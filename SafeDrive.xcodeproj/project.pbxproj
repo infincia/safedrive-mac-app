@@ -1,0 +1,663 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0CB8CE4FA71899FD8B581211 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC90D839322FCEA9362E8D12 /* libPods.a */; };
+		AA0A7D151A19670600DCB77E /* SDAccountWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0A7D131A19670600DCB77E /* SDAccountWindow.m */; };
+		AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* SDPreferencesWindow.xib */; };
+		AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */; };
+		AA0A7D261A1968BB00DCB77E /* SafeDrive.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* SafeDrive.strings */; };
+		AA0A7D271A1968BB00DCB77E /* SafeDrive.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* SafeDrive.strings */; };
+		AA31681A1A191B72006CC0EB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168191A191B72006CC0EB /* AppDelegate.m */; };
+		AA31681C1A191B72006CC0EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31681B1A191B72006CC0EB /* main.m */; };
+		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
+		AA3168211A191B72006CC0EB /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA31681F1A191B72006CC0EB /* Main.xib */; };
+		AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31682C1A191B72006CC0EB /* SafeDriveTests.m */; };
+		AA31684B1A192D27006CC0EB /* SDPreferencesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168491A192D26006CC0EB /* SDPreferencesWindow.m */; };
+		AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168531A192DC2006CC0EB /* SDAPI.m */; };
+		AA3168551A192DC7006CC0EB /* SDAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168531A192DC2006CC0EB /* SDAPI.m */; };
+		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
+		AA3168571A192DE3006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
+		AA31685B1A195426006CC0EB /* SDStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31685A1A195426006CC0EB /* SDStatusItem.m */; };
+		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
+		AAF85BFF1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AA3168271A191B72006CC0EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA3168121A191B72006CC0EB;
+			remoteInfo = SafeDrive;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A34345371AB24DAC0D1FC2D3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		AA0A7D121A19670600DCB77E /* SDAccountWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDAccountWindow.h; path = SafeDrive/AccountWindow/SDAccountWindow.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		AA0A7D131A19670600DCB77E /* SDAccountWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountWindow.m; path = SafeDrive/AccountWindow/SDAccountWindow.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA0A7D181A1967FB00DCB77E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDPreferencesWindow.xib; sourceTree = "<group>"; };
+		AA0A7D1D1A19682700DCB77E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
+		AA0A7D1F1A19682D00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDAccountWindow.xib; sourceTree = "<group>"; };
+		AA0A7D231A19687400DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		AA0A7D241A19687400DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
+		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/SafeDrive.strings; sourceTree = "<group>"; };
+		AA0A7D2A1A1968C300DCB77E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SafeDrive.strings; sourceTree = "<group>"; };
+		AA0A7D2B1A1968C500DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SafeDrive.strings; sourceTree = "<group>"; };
+		AA0A7D2C1A1968E700DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		AA0A7D2D1A1968E700DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
+		AA0A7D2F1A1968E700DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SafeDrive.strings; sourceTree = "<group>"; };
+		AA0A7D301A1968F200DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		AA0A7D311A1968F200DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
+		AA0A7D331A1968F200DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SafeDrive.strings; sourceTree = "<group>"; };
+		AA0A7D341A19690100DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Main.strings; sourceTree = "<group>"; };
+		AA0A7D371A19690100DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SafeDrive.strings; sourceTree = "<group>"; };
+		AA0A7D391A196A7400DCB77E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
+		AA0A7D3B1A196A8B00DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
+		AA0A7D3D1A196A9100DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
+		AA0A7D3F1A196A9400DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
+		AA0A7D411A196A9800DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
+		AA0A7D431A196B0700DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
+		AA3168131A191B72006CC0EB /* SafeDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA3168171A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA3168181A191B72006CC0EB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		AA3168191A191B72006CC0EB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA31681B1A191B72006CC0EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA31681D1A191B72006CC0EB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		AA3168201A191B72006CC0EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Main.xib; sourceTree = "<group>"; };
+		AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeDriveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA31682B1A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA31682C1A191B72006CC0EB /* SafeDriveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SafeDriveTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA3168481A192D26006CC0EB /* SDPreferencesWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDPreferencesWindow.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		AA3168491A192D26006CC0EB /* SDPreferencesWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDPreferencesWindow.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA31684F1A192D87006CC0EB /* SDMountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDMountController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		AA3168501A192D87006CC0EB /* SDMountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDMountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA3168521A192DC2006CC0EB /* SDAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		AA3168531A192DC2006CC0EB /* SDAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA3168591A195426006CC0EB /* SDStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDStatusItem.h; path = StatusItem/SDStatusItem.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		AA31685A1A195426006CC0EB /* SDStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDStatusItem.m; path = StatusItem/SDStatusItem.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		C59916428BE280E2339742A3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		EC90D839322FCEA9362E8D12 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA3168101A191B72006CC0EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0CB8CE4FA71899FD8B581211 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA3168231A191B72006CC0EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EC90D839322FCEA9362E8D12 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8F638D2A33EA590EBD29A305 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A34345371AB24DAC0D1FC2D3 /* Pods.debug.xcconfig */,
+				C59916428BE280E2339742A3 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		AA31680A1A191B72006CC0EB = {
+			isa = PBXGroup;
+			children = (
+				AA3168151A191B72006CC0EB /* SafeDrive */,
+				AA3168291A191B72006CC0EB /* SafeDriveTests */,
+				AA3168141A191B72006CC0EB /* Products */,
+				8F638D2A33EA590EBD29A305 /* Pods */,
+				5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AA3168141A191B72006CC0EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA3168131A191B72006CC0EB /* SafeDrive.app */,
+				AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA3168151A191B72006CC0EB /* SafeDrive */ = {
+			isa = PBXGroup;
+			children = (
+				AA3168181A191B72006CC0EB /* AppDelegate.h */,
+				AA3168191A191B72006CC0EB /* AppDelegate.m */,
+				AA31681F1A191B72006CC0EB /* Main.xib */,
+				AA31683B1A192CD2006CC0EB /* AccountWindow */,
+				AA3168471A192D26006CC0EB /* PreferencesWindow */,
+				AA3168581A1953CF006CC0EB /* StatusItem */,
+				AA31684D1A192D64006CC0EB /* MountController */,
+				AA31684E1A192D64006CC0EB /* SafeDriveAPI */,
+				AAF85BFB1A23A4BC0063B54F /* SystemAPI */,
+				AA3168161A191B72006CC0EB /* Supporting Files */,
+			);
+			path = SafeDrive;
+			sourceTree = "<group>";
+		};
+		AA3168161A191B72006CC0EB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AA31681D1A191B72006CC0EB /* Images.xcassets */,
+				AA31685C1A195B65006CC0EB /* Localization */,
+				AA3168171A191B72006CC0EB /* Info.plist */,
+				AA31681B1A191B72006CC0EB /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AA3168291A191B72006CC0EB /* SafeDriveTests */ = {
+			isa = PBXGroup;
+			children = (
+				AA31682C1A191B72006CC0EB /* SafeDriveTests.m */,
+				AA31682A1A191B72006CC0EB /* Supporting Files */,
+			);
+			path = SafeDriveTests;
+			sourceTree = "<group>";
+		};
+		AA31682A1A191B72006CC0EB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AA31682B1A191B72006CC0EB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AA31683B1A192CD2006CC0EB /* AccountWindow */ = {
+			isa = PBXGroup;
+			children = (
+				AA0A7D121A19670600DCB77E /* SDAccountWindow.h */,
+				AA0A7D131A19670600DCB77E /* SDAccountWindow.m */,
+				AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */,
+			);
+			name = AccountWindow;
+			path = LoginWindow;
+			sourceTree = "<group>";
+		};
+		AA3168471A192D26006CC0EB /* PreferencesWindow */ = {
+			isa = PBXGroup;
+			children = (
+				AA3168481A192D26006CC0EB /* SDPreferencesWindow.h */,
+				AA3168491A192D26006CC0EB /* SDPreferencesWindow.m */,
+				AA0A7D1B1A19682000DCB77E /* SDPreferencesWindow.xib */,
+			);
+			path = PreferencesWindow;
+			sourceTree = "<group>";
+		};
+		AA31684D1A192D64006CC0EB /* MountController */ = {
+			isa = PBXGroup;
+			children = (
+				AA31684F1A192D87006CC0EB /* SDMountController.h */,
+				AA3168501A192D87006CC0EB /* SDMountController.m */,
+			);
+			path = MountController;
+			sourceTree = "<group>";
+		};
+		AA31684E1A192D64006CC0EB /* SafeDriveAPI */ = {
+			isa = PBXGroup;
+			children = (
+				AA3168521A192DC2006CC0EB /* SDAPI.h */,
+				AA3168531A192DC2006CC0EB /* SDAPI.m */,
+			);
+			path = SafeDriveAPI;
+			sourceTree = "<group>";
+		};
+		AA3168581A1953CF006CC0EB /* StatusItem */ = {
+			isa = PBXGroup;
+			children = (
+				AA3168591A195426006CC0EB /* SDStatusItem.h */,
+				AA31685A1A195426006CC0EB /* SDStatusItem.m */,
+			);
+			name = StatusItem;
+			sourceTree = "<group>";
+		};
+		AA31685C1A195B65006CC0EB /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				AA0A7D291A1968BB00DCB77E /* SafeDrive.strings */,
+			);
+			name = Localization;
+			sourceTree = "<group>";
+		};
+		AAF85BFB1A23A4BC0063B54F /* SystemAPI */ = {
+			isa = PBXGroup;
+			children = (
+				AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */,
+				AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */,
+			);
+			name = SystemAPI;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA3168121A191B72006CC0EB /* SafeDrive */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA3168301A191B72006CC0EB /* Build configuration list for PBXNativeTarget "SafeDrive" */;
+			buildPhases = (
+				82F39C7CA66A1576AE71D2DF /* Check Pods Manifest.lock */,
+				AA31680F1A191B72006CC0EB /* Sources */,
+				AA3168101A191B72006CC0EB /* Frameworks */,
+				AA3168111A191B72006CC0EB /* Resources */,
+				2535D034CEF9D3398C849151 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SafeDrive;
+			productName = SafeDrive;
+			productReference = AA3168131A191B72006CC0EB /* SafeDrive.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AA3168251A191B72006CC0EB /* SafeDriveTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA3168331A191B72006CC0EB /* Build configuration list for PBXNativeTarget "SafeDriveTests" */;
+			buildPhases = (
+				AA3168221A191B72006CC0EB /* Sources */,
+				AA3168231A191B72006CC0EB /* Frameworks */,
+				AA3168241A191B72006CC0EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA3168281A191B72006CC0EB /* PBXTargetDependency */,
+			);
+			name = SafeDriveTests;
+			productName = SafeDriveTests;
+			productReference = AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA31680B1A191B72006CC0EB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SD;
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Infincia LLC";
+				TargetAttributes = {
+					AA3168121A191B72006CC0EB = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = G738Z89QKM;
+					};
+					AA3168251A191B72006CC0EB = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = AA3168121A191B72006CC0EB;
+					};
+				};
+			};
+			buildConfigurationList = AA31680E1A191B72006CC0EB /* Build configuration list for PBXProject "SafeDrive" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				fr,
+				de,
+				es,
+				ro,
+			);
+			mainGroup = AA31680A1A191B72006CC0EB;
+			productRefGroup = AA3168141A191B72006CC0EB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA3168121A191B72006CC0EB /* SafeDrive */,
+				AA3168251A191B72006CC0EB /* SafeDriveTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA3168111A191B72006CC0EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */,
+				AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */,
+				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
+				AA0A7D261A1968BB00DCB77E /* SafeDrive.strings in Resources */,
+				AA3168211A191B72006CC0EB /* Main.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA3168241A191B72006CC0EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0A7D271A1968BB00DCB77E /* SafeDrive.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2535D034CEF9D3398C849151 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		82F39C7CA66A1576AE71D2DF /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA31680F1A191B72006CC0EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0A7D151A19670600DCB77E /* SDAccountWindow.m in Sources */,
+				AA31681C1A191B72006CC0EB /* main.m in Sources */,
+				AA31684B1A192D27006CC0EB /* SDPreferencesWindow.m in Sources */,
+				AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */,
+				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
+				AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */,
+				AA31685B1A195426006CC0EB /* SDStatusItem.m in Sources */,
+				AA31681A1A191B72006CC0EB /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA3168221A191B72006CC0EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AAF85BFF1A23A5510063B54F /* SDSystemAPI.m in Sources */,
+				AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */,
+				AA3168551A192DC7006CC0EB /* SDAPI.m in Sources */,
+				AA3168571A192DE3006CC0EB /* SDMountController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA3168281A191B72006CC0EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA3168121A191B72006CC0EB /* SafeDrive */;
+			targetProxy = AA3168271A191B72006CC0EB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AA0A7D1B1A19682000DCB77E /* SDPreferencesWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AA0A7D1A1A19682000DCB77E /* Base */,
+				AA0A7D1D1A19682700DCB77E /* en */,
+				AA0A7D241A19687400DCB77E /* fr */,
+				AA0A7D2D1A1968E700DCB77E /* de */,
+				AA0A7D311A1968F200DCB77E /* es */,
+				AA0A7D431A196B0700DCB77E /* ro */,
+			);
+			name = SDPreferencesWindow.xib;
+			sourceTree = "<group>";
+		};
+		AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AA0A7D1F1A19682D00DCB77E /* Base */,
+				AA0A7D391A196A7400DCB77E /* en */,
+				AA0A7D3B1A196A8B00DCB77E /* fr */,
+				AA0A7D3D1A196A9100DCB77E /* de */,
+				AA0A7D3F1A196A9400DCB77E /* es */,
+				AA0A7D411A196A9800DCB77E /* ro */,
+			);
+			name = SDAccountWindow.xib;
+			path = SafeDrive/AccountWindow;
+			sourceTree = SOURCE_ROOT;
+		};
+		AA0A7D291A1968BB00DCB77E /* SafeDrive.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AA0A7D281A1968BB00DCB77E /* Base */,
+				AA0A7D2A1A1968C300DCB77E /* en */,
+				AA0A7D2B1A1968C500DCB77E /* fr */,
+				AA0A7D2F1A1968E700DCB77E /* de */,
+				AA0A7D331A1968F200DCB77E /* es */,
+				AA0A7D371A19690100DCB77E /* ro */,
+			);
+			name = SafeDrive.strings;
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		AA31681F1A191B72006CC0EB /* Main.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AA3168201A191B72006CC0EB /* Base */,
+				AA0A7D181A1967FB00DCB77E /* en */,
+				AA0A7D231A19687400DCB77E /* fr */,
+				AA0A7D2C1A1968E700DCB77E /* de */,
+				AA0A7D301A1968F200DCB77E /* es */,
+				AA0A7D341A19690100DCB77E /* ro */,
+			);
+			name = Main.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AA31682E1A191B72006CC0EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		AA31682F1A191B72006CC0EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		AA3168311A191B72006CC0EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A34345371AB24DAC0D1FC2D3 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SafeDrive/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AA3168321A191B72006CC0EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C59916428BE280E2339742A3 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SafeDrive/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		AA3168341A191B72006CC0EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SafeDriveTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SafeDrive.app/Contents/MacOS/SafeDrive";
+			};
+			name = Debug;
+		};
+		AA3168351A191B72006CC0EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SafeDriveTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SafeDrive.app/Contents/MacOS/SafeDrive";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA31680E1A191B72006CC0EB /* Build configuration list for PBXProject "SafeDrive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA31682E1A191B72006CC0EB /* Debug */,
+				AA31682F1A191B72006CC0EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA3168301A191B72006CC0EB /* Build configuration list for PBXNativeTarget "SafeDrive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA3168311A191B72006CC0EB /* Debug */,
+				AA3168321A191B72006CC0EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA3168331A191B72006CC0EB /* Build configuration list for PBXNativeTarget "SafeDriveTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA3168341A191B72006CC0EB /* Debug */,
+				AA3168351A191B72006CC0EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AA31680B1A191B72006CC0EB /* Project object */;
+}
