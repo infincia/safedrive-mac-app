@@ -4,6 +4,6 @@
 
 @import Cocoa;
 
-@interface SDAccountWindow : NSWindowController
+@interface SDAccountWindow : NSWindowController <SDMountStatusProtocol>
 
 @end

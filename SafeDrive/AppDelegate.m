@@ -5,58 +5,48 @@
 
 #import "AppDelegate.h"
 
+#import "SDDropdownMenuController.h"
 #import "SDAccountWindow.h"
 #import "SDPreferencesWindow.h"
 
 
 @interface AppDelegate ()
 
-@property (weak) IBOutlet NSWindow *window;
 @end
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
-    self.statusItem.menu = self.statusItemMenu;
 
-    // this sets the tooltip of the menu bar item using a localized string from SafeDrive.strings
-    self.statusItem.toolTip = NSLocalizedString(@"SafeDriveAppName", @"Safe Drive Name");
-
-#warning This needs to be replaced!
-    // Use a system image of a lock for the menu bar item for now, will need to replace this
-    NSImage *barImage = [NSImage imageNamed:NSImageNameLockLockedTemplate];
-
-    // needed for OS X 10.10 dark mode
-    [barImage setTemplate:YES];
-
-    [self.statusItem setImage:barImage];
-
-
-
+    self.dropdownMenuController = [[SDDropdownMenuController alloc] init];
+    
     self.accountWindow = [[SDAccountWindow alloc] initWithWindowNibName:@"SDAccountWindow"];
     self.preferencesWindow = [[SDPreferencesWindow alloc] initWithWindowNibName:@"SDPreferencesWindow"];
 
+    // register SDApplicationControlProtocol notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenAccountWindow:) name:SDApplicationShouldOpenAccountWindow object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenPreferencesWindow:) name:SDApplicationShouldOpenPreferencesWindow object:nil];
 
 }
 
+- (void)applicationWillTerminate:(NSNotification *)aNotification {
+    // Insert code here to tear down your application
+}
 
--(IBAction)showAccountWindow:(id)sender {
+
+
+#pragma mark - SDApplicationControlProtocol methods
+
+-(void)applicationShouldOpenAccountWindow:(NSNotification*)notification {
     [NSApp activateIgnoringOtherApps:YES];
     [self.accountWindow.window makeKeyAndOrderFront:self];
 }
 
-
--(IBAction)showPreferencesWindow:(id)sender {
+-(void)applicationShouldOpenPreferencesWindow:(NSNotification*)notification {
     [NSApp activateIgnoringOtherApps:YES];
     [self.preferencesWindow.window makeKeyAndOrderFront:self];
 }
 
 
-
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // Insert code here to tear down your application
-}
 
 @end

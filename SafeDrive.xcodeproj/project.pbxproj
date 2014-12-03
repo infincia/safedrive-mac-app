@@ -11,19 +11,22 @@
 		AA0A7D151A19670600DCB77E /* SDAccountWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0A7D131A19670600DCB77E /* SDAccountWindow.m */; };
 		AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* SDPreferencesWindow.xib */; };
 		AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */; };
-		AA0A7D261A1968BB00DCB77E /* SafeDrive.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* SafeDrive.strings */; };
-		AA0A7D271A1968BB00DCB77E /* SafeDrive.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* SafeDrive.strings */; };
+		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
+		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA31681A1A191B72006CC0EB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168191A191B72006CC0EB /* AppDelegate.m */; };
 		AA31681C1A191B72006CC0EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31681B1A191B72006CC0EB /* main.m */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
-		AA3168211A191B72006CC0EB /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA31681F1A191B72006CC0EB /* Main.xib */; };
 		AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31682C1A191B72006CC0EB /* SafeDriveTests.m */; };
 		AA31684B1A192D27006CC0EB /* SDPreferencesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168491A192D26006CC0EB /* SDPreferencesWindow.m */; };
 		AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168531A192DC2006CC0EB /* SDAPI.m */; };
 		AA3168551A192DC7006CC0EB /* SDAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168531A192DC2006CC0EB /* SDAPI.m */; };
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
 		AA3168571A192DE3006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
-		AA31685B1A195426006CC0EB /* SDStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31685A1A195426006CC0EB /* SDStatusItem.m */; };
+		AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */; };
+		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
+		AA73194A1A2F86B8003E2391 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7319491A2F86B8003E2391 /* SDConstants.m */; };
+		AA73194B1A2F86B8003E2391 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7319491A2F86B8003E2391 /* SDConstants.m */; };
+		AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
 		AAF85BFF1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
 /* End PBXBuildFile section */
@@ -42,24 +45,16 @@
 		A34345371AB24DAC0D1FC2D3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		AA0A7D121A19670600DCB77E /* SDAccountWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDAccountWindow.h; path = SafeDrive/AccountWindow/SDAccountWindow.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AA0A7D131A19670600DCB77E /* SDAccountWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountWindow.m; path = SafeDrive/AccountWindow/SDAccountWindow.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AA0A7D181A1967FB00DCB77E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDPreferencesWindow.xib; sourceTree = "<group>"; };
-		AA0A7D1D1A19682700DCB77E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
 		AA0A7D1F1A19682D00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDAccountWindow.xib; sourceTree = "<group>"; };
-		AA0A7D231A19687400DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		AA0A7D241A19687400DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
-		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/SafeDrive.strings; sourceTree = "<group>"; };
-		AA0A7D2A1A1968C300DCB77E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SafeDrive.strings; sourceTree = "<group>"; };
-		AA0A7D2B1A1968C500DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SafeDrive.strings; sourceTree = "<group>"; };
-		AA0A7D2C1A1968E700DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AA0A7D2B1A1968C500DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0A7D2D1A1968E700DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
-		AA0A7D2F1A1968E700DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SafeDrive.strings; sourceTree = "<group>"; };
-		AA0A7D301A1968F200DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		AA0A7D2F1A1968E700DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0A7D311A1968F200DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
-		AA0A7D331A1968F200DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SafeDrive.strings; sourceTree = "<group>"; };
-		AA0A7D341A19690100DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Main.strings; sourceTree = "<group>"; };
-		AA0A7D371A19690100DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SafeDrive.strings; sourceTree = "<group>"; };
-		AA0A7D391A196A7400DCB77E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
+		AA0A7D331A1968F200DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AA0A7D371A19690100DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0A7D3B1A196A8B00DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
 		AA0A7D3D1A196A9100DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
 		AA0A7D3F1A196A9400DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
@@ -71,7 +66,6 @@
 		AA3168191A191B72006CC0EB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA31681B1A191B72006CC0EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA31681D1A191B72006CC0EB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		AA3168201A191B72006CC0EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Main.xib; sourceTree = "<group>"; };
 		AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeDriveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA31682B1A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA31682C1A191B72006CC0EB /* SafeDriveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SafeDriveTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -81,8 +75,18 @@
 		AA3168501A192D87006CC0EB /* SDMountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDMountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3168521A192DC2006CC0EB /* SDAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AA3168531A192DC2006CC0EB /* SDAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AA3168591A195426006CC0EB /* SDStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDStatusItem.h; path = StatusItem/SDStatusItem.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		AA31685A1A195426006CC0EB /* SDStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDStatusItem.m; path = StatusItem/SDStatusItem.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA3168591A195426006CC0EB /* SDDropdownMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDDropdownMenuController.h; path = StatusItem/SDDropdownMenuController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDDropdownMenuController.m; path = StatusItem/SDDropdownMenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
+		AA7319481A2F86B8003E2391 /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDConstants.h; sourceTree = "<group>"; };
+		AA7319491A2F86B8003E2391 /* SDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDConstants.m; sourceTree = "<group>"; };
+		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
+		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
+		AA7319511A2F95A7003E2391 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDDropdownMenu.xib; sourceTree = "<group>"; };
+		AA7319541A2F95AE003E2391 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
+		AA7319561A2F95B2003E2391 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
+		AA7319581A2F95B3003E2391 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
+		AA73195A1A2F95B5003E2391 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		C59916428BE280E2339742A3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -148,12 +152,15 @@
 		AA3168151A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXGroup;
 			children = (
+				AA7319481A2F86B8003E2391 /* SDConstants.h */,
+				AA7319491A2F86B8003E2391 /* SDConstants.m */,
+				AA73194F1A2F89F2003E2391 /* SDProtocols.h */,
 				AA3168181A191B72006CC0EB /* AppDelegate.h */,
 				AA3168191A191B72006CC0EB /* AppDelegate.m */,
-				AA31681F1A191B72006CC0EB /* Main.xib */,
+				AA7319411A2F7EEB003E2391 /* Main.xib */,
 				AA31683B1A192CD2006CC0EB /* AccountWindow */,
 				AA3168471A192D26006CC0EB /* PreferencesWindow */,
-				AA3168581A1953CF006CC0EB /* StatusItem */,
+				AA3168581A1953CF006CC0EB /* Dropdown Menu */,
 				AA31684D1A192D64006CC0EB /* MountController */,
 				AA31684E1A192D64006CC0EB /* SafeDriveAPI */,
 				AAF85BFB1A23A4BC0063B54F /* SystemAPI */,
@@ -165,6 +172,7 @@
 		AA3168161A191B72006CC0EB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AA73194E1A2F893D003E2391 /* SafeDrive.pch */,
 				AA31681D1A191B72006CC0EB /* Images.xcassets */,
 				AA31685C1A195B65006CC0EB /* Localization */,
 				AA3168171A191B72006CC0EB /* Info.plist */,
@@ -229,19 +237,20 @@
 			path = SafeDriveAPI;
 			sourceTree = "<group>";
 		};
-		AA3168581A1953CF006CC0EB /* StatusItem */ = {
+		AA3168581A1953CF006CC0EB /* Dropdown Menu */ = {
 			isa = PBXGroup;
 			children = (
-				AA3168591A195426006CC0EB /* SDStatusItem.h */,
-				AA31685A1A195426006CC0EB /* SDStatusItem.m */,
+				AA3168591A195426006CC0EB /* SDDropdownMenuController.h */,
+				AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */,
+				AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */,
 			);
-			name = StatusItem;
+			name = "Dropdown Menu";
 			sourceTree = "<group>";
 		};
 		AA31685C1A195B65006CC0EB /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				AA0A7D291A1968BB00DCB77E /* SafeDrive.strings */,
+				AA0A7D291A1968BB00DCB77E /* Localizable.strings */,
 			);
 			name = Localization;
 			sourceTree = "<group>";
@@ -344,10 +353,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */,
+				AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */,
 				AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */,
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
-				AA0A7D261A1968BB00DCB77E /* SafeDrive.strings in Resources */,
-				AA3168211A191B72006CC0EB /* Main.xib in Resources */,
+				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
+				AA7319421A2F7EEB003E2391 /* Main.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,7 +365,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA0A7D271A1968BB00DCB77E /* SafeDrive.strings in Resources */,
+				AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,8 +414,9 @@
 				AA31684B1A192D27006CC0EB /* SDPreferencesWindow.m in Sources */,
 				AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
+				AA73194A1A2F86B8003E2391 /* SDConstants.m in Sources */,
 				AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */,
-				AA31685B1A195426006CC0EB /* SDStatusItem.m in Sources */,
+				AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */,
 				AA31681A1A191B72006CC0EB /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,6 +427,7 @@
 			files = (
 				AAF85BFF1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */,
+				AA73194B1A2F86B8003E2391 /* SDConstants.m in Sources */,
 				AA3168551A192DC7006CC0EB /* SDAPI.m in Sources */,
 				AA3168571A192DE3006CC0EB /* SDMountController.m in Sources */,
 			);
@@ -436,7 +448,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AA0A7D1A1A19682000DCB77E /* Base */,
-				AA0A7D1D1A19682700DCB77E /* en */,
 				AA0A7D241A19687400DCB77E /* fr */,
 				AA0A7D2D1A1968E700DCB77E /* de */,
 				AA0A7D311A1968F200DCB77E /* es */,
@@ -449,7 +460,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AA0A7D1F1A19682D00DCB77E /* Base */,
-				AA0A7D391A196A7400DCB77E /* en */,
 				AA0A7D3B1A196A8B00DCB77E /* fr */,
 				AA0A7D3D1A196A9100DCB77E /* de */,
 				AA0A7D3F1A196A9400DCB77E /* es */,
@@ -459,31 +469,30 @@
 			path = SafeDrive/AccountWindow;
 			sourceTree = SOURCE_ROOT;
 		};
-		AA0A7D291A1968BB00DCB77E /* SafeDrive.strings */ = {
+		AA0A7D291A1968BB00DCB77E /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				AA0A7D281A1968BB00DCB77E /* Base */,
-				AA0A7D2A1A1968C300DCB77E /* en */,
 				AA0A7D2B1A1968C500DCB77E /* fr */,
 				AA0A7D2F1A1968E700DCB77E /* de */,
 				AA0A7D331A1968F200DCB77E /* es */,
 				AA0A7D371A19690100DCB77E /* ro */,
 			);
-			name = SafeDrive.strings;
+			name = Localizable.strings;
 			path = Localization;
 			sourceTree = "<group>";
 		};
-		AA31681F1A191B72006CC0EB /* Main.xib */ = {
+		AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				AA3168201A191B72006CC0EB /* Base */,
-				AA0A7D181A1967FB00DCB77E /* en */,
-				AA0A7D231A19687400DCB77E /* fr */,
-				AA0A7D2C1A1968E700DCB77E /* de */,
-				AA0A7D301A1968F200DCB77E /* es */,
-				AA0A7D341A19690100DCB77E /* ro */,
+				AA7319511A2F95A7003E2391 /* Base */,
+				AA7319541A2F95AE003E2391 /* fr */,
+				AA7319561A2F95B2003E2391 /* de */,
+				AA7319581A2F95B3003E2391 /* es */,
+				AA73195A1A2F95B5003E2391 /* ro */,
 			);
-			name = Main.xib;
+			name = SDDropdownMenu.xib;
+			path = StatusItem;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -571,6 +580,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
 				INFOPLIST_FILE = SafeDrive/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
@@ -584,6 +595,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
 				INFOPLIST_FILE = SafeDrive/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
