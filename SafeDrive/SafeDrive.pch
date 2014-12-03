@@ -1,0 +1,8 @@
+
+//  Copyright (c) 2014 Infincia LLC. All rights reserved.
+//
+
+#ifdef __OBJC__
+    #import "SDConstants.h"
+    #import "SDProtocols.h"
+#endif
