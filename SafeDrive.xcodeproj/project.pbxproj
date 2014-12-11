@@ -87,6 +87,7 @@
 		AA7319561A2F95B2003E2391 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
 		AA7319581A2F95B3003E2391 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
 		AA73195A1A2F95B5003E2391 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
+		AA8E7B141A3A2EDF00480CC2 /* sshfs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sshfs; sourceTree = "<group>"; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		C59916428BE280E2339742A3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +133,7 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AA8E7B141A3A2EDF00480CC2 /* sshfs */,
 				AA3168151A191B72006CC0EB /* SafeDrive */,
 				AA3168291A191B72006CC0EB /* SafeDriveTests */,
 				AA3168141A191B72006CC0EB /* Products */,
@@ -266,6 +268,23 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXLegacyTarget section */
+		AA8E7B0E1A3A2BA700480CC2 /* sshfs */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = AA8E7B0F1A3A2BA800480CC2 /* Build configuration list for PBXLegacyTarget "sshfs" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = sshfs;
+			dependencies = (
+			);
+			name = sshfs;
+			passBuildSettingsInEnvironment = 0;
+			productName = sshfs;
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
 		AA3168121A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXNativeTarget;
@@ -322,6 +341,9 @@
 						CreatedOnToolsVersion = 6.1.1;
 						TestTargetID = AA3168121A191B72006CC0EB;
 					};
+					AA8E7B0E1A3A2BA700480CC2 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
 				};
 			};
 			buildConfigurationList = AA31680E1A191B72006CC0EB /* Build configuration list for PBXProject "SafeDrive" */;
@@ -343,6 +365,7 @@
 			targets = (
 				AA3168121A191B72006CC0EB /* SafeDrive */,
 				AA3168251A191B72006CC0EB /* SafeDriveTests */,
+				AA8E7B0E1A3A2BA700480CC2 /* sshfs */,
 			);
 		};
 /* End PBXProject section */
@@ -640,6 +663,31 @@
 			};
 			name = Release;
 		};
+		AA8E7B101A3A2BA800480CC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AA8E7B111A3A2BA800480CC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -666,6 +714,15 @@
 			buildConfigurations = (
 				AA3168341A191B72006CC0EB /* Debug */,
 				AA3168351A191B72006CC0EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA8E7B0F1A3A2BA800480CC2 /* Build configuration list for PBXLegacyTarget "sshfs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA8E7B101A3A2BA800480CC2 /* Debug */,
+				AA8E7B111A3A2BA800480CC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
