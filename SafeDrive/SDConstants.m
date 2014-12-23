@@ -4,8 +4,8 @@
 
 #import "SDConstants.h"
 
-NSString *const SDVolumeDidMountNotification    = @"SDVolumeDidMountNotification";
-NSString *const SDVolumeDidUnmountNotification  = @"SDVolumeDidUnmountNotification";
+NSString *const SDVolumeDidMountNotification              = @"SDVolumeDidMountNotification";
+NSString *const SDVolumeDidUnmountNotification            = @"SDVolumeDidUnmountNotification";
 
 NSString *const SDApplicationShouldOpenPreferencesWindow    = @"SDApplicationShouldOpenPreferencesWindow";
 NSString *const SDApplicationShouldOpenAccountWindow        = @"SDApplicationShouldOpenAccountWindow";
