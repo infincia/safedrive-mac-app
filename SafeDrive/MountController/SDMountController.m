@@ -3,9 +3,11 @@
 //
 
 #import "SDMountController.h"
+#import "SDSystemAPI.h"
 
 @interface SDMountController ()
 @property NSTask *sshfsTask;
+@property SDSystemAPI *sharedSystemAPI;
 @end
 
 @implementation SDMountController
@@ -13,7 +15,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        //
+        self.sharedSystemAPI = [SDSystemAPI sharedAPI];
     }
     return self;
 }
