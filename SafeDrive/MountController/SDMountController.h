@@ -7,10 +7,6 @@
 typedef void(^SDMountSuccessBlock)();
 typedef void(^SDMountFailureBlock)(NSError *mountError);
 
-typedef NS_ENUM(NSUInteger, SDMountErrorType) {
-    SDMountErrorAuthorization
-};
-
 @interface SDMountController : NSObject
 
 +(SDMountController *)sharedAPI;
