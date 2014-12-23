@@ -8,6 +8,7 @@
 @required
 -(void)volumeDidMount:(NSNotification*)notification;
 -(void)volumeDidUnmount:(NSNotification*)notification;
+-(void)mountSubprocessDidTerminate:(NSNotification*)notification;
 @end
 
 @protocol SDApplicationControlProtocol <NSObject>
