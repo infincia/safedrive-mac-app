@@ -207,7 +207,15 @@
 }
 
 -(void)unmountVolumeWithName:(NSString *)mountName success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock {
-    NSAssert(NO, @"Unimplemented");
+#warning Requires testing to see which is better, ejecting the mountpoint appears to work 100% of the time
+    // which is better for a FUSE process? Interrupt signal is suggested by the docs
+    //[self.sshfsTask terminate];
+    //[self.sshfsTask interrupt];
+    [self.sharedSystemAPI ejectMountpoint:self.localMountURL success:^{
+        successBlock();
+    } failure:^(NSError *error) {
+        failureBlock(error);
+    }];
 }
 
 @end
