@@ -4,6 +4,8 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - Custom NSNotifications
+
 FOUNDATION_EXPORT NSString *const SDVolumeDidMountNotification;
 FOUNDATION_EXPORT NSString *const SDVolumeDidUnmountNotification;
 
