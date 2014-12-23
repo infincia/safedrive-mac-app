@@ -4,6 +4,9 @@
 
 @import Foundation;
 
+typedef void(^SDSystemSuccessBlock)();
+typedef void(^SDSystemFailureBlock)(NSError *error);
+
 @interface SDSystemAPI : NSObject
 
 +(SDSystemAPI *)sharedAPI;
