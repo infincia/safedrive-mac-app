@@ -3,6 +3,8 @@
 //
 
 #import "SDSystemAPI.h"
+#import "NSBundle+LoginItem.h"
+
 @import AppKit;
 @import DiskArbitration; // May be necessary if higher level APIs don't work out
 
@@ -92,5 +94,29 @@
         failureBlock(error);
     }
 }
+
+
+-(void)registerStartAtLogin:(id)sender success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure {
+    [[NSBundle mainBundle] addToLoginItems];
+    if ([[NSBundle mainBundle] isLoginItem]) {
+        success();
+    }
+    else {
+        NSError *loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddLoginItemFailed userInfo:@{@"error": @"Adding login item failed"}];
+        failure(loginItemError);
+    }
+}
+
+-(void)unregisterStartAtLogin:(id)sender success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure {
+    [[NSBundle mainBundle] removeFromLoginItems];
+    if ([[NSBundle mainBundle] isLoginItem]) {
+        NSError *loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveLoginItemFailed userInfo:@{@"error": @"Removing login item failed"}];
+        failure(loginItemError);
+    }
+    else {
+        success();
+    }
+}
+
 
 @end

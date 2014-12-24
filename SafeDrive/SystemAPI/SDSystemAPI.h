@@ -17,4 +17,8 @@ typedef void(^SDSystemFailureBlock)(NSError *error);
 
 -(void)ejectMountpoint:(NSURL *)mountpointURL success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure;
 
+-(void)registerStartAtLogin:(id)sender success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure;
+
+-(void)unregisterStartAtLogin:(id)sender success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure;
+
 @end
