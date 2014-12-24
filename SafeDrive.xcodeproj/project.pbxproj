@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0CB8CE4FA71899FD8B581211 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC90D839322FCEA9362E8D12 /* libPods.a */; };
+		33EA39B2E8CF5BFF88C2812D /* libPods-safedriveaskpass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B1249E72DE80AA6A6DC7 /* libPods-safedriveaskpass.a */; };
 		AA0A7D151A19670600DCB77E /* SDAccountWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0A7D131A19670600DCB77E /* SDAccountWindow.m */; };
 		AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* SDPreferencesWindow.xib */; };
 		AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */; };
@@ -19,14 +20,16 @@
 		AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31682C1A191B72006CC0EB /* SafeDriveTests.m */; };
 		AA31684B1A192D27006CC0EB /* SDPreferencesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168491A192D26006CC0EB /* SDPreferencesWindow.m */; };
 		AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168531A192DC2006CC0EB /* SDAPI.m */; };
-		AA3168551A192DC7006CC0EB /* SDAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168531A192DC2006CC0EB /* SDAPI.m */; };
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
-		AA3168571A192DE3006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
 		AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */; };
+		AA4E77331A3E6E640054BBCA /* SDTestCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestCredentials.m */; };
+		AA4E77341A3E6E640054BBCA /* SDTestCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestCredentials.m */; };
+		AA4E773D1A3E9B1D0054BBCA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E773C1A3E9B1D0054BBCA /* main.m */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
 		AA73194A1A2F86B8003E2391 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7319491A2F86B8003E2391 /* SDConstants.m */; };
 		AA73194B1A2F86B8003E2391 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7319491A2F86B8003E2391 /* SDConstants.m */; };
 		AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */; };
+		AABB0FC01A3F292F00FA3530 /* safedriveaskpass in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
 		AAF85BFF1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
 /* End PBXBuildFile section */
@@ -39,9 +42,54 @@
 			remoteGlobalIDString = AA3168121A191B72006CC0EB;
 			remoteInfo = SafeDrive;
 		};
+		AA8E7B201A3A7DB100480CC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA3168121A191B72006CC0EB;
+			remoteInfo = SafeDrive;
+		};
+		AABB0FBB1A3F28DE00FA3530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA4E77391A3E9B1D0054BBCA;
+			remoteInfo = safedriveaskpass;
+		};
+		AABB0FBD1A3F28E400FA3530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA4E77391A3E9B1D0054BBCA;
+			remoteInfo = safedriveaskpass;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		AA4E77381A3E9B1D0054BBCA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		AABB0FBF1A3F290400FA3530 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				AABB0FC01A3F292F00FA3530 /* safedriveaskpass in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		64B5F6CFFF823B74297AAF32 /* Pods-safedriveaskpass.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.release.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.release.xcconfig"; sourceTree = "<group>"; };
+		6771B1249E72DE80AA6A6DC7 /* libPods-safedriveaskpass.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-safedriveaskpass.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A34345371AB24DAC0D1FC2D3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		AA0A7D121A19670600DCB77E /* SDAccountWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDAccountWindow.h; path = SafeDrive/AccountWindow/SDAccountWindow.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AA0A7D131A19670600DCB77E /* SDAccountWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountWindow.m; path = SafeDrive/AccountWindow/SDAccountWindow.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -77,6 +125,8 @@
 		AA3168531A192DC2006CC0EB /* SDAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3168591A195426006CC0EB /* SDDropdownMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDDropdownMenuController.h; path = StatusItem/SDDropdownMenuController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDDropdownMenuController.m; path = StatusItem/SDDropdownMenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA4E77431A3E9CFD0054BBCA /* safedrive-askpass.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "safedrive-askpass.entitlements"; sourceTree = "<group>"; };
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA7319481A2F86B8003E2391 /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDConstants.h; sourceTree = "<group>"; };
 		AA7319491A2F86B8003E2391 /* SDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDConstants.m; sourceTree = "<group>"; };
@@ -91,6 +141,7 @@
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		C59916428BE280E2339742A3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		E30943F58DF3DB774E94D301 /* Pods-safedriveaskpass.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.debug.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.debug.xcconfig"; sourceTree = "<group>"; };
 		EC90D839322FCEA9362E8D12 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -110,13 +161,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA4E77371A3E9B1D0054BBCA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33EA39B2E8CF5BFF88C2812D /* libPods-safedriveaskpass.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA8E7B161A3A7D9900480CC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA4E77411A3E9B830054BBCA /* libPods-MCSMKeychainItem.a */,
 				EC90D839322FCEA9362E8D12 /* libPods.a */,
+				6771B1249E72DE80AA6A6DC7 /* libPods-safedriveaskpass.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -126,6 +194,8 @@
 			children = (
 				A34345371AB24DAC0D1FC2D3 /* Pods.debug.xcconfig */,
 				C59916428BE280E2339742A3 /* Pods.release.xcconfig */,
+				E30943F58DF3DB774E94D301 /* Pods-safedriveaskpass.debug.xcconfig */,
+				64B5F6CFFF823B74297AAF32 /* Pods-safedriveaskpass.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -138,6 +208,7 @@
 				AA3168291A191B72006CC0EB /* SafeDriveTests */,
 				AA3168141A191B72006CC0EB /* Products */,
 				8F638D2A33EA590EBD29A305 /* Pods */,
+				AA4E773B1A3E9B1D0054BBCA /* safedrive-askpass */,
 				5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -147,6 +218,7 @@
 			children = (
 				AA3168131A191B72006CC0EB /* SafeDrive.app */,
 				AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */,
+				AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -257,6 +329,15 @@
 			name = Localization;
 			sourceTree = "<group>";
 		};
+		AA4E773B1A3E9B1D0054BBCA /* safedrive-askpass */ = {
+			isa = PBXGroup;
+			children = (
+				AA4E773C1A3E9B1D0054BBCA /* main.m */,
+				AA4E77431A3E9CFD0054BBCA /* safedrive-askpass.entitlements */,
+			);
+			path = "safedrive-askpass";
+			sourceTree = "<group>";
+		};
 		AAF85BFB1A23A4BC0063B54F /* SystemAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +376,7 @@
 				AA3168101A191B72006CC0EB /* Frameworks */,
 				AA3168111A191B72006CC0EB /* Resources */,
 				2535D034CEF9D3398C849151 /* Copy Pods Resources */,
+				AABB0FBF1A3F290400FA3530 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -323,6 +405,25 @@
 			productReference = AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		AA4E77391A3E9B1D0054BBCA /* safedriveaskpass */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA4E77401A3E9B1D0054BBCA /* Build configuration list for PBXNativeTarget "safedriveaskpass" */;
+			buildPhases = (
+				2BFAF3B7096438FA9C7CA26E /* Check Pods Manifest.lock */,
+				AA4E77361A3E9B1D0054BBCA /* Sources */,
+				AA4E77371A3E9B1D0054BBCA /* Frameworks */,
+				AA4E77381A3E9B1D0054BBCA /* CopyFiles */,
+				972926468891CFF49A5B8009 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = safedriveaskpass;
+			productName = "safedrive-askpass";
+			productReference = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -340,6 +441,9 @@
 					AA3168251A191B72006CC0EB = {
 						CreatedOnToolsVersion = 6.1.1;
 						TestTargetID = AA3168121A191B72006CC0EB;
+					};
+					AA4E77391A3E9B1D0054BBCA = {
+						CreatedOnToolsVersion = 6.1.1;
 					};
 					AA8E7B0E1A3A2BA700480CC2 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -366,6 +470,7 @@
 				AA3168121A191B72006CC0EB /* SafeDrive */,
 				AA3168251A191B72006CC0EB /* SafeDriveTests */,
 				AA8E7B0E1A3A2BA700480CC2 /* sshfs */,
+				AA4E77391A3E9B1D0054BBCA /* safedriveaskpass */,
 			);
 		};
 /* End PBXProject section */
@@ -425,6 +530,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		972926468891CFF49A5B8009 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -448,11 +568,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAF85BFF1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */,
-				AA73194B1A2F86B8003E2391 /* SDConstants.m in Sources */,
-				AA3168551A192DC7006CC0EB /* SDAPI.m in Sources */,
-				AA3168571A192DE3006CC0EB /* SDMountController.m in Sources */,
+				AA4E77331A3E6E640054BBCA /* SDTestCredentials.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA4E77361A3E9B1D0054BBCA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AABB0FBA1A3F277C00FA3530 /* SDTestCredentials.m in Sources */,
+				AA4E773D1A3E9B1D0054BBCA /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,6 +792,36 @@
 			};
 			name = Release;
 		};
+		AA4E773E1A3E9B1D0054BBCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E30943F58DF3DB774E94D301 /* Pods-safedriveaskpass.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SafeDrive-chuvxsgbhfnlbyfxzkgdnlscvvoy/Build/Products/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AA4E773F1A3E9B1D0054BBCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 64B5F6CFFF823B74297AAF32 /* Pods-safedriveaskpass.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SafeDrive-chuvxsgbhfnlbyfxzkgdnlscvvoy/Build/Products/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		AA8E7B101A3A2BA800480CC2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -714,6 +873,15 @@
 			buildConfigurations = (
 				AA3168341A191B72006CC0EB /* Debug */,
 				AA3168351A191B72006CC0EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA4E77401A3E9B1D0054BBCA /* Build configuration list for PBXNativeTarget "safedriveaskpass" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA4E773E1A3E9B1D0054BBCA /* Debug */,
+				AA4E773F1A3E9B1D0054BBCA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
