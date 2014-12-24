@@ -240,6 +240,7 @@
 		AA3168151A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXGroup;
 			children = (
+				AA4E77351A3E95B20054BBCA /* SafeDrive.entitlements */,
 				AA7319481A2F86B8003E2391 /* SDConstants.h */,
 				AA7319491A2F86B8003E2391 /* SDConstants.m */,
 				AA73194F1A2F89F2003E2391 /* SDProtocols.h */,
@@ -481,6 +482,11 @@
 					AA3168121A191B72006CC0EB = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = G738Z89QKM;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					AA3168251A191B72006CC0EB = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -819,6 +825,9 @@
 			baseConfigurationReference = A34345371AB24DAC0D1FC2D3 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SafeDrive/SafeDrive.entitlements;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
@@ -826,6 +835,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -834,6 +844,9 @@
 			baseConfigurationReference = C59916428BE280E2339742A3 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SafeDrive/SafeDrive.entitlements;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
@@ -841,6 +854,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
