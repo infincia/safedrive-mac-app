@@ -59,3 +59,12 @@ FOUNDATION_EXPORT NSUInteger const SDSystemErrorRemoveLoginItemFailed;
 FOUNDATION_EXPORT NSUInteger const SDAPIErrorAuthorization;
 FOUNDATION_EXPORT NSUInteger const SDAPIErrorMaintenance;
 
+
+#pragma mark - Mount state
+
+typedef NS_ENUM(NSUInteger, SDMountState) {
+    SDMountStateMounted,
+    SDMountStateUnmounted,
+    SDMountStateUnknown
+};
+
