@@ -15,6 +15,8 @@ NSString *const SDAPIDomain = @"safedrive.io";
 NSString *const SDServiceName = @"safedrive.io";
 
 
+#pragma mark - Custom NSNotifications
+
 NSString *const SDVolumeDidMountNotification              = @"SDVolumeDidMountNotification";
 NSString *const SDVolumeDidUnmountNotification            = @"SDVolumeDidUnmountNotification";
 
