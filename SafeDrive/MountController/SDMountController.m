@@ -16,6 +16,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        self.mountState = SDMountStateUnmounted;
         self.sharedSystemAPI = [SDSystemAPI sharedAPI];
     }
     return self;

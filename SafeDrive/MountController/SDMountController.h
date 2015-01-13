@@ -9,6 +9,7 @@ typedef void(^SDMountFailureBlock)(NSError *mountError);
 
 @interface SDMountController : NSObject
 
+@property enum SDMountState mountState;
 +(SDMountController *)sharedAPI;
 
 -(void)mountVolumeWithName:(NSString *)mountName atURL:(NSURL *)mountURL success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock;
