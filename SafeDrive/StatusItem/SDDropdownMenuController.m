@@ -72,14 +72,14 @@
 #pragma mark - SDMountStatusProtocol methods
 
 -(void)volumeDidMount:(NSNotification*)notification {
-    self.connectMenuItem.title = NSLocalizedString(@"Disconnect", @"Menu title for connecting the volume");
+    self.connectMenuItem.title = NSLocalizedString(@"Disconnect", @"Menu title for disconnecting the volume");
 
     #warning These icons need to be replaced!
     [self setMenuBarImage:[NSImage imageNamed:NSImageNameLockUnlockedTemplate]];
 }
 
 -(void)volumeDidUnmount:(NSNotification*)notification {
-    self.connectMenuItem.title = NSLocalizedString(@"Connect", @"Menu title for opening the settings window");
+    self.connectMenuItem.title = NSLocalizedString(@"Connect", @"Menu title for connecting the volume");
 
     #warning These icons need to be replaced!
     [self setMenuBarImage:[NSImage imageNamed:NSImageNameLockLockedTemplate]];
