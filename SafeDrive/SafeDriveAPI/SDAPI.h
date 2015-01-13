@@ -4,10 +4,6 @@
 
 @import Foundation;
 
-typedef NS_ENUM(NSUInteger, SDAPIErrorType) {
-    SDAPIErrorAuthorization
-};
-
 @interface SDAPI : NSObject
 
 @property (nonatomic, readonly) NSURL *shareLocation;
