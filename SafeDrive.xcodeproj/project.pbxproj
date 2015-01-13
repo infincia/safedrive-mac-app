@@ -146,7 +146,6 @@
 		AA7319561A2F95B2003E2391 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
 		AA7319581A2F95B3003E2391 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
 		AA73195A1A2F95B5003E2391 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
-		AA8E7B141A3A2EDF00480CC2 /* sshfs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sshfs; sourceTree = "<group>"; };
 		AA8E7B191A3A7D9900480CC2 /* shelltest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = shelltest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA8E7B1B1A3A7D9900480CC2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AABB0FC21A3F50C300FA3530 /* shelltest.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shelltest.pch; sourceTree = "<group>"; };
@@ -219,7 +218,6 @@
 				AA3168291A191B72006CC0EB /* SafeDriveTests */,
 				AA8E7B1A1A3A7D9900480CC2 /* shelltest */,
 				AA4E773B1A3E9B1D0054BBCA /* safedrive-askpass */,
-				AA8E7B141A3A2EDF00480CC2 /* sshfs */,
 				5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */,
 				8F638D2A33EA590EBD29A305 /* Pods */,
 				AA3168141A191B72006CC0EB /* Products */,
@@ -375,23 +373,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXLegacyTarget section */
-		AA8E7B0E1A3A2BA700480CC2 /* sshfs */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = AA8E7B0F1A3A2BA800480CC2 /* Build configuration list for PBXLegacyTarget "sshfs" */;
-			buildPhases = (
-			);
-			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = sshfs;
-			dependencies = (
-			);
-			name = sshfs;
-			passBuildSettingsInEnvironment = 0;
-			productName = sshfs;
-		};
-/* End PBXLegacyTarget section */
-
 /* Begin PBXNativeTarget section */
 		AA3168121A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXNativeTarget;
@@ -495,9 +476,6 @@
 					AA4E77391A3E9B1D0054BBCA = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
-					AA8E7B0E1A3A2BA700480CC2 = {
-						CreatedOnToolsVersion = 6.1.1;
-					};
 					AA8E7B181A3A7D9900480CC2 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
@@ -522,7 +500,6 @@
 			targets = (
 				AA3168121A191B72006CC0EB /* SafeDrive */,
 				AA3168251A191B72006CC0EB /* SafeDriveTests */,
-				AA8E7B0E1A3A2BA700480CC2 /* sshfs */,
 				AA8E7B181A3A7D9900480CC2 /* shelltest */,
 				AA4E77391A3E9B1D0054BBCA /* safedriveaskpass */,
 			);
@@ -924,31 +901,6 @@
 			};
 			name = Release;
 		};
-		AA8E7B101A3A2BA800480CC2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUGGING_SYMBOLS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		AA8E7B111A3A2BA800480CC2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		AA8E7B1E1A3A7D9900480CC2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1006,15 +958,6 @@
 			buildConfigurations = (
 				AA4E773E1A3E9B1D0054BBCA /* Debug */,
 				AA4E773F1A3E9B1D0054BBCA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		AA8E7B0F1A3A2BA800480CC2 /* Build configuration list for PBXLegacyTarget "sshfs" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AA8E7B101A3A2BA800480CC2 /* Debug */,
-				AA8E7B111A3A2BA800480CC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

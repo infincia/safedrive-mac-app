@@ -1,4 +1,0 @@
-[submodule "sshfs"]
-	path = sshfs
-	url = git@github.com:osxfuse/sshfs.git
-	branch = osxfuse-sshfs-2.5.0
