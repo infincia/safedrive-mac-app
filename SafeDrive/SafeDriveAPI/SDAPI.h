@@ -11,6 +11,6 @@
 
 +(SDAPI *)sharedAPI;
 
--(void)authenticateWithUser:(NSString *)email password:(NSString *)password success:(void (^)(NSURL *shareLocation))successBlock failure:(void (^)(NSError *error))failureBlock;
+-(void)authenticateWithUser:(NSString *)user password:(NSString *)password success:(void (^)(void))successBlock failure:(void (^)(NSError *error))failureBlock;
 
 @end

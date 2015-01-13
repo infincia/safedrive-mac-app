@@ -34,8 +34,7 @@
     return localInstance;
 }
 
--(void)authenticateWithUser:(NSString *)email password:(NSString *)password success:(void (^)(NSURL *))successBlock failure:(void (^)(NSError *))failureBlock {
-    NSAssert(NO, @"Unimplemented");
+-(void)authenticateWithUser:(NSString *)user password:(NSString *)password success:(void (^)(void))successBlock failure:(void (^)(NSError *error))failureBlock {
 }
 
 
