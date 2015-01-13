@@ -16,3 +16,10 @@
 -(void)applicationShouldOpenPreferencesWindow:(NSNotification*)notification;
 -(void)applicationShouldOpenAccountWindow:(NSNotification*)notification;
 @end
+
+@protocol SDAPIAvailabilityProtocol <NSObject>
+@required
+-(void)apiDidEnterMaintenancePeriod:(NSNotification*)notification;
+-(void)apiDidBecomeReachable:(NSNotification*)notification;
+-(void)apiDidBecomeUnreachable:(NSNotification*)notification;
+@end
