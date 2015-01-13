@@ -101,5 +101,15 @@
     }];
 }
 
+-(void)apiStatusWithSuccess:(void (^)(void))successBlock failure:(void (^)(NSError *error))failureBlock {
+
+    [self.apiManager GET:@"/status" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *response = (NSDictionary *)response;
+
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //
+    }];
+}
 
 @end
