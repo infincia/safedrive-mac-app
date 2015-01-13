@@ -75,6 +75,18 @@
 }
 
 -(void)authenticateWithUser:(NSString *)user password:(NSString *)password success:(void (^)(void))successBlock failure:(void (^)(NSError *error))failureBlock {
+    NSDictionary *postParameters = @{@"user": user, @"password": password };
+
+    [self.apiManager POST:@"/user/authenticate" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *response = (NSDictionary *)response;
+
+
+
+
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //
+    }];
 }
 
 
