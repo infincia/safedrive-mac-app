@@ -9,6 +9,12 @@
 FOUNDATION_EXPORT NSString *const SDAPIDomain;
 
 
+#pragma mark - Keychain constants
+
+
+FOUNDATION_EXPORT NSString *const SDServiceName;
+
+
 #pragma mark - Custom NSNotifications
 
 FOUNDATION_EXPORT NSString *const SDVolumeDidMountNotification;

@@ -9,6 +9,12 @@
 NSString *const SDAPIDomain = @"safedrive.io";
 
 
+#pragma mark - Keychain constants
+
+
+NSString *const SDServiceName = @"safedrive.io";
+
+
 NSString *const SDVolumeDidMountNotification              = @"SDVolumeDidMountNotification";
 NSString *const SDVolumeDidUnmountNotification            = @"SDVolumeDidUnmountNotification";
 
