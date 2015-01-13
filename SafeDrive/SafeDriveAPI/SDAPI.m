@@ -3,13 +3,53 @@
 //
 
 #import "SDAPI.h"
+#import <AFNetworking/AFHTTPRequestOperationManager.h>
+#import <AFNetworking/AFNetworkReachabilityManager.h>
+
+@interface SDAPI ()
+@property (nonatomic, readonly) AFNetworkReachabilityManager *reachabilityManager;
+@property (nonatomic, readonly) AFHTTPRequestOperationManager *apiManager;
+@end
 
 @implementation SDAPI
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        //
+        NSLog(@"Creating SDAPI with base URL: %@", SDAPIDomain);
+
+        _reachabilityManager = [AFNetworkReachabilityManager managerForDomain:SDAPIDomain];
+
+        [self.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+            switch (status) {
+                case AFNetworkReachabilityStatusUnknown: {
+                    //
+                    break;
+                }
+                case AFNetworkReachabilityStatusNotReachable: {
+                    //
+                    break;
+                }
+                case AFNetworkReachabilityStatusReachableViaWWAN: {
+                    //
+                    break;
+                }
+                case AFNetworkReachabilityStatusReachableViaWiFi: {
+                    //
+                    break;
+                }
+                default: {
+                    //
+                    break;
+                }
+            }
+        }];
+
+        NSURL *apiURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@", SDAPIDomain]];
+
+        _apiManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:apiURL];
+        self.apiManager.requestSerializer = [[AFHTTPRequestSerializer alloc] init];
+        self.apiManager.responseSerializer = [[AFJSONResponseSerializer alloc] init];
     }
     return self;
 }
