@@ -31,13 +31,16 @@ FOUNDATION_EXPORT NSString *const SDErrorDomain;
 
 #pragma mark - Mount related errors
 
+FOUNDATION_EXPORT NSUInteger const SDMountErrorUnknown;
 FOUNDATION_EXPORT NSUInteger const SDMountErrorAuthorization;
 FOUNDATION_EXPORT NSUInteger const SDMountErrorTimeout;
 FOUNDATION_EXPORT NSUInteger const SDMountErrorMountFailed;
 FOUNDATION_EXPORT NSUInteger const SDMountErrorUnmountFailed;
 FOUNDATION_EXPORT NSUInteger const SDMountErrorAlreadyMounted;
 FOUNDATION_EXPORT NSUInteger const SDMountErrorAskpassMissing;
-FOUNDATION_EXPORT NSUInteger const SDMountErrorUnknown;
+FOUNDATION_EXPORT NSUInteger const SDMountErrorHostFingerprintChanged;
+FOUNDATION_EXPORT NSUInteger const SDMountErrorHostKeyVerificationFailed;
+
 
 #pragma mark - System API related errors
 

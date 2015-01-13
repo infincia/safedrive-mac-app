@@ -25,17 +25,28 @@ NSString *const SDMountSubprocessDidTerminateNotification = @"SDMountSubprocessD
 NSString *const SDApplicationShouldOpenPreferencesWindow  = @"SDApplicationShouldOpenPreferencesWindow";
 NSString *const SDApplicationShouldOpenAccountWindow      = @"SDApplicationShouldOpenAccountWindow";
 
-NSString *const SDErrorDomain                             = @"com.safedrive";
-
-NSUInteger const SDMountErrorUnknown                      = 0x1001;
-NSUInteger const SDMountErrorAuthorization                = 0x1002;
-NSUInteger const SDMountErrorTimeout                      = 0x1003;
-NSUInteger const SDMountErrorMountFailed                  = 0x1004;
-NSUInteger const SDMountErrorUnmountFailed                = 0x1005;
-NSUInteger const SDMountErrorAlreadyMounted               = 0x1006;
-NSUInteger const SDMountErrorAskpassMissing               = 0x1007;
 
 
-NSUInteger const SDSystemErrorUnknown                     = 0x2001;
-NSUInteger const SDSystemErrorAddLoginItemFailed          = 0x2002;
-NSUInteger const SDSystemErrorRemoveLoginItemFailed       = 0x2003;
+
+#pragma mark - Errors
+
+NSString *const SDErrorDomain = @"io.safedrive";
+
+#pragma mark - Mount related errors
+
+NSUInteger const SDMountErrorUnknown                   = 1001;
+NSUInteger const SDMountErrorAuthorization             = 1002;
+NSUInteger const SDMountErrorTimeout                   = 1003;
+NSUInteger const SDMountErrorMountFailed               = 1004;
+NSUInteger const SDMountErrorUnmountFailed             = 1005;
+NSUInteger const SDMountErrorAlreadyMounted            = 1006;
+NSUInteger const SDMountErrorAskpassMissing            = 1007;
+NSUInteger const SDMountErrorHostFingerprintChanged    = 1008;
+NSUInteger const SDMountErrorHostKeyVerificationFailed = 1009;
+
+
+#pragma mark - System API related errors
+
+NSUInteger const SDSystemErrorUnknown               = 2001;
+NSUInteger const SDSystemErrorAddLoginItemFailed    = 2002;
+NSUInteger const SDSystemErrorRemoveLoginItemFailed = 2003;
