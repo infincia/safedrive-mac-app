@@ -25,6 +25,12 @@ FOUNDATION_EXPORT NSString *const SDMountSubprocessDidTerminateNotification;
 FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenPreferencesWindow;
 FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenAccountWindow;
 
+FOUNDATION_EXPORT NSString *const SDAPIDidEnterMaintenancePeriod;
+FOUNDATION_EXPORT NSString *const SDAPIDidBecomeReachable;
+FOUNDATION_EXPORT NSString *const SDAPIDidBecomeUnreachable;
+
+
+
 #pragma mark - Errors
 
 FOUNDATION_EXPORT NSString *const SDErrorDomain;

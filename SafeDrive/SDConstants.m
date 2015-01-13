@@ -25,6 +25,9 @@ NSString *const SDMountSubprocessDidTerminateNotification = @"SDMountSubprocessD
 NSString *const SDApplicationShouldOpenPreferencesWindow  = @"SDApplicationShouldOpenPreferencesWindow";
 NSString *const SDApplicationShouldOpenAccountWindow      = @"SDApplicationShouldOpenAccountWindow";
 
+NSString *const SDAPIDidEnterMaintenancePeriod            = @"SDAPIDidEnterMaintenancePeriod";
+NSString *const SDAPIDidBecomeReachable                   = @"SDAPIDidBecomeReachable";
+NSString *const SDAPIDidBecomeUnreachable                 = @"SDAPIDidBecomeUnreachable";
 
 
 
