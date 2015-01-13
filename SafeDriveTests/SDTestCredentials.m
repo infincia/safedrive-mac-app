@@ -4,9 +4,9 @@
 
 #import "SDConstants.h"
 
-NSString *const SDTestCredentialsUser      = @"user";
-NSString *const SDTestCredentialsPassword  = @"password";
+NSString *const SDTestCredentialsUser      = @"testuser";
+NSString *const SDTestCredentialsPassword  = @"testpass";
 
-NSString *const SDTestCredentialsHost      = @"server";
-NSString *const SDTestCredentialsPath      = @"/remote/path";
+NSString *const SDTestCredentialsHost      = @"testhostname";
+NSString *const SDTestCredentialsPath      = @"/";
 NSInteger const SDTestCredentialsPort      = 22;
