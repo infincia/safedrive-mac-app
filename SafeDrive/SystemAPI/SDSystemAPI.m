@@ -84,7 +84,7 @@
             }
             [NSThread sleepForTimeInterval:1];
         }
-        NSError *volumeError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorTimeout userInfo:@{@"error": @"Volume mount timeout"}];
+        NSError *volumeError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorTimeout userInfo:@{NSLocalizedDescriptionKey: @"Volume mount timeout"}];
         failureBlock(volumeError);
     }];
 }
@@ -108,7 +108,7 @@
         success();
     }
     else {
-        NSError *loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddLoginItemFailed userInfo:@{@"error": @"Adding login item failed"}];
+        NSError *loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Adding login item failed"}];
         failure(loginItemError);
     }
 }
@@ -116,7 +116,7 @@
 -(void)unregisterStartAtLogin:(id)sender success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure {
     [[NSBundle mainBundle] removeFromLoginItems];
     if ([[NSBundle mainBundle] isLoginItem]) {
-        NSError *loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveLoginItemFailed userInfo:@{@"error": @"Removing login item failed"}];
+        NSError *loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Removing login item failed"}];
         failure(loginItemError);
     }
     else {
