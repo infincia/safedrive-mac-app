@@ -5,6 +5,8 @@
 #import "SDSystemAPI.h"
 #import "NSBundle+LoginItem.h"
 
+#import "MCSMKeychainItem.h"
+
 @import AppKit;
 @import DiskArbitration; // May be necessary if higher level APIs don't work out
 
@@ -116,6 +118,53 @@
     else {
         success();
     }
+}
+
+-(NSDictionary *)retrieveCredentialsFromKeychain {
+    NSDictionary *credentials = nil;
+    NSError *error;
+
+    NSDictionary *attributes = @{ (__bridge id<NSCopying>)kSecAttrAccessGroup: SDServiceName };
+
+    MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDServiceName
+                                                                                        account:nil
+                                                                                    attributes:attributes
+                                                                                         error:&error];
+    if (error) {
+        NSLog(@"Failure retrieving credentials: %@", error.localizedDescription);
+    }
+    else {
+        credentials = @{@"account": keychainItem.account, @"password": keychainItem.password };
+    }
+    return credentials;
+}
+
+-(BOOL)insertCredentialsInKeychain:(NSString *)account password:(NSString *)password {
+    NSDictionary *attributes = @{ (__bridge id<NSCopying>)kSecAttrAccessGroup: SDServiceName };
+
+    MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDServiceName
+                                                                                    account:account
+                                                                                 attributes:attributes
+                                                                                      error:NULL];
+    if (keychainItem) {
+        NSError *keychainRemoveError;
+        [keychainItem removeFromKeychainWithError:&keychainRemoveError];
+        if (keychainRemoveError) {
+            NSLog(@"Keychain remove error: %@", keychainRemoveError.localizedDescription);
+            return NO;
+        }
+    }
+    NSError *keychainInsertError;
+    [MCSMGenericKeychainItem genericKeychainItemWithService:SDServiceName
+                                                    account:account
+                                                 attributes:attributes
+                                                   password:password
+                                                      error:&keychainInsertError];
+    if (keychainInsertError) {
+        NSLog(@"Keychain insert credential error: %@", keychainInsertError.localizedDescription);
+        return NO;
+    }
+    return YES;
 }
 
 

@@ -21,4 +21,8 @@ typedef void(^SDSystemFailureBlock)(NSError *error);
 
 -(void)unregisterStartAtLogin:(id)sender success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure;
 
+-(NSDictionary *)retrieveCredentialsFromKeychain;
+
+-(BOOL)insertCredentialsInKeychain:(NSString *)account password:(NSString *)password;
+
 @end
