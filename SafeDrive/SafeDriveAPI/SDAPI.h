@@ -6,7 +6,8 @@
 
 @interface SDAPI : NSObject
 
-@property (nonatomic, readonly) NSURL *shareLocation;
+@property (nonatomic, readonly) NSURL *volumeURL;
+
 
 +(SDAPI *)sharedAPI;
 
