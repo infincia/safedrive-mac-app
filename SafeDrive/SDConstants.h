@@ -53,3 +53,9 @@ FOUNDATION_EXPORT NSUInteger const SDMountErrorHostKeyVerificationFailed;
 FOUNDATION_EXPORT NSUInteger const SDSystemErrorUnknown;
 FOUNDATION_EXPORT NSUInteger const SDSystemErrorAddLoginItemFailed;
 FOUNDATION_EXPORT NSUInteger const SDSystemErrorRemoveLoginItemFailed;
+
+#pragma mark - SafeDrive API related errors
+
+FOUNDATION_EXPORT NSUInteger const SDAPIErrorAuthorization;
+FOUNDATION_EXPORT NSUInteger const SDAPIErrorMaintenance;
+

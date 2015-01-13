@@ -53,3 +53,8 @@ NSUInteger const SDMountErrorHostKeyVerificationFailed = 1009;
 NSUInteger const SDSystemErrorUnknown               = 2001;
 NSUInteger const SDSystemErrorAddLoginItemFailed    = 2002;
 NSUInteger const SDSystemErrorRemoveLoginItemFailed = 2003;
+
+#pragma mark - SafeDrive API related errors
+
+NSUInteger const SDAPIErrorAuthorization = 3001;
+NSUInteger const SDAPIErrorMaintenance   = 3002;
