@@ -13,4 +13,6 @@
 
 -(void)authenticateWithUser:(NSString *)user password:(NSString *)password success:(void (^)(void))successBlock failure:(void (^)(NSError *error))failureBlock;
 
+-(void)volumeURLForUser:(NSString *)user password:(NSString *)password volume:(NSString *)volumeName success:(void (^)(NSURL *volumeURL))successBlock failure:(void (^)(NSError *error))failureBlock;
+
 @end

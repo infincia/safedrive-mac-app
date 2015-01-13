@@ -89,6 +89,17 @@
     }];
 }
 
+-(void)volumeURLForUser:(NSString *)user password:(NSString *)password volume:(NSString *)volumeName success:(void (^)(NSURL *volumeURL))successBlock failure:(void (^)(NSError *error))failureBlock {
+    NSDictionary *postParameters = @{@"user": user, @"password": password, @"volname": volumeName };
+
+    [self.apiManager POST:@"/user/volume" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *response = (NSDictionary *)response;
+
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //
+    }];
+}
 
 
 @end
