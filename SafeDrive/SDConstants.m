@@ -4,6 +4,11 @@
 
 #import "SDConstants.h"
 
+#pragma mark - SafeDrive API constants
+
+NSString *const SDAPIDomain = @"safedrive.io";
+
+
 NSString *const SDVolumeDidMountNotification              = @"SDVolumeDidMountNotification";
 NSString *const SDVolumeDidUnmountNotification            = @"SDVolumeDidUnmountNotification";
 

@@ -4,6 +4,11 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - SafeDrive API constants
+
+FOUNDATION_EXPORT NSString *const SDAPIDomain;
+
+
 #pragma mark - Custom NSNotifications
 
 FOUNDATION_EXPORT NSString *const SDVolumeDidMountNotification;
