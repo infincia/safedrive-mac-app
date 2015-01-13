@@ -65,18 +65,22 @@
 }
 
 
+-(BOOL)checkForMountedVolume:(NSURL *)mountURL {
+    NSArray *mountedVolumes = [[NSFileManager defaultManager] mountedVolumeURLsIncludingResourceValuesForKeys:@[NSURLVolumeNameKey] options:NSVolumeEnumerationSkipHiddenVolumes];
+    for (NSURL *mountedVolumeURL in mountedVolumes) {
+        if ([mountedVolumeURL.path isEqualToString:mountURL.path]) {
+            return YES;
+        }
+    }
+    return NO;
+}
 
-
--(void)checkForMountedVolume:(NSURL *)mountpointURL withTimeout:(NSTimeInterval)timeout success:(SDSystemSuccessBlock)successBlock failure:(SDSystemFailureBlock)failureBlock {
+-(void)checkForMountedVolume:(NSURL *)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSystemSuccessBlock)successBlock failure:(SDSystemFailureBlock)failureBlock {
     NSOperationQueue *opQueue = [[NSOperationQueue alloc] init];
     [opQueue addOperationWithBlock:^{
         for (NSInteger remainingTime = timeout; remainingTime > 0; remainingTime--) {
-            NSArray *mountedVolumes = [[NSFileManager defaultManager] mountedVolumeURLsIncludingResourceValuesForKeys:@[NSURLVolumeNameKey] options:NSVolumeEnumerationSkipHiddenVolumes];
-            for (NSURL *mountedVolumeURL in mountedVolumes) {
-                if ([mountedVolumeURL.path isEqualToString:mountpointURL.path]) {
-                    successBlock();
-                    return;
-                }
+            if ([self checkForMountedVolume:mountURL]) {
+                successBlock();
             }
             [NSThread sleepForTimeInterval:1];
         }
