@@ -6,4 +6,6 @@
 
 @interface SDAccountWindow : NSWindowController <SDMountStatusProtocol>
 
+-(IBAction)toggleMount:(id)sender;
+
 @end
