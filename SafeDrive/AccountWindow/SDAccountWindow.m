@@ -68,8 +68,8 @@
 
 
 
-    // register SDMountStatusProtocol notifications
-    #warning Keep track of these SDMountStatusProtocol requirements!!!
+    // register SDVolumeEventProtocol notifications
+    #warning Keep track of these SDVolumeEventProtocol requirements!!!
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidMount:) name:SDVolumeDidMountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidUnmount:) name:SDVolumeDidUnmountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountSubprocessDidTerminate:) name:SDMountSubprocessDidTerminateNotification object:nil];
