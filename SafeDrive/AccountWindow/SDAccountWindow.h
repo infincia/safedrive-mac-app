@@ -4,7 +4,7 @@
 
 @import Cocoa;
 
-@interface SDAccountWindow : NSWindowController <SDMountStatusProtocol>
+@interface SDAccountWindow : NSWindowController <SDMountStateProtocol, SDVolumeEventProtocol>
 
 -(IBAction)toggleMount:(id)sender;
 

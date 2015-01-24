@@ -4,7 +4,6 @@
 
 @import Cocoa;
 
-
-@interface SDPreferencesWindow : NSWindowController <SDMountStatusProtocol>
+@interface SDPreferencesWindow : NSWindowController <SDMountStateProtocol>
 
 @end
