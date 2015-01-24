@@ -9,6 +9,7 @@
 @property NSTask *sshfsTask;
 @property SDSystemAPI *sharedSystemAPI;
 @property NSURL *localMountURL;
+-(NSURL *)mountURLForVolumeName:(NSString *)volumeName;
 @end
 
 @implementation SDMountController
@@ -219,4 +220,11 @@
     }];
 }
 
+#pragma mark - Internal API
+
+-(NSURL *)mountURLForVolumeName:(NSString *)volumeName {
+    NSURL *volumesDirectoryURL = [NSURL fileURLWithFileSystemRepresentation:"/Volumes\0" isDirectory:YES relativeToURL:nil];
+    NSURL *mountURL = [NSURL fileURLWithFileSystemRepresentation:[volumeName UTF8String] isDirectory:YES relativeToURL:volumesDirectoryURL];
+    return mountURL;
+}
 @end
