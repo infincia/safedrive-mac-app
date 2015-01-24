@@ -11,6 +11,12 @@
 -(void)mountSubprocessDidTerminate:(NSNotification*)notification;
 @end
 
+@protocol SDMountStateProtocol <NSObject>
+@required
+-(void)mountStateMounted:(NSNotification*)notification;
+-(void)mountStateUnmounted:(NSNotification*)notification;
+@end
+
 @protocol SDApplicationControlProtocol <NSObject>
 @required
 -(void)applicationShouldOpenPreferencesWindow:(NSNotification*)notification;

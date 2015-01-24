@@ -4,12 +4,14 @@
 
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
+#import <dispatch/dispatch.h>
 
 @interface SDMountController ()
 @property NSTask *sshfsTask;
 @property SDSystemAPI *sharedSystemAPI;
 @property NSURL *localMountURL;
 -(NSURL *)mountURLForVolumeName:(NSString *)volumeName;
+-(void)mountCheckLoop;
 @end
 
 @implementation SDMountController
@@ -227,4 +229,36 @@
     NSURL *mountURL = [NSURL fileURLWithFileSystemRepresentation:[volumeName UTF8String] isDirectory:YES relativeToURL:volumesDirectoryURL];
     return mountURL;
 }
+
+-(void)mountCheckLoop {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (;;) {
+            NSString *volumeName = [[NSUserDefaults standardUserDefaults] objectForKey:@"volumeName"];
+            if (volumeName) {
+                NSURL *mountURL = [self mountURLForVolumeName:volumeName];
+                BOOL mounted = [self.sharedSystemAPI checkForMountedVolume:mountURL];
+                self.mountState = ( mounted ? SDMountStateMounted : SDMountStateUnmounted);
+            }
+            NSLog(@"Mount state: %lu", self.mountState);
+            switch (self.mountState) {
+                case SDMountStateMounted: {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateMountedNotification object:nil];
+                    break;
+                }
+                case SDMountStateUnmounted: {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateUnmountedNotification object:nil];
+                    break;
+                }
+                case SDMountStateUnknown: {
+                    //
+                }
+                default: {
+                    break;
+                }
+            }
+            [NSThread sleepForTimeInterval:1];
+        }
+    });
+}
+
 @end

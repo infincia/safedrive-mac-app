@@ -17,6 +17,9 @@ FOUNDATION_EXPORT NSString *const SDServiceName;
 
 #pragma mark - Custom NSNotifications
 
+FOUNDATION_EXPORT NSString *const SDMountStateMountedNotification;
+FOUNDATION_EXPORT NSString *const SDMountStateUnmountedNotification;
+
 FOUNDATION_EXPORT NSString *const SDVolumeDidMountNotification;
 FOUNDATION_EXPORT NSString *const SDVolumeDidUnmountNotification;
 
