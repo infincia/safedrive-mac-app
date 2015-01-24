@@ -4,11 +4,11 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol SDMountStatusProtocol <NSObject>
+@protocol SDVolumeEventProtocol <NSObject>
 @required
 -(void)volumeDidMount:(NSNotification*)notification;
 -(void)volumeDidUnmount:(NSNotification*)notification;
--(void)mountSubprocessDidTerminate:(NSNotification*)notification;
+-(void)volumeSubprocessDidTerminate:(NSNotification*)notification;
 @end
 
 @protocol SDMountStateProtocol <NSObject>
