@@ -13,7 +13,7 @@
 @property IBOutlet NSMenuItem *preferencesMenuItem;
 
 
--(IBAction)openAccountWindow:(id)sender;
+-(IBAction)toggleMount:(id)sender;
 -(IBAction)openPreferencesWindow:(id)sender;
 
 @end

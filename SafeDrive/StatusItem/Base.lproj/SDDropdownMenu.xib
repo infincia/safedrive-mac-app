@@ -19,7 +19,7 @@
                 <menuItem title="Connect" id="UpL-Lb-jBl">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="openAccountWindow:" target="-2" id="KU9-aw-bt7"/>
+                        <action selector="toggleMount:" target="-2" id="AbD-p0-4gP"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Settings" id="BHr-Vz-MCm">
