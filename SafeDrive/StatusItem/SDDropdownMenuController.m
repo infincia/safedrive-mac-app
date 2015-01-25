@@ -14,6 +14,7 @@
 @property SDSystemAPI *sharedSystemAPI;
 
 -(void)setMenuBarImage:(NSImage *)image;
+-(void)disconnectVolume;
 @end
 
 @implementation SDDropdownMenuController
@@ -63,6 +64,16 @@
 }
 
 
+-(void)disconnectVolume {
+    NSString *volumeName = [[NSUserDefaults standardUserDefaults] objectForKey:@"volumeName"];
+    if (volumeName) {
+        [self.mountController unmountVolumeWithName:volumeName success:^(NSURL *mountURL, NSError *mountError) {
+            //
+        } failure:^(NSURL *mountURL, NSError *mountError) {
+            //
+        }];
+    }
+}
 
 
 #pragma mark - IBActions
