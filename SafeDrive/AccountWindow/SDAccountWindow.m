@@ -70,12 +70,16 @@
 
 
 
+    // register SDMountStateProtocol notifications
+    #warning Keep track of these SDMountStateProtocol requirements!!!
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateMounted:) name:SDMountStateMountedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateUnmounted:) name:SDMountStateUnmountedNotification object:nil];
 
     // register SDVolumeEventProtocol notifications
     #warning Keep track of these SDVolumeEventProtocol requirements!!!
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidMount:) name:SDVolumeDidMountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidUnmount:) name:SDVolumeDidUnmountNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountSubprocessDidTerminate:) name:SDMountSubprocessDidTerminateNotification object:nil];
+
 
 }
 
@@ -107,18 +111,33 @@
         }
     }
 }
-#pragma mark - SDMountStatusProtocol methods
 
--(void)volumeDidMount:(NSNotification*)notification {
+
+
+
+#pragma mark - SDVolumeEventProtocol methods
+
+-(void)volumeDidMount:(NSNotification *)notification {
+    [self close];
+}
+
+-(void)volumeDidUnmount:(NSNotification *)notification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenAccountWindow object:nil];
+}
+
+-(void)volumeSubprocessDidTerminate:(NSNotification *)notification {
 
 }
 
--(void)volumeDidUnmount:(NSNotification*)notification {
+#pragma mark - SDMountStateProtocol methods
+
+-(void)mountStateMounted:(NSNotification*)notification {
 
 }
 
--(void)mountSubprocessDidTerminate:(NSNotification *)notification {
+-(void)mountStateUnmounted:(NSNotification*)notification {
 
 }
+
 
 @end
