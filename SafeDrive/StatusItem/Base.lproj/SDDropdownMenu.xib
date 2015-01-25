@@ -22,11 +22,8 @@
                         <action selector="toggleMount:" target="-2" id="AbD-p0-4gP"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Settings" id="BHr-Vz-MCm">
+                <menuItem title="Settings" enabled="NO" id="BHr-Vz-MCm">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="openPreferencesWindow:" target="-2" id="Pgi-6p-i1z"/>
-                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="UFs-K9-Db6"/>
                 <menuItem title="Quit" id="CHy-oK-4Q4">
