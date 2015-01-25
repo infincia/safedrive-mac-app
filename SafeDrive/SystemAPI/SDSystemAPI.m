@@ -151,6 +151,10 @@
                                                                                  attributes:attributes
                                                                                       error:NULL];
     if (keychainItem) {
+        BOOL sameUser = [account isEqualToString:keychainItem.account];
+        BOOL samePass = [password isEqualToString:keychainItem.password];
+        /* don't do anything if credentials haven't changed */
+        if (sameUser && samePass) return YES;
         NSError *keychainRemoveError;
         [keychainItem removeFromKeychainWithError:&keychainRemoveError];
         if (keychainRemoveError) {
