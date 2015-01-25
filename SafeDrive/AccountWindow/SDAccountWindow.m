@@ -112,6 +112,128 @@
     }
 }
 
+# pragma mark
+# pragma mark Internal API
+
+
+-(void)connectVolume {
+    [self.spinner startAnimation:self];
+    /* 
+        This is somewhat fragile (the volume name must start with a slash) and 
+        in general it must be replaced before shipping because it isn't available 
+        in OS X 10.8 anyway
+        
+        A custom method for creating new NSURLs safely could be used, or just
+        skip NSURL entirely and use NSDictionary with constants for keys
+    */
+    NSURLComponents *urlComponents = [NSURLComponents new];
+    urlComponents.user      = self.emailField.stringValue;
+    urlComponents.password  = self.passwordField.stringValue;
+    urlComponents.host      = SDTestCredentialsHost;
+    urlComponents.path      = [NSString stringWithFormat:@"/%@", self.volumeNameField.stringValue];
+    urlComponents.port      = @(SDTestCredentialsPort);
+
+    NSURL *sshURL = urlComponents.URL;
+    NSLog(@"Account window mounting URL: %@", sshURL);
+    BOOL success = [self.sharedSystemAPI insertCredentialsInKeychain:sshURL.user password:sshURL.password];
+    if (!success) {
+        [self.spinner stopAnimation:self];
+        return;
+    }
+    
+    #ifdef SSHFS_TEST_MODE
+    [self.mountController startMountTaskWithVolumeName:self.volumeNameField.stringValue sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
+        NSLog(@"SSHFS subprocess start success in account window");
+
+        /*
+            now check for a successful mount. if after 30 seconds there is no volume
+            mounted, it is a fair bet that an error occurred in the meantime
+        */
+        [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
+
+            NSLog(@"Mount volume success in account window");
+            [[NSNotificationCenter defaultCenter] postNotificationName:SDVolumeDidMountNotification object:nil];
+            [self.spinner stopAnimation:self];
+
+        } failure:^(NSError *error) {
+
+            NSLog(@"Mount volume failure in account window");
+            [self displayError:error forDuration:10];
+            [self.spinner stopAnimation:self];
+
+        }];
+
+
+    } failure:^(NSURL *mountURL, NSError *mountError) {
+
+        NSLog(@"SSHFS subprocess start failure in account window");
+        [self displayError:mountError forDuration:10];
+        [self.spinner stopAnimation:self];
+
+    }];
+
+    #else
+
+    [self.safeDriveAPI authenticateUser:self.emailField.stringValue password:self.passwordField.stringValue success:^(NSString *sessionToken) {
+
+        NSLog(@"SafeDrive auth API success in account window");
+
+        [self.safeDriveAPI volumeURLForUser:self.emailField.stringValue sessionToken:sessionToken volume:self.volumeNameField.stringValue success:^(NSURL *sshURL) {
+
+            NSLog(@"SafeDrive volume URL API success in account window");
+
+
+            [self.mountController startMountTaskWithVolumeName:self.volumeNameField.stringValue sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
+                NSLog(@"SSHFS subprocess start success in account window");
+
+                /*
+                    now check for a successful mount. if after 30 seconds there is no volume
+                    mounted, it is a fair bet that an error occurred in the meantime
+                 */
+                [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
+
+                    NSLog(@"Mount volume success in account window");
+                    [[NSNotificationCenter defaultCenter] postNotificationName:SDVolumeDidMountNotification object:nil];
+                    [self.spinner stopAnimation:self];
+
+                } failure:^(NSError *error) {
+
+                    NSLog(@"Mount volume failure in account window");
+                    [self displayError:error forDuration:10];
+                    [self.spinner stopAnimation:self];
+
+                }];
+
+
+            } failure:^(NSURL *mountURL, NSError *mountError) {
+
+                NSLog(@"SSHFS subprocess start failure in account window");
+                [self displayError:mountError forDuration:10];
+                [self.spinner stopAnimation:self];
+
+            }];
+
+        } failure:^(NSError *volumeAPIError) {
+
+            NSLog(@"Safedrive volume URL API failure in account window");
+            [self displayError:volumeAPIError forDuration:10];
+            [self.spinner stopAnimation:self];
+            
+        }];
+
+    } failure:^(NSError *authError) {
+
+        NSLog(@"SafeDrive auth API failure in account window");
+        [self displayError:authError forDuration:10];
+        [self.spinner stopAnimation:self];
+
+    }];
+
+    #endif
+
+
+}
+
 
 
 
