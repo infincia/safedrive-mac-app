@@ -24,6 +24,10 @@
 
 }
 
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - SDMountStatusProtocol methods
 
 -(void)volumeDidMount:(NSNotification*)notification {
