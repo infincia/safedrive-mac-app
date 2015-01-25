@@ -3,6 +3,8 @@
 //
 
 #import "SDPreferencesWindow.h"
+#import <INAppStoreWindow/INAppStoreWindow.h>
+
 
 @interface SDPreferencesWindow ()
 
@@ -13,6 +15,19 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
 
+    INAppStoreWindow *aWindow = (INAppStoreWindow*)[self window];
+    aWindow.titleBarHeight = 24.0;
+    aWindow.showsBaselineSeparator = NO;
+
+    NSColor *topColor = [NSColor whiteColor];
+    aWindow.titleBarStartColor     = topColor;
+    aWindow.titleBarEndColor       = topColor;
+    aWindow.baselineSeparatorColor = topColor;
+
+    aWindow.inactiveTitleBarEndColor       = topColor;
+    aWindow.inactiveTitleBarStartColor     = topColor;
+    aWindow.inactiveBaselineSeparatorColor = topColor;
+    
     // register SDVolumeEventProtocol notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidMount:) name:SDVolumeDidMountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidUnmount:) name:SDVolumeDidUnmountNotification object:nil];
