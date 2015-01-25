@@ -13,10 +13,9 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
 
-    // register SDMountStatusProtocol notifications
+    // register SDVolumeEventProtocol notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidMount:) name:SDVolumeDidMountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidUnmount:) name:SDVolumeDidUnmountNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountSubprocessDidTerminate:) name:SDMountSubprocessDidTerminateNotification object:nil];
 
 }
 
