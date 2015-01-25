@@ -4,7 +4,15 @@
 
 #import "SDDropdownMenuController.h"
 
+#import "SDAPI.h"
+#import "SDMountController.h"
+#import "SDSystemAPI.h"
+
 @interface SDDropdownMenuController ()
+@property SDAPI *safeDriveAPI;
+@property SDMountController *mountController;
+@property SDSystemAPI *sharedSystemAPI;
+
 -(void)setMenuBarImage:(NSImage *)image;
 @end
 
@@ -15,6 +23,10 @@
     self = [super init];
     if (self) {
         [[NSBundle mainBundle] loadNibNamed:@"SDDropdownMenu" owner:self topLevelObjects:nil];
+        
+        self.safeDriveAPI = [SDAPI sharedAPI];
+        self.mountController = [SDMountController sharedAPI];
+        self.sharedSystemAPI = [SDSystemAPI sharedAPI];
 
         // register SDMountStatusProtocol notifications
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidMount:) name:SDVolumeDidMountNotification object:nil];
