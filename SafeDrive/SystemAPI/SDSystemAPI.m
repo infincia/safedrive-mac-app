@@ -42,11 +42,11 @@
     return localInstance;
 }
 
--(NSDictionary *)statusForMountpoint:(NSURL *)mountpointURL {
+-(NSDictionary *)statusForMount:(NSURL *)mountURL {
     NSMutableDictionary *mountpointInfo = [NSMutableDictionary new];
     NSError *error;
     NSNumber *volumeSize;
-    if([mountpointURL getResourceValue:&volumeSize forKey:NSURLVolumeTotalCapacityKey error:&error]) {
+    if([mountURL getResourceValue:&volumeSize forKey:NSURLVolumeTotalCapacityKey error:&error]) {
         NSLog(@"Volume size in bytes: %@", volumeSize);
         mountpointInfo[NSURLVolumeTotalCapacityKey] = volumeSize;
     }
@@ -54,7 +54,7 @@
         /* Handle error */
     }
     NSNumber *volumeSpaceAvailable;
-    if([mountpointURL getResourceValue:&volumeSpaceAvailable forKey:NSURLVolumeAvailableCapacityKey error:&error]) {
+    if([mountURL getResourceValue:&volumeSpaceAvailable forKey:NSURLVolumeAvailableCapacityKey error:&error]) {
         NSLog(@"Volume space available in bytes: %@", volumeSpaceAvailable);
         mountpointInfo[NSURLVolumeAvailableCapacityKey] = volumeSpaceAvailable;
     }
@@ -92,9 +92,9 @@
 
 
 
--(void)ejectMountpoint:(NSURL *)mountpointURL success:(SDSystemSuccessBlock)successBlock failure:(SDSystemFailureBlock)failureBlock {
+-(void)ejectMount:(NSURL *)mountURL success:(SDSystemSuccessBlock)successBlock failure:(SDSystemFailureBlock)failureBlock {
     NSError *error;
-    BOOL ejectSuccess = [[NSWorkspace sharedWorkspace] unmountAndEjectDeviceAtURL:mountpointURL error:&error];
+    BOOL ejectSuccess = [[NSWorkspace sharedWorkspace] unmountAndEjectDeviceAtURL:mountURL error:&error];
     if (ejectSuccess && successBlock) successBlock();
     else {
         failureBlock(error);
