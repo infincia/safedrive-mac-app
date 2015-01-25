@@ -115,6 +115,35 @@
 
 
 
+#pragma mark - Error display
+
+-(void)resetErrorDisplay {
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+        context.duration = 0.3f;
+        self.errorField.animator.alphaValue = 0.0f;
+    } completionHandler:^{
+        self.errorField.stringValue = @"";
+    }];
+}
+
+-(void)displayError:(NSError *)error forDuration:(NSTimeInterval)duration {
+    self.errorField.stringValue = [error localizedDescription];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+        context.duration = 0.5f;
+        self.errorField.animator.alphaValue = 1.0f;
+    } completionHandler:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+                context.duration = 0.3f;
+                self.errorField.animator.alphaValue = 0.0f;
+            } completionHandler:^{
+                [self resetErrorDisplay];
+            }];
+        });
+    }];
+
+}
+
 #pragma mark - SDVolumeEventProtocol methods
 
 -(void)volumeDidMount:(NSNotification *)notification {
