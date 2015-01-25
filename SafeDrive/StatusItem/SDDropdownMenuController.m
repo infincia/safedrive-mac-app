@@ -28,10 +28,9 @@
         self.mountController = [SDMountController sharedAPI];
         self.sharedSystemAPI = [SDSystemAPI sharedAPI];
 
-        // register SDMountStatusProtocol notifications
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidMount:) name:SDVolumeDidMountNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidUnmount:) name:SDVolumeDidUnmountNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountSubprocessDidTerminate:) name:SDMountSubprocessDidTerminateNotification object:nil];
+        // register SDMountStateProtocol notifications
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateMounted:) name:SDMountStateMountedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateUnmounted:) name:SDMountStateUnmountedNotification object:nil];
 
     }
     return self;
@@ -81,24 +80,20 @@
 
 
 
-#pragma mark - SDMountStatusProtocol methods
+#pragma mark - SDMountStateProtocol methods
 
--(void)volumeDidMount:(NSNotification*)notification {
+-(void)mountStateMounted:(NSNotification*)notification {
     self.connectMenuItem.title = NSLocalizedString(@"Disconnect", @"Menu title for disconnecting the volume");
 
     #warning These icons need to be replaced!
     [self setMenuBarImage:[NSImage imageNamed:NSImageNameLockUnlockedTemplate]];
 }
 
--(void)volumeDidUnmount:(NSNotification*)notification {
+-(void)mountStateUnmounted:(NSNotification*)notification {
     self.connectMenuItem.title = NSLocalizedString(@"Connect", @"Menu title for connecting the volume");
 
     #warning These icons need to be replaced!
     [self setMenuBarImage:[NSImage imageNamed:NSImageNameLockLockedTemplate]];
-}
-
--(void)mountSubprocessDidTerminate:(NSNotification *)notification {
-
 }
 
 
