@@ -65,8 +65,8 @@ FOUNDATION_EXPORT NSUInteger const SDAPIErrorMaintenance;
 #pragma mark - Mount state
 
 typedef NS_ENUM(NSUInteger, SDMountState) {
-    SDMountStateMounted,
-    SDMountStateUnmounted,
-    SDMountStateUnknown
+    SDMountStateUnknown   = -1,
+    SDMountStateUnmounted = 0,
+    SDMountStateMounted   = 1
 };
 
