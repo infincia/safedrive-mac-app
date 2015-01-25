@@ -17,6 +17,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidMount:) name:SDVolumeDidMountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidUnmount:) name:SDVolumeDidUnmountNotification object:nil];
 
+    // register SDMountStateProtocol notifications
+    #warning Keep track of these SDMountStateProtocol requirements!!!
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateMounted:) name:SDMountStateMountedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateUnmounted:) name:SDMountStateUnmountedNotification object:nil];
+
 }
 
 #pragma mark - SDMountStatusProtocol methods
@@ -31,6 +36,16 @@
 
 -(void)mountSubprocessDidTerminate:(NSNotification *)notification {
 
+}
+
+#pragma mark - SDMountStateProtocol methods
+
+-(void)mountStateMounted:(NSNotification *)notification {
+
+}
+
+-(void)mountStateUnmounted:(NSNotification*)notification {
+    
 }
 
 
