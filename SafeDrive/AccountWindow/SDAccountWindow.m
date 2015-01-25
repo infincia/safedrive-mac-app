@@ -10,7 +10,7 @@
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
 
-
+#define SSHFS_TEST_MODE
 
 @interface SDAccountWindow ()
 @property IBOutlet NSTextField *emailField;
