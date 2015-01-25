@@ -7,11 +7,13 @@
 #import <dispatch/dispatch.h>
 
 @interface SDMountController ()
+
 @property NSTask *sshfsTask;
 @property SDSystemAPI *sharedSystemAPI;
 @property NSURL *localMountURL;
 -(NSURL *)mountURLForVolumeName:(NSString *)volumeName;
 -(void)mountCheckLoop;
+
 @end
 
 @implementation SDMountController
@@ -21,6 +23,7 @@
     if (self) {
         self.mountState = SDMountStateUnmounted;
         self.sharedSystemAPI = [SDSystemAPI sharedAPI];
+        [self mountCheckLoop];
     }
     return self;
 }
