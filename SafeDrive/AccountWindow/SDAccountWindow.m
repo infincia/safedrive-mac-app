@@ -58,13 +58,16 @@
     INAppStoreWindow *aWindow = (INAppStoreWindow*)[self window];
     aWindow.titleBarHeight = 24.0;
     aWindow.showsBaselineSeparator = NO;
-    aWindow.titleBarStartColor     = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
-    aWindow.titleBarEndColor       = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
-    aWindow.baselineSeparatorColor = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+    
+    NSColor *topColor = [NSColor whiteColor];
+    aWindow.titleBarStartColor     = topColor;
+    aWindow.titleBarEndColor       = topColor;
+    aWindow.baselineSeparatorColor = topColor;
 
-    aWindow.inactiveTitleBarEndColor       = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
-    aWindow.inactiveTitleBarStartColor     = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
-    aWindow.inactiveBaselineSeparatorColor = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+    aWindow.inactiveTitleBarEndColor       = topColor;
+    aWindow.inactiveTitleBarStartColor     = topColor;
+    aWindow.inactiveBaselineSeparatorColor = topColor;
+
 
 
 
