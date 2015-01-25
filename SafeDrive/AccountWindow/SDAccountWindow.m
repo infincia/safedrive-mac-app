@@ -26,7 +26,6 @@
 -(void)resetErrorDisplay;
 -(void)displayError:(NSError *)error forDuration:(NSTimeInterval)duration;
 -(void)connectVolume;
--(void)disconnectVolume;
 
 @end
 
@@ -94,22 +93,8 @@
 # pragma mark
 # pragma mark Public API
 
--(IBAction)toggleMount:(id)sender {
-    switch (self.mountController.mountState) {
-        case SDMountStateMounted: {
-            [self disconnectVolume];
-            break;
-        }
-        case SDMountStateUnmounted: {
-            [self connectVolume];
-        }
-        case SDMountStateUnknown: {
-            //
-        }
-        default: {
-            break;
-        }
-    }
+-(IBAction)mount:(id)sender {
+    [self connectVolume];
 }
 
 # pragma mark

@@ -6,6 +6,6 @@
 
 @interface SDAccountWindow : NSWindowController <SDMountStateProtocol, SDVolumeEventProtocol>
 
--(IBAction)toggleMount:(id)sender;
+-(IBAction)mount:(id)sender;
 
 @end

@@ -68,7 +68,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="toggleMount:" target="-2" id="tbF-NS-rOX"/>
+                            <action selector="mount:" target="-2" id="HjC-B2-9IS"/>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NQX-gH-k3k">
