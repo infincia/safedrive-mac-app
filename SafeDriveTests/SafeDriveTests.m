@@ -31,7 +31,7 @@
     [super tearDown];
 }
 
-- (void)test_SDMountController_mountVolumeWithName {
+- (void)test_SDMountController_startMountTaskWithVolumeName {
     XCTAssertNotNil(self.sharedMountController);
 
     // As this is only used for testing, we can use NSURLComponents which isn't available in OS X 10.8
@@ -43,24 +43,45 @@
     urlComponents.port = @(SDTestCredentialsPort);
 
     NSURL *url = urlComponents.URL;
-    NSLog(@"URL: %@", url);
 
-    [self.sharedMountController mountVolumeWithName:@"SafeDrive" atURL:url success:^{
-        XCTAssert(YES, @"Pass");
-    } failure:^(NSError *mountError) {
-        XCTFail(@"%@", [mountError localizedDescription]);
+    [self.sharedMountController startMountTaskWithVolumeName:@"SafeDrive" sshURL:url success:^(NSURL *mountURL, NSError *mountError) {
+        /*  
+            now check for a successful mount. if after 30 seconds there is no volume
+            mounted, it is a fair bet that an error occurred in the meantime
+        
+        */
+        XCTAssertNotNil(mountURL);
+        XCTAssertNotNil(mountError);
+
+        [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
+            NSDictionary *mountStatus = [self.sharedSystemAPI statusForMount:mountURL];
+            XCTAssertNotNil(mountStatus);
+            XCTAssertTrue(mountStatus[NSURLVolumeTotalCapacityKey]);
+            XCTAssertTrue(mountStatus[NSURLVolumeAvailableCapacityKey]);
+        } failure:^(NSError *error) {
+            XCTFail(@"%@", error.localizedDescription);
+        }];
+    } failure:^(NSURL *mountURL, NSError *mountError) {
+        XCTFail(@"%@", mountError.localizedDescription);
     }];
 }
 
 - (void)test_SDSystemAPI_statusForMountpoint {
     XCTAssertNotNil(self.sharedSystemAPI);
     // test root since it should always work as a URL
-    NSDictionary *mountStatus = [self.sharedSystemAPI statusForMountpoint:[NSURL fileURLWithFileSystemRepresentation:"/\0" isDirectory:YES relativeToURL:nil]];
+    NSDictionary *mountStatus = [self.sharedSystemAPI statusForMount:[NSURL fileURLWithFileSystemRepresentation:"/\0" isDirectory:YES relativeToURL:nil]];
     XCTAssertNotNil(mountStatus);
     XCTAssertTrue(mountStatus[NSURLVolumeTotalCapacityKey]);
     XCTAssertTrue(mountStatus[NSURLVolumeAvailableCapacityKey]);
     NSLog(@"test_SDSystemAPI_statusForMountpoint: %@", mountStatus);
 }
+
+- (void)test_SDSystemAPI_insertCredentialsInKeychain {
+    XCTAssertNotNil(self.sharedSystemAPI);
+    BOOL success = [self.sharedSystemAPI insertCredentialsInKeychain:SDTestCredentialsUser password:SDTestCredentialsPassword];
+    NSLog(@"test_SDSystemAPI_insertCredentialsInKeychain: %@", @(success));
+}
+
 
 /*
 - (void)testPerformanceExample {
