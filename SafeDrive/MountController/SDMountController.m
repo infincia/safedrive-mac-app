@@ -10,7 +10,7 @@
 
 @property NSTask *sshfsTask;
 @property SDSystemAPI *sharedSystemAPI;
-@property NSURL *localMountURL;
+
 -(NSURL *)mountURLForVolumeName:(NSString *)volumeName;
 -(void)mountCheckLoop;
 
