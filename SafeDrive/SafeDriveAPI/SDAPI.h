@@ -4,18 +4,21 @@
 
 @import Foundation;
 
+typedef void(^SDAPISuccessBlock)();
+
+typedef void(^SDAPIAuthenticationSuccessBlock)(NSString *sessionToken);
+typedef void(^SDAPIVolumeLocationSuccessBlock)(NSURL *sshURL);
+typedef void(^SDAPIFailureBlock)(NSError *apiError);
+
 @interface SDAPI : NSObject
 
-@property (nonatomic, readonly) NSURL *volumeURL;
-
+@property (nonatomic, readonly) NSURL *sshURL;
+@property (nonatomic, readonly) NSString *sessionToken;
 
 +(SDAPI *)sharedAPI;
 
--(void)authenticateWithUser:(NSString *)user password:(NSString *)password success:(void (^)(void))successBlock failure:(void (^)(NSError *error))failureBlock;
+-(void)authenticateUser:(NSString *)user password:(NSString *)password success:(SDAPIAuthenticationSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
 
--(void)volumeURLForUser:(NSString *)user password:(NSString *)password volume:(NSString *)volumeName success:(void (^)(NSURL *volumeURL))successBlock failure:(void (^)(NSError *error))failureBlock;
-
--(void)apiStatusWithSuccess:(void (^)(void))successBlock failure:(void (^)(NSError *error))failureBlock;
-
+-(void)volumeURLForUser:(NSString *)user sessionToken:(NSString *)token volume:(NSString *)volumeName success:(SDAPIVolumeLocationSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
 
 @end
