@@ -45,145 +45,113 @@
     return localInstance;
 }
 
--(void)mountVolumeWithName:(NSString *)mountName atURL:(NSURL *)mountURL success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock {
+-(void)startMountTaskWithVolumeName:(NSString *)volumeName sshURL:(NSURL *)sshURL success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock {
 
-    NSURL *volumesDirectoryURL = [NSURL fileURLWithFileSystemRepresentation:"/Volumes\0" isDirectory:YES relativeToURL:nil];
-    self.localMountURL = [NSURL fileURLWithFileSystemRepresentation:[mountName UTF8String] isDirectory:YES relativeToURL:volumesDirectoryURL];
+    NSURL *mountURL = [self mountURLForVolumeName:volumeName];
 
-#pragma mark - Create directory in /Volumes if it doesn't exist
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *createError;
-    BOOL createSuccess = [fileManager createDirectoryAtURL:self.localMountURL withIntermediateDirectories:YES attributes:nil error:&createError];
-    if (!createSuccess) {
-        failureBlock(createError);
+    if (self.mountState == SDMountStateMounted) {
+        NSError *mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
+        failureBlock(mountURL, mountError);
         return;
     }
 
+    
+#pragma mark - Create the mount path directory if it doesn't exist
+
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *createError;
+    BOOL createSuccess = [fileManager createDirectoryAtURL:mountURL withIntermediateDirectories:YES attributes:nil error:&createError];
+    if (!createSuccess) {
+        failureBlock(mountURL, createError);
+        return;
+    }
+
+
+
 #pragma mark - Retrieve necessary parameters from ssh url
 
-    NSString *host = [mountURL host];
-    NSNumber *port = [mountURL port];
-    NSString *user = [mountURL user];
-    NSString *volumePath = [mountURL path];
+    NSString *host = [sshURL host];
+    NSNumber *port = [sshURL port];
+    NSString *user = [sshURL user];
+    NSString *serverPath = [sshURL path];
+    NSLog(@"Mounting ssh URL: %@", sshURL);
 
 
 
 
-
+#pragma mark - Create the subprocess to be configured below
 
     self.sshfsTask = [[NSTask alloc] init];
 
+    [self.sshfsTask setLaunchPath:@"/usr/local/bin/sshfs"];
 
 
-#pragma mark - Set asynchronous blocks to handle subprocess stdout/stderr output
 
-    // new pipe and handler for stdout
-    NSPipe *stdoutPipe = [NSPipe pipe];
-    NSFileHandle *stdoutPipeHandle = [stdoutPipe fileHandleForReading];
-    stdoutPipeHandle.readabilityHandler = ^( NSFileHandle *handle ) {
-        NSString *stdoutString = [[NSString alloc] initWithData:[handle availableData] encoding:NSUTF8StringEncoding];
-        NSLog(@"Stdout: %@", stdoutString);
-    };
-    [self.sshfsTask setStandardOutput:stdoutPipe];
-
-
-    // new pipe and handler for stderr
-    NSPipe *stderrPipe = [NSPipe pipe];
-    NSFileHandle *stderrPipeHandle = [stderrPipe fileHandleForReading];
-    stderrPipeHandle.readabilityHandler = ^( NSFileHandle *handle ) {
-        NSString *stderrString = [[NSString alloc] initWithData:[handle availableData] encoding:NSUTF8StringEncoding];
-
-        NSError *mountError;
-        if ([stderrString containsString:@"No such file or directory"]) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{@"error": stderrString}];
-            failureBlock(mountError);
-        }
-        else if ([stderrString containsString:@"Permission denied"]) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAuthorization userInfo:@{@"error": stderrString}];
-            failureBlock(mountError);
-        }
-        else if ([stderrString containsString:[NSString stringWithFormat:@"mount point %@ is itself on a OSXFUSE volume", self.localMountURL.path]]) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAlreadyMounted userInfo:@{@"error": stderrString}];
-            //successBlock(); // no need to run the successblock again since the volume is already mounted
-            // this case may occur if the SafeDrive app quits/crashes but the sshfs process remains running and mounted
-        }
-        else if ([stderrString containsString:@"remote host has disconnected"]) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{@"error": stderrString}];
-            failureBlock(mountError);
-        }
-        else {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorUnknown userInfo:@{@"error": stderrString}];
-            failureBlock(mountError);
-        }
-    };
-    [self.sshfsTask setStandardError:stderrPipe];
-
-
-#pragma mark - Set asynchronous blocks to handle subprocess termination
-
-
-    // clear the old read and write blocks if the task terminates
-    [self.sshfsTask setTerminationHandler:^(NSTask *task) {
-        [task.standardOutput fileHandleForReading].readabilityHandler = nil;
-        [task.standardError fileHandleForReading].readabilityHandler = nil;
-        //NSError *terminationError = [NSError errorWithDomain:SDErrorDomain code:task.terminationReason userInfo:nil];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:SDMountSubprocessDidTerminateNotification object:terminationError];
-    }];
 
 
 #pragma mark - Set custom environment variables for sshfs subprocess
 
     NSMutableDictionary *sshfsEnvironment = [NSMutableDictionary dictionaryWithDictionary:[[NSProcessInfo processInfo] environment]];
 
-    // path of our custom askpass helper so ssh can use it
+    /* path of our custom askpass helper so ssh can use it */
     NSString *safeDriveAskpassPath;
 
 #ifdef TEST_MODE
+    /*
+        Point sshfs/ssh directly at the askpass binary in the compiled products directory
+        
+        This is needed as the alternative relative path based on the bundle does
+        not work for testing purposes, as there is no bundle
+
+    */
+    NSLog(@"Using test mode askpass");
     NSString *debugPath = sshfsEnvironment[@"__XCODE_BUILT_PRODUCTS_DIR_PATHS"];
     NSURL *debugProductsURL = [NSURL fileURLWithFileSystemRepresentation:[debugPath UTF8String] isDirectory:YES relativeToURL:nil];
     NSURL *debugAskpassURL = [NSURL fileURLWithFileSystemRepresentation:"safedriveaskpass\0" isDirectory:NO relativeToURL:debugProductsURL];
     safeDriveAskpassPath = [debugAskpassURL path];
 #else
+    NSLog(@"Using bundled askpass");
     safeDriveAskpassPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"safedriveaskpass"];
 #endif
-    //NSLog(@"Askpass path: %@", safeDriveAskpassPath);
+
+    NSLog(@"Askpass path: %@", safeDriveAskpassPath);
+
+
     if (safeDriveAskpassPath != nil) {
         [sshfsEnvironment setObject:safeDriveAskpassPath forKey:@"SSH_ASKPASS"];
     }
     else {
-        NSError *askpassError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAskpassMissing userInfo:@{@"error": @"Askpass helper missing"}];
-        failureBlock(askpassError);
+        NSError *askpassError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAskpassMissing userInfo:@{NSLocalizedDescriptionKey: @"Askpass helper missing"}];
+        failureBlock(mountURL, askpassError);
+        return;
     }
-    // pass the account name to the ssh environment so our safedrive-askpass helper can use it
+
+    /* pass the account name to the safedriveaskpass environment */
     [sshfsEnvironment setObject:user forKey:@"SSH_ACCOUNT"];
+
+    /*
+        remove any existing SSH agent socket in the subprocess environment so we
+        have full control over auth behavior
+    */
     [sshfsEnvironment removeObjectForKey:@"SSH_AUTH_SOCK"];
 
-    //NSLog(@"Subprocess environment: %@", sshfsEnvironment);
+    NSLog(@"Subprocess environment: %@", sshfsEnvironment);
     self.sshfsTask.environment = sshfsEnvironment;
 
 
 
-#pragma mark - Set SSHFS arguments
-
-
+#pragma mark - Set SSHFS subprocess arguments
 
     NSMutableArray *taskArguments = [NSMutableArray new];
 
-    // don't let sshfs background itself
-    //[taskArguments addObject:@"-f"];
+    /* server connection */
+    [taskArguments addObject:[NSString stringWithFormat:@"%@@%@:%@", user, host, serverPath]];
 
+    /* mount location */
+    [taskArguments addObject:mountURL.path];
 
-
-    // server connection
-    [taskArguments addObject:[NSString stringWithFormat:@"%@@%@:%@", user, host, volumePath]];
-
-    // mount location
-    [taskArguments addObject:self.localMountURL.path];
-
-    // don't prompt for passwords over and over (may be unnecessary)
-    //[taskArguments addObject:@"-oNumberOfPasswordPrompts=1"];
-
-    // basic sshfs options
+    /* basic sshfs options */
     [taskArguments addObject:@"-oauto_cache"];
     [taskArguments addObject:@"-oreconnect"];
     [taskArguments addObject:@"-odefer_permissions"];
@@ -191,37 +159,163 @@
     [taskArguments addObject:@"-onegative_vncache"];
     [taskArguments addObject:@"-oNumberOfPasswordPrompts=1"];
 
-    // custom volume name
-    [taskArguments addObject:[NSString stringWithFormat:@"-ovolname=%@", mountName]];
+    /* 
+        This shouldn't be necessary and I don't like it, but it'll work for 
+        testing purposes until we can implement a UI and code for displaying
+        server fingerprints and allowing users to check and accept them or use
+        the bundled known_hosts file to preapprove server fingerprints 
 
-    // custom port if needed
+    [taskArguments addObject:@"-oCheckHostIP=no"];
+    [taskArguments addObject:@"-oStrictHostKeyChecking=no"];
+    
+    */
+
+    /* 
+        Use a bundled known_hosts file as static root of trust.
+        
+        This serves two purposes:
+        
+            1. Users never have to click through fingerprint verification
+               prompts, or manually verify the fingerprint (most people won't).
+               We don't currently have code for scripting that part of an initial
+               ssh connection anyway, and it's not clear if we can even get sshfs 
+               to put ssh in the right mode to print the fingerprint prompt on 
+               stdout while running as a background process using SSH_ASKPASS 
+               for authentication.
+               
+            2. Users are never going to be subject to man-in-the-middle attacks
+               as the fingerprint is preconfigured in the app and
+    */
+    NSString *knownHostsFile = [[NSBundle mainBundle] pathForResource:@"known_hosts" ofType:nil];
+    NSLog(@"Known hosts file: %@", knownHostsFile);
+    [taskArguments addObject:[NSString stringWithFormat:@"-oUserKnownHostsFile=%@", knownHostsFile]];
+
+
+    #ifdef TEST_MODE
+    /* debug output from sshfs, this will cause stderr to go crazy, but may be
+       necessary to properly parse fingerprint messages and host key verification
+       prompts
+    */
+    //[taskArguments addObject:@"-d"];
+    //[taskArguments addObject:@"-odebug"];
+    #endif
+
+    /* custom volume name */
+    [taskArguments addObject:[NSString stringWithFormat:@"-ovolname=%@", volumeName]];
+
+    /* custom port if needed */
     [taskArguments addObject:[NSString stringWithFormat:@"-p%@", port]];
 
-#pragma mark - Set launch path of subprocess executable and run it
-
-#warning this is the path of sshfs set by Homebrew or the official SSHFS package, it WILL change once we bundle sshfs-static!!!
-    [self.sshfsTask setLaunchPath:@"/usr/local/bin/sshfs"];
     [self.sshfsTask setArguments:taskArguments];
 
-    [self.sshfsTask launch];
 
-    [self.sharedSystemAPI checkForMountedVolume:self.localMountURL withTimeout:30 success:^{
-        successBlock();
-    } failure:^(NSError *error) {
-        NSError *mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorUnknown userInfo:@{@"error": error}];
-        failureBlock(mountError);
+#pragma mark - Set asynchronous block to handle subprocess stderr and stdout
+
+    NSPipe *outputPipe = [NSPipe pipe];
+    NSFileHandle *outputPipeHandle = [outputPipe fileHandleForReading];
+    outputPipeHandle.readabilityHandler = ^( NSFileHandle *handle ) {
+        NSString *outputString = [[NSString alloc] initWithData:[handle availableData] encoding:NSUTF8StringEncoding];
+        NSLog(@"SSHFS Task output: %@", outputString);
+
+        NSError *mountError;
+        if ([outputString containsString:@"No such file or directory"]) {
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Volume does not exist"}];
+            failureBlock(mountURL, mountError);
+        }
+        else if ([outputString containsString:@"Permission denied"]) {
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
+            failureBlock(mountURL, mountError);
+        }
+        else if ([outputString containsString:@"is itself on a OSXFUSE volume"]) {
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
+            /* 
+                no need to run the successblock again since the volume is already mounted
+
+                this is unlikely to happen in practice, we shouldn't even get to this
+                point if the mount status code is reacting quickly
+
+                this case may occur if the SafeDrive app quits/crashes but the sshfs process 
+                remains running and mounted. We'll deal with that at startup time
+                since we'll be constantly watching for mount/unmount anyway
+            */
+            //successBlock();
+        }
+        else if ([outputString containsString:@"Error resolving hostname"]) {
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Mount failed"}];
+            failureBlock(mountURL, mountError);
+        }
+        else if ([outputString containsString:@"remote host has disconnected"]) {
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Mount failed"}];
+            failureBlock(mountURL, mountError);
+        }
+        else if ([outputString containsString:@"REMOTE HOST IDENTIFICATION HAS CHANGED"]) {
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorHostFingerprintChanged userInfo:@{NSLocalizedDescriptionKey: @"Warning: server fingerprint changed!"}];
+            failureBlock(mountURL, mountError);
+        }
+        else if ([outputString containsString:@"Host key verification failed"]) {
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorHostKeyVerificationFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server key verification failed!"}];
+            failureBlock(mountURL, mountError);
+        }
+        else {
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorUnknown userInfo:@{NSLocalizedDescriptionKey: outputString}];
+            /*
+                for the moment we don't want to call the failure block here, as 
+                not everything that comes through stderr indicates a mount 
+                failure.
+
+                testing is required to discover and handle the stderr output that 
+                we actually need to handle and ignore the rest.
+
+            */
+            // failureBlock(mountURL, mountError);
+        }
+        if (mountError) {
+            NSLog(@"SSHFS Task error: %lu, %@", mountError.code, mountError.localizedDescription);
+        }
+    };
+    [self.sshfsTask setStandardError:outputPipe];
+    [self.sshfsTask setStandardOutput:outputPipe];
+
+
+
+
+#pragma mark - Set asynchronous block to handle subprocess termination
+
+
+    /* 
+        clear the read and write blocks once the subprocess terminates, and then
+        call the success block if no error occurred.
+        
+    */
+    __weak SDMountController *weakSelf = self;
+    [self.sshfsTask setTerminationHandler:^(NSTask *task) {
+        [task.standardOutput fileHandleForReading].readabilityHandler = nil;
+        [task.standardError fileHandleForReading].readabilityHandler = nil;
+        if (task.terminationStatus == 0) {
+            NSLog(@"Task exited cleanly, running successBlock");
+            weakSelf.mountURL = mountURL;
+            successBlock(mountURL, nil);
+        }
     }];
+
+
+
+
+
+#pragma mark - Launch subprocess and return
+
+
+    NSLog(@"Launching SSHFS with arguments: %@", taskArguments);
+    [self.sshfsTask launch];
 }
 
--(void)unmountVolumeWithName:(NSString *)mountName success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock {
-#warning Requires testing to see which is better, ejecting the mountpoint appears to work 100% of the time
-    // which is better for a FUSE process? Interrupt signal is suggested by the docs
-    //[self.sshfsTask terminate];
-    //[self.sshfsTask interrupt];
-    [self.sharedSystemAPI ejectMountpoint:self.localMountURL success:^{
-        successBlock();
+-(void)unmountVolumeWithName:(NSString *)volumeName success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock {
+    NSURL *mountURL = [self mountURLForVolumeName:volumeName];
+
+    [self.sharedSystemAPI ejectMount:mountURL success:^{
+        successBlock(mountURL, nil);
     } failure:^(NSError *error) {
-        failureBlock(error);
+        failureBlock(mountURL, error);
     }];
 }
 
