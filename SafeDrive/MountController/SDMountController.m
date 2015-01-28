@@ -222,6 +222,10 @@
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Server could not find that volume name"}];
             failureBlock(mountURL, mountError);
         }
+        else if ([outputString rangeOfString:@"Not a directory"].length > 0) {
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Server could not find that volume name"}];
+            failureBlock(mountURL, mountError);
+        }
         else if ([outputString rangeOfString:@"Permission denied"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
             failureBlock(mountURL, mountError);
