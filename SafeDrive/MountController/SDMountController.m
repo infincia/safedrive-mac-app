@@ -322,8 +322,8 @@
 #pragma mark - Internal API
 
 -(NSURL *)mountURLForVolumeName:(NSString *)volumeName {
-    NSURL *volumesDirectoryURL = [NSURL fileURLWithFileSystemRepresentation:"/Volumes\0" isDirectory:YES relativeToURL:nil];
-    NSURL *mountURL = [NSURL fileURLWithFileSystemRepresentation:[volumeName UTF8String] isDirectory:YES relativeToURL:volumesDirectoryURL];
+    NSURL *volumesDirectoryURL = [NSURL fileURLWithPath:@"/Volumes" isDirectory:YES];
+    NSURL *mountURL = [volumesDirectoryURL URLByAppendingPathComponent:volumeName];
     return mountURL;
 }
 
