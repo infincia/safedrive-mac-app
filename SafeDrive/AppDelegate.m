@@ -30,10 +30,8 @@
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // Insert code here to tear down your application
+    [[NSNotificationCenter defaultCenter] postNotificationName:SDVolumeShouldUnmountNotification object:nil];
 }
-
-
 
 #pragma mark - SDApplicationControlProtocol methods
 
