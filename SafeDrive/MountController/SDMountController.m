@@ -219,7 +219,7 @@
 
         NSError *mountError;
         if ([outputString containsString:@"No such file or directory"]) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Volume does not exist"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Server could not find that volume name"}];
             failureBlock(mountURL, mountError);
         }
         else if ([outputString containsString:@"Permission denied"]) {
@@ -241,11 +241,11 @@
             //successBlock();
         }
         else if ([outputString containsString:@"Error resolving hostname"]) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Mount failed"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Error resolving hostname, contact support"}];
             failureBlock(mountURL, mountError);
         }
         else if ([outputString containsString:@"remote host has disconnected"]) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Mount failed"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Mount failed, check username and password"}];
             failureBlock(mountURL, mountError);
         }
         else if ([outputString containsString:@"REMOTE HOST IDENTIFICATION HAS CHANGED"]) {
