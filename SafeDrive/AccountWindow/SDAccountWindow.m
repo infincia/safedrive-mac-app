@@ -12,6 +12,8 @@
 
 #define SSHFS_TEST_MODE
 
+#define CUSTOM_NSURL
+
 @interface SDAccountWindow ()
 @property IBOutlet NSTextField *emailField;
 @property IBOutlet NSTextField *passwordField;
@@ -134,14 +136,20 @@
         A custom method for creating new NSURLs safely could be used, or just
         skip NSURL entirely and use NSDictionary with constants for keys
     */
+
+    NSURL *sshURL;
+    #ifdef CUSTOM_NSURL
+    sshURL = [self urlForVolume:self.volumeNameField.stringValue account:self.emailField.stringValue password:self.passwordField.stringValue host:SDTestCredentialsHost port:@(SDTestCredentialsPort)];
+    #else
     NSURLComponents *urlComponents = [NSURLComponents new];
     urlComponents.user      = self.emailField.stringValue;
     urlComponents.password  = self.passwordField.stringValue;
     urlComponents.host      = SDTestCredentialsHost;
     urlComponents.path      = [NSString stringWithFormat:@"/%@", self.volumeNameField.stringValue];
     urlComponents.port      = @(SDTestCredentialsPort);
+    sshURL = urlComponents.URL;
+    #endif
 
-    NSURL *sshURL = urlComponents.URL;
     NSLog(@"Account window mounting URL: %@", sshURL);
     BOOL success = [self.sharedSystemAPI insertCredentialsInKeychain:sshURL.user password:sshURL.password];
     if (!success) {
