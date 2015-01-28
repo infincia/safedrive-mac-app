@@ -10,6 +10,8 @@
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
 
+#import "NSURL+SSH.h"
+
 #define SSHFS_TEST_MODE
 
 #define CUSTOM_NSURL
@@ -28,11 +30,7 @@
 -(void)resetErrorDisplay;
 -(void)displayError:(NSError *)error forDuration:(NSTimeInterval)duration;
 -(void)connectVolume;
--(NSURL *)urlForVolume:(NSString *)volumeName
-               account:(NSString *)account
-              password:(NSString *)password
-                  host:(NSString *)host
-                  port:(NSNumber *)port;
+
 @end
 
 @implementation SDAccountWindow
@@ -107,25 +105,6 @@
 # pragma mark
 # pragma mark Internal API
 
--(NSURL *)urlForVolume:(NSString *)volumeName
-               account:(NSString *)account
-              password:(NSString *)password
-                  host:(NSString *)host
-                  port:(NSNumber *)port {
-    // ssh://user:password@host.domain.org
-
-    NSString *escapedVolume = [volumeName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
-    NSString *escapedAccount = [account stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
-    NSString *escapedPassword = [password stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
-
-    NSString *urlString = [NSString stringWithFormat:@"ssh://%@:%@@%@:%@/%@",escapedAccount, escapedPassword, host, port, escapedVolume];
-    return [NSURL URLWithString:urlString];
-}
-
-
 -(void)connectVolume {
     [self.spinner startAnimation:self];
     /* 
@@ -139,7 +118,7 @@
 
     NSURL *sshURL;
     #ifdef CUSTOM_NSURL
-    sshURL = [self urlForVolume:self.volumeNameField.stringValue account:self.emailField.stringValue password:self.passwordField.stringValue host:SDTestCredentialsHost port:@(SDTestCredentialsPort)];
+    sshURL = [NSURL SSHURLForAccount:self.emailField.stringValue password:self.passwordField.stringValue host:SDTestCredentialsHost port:@(SDTestCredentialsPort) path:self.volumeNameField.stringValue];
     #else
     NSURLComponents *urlComponents = [NSURLComponents new];
     urlComponents.user      = self.emailField.stringValue;
