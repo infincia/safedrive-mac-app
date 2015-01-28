@@ -37,6 +37,13 @@
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <connections>
+                            <binding destination="-2" name="enabled" keyPath="self.mountController.mountState" id="pZf-0b-E9X">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
                     </textField>
                     <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P8c-vh-VQc" userLabel="Password Field" customClass="NSSecureTextField">
                         <rect key="frame" x="189" y="148" width="142" height="24"/>
@@ -45,6 +52,13 @@
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <connections>
+                            <binding destination="-2" name="enabled" keyPath="self.mountController.mountState" id="Sx6-AL-kuE">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
                     </textField>
                     <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mc1-TV-NQe" userLabel="Volume Name Field">
                         <rect key="frame" x="28" y="99" width="235" height="24"/>
@@ -54,6 +68,11 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
+                            <binding destination="-2" name="enabled" keyPath="self.mountController.mountState" id="lyA-xU-0bV">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
                             <binding destination="1Ol-33-M9u" name="value" keyPath="values.volumeName" id="ua8-mn-J5Y">
                                 <dictionary key="options">
                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
@@ -69,6 +88,11 @@
                         </buttonCell>
                         <connections>
                             <action selector="mount:" target="-2" id="HjC-B2-9IS"/>
+                            <binding destination="-2" name="enabled" keyPath="self.mountController.mountState" id="H5o-Id-gR0">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NQX-gH-k3k">
