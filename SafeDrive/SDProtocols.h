@@ -8,6 +8,7 @@
 @required
 -(void)volumeDidMount:(NSNotification*)notification;
 -(void)volumeDidUnmount:(NSNotification*)notification;
+-(void)volumeShouldUnmount:(NSNotification*)notification;
 -(void)volumeSubprocessDidTerminate:(NSNotification*)notification;
 @end
 

@@ -22,6 +22,7 @@ NSString *const SDMountStateUnmountedNotification        = @"SDMountStateUnmount
 
 NSString *const SDVolumeDidMountNotification              = @"SDVolumeDidMountNotification";
 NSString *const SDVolumeDidUnmountNotification            = @"SDVolumeDidUnmountNotification";
+NSString *const SDVolumeShouldUnmountNotification         = @"SDVolumeShouldUnmountNotification";
 NSString *const SDVolumeSubprocessDidTerminateNotification = @"SDVolumeSubprocessDidTerminateNotification";
 
 NSString *const SDApplicationShouldOpenPreferencesWindow  = @"SDApplicationShouldOpenPreferencesWindow";
