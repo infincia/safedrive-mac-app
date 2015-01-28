@@ -2,6 +2,8 @@
 //  Copyright (c) 2014 Infincia LLC. All rights reserved.
 //
 
+#import <dispatch/dispatch.h>
+
 #import "SDSystemAPI.h"
 #import "NSBundle+LoginItem.h"
 
@@ -76,8 +78,7 @@
 }
 
 -(void)checkForMountedVolume:(NSURL *)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSystemSuccessBlock)successBlock failure:(SDSystemFailureBlock)failureBlock {
-    NSOperationQueue *opQueue = [[NSOperationQueue alloc] init];
-    [opQueue addOperationWithBlock:^{
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (NSInteger remainingTime = timeout; remainingTime > 0; remainingTime--) {
             if ([self checkForMountedVolume:mountURL]) {
                 successBlock();
@@ -86,7 +87,7 @@
         }
         NSError *volumeError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorTimeout userInfo:@{NSLocalizedDescriptionKey: @"Volume mount timeout"}];
         failureBlock(volumeError);
-    }];
+    });
 }
 
 
