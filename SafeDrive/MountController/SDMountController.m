@@ -115,7 +115,7 @@
     safeDriveAskpassPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"safedriveaskpass"];
 #endif
 
-    NSLog(@"Askpass path: %@", safeDriveAskpassPath);
+    //NSLog(@"Askpass path: %@", safeDriveAskpassPath);
 
 
     if (safeDriveAskpassPath != nil) {
@@ -136,7 +136,7 @@
     */
     [sshfsEnvironment removeObjectForKey:@"SSH_AUTH_SOCK"];
 
-    NSLog(@"Subprocess environment: %@", sshfsEnvironment);
+    //NSLog(@"Subprocess environment: %@", sshfsEnvironment);
     self.sshfsTask.environment = sshfsEnvironment;
 
 
@@ -187,7 +187,7 @@
                as the fingerprint is preconfigured in the app and
     */
     NSString *knownHostsFile = [[NSBundle mainBundle] pathForResource:@"known_hosts" ofType:nil];
-    NSLog(@"Known hosts file: %@", knownHostsFile);
+    //NSLog(@"Known hosts file: %@", knownHostsFile);
     [taskArguments addObject:[NSString stringWithFormat:@"-oUserKnownHostsFile=%@", knownHostsFile]];
 
 
@@ -309,7 +309,7 @@
 #pragma mark - Launch subprocess and return
 
 
-    NSLog(@"Launching SSHFS with arguments: %@", taskArguments);
+    //NSLog(@"Launching SSHFS with arguments: %@", taskArguments);
     [self.sshfsTask launch];
 }
 
@@ -342,7 +342,7 @@
                     self.mountState = ( mounted ? SDMountStateMounted : SDMountStateUnmounted);
                 });
             }
-            NSLog(@"Mount state: %lu", self.mountState);
+            //NSLog(@"Mount state: %lu", self.mountState);
             dispatch_sync(dispatch_get_main_queue(), ^{
                 switch (self.mountState) {
                     case SDMountStateMounted: {

@@ -129,7 +129,7 @@
     sshURL = urlComponents.URL;
     #endif
 
-    NSLog(@"Account window mounting URL: %@", sshURL);
+    //NSLog(@"Account window mounting URL: %@", sshURL);
     BOOL success = [self.sharedSystemAPI insertCredentialsInKeychain:sshURL.user password:sshURL.password];
     if (!success) {
         [self.spinner stopAnimation:self];
