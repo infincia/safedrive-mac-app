@@ -26,7 +26,11 @@
 -(void)resetErrorDisplay;
 -(void)displayError:(NSError *)error forDuration:(NSTimeInterval)duration;
 -(void)connectVolume;
-
+-(NSURL *)urlForVolume:(NSString *)volumeName
+               account:(NSString *)account
+              password:(NSString *)password
+                  host:(NSString *)host
+                  port:(NSNumber *)port;
 @end
 
 @implementation SDAccountWindow
@@ -100,6 +104,24 @@
 
 # pragma mark
 # pragma mark Internal API
+
+-(NSURL *)urlForVolume:(NSString *)volumeName
+               account:(NSString *)account
+              password:(NSString *)password
+                  host:(NSString *)host
+                  port:(NSNumber *)port {
+    // ssh://user:password@host.domain.org
+
+    NSString *escapedVolume = [volumeName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    NSString *escapedAccount = [account stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    NSString *escapedPassword = [password stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+
+    NSString *urlString = [NSString stringWithFormat:@"ssh://%@:%@@%@:%@/%@",escapedAccount, escapedPassword, host, port, escapedVolume];
+    return [NSURL URLWithString:urlString];
+}
 
 
 -(void)connectVolume {
