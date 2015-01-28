@@ -218,15 +218,15 @@
         NSLog(@"SSHFS Task output: %@", outputString);
 
         NSError *mountError;
-        if ([outputString containsString:@"No such file or directory"]) {
+        if ([outputString rangeOfString:@"No such file or directory"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Server could not find that volume name"}];
             failureBlock(mountURL, mountError);
         }
-        else if ([outputString containsString:@"Permission denied"]) {
+        else if ([outputString rangeOfString:@"Permission denied"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
             failureBlock(mountURL, mountError);
         }
-        else if ([outputString containsString:@"is itself on a OSXFUSE volume"]) {
+        else if ([outputString rangeOfString:@"is itself on a OSXFUSE volume"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
             /* 
                 no need to run the successblock again since the volume is already mounted
@@ -240,19 +240,19 @@
             */
             //successBlock();
         }
-        else if ([outputString containsString:@"Error resolving hostname"]) {
+        else if ([outputString rangeOfString:@"Error resolving hostname"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Error resolving hostname, contact support"}];
             failureBlock(mountURL, mountError);
         }
-        else if ([outputString containsString:@"remote host has disconnected"]) {
+        else if ([outputString rangeOfString:@"remote host has disconnected"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Mount failed, check username and password"}];
             failureBlock(mountURL, mountError);
         }
-        else if ([outputString containsString:@"REMOTE HOST IDENTIFICATION HAS CHANGED"]) {
+        else if ([outputString rangeOfString:@"REMOTE HOST IDENTIFICATION HAS CHANGED"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorHostFingerprintChanged userInfo:@{NSLocalizedDescriptionKey: @"Warning: server fingerprint changed!"}];
             failureBlock(mountURL, mountError);
         }
-        else if ([outputString containsString:@"Host key verification failed"]) {
+        else if ([outputString rangeOfString:@"Host key verification failed"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorHostKeyVerificationFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server key verification failed!"}];
             failureBlock(mountURL, mountError);
         }
