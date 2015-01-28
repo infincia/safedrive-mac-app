@@ -248,7 +248,15 @@
 }
 
 -(void)displayError:(NSError *)error forDuration:(NSTimeInterval)duration {
-    self.errorField.stringValue = [error localizedDescription];
+    self.errorField.stringValue = error.localizedDescription;
+    NSColor *fadedRed = [NSColor colorWithCalibratedRed:1.0f green:0.25098f blue:0.25098f alpha:0.73f];
+    NSColor *fadedBlue = [NSColor colorWithCalibratedRed:0.25098f green:0.25098f blue:1.0f alpha:0.73f];
+    if (error.code > 0) {
+        self.errorField.textColor = fadedRed;
+    }
+    else {
+        self.errorField.textColor = fadedBlue;
+    }
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
         context.duration = 0.5f;
         self.errorField.animator.alphaValue = 1.0f;
