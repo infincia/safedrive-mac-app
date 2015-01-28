@@ -106,9 +106,9 @@
 
     */
     NSLog(@"Using test mode askpass");
-    NSString *debugPath = sshfsEnvironment[@"__XCODE_BUILT_PRODUCTS_DIR_PATHS"];
-    NSURL *debugProductsURL = [NSURL fileURLWithFileSystemRepresentation:[debugPath UTF8String] isDirectory:YES relativeToURL:nil];
-    NSURL *debugAskpassURL = [NSURL fileURLWithFileSystemRepresentation:"safedriveaskpass\0" isDirectory:NO relativeToURL:debugProductsURL];
+    NSString *builtProductsPath = sshfsEnvironment[@"__XCODE_BUILT_PRODUCTS_DIR_PATHS"];
+    NSURL *builtProductsURL = [NSURL fileURLWithPath:builtProductsPath isDirectory:YES];
+    NSURL *debugAskpassURL = [builtProductsURL URLByAppendingPathComponent:@"safedriveaskpass"];
     safeDriveAskpassPath = [debugAskpassURL path];
 #else
     NSLog(@"Using bundled askpass");
