@@ -38,6 +38,8 @@ FOUNDATION_EXPORT NSString *const SDAPIDidBecomeUnreachable;
 
 FOUNDATION_EXPORT NSString *const SDErrorDomain;
 
+FOUNDATION_EXPORT NSUInteger const SDErrorNone;
+
 #pragma mark - Mount related errors
 
 FOUNDATION_EXPORT NSUInteger const SDMountErrorUnknown;

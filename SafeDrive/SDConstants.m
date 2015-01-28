@@ -38,6 +38,9 @@ NSString *const SDAPIDidBecomeUnreachable                 = @"SDAPIDidBecomeUnre
 
 NSString *const SDErrorDomain = @"io.safedrive";
 
+NSUInteger const SDErrorNone                           = 0;
+
+
 #pragma mark - Mount related errors
 
 NSUInteger const SDMountErrorUnknown                   = 1001;
