@@ -147,7 +147,9 @@
         [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
 
             NSLog(@"Mount volume success in account window");
-            [[NSNotificationCenter defaultCenter] postNotificationName:SDVolumeDidMountNotification object:nil];
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:SDVolumeDidMountNotification object:nil];
+            });
             [self.spinner stopAnimation:self];
 
         } failure:^(NSError *error) {
@@ -188,7 +190,9 @@
                 [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
 
                     NSLog(@"Mount volume success in account window");
-                    [[NSNotificationCenter defaultCenter] postNotificationName:SDVolumeDidMountNotification object:nil];
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:SDVolumeDidMountNotification object:nil];
+                    });
                     [self.spinner stopAnimation:self];
 
                 } failure:^(NSError *error) {

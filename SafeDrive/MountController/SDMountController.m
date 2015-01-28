@@ -339,22 +339,24 @@
                 });
             }
             NSLog(@"Mount state: %lu", self.mountState);
-            switch (self.mountState) {
-                case SDMountStateMounted: {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateMountedNotification object:nil];
-                    break;
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                switch (self.mountState) {
+                    case SDMountStateMounted: {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateMountedNotification object:nil];
+                        break;
+                    }
+                    case SDMountStateUnmounted: {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateUnmountedNotification object:nil];
+                        break;
+                    }
+                    case SDMountStateUnknown: {
+                        //
+                    }
+                    default: {
+                        break;
+                    }
                 }
-                case SDMountStateUnmounted: {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateUnmountedNotification object:nil];
-                    break;
-                }
-                case SDMountStateUnknown: {
-                    //
-                }
-                default: {
-                    break;
-                }
-            }
+            });
             [NSThread sleepForTimeInterval:1];
         }
     });
