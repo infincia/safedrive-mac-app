@@ -109,7 +109,23 @@
 }
 
 
+#pragma mark - SDVolumeEventProtocol methods
 
+-(void)volumeDidMount:(NSNotification *)notification {
+
+}
+
+-(void)volumeDidUnmount:(NSNotification *)notification {
+
+}
+
+-(void)volumeSubprocessDidTerminate:(NSNotification *)notification {
+
+}
+
+-(void)volumeShouldUnmount:(NSNotification *)notification {
+    [self disconnectVolume];
+}
 
 
 #pragma mark - SDMountStateProtocol methods
