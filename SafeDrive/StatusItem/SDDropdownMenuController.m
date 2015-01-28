@@ -30,6 +30,7 @@
         self.sharedSystemAPI = [SDSystemAPI sharedAPI];
 
         // register SDMountStateProtocol notifications
+        #warning Keep track of these SDMountStateProtocol requirements!!!
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateMounted:) name:SDMountStateMountedNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateUnmounted:) name:SDMountStateUnmountedNotification object:nil];
 
