@@ -277,6 +277,8 @@
 
 -(void)volumeDidMount:(NSNotification *)notification {
     [self close];
+    //NSError *mountSuccess = [NSError errorWithDomain:SDErrorDomain code:SDErrorNone userInfo:@{NSLocalizedDescriptionKey: @"Volume mounted"}];
+    //[self displayError:mountSuccess forDuration:10];
 }
 
 -(void)volumeDidUnmount:(NSNotification *)notification {
