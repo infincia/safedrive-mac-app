@@ -334,7 +334,9 @@
             if (volumeName) {
                 NSURL *mountURL = [self mountURLForVolumeName:volumeName];
                 BOOL mounted = [self.sharedSystemAPI checkForMountedVolume:mountURL];
-                self.mountState = ( mounted ? SDMountStateMounted : SDMountStateUnmounted);
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    self.mountState = ( mounted ? SDMountStateMounted : SDMountStateUnmounted);
+                });
             }
             NSLog(@"Mount state: %lu", self.mountState);
             switch (self.mountState) {
