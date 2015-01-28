@@ -82,6 +82,7 @@
         for (NSInteger remainingTime = timeout; remainingTime > 0; remainingTime--) {
             if ([self checkForMountedVolume:mountURL]) {
                 successBlock();
+                return;
             }
             [NSThread sleepForTimeInterval:1];
         }
