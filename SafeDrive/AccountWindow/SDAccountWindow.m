@@ -106,6 +106,7 @@
 # pragma mark Internal API
 
 -(void)connectVolume {
+    [self resetErrorDisplay];
     [self.spinner startAnimation:self];
     /* 
         This is somewhat fragile (the volume name must start with a slash) and 
