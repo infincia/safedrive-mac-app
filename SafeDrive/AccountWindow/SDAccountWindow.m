@@ -250,6 +250,7 @@
 }
 
 -(void)displayError:(NSError *)error forDuration:(NSTimeInterval)duration {
+    [NSApp activateIgnoringOtherApps:YES];
     self.errorField.stringValue = error.localizedDescription;
     NSColor *fadedRed = [NSColor colorWithCalibratedRed:1.0f green:0.25098f blue:0.25098f alpha:0.73f];
     NSColor *fadedBlue = [NSColor colorWithCalibratedRed:0.25098f green:0.25098f blue:1.0f alpha:0.73f];
