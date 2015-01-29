@@ -78,8 +78,10 @@
 
 - (void)test_SDSystemAPI_insertCredentialsInKeychain {
     XCTAssertNotNil(self.sharedSystemAPI);
-    BOOL success = [self.sharedSystemAPI insertCredentialsInKeychain:SDTestCredentialsUser password:SDTestCredentialsPassword];
-    NSLog(@"test_SDSystemAPI_insertCredentialsInKeychain: %@", @(success));
+    NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychain:SDTestCredentialsUser password:SDTestCredentialsPassword];
+    if (keychainError) {
+        NSLog(@"test_SDSystemAPI_insertCredentialsInKeychain: %@", keychainError.localizedDescription);
+    }
 }
 
 

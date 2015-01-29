@@ -130,8 +130,9 @@
     #endif
 
     //NSLog(@"Account window mounting URL: %@", sshURL);
-    BOOL success = [self.sharedSystemAPI insertCredentialsInKeychain:sshURL.user password:sshURL.password];
-    if (!success) {
+    NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychain:sshURL.user password:sshURL.password];
+    if (keychainError) {
+        [self displayError:keychainError forDuration:10];
         [self.spinner stopAnimation:self];
         return;
     }

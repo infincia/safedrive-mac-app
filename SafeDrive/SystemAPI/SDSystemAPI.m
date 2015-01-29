@@ -145,7 +145,7 @@
     return credentials;
 }
 
--(BOOL)insertCredentialsInKeychain:(NSString *)account password:(NSString *)password {
+-(NSError *)insertCredentialsInKeychain:(NSString *)account password:(NSString *)password {
     NSDictionary *attributes = @{ (__bridge id<NSCopying>)kSecAttrAccessGroup: SDServiceName };
 
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDServiceName
@@ -156,12 +156,13 @@
         BOOL sameUser = [account isEqualToString:keychainItem.account];
         BOOL samePass = [password isEqualToString:keychainItem.password];
         /* don't do anything if credentials haven't changed */
-        if (sameUser && samePass) return YES;
+        if (sameUser && samePass) return nil;
         NSError *keychainRemoveError;
         [keychainItem removeFromKeychainWithError:&keychainRemoveError];
         if (keychainRemoveError) {
             NSLog(@"Keychain remove error: %@", keychainRemoveError.localizedDescription);
-            return NO;
+            return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Keychain failed to remove old credentials"}];
+;
         }
     }
     NSError *keychainInsertError;
@@ -172,9 +173,10 @@
                                                       error:&keychainInsertError];
     if (keychainInsertError) {
         NSLog(@"Keychain insert credential error: %@", keychainInsertError.localizedDescription);
-        return NO;
+        return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Keychain failed to store credentials"}];
+;
     }
-    return YES;
+    return nil;
 }
 
 

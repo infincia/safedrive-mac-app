@@ -25,6 +25,6 @@ typedef void(^SDSystemFailureBlock)(NSError *error);
 
 -(NSDictionary *)retrieveCredentialsFromKeychain;
 
--(BOOL)insertCredentialsInKeychain:(NSString *)account password:(NSString *)password;
+-(NSError *)insertCredentialsInKeychain:(NSString *)account password:(NSString *)password;
 
 @end
