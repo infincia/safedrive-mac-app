@@ -17,12 +17,12 @@ void insert_test_data(NSString *accountName);
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         NSString *keychainAccount = [[[NSProcessInfo processInfo] environment] objectForKey:@"SSH_ACCOUNT"];
-        NSDictionary *attributes = @{ (__bridge id<NSCopying>)kSecAttrAccessGroup: SDServiceName };
+        //NSDictionary *attributes = @{ (__bridge id<NSCopying>)kSecAttrAccessGroup: SDServiceName };
 
         NSError *keychainError;
         MCSMKeychainItem *genericKeychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDServiceName
                                                                                                 account:keychainAccount
-                                                                                             attributes:attributes
+                                                                                             attributes:nil
                                                                                                   error:&keychainError];
 
         if (keychainError) {

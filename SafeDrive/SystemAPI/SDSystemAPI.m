@@ -130,11 +130,11 @@
     NSDictionary *credentials = nil;
     NSError *error;
 
-    NSDictionary *attributes = @{ (__bridge id<NSCopying>)kSecAttrAccessGroup: SDServiceName };
+    //NSDictionary *attributes = @{ (__bridge id<NSCopying>)kSecAttrAccessGroup: SDServiceName };
 
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDServiceName
                                                                                         account:nil
-                                                                                    attributes:attributes
+                                                                                    attributes:nil
                                                                                          error:&error];
     if (error) {
         NSLog(@"Failure retrieving credentials: %@", error.localizedDescription);
@@ -146,11 +146,11 @@
 }
 
 -(NSError *)insertCredentialsInKeychain:(NSString *)account password:(NSString *)password {
-    NSDictionary *attributes = @{ (__bridge id<NSCopying>)kSecAttrAccessGroup: SDServiceName };
+    //NSDictionary *attributes = @{ (__bridge id<NSCopying>)kSecAttrAccessGroup: SDServiceName };
 
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDServiceName
-                                                                                    account:account
-                                                                                 attributes:attributes
+                                                                                    account:nil
+                                                                                 attributes:nil
                                                                                       error:NULL];
     if (keychainItem) {
         BOOL sameUser = [account isEqualToString:keychainItem.account];
@@ -168,7 +168,7 @@
     NSError *keychainInsertError;
     [MCSMGenericKeychainItem genericKeychainItemWithService:SDServiceName
                                                     account:account
-                                                 attributes:attributes
+                                                 attributes:nil
                                                    password:password
                                                       error:&keychainInsertError];
     if (keychainInsertError) {
