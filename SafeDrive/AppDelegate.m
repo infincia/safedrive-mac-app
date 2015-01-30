@@ -31,6 +31,7 @@
     // register SDApplicationControlProtocol notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenAccountWindow:) name:SDApplicationShouldOpenAccountWindow object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenPreferencesWindow:) name:SDApplicationShouldOpenPreferencesWindow object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenAboutWindow:) name:SDApplicationShouldOpenAboutWindow object:nil];
 
 }
 
@@ -50,6 +51,9 @@
     [self.preferencesWindow showWindow:nil];
 }
 
-
+-(void)applicationShouldOpenAboutWindow:(NSNotification*)notification {
+    [NSApp activateIgnoringOtherApps:YES];
+    [self.aboutWindow showWindow:nil];
+}
 
 @end
