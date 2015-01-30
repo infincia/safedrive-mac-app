@@ -572,7 +572,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"----- Codesign $BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app -----\"\ncodesign -f -s 'Developer ID Application: Stephen Oliver (G738Z89QKM)' -r='designated => identifier \"io.safedrive.$PRODUCT_NAME\" and anchor apple generic' $BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app";
+			shellScript = "echo \"----- Codesign $BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app -----\"\ncodesign -f -s 'Developer ID Application: Stephen Oliver (G738Z89QKM)' -r='designated => identifier \"io.safedrive.SafeDrive\" and anchor apple generic' $BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app";
 		};
 /* End PBXShellScriptBuildPhase section */
 
