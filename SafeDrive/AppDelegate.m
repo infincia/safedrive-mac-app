@@ -42,12 +42,12 @@
 
 -(void)applicationShouldOpenAccountWindow:(NSNotification*)notification {
     [NSApp activateIgnoringOtherApps:YES];
-    [self.accountWindow.window makeKeyAndOrderFront:self];
+    [self.accountWindow showWindow:nil];
 }
 
 -(void)applicationShouldOpenPreferencesWindow:(NSNotification*)notification {
     [NSApp activateIgnoringOtherApps:YES];
-    [self.preferencesWindow.window makeKeyAndOrderFront:self];
+    [self.preferencesWindow showWindow:nil];
 }
 
 
