@@ -27,6 +27,7 @@ FOUNDATION_EXPORT NSString *const SDVolumeSubprocessDidTerminateNotification;
 
 FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenPreferencesWindow;
 FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenAccountWindow;
+FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenAboutWindow;
 
 FOUNDATION_EXPORT NSString *const SDAPIDidEnterMaintenancePeriod;
 FOUNDATION_EXPORT NSString *const SDAPIDidBecomeReachable;

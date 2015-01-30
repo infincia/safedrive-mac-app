@@ -22,6 +22,7 @@
 @required
 -(void)applicationShouldOpenPreferencesWindow:(NSNotification*)notification;
 -(void)applicationShouldOpenAccountWindow:(NSNotification*)notification;
+-(void)applicationShouldOpenAboutWindow:(NSNotification*)notification;
 @end
 
 @protocol SDAPIAvailabilityProtocol <NSObject>
