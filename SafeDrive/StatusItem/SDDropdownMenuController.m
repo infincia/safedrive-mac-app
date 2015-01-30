@@ -109,6 +109,10 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenPreferencesWindow object:nil];
 }
 
+-(IBAction)openAboutWindow:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenAboutWindow object:nil];
+}
+
 
 #pragma mark - SDVolumeEventProtocol methods
 

@@ -26,6 +26,12 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="UFs-K9-Db6"/>
+                <menuItem title="About" id="ZYj-54-W6V">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openAboutWindow:" target="-2" id="2RD-4J-puM"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Quit" id="CHy-oK-4Q4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

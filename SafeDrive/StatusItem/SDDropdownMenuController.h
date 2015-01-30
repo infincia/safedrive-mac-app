@@ -15,5 +15,6 @@
 
 -(IBAction)toggleMount:(id)sender;
 -(IBAction)openPreferencesWindow:(id)sender;
+-(IBAction)openAboutWindow:(id)sender;
 
 @end
