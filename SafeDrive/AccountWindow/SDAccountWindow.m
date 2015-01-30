@@ -280,6 +280,7 @@
 
 -(void)volumeDidMount:(NSNotification *)notification {
     [self close];
+    [[NSWorkspace sharedWorkspace] openURL:self.mountController.mountURL];
     //NSError *mountSuccess = [NSError errorWithDomain:SDErrorDomain code:SDErrorNone userInfo:@{NSLocalizedDescriptionKey: @"Volume mounted"}];
     //[self displayError:mountSuccess forDuration:10];
 }
