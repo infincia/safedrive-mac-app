@@ -8,10 +8,10 @@
 #import "SDDropdownMenuController.h"
 #import "SDAccountWindow.h"
 #import "SDPreferencesWindow.h"
-
+#import <DCOAboutWindow/DCOAboutWindowController.h>
 
 @interface AppDelegate ()
-
+@property DCOAboutWindowController *aboutWindow;
 @end
 
 @implementation AppDelegate
@@ -22,6 +22,11 @@
     
     self.accountWindow = [[SDAccountWindow alloc] initWithWindowNibName:@"SDAccountWindow"];
     self.preferencesWindow = [[SDPreferencesWindow alloc] initWithWindowNibName:@"SDPreferencesWindow"];
+
+    self.aboutWindow = [[DCOAboutWindowController alloc] init];
+    self.aboutWindow.useTextViewForAcknowledgments = YES;
+    NSString *websiteURLPath = [NSString stringWithFormat:@"https://%@", SDWebDomain];
+    self.aboutWindow.appWebsiteURL = [NSURL URLWithString:websiteURLPath];
 
     // register SDApplicationControlProtocol notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenAccountWindow:) name:SDApplicationShouldOpenAccountWindow object:nil];
