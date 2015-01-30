@@ -7,7 +7,7 @@
 #pragma mark - SafeDrive API constants
 
 NSString *const SDAPIDomain = @"safedrive.io";
-
+NSString *const SDWebDomain = @"safedrive.io";
 
 #pragma mark - Keychain constants
 

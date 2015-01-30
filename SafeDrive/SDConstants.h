@@ -7,7 +7,7 @@
 #pragma mark - SafeDrive API constants
 
 FOUNDATION_EXPORT NSString *const SDAPIDomain;
-
+FOUNDATION_EXPORT NSString *const SDWebDomain;
 
 #pragma mark - Keychain constants
 
