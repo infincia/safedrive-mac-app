@@ -318,6 +318,7 @@
 
     [self.sharedSystemAPI ejectMount:mountURL success:^{
         successBlock(mountURL, nil);
+        [[NSNotificationCenter defaultCenter] postNotificationName:SDVolumeDidUnmountNotification object:nil];
     } failure:^(NSError *error) {
         failureBlock(mountURL, error);
     }];
