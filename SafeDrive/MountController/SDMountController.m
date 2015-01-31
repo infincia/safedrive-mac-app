@@ -12,7 +12,7 @@
 @property SDSystemAPI *sharedSystemAPI;
 
 -(NSURL *)mountURLForVolumeName:(NSString *)volumeName;
--(void)mountCheckLoop;
+-(void)mountStateLoop;
 
 @end
 
@@ -23,7 +23,7 @@
     if (self) {
         self.mountState = SDMountStateUnmounted;
         self.sharedSystemAPI = [SDSystemAPI sharedAPI];
-        [self mountCheckLoop];
+        [self mountStateLoop];
     }
     return self;
 }
@@ -337,7 +337,7 @@
     return mountURL;
 }
 
--(void)mountCheckLoop {
+-(void)mountStateLoop {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (;;) {
             NSString *volumeName = [[NSUserDefaults standardUserDefaults] objectForKey:@"volumeName"];
