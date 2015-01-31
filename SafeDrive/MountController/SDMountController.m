@@ -11,7 +11,7 @@
 @property NSTask *sshfsTask;
 @property SDSystemAPI *sharedSystemAPI;
 
--(NSURL *)mountURLForVolumeName:(NSString *)volumeName;
+-(NSURL *)getMountURLForVolumeName:(NSString *)volumeName;
 -(void)mountStateLoop;
 
 @end
@@ -47,7 +47,7 @@
 
 -(void)startMountTaskWithVolumeName:(NSString *)volumeName sshURL:(NSURL *)sshURL success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock {
 
-    NSURL *mountURL = [self mountURLForVolumeName:volumeName];
+    NSURL *mountURL = [self getMountURLForVolumeName:volumeName];
 
     /* 
         This is mostly insurance against running 2 sshfs processes at once, or
@@ -319,7 +319,7 @@
 }
 
 -(void)unmountVolumeWithName:(NSString *)volumeName success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock {
-    NSURL *mountURL = [self mountURLForVolumeName:volumeName];
+    NSURL *mountURL = [self getMountURLForVolumeName:volumeName];
 
     [self.sharedSystemAPI ejectMount:mountURL success:^{
         successBlock(mountURL, nil);
@@ -331,7 +331,7 @@
 
 #pragma mark - Internal API
 
--(NSURL *)mountURLForVolumeName:(NSString *)volumeName {
+-(NSURL *)getMountURLForVolumeName:(NSString *)volumeName {
     NSURL *volumesDirectoryURL = [NSURL fileURLWithPath:@"/Volumes" isDirectory:YES];
     NSURL *mountURL = [volumesDirectoryURL URLByAppendingPathComponent:volumeName];
     return mountURL;
@@ -342,7 +342,7 @@
         for (;;) {
             NSString *volumeName = [[NSUserDefaults standardUserDefaults] objectForKey:@"volumeName"];
             if (volumeName) {
-                NSURL *mountURL = [self mountURLForVolumeName:volumeName];
+                NSURL *mountURL = [self getMountURLForVolumeName:volumeName];
                 BOOL mounted = [self.sharedSystemAPI checkForMountedVolume:mountURL];
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     self.mountState = ( mounted ? SDMountStateMounted : SDMountStateUnmounted);
