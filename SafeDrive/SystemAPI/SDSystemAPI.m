@@ -49,7 +49,6 @@
     NSError *error;
     NSNumber *volumeSize;
     if([mountURL getResourceValue:&volumeSize forKey:NSURLVolumeTotalCapacityKey error:&error]) {
-        NSLog(@"Volume size in bytes: %@", volumeSize);
         mountpointInfo[NSURLVolumeTotalCapacityKey] = volumeSize;
     }
     else {
@@ -57,7 +56,6 @@
     }
     NSNumber *volumeSpaceAvailable;
     if([mountURL getResourceValue:&volumeSpaceAvailable forKey:NSURLVolumeAvailableCapacityKey error:&error]) {
-        NSLog(@"Volume space available in bytes: %@", volumeSpaceAvailable);
         mountpointInfo[NSURLVolumeAvailableCapacityKey] = volumeSpaceAvailable;
     }
     else {
