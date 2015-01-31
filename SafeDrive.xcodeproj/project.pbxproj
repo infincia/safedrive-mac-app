@@ -33,6 +33,7 @@
 		AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */; };
 		AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */; };
 		AABB0FC01A3F292F00FA3530 /* safedriveaskpass in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAEED2D31A7D76F200B92993 /* SDDataSizeTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEED2D21A7D76F200B92993 /* SDDataSizeTransformer.m */; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +142,8 @@
 		AA9E7DE51A7950A500E3C3E8 /* NSURL+SSH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SSH.m"; sourceTree = "<group>"; };
 		AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
+		AAEED2D11A7D76F200B92993 /* SDDataSizeTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDDataSizeTransformer.h; sourceTree = "<group>"; };
+		AAEED2D21A7D76F200B92993 /* SDDataSizeTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDDataSizeTransformer.m; sourceTree = "<group>"; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		C59916428BE280E2339742A3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -353,6 +356,8 @@
 			children = (
 				AA9E7DE41A7950A500E3C3E8 /* NSURL+SSH.h */,
 				AA9E7DE51A7950A500E3C3E8 /* NSURL+SSH.m */,
+				AAEED2D11A7D76F200B92993 /* SDDataSizeTransformer.h */,
+				AAEED2D21A7D76F200B92993 /* SDDataSizeTransformer.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -599,6 +604,7 @@
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AA73194A1A2F86B8003E2391 /* SDConstants.m in Sources */,
 				AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */,
+				AAEED2D31A7D76F200B92993 /* SDDataSizeTransformer.m in Sources */,
 				AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */,
 				AA31681A1A191B72006CC0EB /* AppDelegate.m in Sources */,
 			);
