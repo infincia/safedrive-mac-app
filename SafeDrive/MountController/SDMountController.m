@@ -355,10 +355,14 @@
             dispatch_sync(dispatch_get_main_queue(), ^{
                 switch (self.mountState) {
                     case SDMountStateMounted: {
+                        NSURL *mountURL = [self getMountURLForVolumeName:volumeName];
+                        NSDictionary *mountDetails = [self.sharedSystemAPI detailsForMount:mountURL];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateDetailsNotification object:mountDetails];
                         [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateMountedNotification object:nil];
                         break;
                     }
                     case SDMountStateUnmounted: {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateDetailsNotification object:nil];
                         [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateUnmountedNotification object:nil];
                         break;
                     }
