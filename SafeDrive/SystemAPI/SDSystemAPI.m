@@ -109,27 +109,26 @@
     }
 }
 
-
--(void)registerStartAtLogin:(id)sender success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure {
-    [[NSBundle mainBundle] addToLoginItems];
-    if ([[NSBundle mainBundle] isLoginItem]) {
-        success();
-    }
-    else {
-        NSError *loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Adding login item failed"}];
-        failure(loginItemError);
-    }
+-(BOOL)autostart {
+    return [[NSBundle mainBundle] isLoginItem];
 }
 
--(void)unregisterStartAtLogin:(id)sender success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure {
+-(NSError *)enableAutostart {
+    NSError *loginItemError = nil;
+    [[NSBundle mainBundle] addToLoginItems];
+    if (!self.autostart) {
+        loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Adding login item failed"}];
+    }
+    return loginItemError;
+}
+
+-(NSError *)disableAutostart {
+    NSError *loginItemError = nil;
     [[NSBundle mainBundle] removeFromLoginItems];
-    if ([[NSBundle mainBundle] isLoginItem]) {
-        NSError *loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Removing login item failed"}];
-        failure(loginItemError);
+    if (self.autostart) {
+        loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Removing login item failed"}];
     }
-    else {
-        success();
-    }
+    return loginItemError;
 }
 
 -(NSDictionary *)retrieveCredentialsFromKeychain {

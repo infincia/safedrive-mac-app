@@ -19,9 +19,11 @@ typedef void(^SDSystemFailureBlock)(NSError *error);
 
 -(void)ejectMount:(NSURL *)mountURL success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure;
 
--(void)registerStartAtLogin:(id)sender success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure;
+-(BOOL)autostart;
 
--(void)unregisterStartAtLogin:(id)sender success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure;
+-(NSError *)enableAutostart;
+
+-(NSError *)disableAutostart;
 
 -(NSDictionary *)retrieveCredentialsFromKeychain;
 
