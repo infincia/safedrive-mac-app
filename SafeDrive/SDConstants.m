@@ -40,31 +40,4 @@ NSString *const SDAPIDidBecomeUnreachable                 = @"SDAPIDidBecomeUnre
 
 NSString *const SDErrorDomain = @"io.safedrive";
 
-NSUInteger const SDErrorNone                           = 0;
-
-
-#pragma mark - Mount related errors
-
-NSUInteger const SDMountErrorUnknown                   = 1001;
-NSUInteger const SDMountErrorAuthorization             = 1002;
-NSUInteger const SDMountErrorTimeout                   = 1003;
-NSUInteger const SDMountErrorMountFailed               = 1004;
-NSUInteger const SDMountErrorUnmountFailed             = 1005;
-NSUInteger const SDMountErrorAlreadyMounted            = 1006;
-NSUInteger const SDMountErrorAskpassMissing            = 1007;
-NSUInteger const SDMountErrorHostFingerprintChanged    = 1008;
-NSUInteger const SDMountErrorHostKeyVerificationFailed = 1009;
-
-
-#pragma mark - System API related errors
-
-NSUInteger const SDSystemErrorUnknown               = 2001;
-NSUInteger const SDSystemErrorAddLoginItemFailed    = 2002;
-NSUInteger const SDSystemErrorRemoveLoginItemFailed = 2003;
-NSUInteger const SDSystemErrorAddKeychainItemFailed = 2004;
-NSUInteger const SDSystemErrorRemoveKeychainItemFailed = 2005;
-
-#pragma mark - SafeDrive API related errors
-
-NSUInteger const SDAPIErrorAuthorization = 3001;
-NSUInteger const SDAPIErrorMaintenance   = 3002;
+NSUInteger const SDErrorNone = 0;

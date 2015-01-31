@@ -43,31 +43,34 @@ FOUNDATION_EXPORT NSUInteger const SDErrorNone;
 
 #pragma mark - Mount related errors
 
-FOUNDATION_EXPORT NSUInteger const SDMountErrorUnknown;
-FOUNDATION_EXPORT NSUInteger const SDMountErrorAuthorization;
-FOUNDATION_EXPORT NSUInteger const SDMountErrorTimeout;
-FOUNDATION_EXPORT NSUInteger const SDMountErrorMountFailed;
-FOUNDATION_EXPORT NSUInteger const SDMountErrorUnmountFailed;
-FOUNDATION_EXPORT NSUInteger const SDMountErrorAlreadyMounted;
-FOUNDATION_EXPORT NSUInteger const SDMountErrorAskpassMissing;
-FOUNDATION_EXPORT NSUInteger const SDMountErrorHostFingerprintChanged;
-FOUNDATION_EXPORT NSUInteger const SDMountErrorHostKeyVerificationFailed;
-
+typedef NS_ENUM(NSUInteger, SDMountError) {
+    SDMountErrorUnknown                   = 1001,
+    SDMountErrorAuthorization             = 1002,
+    SDMountErrorTimeout                   = 1003,
+    SDMountErrorMountFailed               = 1004,
+    SDMountErrorUnmountFailed             = 1005,
+    SDMountErrorAlreadyMounted            = 1006,
+    SDMountErrorAskpassMissing            = 1007,
+    SDMountErrorHostFingerprintChanged    = 1008,
+    SDMountErrorHostKeyVerificationFailed = 1009
+};
 
 #pragma mark - System API related errors
 
-FOUNDATION_EXPORT NSUInteger const SDSystemErrorUnknown;
-FOUNDATION_EXPORT NSUInteger const SDSystemErrorAddLoginItemFailed;
-FOUNDATION_EXPORT NSUInteger const SDSystemErrorRemoveLoginItemFailed;
-FOUNDATION_EXPORT NSUInteger const SDSystemErrorAddKeychainItemFailed;
-FOUNDATION_EXPORT NSUInteger const SDSystemErrorRemoveKeychainItemFailed;
-
+typedef NS_ENUM(NSUInteger, SDSystemError) {
+    SDSystemErrorUnknown                  = 2001,
+    SDSystemErrorAddLoginItemFailed       = 2002,
+    SDSystemErrorRemoveLoginItemFailed    = 2003,
+    SDSystemErrorAddKeychainItemFailed    = 2004,
+    SDSystemErrorRemoveKeychainItemFailed = 2005
+};
 
 #pragma mark - SafeDrive API related errors
 
-FOUNDATION_EXPORT NSUInteger const SDAPIErrorAuthorization;
-FOUNDATION_EXPORT NSUInteger const SDAPIErrorMaintenance;
-
+typedef NS_ENUM(NSUInteger, SDAPIError) {
+    SDAPIErrorAuthorization = 3001,
+    SDAPIErrorMaintenance   = 3002
+};
 
 #pragma mark - Mount state
 
