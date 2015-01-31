@@ -190,7 +190,7 @@
                for authentication.
                
             2. Users are never going to be subject to man-in-the-middle attacks
-               as the fingerprint is preconfigured in the app and
+               as the fingerprint is preconfigured in the app
     */
     NSString *knownHostsFile = [[NSBundle mainBundle] pathForResource:@"known_hosts" ofType:nil];
     //NSLog(@"Known hosts file: %@", knownHostsFile);
