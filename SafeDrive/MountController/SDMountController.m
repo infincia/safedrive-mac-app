@@ -49,6 +49,11 @@
 
     NSURL *mountURL = [self mountURLForVolumeName:volumeName];
 
+    /* 
+        This is mostly insurance against running 2 sshfs processes at once, or
+        double-mounting. Disabling the login button when a mount succeeds should 
+        prevent the code from ever running.
+    */
     if (self.mountState == SDMountStateMounted) {
         NSError *mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
         failureBlock(mountURL, mountError);
