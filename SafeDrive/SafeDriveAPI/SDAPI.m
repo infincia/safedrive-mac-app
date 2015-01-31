@@ -132,7 +132,7 @@ typedef void(^SDAPIFingerprintListSuccessBlock)(NSString *fingerprintList);
 -(void)accountDetailsForUser:(NSString *)user sessionToken:(NSString *)token success:(SDAPIAccountDetailsBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
     NSDictionary *postParameters = @{@"user": user, @"session": token };
 
-    [self.apiManager POST:@"accountStatus" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.apiManager POST:@"accountDetails" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *accountDetails = (NSDictionary *)responseObject;
         successBlock(accountDetails);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
