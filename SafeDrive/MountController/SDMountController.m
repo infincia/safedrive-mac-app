@@ -321,9 +321,10 @@
 
 -(void)unmountVolumeWithName:(NSString *)volumeName success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock {
     NSURL *mountURL = [self getMountURLForVolumeName:volumeName];
-
+    __weak SDMountController *weakSelf = self;
     [self.sharedSystemAPI ejectMount:mountURL success:^{
         successBlock(mountURL, nil);
+        weakSelf.mountURL = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:SDVolumeDidUnmountNotification object:nil];
     } failure:^(NSError *error) {
         failureBlock(mountURL, error);
