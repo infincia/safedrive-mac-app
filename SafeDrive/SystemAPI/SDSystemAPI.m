@@ -81,13 +81,17 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (NSInteger remainingTime = timeout; remainingTime > 0; remainingTime--) {
             if ([self checkForMountedVolume:mountURL]) {
-                successBlock();
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    successBlock();
+                });
                 return;
             }
             [NSThread sleepForTimeInterval:1];
         }
         NSError *volumeError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorTimeout userInfo:@{NSLocalizedDescriptionKey: @"Volume mount timeout"}];
-        failureBlock(volumeError);
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            failureBlock(volumeError);
+        });
     });
 }
 
