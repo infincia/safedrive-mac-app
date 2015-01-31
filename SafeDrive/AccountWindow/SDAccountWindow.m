@@ -121,7 +121,7 @@
     */
     NSURL *sshURL;
     #ifdef CUSTOM_NSURL
-    sshURL = [NSURL SSHURLForAccount:self.emailField.stringValue password:self.passwordField.stringValue host:SDTestCredentialsHost port:@(SDTestCredentialsPort) path:self.volumeNameField.stringValue];
+    sshURL = [NSURL SSHURLForAccount:self.emailField.stringValue host:SDTestCredentialsHost port:@(SDTestCredentialsPort) path:self.volumeNameField.stringValue];
     #else
     /*
         This is the modern way to create an NSURL, but it is only available on
@@ -146,7 +146,6 @@
     */
     NSURLComponents *urlComponents = [NSURLComponents new];
     urlComponents.user      = self.emailField.stringValue;
-    urlComponents.password  = self.passwordField.stringValue;
     urlComponents.host      = SDTestCredentialsHost;
     urlComponents.path      = [NSString stringWithFormat:@"/%@", self.volumeNameField.stringValue];
     urlComponents.port      = @(SDTestCredentialsPort);
@@ -154,7 +153,7 @@
     #endif
 
     //NSLog(@"Account window mounting URL: %@", sshURL);
-    NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychain:sshURL.user password:sshURL.password];
+    NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychain:self.emailField.stringValue password:self.passwordField.stringValue];
     if (keychainError) {
         [self displayError:keychainError forDuration:10];
         [self.spinner stopAnimation:self];
