@@ -46,6 +46,7 @@
 }
 
 -(void)startMountTaskWithVolumeName:(NSString *)volumeName sshURL:(NSURL *)sshURL success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock {
+    NSAssert([NSThread currentThread] == [NSThread mainThread], @"SSHFS task started from background thread");
 
     NSURL *mountURL = [self getMountURLForVolumeName:volumeName];
 

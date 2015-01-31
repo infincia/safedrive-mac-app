@@ -78,6 +78,8 @@
 }
 
 -(void)checkForMountedVolume:(NSURL *)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSystemSuccessBlock)successBlock failure:(SDSystemFailureBlock)failureBlock {
+    NSAssert([NSThread currentThread] == [NSThread mainThread], @"Mount check called on background thread");
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (NSInteger remainingTime = timeout; remainingTime > 0; remainingTime--) {
             if ([self checkForMountedVolume:mountURL]) {

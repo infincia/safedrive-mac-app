@@ -263,6 +263,7 @@
 }
 
 -(void)displayError:(NSError *)error forDuration:(NSTimeInterval)duration {
+    NSAssert([NSThread currentThread] == [NSThread mainThread], @"Error display called on background thread");
     self.currentlyDisplayedError = error;
     [NSApp activateIgnoringOtherApps:YES];
     self.errorField.stringValue = error.localizedDescription;
