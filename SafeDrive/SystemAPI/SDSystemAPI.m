@@ -166,8 +166,10 @@
         NSError *keychainRemoveError;
         [keychainItem removeFromKeychainWithError:&keychainRemoveError];
         if (keychainRemoveError) {
-            NSLog(@"Keychain remove error: %@", keychainRemoveError.localizedDescription);
-            return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Keychain failed to remove old credentials"}];
+            CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainRemoveError.code, NULL);
+            NSString *keychainErrorString = (id) CFBridgingRelease(err);
+            NSLog(@"Keychain remove error: %@", keychainErrorString);
+            return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
 ;
         }
     }
@@ -178,8 +180,10 @@
                                                    password:password
                                                       error:&keychainInsertError];
     if (keychainInsertError) {
-        NSLog(@"Keychain insert credential error: %@", keychainInsertError.localizedDescription);
-        return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Keychain failed to store credentials"}];
+        CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainInsertError.code, NULL);
+        NSString *keychainErrorString = (id) CFBridgingRelease(err);
+        NSLog(@"Keychain insert credential error: %@", keychainErrorString);
+        return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
 ;
     }
     return nil;
