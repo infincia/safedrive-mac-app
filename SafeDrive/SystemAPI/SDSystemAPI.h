@@ -11,7 +11,7 @@ typedef void(^SDSystemFailureBlock)(NSError *error);
 
 +(SDSystemAPI *)sharedAPI;
 
--(NSDictionary *)statusForMount:(NSURL *)mountURL;
+-(NSDictionary *)detailsForMount:(NSURL *)mountURL;
 
 -(BOOL)checkForMountedVolume:(NSURL *)mountURL;
 

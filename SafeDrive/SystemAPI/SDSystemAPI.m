@@ -44,7 +44,7 @@
     return localInstance;
 }
 
--(NSDictionary *)statusForMount:(NSURL *)mountURL {
+-(NSDictionary *)detailsForMount:(NSURL *)mountURL {
     NSMutableDictionary *mountpointInfo = [NSMutableDictionary new];
     NSError *error;
     NSNumber *volumeSize;

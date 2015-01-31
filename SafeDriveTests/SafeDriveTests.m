@@ -54,10 +54,10 @@
         XCTAssertNotNil(mountError);
 
         [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
-            NSDictionary *mountStatus = [self.sharedSystemAPI statusForMount:mountURL];
-            XCTAssertNotNil(mountStatus);
-            XCTAssertTrue(mountStatus[NSURLVolumeTotalCapacityKey]);
-            XCTAssertTrue(mountStatus[NSURLVolumeAvailableCapacityKey]);
+            NSDictionary *mountDetails = [self.sharedSystemAPI detailsForMount:mountURL];
+            XCTAssertNotNil(mountDetails);
+            XCTAssertTrue(mountDetails[NSURLVolumeTotalCapacityKey]);
+            XCTAssertTrue(mountDetails[NSURLVolumeAvailableCapacityKey]);
         } failure:^(NSError *error) {
             XCTFail(@"%@", error.localizedDescription);
         }];
@@ -69,11 +69,11 @@
 - (void)test_SDSystemAPI_statusForMountpoint {
     XCTAssertNotNil(self.sharedSystemAPI);
     // test root since it should always work as a URL
-    NSDictionary *mountStatus = [self.sharedSystemAPI statusForMount:[NSURL fileURLWithFileSystemRepresentation:"/\0" isDirectory:YES relativeToURL:nil]];
-    XCTAssertNotNil(mountStatus);
-    XCTAssertTrue(mountStatus[NSURLVolumeTotalCapacityKey]);
-    XCTAssertTrue(mountStatus[NSURLVolumeAvailableCapacityKey]);
-    NSLog(@"test_SDSystemAPI_statusForMountpoint: %@", mountStatus);
+    NSDictionary *mountDetails = [self.sharedSystemAPI detailsForMount:[NSURL fileURLWithFileSystemRepresentation:"/\0" isDirectory:YES relativeToURL:nil]];
+    XCTAssertNotNil(mountDetails);
+    XCTAssertTrue(mountDetails[NSURLVolumeTotalCapacityKey]);
+    XCTAssertTrue(mountDetails[NSURLVolumeAvailableCapacityKey]);
+    NSLog(@"test_SDSystemAPI_statusForMountpoint: %@", mountDetails);
 }
 
 - (void)test_SDSystemAPI_insertCredentialsInKeychain {
