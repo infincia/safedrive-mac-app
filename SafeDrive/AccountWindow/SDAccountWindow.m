@@ -79,6 +79,7 @@
     #warning Keep track of these SDMountStateProtocol requirements!!!
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateMounted:) name:SDMountStateMountedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateUnmounted:) name:SDMountStateUnmountedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateDetails:) name:SDMountStateDetailsNotification object:nil];
 
     // register SDVolumeEventProtocol notifications
     #warning Keep track of these SDVolumeEventProtocol requirements!!!
@@ -325,5 +326,8 @@
 
 }
 
+-(void)mountStateDetails:(NSNotification *)notification {
+
+}
 
 @end
