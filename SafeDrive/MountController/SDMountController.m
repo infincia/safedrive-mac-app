@@ -301,8 +301,8 @@
         [task.standardError fileHandleForReading].readabilityHandler = nil;
         if (task.terminationStatus == 0) {
             NSLog(@"Task exited cleanly, running successBlock");
-            weakSelf.mountURL = mountURL;
             dispatch_sync(dispatch_get_main_queue(), ^{
+                weakSelf.mountURL = mountURL;
                 successBlock(mountURL, nil);
             });
         }
