@@ -56,7 +56,9 @@
     */
     if (self.mountState == SDMountStateMounted) {
         NSError *mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
-        failureBlock(mountURL, mountError);
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            failureBlock(mountURL, mountError);
+        });
         return;
     }
 
@@ -226,15 +228,12 @@
         NSError *mountError;
         if ([outputString rangeOfString:@"No such file or directory"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Server could not find that volume name"}];
-            failureBlock(mountURL, mountError);
         }
         else if ([outputString rangeOfString:@"Not a directory"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Server could not find that volume name"}];
-            failureBlock(mountURL, mountError);
         }
         else if ([outputString rangeOfString:@"Permission denied"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
-            failureBlock(mountURL, mountError);
         }
         else if ([outputString rangeOfString:@"is itself on a OSXFUSE volume"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
@@ -252,19 +251,15 @@
         }
         else if ([outputString rangeOfString:@"Error resolving hostname"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Error resolving hostname, contact support"}];
-            failureBlock(mountURL, mountError);
         }
         else if ([outputString rangeOfString:@"remote host has disconnected"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Mount failed, check username and password"}];
-            failureBlock(mountURL, mountError);
         }
         else if ([outputString rangeOfString:@"REMOTE HOST IDENTIFICATION HAS CHANGED"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorHostFingerprintChanged userInfo:@{NSLocalizedDescriptionKey: @"Warning: server fingerprint changed!"}];
-            failureBlock(mountURL, mountError);
         }
         else if ([outputString rangeOfString:@"Host key verification failed"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorHostKeyVerificationFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server key verification failed!"}];
-            failureBlock(mountURL, mountError);
         }
         else {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorUnknown userInfo:@{NSLocalizedDescriptionKey: outputString}];
@@ -280,6 +275,9 @@
             // failureBlock(mountURL, mountError);
         }
         if (mountError) {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                failureBlock(mountURL, mountError);
+            });
             NSLog(@"SSHFS Task error: %lu, %@", mountError.code, mountError.localizedDescription);
         }
     };
@@ -304,7 +302,9 @@
         if (task.terminationStatus == 0) {
             NSLog(@"Task exited cleanly, running successBlock");
             weakSelf.mountURL = mountURL;
-            successBlock(mountURL, nil);
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                successBlock(mountURL, nil);
+            });
         }
     }];
 
