@@ -19,6 +19,7 @@ NSString *const SDServiceName = @"safedrive.io";
 
 NSString *const SDMountStateMountedNotification          = @"SDMountStateMountedNotification";
 NSString *const SDMountStateUnmountedNotification        = @"SDMountStateUnmountedNotification";
+NSString *const SDMountStateDetailsNotification          = @"SDMountDetailsNotification";
 
 NSString *const SDVolumeDidMountNotification              = @"SDVolumeDidMountNotification";
 NSString *const SDVolumeDidUnmountNotification            = @"SDVolumeDidUnmountNotification";

@@ -19,6 +19,8 @@ FOUNDATION_EXPORT NSString *const SDServiceName;
 
 FOUNDATION_EXPORT NSString *const SDMountStateMountedNotification;
 FOUNDATION_EXPORT NSString *const SDMountStateUnmountedNotification;
+FOUNDATION_EXPORT NSString *const SDMountStateDetailsNotification;
+
 
 FOUNDATION_EXPORT NSString *const SDVolumeDidMountNotification;
 FOUNDATION_EXPORT NSString *const SDVolumeDidUnmountNotification;

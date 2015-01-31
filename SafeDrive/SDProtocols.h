@@ -16,6 +16,7 @@
 @required
 -(void)mountStateMounted:(NSNotification*)notification;
 -(void)mountStateUnmounted:(NSNotification*)notification;
+-(void)mountStateDetails:(NSNotification *)notification;
 @end
 
 @protocol SDApplicationControlProtocol <NSObject>
