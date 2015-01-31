@@ -27,6 +27,8 @@
 @property SDMountController *mountController;
 @property SDSystemAPI *sharedSystemAPI;
 
+@property NSError *currentlyDisplayedError;
+
 -(void)resetErrorDisplay;
 -(void)displayError:(NSError *)error forDuration:(NSTimeInterval)duration;
 -(void)connectVolume;
@@ -237,15 +239,11 @@
 #pragma mark - Error display
 
 -(void)resetErrorDisplay {
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-        context.duration = 0.3f;
-        self.errorField.animator.alphaValue = 0.0f;
-    } completionHandler:^{
-        self.errorField.stringValue = @"";
-    }];
+    self.errorField.stringValue = @"";
 }
 
 -(void)displayError:(NSError *)error forDuration:(NSTimeInterval)duration {
+    self.currentlyDisplayedError = error;
     [NSApp activateIgnoringOtherApps:YES];
     self.errorField.stringValue = error.localizedDescription;
     NSColor *fadedRed = [NSColor colorWithCalibratedRed:1.0f green:0.25098f blue:0.25098f alpha:0.73f];
@@ -256,19 +254,22 @@
     else {
         self.errorField.textColor = fadedBlue;
     }
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-        context.duration = 0.5f;
-        self.errorField.animator.alphaValue = 1.0f;
-    } completionHandler:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-                context.duration = 0.3f;
-                self.errorField.animator.alphaValue = 0.0f;
-            } completionHandler:^{
-                [self resetErrorDisplay];
-            }];
-        });
-    }];
+    __weak SDAccountWindow *weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        /* 
+            Only reset the error display if this block is the most recent to be 
+            scheduled. If another error has been displayed since this block was
+            scheduled, we don't want to reset the display early, and should simply
+            return.
+            
+            On OS X 10.10 there is a dispatch_clear_block() method but for now,
+            using the NSError object as a context works.
+            
+        */
+        if (self.currentlyDisplayedError == error) {
+            [weakSelf resetErrorDisplay];
+        }
+    });
 
 }
 
