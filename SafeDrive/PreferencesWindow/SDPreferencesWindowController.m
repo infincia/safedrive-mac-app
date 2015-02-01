@@ -42,7 +42,8 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-
+    [self.window setLevel:NSStatusWindowLevel];
+    
     INAppStoreWindow *aWindow = (INAppStoreWindow*)[self window];
     aWindow.titleBarHeight = 24.0;
     aWindow.showsBaselineSeparator = NO;
