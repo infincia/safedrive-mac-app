@@ -4,7 +4,7 @@
 
 @import Cocoa;
 
-@interface SDPreferencesWindow : NSWindowController <SDMountStateProtocol>
+@interface SDPreferencesWindowController : NSWindowController <SDMountStateProtocol>
 
 @property NSString *volumeMountState;
 @property NSString *volumeTotalSpace;

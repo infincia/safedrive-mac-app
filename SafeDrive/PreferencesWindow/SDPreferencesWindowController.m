@@ -2,15 +2,15 @@
 //  Copyright (c) 2014 Infincia LLC. All rights reserved.
 //
 
-#import "SDPreferencesWindow.h"
+#import "SDPreferencesWindowController.h"
 #import <INAppStoreWindow/INAppStoreWindow.h>
 #import "SDSystemAPI.h"
 
-@interface SDPreferencesWindow ()
+@interface SDPreferencesWindowController ()
 @property SDSystemAPI *sharedSystemAPI;
 @end
 
-@implementation SDPreferencesWindow
+@implementation SDPreferencesWindowController
 
 /* 
     custom getter and setter for this property as it isn't local state, it's 

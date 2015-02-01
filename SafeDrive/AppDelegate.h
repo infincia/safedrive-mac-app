@@ -5,14 +5,14 @@
 @import Cocoa;
 
 @class SDAccountWindowController;
-@class SDPreferencesWindow;
+@class SDPreferencesWindowController;
 @class SDDropdownMenuController;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, SDApplicationControlProtocol>
 
 @property SDDropdownMenuController *dropdownMenuController;
 @property SDAccountWindowController *accountWindow;
-@property SDPreferencesWindow *preferencesWindow;
+@property SDPreferencesWindowController *preferencesWindow;
 
 @end
 

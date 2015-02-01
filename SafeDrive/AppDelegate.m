@@ -7,7 +7,7 @@
 
 #import "SDDropdownMenuController.h"
 #import "SDAccountWindowController.h"
-#import "SDPreferencesWindow.h"
+#import "SDPreferencesWindowController.h"
 #import <DCOAboutWindow/DCOAboutWindowController.h>
 
 @interface AppDelegate ()
@@ -21,7 +21,7 @@
     self.dropdownMenuController = [[SDDropdownMenuController alloc] init];
     
     self.accountWindow = [[SDAccountWindowController alloc] initWithWindowNibName:@"SDAccountWindow"];
-    self.preferencesWindow = [[SDPreferencesWindow alloc] initWithWindowNibName:@"SDPreferencesWindow"];
+    self.preferencesWindow = [[SDPreferencesWindowController alloc] initWithWindowNibName:@"SDPreferencesWindow"];
 
     self.aboutWindow = [[DCOAboutWindowController alloc] init];
     self.aboutWindow.useTextViewForAcknowledgments = YES;

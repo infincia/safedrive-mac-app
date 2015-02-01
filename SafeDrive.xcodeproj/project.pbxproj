@@ -20,7 +20,7 @@
 		AA31681C1A191B72006CC0EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31681B1A191B72006CC0EB /* main.m */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31682C1A191B72006CC0EB /* SafeDriveTests.m */; };
-		AA31684B1A192D27006CC0EB /* SDPreferencesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168491A192D26006CC0EB /* SDPreferencesWindow.m */; };
+		AA31684B1A192D27006CC0EB /* SDPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168491A192D26006CC0EB /* SDPreferencesWindowController.m */; };
 		AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168531A192DC2006CC0EB /* SDAPI.m */; };
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
 		AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */; };
@@ -115,8 +115,8 @@
 		AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeDriveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA31682B1A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA31682C1A191B72006CC0EB /* SafeDriveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SafeDriveTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AA3168481A192D26006CC0EB /* SDPreferencesWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDPreferencesWindow.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		AA3168491A192D26006CC0EB /* SDPreferencesWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDPreferencesWindow.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA3168481A192D26006CC0EB /* SDPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDPreferencesWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		AA3168491A192D26006CC0EB /* SDPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDPreferencesWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA31684F1A192D87006CC0EB /* SDMountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDMountController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AA3168501A192D87006CC0EB /* SDMountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDMountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3168521A192DC2006CC0EB /* SDAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -299,8 +299,8 @@
 		AA3168471A192D26006CC0EB /* PreferencesWindow */ = {
 			isa = PBXGroup;
 			children = (
-				AA3168481A192D26006CC0EB /* SDPreferencesWindow.h */,
-				AA3168491A192D26006CC0EB /* SDPreferencesWindow.m */,
+				AA3168481A192D26006CC0EB /* SDPreferencesWindowController.h */,
+				AA3168491A192D26006CC0EB /* SDPreferencesWindowController.m */,
 				AA0A7D1B1A19682000DCB77E /* SDPreferencesWindow.xib */,
 			);
 			path = PreferencesWindow;
@@ -598,7 +598,7 @@
 				AA0A7D151A19670600DCB77E /* SDAccountWindowController.m in Sources */,
 				AAA5A75B1A65E91600C98D24 /* SDTestCredentials.m in Sources */,
 				AA31681C1A191B72006CC0EB /* main.m in Sources */,
-				AA31684B1A192D27006CC0EB /* SDPreferencesWindow.m in Sources */,
+				AA31684B1A192D27006CC0EB /* SDPreferencesWindowController.m in Sources */,
 				AA9E7DE61A7950A500E3C3E8 /* NSURL+SSH.m in Sources */,
 				AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
