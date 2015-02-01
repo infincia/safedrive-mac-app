@@ -6,7 +6,7 @@
 #import "AppDelegate.h"
 
 #import "SDDropdownMenuController.h"
-#import "SDAccountWindow.h"
+#import "SDAccountWindowController.h"
 #import "SDPreferencesWindow.h"
 #import <DCOAboutWindow/DCOAboutWindowController.h>
 
@@ -20,7 +20,7 @@
 
     self.dropdownMenuController = [[SDDropdownMenuController alloc] init];
     
-    self.accountWindow = [[SDAccountWindow alloc] initWithWindowNibName:@"SDAccountWindow"];
+    self.accountWindow = [[SDAccountWindowController alloc] initWithWindowNibName:@"SDAccountWindow"];
     self.preferencesWindow = [[SDPreferencesWindow alloc] initWithWindowNibName:@"SDPreferencesWindow"];
 
     self.aboutWindow = [[DCOAboutWindowController alloc] init];

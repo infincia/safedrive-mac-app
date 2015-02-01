@@ -4,7 +4,7 @@
 
 @import Cocoa;
 
-@interface SDAccountWindow : NSWindowController <SDMountStateProtocol, SDVolumeEventProtocol>
+@interface SDAccountWindowController : NSWindowController <SDMountStateProtocol, SDVolumeEventProtocol>
 
 -(IBAction)mount:(id)sender;
 

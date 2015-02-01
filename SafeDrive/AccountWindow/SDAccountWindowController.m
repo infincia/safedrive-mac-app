@@ -2,7 +2,7 @@
 //  Copyright (c) 2014 Infincia LLC. All rights reserved.
 //
 
-#import "SDAccountWindow.h"
+#import "SDAccountWindowController.h"
 #import <INAppStoreWindow/INAppStoreWindow.h>
 #import <dispatch/dispatch.h>
 
@@ -16,7 +16,7 @@
 
 #define CUSTOM_NSURL
 
-@interface SDAccountWindow ()
+@interface SDAccountWindowController ()
 @property IBOutlet NSTextField *emailField;
 @property IBOutlet NSTextField *passwordField;
 @property IBOutlet NSTextField *volumeNameField;
@@ -35,7 +35,7 @@
 
 @end
 
-@implementation SDAccountWindow
+@implementation SDAccountWindowController
 
 
 
@@ -276,7 +276,7 @@
     else {
         self.errorField.textColor = fadedBlue;
     }
-    __weak SDAccountWindow *weakSelf = self;
+    __weak SDAccountWindowController *weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         /* 
             Only reset the error display if this block is the most recent to be 

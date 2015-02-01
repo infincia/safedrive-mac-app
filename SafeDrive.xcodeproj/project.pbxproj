@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		0CB8CE4FA71899FD8B581211 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC90D839322FCEA9362E8D12 /* libPods.a */; };
 		33EA39B2E8CF5BFF88C2812D /* libPods-safedriveaskpass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B1249E72DE80AA6A6DC7 /* libPods-safedriveaskpass.a */; };
-		AA0A7D151A19670600DCB77E /* SDAccountWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0A7D131A19670600DCB77E /* SDAccountWindow.m */; };
+		AA0A7D151A19670600DCB77E /* SDAccountWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0A7D131A19670600DCB77E /* SDAccountWindowController.m */; };
 		AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* SDPreferencesWindow.xib */; };
-		AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */; };
+		AA0A7D1E1A19682D00DCB77E /* SDAccountWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D201A19682D00DCB77E /* SDAccountWindowController.xib */; };
 		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA13CB9F1A7212F000A91C7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13CB9D1A7212F000A91C7A /* main.m */; };
@@ -87,10 +87,10 @@
 		64B5F6CFFF823B74297AAF32 /* Pods-safedriveaskpass.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.release.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.release.xcconfig"; sourceTree = "<group>"; };
 		6771B1249E72DE80AA6A6DC7 /* libPods-safedriveaskpass.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-safedriveaskpass.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A34345371AB24DAC0D1FC2D3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		AA0A7D121A19670600DCB77E /* SDAccountWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDAccountWindow.h; path = SafeDrive/AccountWindow/SDAccountWindow.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		AA0A7D131A19670600DCB77E /* SDAccountWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountWindow.m; path = SafeDrive/AccountWindow/SDAccountWindow.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA0A7D121A19670600DCB77E /* SDAccountWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDAccountWindowController.h; path = SafeDrive/AccountWindow/SDAccountWindowController.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		AA0A7D131A19670600DCB77E /* SDAccountWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountWindowController.m; path = SafeDrive/AccountWindow/SDAccountWindowController.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDPreferencesWindow.xib; sourceTree = "<group>"; };
-		AA0A7D1F1A19682D00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDAccountWindow.xib; sourceTree = "<group>"; };
+		AA0A7D1F1A19682D00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDAccountWindowController.xib; sourceTree = "<group>"; };
 		AA0A7D241A19687400DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0A7D2B1A1968C500DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -99,10 +99,10 @@
 		AA0A7D311A1968F200DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
 		AA0A7D331A1968F200DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0A7D371A19690100DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
-		AA0A7D3B1A196A8B00DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
-		AA0A7D3D1A196A9100DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
-		AA0A7D3F1A196A9400DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
-		AA0A7D411A196A9800DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
+		AA0A7D3B1A196A8B00DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SDAccountWindowController.strings; sourceTree = "<group>"; };
+		AA0A7D3D1A196A9100DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDAccountWindowController.strings; sourceTree = "<group>"; };
+		AA0A7D3F1A196A9400DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDAccountWindowController.strings; sourceTree = "<group>"; };
+		AA0A7D411A196A9800DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDAccountWindowController.strings; sourceTree = "<group>"; };
 		AA0A7D431A196B0700DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
 		AA13CB9D1A7212F000A91C7A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = safedriveaskpass/main.m; sourceTree = SOURCE_ROOT; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
@@ -288,9 +288,9 @@
 		AA31683B1A192CD2006CC0EB /* AccountWindow */ = {
 			isa = PBXGroup;
 			children = (
-				AA0A7D121A19670600DCB77E /* SDAccountWindow.h */,
-				AA0A7D131A19670600DCB77E /* SDAccountWindow.m */,
-				AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */,
+				AA0A7D121A19670600DCB77E /* SDAccountWindowController.h */,
+				AA0A7D131A19670600DCB77E /* SDAccountWindowController.m */,
+				AA0A7D201A19682D00DCB77E /* SDAccountWindowController.xib */,
 			);
 			name = AccountWindow;
 			path = LoginWindow;
@@ -496,7 +496,7 @@
 				AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */,
 				AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */,
 				AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */,
-				AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */,
+				AA0A7D1E1A19682D00DCB77E /* SDAccountWindowController.xib in Resources */,
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
 				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
 				AA7319421A2F7EEB003E2391 /* Main.xib in Resources */,
@@ -595,7 +595,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA0A7D151A19670600DCB77E /* SDAccountWindow.m in Sources */,
+				AA0A7D151A19670600DCB77E /* SDAccountWindowController.m in Sources */,
 				AAA5A75B1A65E91600C98D24 /* SDTestCredentials.m in Sources */,
 				AA31681C1A191B72006CC0EB /* main.m in Sources */,
 				AA31684B1A192D27006CC0EB /* SDPreferencesWindow.m in Sources */,
@@ -660,7 +660,7 @@
 			name = SDPreferencesWindow.xib;
 			sourceTree = "<group>";
 		};
-		AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */ = {
+		AA0A7D201A19682D00DCB77E /* SDAccountWindowController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				AA0A7D1F1A19682D00DCB77E /* Base */,
@@ -669,7 +669,7 @@
 				AA0A7D3F1A196A9400DCB77E /* es */,
 				AA0A7D411A196A9800DCB77E /* ro */,
 			);
-			name = SDAccountWindow.xib;
+			name = SDAccountWindowController.xib;
 			path = SafeDrive/AccountWindow;
 			sourceTree = SOURCE_ROOT;
 		};
