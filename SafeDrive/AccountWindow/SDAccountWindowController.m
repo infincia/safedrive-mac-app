@@ -44,7 +44,8 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-
+    [self.window setLevel:NSStatusWindowLevel];
+    
     self.safeDriveAPI = [SDAPI sharedAPI];
     self.mountController = [SDMountController sharedAPI];
     self.sharedSystemAPI = [SDSystemAPI sharedAPI];
