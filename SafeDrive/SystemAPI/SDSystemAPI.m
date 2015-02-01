@@ -165,7 +165,7 @@
         if (keychainRemoveError) {
             CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainRemoveError.code, NULL);
             NSString *keychainErrorString = (id) CFBridgingRelease(err);
-            NSLog(@"Keychain remove error: %@", keychainErrorString);
+                NSLog(@"Keychain remove error: %@, query: %@", keychainErrorString, keychainRemoveError.userInfo[MCSMKeychainItemQueryKey]);
             return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
 ;
         }
@@ -179,7 +179,7 @@
     if (keychainInsertError) {
         CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainInsertError.code, NULL);
         NSString *keychainErrorString = (id) CFBridgingRelease(err);
-        NSLog(@"Keychain insert credential error: %@", keychainErrorString);
+        NSLog(@"Keychain insert credential error: %@, query: %@", keychainErrorString, keychainInsertError.userInfo[MCSMKeychainItemQueryKey]);
         return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
 ;
     }
