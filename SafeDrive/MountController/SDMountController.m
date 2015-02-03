@@ -174,7 +174,6 @@
     [taskArguments addObject:mountURL.path];
 
     /* basic sshfs options */
-    [taskArguments addObject:[NSString stringWithFormat:@"-p%@", port]];
     [taskArguments addObject:@"-oauto_cache"];
     [taskArguments addObject:@"-oreconnect"];
     [taskArguments addObject:@"-odefer_permissions"];
