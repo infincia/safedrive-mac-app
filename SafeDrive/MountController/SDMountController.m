@@ -106,7 +106,7 @@
 
     self.sshfsTask = [[NSTask alloc] init];
 
-    [self.sshfsTask setLaunchPath:@"/usr/local/bin/sshfs"];
+    [self.sshfsTask setLaunchPath:SSHFSPath];
 
 
 
