@@ -10,7 +10,7 @@
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
 
-#import "NSURL+SSH.h"
+#import "NSURL+SFTP.h"
 
 #define SSHFS_TEST_MODE
 
@@ -123,7 +123,7 @@
     */
     NSURL *sshURL;
     #ifdef CUSTOM_NSURL
-    sshURL = [NSURL SSHURLForAccount:self.emailField.stringValue host:SDTestCredentialsHost port:@(SDTestCredentialsPort) path:self.volumeNameField.stringValue];
+    sshURL = [NSURL SFTPURLForAccount:self.emailField.stringValue host:SDTestCredentialsHost port:@(SDTestCredentialsPort) path:self.volumeNameField.stringValue];
     #else
     /*
         This is the modern way to create an NSURL, but it is only available on
