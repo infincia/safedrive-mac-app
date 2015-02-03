@@ -28,7 +28,7 @@
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
 		AA73194A1A2F86B8003E2391 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7319491A2F86B8003E2391 /* SDConstants.m */; };
 		AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */; };
-		AA9E7DE61A7950A500E3C3E8 /* NSURL+SSH.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9E7DE51A7950A500E3C3E8 /* NSURL+SSH.m */; };
+		AA9E7DE61A7950A500E3C3E8 /* NSURL+SFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9E7DE51A7950A500E3C3E8 /* NSURL+SFTP.m */; };
 		AAA5A75B1A65E91600C98D24 /* SDTestCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestCredentials.m */; };
 		AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */; };
 		AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */; };
@@ -138,8 +138,8 @@
 		AA7319561A2F95B2003E2391 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
 		AA7319581A2F95B3003E2391 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
 		AA73195A1A2F95B5003E2391 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
-		AA9E7DE41A7950A500E3C3E8 /* NSURL+SSH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SSH.h"; sourceTree = "<group>"; };
-		AA9E7DE51A7950A500E3C3E8 /* NSURL+SSH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SSH.m"; sourceTree = "<group>"; };
+		AA9E7DE41A7950A500E3C3E8 /* NSURL+SFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SFTP.h"; sourceTree = "<group>"; };
+		AA9E7DE51A7950A500E3C3E8 /* NSURL+SFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SFTP.m"; sourceTree = "<group>"; };
 		AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
 		AAEED2D11A7D76F200B92993 /* SDDataSizeTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDDataSizeTransformer.h; sourceTree = "<group>"; };
@@ -354,8 +354,8 @@
 		AA9E7DE31A79505600E3C3E8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				AA9E7DE41A7950A500E3C3E8 /* NSURL+SSH.h */,
-				AA9E7DE51A7950A500E3C3E8 /* NSURL+SSH.m */,
+				AA9E7DE41A7950A500E3C3E8 /* NSURL+SFTP.h */,
+				AA9E7DE51A7950A500E3C3E8 /* NSURL+SFTP.m */,
 				AAEED2D11A7D76F200B92993 /* SDDataSizeTransformer.h */,
 				AAEED2D21A7D76F200B92993 /* SDDataSizeTransformer.m */,
 			);
@@ -599,7 +599,7 @@
 				AAA5A75B1A65E91600C98D24 /* SDTestCredentials.m in Sources */,
 				AA31681C1A191B72006CC0EB /* main.m in Sources */,
 				AA31684B1A192D27006CC0EB /* SDPreferencesWindowController.m in Sources */,
-				AA9E7DE61A7950A500E3C3E8 /* NSURL+SSH.m in Sources */,
+				AA9E7DE61A7950A500E3C3E8 /* NSURL+SFTP.m in Sources */,
 				AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AA73194A1A2F86B8003E2391 /* SDConstants.m in Sources */,
