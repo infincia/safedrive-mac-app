@@ -288,6 +288,7 @@
 
             */
             // failureBlock(mountURL, mountError);
+            return;
         }
         if (mountError) {
             dispatch_sync(dispatch_get_main_queue(), ^{
