@@ -9,6 +9,11 @@
 FOUNDATION_EXPORT NSString *const SDAPIDomain;
 FOUNDATION_EXPORT NSString *const SDWebDomain;
 
+#pragma mark - Common paths
+
+FOUNDATION_EXPORT NSString *const SSHFSPath;
+FOUNDATION_EXPORT NSString *const OSXFUSEPath;
+
 #pragma mark - Keychain constants
 
 
@@ -54,7 +59,9 @@ typedef NS_ENUM(NSUInteger, SDMountError) {
     SDMountErrorAlreadyMounted            = 1006,
     SDMountErrorAskpassMissing            = 1007,
     SDMountErrorHostFingerprintChanged    = 1008,
-    SDMountErrorHostKeyVerificationFailed = 1009
+    SDMountErrorHostKeyVerificationFailed = 1009,
+    SDMountErrorOSXFUSEMissing            = 1010,
+    SDMountErrorSSHFSMissing              = 1011
 };
 
 #pragma mark - System API related errors

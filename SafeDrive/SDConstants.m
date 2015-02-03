@@ -9,6 +9,11 @@
 NSString *const SDAPIDomain = @"safedrive.io";
 NSString *const SDWebDomain = @"safedrive.io";
 
+#pragma mark - Common paths
+
+NSString *const SSHFSPath = @"/usr/local/bin/sshfs";
+NSString *const OSXFUSEPath = @"/Library/Filesystems/osxfusefs.fs";
+
 #pragma mark - Keychain constants
 
 
