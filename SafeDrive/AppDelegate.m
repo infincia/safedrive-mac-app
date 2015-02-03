@@ -9,6 +9,7 @@
 #import "SDAccountWindowController.h"
 #import "SDPreferencesWindowController.h"
 #import <DCOAboutWindow/DCOAboutWindowController.h>
+#import <PFMoveApplication.h>
 
 @interface AppDelegate ()
 @property DCOAboutWindowController *aboutWindow;
@@ -17,6 +18,7 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    PFMoveToApplicationsFolderIfNecessary();
 
     self.dropdownMenuController = [[SDDropdownMenuController alloc] init];
     
