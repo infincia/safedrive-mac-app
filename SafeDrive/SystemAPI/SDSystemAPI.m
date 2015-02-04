@@ -162,7 +162,7 @@
         if (keychainRemoveError) {
             CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainRemoveError.code, NULL);
             NSString *keychainErrorString = (id) CFBridgingRelease(err);
-                NSLog(@"Keychain remove error: %@, query: %@", keychainErrorString, keychainRemoveError.userInfo[MCSMKeychainItemQueryKey]);
+            NSLog(@"Keychain remove error: %@, query: %@", keychainErrorString, keychainRemoveError.userInfo[MCSMKeychainItemQueryKey]);
             return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
 ;
         }
