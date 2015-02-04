@@ -384,7 +384,6 @@
 				AA3168111A191B72006CC0EB /* Resources */,
 				2535D034CEF9D3398C849151 /* Copy Pods Resources */,
 				AABB0FBF1A3F290400FA3530 /* CopyFiles */,
-				AA9E7DE21A7838E400E3C3E8 /* Custom codesign DR */,
 			);
 			buildRules = (
 			);
@@ -573,20 +572,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		AA9E7DE21A7838E400E3C3E8 /* Custom codesign DR */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Custom codesign DR";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo \"----- Codesign $BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app -----\"\ncodesign -f -s 'Developer ID Application: Stephen Oliver (G738Z89QKM)' -r='designated => identifier \"io.safedrive.SafeDrive\" and anchor apple generic' $BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app";
 		};
 /* End PBXShellScriptBuildPhase section */
 
