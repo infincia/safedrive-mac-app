@@ -12,7 +12,6 @@ static int SSHAskPassReturnValueSuccess      = 0;
 static int SSHAskPassReturnValueUserCanceled = 1;
 
 
-void insert_test_data(NSString *accountName);
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
