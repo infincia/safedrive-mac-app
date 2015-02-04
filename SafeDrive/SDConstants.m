@@ -4,6 +4,13 @@
 
 #import "SDConstants.h"
 
+#pragma mark - General constants
+
+NSString *const SDDefaultVolumeName = @"SafeDrive";
+NSString *const SDDefaultServerPath = @"storage";
+NSString *const SDDefaultServerHostname = @"sd.infincia.com";
+NSInteger const SDDefaultServerPort = 22;
+
 #pragma mark - NSUserDefaults keys
 
 NSString *const SDCurrentVolumeNameKey = @"currentVolumeName";
