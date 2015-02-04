@@ -4,6 +4,10 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - NSUserDefaults keys
+
+FOUNDATION_EXPORT NSString *const SDCurrentVolumeNameKey;
+
 #pragma mark - SafeDrive API constants
 
 FOUNDATION_EXPORT NSString *const SDAPIDomain;

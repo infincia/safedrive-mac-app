@@ -4,6 +4,10 @@
 
 #import "SDConstants.h"
 
+#pragma mark - NSUserDefaults keys
+
+NSString *const SDCurrentVolumeNameKey = @"currentVolumeName";
+
 #pragma mark - SafeDrive API constants
 
 NSString *const SDAPIDomain = @"safedrive.io";
