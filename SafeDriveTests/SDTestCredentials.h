@@ -6,6 +6,3 @@
 
 FOUNDATION_EXPORT NSString *const SDTestCredentialsUser;
 FOUNDATION_EXPORT NSString *const SDTestCredentialsPassword;
-FOUNDATION_EXPORT NSString *const SDTestCredentialsHost;
-FOUNDATION_EXPORT NSString *const SDTestCredentialsPath;
-FOUNDATION_EXPORT NSInteger const SDTestCredentialsPort;
