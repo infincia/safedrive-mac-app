@@ -7,11 +7,8 @@
 
 static NSString *SDServiceName = @"safedrive.io";
 
-static int SSHAskPassReturnValueFailure      = -1;
-static int SSHAskPassReturnValueSuccess      = 0;
-static int SSHAskPassReturnValueUserCanceled = 1;
-
-
+static int SSHAskPassReturnValueSuccess = 0;
+static int SSHAskPassReturnValueFailure = 1;
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
