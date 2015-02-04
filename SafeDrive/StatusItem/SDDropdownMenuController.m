@@ -72,14 +72,14 @@
 
 
 -(void)disconnectVolume {
-    NSString *volumeName = [[NSUserDefaults standardUserDefaults] objectForKey:@"volumeName"];
-    if (volumeName) {
-        [self.mountController unmountVolumeWithName:volumeName success:^(NSURL *mountURL, NSError *mountError) {
-            //
-        } failure:^(NSURL *mountURL, NSError *mountError) {
-            //
-        }];
-    }
+    NSString *volumeName = self.sharedSystemAPI.currentVolumeName;
+    NSLog(@"Dismounting volume: %@", volumeName);
+    [self.mountController unmountVolumeWithName:volumeName success:^(NSURL *mountURL, NSError *mountError) {
+        //
+    } failure:^(NSURL *mountURL, NSError *mountError) {
+        //
+    }];
+
 }
 
 

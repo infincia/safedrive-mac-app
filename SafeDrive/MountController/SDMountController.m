@@ -391,16 +391,12 @@
 -(void)mountStateLoop {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (;;) {
-            NSString *volumeName = [[NSUserDefaults standardUserDefaults] objectForKey:@"volumeName"];
-            if (volumeName) {
-                NSURL *mountURL = [self getMountURLForVolumeName:volumeName];
-                BOOL mounted = [self.sharedSystemAPI checkForMountedVolume:mountURL];
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    self.mountState = ( mounted ? SDMountStateMounted : SDMountStateUnmounted);
-                });
-            }
-            //NSLog(@"Mount state: %lu", self.mountState);
+            NSString *volumeName = self.sharedSystemAPI.currentVolumeName;
+            NSURL *mountURL = [self getMountURLForVolumeName:volumeName];
+            BOOL mounted = [self.sharedSystemAPI checkForMountedVolume:mountURL];
+
             dispatch_sync(dispatch_get_main_queue(), ^{
+                self.mountState = ( mounted ? SDMountStateMounted : SDMountStateUnmounted);
                 switch (self.mountState) {
                     case SDMountStateMounted: {
                         NSURL *mountURL = [self getMountURLForVolumeName:volumeName];

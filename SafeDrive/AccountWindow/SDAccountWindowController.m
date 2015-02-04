@@ -165,7 +165,7 @@
     }
     
     #ifdef SSHFS_TEST_MODE
-    [self.mountController startMountTaskWithVolumeName:self.volumeNameField.stringValue sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
+    [self.mountController startMountTaskWithVolumeName:self.sharedSystemAPI.currentVolumeName sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
         NSLog(@"SSHFS subprocess start success in account window");
 
         /*
@@ -206,7 +206,7 @@
             NSLog(@"SafeDrive volume URL API success in account window");
 
 
-            [self.mountController startMountTaskWithVolumeName:self.volumeNameField.stringValue sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
+            [self.mountController startMountTaskWithVolumeName:self.sharedSystemAPI.currentVolumeName sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
                 NSLog(@"SSHFS subprocess start success in account window");
 
                 /*
