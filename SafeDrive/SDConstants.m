@@ -11,8 +11,8 @@ NSString *const SDWebDomain = @"safedrive.io";
 
 #pragma mark - Common paths
 
-NSString *const SSHFSPath = @"/usr/local/bin/sshfs";
-NSString *const OSXFUSEPath = @"/Library/Filesystems/osxfusefs.fs";
+NSString *const SDDefaultSSHFSPath = @"/usr/local/bin/sshfs";
+NSString *const SDDefaultOSXFUSEFSPath = @"/Library/Filesystems/osxfusefs.fs";
 
 #pragma mark - Keychain constants
 

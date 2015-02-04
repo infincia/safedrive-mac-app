@@ -11,8 +11,8 @@ FOUNDATION_EXPORT NSString *const SDWebDomain;
 
 #pragma mark - Common paths
 
-FOUNDATION_EXPORT NSString *const SSHFSPath;
-FOUNDATION_EXPORT NSString *const OSXFUSEPath;
+FOUNDATION_EXPORT NSString *const SDDefaultSSHFSPath;
+FOUNDATION_EXPORT NSString *const SDDefaultOSXFUSEFSPath;
 
 #pragma mark - Keychain constants
 
