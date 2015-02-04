@@ -73,7 +73,7 @@
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
-                            <binding destination="1Ol-33-M9u" name="value" keyPath="values.volumeName" id="ua8-mn-J5Y">
+                            <binding destination="1Ol-33-M9u" name="value" keyPath="values.currentVolumeName" id="BFC-Nk-rKp">
                                 <dictionary key="options">
                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                 </dictionary>
