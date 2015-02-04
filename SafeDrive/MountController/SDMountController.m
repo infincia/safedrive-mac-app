@@ -158,6 +158,38 @@
     */
     [sshfsEnvironment removeObjectForKey:@"SSH_AUTH_SOCK"];
 
+    /* 
+        Set a blank DISPLAY environment variable. This is critical for making
+        sure that OpenSSH actually runs our custom askpass binary, even though
+        X11 isn't being used at all.
+        
+        If you're reading this code or working on it, just be aware that SSH auth
+        relying on an askpass will *fail* 100% of the time without this variable
+        set, even though it's blank.
+        
+        For the reason, see below.
+        
+        ------------------------------------------------------------------------
+
+        OpenSSH will only run an askpass binary if a DISPLAY environment variable
+        is set. On OS X, that variable isn't present unless XQuartz is installed.
+        
+        Given that the original purpose of askpass was to display a GUI password 
+        prompt using X11, this behavior makes some sense. If DISPLAY isn't set, 
+        OpenSSH assumes the askpass won't be able to function because it won't 
+        have access to X11, so it doesn't even try to run the askpass.
+        
+        It's a flawed assumption now, particularly on systems that don't rely on
+        X11 for native display, but Apple's version of OpenSSH doesn't patch it 
+        out (likely because they don't use or even ship an askpass with OS X).
+
+        Lastly, this only overrides the variable for the SSHFS process environment,
+        it won't interfere with use of XQuartz at all.
+
+    */
+#warning DO NOT REMOVE THIS. See above comment for the reason.
+    [sshfsEnvironment setObject:@"" forKey:@"DISPLAY"];
+
     //NSLog(@"Subprocess environment: %@", sshfsEnvironment);
     self.sshfsTask.environment = sshfsEnvironment;
 
