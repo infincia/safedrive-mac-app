@@ -18,6 +18,7 @@
 @end
 
 @implementation SDSystemAPI
+@dynamic currentVolumeName;
 
 - (instancetype)init {
     self = [super init];
@@ -42,6 +43,14 @@
         localInstance = [[SDSystemAPI alloc] init];
     });
     return localInstance;
+}
+
+-(NSString *)currentVolumeName {
+    NSString *volumeName = [[NSUserDefaults standardUserDefaults] objectForKey:SDCurrentVolumeNameKey];
+    if (!volumeName) {
+        volumeName = SDDefaultVolumeName;
+    }
+    return volumeName;
 }
 
 -(NSDictionary *)detailsForMount:(NSURL *)mountURL {

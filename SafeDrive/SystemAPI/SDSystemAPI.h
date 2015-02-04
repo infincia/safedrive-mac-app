@@ -9,6 +9,8 @@ typedef void(^SDSystemFailureBlock)(NSError *error);
 
 @interface SDSystemAPI : NSObject
 
+@property (readonly) NSString *currentVolumeName;
+
 +(SDSystemAPI *)sharedAPI;
 
 -(NSDictionary *)detailsForMount:(NSURL *)mountURL;
