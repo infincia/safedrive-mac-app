@@ -133,8 +133,6 @@
     NSDictionary *credentials = nil;
     NSError *error;
 
-    //NSDictionary *attributes = @{ (__bridge id<NSCopying>)kSecAttrAccessGroup: SDServiceName };
-
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDServiceName
                                                                                         account:nil
                                                                                     attributes:nil
@@ -149,7 +147,6 @@
 }
 
 -(NSError *)insertCredentialsInKeychain:(NSString *)account password:(NSString *)password {
-    //NSDictionary *attributes = @{ (__bridge id<NSCopying>)kSecAttrAccessGroup: SDServiceName };
 
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDServiceName
                                                                                     account:nil
