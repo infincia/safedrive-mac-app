@@ -125,7 +125,7 @@
     */
     NSURL *sshURL;
     #ifdef CUSTOM_NSURL
-    sshURL = [NSURL SFTPURLForAccount:self.emailField.stringValue host:SDTestCredentialsHost port:@(SDTestCredentialsPort) path:self.volumeNameField.stringValue];
+    sshURL = [NSURL SFTPURLForAccount:self.emailField.stringValue host:SDDefaultServerHostname port:@(SDDefaultServerPort) path:SDDefaultServerPath];
     #else
     /*
         This is the modern way to create an NSURL, but it is only available on
