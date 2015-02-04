@@ -52,6 +52,8 @@
 
     self.passwordField.focusRingType = NSFocusRingTypeNone;
 
+    self.volumeNameField.placeholderString = SDDefaultVolumeName;
+
     // grab credentials from keychain if they exist
     NSDictionary *credentials = [self.sharedSystemAPI retrieveCredentialsFromKeychain];
     if (credentials) {
