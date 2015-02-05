@@ -14,6 +14,8 @@ FOUNDATION_EXPORT NSInteger const SDDefaultServerPort;
 #pragma mark - NSUserDefaults keys
 
 FOUNDATION_EXPORT NSString *const SDCurrentVolumeNameKey;
+FOUNDATION_EXPORT NSString *const SDMountAtLaunchKey;
+
 
 #pragma mark - SafeDrive API constants
 

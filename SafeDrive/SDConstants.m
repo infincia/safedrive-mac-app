@@ -14,6 +14,7 @@ NSInteger const SDDefaultServerPort = 22;
 #pragma mark - NSUserDefaults keys
 
 NSString *const SDCurrentVolumeNameKey = @"currentVolumeName";
+NSString *const SDMountAtLaunchKey = @"mountAtLaunch";
 
 #pragma mark - SafeDrive API constants
 
