@@ -19,6 +19,7 @@
 
 @implementation SDSystemAPI
 @dynamic currentVolumeName;
+@dynamic mountAtLaunch;
 
 - (instancetype)init {
     self = [super init];
@@ -51,6 +52,14 @@
         volumeName = SDDefaultVolumeName;
     }
     return volumeName;
+}
+
+-(BOOL)mountAtLaunch {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:SDMountAtLaunchKey];
+}
+
+-(void)setMountAtLaunch:(BOOL)mountAtLaunch {
+    [[NSUserDefaults standardUserDefaults] setBool:mountAtLaunch forKey:SDMountAtLaunchKey];
 }
 
 -(NSDictionary *)detailsForMount:(NSURL *)mountURL {
