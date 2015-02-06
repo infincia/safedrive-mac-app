@@ -8,7 +8,7 @@
 
 NSString *const SDDefaultVolumeName = @"SafeDrive";
 NSString *const SDDefaultServerPath = @"storage";
-NSString *const SDDefaultServerHostname = @"sd.infincia.com";
+NSString *const SDDefaultServerHostname = @"93.113.136.95";
 NSInteger const SDDefaultServerPort = 22;
 
 #pragma mark - NSUserDefaults keys
