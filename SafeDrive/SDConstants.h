@@ -63,8 +63,8 @@ FOUNDATION_EXPORT NSUInteger const SDErrorNone;
 
 #pragma mark - Mount related errors
 
-typedef NS_ENUM(NSUInteger, SDMountError) {
-    SDMountErrorUnknown                   = 1001,
+typedef NS_ENUM(NSInteger, SDMountError) {
+    SDMountErrorUnknown                   = -1,
     SDMountErrorAuthorization             = 1002,
     SDMountErrorTimeout                   = 1003,
     SDMountErrorMountFailed               = 1004,
@@ -79,8 +79,8 @@ typedef NS_ENUM(NSUInteger, SDMountError) {
 
 #pragma mark - System API related errors
 
-typedef NS_ENUM(NSUInteger, SDSystemError) {
-    SDSystemErrorUnknown                  = 2001,
+typedef NS_ENUM(NSInteger, SDSystemError) {
+    SDSystemErrorUnknown                  = -1,
     SDSystemErrorAddLoginItemFailed       = 2002,
     SDSystemErrorRemoveLoginItemFailed    = 2003,
     SDSystemErrorAddKeychainItemFailed    = 2004,
@@ -89,14 +89,15 @@ typedef NS_ENUM(NSUInteger, SDSystemError) {
 
 #pragma mark - SafeDrive API related errors
 
-typedef NS_ENUM(NSUInteger, SDAPIError) {
+typedef NS_ENUM(NSInteger, SDAPIError) {
+    SDAPIErrorUnknown       = -1,
     SDAPIErrorAuthorization = 3001,
     SDAPIErrorMaintenance   = 3002
 };
 
 #pragma mark - Mount state
 
-typedef NS_ENUM(NSUInteger, SDMountState) {
+typedef NS_ENUM(NSInteger, SDMountState) {
     SDMountStateUnknown   = -1,
     SDMountStateUnmounted = 0,
     SDMountStateMounted   = 1
