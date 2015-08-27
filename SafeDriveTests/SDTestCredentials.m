@@ -4,5 +4,5 @@
 
 #import "SDConstants.h"
 
-NSString *const SDTestCredentialsUser      = @"testuser";
-NSString *const SDTestCredentialsPassword  = @"testpass";
+NSString *const SDTestCredentialsUser      = @"bogdan.solga@safedrive.io";
+NSString *const SDTestCredentialsPassword  = @"safedrive.io";
