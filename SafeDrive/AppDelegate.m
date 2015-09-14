@@ -18,6 +18,44 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+#if DEBUG    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMM d yyyy"];
+    NSLocale *localeUS = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:localeUS];
+
+    NSDate *compileDate = [dateFormatter dateFromString:[NSString stringWithUTF8String:__DATE__]];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSWeekCalendarUnit 
+                                                                   fromDate:compileDate 
+                                                                     toDate:[NSDate date] 
+                                                                    options:0];
+    // Expired after 4 weeks
+    if ([components week] > 4) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"This beta of SafeDrive has expired.";
+        [alert addButtonWithTitle:@"OK"];
+        alert.informativeText = @"Please obtain a new version from safedrive.io";
+        if ([alert runModal]) {
+            [NSApp terminate:nil];
+        }
+    }   
+    else {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"This is a beta build of SafeDrive.";
+        [alert addButtonWithTitle:@"OK"];
+        NSDateComponents *weekComponent = [[NSDateComponents alloc] init];
+        weekComponent.week = 4;
+        
+        NSCalendar *theCalendar = [NSCalendar currentCalendar];
+        NSDate *expirationDate = [theCalendar dateByAddingComponents:weekComponent toDate:compileDate options:0];
+
+        alert.informativeText = [NSString stringWithFormat:@"It will expire on %@", expirationDate];
+        if ([alert runModal]) {
+
+        }
+    }
+#endif
+
     PFMoveToApplicationsFolderIfNecessary();
 
     self.dropdownMenuController = [[SDDropdownMenuController alloc] init];
