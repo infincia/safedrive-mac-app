@@ -6,7 +6,7 @@
 #import "FinderSync.h"
 
 @interface FinderSync ()
-
+-(void)showMessage:(NSString *)title withBody:(NSString *)body;
 @end
 
 @implementation FinderSync
@@ -109,6 +109,21 @@
 
 - (IBAction)openRestoreWindow:(id)sender {
     
+}
+
+#pragma mark - Helpers
+
+-(void)showMessage:(NSString *)title withBody:(NSString *)body {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = title;
+        [alert addButtonWithTitle:@"OK"];
+
+        alert.informativeText = body;
+        if ([alert runModal]) {
+
+        }
+    });
 }
 
 @end
