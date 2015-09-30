@@ -4,8 +4,7 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import <FinderSync/FinderSync.h>
 
-@interface FinderSync : FIFinderSync
-
-@end
+int main(int argc, const char * argv[]) {
+    return NSApplicationMain(argc, argv);
+}

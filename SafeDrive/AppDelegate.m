@@ -11,14 +11,20 @@
 #import <DCOAboutWindow/DCOAboutWindowController.h>
 #import <PFMoveApplication.h>
 
+#import "SDServiceXPCRouter.h"
+#import "SDServiceManager.h"
+
+
 @interface AppDelegate ()
 @property DCOAboutWindowController *aboutWindow;
+@property SDServiceXPCRouter *serviceRouter;
+@property SDServiceManager *serviceManager;
 @end
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-#if DEBUG    
+#if RELEASE    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMM d yyyy"];
     NSLocale *localeUS = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
@@ -57,7 +63,18 @@
 #endif
 
     PFMoveToApplicationsFolderIfNecessary();
-
+    self.serviceManager = [SDServiceManager sharedServiceManager];
+    [self.serviceManager deployService];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"Service status: %hhd", self.serviceManager.serviceStatus);
+        [self.serviceManager unloadService];
+         [NSThread sleepForTimeInterval:1];
+        [self.serviceManager loadService];
+        [NSThread sleepForTimeInterval:2];
+        self.serviceRouter = [[SDServiceXPCRouter alloc] init];
+    });
+    
     self.dropdownMenuController = [[SDDropdownMenuController alloc] init];
     
     self.accountWindow = [[SDAccountWindowController alloc] initWithWindowNibName:@"SDAccountWindow"];
@@ -82,18 +99,25 @@
 #pragma mark - SDApplicationControlProtocol methods
 
 -(void)applicationShouldOpenAccountWindow:(NSNotification*)notification {
-    [NSApp activateIgnoringOtherApps:YES];
-    [self.accountWindow showWindow:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [NSApp activateIgnoringOtherApps:YES];
+        [self.accountWindow showWindow:nil];
+    });
 }
 
 -(void)applicationShouldOpenPreferencesWindow:(NSNotification*)notification {
-    [NSApp activateIgnoringOtherApps:YES];
-    [self.preferencesWindow showWindow:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [NSApp activateIgnoringOtherApps:YES];
+        [self.preferencesWindow showWindow:nil];
+    });
+
 }
 
 -(void)applicationShouldOpenAboutWindow:(NSNotification*)notification {
-    [NSApp activateIgnoringOtherApps:YES];
-    [self.aboutWindow showWindow:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [NSApp activateIgnoringOtherApps:YES];
+        [self.aboutWindow showWindow:nil];
+    });
 }
 
 @end

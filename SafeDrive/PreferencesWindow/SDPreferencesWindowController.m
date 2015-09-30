@@ -5,9 +5,12 @@
 #import "SDPreferencesWindowController.h"
 #import <INAppStoreWindow/INAppStoreWindow.h>
 #import "SDSystemAPI.h"
+#import "SDServiceManager.h"
 
 @interface SDPreferencesWindowController ()
 @property SDSystemAPI *sharedSystemAPI;
+@property SDServiceManager *sharedServiceManager;
+@property NSString *serviceStatus;
 @end
 
 @implementation SDPreferencesWindowController
@@ -22,6 +25,7 @@
 -(instancetype)initWithWindowNibName:(NSString *)windowNibName {
     self = [super initWithWindowNibName:windowNibName];
     self.sharedSystemAPI = [SDSystemAPI sharedAPI];
+    self.sharedServiceManager = [SDServiceManager sharedServiceManager];
 
     self.volumeMountState = @"";
     self.volumeTotalSpace = @"";
@@ -36,7 +40,15 @@
     #warning Keep track of these SDMountStateProtocol requirements!!!
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateMounted:) name:SDMountStateMountedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateUnmounted:) name:SDMountStateUnmountedNotification object:nil];
-
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (;;) {
+            BOOL serviceStatus = self.sharedServiceManager.serviceStatus;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.serviceStatus = serviceStatus ? @"Running" : @"Stopped";
+            });
+            [NSThread sleepForTimeInterval:1];
+        }
+    });
     return self;
 }
 
