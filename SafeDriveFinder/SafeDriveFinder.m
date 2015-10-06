@@ -50,17 +50,10 @@
             }] ping:^(NSString *reply) {
                 NSLog(@"Ping reply from service: %@", reply);
             }];
-            /*[[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
-                NSLog(@"Error: %@", error);
-            }] getAppEndpoint:^(NSXPCListenerEndpoint *endpoint) {
-                NSLog(@"Got app endpoint from service");
-                self.appConnection = [self createAppConnectionFromEndpoint:endpoint];
-            }];*/
             continue;
         }
         if (!self.appConnection) {
             NSLog(@"App connection not found, creating");
-            //self.appConnection = [self createAppConnection];
             [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
                 NSLog(@"Error: %@", error);
             }] getAppEndpoint:^(NSXPCListenerEndpoint *endpoint) {
@@ -104,30 +97,6 @@
 }
 
 #pragma mark - App XPC Connection
-
--(NSXPCConnection *)createAppConnection {
-    NSXPCConnection *newConnection = [[NSXPCConnection alloc] initWithMachServiceName:@"io.safedrive.SafeDrive" options:0];
-    NSXPCInterface *appInterface = [NSXPCInterface interfaceWithProtocol:@protocol(SDAppXPCProtocol)];
-    newConnection.remoteObjectInterface = appInterface;
-    __weak typeof(self) weakSelf = self;
-    newConnection.interruptionHandler = ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (weakSelf) {
-                NSLog(@"App connection interrupted");
-            }
-        });
-    };
-    newConnection.invalidationHandler = ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (weakSelf) {
-                NSLog(@"App connection invalidated");
-                weakSelf.appConnection = nil;
-            }
-        });
-    };
-    [newConnection resume];
-    return newConnection;
-}
 
 -(NSXPCConnection *)createAppConnectionFromEndpoint:(NSXPCListenerEndpoint *)endpoint {
     NSXPCConnection *newConnection = [[NSXPCConnection alloc] initWithListenerEndpoint:endpoint];
