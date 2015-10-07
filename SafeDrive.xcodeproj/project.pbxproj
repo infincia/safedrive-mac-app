@@ -606,7 +606,6 @@
 				AA4E77361A3E9B1D0054BBCA /* Sources */,
 				AA4E77371A3E9B1D0054BBCA /* Frameworks */,
 				AA4E77381A3E9B1D0054BBCA /* CopyFiles */,
-				972926468891CFF49A5B8009 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -837,21 +836,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		972926468891CFF49A5B8009 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AA5C1A991BB23FD0006A0C8C /* ShellScript */ = {
