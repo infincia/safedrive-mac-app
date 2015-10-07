@@ -66,7 +66,7 @@
                 NSLog(@"Ping reply from app: %@", reply);
             }];
         }
-        [NSThread sleepForTimeInterval:5];
+        [NSThread sleepForTimeInterval:1];
     }
 }
 
