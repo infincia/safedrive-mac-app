@@ -49,10 +49,7 @@
     NSURL *serviceDestinationURL = [safeDriveApplicationSupportURL URLByAppendingPathComponent:@"SafeDriveService.app" isDirectory:YES];
 
     NSURL *serviceSourceURL = [[NSBundle mainBundle] URLForResource:@"SafeDriveService" withExtension:@"app" subdirectory:@"../PlugIns"];
-    NSLog(@"Service source URL in bundle: %@", serviceSourceURL);
-    NSLog(@"Service destination URL %@", serviceDestinationURL);
     if ([[NSFileManager defaultManager] fileExistsAtPath:serviceDestinationURL.path]) {
-        NSLog(@"Service already installed, removing old copy");
         [[NSFileManager defaultManager] removeItemAtURL:serviceDestinationURL error:nil];
     }
     NSError *copyError = nil;
