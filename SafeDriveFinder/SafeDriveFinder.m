@@ -155,7 +155,7 @@
 }
 
 - (NSImage *)toolbarItemImage {
-    return [NSImage imageNamed:NSImageNameNetwork];
+    return [NSImage imageNamed:NSImageNameLockLockedTemplate];
 }
 
 - (NSMenu *)menuForMenuKind:(FIMenuKind)whichMenu {
