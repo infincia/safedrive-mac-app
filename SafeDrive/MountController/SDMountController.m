@@ -217,11 +217,9 @@
         testing purposes until we can implement a UI and code for displaying
         server fingerprints and allowing users to check and accept them or use
         the bundled known_hosts file to preapprove server fingerprints 
-
+    */
     [taskArguments addObject:@"-oCheckHostIP=no"];
     [taskArguments addObject:@"-oStrictHostKeyChecking=no"];
-    
-    */
 
     /* 
         Use a bundled known_hosts file as static root of trust.
@@ -239,9 +237,8 @@
             2. Users are never going to be subject to man-in-the-middle attacks
                as the fingerprint is preconfigured in the app
     */
-    NSString *knownHostsFile = [[NSBundle mainBundle] pathForResource:@"known_hosts" ofType:nil];
+    //NSString *knownHostsFile = [[NSBundle mainBundle] pathForResource:@"known_hosts" ofType:nil];
     //NSLog(@"Known hosts file: %@", knownHostsFile);
-    [taskArguments addObject:[NSString stringWithFormat:@"-oUserKnownHostsFile=%@", knownHostsFile]];
 
 
     #ifdef TEST_MODE
@@ -252,6 +249,7 @@
     //[taskArguments addObject:@"-d"];
     //[taskArguments addObject:@"-odebug"];
     #endif
+    //[taskArguments addObject:[NSString stringWithFormat:@"-oUserKnownHostsFile=%@", knownHostsFile]];
 
     /* custom volume name */
     [taskArguments addObject:[NSString stringWithFormat:@"-ovolname=%@", volumeName]];
