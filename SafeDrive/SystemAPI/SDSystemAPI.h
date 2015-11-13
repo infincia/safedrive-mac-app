@@ -14,6 +14,14 @@ typedef void(^SDSystemFailureBlock)(NSError *error);
 
 +(SDSystemAPI *)sharedAPI;
 
+-(NSString *)machineSerialNumber;
+
+-(NSString *)machineID;
+
+-(NSString *)en0MAC;
+
+-(NSString *)currentOSVersion;
+
 -(NSDictionary *)detailsForMount:(NSURL *)mountURL;
 
 -(BOOL)checkForMountedVolume:(NSURL *)mountURL;
