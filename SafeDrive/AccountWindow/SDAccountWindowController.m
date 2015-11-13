@@ -93,8 +93,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidMount:) name:SDVolumeDidMountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidUnmount:) name:SDVolumeDidUnmountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeShouldUnmount:) name:SDVolumeShouldUnmountNotification object:nil];
-
-
+    if (self.sharedSystemAPI.mountAtLaunch) {
+        NSURL *mountURL = [self.mountController getMountURLForVolumeName:self.sharedSystemAPI.currentVolumeName];
+        BOOL mounted = [self.sharedSystemAPI checkForMountedVolume:mountURL];
+        if (!mounted) {
+            [self showWindow:nil];
+            [self connectVolume];
+        }
+    }
 }
 
 -(void)dealloc {
