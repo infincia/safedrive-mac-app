@@ -22,6 +22,7 @@
     self = [super init];
     if (self) {
         self.mountState = SDMountStateUnmounted;
+        self.mounting = NO;
         self.sharedSystemAPI = [SDSystemAPI sharedAPI];
         [self mountStateLoop];
     }
