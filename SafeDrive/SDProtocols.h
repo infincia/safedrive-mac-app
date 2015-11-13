@@ -24,6 +24,12 @@
 -(void)didReceiveAccountStatus:(NSNotification*)notification;
 -(void)didReceiveAccountDetails:(NSNotification *)notification;
 @end
+
+@protocol SDServiceStatusProtocol <NSObject>
+@required
+-(void)didReceiveServiceStatus:(NSNotification*)notification;
+@end
+
 @protocol SDApplicationControlProtocol <NSObject>
 @required
 -(void)applicationShouldOpenPreferencesWindow:(NSNotification*)notification;

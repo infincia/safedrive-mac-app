@@ -57,6 +57,7 @@ NSString *const SDAPIDidBecomeUnreachable                 = @"SDAPIDidBecomeUnre
 NSString *const SDAccountStatusNotification               = @"SDAccountStatusNotification";
 NSString *const SDAccountDetailsNotification              = @"SDAccountDetailsNotification";
 
+NSString *const SDServiceStatusNotification               = @"SDServiceStatusNotification";
 
 #pragma mark - Errors
 

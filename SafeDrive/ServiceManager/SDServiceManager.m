@@ -6,19 +6,39 @@
 
 @import ServiceManagement;
 
+@interface SDServiceManager ()
+-(void)serviceLoop;
+@end
+
 @implementation SDServiceManager
 @dynamic serviceStatus;
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-
+        [self serviceLoop];
     }
     return self;
 }
 
 - (void)dealloc {
     //never
+}
+
+#pragma mark
+#pragma mark Internal API
+
+-(void)serviceLoop {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (;;) {
+            BOOL serviceStatus = self.serviceStatus;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:SDServiceStatusNotification object:@(serviceStatus)];
+
+            });
+            [NSThread sleepForTimeInterval:1];
+        }
+    });
 }
 
 

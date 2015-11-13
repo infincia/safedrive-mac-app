@@ -59,6 +59,9 @@ FOUNDATION_EXPORT NSString *const SDAPIDidBecomeUnreachable;
 FOUNDATION_EXPORT NSString *const SDAccountStatusNotification;
 FOUNDATION_EXPORT NSString *const SDAccountDetailsNotification;
 
+FOUNDATION_EXPORT NSString *const SDServiceStatusNotification;
+
+
 #pragma mark - Status Enums
 
 typedef NS_ENUM(NSUInteger, SDAccountStatus) {
