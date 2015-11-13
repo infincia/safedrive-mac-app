@@ -116,28 +116,7 @@
     NSMutableDictionary *sshfsEnvironment = [NSMutableDictionary dictionaryWithDictionary:[[NSProcessInfo processInfo] environment]];
 
     /* path of our custom askpass helper so ssh can use it */
-    NSString *safeDriveAskpassPath;
-
-#ifdef TEST_MODE
-    /*
-        Point sshfs/ssh directly at the askpass binary in the compiled products directory
-        
-        This is needed as the alternative relative path based on the bundle does
-        not work for testing purposes, as there is no bundle
-
-    */
-    NSLog(@"Using test mode askpass");
-    NSString *builtProductsPath = sshfsEnvironment[@"__XCODE_BUILT_PRODUCTS_DIR_PATHS"];
-    NSURL *builtProductsURL = [NSURL fileURLWithPath:builtProductsPath isDirectory:YES];
-    NSURL *debugAskpassURL = [builtProductsURL URLByAppendingPathComponent:@"safedriveaskpass"];
-    safeDriveAskpassPath = [debugAskpassURL path];
-#else
-    NSLog(@"Using bundled askpass");
-    safeDriveAskpassPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"safedriveaskpass"];
-#endif
-
-    //NSLog(@"Askpass path: %@", safeDriveAskpassPath);
-
+    NSString *safeDriveAskpassPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"safedriveaskpass"];
 
     if (safeDriveAskpassPath != nil) {
         [sshfsEnvironment setObject:safeDriveAskpassPath forKey:@"SSH_ASKPASS"];
@@ -239,16 +218,6 @@
     */
     //NSString *knownHostsFile = [[NSBundle mainBundle] pathForResource:@"known_hosts" ofType:nil];
     //NSLog(@"Known hosts file: %@", knownHostsFile);
-
-
-    #ifdef TEST_MODE
-    /* debug output from sshfs, this will cause stderr to go crazy, but may be
-       necessary to properly parse fingerprint messages and host key verification
-       prompts
-    */
-    //[taskArguments addObject:@"-d"];
-    //[taskArguments addObject:@"-odebug"];
-    #endif
     //[taskArguments addObject:[NSString stringWithFormat:@"-oUserKnownHostsFile=%@", knownHostsFile]];
 
     /* custom volume name */
