@@ -56,11 +56,11 @@
                 NSLog(@"Error: %@", error);
             }] getAppEndpoint:^(NSXPCListenerEndpoint *endpoint) {
                 self.appConnection = [self createAppConnectionFromEndpoint:endpoint];
-            }];
-            [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
-                NSLog(@"Error: %@", error);
-            }] ping:^(NSString *reply) {
-                NSLog(@"Ping reply from app: %@", reply);
+                [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
+                    NSLog(@"Error: %@", error);
+                }] ping:^(NSString *reply) {
+                    NSLog(@"Ping reply from app: %@", reply);
+                }];
             }];
         }
         [NSThread sleepForTimeInterval:1];
