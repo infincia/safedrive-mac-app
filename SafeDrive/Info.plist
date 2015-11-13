@@ -32,5 +32,9 @@
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SUFeedURL</key>
+	<string>https://infincia.com:1600/safedrive/appcast.xml</string>
+	<key>SUShowReleaseNotes</key>
+	<false/>
 </dict>
 </plist>
