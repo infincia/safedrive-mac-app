@@ -89,7 +89,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenAccountWindow:) name:SDApplicationShouldOpenAccountWindow object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenPreferencesWindow:) name:SDApplicationShouldOpenPreferencesWindow object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenAboutWindow:) name:SDApplicationShouldOpenAboutWindow object:nil];
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenAboutWindow object:nil];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
