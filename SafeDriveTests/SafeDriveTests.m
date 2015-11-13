@@ -141,7 +141,6 @@
                  
                  */
                 XCTAssertNotNil(mountURL);
-                XCTAssertNotNil(mountError);
                 
                 [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
                     NSDictionary *mountDetails = [self.sharedSystemAPI detailsForMount:mountURL];
