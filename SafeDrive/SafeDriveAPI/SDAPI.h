@@ -5,20 +5,30 @@
 @import Foundation;
 
 typedef void(^SDAPISuccessBlock)();
-
-typedef void(^SDAPIAuthenticationSuccessBlock)(NSString *sessionToken);
-typedef void(^SDAPIVolumeLocationSuccessBlock)(NSURL *sshURL);
 typedef void(^SDAPIFailureBlock)(NSError *apiError);
 
-@interface SDAPI : NSObject
+typedef void(^SDAPIClientRegistrationSuccessBlock)(NSString *sessionToken);
+typedef void(^SDAPIAccountStatusBlock)(NSDictionary *accountStatus);
+typedef void(^SDAPIAccountDetailsBlock)(NSDictionary *accountDetails);
+typedef void(^SDAPIFingerprintListSuccessBlock)(NSDictionary *fingerprintPairs);
+
+@interface SDAPI : NSObject {
+    NSString *_privateSessionToken;
+}
 
 @property (nonatomic, readonly) NSURL *sshURL;
-@property (nonatomic, readonly) NSString *sessionToken;
+@property (nonatomic) NSString *sessionToken;
 
 +(SDAPI *)sharedAPI;
 
--(void)authenticateUser:(NSString *)user password:(NSString *)password success:(SDAPIAuthenticationSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
+-(void)registerMachineWithUser:(NSString *)user password:(NSString *)password success:(SDAPIClientRegistrationSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
 
--(void)volumeURLForUser:(NSString *)user sessionToken:(NSString *)token volume:(NSString *)volumeName success:(SDAPIVolumeLocationSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
+-(void)accountStatusForUser:(NSString *)user success:(SDAPIAccountStatusBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
+
+-(void)accountDetailsForUser:(NSString *)user success:(SDAPIAccountDetailsBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
+
+-(void)getHostFingerprintList:(SDAPIFingerprintListSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
+
+-(void)apiStatus:(SDAPISuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
 
 @end

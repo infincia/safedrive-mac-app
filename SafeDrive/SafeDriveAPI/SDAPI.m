@@ -3,26 +3,16 @@
 //
 
 #import "SDAPI.h"
+#import "SDSystemAPI.h"
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
-
-typedef void(^SDAPIAccountStatusBlock)(NSDictionary *accountStatus);
-typedef void(^SDAPIAccountDetailsBlock)(NSDictionary *accountDetails);
-typedef void(^SDAPIFingerprintListSuccessBlock)(NSString *fingerprintList);
 
 @interface SDAPI ()
 @property (nonatomic, readonly) AFNetworkReachabilityManager *reachabilityManager;
 @property (nonatomic, readonly) AFHTTPRequestOperationManager *apiManager;
 
--(void)accountStatusForUser:(NSString *)user sessionToken:(NSString *)token success:(SDAPIAccountStatusBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
-
--(void)accountDetailsForUser:(NSString *)user sessionToken:(NSString *)token success:(SDAPIAccountDetailsBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
-
--(void)getHostFingerprintList:(SDAPIFingerprintListSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
-
--(void)apiStatus:(SDAPISuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock;
-
-
+@property SDSystemAPI *sharedSystemAPI;
+@property NSURL *baseURL;
 @end
 
 @implementation SDAPI
@@ -30,8 +20,12 @@ typedef void(^SDAPIFingerprintListSuccessBlock)(NSString *fingerprintList);
 - (instancetype)init {
     self = [super init];
     if (self) {
+        
+        self.sharedSystemAPI = [SDSystemAPI sharedAPI];
+        
 
-        _reachabilityManager = [AFNetworkReachabilityManager managerForDomain:SDAPIDomain];
+
+        _reachabilityManager = [AFNetworkReachabilityManager managerForDomain:SDAPIDomainTesting];
 
         [self.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             switch (status) {
@@ -58,10 +52,12 @@ typedef void(^SDAPIFingerprintListSuccessBlock)(NSString *fingerprintList);
             }
         }];
 
-        NSURL *apiURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/sd/a/", SDAPIDomain]];
+        self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/api/1/", SDAPIDomainTesting]];
 
-        _apiManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:apiURL];
-        self.apiManager.requestSerializer = [[AFHTTPRequestSerializer alloc] init];
+        _apiManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:self.baseURL];
+        self.apiManager.requestSerializer = [[AFJSONRequestSerializer alloc] init];
+        [self.apiManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [self.apiManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
         self.apiManager.responseSerializer = [[AFJSONResponseSerializer alloc] init];
     }
     return self;
@@ -87,40 +83,44 @@ typedef void(^SDAPIFingerprintListSuccessBlock)(NSString *fingerprintList);
     return localInstance;
 }
 
--(void)authenticateUser:(NSString *)user password:(NSString *)password success:(SDAPIAuthenticationSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
-    NSDictionary *postParameters = @{@"user": user, @"password": password };
+-(void)setSessionToken:(NSString *)sessionToken {
+    _privateSessionToken = sessionToken;
+    [self.apiManager.requestSerializer setValue:_privateSessionToken forHTTPHeaderField:@"SD-Auth-Token"];
+}
 
-    [self.apiManager POST:@"/user/authenticate" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+-(NSString *)sessionToken {
+    NSDictionary *session = [self.sharedSystemAPI retrieveCredentialsFromKeychainForService:SDSessionServiceName];
+    if (session) {
+        [self.apiManager.requestSerializer setValue:session[@"password"] forHTTPHeaderField:@"SD-Auth-Token"];
+        return session[@"password"];
+    }
+    return _privateSessionToken;
+}
+
+#pragma mark - Client registration
+
+-(void)registerMachineWithUser:(NSString *)user password:(NSString *)password success:(SDAPIClientRegistrationSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
+    NSString *languageCode = [[NSLocale preferredLanguages] objectAtIndex:0];
+    NSLog(@"Lang: %@", languageCode);
+    NSString *os = [NSString stringWithFormat:@"OS X %@", self.sharedSystemAPI.currentOSVersion];
+    NSString *identifier = [self.sharedSystemAPI machineID];
+    
+    NSDictionary *postParameters = @{ @"email": user, @"password": password, @"operatingSystem": os,   @"language": languageCode, @"uniqueClientId": identifier };
+    NSLog(@"Post: %@", postParameters);
+    [self.apiManager POST:@"client/register" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
-
+        NSLog(@"Client registered: %@", response);
+        self.sessionToken = response[@"token"];
+        [self.sharedSystemAPI insertCredentialsInKeychainForService:SDSessionServiceName account:user password:response[@"token"]];
+        successBlock(self.sessionToken);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Client registration failed: %@", error.localizedDescription);
         failureBlock(error);
     }];
 }
 
-
--(void)volumeURLForUser:(NSString *)user sessionToken:(NSString *)token volume:(NSString *)volumeName success:(SDAPIVolumeLocationSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
-    NSDictionary *postParameters = @{@"user": user, @"session": token, @"volname": volumeName };
-
-    [self.apiManager POST:@"/user/volume" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *response = (NSDictionary *)responseObject;
-
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error);
-    }];
-}
-
-
-
-
-
-#pragma mark - Post phase 1 
-
--(void)accountStatusForUser:(NSString *)user sessionToken:(NSString *)token success:(SDAPIAccountStatusBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
-    NSDictionary *postParameters = @{@"user": user, @"session": token };
-
-    [self.apiManager POST:@"accountStatus" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+-(void)accountStatusForUser:(NSString *)user success:(SDAPIAccountStatusBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
+    [self.apiManager GET:@"account/status" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *accountStatus = (NSDictionary *)responseObject;
         successBlock(accountStatus);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -128,10 +128,8 @@ typedef void(^SDAPIFingerprintListSuccessBlock)(NSString *fingerprintList);
     }];
 }
 
--(void)accountDetailsForUser:(NSString *)user sessionToken:(NSString *)token success:(SDAPIAccountDetailsBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
-    NSDictionary *postParameters = @{@"user": user, @"session": token };
-
-    [self.apiManager POST:@"accountDetails" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+-(void)accountDetailsForUser:(NSString *)user success:(SDAPIAccountDetailsBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
+    [self.apiManager GET:@"account/details" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *accountDetails = (NSDictionary *)responseObject;
         successBlock(accountDetails);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -139,11 +137,12 @@ typedef void(^SDAPIFingerprintListSuccessBlock)(NSString *fingerprintList);
     }];
 }
 
+#pragma mark - Unused 
+
 -(void)getHostFingerprintList:(SDAPIFingerprintListSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
-    [self.apiManager GET:@"/fingerprints" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.apiManager GET:@"fingerprints" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
-
-
+        successBlock(response[@"fingerprints"]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error);
     }];
@@ -151,11 +150,10 @@ typedef void(^SDAPIFingerprintListSuccessBlock)(NSString *fingerprintList);
 
 
 -(void)apiStatus:(SDAPISuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
-
-    [self.apiManager GET:@"/status" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.apiManager GET:@"status" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
-
-
+        NSLog(@"API Status: %@", response);
+        successBlock();
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error);
     }];
