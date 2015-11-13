@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SDAccountWindowController">
@@ -28,18 +28,34 @@
                 <subviews>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hPX-9g-aAz" userLabel="Background">
                         <rect key="frame" x="0.0" y="-12" width="351" height="525"/>
+                        <animations/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="Login Screen" id="WKw-AS-Fub"/>
                     </imageView>
                     <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fMW-gW-mXX" userLabel="Email Field">
                         <rect key="frame" x="28" y="148" width="142" height="24"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="left" placeholderString="email" id="yV5-xM-rKA">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
+                            <binding destination="-2" name="value" keyPath="self.accountController.email" id="DdY-iq-yUw">
+                                <dictionary key="options">
+                                    <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                </dictionary>
+                            </binding>
                             <binding destination="-2" name="enabled" keyPath="self.mountController.mountState" id="pZf-0b-E9X">
                                 <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="-2" name="enabled2" keyPath="self.mountController.mounting" previousBinding="pZf-0b-E9X" id="XVU-N7-DO6">
+                                <dictionary key="options">
+                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
@@ -47,14 +63,29 @@
                     </textField>
                     <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P8c-vh-VQc" userLabel="Password Field" customClass="NSSecureTextField">
                         <rect key="frame" x="189" y="148" width="142" height="24"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="left" placeholderString="password" id="e2V-t1-TCv">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
+                            <binding destination="-2" name="value" keyPath="self.accountController.password" id="auR-WY-KRc">
+                                <dictionary key="options">
+                                    <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                </dictionary>
+                            </binding>
                             <binding destination="-2" name="enabled" keyPath="self.mountController.mountState" id="Sx6-AL-kuE">
                                 <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="-2" name="enabled2" keyPath="self.mountController.mounting" previousBinding="Sx6-AL-kuE" id="SuC-vo-85p">
+                                <dictionary key="options">
+                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
@@ -62,6 +93,7 @@
                     </textField>
                     <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mc1-TV-NQe" userLabel="Volume Name Field">
                         <rect key="frame" x="28" y="99" width="235" height="24"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="left" placeholderString="SafeDrive" id="6i2-aU-1co">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -70,6 +102,15 @@
                         <connections>
                             <binding destination="-2" name="enabled" keyPath="self.mountController.mountState" id="lyA-xU-0bV">
                                 <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="-2" name="enabled2" keyPath="self.mountController.mounting" previousBinding="lyA-xU-0bV" id="toP-Gw-2Ej">
+                                <dictionary key="options">
+                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
@@ -82,14 +123,40 @@
                     </textField>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Dg-ut-JPk">
                         <rect key="frame" x="225" y="27" width="102" height="31"/>
+                        <animations/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Login Button" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="Ah9-Jo-RxI">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
                             <action selector="mount:" target="-2" id="HjC-B2-9IS"/>
+                            <binding destination="-2" name="enabled2" keyPath="self.accountController.email.length" previousBinding="H5o-Id-gR0" id="0zu-BO-ON5">
+                                <dictionary key="options">
+                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="0"/>
+                                </dictionary>
+                            </binding>
+                            <binding destination="-2" name="enabled3" keyPath="self.accountController.password.length" previousBinding="0zu-BO-ON5" id="cWS-H7-CXP">
+                                <dictionary key="options">
+                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="0"/>
+                                </dictionary>
+                            </binding>
                             <binding destination="-2" name="enabled" keyPath="self.mountController.mountState" id="H5o-Id-gR0">
                                 <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="-2" name="enabled4" keyPath="self.mountController.mounting" previousBinding="cWS-H7-CXP" id="MWc-Sm-eYm">
+                                <dictionary key="options">
+                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
@@ -97,6 +164,7 @@
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NQX-gH-k3k">
                         <rect key="frame" x="28" y="74" width="303" height="17"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Errors displayed here" placeholderString="" usesSingleLineMode="YES" id="Q3R-Nd-geZ">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" red="1" green="0.25098039215686274" blue="0.25098039215686274" alpha="0.72999999999999998" colorSpace="calibratedRGB"/>
@@ -105,8 +173,10 @@
                     </textField>
                     <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="riG-90-EaW">
                         <rect key="frame" x="201" y="34" width="16" height="16"/>
+                        <animations/>
                     </progressIndicator>
                 </subviews>
+                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>

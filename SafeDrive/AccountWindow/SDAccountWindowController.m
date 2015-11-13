@@ -9,6 +9,7 @@
 #import "SDAPI.h"
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
+#import "SDAccountController.h"
 
 #import "NSURL+SFTP.h"
 
@@ -49,17 +50,20 @@
     self.safeDriveAPI = [SDAPI sharedAPI];
     self.mountController = [SDMountController sharedAPI];
     self.sharedSystemAPI = [SDSystemAPI sharedAPI];
+    self.accountController = [SDAccountController sharedAccountController];
 
     self.passwordField.focusRingType = NSFocusRingTypeNone;
 
     self.volumeNameField.placeholderString = SDDefaultVolumeName;
 
     // grab credentials from keychain if they exist
-    NSDictionary *credentials = [self.sharedSystemAPI retrieveCredentialsFromKeychain];
+    NSDictionary *credentials = [self.sharedSystemAPI retrieveCredentialsFromKeychainForService:SDServiceName];
     if (credentials) {
-        self.emailField.stringValue = credentials[@"account"];
-        self.passwordField.stringValue = credentials[@"password"];
+        self.accountController.email = credentials[@"account"];
+        self.accountController.password = credentials[@"password"];
     }
+
+
     // reset error field to empty before display
     [self resetErrorDisplay];
 
@@ -113,148 +117,104 @@
 
 -(void)connectVolume {
     [self resetErrorDisplay];
+    self.mountController.mounting = YES;
     [self.spinner startAnimation:self];
-
-    /* 
-        Using NSURL here provides some validation of the parameters since we are
-        passing a standard RFC3986 URL string to SSHFS.
-
-        A custom NSURL category is being used because NSURLComponents isn't
-        available in OS X 10.8 (see below)
-
-    */
-    NSURL *sshURL;
-    #ifdef CUSTOM_NSURL
-    sshURL = [NSURL SFTPURLForAccount:self.emailField.stringValue host:SDDefaultServerHostname port:@(SDDefaultServerPort) path:SDDefaultServerPath];
-    #else
-    /*
-        This is the modern way to create an NSURL, but it is only available on
-        OS X 10.9+
-        
-        Things to keep in mind:
-
-        * The NSComponents URL property will just return nil if the parameters 
-          don't conform to RFC3986 (fragile if you don't check for that and handle it)
-        
-        * The user and password properties are only provided for compatibility
-          purposes and are technically deprecated in RFC3986. We're not giving
-          the password property directly to SSHFS (it's just used internally, 
-          an askpass helper binary is used for giving the password to SSHFS). We
-          ARE passing the user property though because that's how SSH logins work.
-        
-        * It isn't compatible with OS X 10.8, so we're not using it at the moment
-        
-        Whenever 10.8 support is dropped, THIS code should be used instead of
-        the custom NSURL category above
-
-    */
-    NSURLComponents *urlComponents = [NSURLComponents new];
-    urlComponents.user      = self.emailField.stringValue;
-    urlComponents.host      = SDTestCredentialsHost;
-    urlComponents.path      = [NSString stringWithFormat:@"/%@", self.volumeNameField.stringValue];
-    urlComponents.port      = @(SDTestCredentialsPort);
-    sshURL = urlComponents.URL;
-    #endif
-
-    //NSLog(@"Account window mounting URL: %@", sshURL);
-    NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychain:self.emailField.stringValue password:self.passwordField.stringValue];
+    
+    NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychainForService:SDServiceName account:self.accountController.email password:self.accountController.password];
     if (keychainError) {
         [self displayError:keychainError forDuration:10];
         [self.spinner stopAnimation:self];
+        self.mountController.mounting = NO;
         return;
     }
-    
-    #ifdef SSHFS_TEST_MODE
-    [self.mountController startMountTaskWithVolumeName:self.sharedSystemAPI.currentVolumeName sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
-        NSLog(@"SSHFS subprocess start success in account window");
-
-        /*
-            now check for a successful mount. if after 30 seconds there is no volume
-            mounted, it is a fair bet that an error occurred in the meantime
-        */
-        [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
-
-            NSLog(@"Mount volume success in account window");
-            [[NSNotificationCenter defaultCenter] postNotificationName:SDVolumeDidMountNotification object:nil];
-            [self.spinner stopAnimation:self];
-
-        } failure:^(NSError *error) {
-
-            NSLog(@"Mount volume failure in account window");
-            [self displayError:error forDuration:10];
-            [self.spinner stopAnimation:self];
-
-        }];
-
-
-    } failure:^(NSURL *mountURL, NSError *mountError) {
-
-        NSLog(@"SSHFS subprocess start failure in account window");
-        [self displayError:mountError forDuration:10];
-        [self.spinner stopAnimation:self];
-
-    }];
-
-    #else
-
-    [self.safeDriveAPI authenticateUser:self.emailField.stringValue password:self.passwordField.stringValue success:^(NSString *sessionToken) {
-
-        NSLog(@"SafeDrive auth API success in account window");
-
-        [self.safeDriveAPI volumeURLForUser:self.emailField.stringValue sessionToken:sessionToken volume:self.volumeNameField.stringValue success:^(NSURL *sshURL) {
-
-            NSLog(@"SafeDrive volume URL API success in account window");
-
-
-            [self.mountController startMountTaskWithVolumeName:self.sharedSystemAPI.currentVolumeName sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
-                NSLog(@"SSHFS subprocess start success in account window");
-
+    [self.safeDriveAPI registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
+        //
+        [self.safeDriveAPI accountStatusForUser:self.accountController.email success:^(NSDictionary *accountStatus) {            
+            NSLog(@"SafeDrive accountStatusForUser success in account window");
+            NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychainForService:SDSSHServiceName account:accountStatus[@"userName"] password:self.accountController.password];
+            if (keychainError) {
+                [self displayError:keychainError forDuration:10];
+                [self.spinner stopAnimation:self];
+                self.mountController.mounting = NO;
+                return;
+            }
+            /* 
+             Using NSURL here provides some validation of the parameters since we are
+             passing a standard RFC3986 URL string to SSHFS.
+             
+             A custom NSURL category is being used because NSURLComponents isn't
+             available in OS X 10.8 (see below)
+             
+             */
+            NSURL *sshURL;
+#ifdef CUSTOM_NSURL
+            sshURL = [NSURL SFTPURLForAccount:accountStatus[@"userName"] host:accountStatus[@"host"] port:accountStatus[@"port"] path:SDDefaultServerPath];
+#else
+            /*
+             This is the modern way to create an NSURL, but it is only available on
+             OS X 10.9+
+             
+             Things to keep in mind:
+             
+             * The NSComponents URL property will just return nil if the parameters 
+             don't conform to RFC3986 (fragile if you don't check for that and handle it)
+             
+             * The user and password properties are only provided for compatibility
+             purposes and are technically deprecated in RFC3986. We're not giving
+             the password property directly to SSHFS (it's just used internally, 
+             an askpass helper binary is used for giving the password to SSHFS). We
+             ARE passing the user property though because that's how SSH logins work.
+             
+             * It isn't compatible with OS X 10.8, so we're not using it at the moment
+             
+             Whenever 10.8 support is dropped, THIS code should be used instead of
+             the custom NSURL category above
+             
+             */
+            NSURLComponents *urlComponents = [NSURLComponents new];
+            urlComponents.user      = self.email;
+            urlComponents.host      = SDTestCredentialsHost;
+            urlComponents.path      = [NSString stringWithFormat:@"/%@", self.volumeNameField.stringValue];
+            urlComponents.port      = @(SDTestCredentialsPort);
+            sshURL = urlComponents.URL;
+#endif
+            [self.mountController startMountTaskWithVolumeName:@"SafeDrive" sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
+                NSLog(@"SafeDrive startMountTaskWithVolumeName success in account window");
                 /*
-                    now check for a successful mount. if after 30 seconds there is no volume
-                    mounted, it is a fair bet that an error occurred in the meantime
+                 now check for a successful mount. if after 30 seconds there is no volume
+                 mounted, it is a fair bet that an error occurred in the meantime
                  */
                 [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
-
-                    NSLog(@"Mount volume success in account window");
+                    NSLog(@"SafeDrive checkForMountedVolume success in account window");
                     [[NSNotificationCenter defaultCenter] postNotificationName:SDVolumeDidMountNotification object:nil];
+                    [self displayError:nil forDuration:10];
                     [self.spinner stopAnimation:self];
-
+                    self.mountController.mounting = NO;
                 } failure:^(NSError *error) {
-
-                    NSLog(@"Mount volume failure in account window");
+                    NSLog(@"SafeDrive checkForMountedVolume  failure in account window");
                     [self displayError:error forDuration:10];
                     [self.spinner stopAnimation:self];
-
+                    self.mountController.mounting = NO;
+                    
                 }];
-
-
             } failure:^(NSURL *mountURL, NSError *mountError) {
-
-                NSLog(@"SSHFS subprocess start failure in account window");
+                NSLog(@"SafeDrive startMountTaskWithVolumeName failure in account window");
                 [self displayError:mountError forDuration:10];
                 [self.spinner stopAnimation:self];
-
+                self.mountController.mounting = NO;
             }];
-
-        } failure:^(NSError *volumeAPIError) {
-
-            NSLog(@"Safedrive volume URL API failure in account window");
-            [self displayError:volumeAPIError forDuration:10];
+        } failure:^(NSError *apiError) {
+            NSLog(@"SafeDrive accountStatusForUser failure in account window");
+            [self displayError:apiError forDuration:10];
             [self.spinner stopAnimation:self];
-            
+            self.mountController.mounting = NO;
         }];
-
-    } failure:^(NSError *authError) {
-
-        NSLog(@"SafeDrive auth API failure in account window");
-        [self displayError:authError forDuration:10];
+        
+    } failure:^(NSError *apiError) {
+        [self displayError:apiError forDuration:10];
         [self.spinner stopAnimation:self];
-
+        self.mountController.mounting = NO;
     }];
-
-    #endif
-
-
 }
 
 

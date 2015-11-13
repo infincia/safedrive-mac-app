@@ -3,9 +3,10 @@
 //
 
 @import Cocoa;
+@class SDAccountController;
 
 @interface SDAccountWindowController : NSWindowController <SDMountStateProtocol, SDVolumeEventProtocol>
 
 -(IBAction)mount:(id)sender;
-
+@property SDAccountController *accountController;
 @end
