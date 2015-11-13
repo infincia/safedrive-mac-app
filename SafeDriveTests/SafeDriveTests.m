@@ -147,7 +147,12 @@
                     XCTAssertNotNil(mountDetails);
                     XCTAssertTrue(mountDetails[NSFileSystemSize]);
                     XCTAssertTrue(mountDetails[NSFileSystemFreeSize]);
-                    [expectation fulfill];
+                    [self.sharedMountController unmountVolumeWithName:@"SafeDrive" success:^(NSURL *mountURL, NSError *mountError) {
+                        [expectation fulfill];
+                    } failure:^(NSURL *mountURL, NSError *mountError) {
+                        XCTFail(@"%@", mountError.localizedDescription);
+                    }];
+                    
                 } failure:^(NSError *error) {
                     XCTFail(@"%@", error.localizedDescription);
                 }];
