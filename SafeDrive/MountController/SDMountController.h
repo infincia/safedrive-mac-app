@@ -14,6 +14,8 @@ typedef void(^SDMountFailureBlock)(NSURL *mountURL, NSError *mountError);
 
 +(SDMountController *)sharedAPI;
 
+-(NSURL *)getMountURLForVolumeName:(NSString *)volumeName;
+
 -(void)startMountTaskWithVolumeName:(NSString *)volumeName sshURL:(NSURL *)sshURL success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock;
 
 -(void)unmountVolumeWithName:(NSString *)volumeName success:(SDMountSuccessBlock)successBlock failure:(SDMountFailureBlock)failureBlock;

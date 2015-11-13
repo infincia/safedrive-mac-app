@@ -376,7 +376,7 @@
     }];
 }
 
-#pragma mark - Internal API
+
 
 -(NSURL *)getMountURLForVolumeName:(NSString *)volumeName {
     NSURL *volumesDirectoryURL = [NSURL fileURLWithPath:@"/Volumes" isDirectory:YES];
