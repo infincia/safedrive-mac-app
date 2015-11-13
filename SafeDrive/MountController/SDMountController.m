@@ -393,13 +393,14 @@
             NSString *volumeName = self.sharedSystemAPI.currentVolumeName;
             NSURL *mountURL = [self getMountURLForVolumeName:volumeName];
             BOOL mounted = [self.sharedSystemAPI checkForMountedVolume:mountURL];
-
+            NSDictionary *mountDetails;
+            if (mounted) {
+                mountDetails = [self.sharedSystemAPI detailsForMount:mountURL];
+            }
             dispatch_sync(dispatch_get_main_queue(), ^{
                 self.mountState = ( mounted ? SDMountStateMounted : SDMountStateUnmounted);
                 switch (self.mountState) {
                     case SDMountStateMounted: {
-                        NSURL *mountURL = [self getMountURLForVolumeName:volumeName];
-                        NSDictionary *mountDetails = [self.sharedSystemAPI detailsForMount:mountURL];
                         [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateDetailsNotification object:mountDetails];
                         [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateMountedNotification object:nil];
                         break;
