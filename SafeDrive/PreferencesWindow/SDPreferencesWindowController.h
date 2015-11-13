@@ -4,12 +4,19 @@
 
 @import Cocoa;
 
-@interface SDPreferencesWindowController : NSWindowController <SDMountStateProtocol>
+@interface SDPreferencesWindowController : NSWindowController <SDMountStateProtocol, SDAccountProtocol, SDServiceStatusProtocol>
 
 @property NSString *volumeMountState;
-@property NSString *volumeTotalSpace;
-@property NSString *volumeFreeSpace;
+@property NSNumber *volumeTotalSpace;
+@property NSNumber *volumeFreeSpace;
+@property NSNumber *volumeUsedSpace;
 
-@property BOOL autostart;
+@property (nonatomic) BOOL autostart;
+
+@property NSString *accountStatus;
+@property NSString *expirationDate;
+@property NSNumber *assignedStorage;
+@property NSNumber *usedStorage;
+
 
 @end

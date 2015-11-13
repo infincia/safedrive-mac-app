@@ -28,8 +28,8 @@
     self.sharedServiceManager = [SDServiceManager sharedServiceManager];
 
     self.volumeMountState = @"";
-    self.volumeTotalSpace = @"";
-    self.volumeFreeSpace = @"";
+    self.volumeTotalSpace = @(0);
+    self.volumeFreeSpace = @(0);
     
     // register SDVolumeEventProtocol notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidMount:) name:SDVolumeDidMountNotification object:nil];
@@ -40,15 +40,14 @@
     #warning Keep track of these SDMountStateProtocol requirements!!!
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateMounted:) name:SDMountStateMountedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateUnmounted:) name:SDMountStateUnmountedNotification object:nil];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (;;) {
-            BOOL serviceStatus = self.sharedServiceManager.serviceStatus;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.serviceStatus = serviceStatus ? @"Running" : @"Stopped";
-            });
-            [NSThread sleepForTimeInterval:1];
-        }
-    });
+    
+    // register SDAccountProtocol notifications
+    #warning Keep track of these SDAccountProtocol requirements!!!
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAccountStatus:) name:SDAccountStatusNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAccountDetails:) name:SDAccountDetailsNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveServiceStatus:) name:SDServiceStatusNotification object:nil];
+    
     return self;
 }
 
@@ -60,7 +59,7 @@
     aWindow.titleBarHeight = 24.0;
     aWindow.showsBaselineSeparator = NO;
 
-    NSColor *topColor = [NSColor whiteColor];
+    NSColor *topColor = [NSColor windowBackgroundColor];
     aWindow.titleBarStartColor     = topColor;
     aWindow.titleBarEndColor       = topColor;
     aWindow.baselineSeparatorColor = topColor;
@@ -121,13 +120,45 @@
 -(void)mountStateDetails:(NSNotification *)notification {
     NSDictionary *mountDetails = notification.object;
     if (mountDetails) {
-        self.volumeTotalSpace = mountDetails[NSURLVolumeTotalCapacityKey];
-        self.volumeFreeSpace = mountDetails[NSURLVolumeAvailableCapacityKey];
+        self.volumeTotalSpace = mountDetails[NSFileSystemSize];
+        self.volumeFreeSpace = mountDetails[NSFileSystemFreeSize];
+        self.volumeUsedSpace = @(self.volumeTotalSpace.longLongValue - self.volumeFreeSpace.longLongValue);
     }
     else {
         self.volumeTotalSpace = nil;
         self.volumeFreeSpace = nil;
     }
 }
+
+#pragma mark - SDAccountProtocol methods
+
+-(void)didReceiveAccountStatus:(NSNotification *)notification {
+    NSDictionary *accountStatus = notification.object;
+    NSString *status = accountStatus[@"status"];
+    self.accountStatus = [status capitalizedString];
+}
+
+-(void)didReceiveAccountDetails:(NSNotification *)notification {
+    NSDictionary *accountDetails = notification.object;
+    self.assignedStorage = accountDetails[@"assignedStorage"];
+    self.usedStorage = accountDetails[@"usedStorage"];
+    NSNumber *expirationDate = accountDetails[@"expirationDate"];
+    NSDate* date = [NSDate dateWithTimeIntervalSince1970:expirationDate.doubleValue / 1000];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.locale = [NSLocale currentLocale];
+    dateFormatter.timeStyle = NSDateFormatterMediumStyle;
+    dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+    //[dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    self.expirationDate = [dateFormatter stringFromDate:date];
+
+}
+
+#pragma mark - SDServiceStatusProtocol methods
+
+-(void)didReceiveServiceStatus:(NSNotification*)notification {
+    NSNumber *status = notification.object;
+    self.serviceStatus = status.boolValue ? @"Running" : @"Stopped";
+}
+
 
 @end
