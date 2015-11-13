@@ -45,14 +45,13 @@
     newConnection.interruptionHandler = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if (weakSelf) {
-                NSLog(@"Connection interrupted");
+
             }
         });
     };
     newConnection.invalidationHandler = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if (weakSelf) {
-                NSLog(@"Connection invalidated");
                 weakSelf.serviceConnection = nil;
             }
         });
@@ -79,23 +78,23 @@
     for (;;) {
         //[self ensureServiceIsRunning];
         if (!self.serviceConnection) {
-            NSLog(@"Service connection not found, creating");
+
             self.serviceConnection = [self createServiceConnection];
             [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
                 NSLog(@"Error: %@", error);
             }] ping:^(NSString *reply) {
-                NSLog(@"Ping reply: %@", reply);
+
             }];
             [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
                 NSLog(@"Error: %@", error);
             }] sendAppEndpoint:self.appListener.endpoint reply:^(BOOL success) {
-                NSLog(@"Sent endpoint, reply: %@", @(success));
+
             }];  
         }
         [[self.serviceConnection  remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
             NSLog(@"Error: %@", error);
         }] protocolVersion:^(NSNumber *version) {
-            NSLog(@"Service reports running protocol version %@", version);
+
             if ([version integerValue] != kSDServiceXPCProtocolVersion) {
                 NSLog(@"Service needs to be updated!!!!!");
                 [self.serviceConnection invalidate];
@@ -111,7 +110,7 @@
 #pragma mark - App Listener Delegate
 
 -(BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection {
-    NSLog(@"SafeDrive app accepted connection: %@", newConnection);
+
     NSXPCInterface *serviceInterface = [NSXPCInterface interfaceWithProtocol:@protocol(SDAppXPCProtocol)];
     newConnection.exportedInterface = serviceInterface;
     newConnection.exportedObject = self.appXPCDelegate;

@@ -67,7 +67,6 @@
     [self.serviceManager deployService];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSLog(@"Service status: %hhd", self.serviceManager.serviceStatus);
         [self.serviceManager unloadService];
          [NSThread sleepForTimeInterval:1];
         [self.serviceManager loadService];
