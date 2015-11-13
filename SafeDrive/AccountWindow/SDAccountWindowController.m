@@ -118,6 +118,8 @@
 -(void)connectVolume {
     [self resetErrorDisplay];
     self.mountController.mounting = YES;
+    NSError *e = [NSError errorWithDomain:SDErrorDomain code:SDErrorNone userInfo:@{NSLocalizedDescriptionKey:  NSLocalizedString(@"Mounting SafeDrive", @"String informing the user their safedrive is being mounted")}];
+    [self displayError:e forDuration:120];
     [self.spinner startAnimation:self];
     
     NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychainForService:SDServiceName account:self.accountController.email password:self.accountController.password];
