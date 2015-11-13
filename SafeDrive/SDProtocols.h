@@ -19,6 +19,11 @@
 -(void)mountStateDetails:(NSNotification *)notification;
 @end
 
+@protocol SDAccountProtocol <NSObject>
+@required
+-(void)didReceiveAccountStatus:(NSNotification*)notification;
+-(void)didReceiveAccountDetails:(NSNotification *)notification;
+@end
 @protocol SDApplicationControlProtocol <NSObject>
 @required
 -(void)applicationShouldOpenPreferencesWindow:(NSNotification*)notification;

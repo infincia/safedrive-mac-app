@@ -54,6 +54,8 @@ NSString *const SDAPIDidEnterMaintenancePeriod            = @"SDAPIDidEnterMaint
 NSString *const SDAPIDidBecomeReachable                   = @"SDAPIDidBecomeReachable";
 NSString *const SDAPIDidBecomeUnreachable                 = @"SDAPIDidBecomeUnreachable";
 
+NSString *const SDAccountStatusNotification               = @"SDAccountStatusNotification";
+NSString *const SDAccountDetailsNotification              = @"SDAccountDetailsNotification";
 
 
 #pragma mark - Errors

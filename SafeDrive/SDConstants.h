@@ -56,6 +56,8 @@ FOUNDATION_EXPORT NSString *const SDAPIDidEnterMaintenancePeriod;
 FOUNDATION_EXPORT NSString *const SDAPIDidBecomeReachable;
 FOUNDATION_EXPORT NSString *const SDAPIDidBecomeUnreachable;
 
+FOUNDATION_EXPORT NSString *const SDAccountStatusNotification;
+FOUNDATION_EXPORT NSString *const SDAccountDetailsNotification;
 
 #pragma mark - Status Enums
 
