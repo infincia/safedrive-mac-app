@@ -12,7 +12,6 @@
 @implementation SDServiceListenerDelegate
 
 -(BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection {
-    NSLog(@"SafeDrive service accepted connection: %@", newConnection);
     NSXPCInterface *serviceInterface = [NSXPCInterface interfaceWithProtocol:@protocol(SDServiceXPCProtocol)];
     newConnection.exportedInterface = serviceInterface;
     newConnection.exportedObject = self;
@@ -24,7 +23,6 @@
 
 
 -(void)sendMessage:(NSString *)message reply:(void (^)(NSString *reply))replyBlock {
-    NSLog(@"Helper got message: %@", message);
     replyBlock([NSString stringWithFormat:@"Got message: %@", message]);
 }
 
@@ -33,7 +31,6 @@
 }
 
 -(void)protocolVersion:(void (^)(NSNumber *version))replyBlock {
-    NSLog(@"Helper got service version request");
     replyBlock(@(kSDServiceXPCProtocolVersion));
 }
 

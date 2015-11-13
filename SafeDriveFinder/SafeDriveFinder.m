@@ -43,7 +43,6 @@
     for (;;) {
         //[self ensureServiceIsRunning];
         if (!self.serviceConnection) {
-            NSLog(@"Service connection not found, creating");
             self.serviceConnection = [self createServiceConnection];
             [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
                 NSLog(@"Error: %@", error);
@@ -53,11 +52,9 @@
             continue;
         }
         if (!self.appConnection) {
-            NSLog(@"App connection not found, creating");
             [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
                 NSLog(@"Error: %@", error);
             }] getAppEndpoint:^(NSXPCListenerEndpoint *endpoint) {
-                NSLog(@"Got app endpoint from service");
                 self.appConnection = [self createAppConnectionFromEndpoint:endpoint];
             }];
             [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {

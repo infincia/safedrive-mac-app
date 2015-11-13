@@ -30,7 +30,6 @@ typedef void(^SDAPIFingerprintListSuccessBlock)(NSString *fingerprintList);
 - (instancetype)init {
     self = [super init];
     if (self) {
-        NSLog(@"Creating SDAPI with base URL: %@", SDAPIDomain);
 
         _reachabilityManager = [AFNetworkReachabilityManager managerForDomain:SDAPIDomain];
 
