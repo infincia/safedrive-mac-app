@@ -5,10 +5,13 @@
 @import Cocoa;
 @import XCTest;
 
+#import "SDConstants.h"
 #import "SDAPI.h"
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
 #import "SDTestCredentials.h"
+
+#import "NSURL+SFTP.h"
 
 
 @interface SafeDriveTests : XCTestCase
@@ -31,38 +34,137 @@
     [super tearDown];
 }
 
+-(void)test_SDSystemAPI_machineID {
+    XCTAssertNotNil(self.sharedSystemAPI);
+    NSString *identifier = [self.sharedSystemAPI machineID];
+    XCTAssertNotNil(identifier);
+    NSLog(@"ID: %@", identifier);
+}
+
+-(void)test_SDSystemAPI_en0MAC {
+    XCTAssertNotNil(self.sharedSystemAPI);
+    NSString *mac = [self.sharedSystemAPI en0MAC];
+    XCTAssertNotNil(mac);
+    NSLog(@"MAC en0: %@", mac);
+}
+
+-(void)test_SDAPI_registerMachine {
+    XCTAssertNotNil(self.sharedSafedriveAPI);
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test_SDAPI_registerMachine"];
+    
+    [self.sharedSafedriveAPI registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
+        XCTAssertNotNil(sessionToken);
+        [expectation fulfill];
+    } failure:^(NSError *apiError) {
+        XCTFail(@"%@", apiError.localizedDescription);
+    }];
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"test_SDAPI_registerMachine error: %@", error.localizedDescription);    
+        }
+    }];
+}
+
+-(void)test_SDAPI_accountStatusForUser {
+    XCTAssertNotNil(self.sharedSafedriveAPI);
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test_SDAPI_accountStatusForUser"];
+    [self.sharedSafedriveAPI registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
+        XCTAssertNotNil(sessionToken);
+        [self.sharedSafedriveAPI accountStatusForUser:SDTestCredentialsUser success:^(NSDictionary *accountStatus) {
+            XCTAssertNotNil(accountStatus);
+            XCTAssertNotNil(accountStatus[@"host"]);
+            XCTAssertNotNil(accountStatus[@"port"]);
+            XCTAssertNotNil(accountStatus[@"status"]);
+            XCTAssertNotNil(accountStatus[@"userName"]);
+            NSLog(@"Account status: %@", accountStatus);
+            [expectation fulfill];
+        } failure:^(NSError *apiError) {
+            XCTFail(@"%@", apiError.localizedDescription);
+        }];
+    } failure:^(NSError *apiError) {
+        XCTFail(@"%@", apiError.localizedDescription);
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"test_SDAPI_accountStatusForUser error: %@", error.localizedDescription);    
+        }
+    }];
+}
+
+-(void)test_SDAPI_accountDetailsForUser {
+    XCTAssertNotNil(self.sharedSafedriveAPI);
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test_SDAPI_accountDetailsForUser"];
+    [self.sharedSafedriveAPI registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
+        XCTAssertNotNil(sessionToken);
+        [self.sharedSafedriveAPI accountDetailsForUser:SDTestCredentialsUser success:^(NSDictionary *accountDetails) {
+            XCTAssertNotNil(accountDetails);
+
+            NSLog(@"Account details: %@", accountDetails);
+            [expectation fulfill];
+        } failure:^(NSError *apiError) {
+            XCTFail(@"%@", apiError.localizedDescription);
+        }];
+    } failure:^(NSError *apiError) {
+        XCTFail(@"%@", apiError.localizedDescription);
+    }];
+    
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"test_SDAPI_accountDetailsForUser error: %@", error.localizedDescription);    
+        }
+    }];
+}
+
+
 - (void)test_SDMountController_startMountTaskWithVolumeName {
     XCTAssertNotNil(self.sharedMountController);
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test_SDMountController_startMountTaskWithVolumeName"];
 
-    // As this is only used for testing, we can use NSURLComponents which isn't available in OS X 10.8
-    NSURLComponents *urlComponents = [NSURLComponents new];
-    urlComponents.user = SDTestCredentialsUser;
-    urlComponents.password = SDTestCredentialsPassword;
-    urlComponents.host = SDTestCredentialsHost;
-    urlComponents.path = SDTestCredentialsPath;
-    urlComponents.port = @(SDTestCredentialsPort);
+    [self.sharedSafedriveAPI registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
+        XCTAssertNotNil(sessionToken);
+        [self.sharedSafedriveAPI accountStatusForUser:SDTestCredentialsUser success:^(NSDictionary *accountStatus) {
+            XCTAssertNotNil(accountStatus);
+            XCTAssertNotNil(accountStatus[@"host"]);
+            XCTAssertNotNil(accountStatus[@"port"]);
+            XCTAssertNotNil(accountStatus[@"status"]);
+            XCTAssertNotNil(accountStatus[@"userName"]);
+            
+            NSLog(@"Account status: %@", accountStatus);
+            
+            NSURL *url = [NSURL SFTPURLForAccount:accountStatus[@"userName"] host:accountStatus[@"host"] port:accountStatus[@"port"] path:SDDefaultServerPath];
 
-    NSURL *url = urlComponents.URL;
-
-    [self.sharedMountController startMountTaskWithVolumeName:@"SafeDrive" sshURL:url success:^(NSURL *mountURL, NSError *mountError) {
-        /*  
-            now check for a successful mount. if after 30 seconds there is no volume
-            mounted, it is a fair bet that an error occurred in the meantime
-        
-        */
-        XCTAssertNotNil(mountURL);
-        XCTAssertNotNil(mountError);
-
-        [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
-            NSDictionary *mountDetails = [self.sharedSystemAPI detailsForMount:mountURL];
-            XCTAssertNotNil(mountDetails);
-            XCTAssertTrue(mountDetails[NSURLVolumeTotalCapacityKey]);
-            XCTAssertTrue(mountDetails[NSURLVolumeAvailableCapacityKey]);
-        } failure:^(NSError *error) {
-            XCTFail(@"%@", error.localizedDescription);
+            [self.sharedMountController startMountTaskWithVolumeName:@"SafeDrive" sshURL:url success:^(NSURL *mountURL, NSError *mountError) {
+                /*  
+                 now check for a successful mount. if after 30 seconds there is no volume
+                 mounted, it is a fair bet that an error occurred in the meantime
+                 
+                 */
+                XCTAssertNotNil(mountURL);
+                XCTAssertNotNil(mountError);
+                
+                [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
+                    NSDictionary *mountDetails = [self.sharedSystemAPI detailsForMount:mountURL];
+                    XCTAssertNotNil(mountDetails);
+                    XCTAssertTrue(mountDetails[NSFileSystemSize]);
+                    XCTAssertTrue(mountDetails[NSFileSystemFreeSize]);
+                    [expectation fulfill];
+                } failure:^(NSError *error) {
+                    XCTFail(@"%@", error.localizedDescription);
+                }];
+            } failure:^(NSURL *mountURL, NSError *mountError) {
+                XCTFail(@"%@", mountError.localizedDescription);
+            }];
+        } failure:^(NSError *apiError) {
+            XCTFail(@"%@", apiError.localizedDescription);
         }];
-    } failure:^(NSURL *mountURL, NSError *mountError) {
-        XCTFail(@"%@", mountError.localizedDescription);
+    } failure:^(NSError *apiError) {
+        XCTFail(@"%@", apiError.localizedDescription);
+    }];
+    [self waitForExpectationsWithTimeout:30 handler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"test_SDAPI_registerMachine error: %@", error.localizedDescription);    
+        }
     }];
 }
 
@@ -71,28 +173,18 @@
     // test root since it should always work as a URL
     NSDictionary *mountDetails = [self.sharedSystemAPI detailsForMount:[NSURL fileURLWithFileSystemRepresentation:"/\0" isDirectory:YES relativeToURL:nil]];
     XCTAssertNotNil(mountDetails);
-    XCTAssertTrue(mountDetails[NSURLVolumeTotalCapacityKey]);
-    XCTAssertTrue(mountDetails[NSURLVolumeAvailableCapacityKey]);
+    XCTAssertTrue(mountDetails[NSFileSystemSize]);
+    XCTAssertTrue(mountDetails[NSFileSystemFreeSize]);
     NSLog(@"test_SDSystemAPI_statusForMountpoint: %@", mountDetails);
 }
 
-- (void)test_SDSystemAPI_insertCredentialsInKeychain {
+- (void)test_SDSystemAPI_insertCredentialsInKeychainForService {
     XCTAssertNotNil(self.sharedSystemAPI);
-    NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychain:SDTestCredentialsUser password:SDTestCredentialsPassword];
+    NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychainForService:SDServiceName account:SDTestCredentialsUser password:SDTestCredentialsPassword];
     if (keychainError) {
-        NSLog(@"test_SDSystemAPI_insertCredentialsInKeychain: %@", keychainError.localizedDescription);
+        NSLog(@"test_SDSystemAPI_insertCredentialsInKeychainForService: %@", keychainError.localizedDescription);
     }
 }
-
-
-/*
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
-*/
 
 
 @end
