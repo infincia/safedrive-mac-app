@@ -57,9 +57,7 @@
     */
     if (self.mountState == SDMountStateMounted) {
         NSError *mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            failureBlock(mountURL, mountError);
-        });
+        failureBlock(mountURL, mountError);
         return;
     }
 
