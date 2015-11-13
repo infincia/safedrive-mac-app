@@ -270,7 +270,7 @@
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"Error display called on background thread");
     self.currentlyDisplayedError = error;
     [NSApp activateIgnoringOtherApps:YES];
-    self.errorField.stringValue = error.localizedDescription;
+    self.errorField.stringValue = error ? error.localizedDescription : @"";
     NSColor *fadedRed = [NSColor colorWithCalibratedRed:1.0f green:0.25098f blue:0.25098f alpha:0.73f];
     NSColor *fadedBlue = [NSColor colorWithCalibratedRed:0.25098f green:0.25098f blue:1.0f alpha:0.73f];
     if (error.code > 0) {
