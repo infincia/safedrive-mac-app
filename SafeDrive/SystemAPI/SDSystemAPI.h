@@ -40,4 +40,6 @@ typedef void(^SDSystemFailureBlock)(NSError *error);
 
 -(NSError *)insertCredentialsInKeychainForService:(NSString *)service account:(NSString *)account password:(NSString *)password;
 
+-(NSError *)removeCredentialsInKeychainForService:(NSString *)service account:(NSString *)account;
+
 @end

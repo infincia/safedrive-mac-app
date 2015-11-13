@@ -180,9 +180,15 @@
 
 - (void)test_SDSystemAPI_insertCredentialsInKeychainForService {
     XCTAssertNotNil(self.sharedSystemAPI);
-    NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychainForService:SDServiceName account:SDTestCredentialsUser password:SDTestCredentialsPassword];
-    if (keychainError) {
-        NSLog(@"test_SDSystemAPI_insertCredentialsInKeychainForService: %@", keychainError.localizedDescription);
+    NSError *keychainInsertError = [self.sharedSystemAPI insertCredentialsInKeychainForService:SDServiceName account:SDTestCredentialsUser password:SDTestCredentialsPassword];
+    if (keychainInsertError) {
+        XCTFail(@"%@", keychainInsertError.localizedDescription);
+        NSLog(@"test_SDSystemAPI_insertCredentialsInKeychainForService: %@", keychainInsertError.localizedDescription);
+    }
+    NSError *keychainRemoveError = [self.sharedSystemAPI removeCredentialsInKeychainForService:SDServiceName account:SDTestCredentialsUser];
+    if (keychainRemoveError) {
+        XCTFail(@"%@", keychainRemoveError.localizedDescription);
+        NSLog(@"test_SDSystemAPI_insertCredentialsInKeychainForService: %@", keychainRemoveError.localizedDescription);
     }
 }
 

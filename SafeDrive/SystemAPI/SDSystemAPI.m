@@ -265,5 +265,21 @@
     return nil;
 }
 
+-(NSError *)removeCredentialsInKeychainForService:(NSString *)service account:(NSString *)account {
+
+    MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
+                                                                                    account:account
+                                                                                 attributes:nil
+                                                                                      error:NULL];
+    NSError *keychainRemoveError;
+    [keychainItem removeFromKeychainWithError:&keychainRemoveError];
+    if (keychainRemoveError) {
+        CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainRemoveError.code, NULL);
+        NSString *keychainErrorString = (id) CFBridgingRelease(err);
+        NSLog(@"Keychain remove error: %@, query: %@", keychainErrorString, keychainRemoveError.userInfo[MCSMKeychainItemQueryKey]);
+        return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
+    }
+    return keychainRemoveError;
+}
 
 @end
