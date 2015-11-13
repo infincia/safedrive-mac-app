@@ -139,22 +139,10 @@
 }
 
 -(NSDictionary *)detailsForMount:(NSURL *)mountURL {
-    NSMutableDictionary *mountpointInfo = [NSMutableDictionary new];
+    NSDictionary *mountpointInfo;
     NSError *error;
-    NSNumber *volumeSize;
-    if([mountURL getResourceValue:&volumeSize forKey:NSURLVolumeTotalCapacityKey error:&error]) {
-        mountpointInfo[NSURLVolumeTotalCapacityKey] = volumeSize;
-    }
-    else {
-        /* Handle error */
-    }
-    NSNumber *volumeSpaceAvailable;
-    if([mountURL getResourceValue:&volumeSpaceAvailable forKey:NSURLVolumeAvailableCapacityKey error:&error]) {
-        mountpointInfo[NSURLVolumeAvailableCapacityKey] = volumeSpaceAvailable;
-    }
-    else {
-        /* Handle error */
-    }
+    mountpointInfo = [[NSFileManager defaultManager] attributesOfFileSystemForPath:mountURL.path error:&error];
+    if (error) NSLog(@"Mount details error: %@", error.localizedDescription);
     return mountpointInfo;
 }
 
