@@ -31,7 +31,8 @@ NSString *const SDDefaultOSXFUSEFSPath = @"/Library/Filesystems/osxfusefs.fs";
 
 
 NSString *const SDServiceName = @"safedrive.io";
-
+NSString *const SDSSHServiceName = @"ssh.safedrive.io";
+NSString *const SDSessionServiceName = @"session.safedrive.io";
 
 #pragma mark - Custom NSNotifications
 

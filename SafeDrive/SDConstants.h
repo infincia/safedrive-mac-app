@@ -32,6 +32,8 @@ FOUNDATION_EXPORT NSString *const SDDefaultOSXFUSEFSPath;
 
 
 FOUNDATION_EXPORT NSString *const SDServiceName;
+FOUNDATION_EXPORT NSString *const SDSSHServiceName;
+FOUNDATION_EXPORT NSString *const SDSessionServiceName;
 
 
 #pragma mark - Custom NSNotifications

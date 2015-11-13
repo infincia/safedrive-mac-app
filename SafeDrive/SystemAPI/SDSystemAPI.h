@@ -36,8 +36,8 @@ typedef void(^SDSystemFailureBlock)(NSError *error);
 
 -(NSError *)disableAutostart;
 
--(NSDictionary *)retrieveCredentialsFromKeychain;
+-(NSDictionary *)retrieveCredentialsFromKeychainForService:(NSString *)service;
 
--(NSError *)insertCredentialsInKeychain:(NSString *)account password:(NSString *)password;
+-(NSError *)insertCredentialsInKeychainForService:(NSString *)service account:(NSString *)account password:(NSString *)password;
 
 @end

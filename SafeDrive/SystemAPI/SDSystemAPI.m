@@ -223,16 +223,16 @@
     return loginItemError;
 }
 
--(NSDictionary *)retrieveCredentialsFromKeychain {
+-(NSDictionary *)retrieveCredentialsFromKeychainForService:(NSString *)service {
     NSDictionary *credentials = nil;
     NSError *error;
 
-    MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDServiceName
+    MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
                                                                                         account:nil
                                                                                     attributes:nil
                                                                                          error:&error];
     if (error) {
-        NSLog(@"Failure retrieving credentials: %@", error.localizedDescription);
+        NSLog(@"Failure retrieving %@ credentials: %@", service, error.localizedDescription);
     }
     else {
         credentials = @{@"account": keychainItem.account, @"password": keychainItem.password };
@@ -240,9 +240,9 @@
     return credentials;
 }
 
--(NSError *)insertCredentialsInKeychain:(NSString *)account password:(NSString *)password {
+-(NSError *)insertCredentialsInKeychainForService:(NSString *)service account:(NSString *)account password:(NSString *)password {
 
-    MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDServiceName
+    MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
                                                                                     account:nil
                                                                                  attributes:nil
                                                                                       error:NULL];
@@ -262,7 +262,7 @@
         }
     }
     NSError *keychainInsertError;
-    [MCSMGenericKeychainItem genericKeychainItemWithService:SDServiceName
+    [MCSMGenericKeychainItem genericKeychainItemWithService:service
                                                     account:account
                                                  attributes:nil
                                                    password:password
