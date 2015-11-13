@@ -77,6 +77,7 @@
     self.dropdownMenuController = [[SDDropdownMenuController alloc] init];
     
     self.accountWindow = [[SDAccountWindowController alloc] initWithWindowNibName:@"SDAccountWindow"];
+    [self.accountWindow window];
     self.preferencesWindow = [[SDPreferencesWindowController alloc] initWithWindowNibName:@"SDPreferencesWindow"];
 
     self.aboutWindow = [[DCOAboutWindowController alloc] init];
