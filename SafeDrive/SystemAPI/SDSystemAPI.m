@@ -56,6 +56,40 @@
     return localInstance;
 }
 
+#pragma mark
+#pragma mark - OSXFUSE & SSHFS requirement checks
+
+-(BOOL)isOSXFUSEInstalled {
+    NSPipe *pipe = [[NSPipe alloc] init];
+    NSTask *task = [[NSTask alloc] init];
+    task.launchPath = @"/usr/sbin/pkgutil";
+    task.arguments = @[@"--pkgs=com.github.osxfuse.pkg.Core"];
+    [task setStandardOutput:pipe];
+
+    [task launch];
+    [task waitUntilExit];
+    if (task.terminationStatus == 0) {
+        return YES;
+    }
+    return NO;
+}
+
+-(BOOL)isSSHFSInstalled {
+    NSPipe *pipe = [[NSPipe alloc] init];
+    NSTask *task = [[NSTask alloc] init];
+    task.launchPath = @"/usr/sbin/pkgutil";
+    task.arguments = @[@"--pkgs=com.github.osxfuse.pkg.SSHFS"];
+    [task setStandardOutput:pipe];
+
+    [task launch];
+    [task waitUntilExit];
+    if (task.terminationStatus == 0) {
+        return YES;
+    }
+    return NO;
+}
+
+
 #pragma mark - System information
 
 - (NSString *)machineSerialNumber {

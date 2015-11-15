@@ -14,6 +14,10 @@ typedef void(^SDSystemFailureBlock)(NSError *error);
 
 +(SDSystemAPI *)sharedAPI;
 
+-(BOOL)isOSXFUSEInstalled;
+
+-(BOOL)isSSHFSInstalled;
+
 -(NSString *)machineSerialNumber;
 
 -(NSString *)machineID;

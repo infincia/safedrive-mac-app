@@ -68,13 +68,13 @@
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    if (![fileManager fileExistsAtPath:SDDefaultOSXFUSEFSPath isDirectory:nil]) {
+    if (![self.sharedSystemAPI isOSXFUSEInstalled]) {
         NSError *osxfuseError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorOSXFUSEMissing userInfo:@{NSLocalizedDescriptionKey: @"OSXFUSE is not installed"}];
         failureBlock(mountURL, osxfuseError);
         return;
     }
 
-    if (![fileManager fileExistsAtPath:SDDefaultSSHFSPath isDirectory:nil]) {
+    if (![self.sharedSystemAPI isSSHFSInstalled]) {
         NSError *sshfsError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorSSHFSMissing userInfo:@{NSLocalizedDescriptionKey: @"SSHFS is not installed"}];
         failureBlock(mountURL, sshfsError);
         return;
