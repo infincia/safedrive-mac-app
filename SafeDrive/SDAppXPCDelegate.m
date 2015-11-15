@@ -24,7 +24,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenPreferencesWindow object:nil];
 }
 
--(void)displayRestoreWindowForURLs:(NSArray<NSURL*> *)urls {
+-(void)displayRestoreWindowForURLs:(NSArray *)urls {
     
 }
 

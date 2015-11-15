@@ -44,7 +44,7 @@
         //[self ensureServiceIsRunning];
         if (!self.serviceConnection) {
             self.serviceConnection = [self createServiceConnection];
-            [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
+            [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
                 NSLog(@"Error: %@", error);
             }] ping:^(NSString *reply) {
                 NSLog(@"Ping reply from service: %@", reply);
@@ -52,11 +52,11 @@
             continue;
         }
         if (!self.appConnection) {
-            [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
+            [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
                 NSLog(@"Error: %@", error);
             }] getAppEndpoint:^(NSXPCListenerEndpoint *endpoint) {
                 self.appConnection = [self createAppConnectionFromEndpoint:endpoint];
-                [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
+                [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
                     NSLog(@"Error: %@", error);
                 }] ping:^(NSString *reply) {
                     NSLog(@"Ping reply from app: %@", reply);
@@ -203,7 +203,7 @@
 }
 
 - (IBAction)openPreferencesWindow:(id)sender {
-    [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
+    [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
         NSLog(@"Error: %@", error);
     }] displayPreferencesWindow];
 }

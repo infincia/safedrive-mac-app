@@ -11,7 +11,7 @@ static NSInteger kSDAppXPCProtocolVersion = 4;
 -(void)protocolVersion:(void (^)(NSNumber *version))replyBlock;
 
 -(void)displayPreferencesWindow;
--(void)displayRestoreWindowForURLs:(NSArray<NSURL*> *)urls;
+-(void)displayRestoreWindowForURLs:(NSArray *)urls;
 
 
 @end

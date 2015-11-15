@@ -80,18 +80,18 @@
         if (!self.serviceConnection) {
 
             self.serviceConnection = [self createServiceConnection];
-            [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
+            [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
                 NSLog(@"Error: %@", error);
             }] ping:^(NSString *reply) {
 
             }];
-            [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
+            [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
                 NSLog(@"Error: %@", error);
             }] sendAppEndpoint:self.appListener.endpoint reply:^(BOOL success) {
 
             }];  
         }
-        [[self.serviceConnection  remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
+        [[self.serviceConnection  remoteObjectProxyWithErrorHandler:^(NSError * error) {
             NSLog(@"Error: %@", error);
         }] protocolVersion:^(NSNumber *version) {
 
