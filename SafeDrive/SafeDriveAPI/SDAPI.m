@@ -101,12 +101,10 @@
 
 -(void)registerMachineWithUser:(NSString *)user password:(NSString *)password success:(SDAPIClientRegistrationSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
     NSString *languageCode = [[NSLocale preferredLanguages] objectAtIndex:0];
-    NSLog(@"Lang: %@", languageCode);
     NSString *os = [NSString stringWithFormat:@"OS X %@", self.sharedSystemAPI.currentOSVersion];
     NSString *identifier = [self.sharedSystemAPI machineID];
     
     NSDictionary *postParameters = @{ @"email": user, @"password": password, @"operatingSystem": os,   @"language": languageCode, @"uniqueClientId": identifier };
-    NSLog(@"Post: %@", postParameters);
     [self.apiManager POST:@"client/register" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
         NSLog(@"Client registered: %@", response);
@@ -114,7 +112,6 @@
         [self.sharedSystemAPI insertCredentialsInKeychainForService:SDSessionServiceName account:user password:response[@"token"]];
         successBlock(self.sessionToken);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Client registration failed: %@", error.localizedDescription);
         failureBlock(error);
     }];
 }
@@ -152,7 +149,6 @@
 -(void)apiStatus:(SDAPISuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
     [self.apiManager GET:@"status" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
-        NSLog(@"API Status: %@", response);
         successBlock();
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error);
