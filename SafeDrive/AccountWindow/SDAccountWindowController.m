@@ -135,7 +135,7 @@
         self.mountController.mounting = NO;
         return;
     }
-    [self.safeDriveAPI registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
+    [self.safeDriveAPI registerMachineWithUser:self.accountController.email password:self.accountController.password success:^(NSString *sessionToken) {
         //
         [self.safeDriveAPI accountStatusForUser:self.accountController.email success:^(NSDictionary *accountStatus) {            
             NSLog(@"SafeDrive accountStatusForUser success in account window");
@@ -180,10 +180,10 @@
              
              */
             NSURLComponents *urlComponents = [NSURLComponents new];
-            urlComponents.user      = self.email;
-            urlComponents.host      = SDTestCredentialsHost;
-            urlComponents.path      = [NSString stringWithFormat:@"/%@", self.volumeNameField.stringValue];
-            urlComponents.port      = @(SDTestCredentialsPort);
+            urlComponents.user      = accountStatus[@"email"];
+            urlComponents.host      = accountStatus[@"host"];
+            urlComponents.path      = SDDefaultServerPath];
+            urlComponents.port      = accountStatus[@"port"] ;
             sshURL = urlComponents.URL;
 #endif
             [self.mountController startMountTaskWithVolumeName:@"SafeDrive" sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
