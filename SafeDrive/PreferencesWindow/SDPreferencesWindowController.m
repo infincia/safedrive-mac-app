@@ -37,12 +37,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateDetails:) name:SDMountStateDetailsNotification object:nil];
 
     // register SDMountStateProtocol notifications
-    #warning Keep track of these SDMountStateProtocol requirements!!!
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateMounted:) name:SDMountStateMountedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateUnmounted:) name:SDMountStateUnmountedNotification object:nil];
     
     // register SDAccountProtocol notifications
-    #warning Keep track of these SDAccountProtocol requirements!!!
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAccountStatus:) name:SDAccountStatusNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAccountDetails:) name:SDAccountDetailsNotification object:nil];
     
