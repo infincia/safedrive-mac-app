@@ -33,7 +33,8 @@
         #warning Keep track of these SDMountStateProtocol requirements!!!
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateMounted:) name:SDMountStateMountedNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateUnmounted:) name:SDMountStateUnmountedNotification object:nil];
-
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateDetails:) name:SDMountStateDetailsNotification object:nil];
+ 
         // register SDVolumeEventProtocol notifications
         #warning Keep track of these SDVolumeEventProtocol requirements!!!
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(volumeDidMount:) name:SDVolumeDidMountNotification object:nil];
@@ -149,5 +150,8 @@
     [self setMenuBarImage:[NSImage imageNamed:NSImageNameLockLockedTemplate]];
 }
 
+-(void)mountStateDetails:(NSNotification *)notification {
+
+}
 
 @end
