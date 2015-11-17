@@ -560,6 +560,7 @@
 				AABB0FBF1A3F290400FA3530 /* CopyFiles */,
 				AA925C3B1B8F9BAA00222E46 /* Embed App Extensions */,
 				858E7954A05FDF6FEA1CF8D0 /* Embed Pods Frameworks */,
+				AAE474851BFBC1E200B1A555 /* Fabric.io */,
 			);
 			buildRules = (
 			);
@@ -814,6 +815,20 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		AAE474851BFBC1E200B1A555 /* Fabric.io */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Fabric.io;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric-OSX/Fabric.framework/run\" eabb6ed7a9190e38a2676da62aca50ed8731d38d 0f690c677243e5283f4f9a449728a17fc6d150abe16e2eade6a874763d25aea0";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1050,6 +1065,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
 				INFOPLIST_FILE = SafeDrive/Info.plist;

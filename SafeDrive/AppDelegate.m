@@ -14,6 +14,8 @@
 #import "SDServiceXPCRouter.h"
 #import "SDServiceManager.h"
 
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate ()
 @property DCOAboutWindowController *aboutWindow;
@@ -24,6 +26,9 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"NSApplicationCrashOnExceptions": @YES }];
+    [Fabric with:@[[Crashlytics class]]];
+
 #if RELEASE    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMM d yyyy"];
