@@ -273,6 +273,9 @@
         else if ([outputString rangeOfString:@"Host key verification failed"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorHostKeyVerificationFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server key verification failed!"}];
         }
+        else if ([outputString rangeOfString:@"failed to mount"].length > 0) {
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
+        }
         else {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
             /*
