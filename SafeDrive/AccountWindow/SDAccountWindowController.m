@@ -13,6 +13,8 @@
 
 #import "NSURL+SFTP.h"
 
+#import <Crashlytics/Crashlytics.h>
+
 #define SSHFS_TEST_MODE
 
 #define CUSTOM_NSURL
@@ -61,6 +63,7 @@
     if (credentials) {
         self.accountController.email = credentials[@"account"];
         self.accountController.password = credentials[@"password"];
+        [CrashlyticsKit setUserEmail:self.accountController.email];
     }
 
 
@@ -135,6 +138,7 @@
         self.mountController.mounting = NO;
         return;
     }
+    [CrashlyticsKit setUserEmail:self.accountController.email];
     [self.safeDriveAPI registerMachineWithUser:self.accountController.email password:self.accountController.password success:^(NSString *sessionToken) {
         //
         [self.safeDriveAPI accountStatusForUser:self.accountController.email success:^(NSDictionary *accountStatus) {            
