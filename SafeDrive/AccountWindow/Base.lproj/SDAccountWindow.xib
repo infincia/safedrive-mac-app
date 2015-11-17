@@ -40,11 +40,6 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="self.accountController.email" id="DdY-iq-yUw">
-                                <dictionary key="options">
-                                    <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                                </dictionary>
-                            </binding>
                             <binding destination="-2" name="enabled" keyPath="self.mountController.mountState" id="pZf-0b-E9X">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -59,6 +54,12 @@
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
+                            <binding destination="-2" name="value" keyPath="self.accountController.email" id="2uB-1Q-5FF">
+                                <dictionary key="options">
+                                    <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                    <string key="NSNullPlaceholder">email</string>
+                                </dictionary>
+                            </binding>
                         </connections>
                     </textField>
                     <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P8c-vh-VQc" userLabel="Password Field" customClass="NSSecureTextField">
@@ -70,11 +71,6 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="self.accountController.password" id="auR-WY-KRc">
-                                <dictionary key="options">
-                                    <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                                </dictionary>
-                            </binding>
                             <binding destination="-2" name="enabled" keyPath="self.mountController.mountState" id="Sx6-AL-kuE">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -87,6 +83,12 @@
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNullPlaceholder" value="-1"/>
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="-2" name="value" keyPath="self.accountController.password" id="mcC-uk-pEw">
+                                <dictionary key="options">
+                                    <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                    <string key="NSNullPlaceholder">password</string>
                                 </dictionary>
                             </binding>
                         </connections>
@@ -114,9 +116,10 @@
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
-                            <binding destination="1Ol-33-M9u" name="value" keyPath="values.currentVolumeName" id="BFC-Nk-rKp">
+                            <binding destination="1Ol-33-M9u" name="value" keyPath="values.currentVolumeName" id="JAx-oO-lfo">
                                 <dictionary key="options">
                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                    <string key="NSNullPlaceholder">SafeDrive</string>
                                 </dictionary>
                             </binding>
                         </connections>
