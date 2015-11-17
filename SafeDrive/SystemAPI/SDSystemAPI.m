@@ -254,7 +254,7 @@
                                                                                     attributes:nil
                                                                                          error:&error];
     if (error) {
-        NSLog(@"Failure retrieving %@ credentials: %@", service, error.localizedDescription);
+        //NSLog(@"Failure retrieving %@ credentials: %@", service, error.localizedDescription);
     }
     else {
         credentials = @{@"account": keychainItem.account, @"password": keychainItem.password };
