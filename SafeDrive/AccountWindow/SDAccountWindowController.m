@@ -146,6 +146,15 @@
                 self.mountController.mounting = NO;
                 return;
             }
+            
+            NSString *volumeName;
+            if ([[NSUserDefaults standardUserDefaults] objectForKey:SDCurrentVolumeNameKey]) {
+                volumeName = [[NSUserDefaults standardUserDefaults] objectForKey:SDCurrentVolumeNameKey];
+            }
+            else {
+                volumeName = SDDefaultVolumeName;
+            }
+            
             /* 
              Using NSURL here provides some validation of the parameters since we are
              passing a standard RFC3986 URL string to SSHFS.
@@ -186,7 +195,7 @@
             urlComponents.port      = accountStatus[@"port"] ;
             sshURL = urlComponents.URL;
 #endif
-            [self.mountController startMountTaskWithVolumeName:@"SafeDrive" sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
+            [self.mountController startMountTaskWithVolumeName:volumeName sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
                 NSLog(@"SafeDrive startMountTaskWithVolumeName success in account window");
                 /*
                  now check for a successful mount. if after 30 seconds there is no volume
