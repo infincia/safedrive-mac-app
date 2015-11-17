@@ -257,8 +257,13 @@
                                             <rect key="frame" x="13" y="16" width="358" height="20"/>
                                             <animations/>
                                             <connections>
-                                                <binding destination="-2" name="maxValue" keyPath="self.volumeTotalSpace" id="gMN-l0-k05"/>
-                                                <binding destination="-2" name="value" keyPath="self.volumeUsedSpace" previousBinding="gMN-l0-k05" id="TME-EX-L6o">
+                                                <binding destination="-2" name="maxValue" keyPath="self.volumeTotalSpace" id="dCZ-BV-bp3">
+                                                    <dictionary key="options">
+                                                        <integer key="NSNotApplicablePlaceholder" value="1"/>
+                                                        <integer key="NSNullPlaceholder" value="1"/>
+                                                    </dictionary>
+                                                </binding>
+                                                <binding destination="-2" name="value" keyPath="self.volumeUsedSpace" previousBinding="dCZ-BV-bp3" id="Fec-ei-R1Z">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                         <integer key="NSNotApplicablePlaceholder" value="0"/>

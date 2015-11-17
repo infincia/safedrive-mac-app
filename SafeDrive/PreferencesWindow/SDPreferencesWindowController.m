@@ -127,6 +127,7 @@
     else {
         self.volumeTotalSpace = nil;
         self.volumeFreeSpace = nil;
+        self.volumeUsedSpace = nil;
     }
 }
 
