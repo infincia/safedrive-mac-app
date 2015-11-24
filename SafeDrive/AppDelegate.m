@@ -83,7 +83,9 @@
     
     self.accountWindow = [[SDAccountWindowController alloc] initWithWindowNibName:@"SDAccountWindow"];
     [self.accountWindow window];
+    
     self.preferencesWindow = [[SDPreferencesWindowController alloc] initWithWindowNibName:@"SDPreferencesWindow"];
+    [self.preferencesWindow window];
 
     self.aboutWindow = [[DCOAboutWindowController alloc] init];
     self.aboutWindow.useTextViewForAcknowledgments = YES;

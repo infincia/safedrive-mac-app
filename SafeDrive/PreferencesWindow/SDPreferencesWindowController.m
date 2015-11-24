@@ -56,8 +56,8 @@
     INAppStoreWindow *aWindow = (INAppStoreWindow*)[self window];
     aWindow.titleBarHeight = 24.0;
     aWindow.showsBaselineSeparator = NO;
-
-    NSColor *topColor = [NSColor windowBackgroundColor];
+    
+    NSColor *topColor = [NSColor whiteColor];
     aWindow.titleBarStartColor     = topColor;
     aWindow.titleBarEndColor       = topColor;
     aWindow.baselineSeparatorColor = topColor;
@@ -69,6 +69,22 @@
 
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(IBAction)selectTab:(id)sender {
+    NSButton *button = (NSButton *)sender;
+    NSInteger selectedTab = button.tag;
+    [self.tabView selectTabViewItemAtIndex:selectedTab];
+    [self resetButtons];
+    //button.highlighted = YES;
+}
+
+-(void)resetButtons {
+    self.generalButton.highlighted = NO;
+    self.accountButton.highlighted = NO;
+    self.bandwidthButton.highlighted = NO;
+    self.statusButton.highlighted = NO;
+
 }
 
 #pragma mark - Dynamic getter and setter for autostart property

@@ -8,36 +8,45 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SDPreferencesWindowController">
             <connections>
+                <outlet property="accountButton" destination="Vv2-Cb-tgb" id="KzM-cf-oTX"/>
+                <outlet property="bandwidthButton" destination="c1p-SX-QFQ" id="DGw-yJ-IW2"/>
+                <outlet property="generalButton" destination="50Q-kb-XJw" id="o0T-OI-nQx"/>
+                <outlet property="statusButton" destination="Y3b-ju-7in" id="Ycb-MT-wyg"/>
+                <outlet property="tabView" destination="XTW-H7-MsH" id="bZw-tq-D6r"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" customClass="INAppStoreWindow">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" customClass="INAppStoreWindow">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="434" height="237"/>
+            <rect key="contentRect" x="196" y="240" width="351" height="501"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="434" height="237"/>
+                <rect key="frame" x="0.0" y="0.0" width="351" height="501"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XTW-H7-MsH">
-                        <rect key="frame" x="13" y="10" width="408" height="221"/>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nda-Qa-j9w">
+                        <rect key="frame" x="0.0" y="0.0" width="351" height="501"/>
+                        <animations/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Settings-Background" id="e21-zo-JrP"/>
+                    </imageView>
+                    <tabView fixedFrame="YES" drawsBackground="NO" type="noTabsNoBorder" initialItem="Tr0-rv-ChU" translatesAutoresizingMaskIntoConstraints="NO" id="XTW-H7-MsH">
+                        <rect key="frame" x="0.0" y="51" width="351" height="279"/>
                         <animations/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
-                            <tabViewItem label="Settings" identifier="1" id="Tr0-rv-ChU">
-                                <view key="view" id="BGg-1E-DvT">
-                                    <rect key="frame" x="10" y="33" width="388" height="175"/>
+                            <tabViewItem label="General" identifier="1" id="Tr0-rv-ChU">
+                                <view key="view" ambiguous="YES" id="BGg-1E-DvT">
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DFf-pg-Q7a">
-                                            <rect key="frame" x="15" y="135" width="285" height="18"/>
+                                            <rect key="frame" x="33" y="-36" width="285" height="18"/>
                                             <animations/>
                                             <buttonCell key="cell" type="check" title="Start SafeDrive at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="PNJ-M0-iQ9">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                             </buttonCell>
                                             <connections>
                                                 <binding destination="-2" name="value" keyPath="self.autostart" id="Qgp-bn-tsG">
@@ -50,11 +59,11 @@
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pvd-Ip-ebE">
-                                            <rect key="frame" x="15" y="105" width="285" height="18"/>
+                                            <rect key="frame" x="33" y="-66" width="285" height="18"/>
                                             <animations/>
                                             <buttonCell key="cell" type="check" title="Mount volume automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0WR-rs-tJE">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                             </buttonCell>
                                             <connections>
                                                 <binding destination="-2" name="value" keyPath="self.sharedSystemAPI.mountAtLaunch" id="h5g-lC-Xew"/>
@@ -66,23 +75,19 @@
                             </tabViewItem>
                             <tabViewItem label="Account" identifier="2" id="TEc-pJ-Rmk">
                                 <view key="view" id="dbo-3A-0ev">
-                                    <rect key="frame" x="10" y="33" width="388" height="175"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="351" height="279"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E2R-AE-57C">
-                                            <rect key="frame" x="15" y="75" width="125" height="17"/>
+                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T1w-v0-4ij">
+                                            <rect key="frame" x="0.0" y="47" width="351" height="222"/>
                                             <animations/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Storage Plan:" id="AO1-Iy-FqH">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" imageScaling="proportionallyDown" image="Storage-Status-backing" id="1n9-YT-RZd"/>
+                                        </imageView>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0QK-rc-ZL3">
-                                            <rect key="frame" x="144" y="75" width="229" height="17"/>
+                                            <rect key="frame" x="179" y="221" width="120" height="17"/>
                                             <animations/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Unknown" id="wcd-1J-Pl4">
-                                                <font key="font" metaFont="system"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="wcd-1J-Pl4">
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -95,46 +100,20 @@
                                                 </binding>
                                             </connections>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XBY-oW-U0f">
-                                            <rect key="frame" x="15" y="50" width="125" height="17"/>
-                                            <animations/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Storage Used:" id="RIX-m1-qE8">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I9m-Gd-YKy">
-                                            <rect key="frame" x="144" y="50" width="229" height="17"/>
-                                            <animations/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Unknown" id="UkX-Jx-gsq">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                            <connections>
-                                                <binding destination="-2" name="displayPatternValue1" keyPath="self.usedStorage" id="KTa-TD-KyW">
-                                                    <dictionary key="options">
-                                                        <string key="NSDisplayPattern">%{value1}@</string>
-                                                        <string key="NSValueTransformerName">SDDataSizeTransformer</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
-                                        </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UqL-cq-z3R">
-                                            <rect key="frame" x="15" y="125" width="125" height="17"/>
+                                            <rect key="frame" x="60" y="121" width="111" height="18"/>
                                             <animations/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Account Status:" id="GXv-4e-a2z">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Account Status" id="GXv-4e-a2z">
+                                                <font key="font" size="12" name="Raleway-Light"/>
+                                                <color key="textColor" red="0.46274509800000002" green="0.50196078430000002" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="deU-cR-Cba">
-                                            <rect key="frame" x="144" y="125" width="229" height="17"/>
+                                            <rect key="frame" x="179" y="122" width="120" height="17"/>
                                             <animations/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Unknown" id="9gD-C8-FOL">
-                                                <font key="font" metaFont="system"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="9gD-C8-FOL">
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -147,19 +126,19 @@
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zg2-h0-Vo7">
-                                            <rect key="frame" x="15" y="100" width="125" height="17"/>
+                                            <rect key="frame" x="60" y="96" width="111" height="18"/>
                                             <animations/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Account Expiration:" id="g0K-pR-Bgl">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Account Expiration" id="g0K-pR-Bgl">
+                                                <font key="font" size="12" name="Raleway-Light"/>
+                                                <color key="textColor" red="0.46274509800000002" green="0.50196078430000002" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E5M-1Q-InX">
-                                            <rect key="frame" x="144" y="100" width="229" height="17"/>
+                                            <rect key="frame" x="179" y="97" width="120" height="17"/>
                                             <animations/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Unknown" id="38n-H1-Cer">
-                                                <font key="font" metaFont="system"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="38n-H1-Cer">
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -171,38 +150,62 @@
                                                 </binding>
                                             </connections>
                                         </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I9m-Gd-YKy">
+                                            <rect key="frame" x="179" y="188" width="120" height="17"/>
+                                            <animations/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="UkX-Jx-gsq">
+                                                <font key="font" size="12" name="Raleway-Light"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <connections>
+                                                <binding destination="-2" name="displayPatternValue1" keyPath="self.usedStorage" id="KTa-TD-KyW">
+                                                    <dictionary key="options">
+                                                        <string key="NSDisplayPattern">%{value1}@</string>
+                                                        <string key="NSValueTransformerName">SDDataSizeTransformer</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </textField>
                                     </subviews>
                                     <animations/>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="SafeDrive" identifier="" id="dQJ-J2-1uw">
-                                <view key="view" ambiguous="YES" id="HrL-80-KKL">
-                                    <rect key="frame" x="10" y="33" width="388" height="175"/>
+                            <tabViewItem label="Bandwidth" identifier="" id="dE8-gh-gqI">
+                                <view key="view" id="p7U-l6-SWd">
+                                    <rect key="frame" x="0.0" y="0.0" width="351" height="279"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <animations/>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Status" identifier="" id="dQJ-J2-1uw">
+                                <view key="view" id="HrL-80-KKL">
+                                    <rect key="frame" x="0.0" y="0.0" width="351" height="279"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Mg-5I-cfE">
-                                            <rect key="frame" x="11" y="75" width="150" height="17"/>
+                                            <rect key="frame" x="29" y="204" width="150" height="17"/>
                                             <animations/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Volume Size:" id="RIs-Pv-Jt8">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sfa-ZP-V5M">
-                                            <rect key="frame" x="11" y="50" width="150" height="17"/>
+                                            <rect key="frame" x="29" y="179" width="150" height="17"/>
                                             <animations/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Volume Free Space:" id="HHn-nb-e6T">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHr-NL-W41">
-                                            <rect key="frame" x="165" y="75" width="208" height="17"/>
+                                            <rect key="frame" x="183" y="204" width="147" height="17"/>
                                             <animations/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="-" id="XId-Yi-qz9">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -216,10 +219,10 @@
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cac-Lo-ph0">
-                                            <rect key="frame" x="165" y="50" width="208" height="17"/>
+                                            <rect key="frame" x="183" y="179" width="147" height="17"/>
                                             <animations/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="-" id="EhK-k7-8br">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -233,19 +236,19 @@
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Miu-7i-xBb">
-                                            <rect key="frame" x="11" y="100" width="150" height="17"/>
+                                            <rect key="frame" x="29" y="229" width="150" height="17"/>
                                             <animations/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Mounted:" id="kvC-v6-l3N">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yg4-O1-zL4">
-                                            <rect key="frame" x="165" y="100" width="208" height="17"/>
+                                            <rect key="frame" x="183" y="229" width="147" height="17"/>
                                             <animations/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Unmounted" id="aW6-5F-TLE">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -254,7 +257,7 @@
                                             </connections>
                                         </textField>
                                         <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="VpF-cu-Njk">
-                                            <rect key="frame" x="13" y="16" width="358" height="20"/>
+                                            <rect key="frame" x="31" y="145" width="297" height="20"/>
                                             <animations/>
                                             <connections>
                                                 <binding destination="-2" name="maxValue" keyPath="self.volumeTotalSpace" id="dCZ-BV-bp3">
@@ -273,19 +276,19 @@
                                             </connections>
                                         </progressIndicator>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VgD-5i-jzK">
-                                            <rect key="frame" x="11" y="125" width="150" height="17"/>
+                                            <rect key="frame" x="29" y="254" width="150" height="17"/>
                                             <animations/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Background Service:" id="cLw-5J-zPf">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I8E-Hm-VKG">
-                                            <rect key="frame" x="165" y="125" width="208" height="17"/>
+                                            <rect key="frame" x="183" y="254" width="147" height="17"/>
                                             <animations/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Stopped" id="CgH-iX-ik5">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" size="12" name="Raleway-Light"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -299,14 +302,66 @@
                             </tabViewItem>
                         </tabViewItems>
                     </tabView>
+                    <button focusRingType="none" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vv2-Cb-tgb">
+                        <rect key="frame" x="104" y="362" width="62" height="61"/>
+                        <animations/>
+                        <buttonCell key="cell" type="square" title="Account" bezelStyle="shadowlessSquare" image="Account-Icon" imagePosition="above" alignment="center" focusRingType="none" inset="2" id="NPT-Vf-wdt">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="10" name="Raleway-Light"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="selectTab:" target="-2" id="xWC-u9-LV4"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="c1p-SX-QFQ">
+                        <rect key="frame" x="179" y="362" width="62" height="53"/>
+                        <animations/>
+                        <buttonCell key="cell" type="square" title="Bandwidth" bezelStyle="shadowlessSquare" image="Bandwidth-Icon" imagePosition="above" alignment="center" inset="2" id="SKZ-9M-ZFJ">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="10" name="Raleway-Light"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="selectTab:" target="-2" id="heh-o3-c6F"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="Y3b-ju-7in">
+                        <rect key="frame" x="252" y="362" width="62" height="56"/>
+                        <animations/>
+                        <buttonCell key="cell" type="square" title="Status" bezelStyle="shadowlessSquare" image="Status-Icon" imagePosition="above" alignment="center" inset="2" id="Jpe-nv-weI">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="10" name="Raleway-Light"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="selectTab:" target="-2" id="PFW-ZB-pQh"/>
+                        </connections>
+                    </button>
+                    <button focusRingType="none" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50Q-kb-XJw">
+                        <rect key="frame" x="36" y="362" width="62" height="60"/>
+                        <animations/>
+                        <buttonCell key="cell" type="square" title="General" bezelStyle="shadowlessSquare" image="General-icon" imagePosition="above" alignment="center" focusRingType="none" inset="2" id="dwC-vx-xwb">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="10" name="Raleway-Light"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="selectTab:" target="-2" id="BfG-1g-oQ2"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="278" y="215.5"/>
+            <point key="canvasLocation" x="277.5" y="215.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="5W4-7o-gwy"/>
     </objects>
+    <resources>
+        <image name="Account-Icon" width="41" height="41"/>
+        <image name="Bandwidth-Icon" width="55" height="32"/>
+        <image name="General-icon" width="40" height="39"/>
+        <image name="Settings-Background" width="351" height="501"/>
+        <image name="Status-Icon" width="36" height="35"/>
+        <image name="Storage-Status-backing" width="265" height="124"/>
+    </resources>
 </document>

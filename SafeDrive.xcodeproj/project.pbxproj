@@ -27,6 +27,14 @@
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
 		AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */; };
 		AA4E77331A3E6E640054BBCA /* SDTestCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestCredentials.m */; };
+		AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */; };
+		AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C711BFC57B50008FB8B /* Settings-Background.png */; };
+		AA543C781BFC57B50008FB8B /* General-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C721BFC57B50008FB8B /* General-icon.png */; };
+		AA543C791BFC57B50008FB8B /* Account-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C731BFC57B50008FB8B /* Account-Icon.png */; };
+		AA543C7A1BFC57B50008FB8B /* Bandwidth-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C741BFC57B50008FB8B /* Bandwidth-Icon.png */; };
+		AA543C7B1BFC57B50008FB8B /* Status-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C751BFC57B50008FB8B /* Status-Icon.png */; };
+		AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */; };
+		AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */; };
 		AA54495C1BC35F4800826A0B /* io.safedrive.SafeDrive.Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA54495B1BC35F4800826A0B /* io.safedrive.SafeDrive.Service.plist */; };
 		AA54495D1BC35F4800826A0B /* io.safedrive.SafeDrive.Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA54495B1BC35F4800826A0B /* io.safedrive.SafeDrive.Service.plist */; };
 		AA5449611BC3667300826A0B /* SDServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5449601BC3667300826A0B /* SDServiceManager.m */; };
@@ -164,6 +172,14 @@
 		AA4E77321A3E6E640054BBCA /* SDTestCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTestCredentials.m; sourceTree = "<group>"; };
 		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4E77411A3E9B830054BBCA /* libPods-MCSMKeychainItem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-MCSMKeychainItem.a"; path = "../../../Users/steve/Library/Developer/Xcode/DerivedData/SafeDrive-chuvxsgbhfnlbyfxzkgdnlscvvoy/Build/Products/Debug/libPods-MCSMKeychainItem.a"; sourceTree = "<group>"; };
+		AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Storage-Status-backing.png"; sourceTree = "<group>"; };
+		AA543C711BFC57B50008FB8B /* Settings-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-Background.png"; sourceTree = "<group>"; };
+		AA543C721BFC57B50008FB8B /* General-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "General-icon.png"; sourceTree = "<group>"; };
+		AA543C731BFC57B50008FB8B /* Account-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Account-Icon.png"; sourceTree = "<group>"; };
+		AA543C741BFC57B50008FB8B /* Bandwidth-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bandwidth-Icon.png"; sourceTree = "<group>"; };
+		AA543C751BFC57B50008FB8B /* Status-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Status-Icon.png"; sourceTree = "<group>"; };
+		AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Light.ttf"; sourceTree = "<group>"; };
+		AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		AA54495B1BC35F4800826A0B /* io.safedrive.SafeDrive.Service.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = io.safedrive.SafeDrive.Service.plist; sourceTree = "<group>"; };
 		AA54495F1BC3667300826A0B /* SDServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDServiceManager.h; path = ServiceManager/SDServiceManager.h; sourceTree = "<group>"; };
 		AA5449601BC3667300826A0B /* SDServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDServiceManager.m; path = ServiceManager/SDServiceManager.m; sourceTree = "<group>"; };
@@ -282,6 +298,8 @@
 		AA2E550E1A774DED00647637 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */,
+				AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */,
 				AA2E550F1A774E0000647637 /* known_hosts */,
 				AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */,
 				AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */,
@@ -386,6 +404,12 @@
 		AA3168471A192D26006CC0EB /* PreferencesWindow */ = {
 			isa = PBXGroup;
 			children = (
+				AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */,
+				AA543C711BFC57B50008FB8B /* Settings-Background.png */,
+				AA543C721BFC57B50008FB8B /* General-icon.png */,
+				AA543C731BFC57B50008FB8B /* Account-Icon.png */,
+				AA543C741BFC57B50008FB8B /* Bandwidth-Icon.png */,
+				AA543C751BFC57B50008FB8B /* Status-Icon.png */,
 				AA3168481A192D26006CC0EB /* SDPreferencesWindowController.h */,
 				AA3168491A192D26006CC0EB /* SDPreferencesWindowController.m */,
 				AA0A7D1B1A19682000DCB77E /* SDPreferencesWindow.xib */,
@@ -714,13 +738,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */,
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
+				AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */,
 				AA2E55101A774E0000647637 /* known_hosts in Resources */,
+				AA543C7A1BFC57B50008FB8B /* Bandwidth-Icon.png in Resources */,
 				AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */,
 				AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */,
+				AA543C781BFC57B50008FB8B /* General-icon.png in Resources */,
 				AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */,
 				AA54495C1BC35F4800826A0B /* io.safedrive.SafeDrive.Service.plist in Resources */,
 				AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */,
+				AA543C791BFC57B50008FB8B /* Account-Icon.png in Resources */,
+				AA543C7B1BFC57B50008FB8B /* Status-Icon.png in Resources */,
+				AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */,
+				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
 				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
 				AA7319421A2F7EEB003E2391 /* Main.xib in Resources */,
