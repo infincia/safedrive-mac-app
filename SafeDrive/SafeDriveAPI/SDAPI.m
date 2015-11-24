@@ -105,6 +105,9 @@
     NSString *identifier = [self.sharedSystemAPI machineID];
     
     NSDictionary *postParameters = @{ @"email": user, @"password": password, @"operatingSystem": os,   @"language": languageCode, @"uniqueClientId": identifier };
+    
+    [self.apiManager.requestSerializer setValue:nil forHTTPHeaderField:@"SD-Auth-Token"];
+
     [self.apiManager POST:@"client/register" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
         NSLog(@"Client registered: %@", response);
