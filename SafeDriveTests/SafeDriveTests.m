@@ -15,18 +15,13 @@
 
 
 @interface SafeDriveTests : XCTestCase
-@property SDMountController *sharedMountController;
-@property SDAPI *sharedSafedriveAPI;
-@property SDSystemAPI *sharedSystemAPI;
+
 @end
 
 @implementation SafeDriveTests
 
 - (void)setUp {
     [super setUp];
-    self.sharedMountController = [SDMountController sharedAPI];
-    self.sharedSafedriveAPI = [SDAPI sharedAPI];
-    self.sharedSystemAPI = [SDSystemAPI sharedAPI];
 }
 
 - (void)tearDown {
@@ -35,24 +30,24 @@
 }
 
 -(void)test_SDSystemAPI_machineID {
-    XCTAssertNotNil(self.sharedSystemAPI);
-    NSString *identifier = [self.sharedSystemAPI machineID];
+    XCTAssertNotNil([SDSystemAPI sharedAPI]);
+    NSString *identifier = [[SDSystemAPI sharedAPI] machineID];
     XCTAssertNotNil(identifier);
     NSLog(@"ID: %@", identifier);
 }
 
 -(void)test_SDSystemAPI_en0MAC {
-    XCTAssertNotNil(self.sharedSystemAPI);
-    NSString *mac = [self.sharedSystemAPI en0MAC];
+    XCTAssertNotNil([SDSystemAPI sharedAPI]);
+    NSString *mac = [[SDSystemAPI sharedAPI] en0MAC];
     XCTAssertNotNil(mac);
     NSLog(@"MAC en0: %@", mac);
 }
 
 -(void)test_SDAPI_registerMachine {
-    XCTAssertNotNil(self.sharedSafedriveAPI);
+    XCTAssertNotNil([SDAPI sharedAPI]);
     XCTestExpectation *expectation = [self expectationWithDescription:@"test_SDAPI_registerMachine"];
     
-    [self.sharedSafedriveAPI registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
+    [[SDAPI sharedAPI] registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
         XCTAssertNotNil(sessionToken);
         [expectation fulfill];
     } failure:^(NSError *apiError) {
@@ -66,11 +61,11 @@
 }
 
 -(void)test_SDAPI_accountStatusForUser {
-    XCTAssertNotNil(self.sharedSafedriveAPI);
+    XCTAssertNotNil([SDAPI sharedAPI]);
     XCTestExpectation *expectation = [self expectationWithDescription:@"test_SDAPI_accountStatusForUser"];
-    [self.sharedSafedriveAPI registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
+    [[SDAPI sharedAPI] registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
         XCTAssertNotNil(sessionToken);
-        [self.sharedSafedriveAPI accountStatusForUser:SDTestCredentialsUser success:^(NSDictionary *accountStatus) {
+        [[SDAPI sharedAPI] accountStatusForUser:SDTestCredentialsUser success:^(NSDictionary *accountStatus) {
             XCTAssertNotNil(accountStatus);
             XCTAssertNotNil(accountStatus[@"host"]);
             XCTAssertNotNil(accountStatus[@"port"]);
@@ -93,11 +88,11 @@
 }
 
 -(void)test_SDAPI_accountDetailsForUser {
-    XCTAssertNotNil(self.sharedSafedriveAPI);
+    XCTAssertNotNil([SDAPI sharedAPI]);
     XCTestExpectation *expectation = [self expectationWithDescription:@"test_SDAPI_accountDetailsForUser"];
-    [self.sharedSafedriveAPI registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
+    [[SDAPI sharedAPI] registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
         XCTAssertNotNil(sessionToken);
-        [self.sharedSafedriveAPI accountDetailsForUser:SDTestCredentialsUser success:^(NSDictionary *accountDetails) {
+        [[SDAPI sharedAPI] accountDetailsForUser:SDTestCredentialsUser success:^(NSDictionary *accountDetails) {
             XCTAssertNotNil(accountDetails);
 
             NSLog(@"Account details: %@", accountDetails);
@@ -118,12 +113,12 @@
 
 
 - (void)test_SDMountController_startMountTaskWithVolumeName {
-    XCTAssertNotNil(self.sharedMountController);
+    XCTAssertNotNil([SDMountController sharedAPI]);
     XCTestExpectation *expectation = [self expectationWithDescription:@"test_SDMountController_startMountTaskWithVolumeName"];
 
-    [self.sharedSafedriveAPI registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
+    [[SDAPI sharedAPI] registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
         XCTAssertNotNil(sessionToken);
-        [self.sharedSafedriveAPI accountStatusForUser:SDTestCredentialsUser success:^(NSDictionary *accountStatus) {
+        [[SDAPI sharedAPI] accountStatusForUser:SDTestCredentialsUser success:^(NSDictionary *accountStatus) {
             XCTAssertNotNil(accountStatus);
             XCTAssertNotNil(accountStatus[@"host"]);
             XCTAssertNotNil(accountStatus[@"port"]);
@@ -134,7 +129,7 @@
             
             NSURL *url = [NSURL SFTPURLForAccount:accountStatus[@"userName"] host:accountStatus[@"host"] port:accountStatus[@"port"] path:SDDefaultServerPath];
 
-            [self.sharedMountController startMountTaskWithVolumeName:@"SafeDrive" sshURL:url success:^(NSURL *mountURL, NSError *mountError) {
+            [[SDMountController sharedAPI] startMountTaskWithVolumeName:@"SafeDrive" sshURL:url success:^(NSURL *mountURL, NSError *mountError) {
                 /*  
                  now check for a successful mount. if after 30 seconds there is no volume
                  mounted, it is a fair bet that an error occurred in the meantime
@@ -142,12 +137,12 @@
                  */
                 XCTAssertNotNil(mountURL);
                 
-                [self.sharedSystemAPI checkForMountedVolume:mountURL withTimeout:30 success:^{
-                    NSDictionary *mountDetails = [self.sharedSystemAPI detailsForMount:mountURL];
+                [[SDSystemAPI sharedAPI] checkForMountedVolume:mountURL withTimeout:30 success:^{
+                    NSDictionary *mountDetails = [[SDSystemAPI sharedAPI] detailsForMount:mountURL];
                     XCTAssertNotNil(mountDetails);
                     XCTAssertTrue(mountDetails[NSFileSystemSize]);
                     XCTAssertTrue(mountDetails[NSFileSystemFreeSize]);
-                    [self.sharedMountController unmountVolumeWithName:@"SafeDrive" success:^(NSURL *mountURL, NSError *mountError) {
+                    [[SDMountController sharedAPI] unmountVolumeWithName:@"SafeDrive" success:^(NSURL *mountURL, NSError *mountError) {
                         [expectation fulfill];
                     } failure:^(NSURL *mountURL, NSError *mountError) {
                         XCTFail(@"%@", mountError.localizedDescription);
@@ -173,9 +168,9 @@
 }
 
 - (void)test_SDSystemAPI_statusForMountpoint {
-    XCTAssertNotNil(self.sharedSystemAPI);
+    XCTAssertNotNil([SDSystemAPI sharedAPI]);
     // test root since it should always work as a URL
-    NSDictionary *mountDetails = [self.sharedSystemAPI detailsForMount:[NSURL fileURLWithFileSystemRepresentation:"/\0" isDirectory:YES relativeToURL:nil]];
+    NSDictionary *mountDetails = [[SDSystemAPI sharedAPI] detailsForMount:[NSURL fileURLWithFileSystemRepresentation:"/\0" isDirectory:YES relativeToURL:nil]];
     XCTAssertNotNil(mountDetails);
     XCTAssertTrue(mountDetails[NSFileSystemSize]);
     XCTAssertTrue(mountDetails[NSFileSystemFreeSize]);
@@ -183,13 +178,13 @@
 }
 
 - (void)test_SDSystemAPI_insertCredentialsInKeychainForService {
-    XCTAssertNotNil(self.sharedSystemAPI);
-    NSError *keychainInsertError = [self.sharedSystemAPI insertCredentialsInKeychainForService:SDServiceName account:SDTestCredentialsUser password:SDTestCredentialsPassword];
+    XCTAssertNotNil([SDSystemAPI sharedAPI]);
+    NSError *keychainInsertError = [[SDSystemAPI sharedAPI] insertCredentialsInKeychainForService:SDServiceName account:SDTestCredentialsUser password:SDTestCredentialsPassword];
     if (keychainInsertError) {
         XCTFail(@"%@", keychainInsertError.localizedDescription);
         NSLog(@"test_SDSystemAPI_insertCredentialsInKeychainForService: %@", keychainInsertError.localizedDescription);
     }
-    NSError *keychainRemoveError = [self.sharedSystemAPI removeCredentialsInKeychainForService:SDServiceName account:SDTestCredentialsUser];
+    NSError *keychainRemoveError = [[SDSystemAPI sharedAPI] removeCredentialsInKeychainForService:SDServiceName account:SDTestCredentialsUser];
     if (keychainRemoveError) {
         XCTFail(@"%@", keychainRemoveError.localizedDescription);
         NSLog(@"test_SDSystemAPI_insertCredentialsInKeychainForService: %@", keychainRemoveError.localizedDescription);
