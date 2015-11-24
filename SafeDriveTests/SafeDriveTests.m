@@ -20,6 +20,18 @@
 
 @implementation SafeDriveTests
 
++ (void)setUp {
+    NSError *keychainInsertError = [[SDSystemAPI sharedAPI] insertCredentialsInKeychainForService:SDServiceName account:SDTestCredentialsUser password:SDTestCredentialsPassword];
+    if (keychainInsertError) {
+        NSLog(@"+setUp failed: %@", keychainInsertError.localizedDescription);
+    }
+    else {
+        NSLog(@"+setUp succeeded");
+    }
+}
+
+
+
 - (void)setUp {
     [super setUp];
 }
