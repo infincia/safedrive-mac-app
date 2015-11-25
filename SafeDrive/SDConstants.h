@@ -28,6 +28,8 @@ FOUNDATION_EXPORT NSString *const SDWebDomain;
 FOUNDATION_EXPORT NSString *const SDDefaultSSHFSPath;
 FOUNDATION_EXPORT NSString *const SDDefaultOSXFUSEFSPath;
 
+FOUNDATION_EXPORT NSString *const SDDefaultRsyncPath;
+
 #pragma mark - Keychain constants
 
 
@@ -126,5 +128,13 @@ typedef NS_ENUM(NSInteger, SDMountState) {
     SDMountStateUnknown   = -1,
     SDMountStateUnmounted =  0,
     SDMountStateMounted   =  1
+};
+
+#pragma mark - Sync state
+
+typedef NS_ENUM(NSInteger, SDSyncState) {
+    SDSyncStateUnknown = -1,
+    SDSyncStateRunning =  0,
+    SDSyncStateIdle    =  1
 };
 
