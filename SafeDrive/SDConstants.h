@@ -85,18 +85,21 @@ FOUNDATION_EXPORT NSUInteger const SDErrorNone;
 
 #pragma mark - Mount related errors
 
-typedef NS_ENUM(NSInteger, SDMountError) {
-    SDMountErrorUnknown                   =   -1,
-    SDMountErrorAuthorization             = 1002,
-    SDMountErrorTimeout                   = 1003,
-    SDMountErrorMountFailed               = 1004,
-    SDMountErrorUnmountFailed             = 1005,
-    SDMountErrorAlreadyMounted            = 1006,
-    SDMountErrorAskpassMissing            = 1007,
-    SDMountErrorHostFingerprintChanged    = 1008,
-    SDMountErrorHostKeyVerificationFailed = 1009,
-    SDMountErrorOSXFUSEMissing            = 1010,
-    SDMountErrorSSHFSMissing              = 1011
+typedef NS_ENUM(NSInteger, SDSSHError) {
+    SDSSHErrorUnknown                   =   -1,
+    SDSSHErrorAuthorization             = 1002,
+    SDSSHErrorTimeout                   = 1003,
+    SDSSHErrorMountFailed               = 1004,
+    SDSSHErrorUnmountFailed             = 1005,
+    SDSSHErrorAlreadyMounted            = 1006,
+    SDSSHErrorAskpassMissing            = 1007,
+    SDSSHErrorHostFingerprintChanged    = 1008,
+    SDSSHErrorHostKeyVerificationFailed = 1009,
+    SDSSHErrorOSXFUSEMissing            = 1010,
+    SDSSHErrorSSHFSMissing              = 1011,
+    SDSSHErrorDirectoryMissing          = 1012,
+    SDSSHErrorSyncFailed                = 1013
+
 };
 
 #pragma mark - System API related errors

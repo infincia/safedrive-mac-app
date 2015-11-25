@@ -204,7 +204,7 @@
             }
             [NSThread sleepForTimeInterval:1];
         }
-        NSError *volumeError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorTimeout userInfo:@{NSLocalizedDescriptionKey: @"Volume mount timeout"}];
+        NSError *volumeError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorTimeout userInfo:@{NSLocalizedDescriptionKey: @"Volume mount timeout"}];
         dispatch_async(dispatch_get_main_queue(), ^{
             failureBlock(volumeError);
         });

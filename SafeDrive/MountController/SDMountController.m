@@ -57,7 +57,7 @@
         prevent the code from ever running.
     */
     if (self.mountState == SDMountStateMounted) {
-        NSError *mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
+        NSError *mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
         failureBlock(mountURL, mountError);
         return;
     }
@@ -69,13 +69,13 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
     if (![self.sharedSystemAPI isOSXFUSEInstalled]) {
-        NSError *osxfuseError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorOSXFUSEMissing userInfo:@{NSLocalizedDescriptionKey: @"OSXFUSE is not installed"}];
+        NSError *osxfuseError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorOSXFUSEMissing userInfo:@{NSLocalizedDescriptionKey: @"OSXFUSE is not installed"}];
         failureBlock(mountURL, osxfuseError);
         return;
     }
 
     if (![self.sharedSystemAPI isSSHFSInstalled]) {
-        NSError *sshfsError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorSSHFSMissing userInfo:@{NSLocalizedDescriptionKey: @"SSHFS is not installed"}];
+        NSError *sshfsError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorSSHFSMissing userInfo:@{NSLocalizedDescriptionKey: @"SSHFS is not installed"}];
         failureBlock(mountURL, sshfsError);
         return;
     }
@@ -122,7 +122,7 @@
         [sshfsEnvironment setObject:safeDriveAskpassPath forKey:@"SSH_ASKPASS"];
     }
     else {
-        NSError *askpassError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAskpassMissing userInfo:@{NSLocalizedDescriptionKey: @"Askpass helper missing"}];
+        NSError *askpassError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorAskpassMissing userInfo:@{NSLocalizedDescriptionKey: @"Askpass helper missing"}];
         failureBlock(mountURL, askpassError);
         return;
     }
@@ -239,16 +239,16 @@
 
         NSError *mountError;
         if ([outputString rangeOfString:@"No such file or directory"].length > 0) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Server could not find that volume name"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Server could not find that volume name"}];
         }
         else if ([outputString rangeOfString:@"Not a directory"].length > 0) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Server could not find that volume name"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Server could not find that volume name"}];
         }
         else if ([outputString rangeOfString:@"Permission denied"].length > 0) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
         }
         else if ([outputString rangeOfString:@"is itself on a OSXFUSE volume"].length > 0) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
             /* 
                 no need to run the successblock again since the volume is already mounted
 
@@ -262,22 +262,22 @@
             //successBlock();
         }
         else if ([outputString rangeOfString:@"Error resolving hostname"].length > 0) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Error resolving hostname, contact support"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Error resolving hostname, contact support"}];
         }
         else if ([outputString rangeOfString:@"remote host has disconnected"].length > 0) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Mount failed, check username and password"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Mount failed, check username and password"}];
         }
         else if ([outputString rangeOfString:@"REMOTE HOST IDENTIFICATION HAS CHANGED"].length > 0) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorHostFingerprintChanged userInfo:@{NSLocalizedDescriptionKey: @"Warning: server fingerprint changed!"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorHostFingerprintChanged userInfo:@{NSLocalizedDescriptionKey: @"Warning: server fingerprint changed!"}];
         }
         else if ([outputString rangeOfString:@"Host key verification failed"].length > 0) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorHostKeyVerificationFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server key verification failed!"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorHostKeyVerificationFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server key verification failed!"}];
         }
         else if ([outputString rangeOfString:@"failed to mount"].length > 0) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
         }
         else {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDMountErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
+            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
             /*
                 for the moment we don't want to call the failure block here, as 
                 not everything that comes through stderr indicates a mount 
