@@ -115,7 +115,15 @@
         [self.sharedSystemAPI insertCredentialsInKeychainForService:SDSessionServiceName account:user password:response[@"token"]];
         successBlock(self.sessionToken);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error);
+        NSInteger responseCode = operation.response.statusCode;
+        if (responseCode >= 500) {
+            failureBlock(error);
+            return;
+        }
+        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+        NSString *message = responseObject[@"message"];
+        NSError *responseError = [NSError errorWithDomain:SDErrorDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
+        failureBlock(responseError);
     }];
 }
 
@@ -124,7 +132,15 @@
         NSDictionary *accountStatus = (NSDictionary *)responseObject;
         successBlock(accountStatus);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error);
+        NSInteger responseCode = operation.response.statusCode;
+        if (responseCode >= 500) {
+            failureBlock(error);
+            return;
+        }
+        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+        NSString *message = responseObject[@"message"];
+        NSError *responseError = [NSError errorWithDomain:SDErrorDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
+        failureBlock(responseError);
     }];
 }
 
@@ -133,7 +149,15 @@
         NSDictionary *accountDetails = (NSDictionary *)responseObject;
         successBlock(accountDetails);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error);
+        NSInteger responseCode = operation.response.statusCode;
+        if (responseCode >= 500) {
+            failureBlock(error);
+            return;
+        }
+        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+        NSString *message = responseObject[@"message"];
+        NSError *responseError = [NSError errorWithDomain:SDErrorDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
+        failureBlock(responseError);
     }];
 }
 
