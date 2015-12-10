@@ -6,10 +6,11 @@
 @import XCTest;
 
 #import "SDConstants.h"
+#import "SDTestConstants.h"
+
 #import "SDAPI.h"
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
-#import "SDTestCredentials.h"
 
 #import "NSURL+SFTP.h"
 

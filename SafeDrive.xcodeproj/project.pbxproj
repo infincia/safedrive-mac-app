@@ -26,7 +26,7 @@
 		AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168531A192DC2006CC0EB /* SDAPI.m */; };
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
 		AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */; };
-		AA4E77331A3E6E640054BBCA /* SDTestCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestCredentials.m */; };
+		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
 		AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */; };
 		AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C711BFC57B50008FB8B /* Settings-Background.png */; };
 		AA543C781BFC57B50008FB8B /* General-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C721BFC57B50008FB8B /* General-icon.png */; };
@@ -168,8 +168,8 @@
 		AA3168531A192DC2006CC0EB /* SDAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3168591A195426006CC0EB /* SDDropdownMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDDropdownMenuController.h; path = StatusItem/SDDropdownMenuController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDDropdownMenuController.m; path = StatusItem/SDDropdownMenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AA4E77311A3E6E640054BBCA /* SDTestCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestCredentials.h; sourceTree = "<group>"; };
-		AA4E77321A3E6E640054BBCA /* SDTestCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTestCredentials.m; sourceTree = "<group>"; };
+		AA4E77311A3E6E640054BBCA /* SDTestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestConstants.h; sourceTree = "<group>"; };
+		AA4E77321A3E6E640054BBCA /* SDTestConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTestConstants.m; sourceTree = "<group>"; };
 		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4E77411A3E9B830054BBCA /* libPods-MCSMKeychainItem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-MCSMKeychainItem.a"; path = "../../../Users/steve/Library/Developer/Xcode/DerivedData/SafeDrive-chuvxsgbhfnlbyfxzkgdnlscvvoy/Build/Products/Debug/libPods-MCSMKeychainItem.a"; sourceTree = "<group>"; };
 		AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Storage-Status-backing.png"; sourceTree = "<group>"; };
@@ -374,8 +374,8 @@
 		AA3168291A191B72006CC0EB /* SafeDriveTests */ = {
 			isa = PBXGroup;
 			children = (
-				AA4E77311A3E6E640054BBCA /* SDTestCredentials.h */,
-				AA4E77321A3E6E640054BBCA /* SDTestCredentials.m */,
+				AA4E77311A3E6E640054BBCA /* SDTestConstants.h */,
+				AA4E77321A3E6E640054BBCA /* SDTestConstants.m */,
 				AA31682C1A191B72006CC0EB /* SafeDriveTests.m */,
 				AA31682A1A191B72006CC0EB /* Supporting Files */,
 			);
@@ -892,7 +892,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */,
-				AA4E77331A3E6E640054BBCA /* SDTestCredentials.m in Sources */,
+				AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
