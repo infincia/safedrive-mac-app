@@ -134,19 +134,7 @@
 		AA0A7D131A19670600DCB77E /* SDAccountWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountWindowController.m; path = SafeDrive/AccountWindow/SDAccountWindowController.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDPreferencesWindow.xib; sourceTree = "<group>"; };
 		AA0A7D1F1A19682D00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDAccountWindow.xib; sourceTree = "<group>"; };
-		AA0A7D241A19687400DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		AA0A7D2B1A1968C500DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		AA0A7D2D1A1968E700DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
-		AA0A7D2F1A1968E700DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		AA0A7D311A1968F200DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
-		AA0A7D331A1968F200DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		AA0A7D371A19690100DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
-		AA0A7D3B1A196A8B00DCB77E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
-		AA0A7D3D1A196A9100DCB77E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
-		AA0A7D3F1A196A9400DCB77E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
-		AA0A7D411A196A9800DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDAccountWindow.strings; sourceTree = "<group>"; };
-		AA0A7D431A196B0700DCB77E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDPreferencesWindow.strings; sourceTree = "<group>"; };
 		AA13CB9D1A7212F000A91C7A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = safedriveaskpass/main.m; sourceTree = SOURCE_ROOT; };
 		AA1A460E1BEDE685004A5310 /* HKTHashProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKTHashProvider.h; sourceTree = "<group>"; };
 		AA1A460F1BEDE685004A5310 /* HKTHashProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKTHashProvider.m; sourceTree = "<group>"; };
@@ -210,10 +198,6 @@
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
 		AA7319511A2F95A7003E2391 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDDropdownMenu.xib; sourceTree = "<group>"; };
-		AA7319541A2F95AE003E2391 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
-		AA7319561A2F95B2003E2391 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
-		AA7319581A2F95B3003E2391 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
-		AA73195A1A2F95B5003E2391 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/SDDropdownMenu.strings; sourceTree = "<group>"; };
 		AA925C2D1B8F9BAA00222E46 /* SafeDriveFinder.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SafeDriveFinder.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA9E7DE41A7950A500E3C3E8 /* NSURL+SFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SFTP.h"; sourceTree = "<group>"; };
 		AA9E7DE51A7950A500E3C3E8 /* NSURL+SFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SFTP.m"; sourceTree = "<group>"; };
@@ -714,10 +698,6 @@
 			knownRegions = (
 				en,
 				Base,
-				fr,
-				de,
-				es,
-				ro,
 			);
 			mainGroup = AA31680A1A191B72006CC0EB;
 			productRefGroup = AA3168141A191B72006CC0EB /* Products */;
@@ -953,10 +933,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AA0A7D1A1A19682000DCB77E /* Base */,
-				AA0A7D241A19687400DCB77E /* fr */,
-				AA0A7D2D1A1968E700DCB77E /* de */,
-				AA0A7D311A1968F200DCB77E /* es */,
-				AA0A7D431A196B0700DCB77E /* ro */,
 			);
 			name = SDPreferencesWindow.xib;
 			sourceTree = "<group>";
@@ -965,10 +941,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AA0A7D1F1A19682D00DCB77E /* Base */,
-				AA0A7D3B1A196A8B00DCB77E /* fr */,
-				AA0A7D3D1A196A9100DCB77E /* de */,
-				AA0A7D3F1A196A9400DCB77E /* es */,
-				AA0A7D411A196A9800DCB77E /* ro */,
 			);
 			name = SDAccountWindow.xib;
 			path = SafeDrive/AccountWindow;
@@ -978,10 +950,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AA0A7D281A1968BB00DCB77E /* Base */,
-				AA0A7D2B1A1968C500DCB77E /* fr */,
-				AA0A7D2F1A1968E700DCB77E /* de */,
-				AA0A7D331A1968F200DCB77E /* es */,
-				AA0A7D371A19690100DCB77E /* ro */,
 			);
 			name = Localizable.strings;
 			path = Localization;
@@ -999,10 +967,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				AA7319511A2F95A7003E2391 /* Base */,
-				AA7319541A2F95AE003E2391 /* fr */,
-				AA7319561A2F95B2003E2391 /* de */,
-				AA7319581A2F95B3003E2391 /* es */,
-				AA73195A1A2F95B5003E2391 /* ro */,
 			);
 			name = SDDropdownMenu.xib;
 			path = StatusItem;
