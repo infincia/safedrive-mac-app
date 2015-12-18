@@ -85,21 +85,11 @@
 #pragma mark - IBActions
 
 -(IBAction)toggleMount:(id)sender {
-    switch (self.mountController.mountState) {
-        case SDMountStateMounted: {
-            [self disconnectVolume];
-            break;
-        }
-        case SDMountStateUnmounted: {
-            [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenAccountWindow object:nil];
-            break;
-        }
-        case SDMountStateUnknown: {
-            //
-        }
-        default: {
-            break;
-        }
+    if (self.mountController.mounted) {
+        [self disconnectVolume];
+    }
+    else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenAccountWindow object:nil];
     }
 }
 

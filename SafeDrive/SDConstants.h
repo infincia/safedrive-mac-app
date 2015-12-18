@@ -122,14 +122,6 @@ typedef NS_ENUM(NSInteger, SDAPIError) {
     SDAPIErrorMaintenance   = 3002
 };
 
-#pragma mark - Mount state
-
-typedef NS_ENUM(NSInteger, SDMountState) {
-    SDMountStateUnknown   = -1,
-    SDMountStateUnmounted =  0,
-    SDMountStateMounted   =  1
-};
-
 #pragma mark - Sync state
 
 typedef NS_ENUM(NSInteger, SDSyncState) {

@@ -9,7 +9,7 @@ typedef void(^SDMountFailureBlock)(NSURL *mountURL, NSError *mountError);
 
 @interface SDMountController : NSObject
 
-@property enum SDMountState mountState;
+@property (getter=isMounted) BOOL mounted;
 @property (getter=isMounting) BOOL mounting;
 @property NSURL *mountURL;
 

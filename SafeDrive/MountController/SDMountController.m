@@ -21,7 +21,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.mountState = SDMountStateUnmounted;
+        self.mounted = NO;
         self.mounting = NO;
         self.sharedSystemAPI = [SDSystemAPI sharedAPI];
         [self mountStateLoop];
@@ -56,7 +56,7 @@
         double-mounting. Disabling the login button when a mount succeeds should 
         prevent the code from ever running.
     */
-    if (self.mountState == SDMountStateMounted) {
+    if (self.mounted) {
         NSError *mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
         failureBlock(mountURL, mountError);
         return;
@@ -362,30 +362,21 @@
         for (;;) {
             NSString *volumeName = self.sharedSystemAPI.currentVolumeName;
             NSURL *mountURL = [self getMountURLForVolumeName:volumeName];
-            BOOL mounted = [self.sharedSystemAPI checkForMountedVolume:mountURL];
+            BOOL mountCheck = [self.sharedSystemAPI checkForMountedVolume:mountURL];
             NSDictionary *mountDetails;
-            if (mounted) {
+            if (mountCheck) {
                 mountDetails = [self.sharedSystemAPI detailsForMount:mountURL];
             }
             dispatch_sync(dispatch_get_main_queue(), ^{
-                self.mountState = ( mounted ? SDMountStateMounted : SDMountStateUnmounted);
-                switch (self.mountState) {
-                    case SDMountStateMounted: {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateDetailsNotification object:mountDetails];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateMountedNotification object:nil];
-                        break;
-                    }
-                    case SDMountStateUnmounted: {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateDetailsNotification object:nil];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateUnmountedNotification object:nil];
-                        break;
-                    }
-                    case SDMountStateUnknown: {
-                        //
-                    }
-                    default: {
-                        break;
-                    }
+                self.mounted = mountCheck;
+                if (self.mounted) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateDetailsNotification object:mountDetails];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateMountedNotification object:nil];
+                }
+                else {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateDetailsNotification object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:SDMountStateUnmountedNotification object:nil];
+
                 }
             });
             [NSThread sleepForTimeInterval:1];
