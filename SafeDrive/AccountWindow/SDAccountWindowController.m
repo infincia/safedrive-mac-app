@@ -223,6 +223,12 @@
                 [self displayError:mountError forDuration:10];
                 [self.spinner stopAnimation:self];
                 self.mountController.mounting = NO;
+#warning This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
+                [self.mountController unmountVolumeWithName:volumeName success:^(NSURL *mountURL, NSError *mountError) {
+                    //
+                } failure:^(NSURL *mountURL, NSError *mountError) {
+                    //
+                }];
             }];
         } failure:^(NSError *apiError) {
             NSLog(@"SafeDrive accountStatusForUser failure in account window");
