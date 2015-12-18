@@ -52,7 +52,7 @@
             }
         }];
 
-        self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/api/1/", SDAPIDomainTesting]];
+        self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/api/1/", SDAPIDomainTesting]];
 
         _apiManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:self.baseURL];
         self.apiManager.requestSerializer = [[AFJSONRequestSerializer alloc] init];
