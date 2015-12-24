@@ -80,10 +80,10 @@
 }
 
 -(void)resetButtons {
-    self.generalButton.highlighted = NO;
-    self.accountButton.highlighted = NO;
-    self.bandwidthButton.highlighted = NO;
-    self.statusButton.highlighted = NO;
+    //self.generalButton.highlighted = NO;
+    //self.accountButton.highlighted = NO;
+    //self.bandwidthButton.highlighted = NO;
+    //self.statusButton.highlighted = NO;
 
 }
 
