@@ -38,13 +38,10 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="enabled2" keyPath="self.mountController.mounting" previousBinding="rVH-QD-ayC" id="Leh-27-u04">
+                            <binding destination="-2" name="value" keyPath="self.accountController.email" id="2uB-1Q-5FF">
                                 <dictionary key="options">
-                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
-                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                    <string key="NSNullPlaceholder">email</string>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="self.mountController.mounted" id="rVH-QD-ayC">
@@ -52,10 +49,13 @@
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
-                            <binding destination="-2" name="value" keyPath="self.accountController.email" id="2uB-1Q-5FF">
+                            <binding destination="-2" name="enabled2" keyPath="self.mountController.mounting" previousBinding="rVH-QD-ayC" id="Leh-27-u04">
                                 <dictionary key="options">
-                                    <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                                    <string key="NSNullPlaceholder">email</string>
+                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
                         </connections>
@@ -68,13 +68,10 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="enabled2" keyPath="self.mountController.mounting" previousBinding="Hd1-jH-pZn" id="3er-rB-jxP">
+                            <binding destination="-2" name="value" keyPath="self.accountController.password" id="mcC-uk-pEw">
                                 <dictionary key="options">
-                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
-                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                    <string key="NSNullPlaceholder">password</string>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="self.mountController.mounted" id="Hd1-jH-pZn">
@@ -82,10 +79,13 @@
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
-                            <binding destination="-2" name="value" keyPath="self.accountController.password" id="mcC-uk-pEw">
+                            <binding destination="-2" name="enabled2" keyPath="self.mountController.mounting" previousBinding="Hd1-jH-pZn" id="3er-rB-jxP">
                                 <dictionary key="options">
-                                    <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                                    <string key="NSNullPlaceholder">password</string>
+                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
                         </connections>
@@ -98,17 +98,17 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
+                            <binding destination="-2" name="enabled" keyPath="self.mountController.mounted" id="yYY-63-ZST">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
                             <binding destination="-2" name="enabled2" keyPath="self.mountController.mounting" previousBinding="yYY-63-ZST" id="cpH-0a-6u4">
                                 <dictionary key="options">
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNullPlaceholder" value="-1"/>
-                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                </dictionary>
-                            </binding>
-                            <binding destination="-2" name="enabled" keyPath="self.mountController.mounted" id="yYY-63-ZST">
-                                <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
@@ -144,17 +144,17 @@
                                     <integer key="NSNullPlaceholder" value="0"/>
                                 </dictionary>
                             </binding>
+                            <binding destination="-2" name="enabled" keyPath="self.mountController.mounted" id="lf5-4S-RMs">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
                             <binding destination="-2" name="enabled4" keyPath="self.mountController.mounting" previousBinding="aKE-hD-WWf" id="Zhe-DN-eAL">
                                 <dictionary key="options">
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNullPlaceholder" value="-1"/>
-                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                </dictionary>
-                            </binding>
-                            <binding destination="-2" name="enabled" keyPath="self.mountController.mounted" id="lf5-4S-RMs">
-                                <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
