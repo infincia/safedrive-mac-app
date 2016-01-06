@@ -191,7 +191,7 @@
     return NO;
 }
 
--(void)checkForMountedVolume:(NSURL *)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSystemSuccessBlock)successBlock failure:(SDSystemFailureBlock)failureBlock {
+-(void)checkForMountedVolume:(NSURL *)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"Mount check called on background thread");
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -214,7 +214,7 @@
 
 
 
--(void)ejectMount:(NSURL *)mountURL success:(SDSystemSuccessBlock)successBlock failure:(SDSystemFailureBlock)failureBlock {
+-(void)ejectMount:(NSURL *)mountURL success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
     NSError *error;
     BOOL ejectSuccess = [[NSWorkspace sharedWorkspace] unmountAndEjectDeviceAtURL:mountURL error:&error];
     if (ejectSuccess && successBlock) successBlock();

@@ -99,7 +99,7 @@
 
 #pragma mark - Client registration
 
--(void)registerMachineWithUser:(NSString *)user password:(NSString *)password success:(SDAPIClientRegistrationSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
+-(void)registerMachineWithUser:(NSString *)user password:(NSString *)password success:(SDAPIClientRegistrationSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
     NSString *languageCode = [[NSLocale preferredLanguages] objectAtIndex:0];
     NSString *os = [NSString stringWithFormat:@"OS X %@", self.sharedSystemAPI.currentOSVersion];
     NSString *identifier = [self.sharedSystemAPI machineID];
@@ -126,7 +126,7 @@
     }];
 }
 
--(void)accountStatusForUser:(NSString *)user success:(SDAPIAccountStatusBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
+-(void)accountStatusForUser:(NSString *)user success:(SDAPIAccountStatusBlock)successBlock failure:(SDFailureBlock)failureBlock {
     [self.apiManager GET:@"account/status" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *accountStatus = (NSDictionary *)responseObject;
         successBlock(accountStatus);
@@ -142,7 +142,7 @@
     }];
 }
 
--(void)accountDetailsForUser:(NSString *)user success:(SDAPIAccountDetailsBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
+-(void)accountDetailsForUser:(NSString *)user success:(SDAPIAccountDetailsBlock)successBlock failure:(SDFailureBlock)failureBlock {
     [self.apiManager GET:@"account/details" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *accountDetails = (NSDictionary *)responseObject;
         successBlock(accountDetails);
@@ -160,7 +160,7 @@
 
 #pragma mark - Unused 
 
--(void)getHostFingerprintList:(SDAPIFingerprintListSuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
+-(void)getHostFingerprintList:(SDAPIFingerprintListSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
     [self.apiManager GET:@"fingerprints" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
         successBlock(response[@"fingerprints"]);
@@ -170,7 +170,7 @@
 }
 
 
--(void)apiStatus:(SDAPISuccessBlock)successBlock failure:(SDAPIFailureBlock)failureBlock {
+-(void)apiStatus:( SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
     [self.apiManager GET:@"status" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
         successBlock();

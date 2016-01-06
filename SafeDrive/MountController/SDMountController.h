@@ -4,9 +4,6 @@
 
 @import Foundation;
 
-typedef void(^SDMountSuccessBlock)(NSURL *mountURL, NSError *mountError);
-typedef void(^SDMountFailureBlock)(NSURL *mountURL, NSError *mountError);
-
 @interface SDMountController : NSObject
 
 @property (getter=isMounted) BOOL mounted;

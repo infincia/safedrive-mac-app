@@ -130,3 +130,27 @@ typedef NS_ENUM(NSInteger, SDSyncState) {
     SDSyncStateIdle    =  1
 };
 
+#pragma mark - Block definitions
+
+typedef void(^SDSuccessBlock)();
+typedef void(^SDFailureBlock)(NSError *apiError);
+
+typedef void(^SDMountSuccessBlock)(NSURL *mountURL, NSError *mountError);
+typedef void(^SDMountFailureBlock)(NSURL *mountURL, NSError *mountError);
+
+typedef void(^SDAPIClientRegistrationSuccessBlock)(NSString *sessionToken);
+
+typedef void(^SDAPIAccountStatusBlock)(NSDictionary *accountStatus);
+typedef void(^SDAPIAccountDetailsBlock)(NSDictionary *accountDetails);
+
+typedef void(^SDAPIFingerprintListSuccessBlock)(NSDictionary *fingerprintPairs);
+
+typedef void(^SDAPICreateSyncFolderSuccessBlock)(NSNumber *folderID);
+typedef void(^SDAPIReadSyncFoldersSuccessBlock)(NSArray *folders);
+typedef void(^SDAPIDeleteSyncFoldersSuccessBlock)();
+
+
+typedef void(^SDSyncSuccessBlock)(NSURL *syncURL, NSError *syncError);
+typedef void(^SDSyncFailureBlock)(NSURL *syncURL, NSError *syncError);
+
+

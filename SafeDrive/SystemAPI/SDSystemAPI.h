@@ -4,9 +4,6 @@
 
 @import Foundation;
 
-typedef void(^SDSystemSuccessBlock)();
-typedef void(^SDSystemFailureBlock)(NSError *error);
-
 @interface SDSystemAPI : NSObject
 
 @property (nonatomic, readonly) NSString *currentVolumeName;
@@ -30,9 +27,9 @@ typedef void(^SDSystemFailureBlock)(NSError *error);
 
 -(BOOL)checkForMountedVolume:(NSURL *)mountURL;
 
--(void)checkForMountedVolume:(NSURL *)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSystemSuccessBlock)successBlock failure:(SDSystemFailureBlock)failureBlock;
+-(void)checkForMountedVolume:(NSURL *)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
 
--(void)ejectMount:(NSURL *)mountURL success:(SDSystemSuccessBlock)success failure:(SDSystemFailureBlock)failure;
+-(void)ejectMount:(NSURL *)mountURL success:(SDSuccessBlock)success failure:(SDFailureBlock)failure;
 
 -(BOOL)autostart;
 
