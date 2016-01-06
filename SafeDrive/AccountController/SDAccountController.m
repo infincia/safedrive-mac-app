@@ -72,6 +72,8 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:SDAccountStatusNotification object:accountStatus];
                 });
+                self.remoteHost = accountStatus[@"host"];
+                self.remotePort = accountStatus[@"port"];
             } failure:^(NSError *apiError) {
                 //
             }];

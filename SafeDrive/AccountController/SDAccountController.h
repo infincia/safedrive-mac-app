@@ -9,6 +9,8 @@
 
 @property NSString *email;
 @property NSString *password;
+@property NSString *remoteHost;
+@property NSNumber *remotePort;
 
 +(SDAccountController *)sharedAccountController;
 
