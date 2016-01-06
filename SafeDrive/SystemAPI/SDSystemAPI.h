@@ -17,8 +17,6 @@
 
 -(NSString *)machineSerialNumber;
 
--(NSString *)machineID;
-
 -(NSString *)en0MAC;
 
 -(NSString *)currentOSVersion;

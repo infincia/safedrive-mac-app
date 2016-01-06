@@ -7,6 +7,8 @@
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
 
+#import "HKTHashProvider.h"
+
 @interface SDAPI ()
 @property (nonatomic, readonly) AFNetworkReachabilityManager *reachabilityManager;
 @property (nonatomic, readonly) AFHTTPRequestOperationManager *apiManager;
@@ -102,7 +104,10 @@
 -(void)registerMachineWithUser:(NSString *)user password:(NSString *)password success:(SDAPIClientRegistrationSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
     NSString *languageCode = [[NSLocale preferredLanguages] objectAtIndex:0];
     NSString *os = [NSString stringWithFormat:@"OS X %@", self.sharedSystemAPI.currentOSVersion];
-    NSString *identifier = [self.sharedSystemAPI machineID];
+    NSString *macAddress = [self.sharedSystemAPI en0MAC];
+    NSString *machineIdConcatenation = [macAddress stringByAppendingString:user];
+    NSString *identifier = [HKTHashProvider sha256:[machineIdConcatenation dataUsingEncoding:NSUTF8StringEncoding]];
+
     
     NSDictionary *postParameters = @{ @"email": user, @"password": password, @"operatingSystem": os,   @"language": languageCode, @"uniqueClientId": identifier };
     

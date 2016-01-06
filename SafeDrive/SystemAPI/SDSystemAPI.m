@@ -15,7 +15,6 @@
 
 #import "SDSystemAPI.h"
 #import "NSBundle+LoginItem.h"
-#import "HKTHashProvider.h"
 
 #import "MCSMKeychainItem.h"
 
@@ -104,12 +103,6 @@
         IOObjectRelease(platformExpert);
     }
     return serial;
-}
-
--(NSString *)machineID {
-    NSString *en0MAC = [self en0MAC];
-    NSString *identifier = [HKTHashProvider sha256:[en0MAC dataUsingEncoding:NSUTF8StringEncoding]];
-    return identifier;
 }
 
 -(NSString *)en0MAC {
