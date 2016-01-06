@@ -175,7 +175,7 @@
     }];
     [self waitForExpectationsWithTimeout:30 handler:^(NSError *error) {
         if (error != nil) {
-            NSLog(@"test_SDAPI_registerMachine error: %@", error.localizedDescription);    
+            NSLog(@"test_SDMountController_startMountTaskWithVolumeName error: %@", error.localizedDescription);    
         }
     }];
 }
