@@ -53,6 +53,7 @@
 		AA5C1AA41BB27162006A0C8C /* FinderSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5C1AA31BB27162006A0C8C /* FinderSync.framework */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
 		AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */; };
+		AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */; };
 		AA925C371B8F9BAA00222E46 /* SafeDriveFinder.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AA925C2D1B8F9BAA00222E46 /* SafeDriveFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA9E7DE61A7950A500E3C3E8 /* NSURL+SFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9E7DE51A7950A500E3C3E8 /* NSURL+SFTP.m */; };
 		AAAF1A431BF594A9008E7865 /* SDAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAF1A421BF594A9008E7865 /* SDAccountController.m */; };
@@ -200,6 +201,8 @@
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
 		AA7319511A2F95A7003E2391 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDDropdownMenu.xib; sourceTree = "<group>"; };
+		AA7B460E1C46F18600EA8889 /* SDErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDErrorHandler.h; path = ErrorHandler/SDErrorHandler.h; sourceTree = "<group>"; };
+		AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDErrorHandler.m; path = ErrorHandler/SDErrorHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA925C2D1B8F9BAA00222E46 /* SafeDriveFinder.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SafeDriveFinder.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA9E7DE41A7950A500E3C3E8 /* NSURL+SFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SFTP.h"; sourceTree = "<group>"; };
 		AA9E7DE51A7950A500E3C3E8 /* NSURL+SFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SFTP.m"; sourceTree = "<group>"; };
@@ -339,6 +342,7 @@
 				AA5C1A951BB234DD006A0C8C /* XPC */,
 				AA3168161A191B72006CC0EB /* Supporting Files */,
 				AAF85BFB1A23A4BC0063B54F /* SystemAPI */,
+				AA7B460D1C46F0F900EA8889 /* ErrorHandler */,
 				AA9E7DE31A79505600E3C3E8 /* Utilities */,
 			);
 			path = SafeDrive;
@@ -510,6 +514,15 @@
 			);
 			name = XPC;
 			path = ServiceRouter;
+			sourceTree = "<group>";
+		};
+		AA7B460D1C46F0F900EA8889 /* ErrorHandler */ = {
+			isa = PBXGroup;
+			children = (
+				AA7B460E1C46F18600EA8889 /* SDErrorHandler.h */,
+				AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */,
+			);
+			name = ErrorHandler;
 			sourceTree = "<group>";
 		};
 		AA925C2E1B8F9BAA00222E46 /* SafeDriveFinder */ = {
@@ -869,6 +882,7 @@
 				AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */,
 				AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */,
+				AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */,
 				AAEED2D31A7D76F200B92993 /* SDDataSizeTransformer.m in Sources */,
 				AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */,
 				AA31681A1A191B72006CC0EB /* AppDelegate.m in Sources */,

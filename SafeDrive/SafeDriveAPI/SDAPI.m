@@ -99,6 +99,52 @@
     return _privateSessionToken;
 }
 
+#pragma mark - Telemetry
+
+-(void)reportError:(NSError *)error forUser:(NSString *)user queue:(dispatch_queue_t)queue success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+
+    NSMutableDictionary *postParameters = [NSMutableDictionary new];
+    
+    NSString *os = [NSString stringWithFormat:@"OS X %@", self.sharedSystemAPI.currentOSVersion];
+    [postParameters setObject:os forKey:@"operatingSystem"];
+
+    if (user != nil && user.length > 0) {
+        NSString *macAddress = [self.sharedSystemAPI en0MAC];
+        
+        NSString *machineIdConcatenation = [macAddress stringByAppendingString:user];
+        
+        NSString *identifier = [HKTHashProvider sha256:[machineIdConcatenation dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [postParameters setObject:identifier forKey:@"uniqueClientId"];
+    }
+
+    [postParameters setObject:error.localizedDescription forKey:@"description"];
+    
+    NSURL *errorReportingURL = [self.baseURL URLByAppendingPathComponent:@"error"];
+    
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:errorReportingURL];
+    [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [req setHTTPMethod:@"POST"];
+    
+    NSData *body = [NSJSONSerialization dataWithJSONObject:postParameters options:NSJSONWritingPrettyPrinted error:nil];
+    
+    [req setHTTPBody:body];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
+
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        successBlock();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failureBlock(error);
+    }];
+    operation.completionQueue = queue;
+    operation.responseSerializer = [AFPropertyListResponseSerializer serializer];
+    
+    [operation start];
+    [operation waitUntilFinished];
+    
+}
+
 #pragma mark - Client registration
 
 -(void)registerMachineWithUser:(NSString *)user password:(NSString *)password success:(SDAPIClientRegistrationSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {

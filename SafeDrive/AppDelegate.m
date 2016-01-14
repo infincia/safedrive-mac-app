@@ -28,6 +28,9 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"NSApplicationCrashOnExceptions": @YES }];
     [Fabric with:@[[Crashlytics class]]];
+    
+    // initialize error handler, from this point on SDLog() and SDErrorHandlerReport() should be safe to use
+    SDErrorHandlerInitialize();
 
 #if RELEASE    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
