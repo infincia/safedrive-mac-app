@@ -74,15 +74,19 @@
                 });
                 self.remoteHost = accountStatus[@"host"];
                 self.remotePort = accountStatus[@"port"];
+                SDLog(@"Account status: %@", accountStatus);
             } failure:^(NSError *apiError) {
-                //
+                SDLog(@"Account status retrieval failed: %@", apiError.localizedDescription);
+                SDErrorHandlerReport(apiError);
             }];
             [self.sharedSafedriveAPI accountDetailsForUser:self.email success:^(NSDictionary *accountDetails) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:SDAccountDetailsNotification object:accountDetails];
                 });
+                SDLog(@"Account details: %@", accountDetails);
             } failure:^(NSError *apiError) {
-                //
+                SDLog(@"Account details retrieval failed: %@", apiError.localizedDescription);
+                SDErrorHandlerReport(apiError);
             }];
             [NSThread sleepForTimeInterval:60 * 5]; // 5 minutes
         }

@@ -86,6 +86,7 @@
 
             }];
             [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
+                SDErrorHandlerReport(error);
                 NSLog(@"Error: %@", error);
             }] sendAppEndpoint:self.appListener.endpoint reply:^(BOOL success) {
 

@@ -72,7 +72,7 @@
 
 -(void)disconnectVolume {
     NSString *volumeName = self.sharedSystemAPI.currentVolumeName;
-    NSLog(@"Dismounting volume: %@", volumeName);
+    SDLog(@"Dismounting volume: %@", volumeName);
     [self.mountController unmountVolumeWithName:volumeName success:^(NSURL *mountURL, NSError *mountError) {
         //
     } failure:^(NSURL *mountURL, NSError *mountError) {

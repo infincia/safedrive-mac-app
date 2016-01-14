@@ -96,7 +96,7 @@
     NSNumber *port = [sshURL port];
     NSString *user = [sshURL user];
     NSString *serverPath = [sshURL path];
-    NSLog(@"Mounting ssh URL: %@", sshURL);
+    SDLog(@"Mounting ssh URL: %@", sshURL);
 
 
 
@@ -168,7 +168,7 @@
 #warning DO NOT REMOVE THIS. See above comment for the reason.
     [sshfsEnvironment setObject:@"" forKey:@"DISPLAY"];
 
-    //NSLog(@"Subprocess environment: %@", sshfsEnvironment);
+    //SDLog(@"Subprocess environment: %@", sshfsEnvironment);
     self.sshfsTask.environment = sshfsEnvironment;
 
 
@@ -217,7 +217,7 @@
                as the fingerprint is preconfigured in the app
     */
     //NSString *knownHostsFile = [[NSBundle mainBundle] pathForResource:@"known_hosts" ofType:nil];
-    //NSLog(@"Known hosts file: %@", knownHostsFile);
+    //SDLog(@"Known hosts file: %@", knownHostsFile);
     //[taskArguments addObject:[NSString stringWithFormat:@"-oUserKnownHostsFile=%@", knownHostsFile]];
 
     /* custom volume name */
@@ -235,7 +235,7 @@
     NSFileHandle *outputPipeHandle = [outputPipe fileHandleForReading];
     outputPipeHandle.readabilityHandler = ^( NSFileHandle *handle ) {
         NSString *outputString = [[NSString alloc] initWithData:[handle availableData] encoding:NSUTF8StringEncoding];
-        NSLog(@"SSHFS Task output: %@", outputString);
+        SDLog(@"SSHFS Task output: %@", outputString);
 
         NSError *mountError;
         if ([outputString rangeOfString:@"No such file or directory"].length > 0) {
@@ -294,7 +294,7 @@
             dispatch_sync(dispatch_get_main_queue(), ^{
                 failureBlock(mountURL, mountError);
             });
-            NSLog(@"SSHFS Task error: %lu, %@", mountError.code, mountError.localizedDescription);
+            SDLog(@"SSHFS Task error: %lu, %@", mountError.code, mountError.localizedDescription);
         }
     };
     [self.sshfsTask setStandardError:outputPipe];
@@ -316,7 +316,7 @@
         [task.standardOutput fileHandleForReading].readabilityHandler = nil;
         [task.standardError fileHandleForReading].readabilityHandler = nil;
         if (task.terminationStatus == 0) {
-            NSLog(@"Task exited cleanly, running successBlock");
+            SDLog(@"Task exited cleanly, running successBlock");
             dispatch_sync(dispatch_get_main_queue(), ^{
                 weakSelf.mountURL = mountURL;
                 successBlock(mountURL, nil);
@@ -331,7 +331,7 @@
 #pragma mark - Launch subprocess and return
 
 
-    //NSLog(@"Launching SSHFS with arguments: %@", taskArguments);
+    //SDLog(@"Launching SSHFS with arguments: %@", taskArguments);
     [self.sshfsTask launch];
 }
 

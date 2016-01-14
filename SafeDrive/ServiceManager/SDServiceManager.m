@@ -70,7 +70,8 @@
     }
     NSError *launchAgentCopyError = nil;
     if (![fileManager copyItemAtURL:launchAgentSourceURL toURL:launchAgentDestinationURL error:&launchAgentCopyError]) {
-        NSLog(@"Error copying launch agent: %@", launchAgentCopyError.localizedDescription);
+        SDErrorHandlerReport(launchAgentCopyError);
+        SDLog(@"Error copying launch agent: %@", launchAgentCopyError.localizedDescription);
     }
     
     // copy background service to ~/Library/Application Support/SafeDrive/
@@ -79,7 +80,8 @@
     
     NSError *directoryError = nil;
     if (![fileManager createDirectoryAtURL:safeDriveApplicationSupportURL withIntermediateDirectories:YES attributes:nil error:&directoryError]) {
-        NSLog(@"Error creating support directory: %@", directoryError.localizedDescription);
+        SDErrorHandlerReport(directoryError);
+        SDLog(@"Error creating support directory: %@", directoryError.localizedDescription);
     }    
     
     NSURL *serviceDestinationURL = [safeDriveApplicationSupportURL URLByAppendingPathComponent:@"SafeDriveService.app" isDirectory:YES];
@@ -90,7 +92,8 @@
     }
     NSError *serviceCopyError = nil;
     if (![fileManager copyItemAtURL:serviceSourceURL toURL:serviceDestinationURL error:&serviceCopyError]) {
-        NSLog(@"Error copying service: %@", serviceCopyError.localizedDescription);
+        SDErrorHandlerReport(serviceCopyError);
+        SDLog(@"Error copying service: %@", serviceCopyError.localizedDescription);
     }
 }
 
@@ -105,7 +108,8 @@
     
     if (!SMJobSubmit(kSMDomainUserLaunchd, (__bridge CFDictionaryRef)jobDict, NULL, &jobError)) {
         NSError *err = (__bridge NSError *)jobError;
-        NSLog(@"Load service error: %@", err.localizedDescription);
+        SDErrorHandlerReport(err);
+        SDLog(@"Load service error: %@", err.localizedDescription);
     }
 }
 
@@ -113,7 +117,8 @@
     CFErrorRef jobError = NULL;
     if (!SMJobRemove(kSMDomainUserLaunchd, (CFStringRef)@"io.safedrive.SafeDrive.Service", NULL, 0, &jobError)) {
         NSError *err = (__bridge NSError *)jobError;
-        NSLog(@"Unload service error: %@", err.localizedDescription);
+        SDErrorHandlerReport(err);
+        SDLog(@"Unload service error: %@", err.localizedDescription);
     }
 }
 

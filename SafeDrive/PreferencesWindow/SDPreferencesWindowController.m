@@ -102,7 +102,8 @@
         autostartError = [self.sharedSystemAPI disableAutostart];
     }
     if (autostartError) {
-        NSLog(@"Error during login item setter: %@", autostartError);
+        SDErrorHandlerReport(autostartError);
+        SDLog(@"Error during login item setter: %@", autostartError);
     }
 }
 

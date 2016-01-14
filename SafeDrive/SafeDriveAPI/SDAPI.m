@@ -161,7 +161,7 @@
 
     [self.apiManager POST:@"client/register" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
-        NSLog(@"Client registered: %@", response);
+        SDLog(@"Client registered: %@", response);
         self.sessionToken = response[@"token"];
         [self.sharedSystemAPI insertCredentialsInKeychainForService:SDSessionServiceName account:user password:response[@"token"]];
         successBlock(self.sessionToken);
