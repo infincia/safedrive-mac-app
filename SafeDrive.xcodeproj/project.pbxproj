@@ -207,7 +207,7 @@
 		AA9E7DE41A7950A500E3C3E8 /* NSURL+SFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SFTP.h"; sourceTree = "<group>"; };
 		AA9E7DE51A7950A500E3C3E8 /* NSURL+SFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SFTP.m"; sourceTree = "<group>"; };
 		AAAF1A411BF594A9008E7865 /* SDAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDAccountController.h; path = AccountController/SDAccountController.h; sourceTree = "<group>"; };
-		AAAF1A421BF594A9008E7865 /* SDAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDAccountController.m; path = AccountController/SDAccountController.m; sourceTree = "<group>"; };
+		AAAF1A421BF594A9008E7865 /* SDAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountController.m; path = AccountController/SDAccountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
 		AAEA529F1A81A3EA00BF862C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = safedriveaskpass/Info.plist; sourceTree = SOURCE_ROOT; };

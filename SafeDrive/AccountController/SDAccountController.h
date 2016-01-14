@@ -8,10 +8,12 @@
 @property enum SDAccountStatus accountStatus;
 
 @property NSString *email;
+@property NSString *internalUserName;
 @property NSString *password;
 @property NSString *remoteHost;
 @property NSNumber *remotePort;
 
 +(SDAccountController *)sharedAccountController;
 
+-(void)signInWithSuccess:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
 @end

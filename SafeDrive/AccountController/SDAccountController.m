@@ -6,6 +6,8 @@
 #import "SDSystemAPI.h"
 #import "SDAPI.h"
 #import <dispatch/dispatch.h>
+#import <Crashlytics/Crashlytics.h>
+
 
 @interface SDAccountController ()
 @property SDSystemAPI *sharedSystemAPI;
@@ -25,6 +27,14 @@
         self.sharedSystemAPI = [SDSystemAPI sharedAPI];
         self.sharedSafedriveAPI = [SDAPI sharedAPI];
         [self accountLoop];
+        // grab credentials from keychain if they exist
+        NSDictionary *credentials = [self.sharedSystemAPI retrieveCredentialsFromKeychainForService:SDServiceName];
+        if (credentials) {
+            self.email = credentials[@"account"];
+            self.password = credentials[@"password"];
+            [CrashlyticsKit setUserEmail:self.email];
+            SDErrorHandlerSetUser(self.email);
+        }
     }
     return self;
 }
@@ -72,8 +82,10 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:SDAccountStatusNotification object:accountStatus];
                 });
+                self.internalUserName = accountStatus[@"userName"];
                 self.remoteHost = accountStatus[@"host"];
                 self.remotePort = accountStatus[@"port"];
+
                 SDLog(@"Account status: %@", accountStatus);
             } failure:^(NSError *apiError) {
                 SDLog(@"Account status retrieval failed: %@", apiError.localizedDescription);
@@ -105,5 +117,42 @@
     return localInstance;
 }
 
+-(void)signInWithSuccess:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+    NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychainForService:SDServiceName account:self.email password:self.password];
+    
+    if (keychainError) {
+        SDErrorHandlerReport(keychainError);
+        failureBlock(keychainError);
+        return;
+    }
+    
+    [CrashlyticsKit setUserEmail:self.email];
+    SDErrorHandlerSetUser(self.email);
+    
+    [self.sharedSafedriveAPI registerMachineWithUser:self.email password:self.password success:^(NSString *sessionToken) {
+        [self.sharedSafedriveAPI accountStatusForUser:self.email success:^(NSDictionary *accountStatus) {
+            SDLog(@"SafeDrive accountStatusForUser success in account controller");
+
+            self.internalUserName = accountStatus[@"userName"];
+            self.remoteHost = accountStatus[@"host"];
+            self.remotePort = accountStatus[@"port"];
+            
+            NSError *keychainError = [self.sharedSystemAPI insertCredentialsInKeychainForService:SDSSHServiceName account:self.internalUserName password:self.password];
+            if (keychainError) {
+                SDErrorHandlerReport(keychainError);
+                failureBlock(keychainError);
+                return;
+            }
+            successBlock();
+            
+        } failure:^(NSError *apiError) {
+            SDErrorHandlerReport(apiError);
+            failureBlock(apiError);
+        }];
+    } failure:^(NSError *apiError) {
+        SDErrorHandlerReport(apiError);
+        failureBlock(apiError);
+    }];
+}
 
 @end
