@@ -7,7 +7,7 @@
 #pragma mark - General constants
 
 NSString *const SDDefaultVolumeName = @"SafeDrive";
-NSString *const SDDefaultServerPath = @"storage";
+NSString *const SDDefaultServerPath = @"/storage";
 NSInteger const SDDefaultServerPort = 22;
 
 #pragma mark - NSUserDefaults keys
@@ -50,6 +50,7 @@ NSString *const SDVolumeSubprocessDidTerminateNotification = @"SDVolumeSubproces
 NSString *const SDApplicationShouldOpenPreferencesWindow  = @"SDApplicationShouldOpenPreferencesWindow";
 NSString *const SDApplicationShouldOpenAccountWindow      = @"SDApplicationShouldOpenAccountWindow";
 NSString *const SDApplicationShouldOpenAboutWindow        = @"SDApplicationShouldOpenAboutWindow";
+NSString *const SDApplicationShouldOpenSyncWindow        = @"SDApplicationShouldOpenSyncWindow";
 
 
 NSString *const SDAPIDidEnterMaintenancePeriod            = @"SDAPIDidEnterMaintenancePeriod";

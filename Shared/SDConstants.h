@@ -54,6 +54,8 @@ FOUNDATION_EXPORT NSString *const SDVolumeSubprocessDidTerminateNotification;
 FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenPreferencesWindow;
 FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenAccountWindow;
 FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenAboutWindow;
+FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenSyncWindow;
+
 
 FOUNDATION_EXPORT NSString *const SDAPIDidEnterMaintenancePeriod;
 FOUNDATION_EXPORT NSString *const SDAPIDidBecomeReachable;
@@ -111,7 +113,8 @@ typedef NS_ENUM(NSInteger, SDSystemError) {
     SDSystemErrorAddLoginItemFailed       = 2002,
     SDSystemErrorRemoveLoginItemFailed    = 2003,
     SDSystemErrorAddKeychainItemFailed    = 2004,
-    SDSystemErrorRemoveKeychainItemFailed = 2005
+    SDSystemErrorRemoveKeychainItemFailed = 2005,
+    SDSystemErrorFilePermissionDenied     = 2006
 };
 
 #pragma mark - SafeDrive API related errors
@@ -150,7 +153,6 @@ typedef void(^SDAPIReadSyncFoldersSuccessBlock)(NSArray *folders);
 typedef void(^SDAPIDeleteSyncFoldersSuccessBlock)();
 
 
-typedef void(^SDSyncSuccessBlock)(NSURL *syncURL, NSError *syncError);
-typedef void(^SDSyncFailureBlock)(NSURL *syncURL, NSError *syncError);
+typedef void(^SDSyncResultBlock)(NSURL *syncURL, NSError *syncError);
 
 

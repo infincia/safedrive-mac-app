@@ -26,6 +26,9 @@
 		AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168531A192DC2006CC0EB /* SDAPI.m */; };
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
 		AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */; };
+		AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
+		AA3D8EC01C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
+		AA3D8EC11C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
 		AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */; };
 		AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C711BFC57B50008FB8B /* Settings-Background.png */; };
@@ -49,7 +52,6 @@
 		AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5C1AA11BB26C6A006A0C8C /* SDAppXPCDelegate.m */; };
 		AA5C1AA41BB27162006A0C8C /* FinderSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5C1AA31BB27162006A0C8C /* FinderSync.framework */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
-		AA73194A1A2F86B8003E2391 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7319491A2F86B8003E2391 /* SDConstants.m */; };
 		AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */; };
 		AA925C371B8F9BAA00222E46 /* SafeDriveFinder.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AA925C2D1B8F9BAA00222E46 /* SafeDriveFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA9E7DE61A7950A500E3C3E8 /* NSURL+SFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9E7DE51A7950A500E3C3E8 /* NSURL+SFTP.m */; };
@@ -156,6 +158,8 @@
 		AA3168531A192DC2006CC0EB /* SDAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3168591A195426006CC0EB /* SDDropdownMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDDropdownMenuController.h; path = StatusItem/SDDropdownMenuController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDDropdownMenuController.m; path = StatusItem/SDDropdownMenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDConstants.h; path = Shared/SDConstants.h; sourceTree = "<group>"; };
+		AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDConstants.m; path = Shared/SDConstants.m; sourceTree = "<group>"; };
 		AA4E77311A3E6E640054BBCA /* SDTestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestConstants.h; sourceTree = "<group>"; };
 		AA4E77321A3E6E640054BBCA /* SDTestConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTestConstants.m; sourceTree = "<group>"; };
 		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,8 +197,6 @@
 		AA5C1AA11BB26C6A006A0C8C /* SDAppXPCDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDAppXPCDelegate.m; path = SafeDrive/SDAppXPCDelegate.m; sourceTree = SOURCE_ROOT; };
 		AA5C1AA31BB27162006A0C8C /* FinderSync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FinderSync.framework; path = System/Library/Frameworks/FinderSync.framework; sourceTree = SDKROOT; };
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
-		AA7319481A2F86B8003E2391 /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDConstants.h; sourceTree = "<group>"; };
-		AA7319491A2F86B8003E2391 /* SDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDConstants.m; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
 		AA7319511A2F95A7003E2391 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDDropdownMenu.xib; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AA3D8EBA1C3D80A100CF0A3C /* Shared */,
 				AA3168151A191B72006CC0EB /* SafeDrive */,
 				AA3168291A191B72006CC0EB /* SafeDriveTests */,
 				AA4E773B1A3E9B1D0054BBCA /* safedriveaskpass */,
@@ -331,8 +334,6 @@
 				AA3168471A192D26006CC0EB /* PreferencesWindow */,
 				AA2E550E1A774DED00647637 /* Resources */,
 				AA31684E1A192D64006CC0EB /* SafeDriveAPI */,
-				AA7319481A2F86B8003E2391 /* SDConstants.h */,
-				AA7319491A2F86B8003E2391 /* SDConstants.m */,
 				AA73194F1A2F89F2003E2391 /* SDProtocols.h */,
 				AA54495E1BC3664F00826A0B /* ServiceManager */,
 				AA5C1A951BB234DD006A0C8C /* XPC */,
@@ -435,6 +436,15 @@
 				AA0A7D291A1968BB00DCB77E /* Localizable.strings */,
 			);
 			name = Localization;
+			sourceTree = "<group>";
+		};
+		AA3D8EBA1C3D80A100CF0A3C /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */,
+				AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */,
+			);
+			name = Shared;
 			sourceTree = "<group>";
 		};
 		AA4E773B1A3E9B1D0054BBCA /* safedriveaskpass */ = {
@@ -856,8 +866,8 @@
 				AA9E7DE61A7950A500E3C3E8 /* NSURL+SFTP.m in Sources */,
 				AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
-				AA73194A1A2F86B8003E2391 /* SDConstants.m in Sources */,
 				AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */,
+				AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */,
 				AAEED2D31A7D76F200B92993 /* SDDataSizeTransformer.m in Sources */,
 				AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */,
@@ -890,6 +900,7 @@
 			files = (
 				AA5C1A6B1BB1E3AD006A0C8C /* main.m in Sources */,
 				AA5C1A681BB1E3AD006A0C8C /* AppDelegate.m in Sources */,
+				AA3D8EC11C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AA1A46111BEDE685004A5310 /* HKTHashProvider.m in Sources */,
 				AA5C1A891BB1FE67006A0C8C /* SDServiceListenerDelegate.m in Sources */,
 			);
@@ -899,6 +910,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA3D8EC01C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AA5C1A901BB22F02006A0C8C /* SafeDriveFinder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
