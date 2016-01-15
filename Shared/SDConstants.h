@@ -90,7 +90,7 @@ FOUNDATION_EXPORT NSUInteger const SDErrorNone;
 #pragma mark - Mount related errors
 
 typedef NS_ENUM(NSInteger, SDSSHError) {
-    SDSSHErrorUnknown                   =   -1,
+    SDSSHErrorUnknown                   = -1000,
     SDSSHErrorAuthorization             = 1002,
     SDSSHErrorTimeout                   = 1003,
     SDSSHErrorMountFailed               = 1004,
@@ -109,7 +109,7 @@ typedef NS_ENUM(NSInteger, SDSSHError) {
 #pragma mark - System API related errors
 
 typedef NS_ENUM(NSInteger, SDSystemError) {
-    SDSystemErrorUnknown                  =   -1,
+    SDSystemErrorUnknown                  = -2000,
     SDSystemErrorAddLoginItemFailed       = 2002,
     SDSystemErrorRemoveLoginItemFailed    = 2003,
     SDSystemErrorAddKeychainItemFailed    = 2004,
@@ -120,7 +120,7 @@ typedef NS_ENUM(NSInteger, SDSystemError) {
 #pragma mark - SafeDrive API related errors
 
 typedef NS_ENUM(NSInteger, SDAPIError) {
-    SDAPIErrorUnknown       =   -1,
+    SDAPIErrorUnknown       = -3000,
     SDAPIErrorAuthorization = 3001,
     SDAPIErrorMaintenance   = 3002
 };
