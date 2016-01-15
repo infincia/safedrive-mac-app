@@ -332,6 +332,7 @@
 				AA3168181A191B72006CC0EB /* AppDelegate.h */,
 				AA3168191A191B72006CC0EB /* AppDelegate.m */,
 				AA3168581A1953CF006CC0EB /* Dropdown Menu */,
+				AA7B460D1C46F0F900EA8889 /* ErrorHandler */,
 				AA7319411A2F7EEB003E2391 /* Main.xib */,
 				AA31684D1A192D64006CC0EB /* MountController */,
 				AA3168471A192D26006CC0EB /* PreferencesWindow */,
@@ -339,11 +340,10 @@
 				AA31684E1A192D64006CC0EB /* SafeDriveAPI */,
 				AA73194F1A2F89F2003E2391 /* SDProtocols.h */,
 				AA54495E1BC3664F00826A0B /* ServiceManager */,
-				AA5C1A951BB234DD006A0C8C /* XPC */,
 				AA3168161A191B72006CC0EB /* Supporting Files */,
 				AAF85BFB1A23A4BC0063B54F /* SystemAPI */,
-				AA7B460D1C46F0F900EA8889 /* ErrorHandler */,
 				AA9E7DE31A79505600E3C3E8 /* Utilities */,
+				AA5C1A951BB234DD006A0C8C /* XPC */,
 			);
 			path = SafeDrive;
 			sourceTree = "<group>";
