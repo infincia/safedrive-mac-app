@@ -133,6 +133,8 @@
     
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:errorReportingURL];
     [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [req setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+
     [req setHTTPMethod:@"POST"];
     
     NSData *body = [NSJSONSerialization dataWithJSONObject:postParameters options:NSJSONWritingPrettyPrinted error:nil];
