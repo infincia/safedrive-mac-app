@@ -4,6 +4,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma mark - General constants
 
 FOUNDATION_EXPORT NSString *const SDDefaultVolumeName;
@@ -66,6 +68,7 @@ FOUNDATION_EXPORT NSString *const SDAccountDetailsNotification;
 
 FOUNDATION_EXPORT NSString *const SDServiceStatusNotification;
 
+NS_ASSUME_NONNULL_END
 
 #pragma mark - Status Enums
 
@@ -80,6 +83,7 @@ typedef NS_ENUM(NSUInteger, SDAccountStatus) {
     SDAccountStatusPendingCreation  =  7,	// account not ready yet
 };
 
+NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Errors
 
@@ -90,6 +94,8 @@ FOUNDATION_EXPORT NSString *const SDErrorAccountDomain;
 FOUNDATION_EXPORT NSString *const SDErrorAPIDomain;
 
 FOUNDATION_EXPORT NSUInteger const SDErrorNone;
+
+NS_ASSUME_NONNULL_END
 
 #pragma mark - Mount related errors
 
@@ -142,25 +148,25 @@ typedef NS_ENUM(NSInteger, SDSyncState) {
 #pragma mark - Block definitions
 
 typedef void(^SDSuccessBlock)();
-typedef void(^SDFailureBlock)(NSError *apiError);
+typedef void(^SDFailureBlock)(NSError * _Nonnull apiError);
 
-typedef void(^SDMountSuccessBlock)(NSURL *mountURL, NSError *mountError);
-typedef void(^SDMountFailureBlock)(NSURL *mountURL, NSError *mountError);
+typedef void(^SDMountSuccessBlock)(NSURL * _Nonnull mountURL, NSError * _Nullable mountError);
+typedef void(^SDMountFailureBlock)(NSURL * _Nonnull mountURL, NSError * _Nonnull mountError);
 
-typedef void(^SDAPIClientRegistrationSuccessBlock)(NSString *sessionToken);
+typedef void(^SDAPIClientRegistrationSuccessBlock)(NSString * _Nonnull sessionToken);
 
-typedef void(^SDAPIAccountStatusBlock)(NSDictionary *accountStatus);
-typedef void(^SDAPIAccountDetailsBlock)(NSDictionary *accountDetails);
+typedef void(^SDAPIAccountStatusBlock)(NSDictionary * _Nonnull accountStatus);
+typedef void(^SDAPIAccountDetailsBlock)(NSDictionary * _Nonnull accountDetails);
 
-typedef void(^SDAPIFingerprintListSuccessBlock)(NSDictionary *fingerprintPairs);
+typedef void(^SDAPIFingerprintListSuccessBlock)(NSDictionary * _Nonnull fingerprintPairs);
 
-typedef void(^SDAPICreateSyncFolderSuccessBlock)(NSNumber *folderID);
-typedef void(^SDAPIReadSyncFoldersSuccessBlock)(NSArray *folders);
+typedef void(^SDAPICreateSyncFolderSuccessBlock)(NSNumber * _Nonnull folderID);
+typedef void(^SDAPIReadSyncFoldersSuccessBlock)(NSArray * _Nonnull folders);
 typedef void(^SDAPIDeleteSyncFoldersSuccessBlock)();
 
 
-typedef void(^SDSyncResultBlock)(NSURL *syncURL, NSError *syncError);
+typedef void(^SDSyncResultBlock)(NSURL * _Nonnull syncURL, NSError * _Nullable syncError);
 
 #pragma mark - Global functions
 
-NSString * _Nullable SDErrorToString(NSError *error);
+NSString * _Nullable SDErrorToString(NSError * _Nonnull error);
