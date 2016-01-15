@@ -84,6 +84,10 @@ typedef NS_ENUM(NSUInteger, SDAccountStatus) {
 #pragma mark - Errors
 
 FOUNDATION_EXPORT NSString *const SDErrorDomain;
+FOUNDATION_EXPORT NSString *const SDErrorSyncDomain;
+FOUNDATION_EXPORT NSString *const SDErrorSSHFSDomain;
+FOUNDATION_EXPORT NSString *const SDErrorAccountDomain;
+FOUNDATION_EXPORT NSString *const SDErrorAPIDomain;
 
 FOUNDATION_EXPORT NSUInteger const SDErrorNone;
 

@@ -65,5 +65,9 @@ NSString *const SDServiceStatusNotification               = @"SDServiceStatusNot
 #pragma mark - Errors
 
 NSString *const SDErrorDomain = @"io.safedrive";
+NSString *const SDErrorSyncDomain = @"io.safedrive.sync";
+NSString *const SDErrorSSHFSDomain = @"io.safedrive.sshfs";
+NSString *const SDErrorAccountDomain = @"io.safedrive.account";
+NSString *const SDErrorAPIDomain = @"io.safedrive.api";
 
 NSUInteger const SDErrorNone = 0;
