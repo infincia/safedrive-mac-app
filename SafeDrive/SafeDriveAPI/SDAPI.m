@@ -101,7 +101,7 @@
 
 #pragma mark - Telemetry
 
--(void)reportError:(NSError *)error forUser:(NSString *)user queue:(dispatch_queue_t)queue success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)reportError:(NSError *)error forUser:(NSString *)user withLog:(NSArray *)log completionQueue:(dispatch_queue_t)queue success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
 
     NSMutableDictionary *postParameters = [NSMutableDictionary new];
     
@@ -119,6 +119,10 @@
     }
 
     [postParameters setObject:error.localizedDescription forKey:@"description"];
+    [postParameters setObject:error.domain forKey:@"context"];
+    [postParameters setObject:log forKey:@"log"];
+
+    
     
     NSURL *errorReportingURL = [self.baseURL URLByAppendingPathComponent:@"error"];
     

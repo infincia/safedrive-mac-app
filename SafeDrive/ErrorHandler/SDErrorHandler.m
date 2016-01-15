@@ -133,6 +133,8 @@ void _startReportQueue() {
                 if (report != nil) {
                     NSString *reportUser = [report objectForKey:@"user"];
                     
+                    NSArray *reportLog = [report objectForKey:@"log"];
+
                     id archivedError = [report objectForKey:@"error"];
                     
                     // Errors are stored as NSData in the error array so they can be transparently serialized to disk,
@@ -141,7 +143,7 @@ void _startReportQueue() {
                     
                     //note: passing the same queue we're in here is only OK because the called method uses it
                     //      with dispatch_async, if that were not the case this would deadlock forever
-                    [sharedAPI reportError:error forUser:reportUser queue:errorQueue success:^{
+                    [sharedAPI reportError:error forUser:reportUser withLog:reportLog completionQueue:errorQueue success:^{
                         
                         _saveErrors();
                    
