@@ -106,7 +106,9 @@ typedef NS_ENUM(NSInteger, SDSSHError) {
     SDSSHErrorOSXFUSEMissing            = 1010,
     SDSSHErrorSSHFSMissing              = 1011,
     SDSSHErrorDirectoryMissing          = 1012,
-    SDSSHErrorSyncFailed                = 1013
+    SDSSHErrorSyncFailed                = 1013,
+    SDSSHErrorSyncAlreadyRunning        = 1014
+
 
 };
 
