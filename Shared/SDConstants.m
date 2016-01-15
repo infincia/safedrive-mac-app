@@ -71,3 +71,60 @@ NSString *const SDErrorAccountDomain = @"io.safedrive.account";
 NSString *const SDErrorAPIDomain = @"io.safedrive.api";
 
 NSUInteger const SDErrorNone = 0;
+
+ NSString * _Nullable SDErrorToString(NSError *error) {
+    switch (error.code) {
+        case SDSSHErrorUnknown:
+            return @"SDSSHErrorUnknown";
+        case SDSSHErrorAuthorization:
+            return @"SDSSHErrorAuthorization";
+        case SDSSHErrorTimeout:
+            return @"SDSSHErrorTimeout";
+        case SDSSHErrorMountFailed:
+            return @"SDSSHErrorMountFailed";
+        case SDSSHErrorUnmountFailed:
+            return @"SDSSHErrorUnmountFailed";
+        case SDSSHErrorAlreadyMounted:
+            return @"SDSSHErrorAlreadyMounted";
+        case SDSSHErrorAskpassMissing:
+            return @"SDSSHErrorAskpassMissing";
+        case SDSSHErrorHostFingerprintChanged:
+            return @"SDSSHErrorHostFingerprintChanged";
+        case SDSSHErrorHostKeyVerificationFailed:
+            return @"SDSSHErrorHostKeyVerificationFailed";
+        case SDSSHErrorOSXFUSEMissing:
+            return @"SDSSHErrorOSXFUSEMissing";
+        case SDSSHErrorSSHFSMissing:
+            return @"SDSSHErrorSSHFSMissing";
+        case SDSSHErrorDirectoryMissing:
+            return @"SDSSHErrorDirectoryMissing";
+        case SDSSHErrorSyncFailed:
+            return @"SDSSHErrorSyncFailed";
+        case SDSSHErrorSyncAlreadyRunning:
+            return @"SDSSHErrorSyncAlreadyRunning";
+            
+        case SDSystemErrorUnknown:
+            return @"SDSystemErrorUnknown";
+        case SDSystemErrorAddLoginItemFailed:
+            return @"SDSystemErrorAddLoginItemFailed";
+        case SDSystemErrorRemoveLoginItemFailed:
+            return @"SDSystemErrorRemoveLoginItemFailed";
+        case SDSystemErrorAddKeychainItemFailed:
+            return @"SDSystemErrorAddKeychainItemFailed";
+        case SDSystemErrorRemoveKeychainItemFailed:
+            return @"SDSystemErrorRemoveKeychainItemFailed";
+        case SDSystemErrorFilePermissionDenied:
+            return @"SDSystemErrorFilePermissionDenied";
+
+        case SDAPIErrorUnknown:
+            return @"SDAPIErrorUnknown";
+        case SDAPIErrorAuthorization:
+            return @"SDAPIErrorAuthorization";
+        case SDAPIErrorMaintenance:
+            return @"SDAPIErrorMaintenance";
+            
+        default:
+            return [NSString stringWithFormat:@"Unknown: %ld", error.code];
+    }
+    return nil;
+}

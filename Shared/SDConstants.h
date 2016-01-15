@@ -161,4 +161,6 @@ typedef void(^SDAPIDeleteSyncFoldersSuccessBlock)();
 
 typedef void(^SDSyncResultBlock)(NSURL *syncURL, NSError *syncError);
 
+#pragma mark - Global functions
 
+NSString * _Nullable SDErrorToString(NSError *error);
