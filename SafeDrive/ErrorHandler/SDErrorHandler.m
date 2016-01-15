@@ -171,19 +171,13 @@ void _shiftLog() {
 }
 
 void _saveLog() {
-    if ([logBuffer writeToURL:serializedLogLocation atomically:YES]) {
-        NSLog(@"Saved log database");
-    }
-    else {
+    if (![logBuffer writeToURL:serializedLogLocation atomically:YES]) {
         SDLog(@"WARNING: log database could not be saved!!!");
     }
 }
 
 void _saveErrors() {
-    if ([errors writeToURL:serializedErrorLocation atomically:YES]) {
-        NSLog(@"Saved error report database");
-    }
-    else {
+    if (![errors writeToURL:serializedErrorLocation atomically:YES]) {
         SDLog(@"WARNING: error report database could not be saved!!!");
     }
 }
