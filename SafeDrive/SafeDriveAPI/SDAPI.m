@@ -149,7 +149,7 @@
         failureBlock(error);
     }];
     operation.completionQueue = queue;
-    operation.responseSerializer = [AFPropertyListResponseSerializer serializer];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
     
     [operation start];
     [operation waitUntilFinished];
