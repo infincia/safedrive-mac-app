@@ -78,15 +78,17 @@ void SDLog(NSString *format, ...) {
     va_start(args, format);
     NSString *st = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
-    
-    // pass through to NSLog for compatibility, this should be ifdef'd out for RELEASE builds
+#ifdef DEBUG
+    // pass through to NSLog for compatibility during development
     NSLog(@"%@", st);
-   
+#else
+    // for RELEASE builds, redirect logs to the buffer in case there is an error
     dispatch_async(errorQueue, ^{
         [logBuffer addObject:st];
         _shiftLog();
         _saveLog();
     });
+#endif
 }
 
 void SDErrorHandlerReport(NSError *error) {
