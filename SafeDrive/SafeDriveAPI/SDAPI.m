@@ -6,6 +6,8 @@
 #import "SDSystemAPI.h"
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
+#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
+
 
 #import "HKTHashProvider.h"
 
@@ -53,7 +55,10 @@
                 }
             }
         }];
-
+#ifdef DEBUG
+        [[AFNetworkActivityLogger sharedLogger] startLogging];
+        [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+#endif
         self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/api/1/", SDAPIDomainTesting]];
 
         _apiManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:self.baseURL];
