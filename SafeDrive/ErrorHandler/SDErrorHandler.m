@@ -148,8 +148,7 @@ void _startReportQueue() {
                         _saveErrors();
                    
                     } failure:^(NSError *apiError) {
-                        SDLog(@"Error while reporting application error: %@", apiError.localizedDescription);
-
+                        
                         // put the report back in the queue and save it since this attempt failed
                         [errors insertObject:report atIndex:0];
                         
