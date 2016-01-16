@@ -12,6 +12,8 @@
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
 
+#import "SDSyncItem.h"
+
 #import "SDErrorHandler.h"
 
 #import "NSURL+SFTP.h"
@@ -43,6 +45,79 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
+
+
+// NOTE: this test is expected to fail in Xcode as ~/ resolves to something other than
+-(void)test_SDSyncItem_hasConflictingFolderRegistered_tildeInPath {
+    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" isMachine:YES uniqueID:-1];
+    XCTAssertNotNil(machine);
+    
+    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" isMachine:NO uniqueID:1];
+    XCTAssertNotNil(homeSyncFolder);
+    homeSyncFolder.url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
+    
+    [machine addChild:homeSyncFolder];
+    
+    NSURL *relativeHome = [NSURL fileURLWithPath:@"~/user"];
+    XCTAssertTrue([machine hasConflictingFolderRegistered:relativeHome]);
+}
+
+-(void)test_SDSyncItem_hasConflictingFolderRegistered_otherUser {
+    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" isMachine:YES uniqueID:-1];
+    XCTAssertNotNil(machine);
+    
+    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" isMachine:NO uniqueID:1];
+    XCTAssertNotNil(homeSyncFolder);
+    homeSyncFolder.url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
+    
+    [machine addChild:homeSyncFolder];
+    
+    NSURL *otherUserHome = [NSURL fileURLWithPath:@"/Users/otheruser"];
+    XCTAssertFalse([machine hasConflictingFolderRegistered:otherUserHome]);
+}
+
+-(void)test_SDSyncItem_hasConflictingFolderRegistered_subDirectory {
+    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" isMachine:YES uniqueID:-1];
+    XCTAssertNotNil(machine);
+
+    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" isMachine:NO uniqueID:1];
+    XCTAssertNotNil(homeSyncFolder);
+    homeSyncFolder.url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
+    
+    [machine addChild:homeSyncFolder];
+
+    NSURL *documents = [NSURL fileURLWithPath:@"/Users/user/Documents"];
+    XCTAssertTrue([machine hasConflictingFolderRegistered:documents]);
+}
+
+-(void)test_SDSyncItem_hasConflictingFolderRegistered_subDirectory_trailingSlash {
+    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" isMachine:YES uniqueID:-1];
+    XCTAssertNotNil(machine);
+    
+    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" isMachine:NO uniqueID:1];
+    XCTAssertNotNil(homeSyncFolder);
+    homeSyncFolder.url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
+    
+    [machine addChild:homeSyncFolder];
+    
+    NSURL *documents = [NSURL fileURLWithPath:@"/Users/user/Documents/"];
+    XCTAssertTrue([machine hasConflictingFolderRegistered:documents]);
+}
+
+-(void)test_SDSyncItem_hasConflictingFolderRegistered_parentDirectory {
+    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" isMachine:YES uniqueID:-1];
+    XCTAssertNotNil(machine);
+    
+    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" isMachine:NO uniqueID:1];
+    XCTAssertNotNil(homeSyncFolder);
+    homeSyncFolder.url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
+    
+    [machine addChild:homeSyncFolder];
+    
+    NSURL *root = [NSURL fileURLWithPath:@"/"];
+    XCTAssertTrue([machine hasConflictingFolderRegistered:root]);
+}
+
 
 -(void)test_SDErrorHandler_reportError {
     NSError *testError = [NSError errorWithDomain:SDErrorDomain code:SDErrorNone userInfo:@{NSLocalizedDescriptionKey:  NSLocalizedString(@"TEST: IGNORE THIS ERROR REPORT", nil)}];
