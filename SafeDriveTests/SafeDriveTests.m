@@ -49,70 +49,70 @@
 
 // NOTE: this test is expected to fail in Xcode as ~/ resolves to something other than
 -(void)test_SDSyncItem_hasConflictingFolderRegistered_tildeInPath {
-    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" isMachine:YES uniqueID:-1];
+    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" localFolder:nil isMachine:YES uniqueID:-1];
     XCTAssertNotNil(machine);
     
-    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" isMachine:NO uniqueID:1];
+    NSURL *url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
+    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" localFolder:url isMachine:NO uniqueID:1];
     XCTAssertNotNil(homeSyncFolder);
-    homeSyncFolder.url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
     
-    [machine addChild:homeSyncFolder];
+    [machine addSyncFolder:homeSyncFolder];
     
     NSURL *relativeHome = [NSURL fileURLWithPath:@"~/user"];
     XCTAssertTrue([machine hasConflictingFolderRegistered:relativeHome]);
 }
 
 -(void)test_SDSyncItem_hasConflictingFolderRegistered_otherUser {
-    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" isMachine:YES uniqueID:-1];
+    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" localFolder:nil isMachine:YES uniqueID:-1];
     XCTAssertNotNil(machine);
     
-    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" isMachine:NO uniqueID:1];
+    NSURL *url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
+    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" localFolder:url isMachine:NO uniqueID:1];
     XCTAssertNotNil(homeSyncFolder);
-    homeSyncFolder.url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
     
-    [machine addChild:homeSyncFolder];
+    [machine addSyncFolder:homeSyncFolder];
     
     NSURL *otherUserHome = [NSURL fileURLWithPath:@"/Users/otheruser"];
     XCTAssertFalse([machine hasConflictingFolderRegistered:otherUserHome]);
 }
 
 -(void)test_SDSyncItem_hasConflictingFolderRegistered_subDirectory {
-    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" isMachine:YES uniqueID:-1];
+    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" localFolder:nil isMachine:YES uniqueID:-1];
     XCTAssertNotNil(machine);
 
-    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" isMachine:NO uniqueID:1];
+    NSURL *url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
+    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" localFolder:url isMachine:NO uniqueID:1];
     XCTAssertNotNil(homeSyncFolder);
-    homeSyncFolder.url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
     
-    [machine addChild:homeSyncFolder];
+    [machine addSyncFolder:homeSyncFolder];
 
     NSURL *documents = [NSURL fileURLWithPath:@"/Users/user/Documents"];
     XCTAssertTrue([machine hasConflictingFolderRegistered:documents]);
 }
 
 -(void)test_SDSyncItem_hasConflictingFolderRegistered_subDirectory_trailingSlash {
-    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" isMachine:YES uniqueID:-1];
+    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" localFolder:nil isMachine:YES uniqueID:-1];
     XCTAssertNotNil(machine);
     
-    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" isMachine:NO uniqueID:1];
+    NSURL *url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
+    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" localFolder:url isMachine:NO uniqueID:1];
     XCTAssertNotNil(homeSyncFolder);
-    homeSyncFolder.url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
     
-    [machine addChild:homeSyncFolder];
+    [machine addSyncFolder:homeSyncFolder];
     
     NSURL *documents = [NSURL fileURLWithPath:@"/Users/user/Documents/"];
     XCTAssertTrue([machine hasConflictingFolderRegistered:documents]);
 }
 
 -(void)test_SDSyncItem_hasConflictingFolderRegistered_parentDirectory {
-    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" isMachine:YES uniqueID:-1];
+    SDSyncItem *machine = [SDSyncItem itemWithLabel:@"Mac" localFolder:nil isMachine:YES uniqueID:-1];
     XCTAssertNotNil(machine);
     
-    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" isMachine:NO uniqueID:1];
+    NSURL *url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
+    SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" localFolder:url isMachine:NO uniqueID:1];
     XCTAssertNotNil(homeSyncFolder);
-    homeSyncFolder.url = [NSURL fileURLWithPath:@"/Users/user" isDirectory:YES];
     
-    [machine addChild:homeSyncFolder];
+    [machine addSyncFolder:homeSyncFolder];
     
     NSURL *root = [NSURL fileURLWithPath:@"/"];
     XCTAssertTrue([machine hasConflictingFolderRegistered:root]);
