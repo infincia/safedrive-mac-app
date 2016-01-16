@@ -12,6 +12,8 @@
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
 
+#import "SDErrorHandler.h"
+
 #import "NSURL+SFTP.h"
 
 
@@ -42,11 +44,10 @@
     [super tearDown];
 }
 
--(void)test_SDSystemAPI_machineID {
-    XCTAssertNotNil([SDSystemAPI sharedAPI]);
-    NSString *identifier = [[SDSystemAPI sharedAPI] machineID];
-    XCTAssertNotNil(identifier);
-    NSLog(@"ID: %@", identifier);
+-(void)test_SDErrorHandler_reportError {
+    NSError *testError = [NSError errorWithDomain:SDErrorDomain code:SDErrorNone userInfo:@{NSLocalizedDescriptionKey:  NSLocalizedString(@"TEST: IGNORE THIS ERROR REPORT", nil)}];
+    SDErrorHandlerSetUser(SDTestCredentialsUser);
+    SDErrorHandlerReport(testError);
 }
 
 -(void)test_SDSystemAPI_en0MAC {
