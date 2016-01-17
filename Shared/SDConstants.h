@@ -127,7 +127,8 @@ typedef NS_ENUM(NSInteger, SDSystemError) {
     SDSystemErrorRemoveLoginItemFailed    = 2003,
     SDSystemErrorAddKeychainItemFailed    = 2004,
     SDSystemErrorRemoveKeychainItemFailed = 2005,
-    SDSystemErrorFilePermissionDenied     = 2006
+    SDSystemErrorFilePermissionDenied     = 2006,
+    SDSystemErrorFolderConflict           = 2007
 };
 
 #pragma mark - SafeDrive API related errors
