@@ -184,7 +184,7 @@
         NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
         if (responseObject) {
             NSString *message = responseObject[@"message"];
-            NSError *responseError = [NSError errorWithDomain:SDErrorDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
+            NSError *responseError = [NSError errorWithDomain:SDErrorAccountDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
             failureBlock(responseError); 
             return;       
         }
@@ -200,7 +200,7 @@
         NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
         if (responseObject) {
             NSString *message = responseObject[@"message"];
-            NSError *responseError = [NSError errorWithDomain:SDErrorDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
+            NSError *responseError = [NSError errorWithDomain:SDErrorAccountDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
             failureBlock(responseError); 
             return;       
         }
@@ -216,7 +216,7 @@
         NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
         if (responseObject) {
             NSString *message = responseObject[@"message"];
-            NSError *responseError = [NSError errorWithDomain:SDErrorDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
+            NSError *responseError = [NSError errorWithDomain:SDErrorAccountDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
             failureBlock(responseError); 
             return;       
         }
