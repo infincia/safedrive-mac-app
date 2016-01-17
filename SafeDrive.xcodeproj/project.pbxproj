@@ -51,6 +51,7 @@
 		AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */; };
 		AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5C1AA11BB26C6A006A0C8C /* SDAppXPCDelegate.m */; };
 		AA5C1AA41BB27162006A0C8C /* FinderSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5C1AA31BB27162006A0C8C /* FinderSync.framework */; };
+		AA61F84B1C05356D00D992FE /* SDSyncController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA61F84A1C05356D00D992FE /* SDSyncController.m */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
 		AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */; };
 		AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */; };
@@ -199,6 +200,8 @@
 		AA5C1AA01BB26C6A006A0C8C /* SDAppXPCDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDAppXPCDelegate.h; path = SafeDrive/SDAppXPCDelegate.h; sourceTree = SOURCE_ROOT; };
 		AA5C1AA11BB26C6A006A0C8C /* SDAppXPCDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDAppXPCDelegate.m; path = SafeDrive/SDAppXPCDelegate.m; sourceTree = SOURCE_ROOT; };
 		AA5C1AA31BB27162006A0C8C /* FinderSync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FinderSync.framework; path = System/Library/Frameworks/FinderSync.framework; sourceTree = SDKROOT; };
+		AA61F8491C05356D00D992FE /* SDSyncController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncController.h; sourceTree = "<group>"; };
+		AA61F84A1C05356D00D992FE /* SDSyncController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncController.m; sourceTree = "<group>"; };
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
@@ -341,6 +344,7 @@
 				AA73194F1A2F89F2003E2391 /* SDProtocols.h */,
 				AA54495E1BC3664F00826A0B /* ServiceManager */,
 				AA3168161A191B72006CC0EB /* Supporting Files */,
+				AA61F8481C05356D00D992FE /* SyncController */,
 				AAF85BFB1A23A4BC0063B54F /* SystemAPI */,
 				AA9E7DE31A79505600E3C3E8 /* Utilities */,
 				AA5C1A951BB234DD006A0C8C /* XPC */,
@@ -514,6 +518,15 @@
 			);
 			name = XPC;
 			path = ServiceRouter;
+			sourceTree = "<group>";
+		};
+		AA61F8481C05356D00D992FE /* SyncController */ = {
+			isa = PBXGroup;
+			children = (
+				AA61F8491C05356D00D992FE /* SDSyncController.h */,
+				AA61F84A1C05356D00D992FE /* SDSyncController.m */,
+			);
+			path = SyncController;
 			sourceTree = "<group>";
 		};
 		AA7B460D1C46F0F900EA8889 /* ErrorHandler */ = {
@@ -904,6 +917,7 @@
 				AA31681A1A191B72006CC0EB /* AppDelegate.m in Sources */,
 				AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */,
 				AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */,
+				AA61F84B1C05356D00D992FE /* SDSyncController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
