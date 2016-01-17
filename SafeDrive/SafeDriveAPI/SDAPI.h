@@ -26,3 +26,13 @@
 -(void)apiStatus:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
 
 @end
+
+@interface SDAPI (SyncFolderHandling)
+
+-(void)createSyncFolder:(NSURL *)localFolder success:(SDAPICreateSyncFolderSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
+
+-(void)readSyncFoldersWithSuccess:(SDAPIReadSyncFoldersSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
+
+-(void)deleteSyncFolder:(NSNumber *)folderId success:(SDAPIDeleteSyncFoldersSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
+
+@end

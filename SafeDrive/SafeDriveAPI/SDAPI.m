@@ -246,3 +246,78 @@
 }
 
 @end
+
+#pragma mark -
+#pragma mark - Sync folder handling
+
+@implementation SDAPI (SyncFolderHandling)
+
+-(void)createSyncFolder:(NSURL *)localFolder success:(SDAPICreateSyncFolderSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+    NSDictionary *postParameters = @{ @"folderName": localFolder.lastPathComponent, @"folderPath": localFolder.path };
+
+    [self.apiManager POST:@"folder" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *response = (NSDictionary *)responseObject;
+        NSNumber *folderID = response[@"id"];
+        successBlock(folderID);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+        if (responseObject) {
+            NSString *message = responseObject[@"message"];
+            NSError *responseError = [NSError errorWithDomain:SDErrorSyncDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
+            failureBlock(responseError); 
+            return;       
+        }
+        failureBlock(error);
+    }];
+}
+
+-(void)readSyncFoldersWithSuccess:(SDAPIReadSyncFoldersSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+    [self.apiManager GET:@"folder" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *folders = (NSArray *)responseObject;
+        successBlock(folders);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+        if (responseObject) {
+            NSString *message = responseObject[@"message"];
+            NSError *responseError = [NSError errorWithDomain:SDErrorSyncDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
+            failureBlock(responseError); 
+            return;       
+        }
+        failureBlock(error);
+    }];
+}
+
+-(void)deleteSyncFolder:(NSNumber *)folderId success:(SDAPIDeleteSyncFoldersSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+    
+    NSURL *folderURL = [self.baseURL URLByAppendingPathComponent:@"folder"];
+    
+    NSDictionary *folderIds = @{ @"folderIds": folderId };
+    
+    AFHTTPRequestSerializer *ser = [AFHTTPRequestSerializer serializer];
+    
+    [ser setValue:self.sessionToken forHTTPHeaderField:@"SD-Auth-Token"];
+    
+    [ser setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    NSMutableURLRequest *query = [ser requestWithMethod:@"DELETE" URLString:folderURL.absoluteString parameters:folderIds error:nil];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:query];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        successBlock();
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+        if (responseObject) {
+            NSString *message = responseObject[@"message"];
+            NSError *responseError = [NSError errorWithDomain:SDErrorSyncDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
+            failureBlock(responseError);
+            return;
+        }
+        failureBlock(error);
+    }];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [operation start];
+}
+
+@end
