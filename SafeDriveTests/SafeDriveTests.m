@@ -120,9 +120,23 @@
 
 
 -(void)test_SDErrorHandler_reportError {
+    XCTAssertNotNil([SDAPI sharedAPI]);
+
     NSError *testError = [NSError errorWithDomain:SDErrorDomain code:SDErrorNone userInfo:@{NSLocalizedDescriptionKey:  NSLocalizedString(@"TEST: IGNORE THIS ERROR REPORT", nil)}];
-    SDErrorHandlerSetUser(SDTestCredentialsUser);
-    SDErrorHandlerReport(testError);
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test_SDAPI_registerMachine"];
+
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    [[SDAPI sharedAPI] reportError:testError forUser:SDTestCredentialsUser withLog:@[@"test"] completionQueue:queue success:^{
+        [expectation fulfill];
+    } failure:^(NSError *apiError) {
+        XCTFail(@"%@", apiError.localizedDescription);
+    }];
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"test_SDErrorHandler_reportError error: %@", error.localizedDescription);
+        }
+    }];
 }
 
 -(void)test_SDSystemAPI_en0MAC {
