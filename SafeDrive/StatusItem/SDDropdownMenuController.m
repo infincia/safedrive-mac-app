@@ -65,6 +65,7 @@
 
 -(void)enableMenuItems:(BOOL)enabled {
     self.preferencesMenuItem.enabled = enabled;
+    self.syncPreferencesMenuItem.enabled = enabled;
 }
 
 -(void)setMenuBarImage:(NSImage *)image {
@@ -105,6 +106,10 @@
 
 -(IBAction)openAboutWindow:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenAboutWindow object:nil];
+}
+
+-(IBAction)openSyncWindow:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenSyncWindow object:nil];
 }
 
 #pragma mark - SDAccountProtocol

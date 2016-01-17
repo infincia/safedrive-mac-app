@@ -11,10 +11,12 @@
 @property (strong) IBOutlet NSMenu *statusItemMenu;
 @property IBOutlet NSMenuItem *connectMenuItem;
 @property IBOutlet NSMenuItem *preferencesMenuItem;
+@property IBOutlet NSMenuItem *syncPreferencesMenuItem;
 
 
 -(IBAction)toggleMount:(id)sender;
 -(IBAction)openPreferencesWindow:(id)sender;
 -(IBAction)openAboutWindow:(id)sender;
+-(IBAction)openSyncWindow:(id)sender;
 
 @end

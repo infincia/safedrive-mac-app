@@ -17,10 +17,15 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
+#import "SDSyncManagerWindowController.h"
+
+
 @interface AppDelegate ()
 @property DCOAboutWindowController *aboutWindow;
 @property SDServiceXPCRouter *serviceRouter;
 @property SDServiceManager *serviceManager;
+@property SDSyncManagerWindowController *syncManager;
+
 @end
 
 @implementation AppDelegate
@@ -94,12 +99,16 @@
     self.aboutWindow.useTextViewForAcknowledgments = YES;
     NSString *websiteURLPath = [NSString stringWithFormat:@"https://%@", SDWebDomain];
     self.aboutWindow.appWebsiteURL = [NSURL URLWithString:websiteURLPath];
+    
+    self.syncManager = [[SDSyncManagerWindowController alloc] initWithWindowNibName:@"SDSyncManagerWindow"];
+    [self.syncManager window];
 
     // register SDApplicationControlProtocol notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenAccountWindow:) name:SDApplicationShouldOpenAccountWindow object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenPreferencesWindow:) name:SDApplicationShouldOpenPreferencesWindow object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenAboutWindow:) name:SDApplicationShouldOpenAboutWindow object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenAboutWindow object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenSyncWindow:) name:SDApplicationShouldOpenSyncWindow object:nil];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -127,6 +136,13 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [NSApp activateIgnoringOtherApps:YES];
         [self.aboutWindow showWindow:nil];
+    });
+}
+
+-(void)applicationShouldOpenSyncWindow:(NSNotification*)notification {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [NSApp activateIgnoringOtherApps:YES];
+        [self.syncManager showWindow:nil];
     });
 }
 
