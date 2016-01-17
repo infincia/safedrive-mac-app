@@ -55,9 +55,14 @@
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
 		AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */; };
 		AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */; };
+		AA8619991C4B34FD003B9D6B /* SDSyncTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8619981C4B34FD003B9D6B /* SDSyncTableRowView.m */; };
 		AA925C371B8F9BAA00222E46 /* SafeDriveFinder.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AA925C2D1B8F9BAA00222E46 /* SafeDriveFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA9E7DE61A7950A500E3C3E8 /* NSURL+SFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9E7DE51A7950A500E3C3E8 /* NSURL+SFTP.m */; };
+		AAAA912D1BC767ED00A17250 /* SDSyncManagerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAA912B1BC767ED00A17250 /* SDSyncManagerWindowController.m */; };
+		AAAA912E1BC767ED00A17250 /* SDSyncManagerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAAA912C1BC767ED00A17250 /* SDSyncManagerWindow.xib */; };
 		AAAF1A431BF594A9008E7865 /* SDAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAF1A421BF594A9008E7865 /* SDAccountController.m */; };
+		AAB522B81C33524A00429C0C /* SDSyncItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB522B71C33524A00429C0C /* SDSyncItem.m */; };
+		AAB522BB1C337CD100429C0C /* SDSyncTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB522BA1C337CD100429C0C /* SDSyncTableCellView.m */; };
 		AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */; };
 		AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */; };
 		AABB0FC01A3F292F00FA3530 /* safedriveaskpass in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -208,11 +213,20 @@
 		AA7319511A2F95A7003E2391 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDDropdownMenu.xib; sourceTree = "<group>"; };
 		AA7B460E1C46F18600EA8889 /* SDErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDErrorHandler.h; path = ErrorHandler/SDErrorHandler.h; sourceTree = "<group>"; };
 		AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDErrorHandler.m; path = ErrorHandler/SDErrorHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AA8619971C4B34FD003B9D6B /* SDSyncTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncTableRowView.h; sourceTree = "<group>"; };
+		AA8619981C4B34FD003B9D6B /* SDSyncTableRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncTableRowView.m; sourceTree = "<group>"; };
 		AA925C2D1B8F9BAA00222E46 /* SafeDriveFinder.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SafeDriveFinder.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA9E7DE41A7950A500E3C3E8 /* NSURL+SFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SFTP.h"; sourceTree = "<group>"; };
 		AA9E7DE51A7950A500E3C3E8 /* NSURL+SFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SFTP.m"; sourceTree = "<group>"; };
+		AAAA912A1BC767ED00A17250 /* SDSyncManagerWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncManagerWindowController.h; sourceTree = "<group>"; };
+		AAAA912B1BC767ED00A17250 /* SDSyncManagerWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncManagerWindowController.m; sourceTree = "<group>"; };
+		AAAA912C1BC767ED00A17250 /* SDSyncManagerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SDSyncManagerWindow.xib; sourceTree = "<group>"; };
 		AAAF1A411BF594A9008E7865 /* SDAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDAccountController.h; path = AccountController/SDAccountController.h; sourceTree = "<group>"; };
 		AAAF1A421BF594A9008E7865 /* SDAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountController.m; path = AccountController/SDAccountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AAB522B61C33524A00429C0C /* SDSyncItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncItem.h; sourceTree = "<group>"; };
+		AAB522B71C33524A00429C0C /* SDSyncItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncItem.m; sourceTree = "<group>"; };
+		AAB522B91C337CD100429C0C /* SDSyncTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncTableCellView.h; sourceTree = "<group>"; };
+		AAB522BA1C337CD100429C0C /* SDSyncTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncTableCellView.m; sourceTree = "<group>"; };
 		AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
 		AAEA529F1A81A3EA00BF862C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = safedriveaskpass/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -345,6 +359,7 @@
 				AA54495E1BC3664F00826A0B /* ServiceManager */,
 				AA3168161A191B72006CC0EB /* Supporting Files */,
 				AA61F8481C05356D00D992FE /* SyncController */,
+				AAAA91291BC7679B00A17250 /* SyncManager */,
 				AAF85BFB1A23A4BC0063B54F /* SystemAPI */,
 				AA9E7DE31A79505600E3C3E8 /* Utilities */,
 				AA5C1A951BB234DD006A0C8C /* XPC */,
@@ -571,6 +586,22 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		AAAA91291BC7679B00A17250 /* SyncManager */ = {
+			isa = PBXGroup;
+			children = (
+				AAAA912A1BC767ED00A17250 /* SDSyncManagerWindowController.h */,
+				AAAA912B1BC767ED00A17250 /* SDSyncManagerWindowController.m */,
+				AAAA912C1BC767ED00A17250 /* SDSyncManagerWindow.xib */,
+				AAB522B61C33524A00429C0C /* SDSyncItem.h */,
+				AAB522B71C33524A00429C0C /* SDSyncItem.m */,
+				AAB522B91C337CD100429C0C /* SDSyncTableCellView.h */,
+				AAB522BA1C337CD100429C0C /* SDSyncTableCellView.m */,
+				AA8619971C4B34FD003B9D6B /* SDSyncTableRowView.h */,
+				AA8619981C4B34FD003B9D6B /* SDSyncTableRowView.m */,
+			);
+			name = SyncManager;
+			sourceTree = "<group>";
+		};
 		AAAF1A401BF59446008E7865 /* Account Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -765,6 +796,7 @@
 				AA543C781BFC57B50008FB8B /* General-icon.png in Resources */,
 				AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */,
 				AA54495C1BC35F4800826A0B /* io.safedrive.SafeDrive.Service.plist in Resources */,
+				AAAA912E1BC767ED00A17250 /* SDSyncManagerWindow.xib in Resources */,
 				AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */,
 				AA543C791BFC57B50008FB8B /* Account-Icon.png in Resources */,
 				AA543C7B1BFC57B50008FB8B /* Status-Icon.png in Resources */,
@@ -902,9 +934,11 @@
 			files = (
 				AA0A7D151A19670600DCB77E /* SDAccountWindowController.m in Sources */,
 				AAAF1A431BF594A9008E7865 /* SDAccountController.m in Sources */,
+				AA8619991C4B34FD003B9D6B /* SDSyncTableRowView.m in Sources */,
 				AA5449611BC3667300826A0B /* SDServiceManager.m in Sources */,
 				AA31681C1A191B72006CC0EB /* main.m in Sources */,
 				AA31684B1A192D27006CC0EB /* SDPreferencesWindowController.m in Sources */,
+				AAAA912D1BC767ED00A17250 /* SDSyncManagerWindowController.m in Sources */,
 				AA9E7DE61A7950A500E3C3E8 /* NSURL+SFTP.m in Sources */,
 				AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
@@ -916,6 +950,8 @@
 				AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */,
 				AA31681A1A191B72006CC0EB /* AppDelegate.m in Sources */,
 				AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */,
+				AAB522B81C33524A00429C0C /* SDSyncItem.m in Sources */,
+				AAB522BB1C337CD100429C0C /* SDSyncTableCellView.m in Sources */,
 				AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */,
 				AA61F84B1C05356D00D992FE /* SDSyncController.m in Sources */,
 			);
