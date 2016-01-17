@@ -7,6 +7,6 @@
 
 @interface SDAccountWindowController : NSWindowController <SDMountStateProtocol, SDVolumeEventProtocol>
 
--(IBAction)mount:(id)sender;
+-(IBAction)signIn:(id)sender;
 @property SDAccountController *accountController;
 @end

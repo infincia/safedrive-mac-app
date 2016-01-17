@@ -127,7 +127,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="mount:" target="-2" id="HjC-B2-9IS"/>
+                            <action selector="signIn:" target="-2" id="4gk-cv-zwx"/>
                             <binding destination="-2" name="enabled2" keyPath="self.accountController.email.length" previousBinding="lf5-4S-RMs" id="nka-yZ-bm9">
                                 <dictionary key="options">
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>

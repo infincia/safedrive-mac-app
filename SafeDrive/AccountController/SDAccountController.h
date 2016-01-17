@@ -13,6 +13,9 @@
 @property NSString *remoteHost;
 @property NSNumber *remotePort;
 
+@property BOOL hasCredentials;
+@property (getter=isSignedIn) BOOL signedIn;
+
 +(SDAccountController *)sharedAccountController;
 
 -(void)signInWithSuccess:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;

@@ -4,7 +4,7 @@
 
 @import Cocoa;
 
-@interface SDDropdownMenuController : NSObject <SDMountStateProtocol, SDVolumeEventProtocol>
+@interface SDDropdownMenuController : NSObject <SDMountStateProtocol, SDVolumeEventProtocol, SDAccountProtocol>
 
 @property NSStatusItem *statusItem;
 

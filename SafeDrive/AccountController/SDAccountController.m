@@ -26,7 +26,9 @@
         self.accountStatus = SDAccountStatusUnknown;
         self.sharedSystemAPI = [SDSystemAPI sharedAPI];
         self.sharedSafedriveAPI = [SDAPI sharedAPI];
-        [self accountLoop];
+        
+        self.signedIn = NO;
+        self.hasCredentials = NO;
         // grab credentials from keychain if they exist
         NSDictionary *credentials = [self.sharedSystemAPI retrieveCredentialsFromKeychainForService:SDServiceName];
         if (credentials) {
@@ -34,6 +36,7 @@
             self.password = credentials[@"password"];
             [CrashlyticsKit setUserEmail:self.email];
             SDErrorHandlerSetUser(self.email);
+            self.hasCredentials = YES;
         }
     }
     return self;
@@ -132,7 +135,8 @@
     [self.sharedSafedriveAPI registerMachineWithUser:self.email password:self.password success:^(NSString *sessionToken) {
         [self.sharedSafedriveAPI accountStatusForUser:self.email success:^(NSDictionary *accountStatus) {
             SDLog(@"SafeDrive accountStatusForUser success in account controller");
-
+            self.signedIn = YES;
+            
             self.internalUserName = accountStatus[@"userName"];
             self.remoteHost = accountStatus[@"host"];
             self.remotePort = accountStatus[@"port"];
@@ -143,6 +147,9 @@
                 failureBlock(keychainError);
                 return;
             }
+            [[NSNotificationCenter defaultCenter] postNotificationName:SDAccountSignInNotification object:nil];
+            [self accountLoop];
+
             successBlock();
             
         } failure:^(NSError *apiError) {

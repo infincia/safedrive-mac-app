@@ -41,6 +41,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateDetails:) name:SDMountStateDetailsNotification object:nil];
     
     // register SDAccountProtocol notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSignIn:) name:SDAccountSignInNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAccountStatus:) name:SDAccountStatusNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveAccountDetails:) name:SDAccountDetailsNotification object:nil];
     
@@ -147,6 +148,10 @@
 }
 
 #pragma mark - SDAccountProtocol methods
+
+-(void)didSignIn:(NSNotification *)notification {
+    
+}
 
 -(void)didReceiveAccountStatus:(NSNotification *)notification {
     NSDictionary *accountStatus = notification.object;

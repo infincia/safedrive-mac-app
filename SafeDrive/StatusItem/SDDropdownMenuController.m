@@ -54,13 +54,18 @@
 
     #warning This icon needs to be replaced!
     [self setMenuBarImage:[NSImage imageNamed:NSImageNameLockLockedTemplate]];
-
+    
+    [self enableMenuItems:NO];
 }
 
 
 
 
 #pragma mark - Internal methods
+
+-(void)enableMenuItems:(BOOL)enabled {
+    self.preferencesMenuItem.enabled = enabled;
+}
 
 -(void)setMenuBarImage:(NSImage *)image {
     // needed for OS X 10.10's dark mode
@@ -100,6 +105,20 @@
 
 -(IBAction)openAboutWindow:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenAboutWindow object:nil];
+}
+
+#pragma mark - SDAccountProtocol
+
+-(void)didSignIn:(NSNotification *)notification {
+    [self enableMenuItems:YES];
+}
+
+-(void)didReceiveAccountDetails:(NSNotification *)notification {
+    
+}
+
+-(void)didReceiveAccountStatus:(NSNotification *)notification {
+    
 }
 
 

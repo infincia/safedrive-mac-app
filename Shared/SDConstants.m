@@ -57,6 +57,7 @@ NSString *const SDAPIDidEnterMaintenancePeriod            = @"SDAPIDidEnterMaint
 NSString *const SDAPIDidBecomeReachable                   = @"SDAPIDidBecomeReachable";
 NSString *const SDAPIDidBecomeUnreachable                 = @"SDAPIDidBecomeUnreachable";
 
+NSString *const SDAccountSignInNotification               = @"SDAccountSignInNotification";
 NSString *const SDAccountStatusNotification               = @"SDAccountStatusNotification";
 NSString *const SDAccountDetailsNotification              = @"SDAccountDetailsNotification";
 
