@@ -81,14 +81,14 @@ void SDLog(NSString *format, ...) {
 #ifdef DEBUG
     // pass through to NSLog for compatibility during development
     NSLog(@"%@", st);
-#else
+#endif
     // for RELEASE builds, redirect logs to the buffer in case there is an error
     dispatch_async(errorQueue, ^{
         [logBuffer addObject:st];
         _shiftLog();
         _saveLog();
     });
-#endif
+
 }
 
 void SDErrorHandlerReport(NSError *error) {
