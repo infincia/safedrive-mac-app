@@ -10,6 +10,7 @@
 
 #import "SDAPI.h"
 #import "SDMountController.h"
+#import "SDSyncController.h"
 #import "SDSystemAPI.h"
 
 #import "SDSyncItem.h"
@@ -269,6 +270,47 @@
         }
     }];
 }
+
+- (void)test_SDSyncController_startSyncTaskWithFileURL {
+    XCTAssertNotNil([SDSyncController sharedAPI]);
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test_SDSyncController_startSyncTaskWithFileURL"];
+
+    [[SDAPI sharedAPI] registerMachineWithUser:SDTestCredentialsUser password:SDTestCredentialsPassword success:^(NSString *sessionToken) {
+        XCTAssertNotNil(sessionToken);
+        [[SDAPI sharedAPI] accountStatusForUser:SDTestCredentialsUser success:^(NSDictionary *accountStatus) {
+            XCTAssertNotNil(accountStatus);
+            XCTAssertNotNil(accountStatus[@"host"]);
+            XCTAssertNotNil(accountStatus[@"port"]);
+            XCTAssertNotNil(accountStatus[@"status"]);
+            XCTAssertNotNil(accountStatus[@"userName"]);
+            
+            NSLog(@"Account status: %@", accountStatus);
+            
+            NSString *remotePath = [NSString stringWithFormat:SDTestRemoteRsyncPath, [[NSHost currentHost] localizedName]];
+            NSURL *serverURL = [NSURL SFTPURLForAccount:accountStatus[@"userName"] host:accountStatus[@"host"] port:accountStatus[@"port"] path:remotePath];
+            
+            NSURL *localURL = [NSURL fileURLWithPath:[SDTestLocalRsyncPath stringByStandardizingPath] isDirectory:YES];
+            NSLog(@"Syncing: %@", localURL);
+            
+            [[SDSyncController sharedAPI] startSyncTaskWithLocalURL:localURL serverURL:serverURL password:SDTestCredentialsPassword restore:NO success:^(NSURL *syncURL, NSError *syncError) {
+                XCTAssertNotNil(syncURL);
+                [expectation fulfill];
+            } failure:^(NSURL *syncURL, NSError *syncError) {
+                XCTFail(@"%@", syncError.localizedDescription);
+            }];
+        } failure:^(NSError *apiError) {
+            XCTFail(@"%@", apiError.localizedDescription);
+        }];
+    } failure:^(NSError *apiError) {
+        XCTFail(@"%@", apiError.localizedDescription);
+    }];
+    [self waitForExpectationsWithTimeout:300 handler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"test_SDSyncController_startSyncTaskWithLocalURL error: %@", error.localizedDescription);    
+        }
+    }];
+}
+
 
 - (void)test_SDSystemAPI_statusForMountpoint {
     XCTAssertNotNil([SDSystemAPI sharedAPI]);
