@@ -114,9 +114,8 @@ typedef NS_ENUM(NSInteger, SDSSHError) {
     SDSSHErrorSSHFSMissing              = 1011,
     SDSSHErrorDirectoryMissing          = 1012,
     SDSSHErrorSyncFailed                = 1013,
-    SDSSHErrorSyncAlreadyRunning        = 1014
-
-
+    SDSSHErrorSyncAlreadyRunning        = 1014,
+    SDSSHErrorRemoteEnvironment         = 1015
 };
 
 #pragma mark - System API related errors

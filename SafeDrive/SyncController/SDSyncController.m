@@ -252,11 +252,22 @@
         SDLog(@"Rsync Task stdout output: %@", outputString);
 
         NSError *error;
-        if ([outputString rangeOfString:@"No such file or directory"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"That path does not exist on the server"}];
+        if ([outputString rangeOfString:@"Could not chdir to home directory"].length > 0) {
+            /*
+             NSString *msg = [NSString stringWithFormat:@"Could not chdir to home directory"];
+            
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorRemoteEnvironment userInfo:@{NSLocalizedDescriptionKey: msg}];
+             */
+        }
+        else if ([outputString rangeOfString:@"No such file or directory"].length > 0) {
+            NSString *msg = [NSString stringWithFormat:@"That path does not exist on the server: %@", serverPath];
+
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
         }
         else if ([outputString rangeOfString:@"Not a directory"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"That path does not exist on the server"}];
+            NSString *msg = [NSString stringWithFormat:@"That path does not exist on the server: %@", serverPath];
+
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
         }
         else if ([outputString rangeOfString:@"Permission denied"].length > 0) {
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
@@ -306,11 +317,22 @@
         SDLog(@"Rsync Task stderr output: %@", errorString);
         
         NSError *error;
-        if ([errorString rangeOfString:@"No such file or directory"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"That path does not exist on the server"}];
+        if ([errorString rangeOfString:@"Could not chdir to home directory"].length > 0) {
+            /*
+             NSString *msg = [NSString stringWithFormat:@"Could not chdir to home directory"];
+             
+             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorRemoteEnvironment userInfo:@{NSLocalizedDescriptionKey: msg}];
+             */
+        }
+        else if ([errorString rangeOfString:@"No such file or directory"].length > 0) {
+            NSString *msg = [NSString stringWithFormat:@"That path does not exist on the server: %@", serverPath];
+            
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
         }
         else if ([errorString rangeOfString:@"Not a directory"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"That path does not exist on the server"}];
+            NSString *msg = [NSString stringWithFormat:@"That path does not exist on the server: %@", serverPath];
+            
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
         }
         else if ([errorString rangeOfString:@"Permission denied"].length > 0) {
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
