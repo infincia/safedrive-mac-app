@@ -56,7 +56,7 @@
     SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" localFolder:url isMachine:NO uniqueID:1];
     XCTAssertNotNil(homeSyncFolder);
     
-    [machine addSyncFolder:homeSyncFolder];
+    [machine appendSyncFolder:homeSyncFolder];
     
     NSURL *relativeHome = [NSURL fileURLWithPath:@"~/user"];
     XCTAssertTrue([machine hasConflictingFolderRegistered:relativeHome]);
@@ -70,7 +70,7 @@
     SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" localFolder:url isMachine:NO uniqueID:1];
     XCTAssertNotNil(homeSyncFolder);
     
-    [machine addSyncFolder:homeSyncFolder];
+    [machine appendSyncFolder:homeSyncFolder];
     
     NSURL *otherUserHome = [NSURL fileURLWithPath:@"/Users/otheruser"];
     XCTAssertFalse([machine hasConflictingFolderRegistered:otherUserHome]);
@@ -84,7 +84,7 @@
     SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" localFolder:url isMachine:NO uniqueID:1];
     XCTAssertNotNil(homeSyncFolder);
     
-    [machine addSyncFolder:homeSyncFolder];
+    [machine appendSyncFolder:homeSyncFolder];
 
     NSURL *documents = [NSURL fileURLWithPath:@"/Users/user/Documents"];
     XCTAssertTrue([machine hasConflictingFolderRegistered:documents]);
@@ -98,7 +98,7 @@
     SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" localFolder:url isMachine:NO uniqueID:1];
     XCTAssertNotNil(homeSyncFolder);
     
-    [machine addSyncFolder:homeSyncFolder];
+    [machine appendSyncFolder:homeSyncFolder];
     
     NSURL *documents = [NSURL fileURLWithPath:@"/Users/user/Documents/"];
     XCTAssertTrue([machine hasConflictingFolderRegistered:documents]);
@@ -112,7 +112,7 @@
     SDSyncItem *homeSyncFolder = [SDSyncItem itemWithLabel:@"Home" localFolder:url isMachine:NO uniqueID:1];
     XCTAssertNotNil(homeSyncFolder);
     
-    [machine addSyncFolder:homeSyncFolder];
+    [machine appendSyncFolder:homeSyncFolder];
     
     NSURL *root = [NSURL fileURLWithPath:@"/"];
     XCTAssertTrue([machine hasConflictingFolderRegistered:root]);
