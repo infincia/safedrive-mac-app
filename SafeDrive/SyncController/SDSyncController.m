@@ -219,22 +219,6 @@
     else {
         NSString *local = [NSString stringWithFormat:@"%@/", localURL.path];
         
-        /* 
-            Hack to ensure rsync can actually sync to a folder that may not exist yet
-         
-            For example if:
-                1) /storage/ exists
-                2) /storage/<machinename>/documents is the sync target
-                3) /storage/<machinename> doesn't exist yet
-                4) rsync will refuse to create /storage/<machinename> automatically and the sync will fail
-            
-            So we have to get creative and ensure it exists before rsync tries to use it.
-        
-            Note that this is not perfect, we may need to mkdir as a completely separate step when registering the machine
-         
-        */
-        //NSString *mkdirCommand = [NSString stringWithFormat:@"--rsync-path=mkdir -p %@ && rsync", serverPath];
-        
         NSString *remote = [NSString stringWithFormat:@"%@@%@:%@/", user, host, serverPath];
         
         // recursive, local and remote paths
