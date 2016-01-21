@@ -96,6 +96,11 @@
         SDLog(@"Sync error: %@", syncError.localizedDescription);
         folder.syncing = NO;
         [self.syncListView reloadItem:self.mac reloadChildren:YES];
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = NSLocalizedString(@"Error", nil);
+        alert.informativeText = syncError.localizedDescription;
+        [alert addButtonWithTitle:NSLocalizedString(@"OK", nil)];
+        [alert runModal];
     }];
 }
 
