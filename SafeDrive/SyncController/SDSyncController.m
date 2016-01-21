@@ -48,7 +48,10 @@
 
 -(void)createRemoteDirectory:(NSURL *)serverURL password:(NSString *)password success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
     NMSSHLogger *l = [NMSSHLogger sharedLogger];
-    l.logLevel = NMSSHLogLevelVerbose;
+    l.logLevel = NMSSHLogLevelWarn;
+    [l setLogBlock:^(NMSSHLogLevel level, NSString *format) {
+        SDLog(@"%@", format);
+    }];
     
     NSString *host = [serverURL host];
     //unused NSNumber *port = [serverURL port];
