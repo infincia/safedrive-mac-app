@@ -133,7 +133,7 @@
 
     
     
-    NSURL *errorReportingURL = [self.baseURL URLByAppendingPathComponent:@"error"];
+    NSURL *errorReportingURL = [self.baseURL URLByAppendingPathComponent:@"error/log"];
     
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:errorReportingURL];
     [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
