@@ -128,7 +128,7 @@
     if (log.count > 0) {
         // newline separated string version, unused right now
         NSString *logString = [log description];
-        [postParameters setObject:log forKey:@"log"];
+        [postParameters setObject:logString forKey:@"log"];
     }
 
     
