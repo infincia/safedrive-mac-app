@@ -130,7 +130,8 @@
     NSString *host = [serverURL host];
     NSNumber *port = [serverURL port];
     NSString *user = [serverURL user];
-    NSString *serverPath = [serverURL path];
+    NSString *fullServerPath = [serverURL path];
+    NSString *serverPath = [fullServerPath substringFromIndex:1];
     NSString *localPath = [localURL path];
     SDLog(@"Syncing from %@/ to: %@", localPath, serverPath);
 
