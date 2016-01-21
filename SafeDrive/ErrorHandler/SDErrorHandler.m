@@ -96,7 +96,7 @@ void SDErrorHandlerReport(NSError *error) {
     // using archived NSError so the array can be serialized as a plist
     dispatch_async(errorQueue, ^{
         NSDictionary *report = @{ @"error": [NSKeyedArchiver archivedDataWithRootObject:error],
-                                  @"log": logBuffer,
+                                  @"log": [NSKeyedArchiver archivedDataWithRootObject:logBuffer],
                                   @"user": currentUser ?: @"" };
         [errors insertObject:report atIndex:0];
         _saveErrors();
@@ -133,8 +133,10 @@ void _startReportQueue() {
                 if (report != nil) {
                     NSString *reportUser = [report objectForKey:@"user"];
                     
-                    NSArray *reportLog = [report objectForKey:@"log"];
-
+                    NSData *reportLogArchive = [report objectForKey:@"log"];
+                    
+                    NSArray *reportLog = [NSKeyedUnarchiver unarchiveObjectWithData:reportLogArchive];
+                    
                     id archivedError = [report objectForKey:@"error"];
                     
                     // Errors are stored as NSData in the error array so they can be transparently serialized to disk,
