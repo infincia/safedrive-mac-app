@@ -81,8 +81,9 @@
                     });
                 }
                 else {
-                    SDLog(@"SFTP failed to create path: %@", machineDirectory);
-                    NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: @"SFTP failed to create path"}];
+                    NSString *msg = [NSString stringWithFormat:@"SFTP failed to create path: %@", machineDirectory];
+                    SDLog(msg);
+                    NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
                     
                     dispatch_sync(dispatch_get_main_queue(), ^{
                         failureBlock(error);
