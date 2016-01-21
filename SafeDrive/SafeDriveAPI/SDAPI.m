@@ -126,7 +126,6 @@
     [postParameters setObject:error.localizedDescription forKey:@"description"];
     [postParameters setObject:error.domain forKey:@"context"];
     if (log.count > 0) {
-        // newline separated string version, unused right now
         NSString *logString = [log description];
         [postParameters setObject:logString forKey:@"log"];
     }
