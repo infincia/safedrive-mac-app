@@ -133,7 +133,7 @@
     NSString *fullServerPath = [serverURL path];
     NSString *serverPath = [fullServerPath substringFromIndex:1];
     NSString *localPath = [localURL path];
-    SDLog(@"Syncing from %@/ to: %@", localPath, serverPath);
+    SDLog(@"Syncing from %@/ to: %@/", localPath, serverPath);
 
 
 #pragma mark - Create the subprocess to be configured below
