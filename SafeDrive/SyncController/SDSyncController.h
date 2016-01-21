@@ -11,6 +11,6 @@
 
 +(SDSyncController *)sharedAPI;
 
--(void)startSyncTaskWithLocalURL:(NSURL *)localURL serverURL:(NSURL *)serverURL restore:(BOOL)restore success:(SDSyncResultBlock)successBlock failure:(SDSyncResultBlock)failureBlock;
+-(void)startSyncTaskWithLocalURL:(NSURL *)localURL serverURL:(NSURL *)serverURL password:(NSString *)password restore:(BOOL)restore success:(SDSyncResultBlock)successBlock failure:(SDSyncResultBlock)failureBlock;
 
 @end

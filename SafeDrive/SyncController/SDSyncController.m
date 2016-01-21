@@ -6,6 +6,8 @@
 #import "SDSystemAPI.h"
 #import <dispatch/dispatch.h>
 
+#import <NMSSH/NMSSH.h>
+
 @interface SDSyncController ()
 
 @property NSTask *syncTask;
@@ -13,6 +15,8 @@
 @property SDSystemAPI *sharedSystemAPI;
 
 -(void)syncLoop;
+
+-(void)createRemoteDirectory:(NSURL *)serverURL password:(NSString *)password success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
 
 @end
 
@@ -42,7 +46,60 @@
     return localInstance;
 }
 
--(void)startSyncTaskWithLocalURL:(NSURL *)localURL serverURL:(NSURL *)serverURL restore:(BOOL)restore success:(SDSyncResultBlock)successBlock failure:(SDSyncResultBlock)failureBlock {
+-(void)createRemoteDirectory:(NSURL *)serverURL password:(NSString *)password success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+    NMSSHLogger *l = [NMSSHLogger sharedLogger];
+    l.logLevel = NMSSHLogLevelVerbose;
+    
+    NSString *host = [serverURL host];
+    //unused NSNumber *port = [serverURL port];
+    NSString *user = [serverURL user];
+    NSString *serverPath = [serverURL path];
+    NSString *machineDirectory = [serverPath stringByDeletingLastPathComponent];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NMSSHSession *session = [NMSSHSession connectToHost:host
+                                               withUsername:user];
+        
+        if (session.isConnected) {
+            // this can be swapped out for a key method as needed
+            [session authenticateByPassword:password];
+            
+            if (session.isAuthorized) {
+                SDLog(@"SFTP authentication succeeded");
+                NMSFTP *sftp = [NMSFTP connectWithSession:session];
+                if ([sftp directoryExistsAtPath:machineDirectory]) {
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        successBlock();
+                    });
+                }
+                else if ([sftp createDirectoryAtPath:machineDirectory]) {
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        successBlock();
+                    });
+                }
+                else {
+                    SDLog(@"SFTP failed to create path: %@", machineDirectory);
+                    NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: @"SFTP failed to create path"}];
+                    
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        failureBlock(error);
+                    });
+                }
+                [sftp disconnect];
+            }
+            else {
+                NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"SFTP failed to connect"}];
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    failureBlock(error);
+                });
+            }
+        }
+        // all cases should end up disconnecting the session
+        [session disconnect];
+    });
+}
+
+-(void)startSyncTaskWithLocalURL:(NSURL *)localURL serverURL:(NSURL *)serverURL password:(NSString *)password restore:(BOOL)restore success:(SDSyncResultBlock)successBlock failure:(SDSyncResultBlock)failureBlock {
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"Sync task started from background thread");
 
     if (self.syncTask.isRunning) {
@@ -72,8 +129,6 @@
     NSString *serverPath = [serverURL path];
     NSString *localPath = [localURL path];
     SDLog(@"Syncing from %@/ to: %@", localPath, serverPath);
-
-
 
 
 #pragma mark - Create the subprocess to be configured below
@@ -173,12 +228,12 @@
             Note that this is not perfect, we may need to mkdir as a completely separate step when registering the machine
          
         */
-        NSString *mkdirCommand = [NSString stringWithFormat:@"--rsync-path=mkdir -p %@ && rsync", serverPath];
+        //NSString *mkdirCommand = [NSString stringWithFormat:@"--rsync-path=mkdir -p %@ && rsync", serverPath];
         
         NSString *remote = [NSString stringWithFormat:@"%@@%@:%@/", user, host, serverPath];
         
-        // recursive, mkdir hack, local and remote paths
-        taskArguments = @[@"-r", mkdirCommand, local, remote];
+        // recursive, local and remote paths
+        taskArguments = @[@"-r", local, remote];
 
     }
     [self.syncTask setArguments:taskArguments];
@@ -320,9 +375,13 @@
 
 #pragma mark - Launch subprocess and return
 
+    [self createRemoteDirectory:serverURL password:password success:^{
+        SDLog(@"Launching Rsync with arguments: %@", taskArguments);
+        [self.syncTask launch];
+    } failure:^(NSError * _Nonnull apiError) {
+        failureBlock(localURL, apiError);
+    }];
 
-    SDLog(@"Launching Rsync with arguments: %@", taskArguments);
-    [self.syncTask launch];
 }
 
 

@@ -20,6 +20,7 @@ target 'SafeDrive' do
     pod 'Sparkle', '1.13.0'
     pod 'Fabric', '1.6.3'
     pod 'Crashlytics', '3.6.0'
+    pod 'NMSSH', '~> 2.2'
 
 end
 

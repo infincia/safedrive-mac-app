@@ -85,7 +85,7 @@
     
     NSURL *remote = [NSURL SFTPURLForAccount:self.accountController.internalUserName host:self.accountController.remoteHost port:self.accountController.remotePort path:remoteFolder.path];
     [self.syncListView reloadItem:self.mac reloadChildren:YES];
-    [self.syncController startSyncTaskWithLocalURL:localFolder serverURL:remote restore:NO success:^(NSURL *syncURL, NSError *syncError) {
+    [self.syncController startSyncTaskWithLocalURL:localFolder serverURL:remote password:self.accountController.password restore:NO success:^(NSURL *syncURL, NSError *syncError) {
         SDLog(@"Sync finished for local URL: %@", localFolder);
         folder.syncing = NO;
         [self.syncListView reloadItem:self.mac reloadChildren:YES];
