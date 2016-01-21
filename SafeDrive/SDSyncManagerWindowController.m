@@ -57,7 +57,7 @@
 
         self.accountController = [SDAccountController sharedAccountController];
         self.syncController = [SDSyncController sharedAPI];
-        self.mac = [SDSyncItem itemWithLabel:@"Mac" localFolder:nil isMachine:YES uniqueID:-1];
+        self.mac = [SDSyncItem itemWithLabel:[[NSHost currentHost] localizedName] localFolder:nil isMachine:YES uniqueID:-1];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSignIn:) name:SDAccountSignInNotification object:nil];
 
         return self;
