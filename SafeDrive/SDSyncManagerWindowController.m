@@ -36,7 +36,6 @@
 @property SDAccountController *accountController;
 @property SDSyncController *syncController;
 
-@property SDSyncItem *mac;
 @end
 
 @implementation SDSyncManagerWindowController
@@ -57,7 +56,7 @@
 
         self.accountController = [SDAccountController sharedAccountController];
         self.syncController = [SDSyncController sharedAPI];
-        self.mac = [SDSyncItem itemWithLabel:[[NSHost currentHost] localizedName] localFolder:nil isMachine:YES uniqueID:-1];
+        self.syncController.mac = [SDSyncItem itemWithLabel:[[NSHost currentHost] localizedName] localFolder:nil isMachine:YES uniqueID:-1];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSignIn:) name:SDAccountSignInNotification object:nil];
 
         return self;
@@ -73,7 +72,7 @@
     NSInteger uniqueID = button.tag;
     SDLog(@"Starting sync for folder ID: %lu", uniqueID);
     
-    SDSyncItem *folder = [self.mac syncFolderForUniqueId:uniqueID];
+    SDSyncItem *folder = [self.syncController.mac syncFolderForUniqueId:uniqueID];
     folder.syncing = YES;
     NSString *folderName = folder.label;
     NSURL *localFolder = folder.url;
@@ -84,18 +83,18 @@
     SDLog(@"Remote path: %@", remoteFolder);
     
     NSURL *remote = [NSURL SFTPURLForAccount:self.accountController.internalUserName host:self.accountController.remoteHost port:self.accountController.remotePort path:remoteFolder.path];
-    [self.syncListView reloadItem:self.mac reloadChildren:YES];
+    [self.syncListView reloadItem:self.syncController.mac reloadChildren:YES];
     [self.syncController startSyncTaskWithLocalURL:localFolder serverURL:remote password:self.accountController.password restore:NO success:^(NSURL *syncURL, NSError *syncError) {
         SDLog(@"Sync finished for local URL: %@", localFolder);
         folder.syncing = NO;
-        [self.syncListView reloadItem:self.mac reloadChildren:YES];
+        [self.syncListView reloadItem:self.syncController.mac reloadChildren:YES];
         
     } failure:^(NSURL *syncURL, NSError *syncError) {
         SDErrorHandlerReport(syncError);
         SDLog(@"Sync failed for local URL: %@", localFolder);
         SDLog(@"Sync error: %@", syncError.localizedDescription);
         folder.syncing = NO;
-        [self.syncListView reloadItem:self.mac reloadChildren:YES];
+        [self.syncListView reloadItem:self.syncController.mac reloadChildren:YES];
         NSAlert *alert = [[NSAlert alloc] init];
         alert.messageText = NSLocalizedString(@"Error", nil);
         alert.informativeText = syncError.localizedDescription;
@@ -145,13 +144,13 @@
     [self.spinner startAnimation:self];
 
     [self.sharedSafedriveAPI deleteSyncFolder:@(uniqueID) success:^{
-        SDSyncItem *folder = [self.mac syncFolderForUniqueId:uniqueID];
-        [self.mac removeSyncFolder:folder];
+        SDSyncItem *folder = [self.syncController.mac syncFolderForUniqueId:uniqueID];
+        [self.syncController.mac removeSyncFolder:folder];
         [self.syncListView setSortDescriptors:@[
             [NSSortDescriptor sortDescriptorWithKey:@"label" ascending:YES selector:@selector(compare:)]
         ]];
-        [self.syncListView reloadItem:self.mac reloadChildren:YES];
-        [self.syncListView expandItem:self.mac expandChildren:YES];
+        [self.syncListView reloadItem:self.syncController.mac reloadChildren:YES];
+        [self.syncListView expandItem:self.syncController.mac expandChildren:YES];
         [self.spinner stopAnimation:self];
 
     } failure:^(NSError *apiError) {
@@ -169,7 +168,7 @@
 -(IBAction)readSyncFolders:(id)sender {
     [self.spinner startAnimation:self];
     [self.sharedSafedriveAPI readSyncFoldersWithSuccess:^(NSArray *folders) {
-        [self.mac.syncFolders removeAllObjects];
+        [self.syncController.mac.syncFolders removeAllObjects];
         for (NSDictionary *folder in folders) {
         /*
             Current sync folder model:
@@ -188,14 +187,14 @@
             
             SDSyncItem *folder = [SDSyncItem itemWithLabel:folderName localFolder:localFolder isMachine:NO uniqueID:folderId.integerValue];
             
-            [self.mac appendSyncFolder:folder];
+            [self.syncController.mac appendSyncFolder:folder];
         }
 
         [self.syncListView setSortDescriptors:@[
             [NSSortDescriptor sortDescriptorWithKey:@"label" ascending:YES selector:@selector(compare:)]
         ]];
-        [self.syncListView reloadItem:self.mac reloadChildren:YES];
-        [self.syncListView expandItem:self.mac expandChildren:YES];
+        [self.syncListView reloadItem:self.syncController.mac reloadChildren:YES];
+        [self.syncListView expandItem:self.syncController.mac expandChildren:YES];
         [self.spinner stopAnimation:self];
     } failure:^(NSError *apiError) {
         SDErrorHandlerReport(apiError);
@@ -235,7 +234,7 @@
         return NO;
     }  
     // check if the candidate sync path is a parent or subdirectory of an existing registered sync folder
-    if ([self.mac hasConflictingFolderRegistered:url]) {
+    if ([self.syncController.mac hasConflictingFolderRegistered:url]) {
         NSDictionary *errorInfo = @{ NSLocalizedDescriptionKey : NSLocalizedString(@"Cannot select this directory, it is a parent or subdirectory of an existing sync folder", @"String informing the user that the selected folder is a parent or subdirectory of an existing sync folder") };
         
         if (outError != NULL) *outError = [NSError errorWithDomain:SDErrorSyncDomain code:SDSystemErrorFolderConflict userInfo:errorInfo];
@@ -250,9 +249,9 @@
 #pragma mark - NSOutlineView
 
 - (void)outlineView:(NSOutlineView *)outlineView sortDescriptorsDidChange:(NSArray<NSSortDescriptor *> *)oldDescriptors {
-    [self.mac.syncFolders sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"label" ascending:YES selector:@selector(compare:)]]];
-    [self.syncListView reloadItem:self.mac reloadChildren:YES];
-    [self.syncListView expandItem:self.mac expandChildren:YES];
+    [self.syncController.mac.syncFolders sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"label" ascending:YES selector:@selector(compare:)]]];
+    [self.syncListView reloadItem:self.syncController.mac reloadChildren:YES];
+    [self.syncListView expandItem:self.syncController.mac expandChildren:YES];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item {
@@ -273,7 +272,7 @@
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item {
     if (item == nil) {
-        return self.mac; // Root
+        return self.syncController.mac; // Root
     }
     SDSyncItem *syncItem = (SDSyncItem *)item;
     if (syncItem.isMachine) { 
