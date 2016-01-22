@@ -176,6 +176,8 @@
             [m addItemWithTitle:@"SafeDrive: Restore Items" action:@selector(restoreItems:) keyEquivalent:@"R"];
             break;
         case FIMenuKindContextualMenuForContainer: /* contextual menu for the directory being displayed */
+            m = [[NSMenu alloc] init];
+            [m addItemWithTitle:@"SafeDrive: Restore Folder" action:@selector(restoreItems:) keyEquivalent:@""];
             break;
         case FIMenuKindContextualMenuForSidebar: /* contextual menu for an item in the sidebar */
             break;
