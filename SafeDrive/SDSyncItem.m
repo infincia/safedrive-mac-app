@@ -77,8 +77,6 @@
         NSString *registeredPath = [item.url.path stringByExpandingTildeInPath];
         NSString *testPath = [testFolder.path stringByExpandingTildeInPath];
         
-        SDLog(@"Checking %@ against test folder %@", registeredPath, testPath);
-
         NSStringCompareOptions options = (NSAnchoredSearch | NSCaseInsensitiveSearch);
         
         // check if testFolder is a parent or subdirectory of an existing folder
