@@ -173,7 +173,7 @@
     switch (whichMenu) {
         case FIMenuKindContextualMenuForItems: /* contextual menu for one or more files/directories */
             m = [[NSMenu alloc] init];
-            [m addItemWithTitle:@"SafeDrive: Restore Items" action:@selector(restoreItems:) keyEquivalent:@"R"];
+            [m addItemWithTitle:@"SafeDrive: Restore Items" action:@selector(restoreItems:) keyEquivalent:@""];
             break;
         case FIMenuKindContextualMenuForContainer: /* contextual menu for the directory being displayed */
             m = [[NSMenu alloc] init];
