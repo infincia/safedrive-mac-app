@@ -56,8 +56,8 @@
             }
         }];
 #ifdef DEBUG
-        [[AFNetworkActivityLogger sharedLogger] startLogging];
-        [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+        //[[AFNetworkActivityLogger sharedLogger] startLogging];
+        //[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
 #endif
         self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/api/1/", SDAPIDomainTesting]];
 
