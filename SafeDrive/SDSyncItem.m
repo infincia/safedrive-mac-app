@@ -16,6 +16,32 @@
     return nil;
 }
 
+- (id)initWithCoder:(NSCoder *)coder {
+    if ((self = [super init])) {
+        self.label = [coder decodeObjectOfClass:[NSString class] forKey:@"label"];
+        self.isMachine = [coder decodeBoolForKey:@"isMachine"];
+        self.uniqueID = [coder decodeIntegerForKey:@"uniqueID"];
+        self.url = [coder decodeObjectOfClass:[NSURL class] forKey:@"url"];
+        self.syncing = [coder decodeBoolForKey:@"syncing"];
+        NSSet *syncFolderClasses = [NSSet setWithObjects:[NSMutableArray class], [SDSyncItem class], nil];
+        self.syncFolders = [coder decodeObjectOfClasses:syncFolderClasses forKey:@"syncFolders"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.label forKey:@"label"];
+    [coder encodeBool:self.isMachine forKey:@"isMachine"];
+    [coder encodeInteger:self.uniqueID forKey:@"uniqueID"];
+    [coder encodeObject:self.url forKey:@"url"];
+    [coder encodeBool:self.syncing forKey:@"syncing"];
+    [coder encodeObject:self.syncFolders forKey:@"syncFolders"];
+}
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 +(instancetype)itemWithLabel:(NSString *)label localFolder:(NSURL *)url isMachine:(BOOL)isMachine uniqueID:(NSInteger)uniqueID {
     SDSyncItem *item = [[SDSyncItem alloc] init];
     if (item) {
