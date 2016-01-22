@@ -9,6 +9,8 @@
 #import "SDAppXPCDelegate.h"
 #import "SDAppXPCProtocol.h"
 
+#import "SDSyncItem.h"
+
 @import ServiceManagement;
 
 @interface SDServiceXPCRouter ()
@@ -113,6 +115,11 @@
 -(BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection {
 
     NSXPCInterface *serviceInterface = [NSXPCInterface interfaceWithProtocol:@protocol(SDAppXPCProtocol)];
+
+    NSSet *incomingClasses = [NSSet setWithObjects:[SDSyncItem class], nil];
+    [serviceInterface setClasses:incomingClasses forSelector:@selector(getSyncFoldersWithReply:) argumentIndex:0 ofReply:YES];
+
+    
     newConnection.exportedInterface = serviceInterface;
     newConnection.exportedObject = self.appXPCDelegate;
     

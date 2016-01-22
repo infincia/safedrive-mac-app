@@ -57,6 +57,7 @@
 		AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */; };
 		AA8619991C4B34FD003B9D6B /* SDSyncTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8619981C4B34FD003B9D6B /* SDSyncTableRowView.m */; };
 		AA925C371B8F9BAA00222E46 /* SafeDriveFinder.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AA925C2D1B8F9BAA00222E46 /* SafeDriveFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AA97758C1C51F5E200197BC7 /* SDSyncItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB522B71C33524A00429C0C /* SDSyncItem.m */; };
 		AA9E7DE61A7950A500E3C3E8 /* NSURL+SFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9E7DE51A7950A500E3C3E8 /* NSURL+SFTP.m */; };
 		AAAA912D1BC767ED00A17250 /* SDSyncManagerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAA912B1BC767ED00A17250 /* SDSyncManagerWindowController.m */; };
 		AAAA912E1BC767ED00A17250 /* SDSyncManagerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAAA912C1BC767ED00A17250 /* SDSyncManagerWindow.xib */; };
@@ -223,8 +224,8 @@
 		AAAA912C1BC767ED00A17250 /* SDSyncManagerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SDSyncManagerWindow.xib; sourceTree = "<group>"; };
 		AAAF1A411BF594A9008E7865 /* SDAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDAccountController.h; path = AccountController/SDAccountController.h; sourceTree = "<group>"; };
 		AAAF1A421BF594A9008E7865 /* SDAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountController.m; path = AccountController/SDAccountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AAB522B61C33524A00429C0C /* SDSyncItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncItem.h; sourceTree = "<group>"; };
-		AAB522B71C33524A00429C0C /* SDSyncItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncItem.m; sourceTree = "<group>"; };
+		AAB522B61C33524A00429C0C /* SDSyncItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDSyncItem.h; path = SafeDrive/SDSyncItem.h; sourceTree = "<group>"; };
+		AAB522B71C33524A00429C0C /* SDSyncItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDSyncItem.m; path = SafeDrive/SDSyncItem.m; sourceTree = "<group>"; };
 		AAB522B91C337CD100429C0C /* SDSyncTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncTableCellView.h; sourceTree = "<group>"; };
 		AAB522BA1C337CD100429C0C /* SDSyncTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncTableCellView.m; sourceTree = "<group>"; };
 		AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
@@ -464,6 +465,8 @@
 		AA3D8EBA1C3D80A100CF0A3C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				AAB522B61C33524A00429C0C /* SDSyncItem.h */,
+				AAB522B71C33524A00429C0C /* SDSyncItem.m */,
 				AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */,
 				AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */,
 			);
@@ -592,8 +595,6 @@
 				AAAA912A1BC767ED00A17250 /* SDSyncManagerWindowController.h */,
 				AAAA912B1BC767ED00A17250 /* SDSyncManagerWindowController.m */,
 				AAAA912C1BC767ED00A17250 /* SDSyncManagerWindow.xib */,
-				AAB522B61C33524A00429C0C /* SDSyncItem.h */,
-				AAB522B71C33524A00429C0C /* SDSyncItem.m */,
 				AAB522B91C337CD100429C0C /* SDSyncTableCellView.h */,
 				AAB522BA1C337CD100429C0C /* SDSyncTableCellView.m */,
 				AA8619971C4B34FD003B9D6B /* SDSyncTableRowView.h */,
@@ -992,6 +993,7 @@
 			files = (
 				AA3D8EC01C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AA5C1A901BB22F02006A0C8C /* SafeDriveFinder.m in Sources */,
+				AA97758C1C51F5E200197BC7 /* SDSyncItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

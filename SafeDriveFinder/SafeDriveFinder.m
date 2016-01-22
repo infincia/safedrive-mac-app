@@ -8,6 +8,8 @@
 #import "SDAppXPCProtocol.h"
 #import "SDServiceXPCProtocol.h"
 
+#import "SDSyncItem.h"
+
 @interface SafeDriveFinder ()
 @property NSXPCConnection *appConnection;
 @property NSXPCConnection *serviceConnection;
@@ -20,13 +22,7 @@
 - (instancetype)init {
     self = [super init];
 
-    NSLog(@"%s launched from %@ ; compiled at %s", __PRETTY_FUNCTION__, [[NSBundle mainBundle] bundlePath], __TIME__);    
-    
-    // hardcoded for testing, paths to monitor will be retrieved via IPC
-    NSURL *u = [NSURL fileURLWithPath:@"/Users/Shared/SafeDrive"];
-    NSSet *s = [NSSet setWithObject:u];
-    
-    FIFinderSyncController.defaultController.directoryURLs = s;
+    NSLog(@"%s launched from %@ ; compiled at %s", __PRETTY_FUNCTION__, [[NSBundle mainBundle] bundlePath], __TIME__);
 
     // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
     [[FIFinderSyncController defaultController] setBadgeImage:[NSImage imageNamed: NSImageNameStatusAvailable] label:@"Available" forBadgeIdentifier:@"available"];
@@ -52,6 +48,7 @@
             continue;
         }
         if (!self.appConnection) {
+            FIFinderSyncController.defaultController.directoryURLs = [NSSet new];
             [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
                 NSLog(@"Error: %@", error);
             }] getAppEndpoint:^(NSXPCListenerEndpoint *endpoint) {
@@ -61,6 +58,17 @@
                 }] ping:^(NSString *reply) {
                     NSLog(@"Ping reply from app: %@", reply);
                 }];
+            }];
+        }
+        else {
+            [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
+                NSLog(@"Error: %@", error);
+            }] getSyncFoldersWithReply:^(NSMutableArray<SDSyncItem *> *syncFolders) {
+                NSMutableSet *s = [NSMutableSet new];
+                [syncFolders enumerateObjectsUsingBlock:^(SDSyncItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [s addObject:obj.url];
+                }];
+                FIFinderSyncController.defaultController.directoryURLs = s;
             }];
         }
         [NSThread sleepForTimeInterval:1];
@@ -98,6 +106,10 @@
 -(NSXPCConnection *)createAppConnectionFromEndpoint:(NSXPCListenerEndpoint *)endpoint {
     NSXPCConnection *newConnection = [[NSXPCConnection alloc] initWithListenerEndpoint:endpoint];
     NSXPCInterface *appInterface = [NSXPCInterface interfaceWithProtocol:@protocol(SDAppXPCProtocol)];
+    NSSet *incomingClasses = [NSSet setWithObjects:[NSMutableArray class], [SDSyncItem class], nil];
+    
+    [appInterface setClasses:incomingClasses forSelector:@selector(getSyncFoldersWithReply:) argumentIndex:0 ofReply:YES];
+    
     newConnection.remoteObjectInterface = appInterface;
     __weak typeof(self) weakSelf = self;
     newConnection.interruptionHandler = ^{

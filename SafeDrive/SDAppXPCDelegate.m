@@ -5,7 +5,22 @@
 
 #import "SDAppXPCDelegate.h"
 
+#import "SDSyncController.h"
+
+#import "SDSyncItem.h"
+
+@interface SDAppXPCDelegate ()
+@property SDSyncController *syncController;
+@end
 @implementation SDAppXPCDelegate
+
+-(instancetype)init {
+    self = [super init];
+    self.syncController = [SDSyncController sharedAPI];
+
+    return self;
+}
+
 
 
 -(void)sendMessage:(NSString *)message reply:(void (^)(NSString *reply))replyBlock {
@@ -29,5 +44,8 @@
 }
 
 
+-(void)getSyncFoldersWithReply:(void (^)(NSMutableArray<SDSyncItem*> *syncFolders))replyBlock {
+    replyBlock(self.syncController.mac.syncFolders);
+}
 
 @end
