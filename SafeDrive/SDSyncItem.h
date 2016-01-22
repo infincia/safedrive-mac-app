@@ -11,7 +11,7 @@
 @property NSInteger uniqueID;
 @property (getter=isSyncing) BOOL syncing;
 
-@property NSMutableArray *syncFolders;
+@property NSMutableArray<SDSyncItem*> *syncFolders;
 
 +(instancetype)itemWithLabel:(NSString *)label localFolder:(NSURL *)url isMachine:(BOOL)isMachine uniqueID:(NSInteger)uniqueID;
 -(void)appendSyncFolder:(SDSyncItem *)child;
