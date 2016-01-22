@@ -208,7 +208,7 @@
 
     NSLog(@"restoreItems: menu item: %@, target = %@, items = ", [sender title], [target filePathURL]);
     [items enumerateObjectsUsingBlock: ^(id obj, NSUInteger idx, BOOL *stop) {
-        NSLog(@"    %@", [obj filePathURL]);
+        NSLog(@"%@", [obj path]);
     }];
 }
 
