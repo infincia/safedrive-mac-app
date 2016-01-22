@@ -181,9 +181,9 @@
             break;
         case FIMenuKindToolbarItemMenu: 
             m = [[NSMenu alloc] init];
-            [m addItemWithTitle:@"SafeDrive Support" action:@selector(support:) keyEquivalent:@"S"];
-            [m addItemWithTitle:@"SafeDrive Restore Window" action:@selector(openRestoreWindow:) keyEquivalent:@"O"];
-            [m addItemWithTitle:@"SafeDrive Preferences Window" action:@selector(openPreferencesWindow:) keyEquivalent:@"P"];
+            [m addItemWithTitle:@"SafeDrive Support" action:@selector(support:) keyEquivalent:@""];
+            [m addItemWithTitle:@"SafeDrive Sync Preferences" action:@selector(openRestoreWindow:) keyEquivalent:@""];
+            [m addItemWithTitle:@"SafeDrive Preferences Window" action:@selector(openPreferencesWindow:) keyEquivalent:@""];
             break;     
             
         default:
@@ -211,7 +211,9 @@
 }
 
 - (IBAction)openRestoreWindow:(id)sender {
-    
+    [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
+        NSLog(@"Error: %@", error);
+    }] displayRestoreWindowForURLs:nil];
 }
 
 - (IBAction)openPreferencesWindow:(id)sender {

@@ -40,9 +40,9 @@
 }
 
 -(void)displayRestoreWindowForURLs:(NSArray *)urls {
-    
-}
+    [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenSyncWindow object:nil];
 
+}
 
 -(void)getSyncFoldersWithReply:(void (^)(NSMutableArray<SDSyncItem*> *syncFolders))replyBlock {
     replyBlock(self.syncController.mac.syncFolders);
