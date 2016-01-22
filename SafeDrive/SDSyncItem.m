@@ -10,6 +10,7 @@
     self = [super init];
     if (self) {
         self.syncFolders = [NSMutableArray new];
+        self.syncing = NO;
         return self;
     }
     return nil;
@@ -22,7 +23,6 @@
         item.isMachine = isMachine;
         item.uniqueID = uniqueID;
         item.url = url;
-        item.syncing = NO;
         return item;
     }
     return nil;
