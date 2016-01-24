@@ -95,7 +95,8 @@
 #ifdef DEBUG
                 SDLog(@"Account status retrieval failed: %@", apiError.localizedDescription);
 #endif
-                SDErrorHandlerReport(apiError);
+                // don't report these for now, they're almost always going to be network failures
+                // SDErrorHandlerReport(apiError);
             }];
             [self.sharedSafedriveAPI accountDetailsForUser:self.email success:^(NSDictionary *accountDetails) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -108,7 +109,8 @@
 #ifdef DEBUG
                 SDLog(@"Account details retrieval failed: %@", apiError.localizedDescription);
 #endif
-                SDErrorHandlerReport(apiError);
+                // don't report these for now, they're almost always going to be network failures
+                // SDErrorHandlerReport(apiError);
             }];
             [NSThread sleepForTimeInterval:60 * 5]; // 5 minutes
         }
