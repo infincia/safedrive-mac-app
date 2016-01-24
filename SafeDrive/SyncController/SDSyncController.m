@@ -68,20 +68,22 @@
             [session authenticateByPassword:password];
             
             if (session.isAuthorized) {
-                SDLog(@"SFTP authentication succeeded");
+                SDLog(@"SFTP: authentication succeeded");
                 NMSFTP *sftp = [NMSFTP connectWithSession:session];
                 if ([sftp directoryExistsAtPath:machineDirectory]) {
+                    SDLog(@"SFTP: sync directory exists");
                     dispatch_sync(dispatch_get_main_queue(), ^{
                         successBlock();
                     });
                 }
                 else if ([sftp createDirectoryAtPath:machineDirectory]) {
+                    SDLog(@"SFTP: creating sync directory");
                     dispatch_sync(dispatch_get_main_queue(), ^{
                         successBlock();
                     });
                 }
                 else {
-                    NSString *msg = [NSString stringWithFormat:@"SFTP failed to create path: %@", machineDirectory];
+                    NSString *msg = [NSString stringWithFormat:@"SFTP: failed to create path: %@", machineDirectory];
                     SDLog(msg);
                     NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
                     
@@ -92,7 +94,7 @@
                 [sftp disconnect];
             }
             else {
-                NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"SFTP failed to connect"}];
+                NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"SFTP: failed to connect"}];
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     failureBlock(error);
                 });
