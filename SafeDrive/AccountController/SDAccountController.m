@@ -88,19 +88,26 @@
                 self.internalUserName = accountStatus[@"userName"];
                 self.remoteHost = accountStatus[@"host"];
                 self.remotePort = accountStatus[@"port"];
-
+#ifdef DEBUG
                 SDLog(@"Account status: %@", accountStatus);
+#endif
             } failure:^(NSError *apiError) {
+#ifdef DEBUG
                 SDLog(@"Account status retrieval failed: %@", apiError.localizedDescription);
+#endif
                 SDErrorHandlerReport(apiError);
             }];
             [self.sharedSafedriveAPI accountDetailsForUser:self.email success:^(NSDictionary *accountDetails) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:SDAccountDetailsNotification object:accountDetails];
                 });
+#ifdef DEBUG
                 SDLog(@"Account details: %@", accountDetails);
+#endif
             } failure:^(NSError *apiError) {
+#ifdef DEBUG
                 SDLog(@"Account details retrieval failed: %@", apiError.localizedDescription);
+#endif
                 SDErrorHandlerReport(apiError);
             }];
             [NSThread sleepForTimeInterval:60 * 5]; // 5 minutes
