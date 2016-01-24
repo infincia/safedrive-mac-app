@@ -70,8 +70,6 @@
 -(IBAction)startSyncItemNow:(id)sender {
     NSButton *button = sender;
     NSInteger uniqueID = button.tag;
-    SDLog(@"Starting sync for folder ID: %lu", uniqueID);
-    
     SDSyncItem *folder = [self.syncController.mac syncFolderForUniqueId:uniqueID];
     folder.syncing = YES;
     NSString *folderName = folder.label;
@@ -80,7 +78,6 @@
     NSURL *defaultFolder = [NSURL URLWithString:SDDefaultServerPath];
     NSURL *machineFolder = [defaultFolder URLByAppendingPathComponent:[[NSHost currentHost] localizedName] isDirectory:YES];
     NSURL *remoteFolder = [machineFolder URLByAppendingPathComponent:folderName isDirectory:YES];
-    SDLog(@"Remote path: %@", remoteFolder);
     
     NSURL *remote = [NSURL SFTPURLForAccount:self.accountController.internalUserName host:self.accountController.remoteHost port:self.accountController.remotePort path:remoteFolder.path];
     [self.syncListView reloadItem:self.syncController.mac reloadChildren:YES];
