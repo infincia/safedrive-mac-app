@@ -7,13 +7,13 @@
 static NSInteger kSDAppXPCProtocolVersion = 5;
 
 @protocol SDAppXPCProtocol
--(void)sendMessage:(NSString *)message reply:(void (^)(NSString *reply))replyBlock;
--(void)ping:(void (^)(NSString *reply))replyBlock;
--(void)protocolVersion:(void (^)(NSNumber *version))replyBlock;
+-(void)sendMessage:(NSString * _Nonnull)message reply:(void (^ _Nonnull)(NSString * _Nonnull reply))replyBlock;
+-(void)ping:(void (^ _Nonnull)(NSString * _Nonnull reply))replyBlock;
+-(void)protocolVersion:(void (^ _Nonnull)(NSNumber * _Nonnull version))replyBlock;
 
 -(void)displayPreferencesWindow;
--(void)displayRestoreWindowForURLs:(NSArray *)urls;
+-(void)displayRestoreWindowForURLs:(NSArray * _Nonnull)urls;
 
--(void)getSyncFoldersWithReply:(void (^)(NSMutableArray<SDSyncItem*> *syncFolders))replyBlock;
+-(void)getSyncFoldersWithReply:(void (^ _Nonnull)(NSMutableArray<SDSyncItem*> * _Nonnull syncFolders))replyBlock;
 
 @end

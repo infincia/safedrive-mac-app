@@ -6,10 +6,10 @@
 static NSInteger kSDServiceXPCProtocolVersion = 4;
 
 @protocol SDServiceXPCProtocol
--(void)sendMessage:(NSString *)message reply:(void (^)(NSString *reply))replyBlock;
--(void)ping:(void (^)(NSString *reply))replyBlock;
--(void)protocolVersion:(void (^)(NSNumber *version))replyBlock;
--(void)sendAppEndpoint:(NSXPCListenerEndpoint *)endpoint reply:(void (^)(BOOL success))replyBlock;
--(void)getAppEndpoint:(void (^)(NSXPCListenerEndpoint *endpoint))replyBlock;
+-(void)sendMessage:(NSString * _Nonnull)message reply:(void (^ _Nonnull)(NSString * _Nonnull reply))replyBlock;
+-(void)ping:(void (^ _Nonnull)(NSString * _Nonnull reply))replyBlock;
+-(void)protocolVersion:(void (^ _Nonnull)(NSNumber * _Nonnull version))replyBlock;
+-(void)sendAppEndpoint:(NSXPCListenerEndpoint * _Nonnull)endpoint reply:(void (^ _Nonnull)(BOOL success))replyBlock;
+-(void)getAppEndpoint:(void (^ _Nonnull)(NSXPCListenerEndpoint * _Nonnull endpoint))replyBlock;
 
 @end
