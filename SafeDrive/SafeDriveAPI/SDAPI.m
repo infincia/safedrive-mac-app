@@ -55,6 +55,8 @@
                 }
             }
         }];
+        [_reachabilityManager startMonitoring];
+        
 #ifdef DEBUG
         //[[AFNetworkActivityLogger sharedLogger] startLogging];
         //[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
