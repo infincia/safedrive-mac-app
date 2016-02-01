@@ -212,16 +212,16 @@
     // restore just reverses the local and remote path arguments to the rsync command,
     // is not as well tested as normal sync
     if (restore) {
-        NSString *remote = [NSString stringWithFormat:@"%@@%@:%@/", user, host, serverPath];
+        NSString *remote = [NSString stringWithFormat:@"'%@@%@:%@/'", user, host, serverPath];
         
-        NSString *local = [NSString stringWithFormat:@"%@/", localPath];
+        NSString *local = [NSString stringWithFormat:@"'%@/'", localPath];
         
         taskArguments = @[@"-r", remote, local];
     }
     else {
-        NSString *local = [NSString stringWithFormat:@"%@/", localURL.path];
+        NSString *local = [NSString stringWithFormat:@"'%@/'", localURL.path];
         
-        NSString *remote = [NSString stringWithFormat:@"%@@%@:%@/", user, host, serverPath];
+        NSString *remote = [NSString stringWithFormat:@"'%@@%@:%@/'", user, host, serverPath];
         
         // recursive, local and remote paths
         taskArguments = @[@"-r", local, remote];
