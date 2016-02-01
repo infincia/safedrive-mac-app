@@ -92,7 +92,8 @@ void SDLog(NSString *format, ...) {
 }
 
 void SDErrorHandlerReport(NSError *error) {
-    
+// don't even add error reports to the log unless we're in a RELEASE build
+#ifndef DEBUG
     // using archived NSError so the array can be serialized as a plist
     dispatch_async(errorQueue, ^{
         NSDictionary *report = @{ @"error": [NSKeyedArchiver archivedDataWithRootObject:error],
@@ -101,7 +102,7 @@ void SDErrorHandlerReport(NSError *error) {
         [errors insertObject:report atIndex:0];
         _saveErrors();
     });
-    
+#endif
 }
 
 void SDUncaughtExceptionHandler(NSException *exception) {
