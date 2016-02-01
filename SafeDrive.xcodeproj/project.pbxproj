@@ -185,7 +185,7 @@
 		AA54495B1BC35F4800826A0B /* io.safedrive.SafeDrive.Service.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = io.safedrive.SafeDrive.Service.plist; sourceTree = "<group>"; };
 		AA54495F1BC3667300826A0B /* SDServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDServiceManager.h; path = ServiceManager/SDServiceManager.h; sourceTree = "<group>"; };
 		AA5449601BC3667300826A0B /* SDServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDServiceManager.m; path = ServiceManager/SDServiceManager.m; sourceTree = "<group>"; };
-		AA5449631BC36FF000826A0B /* SDServiceXPCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDServiceXPCProtocol.h; sourceTree = "<group>"; };
+		AA5449631BC36FF000826A0B /* SDServiceXPCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDServiceXPCProtocol.h; path = SafeDriveService/SDServiceXPCProtocol.h; sourceTree = "<group>"; };
 		AA5449641BC36FF000826A0B /* SDAppXPCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDAppXPCProtocol.h; path = SafeDrive/SDAppXPCProtocol.h; sourceTree = SOURCE_ROOT; };
 		AA5C1A641BB1E3AD006A0C8C /* SafeDriveService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDriveService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5C1A661BB1E3AD006A0C8C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -469,6 +469,8 @@
 				AAB522B71C33524A00429C0C /* SDSyncItem.m */,
 				AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */,
 				AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */,
+				AA5449641BC36FF000826A0B /* SDAppXPCProtocol.h */,
+				AA5449631BC36FF000826A0B /* SDServiceXPCProtocol.h */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -495,7 +497,6 @@
 		AA5C1A651BB1E3AD006A0C8C /* SafeDriveService */ = {
 			isa = PBXGroup;
 			children = (
-				AA5449631BC36FF000826A0B /* SDServiceXPCProtocol.h */,
 				AA5C1A661BB1E3AD006A0C8C /* AppDelegate.h */,
 				AA5C1A671BB1E3AD006A0C8C /* AppDelegate.m */,
 				AA5C1A6E1BB1E3AD006A0C8C /* MainMenu.xib */,
@@ -528,7 +529,6 @@
 		AA5C1A951BB234DD006A0C8C /* XPC */ = {
 			isa = PBXGroup;
 			children = (
-				AA5449641BC36FF000826A0B /* SDAppXPCProtocol.h */,
 				AA5C1A9D1BB26C40006A0C8C /* SDServiceXPCRouter.h */,
 				AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */,
 				AA5C1AA01BB26C6A006A0C8C /* SDAppXPCDelegate.h */,
