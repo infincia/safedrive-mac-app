@@ -311,6 +311,9 @@
              error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorRemoteEnvironment userInfo:@{NSLocalizedDescriptionKey: msg}];
              */
         }
+        else if ([errorString rangeOfString:@"connection unexpectedly closed"].length > 0) {
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server closed connection unexpectedly"}];
+        }
         else if ([errorString rangeOfString:@"No such file or directory"].length > 0) {
             NSString *msg = [NSString stringWithFormat:@"That path does not exist on the server: %@", serverPath];
             
