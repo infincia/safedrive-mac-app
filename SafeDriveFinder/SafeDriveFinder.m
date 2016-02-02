@@ -26,8 +26,9 @@
     NSLog(@"%s launched from %@ ; compiled at %s", __PRETTY_FUNCTION__, [[NSBundle mainBundle] bundlePath], __TIME__);
 
     // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
-    [[FIFinderSyncController defaultController] setBadgeImage:[NSImage imageNamed: NSImageNameStatusAvailable] label:@"Available" forBadgeIdentifier:@"available"];
-    [[FIFinderSyncController defaultController] setBadgeImage:[NSImage imageNamed: NSImageNameStatusPartiallyAvailable] label:@"Partially Available" forBadgeIdentifier:@"partially_available"];
+    [[FIFinderSyncController defaultController] setBadgeImage:[NSImage imageNamed: NSImageNameStatusAvailable] label:@"Idle" forBadgeIdentifier:@"idle"];
+    [[FIFinderSyncController defaultController] setBadgeImage:[NSImage imageNamed: NSImageNameStatusPartiallyAvailable] label:@"Syncing" forBadgeIdentifier:@"syncing"];
+    [[FIFinderSyncController defaultController] setBadgeImage:[NSImage imageNamed: NSImageNameStatusUnavailable] label:@"Error" forBadgeIdentifier:@"error"];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self serviceReconnectionLoop];
     });
@@ -148,11 +149,25 @@
 }
 
 - (void)requestBadgeIdentifierForURL:(NSURL *)url {
-    NSLog(@"requestBadgeIdentifierForURL:%@", url.filePathURL);
+    SDSyncItem *syncFolder = [self syncFolderForURL:url];
+    NSError *error;
+    NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:url.path error:&error];
+    if (error != nil) {
+        //NSLog(@"Error: %@", error.localizedDescription);
+    }
+    //NSLog(@"Modified: %@", [fileAttributes objectForKey:NSFileModificationDate]);
     
-    NSInteger whichBadge = [url.filePathURL hash] % 2;
-    NSString* badgeIdentifier = @[@"available", @"partially_available"][whichBadge];
-    [[FIFinderSyncController defaultController] setBadgeIdentifier:badgeIdentifier forURL:url];
+    //NSLog(@"Using %@ for %@ status", syncFolder.url.path, url.path);
+    if (syncFolder != nil) {
+        NSString* badgeIdentifier;
+        if (syncFolder.isSyncing) {
+            badgeIdentifier = @"syncing";
+        }
+        else {
+            badgeIdentifier = @"idle";
+        }
+        [[FIFinderSyncController defaultController] setBadgeIdentifier:badgeIdentifier forURL:url];
+    }
 }
 
 #pragma mark - Menu and toolbar item support
