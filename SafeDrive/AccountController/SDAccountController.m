@@ -156,11 +156,9 @@
             successBlock();
             
         } failure:^(NSError *apiError) {
-            SDErrorHandlerReport(apiError);
             failureBlock(apiError);
         }];
     } failure:^(NSError *apiError) {
-        SDErrorHandlerReport(apiError);
         failureBlock(apiError);
     }];
 }
