@@ -217,7 +217,7 @@
 - (IBAction)openRestoreWindow:(id)sender {
     [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
         NSLog(@"Error: %@", error);
-    }] displayRestoreWindowForURLs:nil];
+    }] displayRestoreWindowForURLs:@[]];
 }
 
 - (IBAction)openPreferencesWindow:(id)sender {
