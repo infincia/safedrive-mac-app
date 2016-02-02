@@ -6,7 +6,6 @@
 #import "SDErrorHandler.h"
 #import "SDAPI.h"
 
-static SDAPI * sharedAPI;
 static NSMutableArray * logBuffer;
 static NSMutableArray * errors;
 static dispatch_queue_t errorQueue;
@@ -32,9 +31,6 @@ void SDErrorHandlerInitialize() {
     errorQueue = dispatch_queue_create("errorQueue", DISPATCH_QUEUE_SERIAL);
     errors = [NSMutableArray new];
     logBuffer = [NSMutableArray new];
-    
-    sharedAPI = [SDAPI sharedAPI];
-    
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *applicationSupportURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
@@ -146,7 +142,7 @@ void _startReportQueue() {
                     
                     //note: passing the same queue we're in here is only OK because the called method uses it
                     //      with dispatch_async, if that were not the case this would deadlock forever
-                    [sharedAPI reportError:error forUser:reportUser withLog:reportLog completionQueue:errorQueue success:^{
+                    [[SDAPI sharedAPI] reportError:error forUser:reportUser withLog:reportLog completionQueue:errorQueue success:^{
                         
                         _saveErrors();
                    
