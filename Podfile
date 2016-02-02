@@ -17,8 +17,8 @@ target 'SafeDrive' do
     pod 'INAppStoreWindow', '1.4'
     pod 'DCOAboutWindow', '0.2.0'
     pod 'LetsMove', '~> 1.19'
-    pod 'Sparkle', '1.13.0'
-    pod 'Fabric', '1.6.3'
+    pod 'Sparkle', '1.13.1'
+    pod 'Fabric', '1.6.4'
     pod 'Crashlytics', '3.6.0'
     pod 'NMSSH', '~> 2.2'
 
