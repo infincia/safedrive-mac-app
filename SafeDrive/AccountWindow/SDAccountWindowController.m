@@ -107,10 +107,10 @@
 
 -(IBAction)signIn:(id)sender {
     [self resetErrorDisplay];
-    if (self.accountController.isSignedIn) {
+    /*if (self.accountController.isSignedIn) {
         [self connectVolume];
         return;
-    }
+    }*/
     NSError *e = [NSError errorWithDomain:SDErrorDomain code:SDErrorNone userInfo:@{NSLocalizedDescriptionKey:  NSLocalizedString(@"Signing in to SafeDrive", @"String informing the user that they are being signed in to SafeDrive")}];
     [self displayError:e forDuration:120];
     [self.spinner startAnimation:self];
