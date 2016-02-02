@@ -13,6 +13,7 @@
 @interface SafeDriveFinder ()
 @property NSXPCConnection *appConnection;
 @property NSXPCConnection *serviceConnection;
+@property NSSet <SDSyncItem*> *syncFolders;
 
 -(void)showMessage:(NSString *)title withBody:(NSString *)body;
 @end
@@ -68,6 +69,7 @@
                 [syncFolders enumerateObjectsUsingBlock:^(SDSyncItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     [s addObject:obj.url];
                 }];
+                self.syncFolders = [NSSet setWithArray: syncFolders];
                 FIFinderSyncController.defaultController.directoryURLs = s;
             }];
         }
@@ -237,6 +239,21 @@
 
         }
     });
+}
+
+-(SDSyncItem  * _Nullable)syncFolderForURL:(NSURL *)url {
+    for (SDSyncItem *item in self.syncFolders) {
+        NSString *registeredPath = [item.url.path stringByExpandingTildeInPath];
+        NSString *testPath = [url.path stringByExpandingTildeInPath];
+        
+        NSStringCompareOptions options = (NSAnchoredSearch | NSCaseInsensitiveSearch);
+        
+        // check if testPath is contained by this sync folder
+        if ([testPath rangeOfString:registeredPath options:options].location != NSNotFound) {
+            return item;
+        }
+    }
+    return nil;
 }
 
 @end
