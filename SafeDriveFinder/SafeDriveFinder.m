@@ -138,13 +138,13 @@
 - (void)beginObservingDirectoryAtURL:(NSURL *)url {
     // The user is now seeing the container's contents.
     // If they see it in more than one view at a time, we're only told once.
-    NSLog(@"beginObservingDirectoryAtURL:%@", url.filePathURL);
+    //NSLog(@"beginObservingDirectoryAtURL:%@", url.filePathURL);
 }
 
 
 - (void)endObservingDirectoryAtURL:(NSURL *)url {
     // The user is no longer seeing the container's contents.
-    NSLog(@"endObservingDirectoryAtURL:%@", url.filePathURL);
+    //NSLog(@"endObservingDirectoryAtURL:%@", url.filePathURL);
 }
 
 - (void)requestBadgeIdentifierForURL:(NSURL *)url {
@@ -170,7 +170,7 @@
 }
 
 - (NSMenu *)menuForMenuKind:(FIMenuKind)whichMenu {
-    NSLog(@"Menu Kind: %lu", whichMenu);
+    //NSLog(@"Menu Kind: %lu", whichMenu);
     NSMenu *m = nil;
     switch (whichMenu) {
         case FIMenuKindContextualMenuForItems: /* contextual menu for one or more files/directories */
