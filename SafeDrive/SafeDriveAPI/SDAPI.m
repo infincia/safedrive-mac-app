@@ -114,6 +114,10 @@
     
     NSString *os = [NSString stringWithFormat:@"OS X %@", self.sharedSystemAPI.currentOSVersion];
     [postParameters setObject:os forKey:@"operatingSystem"];
+    
+    NSString *clientVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    [postParameters setObject:clientVersion forKey:@"clientVersion"];
+    
 
     if (user != nil && user.length > 0) {
         NSString *macAddress = [self.sharedSystemAPI en0MAC];
