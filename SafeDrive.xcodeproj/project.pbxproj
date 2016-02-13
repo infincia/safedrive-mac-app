@@ -235,6 +235,7 @@
 		AAEED2D21A7D76F200B92993 /* SDDataSizeTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDDataSizeTransformer.m; sourceTree = "<group>"; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "update-version.sh"; sourceTree = "<group>"; };
 		BE2D8449BAB0BAC9033667C6 /* Pods-safedriveaskpass.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.release.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -317,6 +318,7 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */,
 				AA3D8EBA1C3D80A100CF0A3C /* Shared */,
 				AA3168151A191B72006CC0EB /* SafeDrive */,
 				AA3168291A191B72006CC0EB /* SafeDriveTests */,
@@ -628,6 +630,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA3168301A191B72006CC0EB /* Build configuration list for PBXNativeTarget "SafeDrive" */;
 			buildPhases = (
+				AAFEF7EE1C6FC361001C4358 /* Update versions */,
 				085B84DAED8FC3A5633835A3 /* Check Pods Manifest.lock */,
 				AA31680F1A191B72006CC0EB /* Sources */,
 				AA3168101A191B72006CC0EB /* Frameworks */,
@@ -880,6 +883,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" eabb6ed7a9190e38a2676da62aca50ed8731d38d 0f690c677243e5283f4f9a449728a17fc6d150abe16e2eade6a874763d25aea0";
+		};
+		AAFEF7EE1C6FC361001C4358 /* Update versions */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update versions";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh \"update-version.sh\"";
 		};
 		ACAF538C728AC8861D11CCAB /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
