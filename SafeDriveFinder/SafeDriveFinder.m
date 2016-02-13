@@ -43,7 +43,7 @@
         if (!self.serviceConnection) {
             self.serviceConnection = [self createServiceConnection];
             [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
-                NSLog(@"Error: %@", error);
+                //NSLog(@"Error: %@", error);
             }] ping:^(NSString *reply) {
                 NSLog(@"Ping reply from service: %@", reply);
             }];
@@ -52,19 +52,19 @@
         if (!self.appConnection) {
             FIFinderSyncController.defaultController.directoryURLs = [NSSet new];
             [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
-                NSLog(@"Error: %@", error);
+                //NSLog(@"Error: %@", error);
             }] getAppEndpoint:^(NSXPCListenerEndpoint *endpoint) {
                 self.appConnection = [self createAppConnectionFromEndpoint:endpoint];
                 [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
-                    NSLog(@"Error: %@", error);
+                    //NSLog(@"Error: %@", error);
                 }] ping:^(NSString *reply) {
-                    NSLog(@"Ping reply from app: %@", reply);
+                    //NSLog(@"Ping reply from app: %@", reply);
                 }];
             }];
         }
         else {
             [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
-                NSLog(@"Error: %@", error);
+                //NSLog(@"Error: %@", error);
             }] getSyncFoldersWithReply:^(NSMutableArray<SDSyncItem *> *syncFolders) {
                 NSMutableSet *s = [NSMutableSet new];
                 [syncFolders enumerateObjectsUsingBlock:^(SDSyncItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -88,14 +88,14 @@
     newConnection.interruptionHandler = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if (weakSelf) {
-                NSLog(@"Service connection interrupted");
+                //NSLog(@"Service connection interrupted");
             }
         });
     };
     newConnection.invalidationHandler = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if (weakSelf) {
-                NSLog(@"Service connection invalidated");
+                //NSLog(@"Service connection invalidated");
                 weakSelf.serviceConnection = nil;
             }
         });
@@ -118,14 +118,14 @@
     newConnection.interruptionHandler = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if (weakSelf) {
-                NSLog(@"App connection interrupted");
+                //NSLog(@"App connection interrupted");
             }
         });
     };
     newConnection.invalidationHandler = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if (weakSelf) {
-                NSLog(@"App connection invalidated");
+                //NSLog(@"App connection invalidated");
                 weakSelf.appConnection = nil;
             }
         });
@@ -223,21 +223,21 @@
     NSURL* target = [[FIFinderSyncController defaultController] targetedURL];
     NSArray* items = [[FIFinderSyncController defaultController] selectedItemURLs];
 
-    NSLog(@"restoreItems: menu item: %@, target = %@, items = ", [sender title], [target filePathURL]);
+    //NSLog(@"restoreItems: menu item: %@, target = %@, items = ", [sender title], [target filePathURL]);
     [items enumerateObjectsUsingBlock: ^(id obj, NSUInteger idx, BOOL *stop) {
-        NSLog(@"%@", [obj path]);
+        //NSLog(@"%@", [obj path]);
     }];
 }
 
 - (IBAction)openRestoreWindow:(id)sender {
     [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
-        NSLog(@"Error: %@", error);
+        //NSLog(@"Error: %@", error);
     }] displayRestoreWindowForURLs:@[]];
 }
 
 - (IBAction)openPreferencesWindow:(id)sender {
     [[self.appConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
-        NSLog(@"Error: %@", error);
+        //NSLog(@"Error: %@", error);
     }] displayPreferencesWindow];
 }
 
