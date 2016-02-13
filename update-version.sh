@@ -45,11 +45,6 @@ if [[ -z ${plist} ]]; then
 	echo "Source Info.plist: ${plist}"
 fi
 
-# Find the current build number in the main Info.plist
-mainBundleVersion=$("${plistBuddy}" -c "Print CFBundleVersion" "${plist}")
-mainBundleShortVersionString=$("${plistBuddy}" -c "Print CFBundleShortVersionString" "${plist}")
-echo "Current project version is ${mainBundleShortVersionString} (${mainBundleVersion})."
-
 # Increment the build number if git says things have changed. Note that we also check the main
 # Info.plist file, and if it has already been modified, we don't increment the build number.
 # Alternatively, if the script has been called using "--reflect-commits", we just update to the
@@ -73,13 +68,18 @@ function git_dirty {
     echo ''
 }
 
-mainBundleShortVersionString=$(echo "${mainBundleShortVersionString}" | sed -e 's/-dirty//g')
+lastTagVersion=$(git describe --abbrev=0)
 
 # Update the main CFBundleShortVersionString if needed
 if [[ $(git_dirty) != '' ]]; then
-    echo "Git tree is dirty, using ${mainBundleShortVersionString}$(git_dirty)"
-    mainBundleShortVersionString=${mainBundleShortVersionString}$(git_dirty)
+    echo "Git tree is dirty, using ${lastTagVersion}$(git_dirty)"
+    bundleShortVersionString=${lastTagVersion}$(git_dirty)
 fi
+
+
+# Find the current build number in the main Info.plist
+mainBundleVersion=$("${plistBuddy}" -c "Print CFBundleVersion" "${plist}")
+echo "Current version is ${lastTagVersion} (${mainBundleVersion})."
 
 
 if [[ -n $1 ]] && [[ $1 == "--reflect-commits" ]]; then
@@ -107,8 +107,8 @@ while read -r thisPlist; do
 		"${plistBuddy}" -c "Set :CFBundleVersion ${mainBundleVersion}" "${thisPlist}"
 	fi
 	# Update the CFBundleShortVersionString if needed
-	if [[ ${thisBundleShortVersionString} != ${mainBundleShortVersionString} ]]; then
-		echo "Updating \"${thisPlist}\" with marketing version ${mainBundleShortVersionString}…"
-		"${plistBuddy}" -c "Set :CFBundleShortVersionString ${mainBundleShortVersionString}" "${thisPlist}"
+	if [[ ${thisBundleShortVersionString} != ${bundleShortVersionString} ]]; then
+		echo "Updating \"${thisPlist}\" with marketing version ${bundleShortVersionString}…"
+		"${plistBuddy}" -c "Set :CFBundleShortVersionString ${bundleShortVersionString}" "${thisPlist}"
 	fi
 done <<< "${plists}"
