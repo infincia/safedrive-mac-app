@@ -12,6 +12,9 @@
 #
 # If not using git, you are a braver soul than I.
 
+# Config
+
+reflect_commits=1
 ##
 # The xcodeproj. This is usually found by the script, but you may need to specify its location
 # if it's not in the same folder as the script is called from (the project root if called as a
@@ -61,12 +64,8 @@ mainBundleVersion=$("${plistBuddy}" -c "Print CFBundleVersion" "${plist}")
 echo "Current version is ${bundleShortVersionString} (${mainBundleVersion})."
 
 
-if [[ -n $1 ]] && [[ $1 == "--reflect-commits" ]]; then
+if [[ ${reflect_commits} == 1 ]]; then
 	mainBundleVersion=$("${git}" rev-list --count HEAD)
-	branchName=$("${git}" rev-parse --abbrev-ref HEAD)
-	if [[ ${branchName} != "master" ]]; then
-		mainBundleVersion="${mainBundleVersion}-${branchName}"
-	fi
 else
 	status=$("${git}" status --porcelain)
 	if [[ ${status} != 0 ]] && [[ $status != *"M ${plist}"* ]]; then
