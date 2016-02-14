@@ -51,35 +51,14 @@ fi
 # current number of commits
 git=$(sh /etc/profile; which git)
 
-
-function git_dirty {
-    #unstaged = $(git diff --name-status >/dev/null 2>/dev/null)
-    #staged   = $(git diff --staged --name-status >/dev/null 2>/dev/null)
-    if [ -n "$(git diff --name-status 2>/dev/null)" ]; then
-        echo '-dirty'
-        return
-    elif [ -n "$(git diff --staged --name-status 2>/dev/null)" ]; then
-        echo '-dirty'
-        return
-    elif [ -n $(git ls-files --others --exclude-standard "$(git rev-parse --show-toplevel)") ]; then
-        echo '-dirty'
-        return
-    fi
-    echo ''
-}
-
-lastTagVersion=$(git describe --abbrev=0)
-
-# Update the main CFBundleShortVersionString if needed
-if [[ $(git_dirty) != '' ]]; then
-    echo "Git tree is dirty, using ${lastTagVersion}$(git_dirty)"
-    bundleShortVersionString=${lastTagVersion}$(git_dirty)
-fi
+# Generate the main CFBundleShortVersionString based on git status
+# Uses either last tag or last tag + number of commits + last commit + working tree state
+bundleShortVersionString=$(git describe --dirty)
 
 
 # Find the current build number in the main Info.plist
 mainBundleVersion=$("${plistBuddy}" -c "Print CFBundleVersion" "${plist}")
-echo "Current version is ${lastTagVersion} (${mainBundleVersion})."
+echo "Current version is ${bundleShortVersionString} (${mainBundleVersion})."
 
 
 if [[ -n $1 ]] && [[ $1 == "--reflect-commits" ]]; then
