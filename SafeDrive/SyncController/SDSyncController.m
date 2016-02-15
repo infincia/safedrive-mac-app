@@ -109,7 +109,7 @@
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"Sync task started from background thread");
 
     if (self.syncTask.isRunning) {
-        NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
+        NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
         failureBlock(localURL, error);
         return;
     }
@@ -121,7 +121,7 @@
 
     }
     else {
-        NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: @"Local directory not found"}];
+        NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: @"Local directory not found"}];
         failureBlock(localURL, error);
         return;
     }

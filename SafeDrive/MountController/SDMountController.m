@@ -57,7 +57,7 @@
         prevent the code from ever running.
     */
     if (self.mounted) {
-        NSError *mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
+        NSError *mountError = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
         failureBlock(mountURL, mountError);
         return;
     }
@@ -69,13 +69,13 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
     if (![self.sharedSystemAPI isOSXFUSEInstalled]) {
-        NSError *osxfuseError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorOSXFUSEMissing userInfo:@{NSLocalizedDescriptionKey: @"OSXFUSE is not installed"}];
+        NSError *osxfuseError = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorOSXFUSEMissing userInfo:@{NSLocalizedDescriptionKey: @"OSXFUSE is not installed"}];
         failureBlock(mountURL, osxfuseError);
         return;
     }
 
     if (![self.sharedSystemAPI isSSHFSInstalled]) {
-        NSError *sshfsError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorSSHFSMissing userInfo:@{NSLocalizedDescriptionKey: @"SSHFS is not installed"}];
+        NSError *sshfsError = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSSHFSMissing userInfo:@{NSLocalizedDescriptionKey: @"SSHFS is not installed"}];
         failureBlock(mountURL, sshfsError);
         return;
     }
@@ -248,7 +248,7 @@
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
         }
         else if ([outputString rangeOfString:@"is itself on a OSXFUSE volume"].length > 0) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
+            mountError = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorAlreadyMounted userInfo:@{NSLocalizedDescriptionKey: @"Volume already mounted"}];
             /* 
                 no need to run the successblock again since the volume is already mounted
 
@@ -265,7 +265,7 @@
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Error resolving hostname, contact support"}];
         }
         else if ([outputString rangeOfString:@"remote host has disconnected"].length > 0) {
-            mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Mount failed, check username and password"}];
+            mountError = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Mount failed, check username and password"}];
         }
         else if ([outputString rangeOfString:@"REMOTE HOST IDENTIFICATION HAS CHANGED"].length > 0) {
             mountError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorHostFingerprintChanged userInfo:@{NSLocalizedDescriptionKey: @"Warning: server fingerprint changed!"}];
