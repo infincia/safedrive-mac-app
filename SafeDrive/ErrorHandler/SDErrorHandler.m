@@ -92,6 +92,14 @@ void SDErrorHandlerReport(NSError *error) {
 #ifndef DEBUG
     // using archived NSError so the array can be serialized as a plist
     dispatch_async(errorQueue, ^{
+        NSArray *whitelistErrorDomains = @[SDErrorDomain, SDErrorSyncDomain, SDErrorSSHFSDomain, SDErrorAccountDomain, SDErrorAPIDomain];
+        BOOL isAllowedErrorDomain = NO;
+        for (NSString *whitelistedDomain in whitelistErrorDomains) {
+            if ([error.domain isEqualToString:whitelistedDomain]) {
+                isAllowedErrorDomain = YES;
+            }
+        }
+        if (!isAllowedErrorDomain) return;
         NSDictionary *report = @{ @"error": [NSKeyedArchiver archivedDataWithRootObject:error],
                                   @"log": [NSKeyedArchiver archivedDataWithRootObject:logBuffer],
                                   @"user": currentUser ?: @"" };
