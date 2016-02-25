@@ -66,7 +66,7 @@
 		AAB522BB1C337CD100429C0C /* SDSyncTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB522BA1C337CD100429C0C /* SDSyncTableCellView.m */; };
 		AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */; };
 		AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */; };
-		AABB0FC01A3F292F00FA3530 /* safedriveaskpass in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */ = {isa = PBXBuildFile; fileRef = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAEED2D31A7D76F200B92993 /* SDDataSizeTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEED2D21A7D76F200B92993 /* SDDataSizeTransformer.m */; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
 /* End PBXBuildFile section */
@@ -124,14 +124,15 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AABB0FBF1A3F290400FA3530 /* CopyFiles */ = {
+		AABB0FBF1A3F290400FA3530 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				AABB0FC01A3F292F00FA3530 /* safedriveaskpass in CopyFiles */,
+				AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -633,12 +634,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA3168301A191B72006CC0EB /* Build configuration list for PBXNativeTarget "SafeDrive" */;
 			buildPhases = (
-				AAFEF7EE1C6FC361001C4358 /* Update versions */,
 				085B84DAED8FC3A5633835A3 /* Check Pods Manifest.lock */,
+				AAFEF7EE1C6FC361001C4358 /* Update versions */,
 				AA31680F1A191B72006CC0EB /* Sources */,
 				AA3168101A191B72006CC0EB /* Frameworks */,
 				AA3168111A191B72006CC0EB /* Resources */,
-				AABB0FBF1A3F290400FA3530 /* CopyFiles */,
+				AABB0FBF1A3F290400FA3530 /* Copy Files */,
+				AA1984771C74C84300BAECA5 /* CopyFiles */,
 				AA925C3B1B8F9BAA00222E46 /* Embed App Extensions */,
 				AAE474851BFBC1E200B1A555 /* Fabric.io */,
 				ACAF538C728AC8861D11CCAB /* Embed Pods Frameworks */,
