@@ -15,8 +15,6 @@
 
 #import "SDSyncItem.h"
 
-#import "NSURL+SFTP.h"
-
 @interface NSFileManager (EmptyDirectoryAtURL)
 - (BOOL)isEmptyDirectoryAtURL:(NSURL*)url;
 @end
@@ -79,7 +77,13 @@
     NSURL *machineFolder = [defaultFolder URLByAppendingPathComponent:[[NSHost currentHost] localizedName] isDirectory:YES];
     NSURL *remoteFolder = [machineFolder URLByAppendingPathComponent:folderName isDirectory:YES];
     
-    NSURL *remote = [NSURL SFTPURLForAccount:self.accountController.internalUserName host:self.accountController.remoteHost port:self.accountController.remotePort path:remoteFolder.path];
+    NSURLComponents *urlComponents = [NSURLComponents new];
+    urlComponents.user      = self.accountController.internalUserName;
+    urlComponents.host      = self.accountController.remoteHost;
+    urlComponents.path      = remoteFolder.path;
+    urlComponents.port      = self.accountController.remotePort;
+    NSURL *remote = urlComponents.URL;
+    
     [self.syncListView reloadItem:self.syncController.mac reloadChildren:YES];
     [self.syncController startSyncTaskWithLocalURL:localFolder serverURL:remote password:self.accountController.password restore:NO success:^(NSURL *syncURL, NSError *syncError) {
         SDLog(@"Sync finished for local URL: %@", localFolder);

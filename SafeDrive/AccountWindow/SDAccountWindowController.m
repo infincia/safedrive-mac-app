@@ -11,8 +11,6 @@
 #import "SDSystemAPI.h"
 #import "SDAccountController.h"
 
-#import "NSURL+SFTP.h"
-
 #import <Crashlytics/Crashlytics.h>
 
 #define SSHFS_TEST_MODE
@@ -156,46 +154,13 @@
         volumeName = SDDefaultVolumeName;
     }
     
-    /*
-     Using NSURL here provides some validation of the parameters since we are
-     passing a standard RFC3986 URL string to SSHFS.
-     
-     A custom NSURL category is being used because NSURLComponents isn't
-     available in OS X 10.8 (see below)
-     
-     */
-    NSURL *sshURL;
-#ifdef CUSTOM_NSURL
-    sshURL = [NSURL SFTPURLForAccount:self.accountController.internalUserName host:self.accountController.remoteHost port:self.accountController.remotePort path:SDDefaultServerPath];
-#else
-    /*
-     This is the modern way to create an NSURL, but it is only available on
-     OS X 10.9+
-     
-     Things to keep in mind:
-     
-     * The NSComponents URL property will just return nil if the parameters
-     don't conform to RFC3986 (fragile if you don't check for that and handle it)
-     
-     * The user and password properties are only provided for compatibility
-     purposes and are technically deprecated in RFC3986. We're not giving
-     the password property directly to SSHFS (it's just used internally,
-     an askpass helper binary is used for giving the password to SSHFS). We
-     ARE passing the user property though because that's how SSH logins work.
-     
-     * It isn't compatible with OS X 10.8, so we're not using it at the moment
-     
-     Whenever 10.8 support is dropped, THIS code should be used instead of
-     the custom NSURL category above
-     
-     */
     NSURLComponents *urlComponents = [NSURLComponents new];
     urlComponents.user      = self.accountController.internalUserName;
     urlComponents.host      = self.accountController.remoteHost;
-    urlComponents.path      = SDDefaultServerPath];
+    urlComponents.path      = SDDefaultServerPath;
     urlComponents.port      = self.accountController.remotePort;
-    sshURL = urlComponents.URL;
-#endif
+    NSURL *sshURL = urlComponents.URL;
+
     [self.mountController startMountTaskWithVolumeName:volumeName sshURL:sshURL success:^(NSURL *mountURL, NSError *mountError) {
         SDLog(@"SafeDrive startMountTaskWithVolumeName success in account window");
         /*
