@@ -1,4 +1,4 @@
-platform :osx, '10.8'
+platform :osx, '10.9'
 
 def shared_pods
     pod 'MCSMKeychainItem',  :git => 'https://github.com/ObjColumnist/MCSMKeychainItem.git', :commit => 'dfac30c6e9dac4ee1e8deaae5a742a65523e92aa',  :branch => 'master'
