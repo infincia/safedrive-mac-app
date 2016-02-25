@@ -7,6 +7,9 @@
 #import "SDServiceListenerDelegate.h"
 #import "SDServiceXPCProtocol.h"
 
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
 static NSString *CFBundleVersion;
 
 @interface AppDelegate ()
@@ -17,6 +20,9 @@ static NSString *CFBundleVersion;
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"NSApplicationCrashOnExceptions": @YES }];
+    [Fabric with:@[[Crashlytics class]]];
+    
     NSDictionary *bundleInfo = [[NSBundle mainBundle]  infoDictionary];
     CFBundleVersion = bundleInfo[@"CFBundleVersion"];    
     NSLog(@"SafeDriveService build %@, protocol version %ld starting", CFBundleVersion, kSDServiceXPCProtocolVersion);
