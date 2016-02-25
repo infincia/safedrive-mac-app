@@ -4,16 +4,15 @@
 
 #import "SDAPI.h"
 #import "SDSystemAPI.h"
-#import <AFNetworking/AFHTTPRequestOperationManager.h>
+#import <AFNetworking/AFHTTPSessionManager.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
-#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 
 
 #import "HKTHashProvider.h"
 
 @interface SDAPI ()
 @property (nonatomic, readonly) AFNetworkReachabilityManager *reachabilityManager;
-@property (nonatomic, readonly) AFHTTPRequestOperationManager *apiManager;
+@property (nonatomic, readonly) AFHTTPSessionManager *apiManager;
 
 @property SDSystemAPI *sharedSystemAPI;
 @property NSURL *baseURL;
@@ -57,13 +56,9 @@
         }];
         [_reachabilityManager startMonitoring];
         
-#ifdef DEBUG
-        //[[AFNetworkActivityLogger sharedLogger] startLogging];
-        //[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
-#endif
         self.baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/api/1/", SDAPIDomainTesting]];
 
-        _apiManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:self.baseURL];
+        _apiManager = [[AFHTTPSessionManager alloc] initWithBaseURL:self.baseURL];
         self.apiManager.requestSerializer = [[AFJSONRequestSerializer alloc] init];
         [self.apiManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         [self.apiManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -136,33 +131,17 @@
         [postParameters setObject:logString forKey:@"log"];
     }
 
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:self.baseURL sessionConfiguration:NSURLSessionConfiguration.ephemeralSessionConfiguration];
     
-    
-    NSURL *errorReportingURL = [self.baseURL URLByAppendingPathComponent:@"error/log"];
-    
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:errorReportingURL];
-    [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [req setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-
-    [req setHTTPMethod:@"POST"];
-    
-    NSData *body = [NSJSONSerialization dataWithJSONObject:postParameters options:NSJSONWritingPrettyPrinted error:nil];
-    
-    [req setHTTPBody:body];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
-
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
+    [manager POST:@"error/log" parameters:postParameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         successBlock();
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *task, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
         failureBlock(error);
     }];
-    operation.completionQueue = queue;
-    operation.responseSerializer = [AFJSONResponseSerializer serializer];
-    
-    [operation start];
-    [operation waitUntilFinished];
-    
 }
 
 #pragma mark - Client registration
@@ -179,14 +158,16 @@
     
     [self.apiManager.requestSerializer setValue:nil forHTTPHeaderField:@"SD-Auth-Token"];
 
-    [self.apiManager POST:@"client/register" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.apiManager POST:@"client/register" parameters:postParameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
         SDLog(@"Client registered: %@", response);
         self.sessionToken = response[@"token"];
         [self.sharedSystemAPI insertCredentialsInKeychainForService:SDSessionServiceName account:user password:response[@"token"]];
         successBlock(self.sessionToken);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+    } failure:^(NSURLSessionTask *task, NSError *error) {
+        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        
         if (responseObject) {
             NSString *message = responseObject[@"message"];
             NSError *responseError = [NSError errorWithDomain:SDErrorAccountDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
@@ -198,11 +179,12 @@
 }
 
 -(void)accountStatusForUser:(NSString *)user success:(SDAPIAccountStatusBlock)successBlock failure:(SDFailureBlock)failureBlock {
-    [self.apiManager GET:@"account/status" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.apiManager GET:@"account/status" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *accountStatus = (NSDictionary *)responseObject;
         successBlock(accountStatus);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+    } failure:^(NSURLSessionTask *task, NSError *error) {
+        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
         if (responseObject) {
             NSString *message = responseObject[@"message"];
             NSError *responseError = [NSError errorWithDomain:SDErrorAccountDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
@@ -214,11 +196,12 @@
 }
 
 -(void)accountDetailsForUser:(NSString *)user success:(SDAPIAccountDetailsBlock)successBlock failure:(SDFailureBlock)failureBlock {
-    [self.apiManager GET:@"account/details" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.apiManager GET:@"account/details" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *accountDetails = (NSDictionary *)responseObject;
         successBlock(accountDetails);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+    } failure:^(NSURLSessionTask *task, NSError *error) {
+        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
         if (responseObject) {
             NSString *message = responseObject[@"message"];
             NSError *responseError = [NSError errorWithDomain:SDErrorAccountDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
@@ -232,20 +215,19 @@
 #pragma mark - Unused 
 
 -(void)getHostFingerprintList:(SDAPIFingerprintListSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
-    [self.apiManager GET:@"fingerprints" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.apiManager GET:@"fingerprints" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
         successBlock(response[@"fingerprints"]);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *task, NSError *error) {
         failureBlock(error);
     }];
 }
 
 
 -(void)apiStatus:( SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
-    [self.apiManager GET:@"status" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *response = (NSDictionary *)responseObject;
+    [self.apiManager GET:@"status" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         successBlock();
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *task, NSError *error) {
         failureBlock(error);
     }];
 }
@@ -260,12 +242,13 @@
 -(void)createSyncFolder:(NSURL *)localFolder success:(SDAPICreateSyncFolderSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
     NSDictionary *postParameters = @{ @"folderName": localFolder.lastPathComponent, @"folderPath": localFolder.path };
 
-    [self.apiManager POST:@"folder" parameters:postParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.apiManager POST:@"folder" parameters:postParameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
         NSNumber *folderID = response[@"id"];
         successBlock(folderID);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+    } failure:^(NSURLSessionTask *task, NSError *error) {
+        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
         if (responseObject) {
             NSString *message = responseObject[@"message"];
             NSError *responseError = [NSError errorWithDomain:SDErrorSyncDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
@@ -277,11 +260,12 @@
 }
 
 -(void)readSyncFoldersWithSuccess:(SDAPIReadSyncFoldersSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
-    [self.apiManager GET:@"folder" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.apiManager GET:@"folder" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSArray *folders = (NSArray *)responseObject;
         successBlock(folders);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+    } failure:^(NSURLSessionTask *task, NSError *error) {
+        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
         if (responseObject) {
             NSString *message = responseObject[@"message"];
             NSError *responseError = [NSError errorWithDomain:SDErrorSyncDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
@@ -293,9 +277,6 @@
 }
 
 -(void)deleteSyncFolder:(NSNumber *)folderId success:(SDAPIDeleteSyncFoldersSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
-    
-    NSURL *folderURL = [self.baseURL URLByAppendingPathComponent:@"folder"];
-    
     NSDictionary *folderIds = @{ @"folderIds": folderId };
     
     AFHTTPRequestSerializer *ser = [AFHTTPRequestSerializer serializer];
@@ -304,14 +285,16 @@
     
     [ser setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
-    NSMutableURLRequest *query = [ser requestWithMethod:@"DELETE" URLString:folderURL.absoluteString parameters:folderIds error:nil];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:self.baseURL sessionConfiguration:NSURLSessionConfiguration.ephemeralSessionConfiguration];
     
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:query];
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    [manager setRequestSerializer:ser];
     
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager DELETE:@"folder" parameters:folderIds success:^(NSURLSessionTask *task, id responseObject) {
         successBlock();
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSDictionary *responseObject = (NSDictionary *)operation.responseObject;
+    } failure:^(NSURLSessionTask *task, NSError *error) {
+        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
         if (responseObject) {
             NSString *message = responseObject[@"message"];
             NSError *responseError = [NSError errorWithDomain:SDErrorSyncDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
@@ -320,9 +303,6 @@
         }
         failureBlock(error);
     }];
-    operation.responseSerializer = [AFJSONResponseSerializer serializer];
-    
-    [operation start];
 }
 
 @end
