@@ -194,8 +194,6 @@
 		AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		AA54495F1BC3667300826A0B /* SDServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDServiceManager.h; path = ServiceManager/SDServiceManager.h; sourceTree = "<group>"; };
 		AA5449601BC3667300826A0B /* SDServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDServiceManager.m; path = ServiceManager/SDServiceManager.m; sourceTree = "<group>"; };
-		AA5449631BC36FF000826A0B /* SDServiceXPCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDServiceXPCProtocol.h; path = SafeDriveService/SDServiceXPCProtocol.h; sourceTree = "<group>"; };
-		AA5449641BC36FF000826A0B /* SDAppXPCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDAppXPCProtocol.h; path = SafeDrive/SDAppXPCProtocol.h; sourceTree = SOURCE_ROOT; };
 		AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDriveService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5754041C7FFCC10040E8B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA5754061C7FFCC10040E8B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -242,6 +240,8 @@
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAF945F51C801AA200B972C3 /* SafeDriveService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = SafeDriveService.entitlements; path = SafeDriveService/SafeDriveService.entitlements; sourceTree = "<group>"; };
 		AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SafeDrive.entitlements; sourceTree = "<group>"; };
+		AAF945F71C801EFE00B972C3 /* SDServiceXPCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDServiceXPCProtocol.h; path = Shared/SDServiceXPCProtocol.h; sourceTree = "<group>"; };
+		AAF945FA1C801F6100B972C3 /* SDAppXPCProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SDAppXPCProtocol.h; path = Shared/SDAppXPCProtocol.h; sourceTree = "<group>"; };
 		AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "update-version.sh"; sourceTree = "<group>"; };
 		BE2D8449BAB0BAC9033667C6 /* Pods-safedriveaskpass.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.release.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.release.xcconfig"; sourceTree = "<group>"; };
 		C46507E4A3DE774588A946AB /* libPods-SafeDriveService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SafeDriveService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -484,8 +484,8 @@
 				AAB522B71C33524A00429C0C /* SDSyncItem.m */,
 				AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */,
 				AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */,
-				AA5449641BC36FF000826A0B /* SDAppXPCProtocol.h */,
-				AA5449631BC36FF000826A0B /* SDServiceXPCProtocol.h */,
+				AAF945FA1C801F6100B972C3 /* SDAppXPCProtocol.h */,
+				AAF945F71C801EFE00B972C3 /* SDServiceXPCProtocol.h */,
 				AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */,
 			);
 			name = Shared;
