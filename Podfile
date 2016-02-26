@@ -17,6 +17,7 @@ target 'safedriveaskpass' do
 end
 
 target 'SafeDriveService' do
+    use_frameworks!
     keychain_pods
     shared_pods
 end
