@@ -62,7 +62,7 @@
     // copy launch agent to ~/Library/LaunchAgents/
     NSURL *libraryURL = [fileManager URLForDirectory:NSLibraryDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
     NSURL *launchAgentsURL = [libraryURL URLByAppendingPathComponent:@"LaunchAgents" isDirectory:YES];
-    NSURL *launchAgentDestinationURL = [launchAgentsURL URLByAppendingPathComponent:@"io.safedrive.SafeDrive.Service.plist" isDirectory:YES];
+    NSURL *launchAgentDestinationURL = [launchAgentsURL URLByAppendingPathComponent:@"io.safedrive.SafeDrive.Service.plist" isDirectory:NO];
 
     NSURL *launchAgentSourceURL = [[NSBundle mainBundle] URLForResource:@"io.safedrive.SafeDrive.Service" withExtension:@"plist"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:launchAgentDestinationURL.path]) {
