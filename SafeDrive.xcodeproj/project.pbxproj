@@ -238,9 +238,9 @@
 		AAEED2D21A7D76F200B92993 /* SDDataSizeTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDDataSizeTransformer.m; sourceTree = "<group>"; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AAF945F51C801AA200B972C3 /* SafeDriveService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = SafeDriveService.entitlements; path = SafeDriveService/SafeDriveService.entitlements; sourceTree = "<group>"; };
 		AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SafeDrive.entitlements; sourceTree = "<group>"; };
 		AAF945F71C801EFE00B972C3 /* SDServiceXPCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDServiceXPCProtocol.h; path = Shared/SDServiceXPCProtocol.h; sourceTree = "<group>"; };
+		AAF945F81C801F1200B972C3 /* SafeDriveService.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SafeDriveService.entitlements; sourceTree = "<group>"; };
 		AAF945FA1C801F6100B972C3 /* SDAppXPCProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SDAppXPCProtocol.h; path = Shared/SDAppXPCProtocol.h; sourceTree = "<group>"; };
 		AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "update-version.sh"; sourceTree = "<group>"; };
 		BE2D8449BAB0BAC9033667C6 /* Pods-safedriveaskpass.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.release.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.release.xcconfig"; sourceTree = "<group>"; };
@@ -330,7 +330,6 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
-				AAF945F51C801AA200B972C3 /* SafeDriveService.entitlements */,
 				AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */,
 				AA3D8EBA1C3D80A100CF0A3C /* Shared */,
 				AA3168151A191B72006CC0EB /* SafeDrive */,
@@ -513,6 +512,7 @@
 		AA5754031C7FFCC10040E8B0 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				AAF945F81C801F1200B972C3 /* SafeDriveService.entitlements */,
 				AA5754131C80091F0040E8B0 /* SafeDriveService-Bridging-Header.h */,
 				AA5754041C7FFCC10040E8B0 /* AppDelegate.swift */,
 				AA57540F1C8004660040E8B0 /* ServiceListenerDelegate.swift */,
@@ -1371,7 +1371,7 @@
 			baseConfigurationReference = 4DB687DE7661DC80E407B429 /* Pods-SafeDriveService.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SafeDriveService/SafeDriveService.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Service/SafeDriveService.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1392,7 +1392,7 @@
 			baseConfigurationReference = 2AF739FC659AF44971553AE9 /* Pods-SafeDriveService.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SafeDriveService/SafeDriveService.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Service/SafeDriveService.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
