@@ -24,7 +24,9 @@
     self = [super init];
 
     NSLog(@"%s launched from %@ ; compiled at %s", __PRETTY_FUNCTION__, [[NSBundle mainBundle] bundlePath], __TIME__);
-
+    NSURL *groupURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.io.safedrive.db"];
+    NSLog(@"Group: %@", groupURL);
+    
     // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
     [[FIFinderSyncController defaultController] setBadgeImage:[NSImage imageNamed: NSImageNameStatusAvailable] label:@"Idle" forBadgeIdentifier:@"idle"];
     [[FIFinderSyncController defaultController] setBadgeImage:[NSImage imageNamed: NSImageNameStatusPartiallyAvailable] label:@"Syncing" forBadgeIdentifier:@"syncing"];

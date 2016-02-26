@@ -109,6 +109,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenAboutWindow:) name:SDApplicationShouldOpenAboutWindow object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:SDApplicationShouldOpenAboutWindow object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationShouldOpenSyncWindow:) name:SDApplicationShouldOpenSyncWindow object:nil];
+    NSURL *groupURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.io.safedrive.db"];
+    NSLog(@"Group: %@", groupURL);
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

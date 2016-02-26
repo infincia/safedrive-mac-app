@@ -18,6 +18,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Fabric.with([Crashlytics.self])
         
         print("SafeDriveService build \(CFBundleVersion), protocol version \(kSDServiceXPCProtocolVersion) starting")
+      
+        let groupURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!
+        print("Group: \(groupURL)")
         
         self.listenerDelegate = ServiceListenerDelegate()
         
