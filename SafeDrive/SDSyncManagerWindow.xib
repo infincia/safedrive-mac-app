@@ -95,7 +95,7 @@
                                                         <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="label"/>
                                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                         <prototypeCellViews>
-                                                            <tableCellView identifier="MachineView" id="Ldc-Wu-Fv1" userLabel="MachineView" customClass="SDSyncTableCellView">
+                                                            <tableCellView identifier="MachineView" id="Ldc-Wu-Fv1" userLabel="MachineView" customClass="SyncManagerTableCellView" customModule="SafeDrive" customModuleProvider="target">
                                                                 <rect key="frame" x="1" y="1" width="312" height="17"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
@@ -144,7 +144,7 @@
                                                                     <outlet property="textField" destination="dw9-Zw-BSe" id="gxa-pZ-EEq"/>
                                                                 </connections>
                                                             </tableCellView>
-                                                            <tableCellView identifier="FolderView" id="cr8-aL-DI3" userLabel="FolderView" customClass="SDSyncTableCellView">
+                                                            <tableCellView identifier="FolderView" id="cr8-aL-DI3" userLabel="FolderView" customClass="SyncManagerTableCellView" customModule="SafeDrive" customModuleProvider="target">
                                                                 <rect key="frame" x="1" y="21" width="312" height="17"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>

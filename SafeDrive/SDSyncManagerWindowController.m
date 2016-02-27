@@ -10,8 +10,7 @@
 #import "SDAccountController.h"
 #import "SDSyncController.h"
 
-#import "SDSyncTableRowView.h"
-#import "SDSyncTableCellView.h"
+#import "SafeDrive-Swift.h"
 
 #import "SDSyncItem.h"
 
@@ -310,12 +309,12 @@
 }
 
 - (NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item {
-    SDSyncTableRowView *v = [[SDSyncTableRowView alloc] init];
+    SyncManagerTableRowView *v = [[SyncManagerTableRowView alloc] init];
     return v;
 }
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item {
-    SDSyncTableCellView *tableCellView;
+    SyncManagerTableCellView *tableCellView;
     tableCellView.representedSyncItem = item;
     SDSyncItem *syncItem = (SDSyncItem *)item;
     if ([self outlineView:outlineView isGroupItem:item]) {
