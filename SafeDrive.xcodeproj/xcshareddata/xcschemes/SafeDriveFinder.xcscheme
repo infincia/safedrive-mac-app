@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0720"
    wasCreatedForAppExtension = "YES"
    version = "2.0">
    <BuildAction
@@ -15,7 +15,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AA925C2C1B8F9BAA00222E46"
+               BlueprintIdentifier = "AAF945FE1C815D5A00B972C3"
                BuildableName = "SafeDriveFinder.appex"
                BlueprintName = "SafeDriveFinder"
                ReferencedContainer = "container:SafeDrive.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AA925C2C1B8F9BAA00222E46"
+            BlueprintIdentifier = "AAF945FE1C815D5A00B972C3"
             BuildableName = "SafeDriveFinder.appex"
             BlueprintName = "SafeDriveFinder"
             ReferencedContainer = "container:SafeDrive.xcodeproj">
