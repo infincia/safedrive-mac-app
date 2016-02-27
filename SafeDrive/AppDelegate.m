@@ -9,7 +9,7 @@
 #import "SDAccountWindowController.h"
 #import "SDPreferencesWindowController.h"
 #import <DCOAboutWindow/DCOAboutWindowController.h>
-#import <PFMoveApplication.h>
+#import "PFMoveApplication.h"
 
 #import "SDServiceXPCRouter.h"
 #import "SDServiceManager.h"

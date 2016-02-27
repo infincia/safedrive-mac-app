@@ -22,7 +22,12 @@ target 'SafeDriveService' do
     shared_pods
 end
 
+target 'SafeDriveFinder' do
+    use_frameworks!
+end
+
 target 'SafeDrive' do
+    use_frameworks!
     keychain_pods
     shared_pods
     pod 'IYLoginItem', '0.1'
