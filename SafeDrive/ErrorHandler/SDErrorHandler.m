@@ -72,8 +72,12 @@ void SDErrorHandlerSetUser(NSString *user) {
 void SDLog(NSString *format, ...) {
     va_list args;
     va_start(args, format);
-    NSString *st = [[NSString alloc] initWithFormat:format arguments:args];
+    SDLogv(format, args);
     va_end(args);
+}
+
+void SDLogv(NSString *format, va_list arguments) {
+    NSString *st = [[NSString alloc] initWithFormat:format arguments:arguments];
 #ifdef DEBUG
     // pass through to NSLog for compatibility during development
     NSLog(@"%@", st);
@@ -84,7 +88,6 @@ void SDLog(NSString *format, ...) {
         _shiftLog();
         _saveLog();
     });
-
 }
 
 void SDErrorHandlerReport(NSError *error) {
