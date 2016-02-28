@@ -14,17 +14,6 @@ class FinderSync: FIFinderSync {
     override init() {
         super.init()
         
-        let groupURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!
-        print("Group: \(groupURL)")
-        let test: NSURL = groupURL.URLByAppendingPathComponent("test-finder")
-        
-        do {
-            try "test".writeToURL(test, atomically: true, encoding: NSUTF8StringEncoding)
-        } catch {
-            print("WARNING: finder could not write to app group: \(error)")
-        }
-        
-        
         // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
         FIFinderSyncController.defaultController().setBadgeImage(NSImage(named: NSImageNameStatusAvailable)!, label: "Idle", forBadgeIdentifier: "idle")
         FIFinderSyncController.defaultController().setBadgeImage(NSImage(named: NSImageNameStatusPartiallyAvailable)!, label: "Syncing", forBadgeIdentifier: "syncing")
