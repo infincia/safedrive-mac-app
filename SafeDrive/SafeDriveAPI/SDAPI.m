@@ -258,7 +258,7 @@
     [self.apiManager POST:@"folder" parameters:postParameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
         NSNumber *folderID = response[@"id"];
-        successBlock(folderID);
+        successBlock(folderID.integerValue);
     } failure:^(NSURLSessionTask *task, NSError *error) {
         NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
         
