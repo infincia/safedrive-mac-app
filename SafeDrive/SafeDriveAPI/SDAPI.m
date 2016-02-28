@@ -166,7 +166,11 @@
         successBlock(self.sessionToken);
     } failure:^(NSURLSessionTask *task, NSError *error) {
         NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        
+        NSDictionary *responseObject;
+        if (errorData != nil) {
+             responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        }
         
         if (responseObject) {
             NSString *message = responseObject[@"message"];
@@ -184,7 +188,12 @@
         successBlock(accountStatus);
     } failure:^(NSURLSessionTask *task, NSError *error) {
         NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        
+        NSDictionary *responseObject;
+        if (errorData != nil) {
+            responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        }
+        
         if (responseObject) {
             NSString *message = responseObject[@"message"];
             NSError *responseError = [NSError errorWithDomain:SDErrorAccountDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
@@ -201,7 +210,11 @@
         successBlock(accountDetails);
     } failure:^(NSURLSessionTask *task, NSError *error) {
         NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        
+        NSDictionary *responseObject;
+        if (errorData != nil) {
+            responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        }
         if (responseObject) {
             NSString *message = responseObject[@"message"];
             NSError *responseError = [NSError errorWithDomain:SDErrorAccountDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
@@ -248,7 +261,12 @@
         successBlock(folderID);
     } failure:^(NSURLSessionTask *task, NSError *error) {
         NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        
+        NSDictionary *responseObject;
+        if (errorData != nil) {
+            responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        }
+        
         if (responseObject) {
             NSString *message = responseObject[@"message"];
             NSError *responseError = [NSError errorWithDomain:SDErrorSyncDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
@@ -265,7 +283,12 @@
         successBlock(folders);
     } failure:^(NSURLSessionTask *task, NSError *error) {
         NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        
+        NSDictionary *responseObject;
+        if (errorData != nil) {
+            responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        }
+        
         if (responseObject) {
             NSString *message = responseObject[@"message"];
             NSError *responseError = [NSError errorWithDomain:SDErrorSyncDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
@@ -294,7 +317,12 @@
         successBlock();
     } failure:^(NSURLSessionTask *task, NSError *error) {
         NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        
+        NSDictionary *responseObject;
+        if (errorData != nil) {
+            responseObject = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+        }
+        
         if (responseObject) {
             NSString *message = responseObject[@"message"];
             NSError *responseError = [NSError errorWithDomain:SDErrorSyncDomain code:SDAPIErrorUnknown userInfo:@{NSLocalizedDescriptionKey:  message}];
