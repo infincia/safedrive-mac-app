@@ -49,9 +49,9 @@
 		AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */; };
 		AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
-		AAAA912D1BC767ED00A17250 /* SDSyncManagerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAA912B1BC767ED00A17250 /* SDSyncManagerWindowController.m */; };
-		AAAA912E1BC767ED00A17250 /* SDSyncManagerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAAA912C1BC767ED00A17250 /* SDSyncManagerWindow.xib */; };
+		AAA88BC11C825451009BE1C7 /* SyncManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC01C825451009BE1C7 /* SyncManagerWindowController.swift */; };
 		AAA88BC31C8267C0009BE1C7 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC21C8267C0009BE1C7 /* ErrorHandler.swift */; };
+		AAA88BC51C829846009BE1C7 /* SyncManagerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAA88BC41C829846009BE1C7 /* SyncManagerWindow.xib */; };
 		AAAF1A431BF594A9008E7865 /* SDAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAF1A421BF594A9008E7865 /* SDAccountController.m */; };
 		AAB522B81C33524A00429C0C /* SDSyncItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB522B71C33524A00429C0C /* SDSyncItem.m */; };
 		AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */; };
@@ -217,10 +217,9 @@
 		AA7B460E1C46F18600EA8889 /* SDErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDErrorHandler.h; path = ErrorHandler/SDErrorHandler.h; sourceTree = "<group>"; };
 		AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDErrorHandler.m; path = ErrorHandler/SDErrorHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableRowView.swift; path = SyncManager/SyncManagerTableRowView.swift; sourceTree = "<group>"; };
-		AAAA912A1BC767ED00A17250 /* SDSyncManagerWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncManagerWindowController.h; sourceTree = "<group>"; };
-		AAAA912B1BC767ED00A17250 /* SDSyncManagerWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncManagerWindowController.m; sourceTree = "<group>"; };
-		AAAA912C1BC767ED00A17250 /* SDSyncManagerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SDSyncManagerWindow.xib; sourceTree = "<group>"; };
+		AAA88BC01C825451009BE1C7 /* SyncManagerWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerWindowController.swift; path = SyncManager/SyncManagerWindowController.swift; sourceTree = "<group>"; };
 		AAA88BC21C8267C0009BE1C7 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
+		AAA88BC41C829846009BE1C7 /* SyncManagerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SyncManagerWindow.xib; path = SyncManager/SyncManagerWindow.xib; sourceTree = "<group>"; };
 		AAAF1A411BF594A9008E7865 /* SDAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDAccountController.h; path = AccountController/SDAccountController.h; sourceTree = "<group>"; };
 		AAAF1A421BF594A9008E7865 /* SDAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountController.m; path = AccountController/SDAccountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAB522B61C33524A00429C0C /* SDSyncItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDSyncItem.h; path = SafeDrive/SDSyncItem.h; sourceTree = "<group>"; };
@@ -574,9 +573,8 @@
 		AAAA91291BC7679B00A17250 /* SyncManager */ = {
 			isa = PBXGroup;
 			children = (
-				AAAA912A1BC767ED00A17250 /* SDSyncManagerWindowController.h */,
-				AAAA912B1BC767ED00A17250 /* SDSyncManagerWindowController.m */,
-				AAAA912C1BC767ED00A17250 /* SDSyncManagerWindow.xib */,
+				AAA88BC01C825451009BE1C7 /* SyncManagerWindowController.swift */,
+				AAA88BC41C829846009BE1C7 /* SyncManagerWindow.xib */,
 				AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */,
 				AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */,
 			);
@@ -814,7 +812,6 @@
 				AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */,
 				AA543C781BFC57B50008FB8B /* General-icon.png in Resources */,
 				AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */,
-				AAAA912E1BC767ED00A17250 /* SDSyncManagerWindow.xib in Resources */,
 				AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */,
 				AA543C791BFC57B50008FB8B /* Account-Icon.png in Resources */,
 				AA543C7B1BFC57B50008FB8B /* Status-Icon.png in Resources */,
@@ -822,6 +819,7 @@
 				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
 				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
+				AAA88BC51C829846009BE1C7 /* SyncManagerWindow.xib in Resources */,
 				AA7319421A2F7EEB003E2391 /* Main.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1074,13 +1072,13 @@
 				AA5449611BC3667300826A0B /* SDServiceManager.m in Sources */,
 				AA31681C1A191B72006CC0EB /* main.m in Sources */,
 				AA31684B1A192D27006CC0EB /* SDPreferencesWindowController.m in Sources */,
-				AAAA912D1BC767ED00A17250 /* SDSyncManagerWindowController.m in Sources */,
 				AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */,
 				AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */,
 				AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */,
+				AAA88BC11C825451009BE1C7 /* SyncManagerWindowController.swift in Sources */,
 				AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */,
 				AAEED2D31A7D76F200B92993 /* SDDataSizeTransformer.m in Sources */,
 				AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */,

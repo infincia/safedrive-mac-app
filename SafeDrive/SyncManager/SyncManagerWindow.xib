@@ -6,7 +6,7 @@
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="SDSyncManagerWindowController">
+        <customObject id="-2" userLabel="File's Owner" customClass="SyncManagerWindowController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
                 <outlet property="spinner" destination="Zkz-Sf-qG1" id="RBj-RB-O01"/>
                 <outlet property="syncListView" destination="FBp-sJ-WN8" id="vzi-cx-r8L"/>
