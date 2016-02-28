@@ -51,6 +51,7 @@
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
 		AAAA912D1BC767ED00A17250 /* SDSyncManagerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAA912B1BC767ED00A17250 /* SDSyncManagerWindowController.m */; };
 		AAAA912E1BC767ED00A17250 /* SDSyncManagerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAAA912C1BC767ED00A17250 /* SDSyncManagerWindow.xib */; };
+		AAA88BC31C8267C0009BE1C7 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC21C8267C0009BE1C7 /* ErrorHandler.swift */; };
 		AAAF1A431BF594A9008E7865 /* SDAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAF1A421BF594A9008E7865 /* SDAccountController.m */; };
 		AAB522B81C33524A00429C0C /* SDSyncItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB522B71C33524A00429C0C /* SDSyncItem.m */; };
 		AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */; };
@@ -219,6 +220,7 @@
 		AAAA912A1BC767ED00A17250 /* SDSyncManagerWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncManagerWindowController.h; sourceTree = "<group>"; };
 		AAAA912B1BC767ED00A17250 /* SDSyncManagerWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncManagerWindowController.m; sourceTree = "<group>"; };
 		AAAA912C1BC767ED00A17250 /* SDSyncManagerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SDSyncManagerWindow.xib; sourceTree = "<group>"; };
+		AAA88BC21C8267C0009BE1C7 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
 		AAAF1A411BF594A9008E7865 /* SDAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDAccountController.h; path = AccountController/SDAccountController.h; sourceTree = "<group>"; };
 		AAAF1A421BF594A9008E7865 /* SDAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountController.m; path = AccountController/SDAccountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAB522B61C33524A00429C0C /* SDSyncItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDSyncItem.h; path = SafeDrive/SDSyncItem.h; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 			children = (
 				AA7B460E1C46F18600EA8889 /* SDErrorHandler.h */,
 				AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */,
+				AAA88BC21C8267C0009BE1C7 /* ErrorHandler.swift */,
 			);
 			name = ErrorHandler;
 			sourceTree = "<group>";
@@ -1084,6 +1087,7 @@
 				AA31681A1A191B72006CC0EB /* AppDelegate.m in Sources */,
 				AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */,
 				AAB522B81C33524A00429C0C /* SDSyncItem.m in Sources */,
+				AAA88BC31C8267C0009BE1C7 /* ErrorHandler.swift in Sources */,
 				AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */,
 				AA61F84B1C05356D00D992FE /* SDSyncController.m in Sources */,
 			);
