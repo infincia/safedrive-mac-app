@@ -6,6 +6,9 @@
 #import "SDConstants.h"
 #import "SDProtocols.h"
 
+#import "SDAppXPCProtocol.h"
+#import "SDServiceXPCProtocol.h"
+
 #import "SDErrorHandler.h"
 
 #import "SDSyncItem.h"
@@ -15,3 +18,14 @@
 
 #import "SDAccountController.h"
 #import "SDSyncController.h"
+
+#import "SDDropdownMenuController.h"
+#import "SDAccountWindowController.h"
+#import "SDPreferencesWindowController.h"
+
+@import DCOAboutWindow;
+
+@import LetsMove;
+
+#import "SDServiceXPCRouter.h"
+#import "SDServiceManager.h"
