@@ -80,10 +80,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         self.dropdownMenuController = SDDropdownMenuController()
         
         self.accountWindowController = SDAccountWindowController(windowNibName: "SDAccountWindow")
-        let accountWindow = self.accountWindowController.window!
+        _ = self.accountWindowController.window!
         
         self.preferencesWindowController = SDPreferencesWindowController(windowNibName: "SDPreferencesWindow")
-        let preferencesWindow = self.preferencesWindowController.window!
+        _ = self.preferencesWindowController.window!
         
     
         //self.aboutWindowController =
@@ -92,7 +92,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         //self.aboutWindowController.appWebsiteURL = NSURL(string: websiteURLPath)!
         
         self.syncManagerWindowController = SyncManagerWindowController()
-        let syncManagerWindow = self.syncManagerWindowController.window!
+        _ = syncManagerWindowController.window!
 
         // register SDApplicationControlProtocol notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenAccountWindow:", name: SDApplicationShouldOpenAccountWindow, object: nil)
