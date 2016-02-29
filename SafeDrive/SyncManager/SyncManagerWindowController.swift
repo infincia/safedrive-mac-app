@@ -156,8 +156,11 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     let folderName = folder["folderName"] as! String
                     let folderPath = folder["folderPath"]  as! String
                     let folderId = folder["id"] as! Int
-                    // unused: let addedDate: Int = folder[@"addedDate"] as? Int
-
+                    
+                    let addedUnixDate: Double = folder["addedDate"] as! Double
+                    
+                    let addedDate: NSDate = NSDate(timeIntervalSince1970: addedUnixDate/1000)
+                    
                     let realm = try! Realm()
                     
                     try! realm.write {
@@ -165,7 +168,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                         // because the local database is storing things the remote server does not, we need to ensure
                         // that we don't blow away any of those local properties on existing objects, so
                         // we use Realm.create() instead of Realm.add()
-                        realm.create(SyncFolder.self, value: ["uniqueID": folderId, "name": folderName, "path": folderPath, "machine": self.mac], update: true)
+                        realm.create(SyncFolder.self, value: ["uniqueID": folderId, "name": folderName, "path": folderPath, "machine": self.mac, "added": addedDate], update: true)
                     }
                 }
 
