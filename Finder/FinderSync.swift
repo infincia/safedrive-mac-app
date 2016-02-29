@@ -56,7 +56,7 @@ class FinderSync: FIFinderSync {
             var s = [NSURL]()
             
             for folder in results {
-                let u = NSURL(fileURLWithPath: folder.path!)
+                let u = folder.url!
                 s.append(u)
                 // force update of badges when top level folders change
                 self.requestBadgeIdentifierForURL(u)

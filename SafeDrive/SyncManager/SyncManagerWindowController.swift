@@ -199,7 +199,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         }
         let folderName: String = folder!.name!
         
-        let localFolder: NSURL = NSURL(fileURLWithPath: folder!.path!)
+        let localFolder: NSURL = folder!.url!
         
         let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
         let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(NSHost.currentHost().localizedName!, isDirectory: true)

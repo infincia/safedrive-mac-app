@@ -18,6 +18,13 @@ class SyncFolder: Object {
     dynamic var lastSync: NSDate? = nil
     
     dynamic var machine: Machine? = nil
+    
+    var url: NSURL? {
+        if let path = self.path {
+            return NSURL(fileURLWithPath: path)
+        }
+        return nil
+    }
 
     convenience required init(name: String, url: NSURL, uniqueID: Int) {
         self.init()
