@@ -5,11 +5,22 @@
 import Cocoa
 import FinderSync
 
+import Realm
+import RealmSwift
+
 class FinderSync: FIFinderSync {
 
     var appConnection: NSXPCConnection!
     var serviceConnection: NSXPCConnection!
-    var syncFolders: Set<SDSyncItem> = Set()
+    
+    let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
+
+    
+    var syncFolders: Results<SyncFolder> {
+        return try! Realm().objects(SyncFolder)
+    }
+    
+    var token: RealmSwift.NotificationToken?
     
     override init() {
         super.init()
@@ -19,9 +30,43 @@ class FinderSync: FIFinderSync {
         FIFinderSyncController.defaultController().setBadgeImage(NSImage(named: NSImageNameStatusPartiallyAvailable)!, label: "Syncing", forBadgeIdentifier: "syncing")
         FIFinderSyncController.defaultController().setBadgeImage(NSImage(named: NSImageNameStatusUnavailable)!, label: "Error", forBadgeIdentifier: "error")
         
+        FIFinderSyncController.defaultController().directoryURLs = Set<NSURL>()
+
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
             self.serviceReconnectionLoop()
         })
+        
+        var config = Realm.Configuration()
+        
+        config.path = dbURL.path
+        
+        Realm.Configuration.defaultConfiguration = config
+        
+        guard let realm = try? Realm() else {
+            print("failed to create realm!!!")
+            return
+        }
+        
+        self.token = realm.objects(SyncFolder).addNotificationBlock { results, error in
+            
+            guard let results = results else {
+                return
+            }
+            
+            var s = [NSURL]()
+            
+            for folder in results {
+                let u = NSURL(fileURLWithPath: folder.path!)
+                s.append(u)
+                // force update of badges when top level folders change
+                self.requestBadgeIdentifierForURL(u)
+                
+            }
+            
+            FIFinderSyncController.defaultController().directoryURLs = Set<NSURL>(s)
+        
+            
+        }
         
     }
     
@@ -61,21 +106,6 @@ class FinderSync: FIFinderSync {
                 })
 
             }
-            else {
-                let app = self.appConnection.remoteObjectProxyWithErrorHandler() { error in
-                    print("remote proxy error: \(error)")
-                } as! SDAppXPCProtocol
-                
-                app.getSyncFoldersWithReply({ syncFolders in
-                    
-                    let swiftArray = syncFolders as AnyObject as! [SDSyncItem]
-                    
-                    let s = swiftArray.flatMap({ $0.url })
-
-                    self.syncFolders = Set<SDSyncItem>(swiftArray)
-                    FIFinderSyncController.defaultController().directoryURLs = Set<NSURL>(s)
-                })
-            }
             NSThread.sleepForTimeInterval(1)
         }
     }
@@ -108,13 +138,6 @@ class FinderSync: FIFinderSync {
         let newConnection: NSXPCConnection = NSXPCConnection(listenerEndpoint: endpoint)
         
         let appInterface: NSXPCInterface = NSXPCInterface(withProtocol:SDAppXPCProtocol.self)
-        
-        let syncItemClass = SDSyncItem.self as AnyObject as! NSObject
-        let nsMutableArrayClass = NSMutableArray.self as AnyObject as! NSObject
-
-        let incomingClasses = Set([syncItemClass, nsMutableArrayClass])
-        
-        appInterface.setClasses(incomingClasses, forSelector: "getSyncFoldersWithReply:", argumentIndex: 0, ofReply: true)
         
         newConnection.remoteObjectInterface = appInterface
 
@@ -153,6 +176,7 @@ class FinderSync: FIFinderSync {
     
     override func requestBadgeIdentifierForURL(url: NSURL) {
         guard let syncFolder = self.syncFolderForURL(url) else {
+            print("error")
             return
         }
 
@@ -160,8 +184,8 @@ class FinderSync: FIFinderSync {
         
         do {
             try fileAttributes = NSFileManager.defaultManager().attributesOfItemAtPath(url.path!)
-            print("Modified: \((fileAttributes[NSFileModificationDate] as! String))")
-            print("Using \(syncFolder.url.path!) for \( url.path!) status")
+            print("Modified: \((fileAttributes[NSFileModificationDate] as! NSDate))")
+            print("Using \(syncFolder.path!) for \( url.path!) status")
         }
         catch {
             print("error: \(error)")
@@ -249,10 +273,10 @@ class FinderSync: FIFinderSync {
         })
     }
     
-    func syncFolderForURL(url: NSURL) -> SDSyncItem? {
-        for item: SDSyncItem in self.syncFolders {
+    func syncFolderForURL(url: NSURL) -> SyncFolder? {
+        for item: SyncFolder in self.syncFolders {
             
-            let registeredPath: String = item.url.path!
+            let registeredPath: String = item.path!
             let testPath: String = url.path!
             let options: NSStringCompareOptions = [.AnchoredSearch, .CaseInsensitiveSearch]
             
