@@ -4,7 +4,7 @@
 
 @import Foundation;
 
-@interface SDSyncItem : NSObject <NSSecureCoding>
+__deprecated @interface SDSyncItem : NSObject <NSSecureCoding>
 @property NSString *label;
 @property BOOL isMachine;
 @property NSURL *url;
