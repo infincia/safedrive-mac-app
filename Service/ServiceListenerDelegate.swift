@@ -13,7 +13,7 @@ class ServiceListenerDelegate : NSObject, NSXPCListenerDelegate, SDServiceXPCPro
     var appEndpoint: NSXPCListenerEndpoint?
     
     func listener(listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
-        //let serviceInterface: NSXPCInterface = NSXPCInterface(SDServiceXPCProtocol)
+
         let serviceInterface = NSXPCInterface(withProtocol: SDServiceXPCProtocol.self)
         newConnection.exportedInterface = serviceInterface
         newConnection.exportedObject = self
