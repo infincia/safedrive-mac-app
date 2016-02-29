@@ -18,5 +18,5 @@ class SyncManagerTableCellView: NSTableCellView {
     @IBOutlet var removeButton: NSButton!
     @IBOutlet var syncNowButton: NSButton!
     @IBOutlet var syncStatus: NSProgressIndicator!
-    var representedSyncItem: SDSyncItem?
+    var representedSyncItem: AnyObject?
 }

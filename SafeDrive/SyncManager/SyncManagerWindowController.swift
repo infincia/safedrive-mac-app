@@ -4,6 +4,10 @@
 
 import Cocoa
 
+import Realm
+import RealmSwift
+import Realm
+
 class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, SDAccountProtocol {
     @IBOutlet var syncListView: NSOutlineView!
     @IBOutlet var spinner: NSProgressIndicator!
@@ -15,6 +19,10 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     var accountController = SDAccountController.sharedAccountController()
     
     var syncController = SDSyncController.sharedAPI()
+    
+    var mac = Machine(name: NSHost.currentHost().localizedName!, uniqueClientID: "-1")
+    
+    let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
     
     // MARK: Initializers
     
@@ -28,7 +36,28 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     convenience init() {
         self.init(windowNibName: "SyncManagerWindow")
-        self.syncController.mac = SDSyncItem(label: NSHost.currentHost().localizedName, localFolder: nil, isMachine: true, uniqueID: -1)
+        var config = Realm.Configuration()
+        
+        config.path = dbURL.path
+        
+        Realm.Configuration.defaultConfiguration = config
+        
+        guard let realm = try? Realm() else {
+            print("failed to create realm!!!")
+            return
+        }
+        
+        do {
+            try realm.write {
+                let machineName = NSHost.currentHost().localizedName!
+                realm.create(Machine.self, value: ["uniqueClientID": "-1", "name": machineName], update: true)
+            }
+        }
+        catch {
+            print("failed to write machine to realm!!!")
+            
+        }
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignIn:", name: SDAccountSignInNotification, object: nil)
     }
     
@@ -51,7 +80,21 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.spinner.startAnimation(self)
                 
                 self.sharedSafedriveAPI.createSyncFolder(panel.URL!, success: { (folderID: Int) -> Void in
+                    let realm = try! Realm()
+                    
+                    let syncFolder = SyncFolder(name: panel.URL!.lastPathComponent!, url: panel.URL!, uniqueID: folderID)
+                    
+                    // this is the only place where the `added` property should be set on SyncFolders
+                    syncFolder.added = NSDate()
+                    
+                    syncFolder.machine = self.mac
+                    
+                    try! realm.write {
+                        realm.add(syncFolder, update: true)
+                    }
+                    
                     self.readSyncFolders(self)
+
                 }, failure: { (apiError: NSError) -> Void in
                     SDErrorHandlerReport(apiError)
                     self.spinner.stopAnimation(self)
@@ -71,10 +114,18 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         SDLog("Deleting sync folder ID: %lu", uniqueID)
         self.spinner.startAnimation(self)
         self.sharedSafedriveAPI.deleteSyncFolder(uniqueID, success: {() -> Void in
-            let folder: SDSyncItem = self.syncController.mac.syncFolderForUniqueId(uniqueID)
-            self.syncController.mac.removeSyncFolder(folder)
-            self.syncListView.reloadItem(self.syncController.mac, reloadChildren: true)
-            self.syncListView.expandItem(self.syncController.mac, expandChildren: true)
+            
+            let syncFolders = try! Realm().objects(SyncFolder)
+            
+            let syncFolder = syncFolders.filter("uniqueID == \(uniqueID)")
+            
+            let realm = try! Realm()
+            try! realm.write {
+                realm.delete(syncFolder)
+            }
+            
+            self.syncListView.reloadItem(self.mac, reloadChildren: true)
+            self.syncListView.expandItem(self.mac, expandChildren: true)
             self.spinner.stopAnimation(self)
         }, failure: {(apiError: NSError) -> Void in
             SDErrorHandlerReport(apiError)
@@ -91,7 +142,6 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         self.spinner.startAnimation(self)
         
         self.sharedSafedriveAPI.readSyncFoldersWithSuccess({ (folders: [[NSObject : AnyObject]]) -> Void in
-            self.syncController.mac.syncFolders.removeAllObjects()
             for folder in folders {
                 /*
                 Current sync folder model:
@@ -103,19 +153,26 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 */
                 
                 if let folder = folder as? [String: AnyObject] {
-                    let folderName = folder["folderName"] as? String
-                    let folderPath = folder["folderPath"]  as? String
-                    let folderId = folder["id"] as? Int
+                    let folderName = folder["folderName"] as! String
+                    let folderPath = folder["folderPath"]  as! String
+                    let folderId = folder["id"] as! Int
                     // unused: let addedDate: Int = folder[@"addedDate"] as? Int
-                    let localFolder: NSURL = NSURL.fileURLWithPath(folderPath!, isDirectory: true)
-                    let syncItem: SDSyncItem = SDSyncItem(label: folderName, localFolder: localFolder, isMachine: false, uniqueID: folderId!)
-                    self.syncController.mac.appendSyncFolder(syncItem)
+
+                    let realm = try! Realm()
+                    
+                    try! realm.write {
+                        // we update the local database with any info the server has to ensure they're in sync
+                        // because the local database is storing things the remote server does not, we need to ensure
+                        // that we don't blow away any of those local properties on existing objects, so
+                        // we use Realm.create() instead of Realm.add()
+                        realm.create(SyncFolder.self, value: ["uniqueID": folderId, "name": folderName, "path": folderPath, "machine": self.mac], update: true)
+                    }
                 }
 
             }
             
-            self.syncListView.reloadItem(self.syncController.mac, reloadChildren: true)
-            self.syncListView.expandItem(self.syncController.mac, expandChildren: true)
+            self.syncListView.reloadItem(self.mac, reloadChildren: true)
+            self.syncListView.expandItem(self.mac, expandChildren: true)
             self.spinner.stopAnimation(self)
 
             
@@ -133,10 +190,17 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBAction func startSyncItemNow(sender: AnyObject) {
         let button: NSButton = sender as! NSButton
         let uniqueID: Int = button.tag
-        let folder: SDSyncItem = self.syncController.mac.syncFolderForUniqueId(uniqueID)
-        folder.syncing = true
-        let folderName: String = folder.label
-        let localFolder: NSURL = folder.url
+
+        let realm = try! Realm()
+        let folder = realm.objects(SyncFolder).filter("uniqueID == \(uniqueID)").first
+
+        try! realm.write {
+            realm.create(SyncFolder.self, value: ["uniqueID": uniqueID, "syncing": true], update: true)
+        }
+        let folderName: String = folder!.name!
+        
+        let localFolder: NSURL = NSURL(fileURLWithPath: folder!.path!)
+        
         let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
         let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(NSHost.currentHost().localizedName!, isDirectory: true)
         let remoteFolder: NSURL = machineFolder.URLByAppendingPathComponent(folderName, isDirectory: true)
@@ -147,19 +211,27 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         urlComponents.port = self.accountController.remotePort
         let remote: NSURL = urlComponents.URL!
         
-        self.syncListView.reloadItem(self.syncController.mac, reloadChildren: true)
+        self.syncListView.reloadItem(self.mac, reloadChildren: true)
         
         self.syncController.startSyncTaskWithLocalURL(localFolder, serverURL: remote, password: self.accountController.password, restore: false, success: { (syncURL: NSURL, error: NSError?) -> Void in
             SDLog("Sync finished for local URL: %@", localFolder)
-            folder.syncing = false
-            self.syncListView.reloadItem(self.syncController.mac, reloadChildren: true)
+
+            let realm = try! Realm()
+            try! realm.write {
+                realm.create(SyncFolder.self, value: ["uniqueID": uniqueID, "syncing": false, "lastSync": NSDate()], update: true)
+            }
+            self.syncListView.reloadItem(self.mac, reloadChildren: true)
 
         }, failure: { (syncURL: NSURL, error: NSError?) -> Void in
             SDErrorHandlerReport(error)
             SDLog("Sync failed for local URL: %@", localFolder)
             SDLog("Sync error: %@", error!.localizedDescription)
-            folder.syncing = false
-            self.syncListView.reloadItem(self.syncController.mac, reloadChildren: true)
+
+            let realm = try! Realm()
+            try! realm.write {
+                realm.create(SyncFolder.self, value: ["uniqueID": uniqueID, "syncing": false], update: true)
+            }
+            self.syncListView.reloadItem(self.mac, reloadChildren: true)
             let alert: NSAlert = NSAlert()
             alert.messageText = NSLocalizedString("Error", comment: "")
             alert.informativeText = error!.localizedDescription
@@ -193,7 +265,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         }
         
         // check if the candidate sync path is a parent or subdirectory of an existing registered sync folder
-        if self.syncController.mac.hasConflictingFolderRegistered(url) {
+        let syncFolders = try! Realm().objects(SyncFolder)
+        if SyncFolder.hasConflictingFolderRegistered(url.path!, syncFolders: syncFolders) {
             let errorInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")]
             throw NSError(domain: SDErrorSyncDomain, code: SDSystemError.FolderConflict.rawValue, userInfo: errorInfo)
         }
@@ -202,60 +275,46 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     // MARK: NSOutlineViewDelegate/Datasource
     
     func outlineView(outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
-        self.syncListView.reloadItem(self.syncController.mac, reloadChildren: true)
-        self.syncListView.expandItem(self.syncController.mac, expandChildren: true)
+        self.syncListView.reloadItem(self.mac, reloadChildren: true)
+        self.syncListView.expandItem(self.mac, expandChildren: true)
     }
     
     func outlineView(outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
-        let syncItem: SDSyncItem = item as! SDSyncItem
-        return syncItem.isMachine
+        if item is Machine {
+            return true
+        }
+        return false
     }
     
     func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
-        if item == nil {
-            // Root
-            return 1
+        if item is Machine {
+            let syncFolders = try! Realm().objects(SyncFolder)
+            return syncFolders.count
         }
-        let syncItem: SDSyncItem = item as! SDSyncItem
-        if syncItem.isMachine {
-            return syncItem.syncFolders.count
-        }
-        else {
+        else if item is SyncFolder {
             return 0
         }
+        // Root
+        return 1
     }
     
     func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
-        if item == nil {
-            // Root
-            return self.syncController.mac
+        if item is Machine {
+            let syncFolders = try! Realm().objects(SyncFolder)
+            return syncFolders[index]
         }
-        let syncItem: SDSyncItem = item as! SDSyncItem
-        if syncItem.isMachine {
-            return syncItem.syncFolders[index]
-        }
-        else {
-            return self.syncController.mac
-        }
+        return self.mac
     }
 
     func outlineView(outlineView: NSOutlineView, isGroupItem item: AnyObject) -> Bool {
-        let syncItem: SDSyncItem = item as! SDSyncItem
-        if syncItem.isMachine {
+        if item is Machine {
             return true
         }
-        else {
-            return false
-        }
+        return false
     }
     
     func outlineView(outlineView: NSOutlineView, shouldSelectItem item: AnyObject) -> Bool {
-        if self.outlineView(outlineView, isGroupItem: item) {
-            return false
-        }
-        else {
-            return true
-        }
+        return !self.outlineView(outlineView, isGroupItem: item)
     }
     
     func outlineView(outlineView: NSOutlineView, shouldShowCellExpansionForTableColumn tableColumn: NSTableColumn, item: AnyObject) -> Bool {
@@ -277,23 +336,24 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     func outlineView(outlineView: NSOutlineView, viewForTableColumn tableColumn: NSTableColumn, item: AnyObject) -> NSView {
         var tableCellView: SyncManagerTableCellView
-        let syncItem: SDSyncItem = (item as! SDSyncItem)
         if self.outlineView(outlineView, isGroupItem: item) {
+            let machine = item as! Machine
             tableCellView = outlineView.makeViewWithIdentifier("MachineView", owner: self) as! SyncManagerTableCellView
-            tableCellView.textField!.stringValue = syncItem.label
+            tableCellView.textField!.stringValue = machine.name!
             let cellImage: NSImage = NSImage(named: NSImageNameComputer)!
             cellImage.size = NSMakeSize(15.0, 15.0)
             tableCellView.imageView!.image = cellImage
         }
         else {
+            let syncFolder = item as! SyncFolder
             tableCellView = outlineView.makeViewWithIdentifier("FolderView", owner: self) as! SyncManagerTableCellView
-            tableCellView.textField!.stringValue = syncItem.label
+            tableCellView.textField!.stringValue = syncFolder.name!
             let cellImage: NSImage = NSWorkspace.sharedWorkspace().iconForFileType(NSFileTypeForHFSTypeCode(OSType(kGenericFolderIcon)))
             cellImage.size = NSMakeSize(15.0, 15.0)
             tableCellView.imageView!.image = cellImage
-            tableCellView.removeButton.tag = syncItem.uniqueID
-            tableCellView.syncNowButton.tag = syncItem.uniqueID
-            if syncItem.syncing {
+            tableCellView.removeButton.tag = syncFolder.uniqueID
+            tableCellView.syncNowButton.tag = syncFolder.uniqueID
+            if syncFolder.syncing {
                 tableCellView.syncStatus.startAnimation(self)
                 tableCellView.syncNowButton.enabled = false
                 tableCellView.syncNowButton.hidden = true
@@ -305,7 +365,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             }
 
         }
-        tableCellView.representedSyncItem = syncItem
+        tableCellView.representedSyncItem = item
 
         return tableCellView;
         
@@ -318,7 +378,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     func outlineViewSelectionDidChange(notification: NSNotification) {
         if self.syncListView.selectedRow != -1 {
-            let syncItem: SDSyncItem = self.syncListView.itemAtRow(self.syncListView.selectedRow) as! SDSyncItem
+            let syncItem: SyncFolder = self.syncListView.itemAtRow(self.syncListView.selectedRow) as! SyncFolder
             // visually selecting specific sync folders in the list is disabled for now but this would be the place to
             // do something with them, like display recent sync info or folder stats in the lower window pane
         }
