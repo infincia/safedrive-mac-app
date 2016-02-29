@@ -11,8 +11,6 @@
 
 #import "SDErrorHandler.h"
 
-#import "SDSyncItem.h"
-
 #import "SDSystemAPI.h"
 #import "SDAPI.h"
 

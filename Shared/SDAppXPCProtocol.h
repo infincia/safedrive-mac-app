@@ -2,9 +2,7 @@
 //  Copyright (c) 2014 Infincia LLC. All rights reserved.
 //
 
-@class SDSyncItem;
-
-static NSInteger kSDAppXPCProtocolVersion = 5;
+static NSInteger kSDAppXPCProtocolVersion = 6;
 
 @protocol SDAppXPCProtocol
 -(void)sendMessage:(NSString * _Nonnull)message reply:(void (^ _Nonnull)(NSString * _Nonnull reply))replyBlock;
@@ -13,7 +11,5 @@ static NSInteger kSDAppXPCProtocolVersion = 5;
 
 -(void)displayPreferencesWindow;
 -(void)displayRestoreWindowForURLs:(NSArray * _Nonnull)urls;
-
--(void)getSyncFoldersWithReply:(void (^ _Nonnull)(NSMutableArray<SDSyncItem*> * _Nonnull syncFolders))replyBlock;
 
 @end

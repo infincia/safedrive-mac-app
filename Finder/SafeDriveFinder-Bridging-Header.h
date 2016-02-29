@@ -6,5 +6,3 @@
 
 #import "SDServiceXPCProtocol.h"
 #import "SDAppXPCProtocol.h"
-
-#import "SDSyncItem.h"
