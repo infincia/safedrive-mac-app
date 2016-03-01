@@ -10,6 +10,7 @@ def shared_pods
     pod 'Fabric', '1.6.6'
     pod 'Crashlytics', '3.7.0'
     pod 'NMSSH', '~> 2.2'
+    pod 'SwiftDate', '~> 1.2'
 end
 
 target 'safedriveaskpass' do
