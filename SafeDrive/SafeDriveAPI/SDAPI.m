@@ -78,7 +78,7 @@
 # pragma mark
 # pragma mark Public API
 
-+(SDAPI *)sharedAPI {
++(SDAPI * _Nonnull)sharedAPI {
     static SDAPI *localInstance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -87,12 +87,12 @@
     return localInstance;
 }
 
--(void)setSessionToken:(NSString *)sessionToken {
+-(void)setSessionToken:(NSString * _Nullable)sessionToken {
     _privateSessionToken = sessionToken;
     [self.apiManager.requestSerializer setValue:_privateSessionToken forHTTPHeaderField:@"SD-Auth-Token"];
 }
 
--(NSString *)sessionToken {
+-(NSString * _Nullable)sessionToken {
     NSDictionary *session = [self.sharedSystemAPI retrieveCredentialsFromKeychainForService:SDSessionServiceName];
     if (session) {
         [self.apiManager.requestSerializer setValue:session[@"password"] forHTTPHeaderField:@"SD-Auth-Token"];
@@ -103,7 +103,7 @@
 
 #pragma mark - Telemetry
 
--(void)reportError:(NSError *)error forUser:(NSString *)user withLog:(NSArray *)log completionQueue:(dispatch_queue_t)queue success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)reportError:(NSError * _Nonnull)error forUser:(NSString * _Nonnull)user withLog:(NSArray * _Nonnull)log completionQueue:(dispatch_queue_t _Nonnull)queue success:(SDSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
 
     NSMutableDictionary *postParameters = [NSMutableDictionary new];
     
@@ -146,7 +146,7 @@
 
 #pragma mark - Client registration
 
--(void)registerMachineWithUser:(NSString *)user password:(NSString *)password success:(SDAPIClientRegistrationSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)registerMachineWithUser:(NSString * _Nonnull)user password:(NSString * _Nonnull)password success:(SDAPIClientRegistrationSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
     NSString *languageCode = [[NSLocale preferredLanguages] objectAtIndex:0];
     NSString *os = [NSString stringWithFormat:@"OS X %@", self.sharedSystemAPI.currentOSVersion];
     NSString *macAddress = [self.sharedSystemAPI en0MAC];
@@ -182,7 +182,7 @@
     }];
 }
 
--(void)accountStatusForUser:(NSString *)user success:(SDAPIAccountStatusBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)accountStatusForUser:(NSString * _Nonnull)user success:(SDAPIAccountStatusBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
     [self.apiManager GET:@"account/status" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *accountStatus = (NSDictionary *)responseObject;
         successBlock(accountStatus);
@@ -204,7 +204,7 @@
     }];
 }
 
--(void)accountDetailsForUser:(NSString *)user success:(SDAPIAccountDetailsBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)accountDetailsForUser:(NSString * _Nonnull)user success:(SDAPIAccountDetailsBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
     [self.apiManager GET:@"account/details" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *accountDetails = (NSDictionary *)responseObject;
         successBlock(accountDetails);
@@ -227,7 +227,7 @@
 
 #pragma mark - Unused 
 
--(void)getHostFingerprintList:(SDAPIFingerprintListSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)getHostFingerprintList:(SDAPIFingerprintListSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
     [self.apiManager GET:@"fingerprints" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
         successBlock(response[@"fingerprints"]);
@@ -237,7 +237,7 @@
 }
 
 
--(void)apiStatus:( SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)apiStatus:( SDSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
     [self.apiManager GET:@"status" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         successBlock();
     } failure:^(NSURLSessionTask *task, NSError *error) {
@@ -252,7 +252,7 @@
 
 @implementation SDAPI (SyncFolderHandling)
 
--(void)createSyncFolder:(NSURL *)localFolder success:(SDAPICreateSyncFolderSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)createSyncFolder:(NSURL * _Nonnull)localFolder success:(SDAPICreateSyncFolderSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
     NSDictionary *postParameters = @{ @"folderName": localFolder.lastPathComponent, @"folderPath": localFolder.path };
 
     [self.apiManager POST:@"folder" parameters:postParameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
@@ -277,7 +277,7 @@
     }];
 }
 
--(void)readSyncFoldersWithSuccess:(SDAPIReadSyncFoldersSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)readSyncFoldersWithSuccess:(SDAPIReadSyncFoldersSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
     [self.apiManager GET:@"folder" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSArray *folders = (NSArray *)responseObject;
         successBlock(folders);
@@ -299,7 +299,7 @@
     }];
 }
 
--(void)deleteSyncFolder:(NSNumber *)folderId success:(SDAPIDeleteSyncFoldersSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)deleteSyncFolder:(NSNumber * _Nonnull)folderId success:(SDAPIDeleteSyncFoldersSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
     NSDictionary *folderIds = @{ @"folderIds": folderId };
     
     AFHTTPRequestSerializer *ser = [AFHTTPRequestSerializer serializer];

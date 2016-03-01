@@ -8,31 +8,31 @@
     NSString *_privateSessionToken;
 }
 
-@property (nonatomic, readonly) NSURL *sshURL;
-@property (nonatomic) NSString *sessionToken;
+@property (nonatomic, readonly, nullable) NSURL *sshURL;
+@property (nonatomic, nullable) NSString *sessionToken;
 
-+(SDAPI *)sharedAPI;
++(SDAPI * _Nonnull)sharedAPI;
 
--(void)reportError:(NSError *)error forUser:(NSString *)user withLog:(NSArray *)log completionQueue:(dispatch_queue_t)queue success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
+-(void)reportError:(NSError * _Nonnull)error forUser:(NSString * _Nonnull)user withLog:(NSArray * _Nonnull)log completionQueue:(dispatch_queue_t _Nonnull)queue success:(SDSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock;
 
--(void)registerMachineWithUser:(NSString *)user password:(NSString *)password success:(SDAPIClientRegistrationSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
+-(void)registerMachineWithUser:(NSString * _Nonnull)user password:(NSString * _Nonnull)password success:(SDAPIClientRegistrationSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock;
 
--(void)accountStatusForUser:(NSString *)user success:(SDAPIAccountStatusBlock)successBlock failure:(SDFailureBlock)failureBlock;
+-(void)accountStatusForUser:(NSString * _Nonnull)user success:(SDAPIAccountStatusBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock;
 
--(void)accountDetailsForUser:(NSString *)user success:(SDAPIAccountDetailsBlock)successBlock failure:(SDFailureBlock)failureBlock;
+-(void)accountDetailsForUser:(NSString * _Nonnull)user success:(SDAPIAccountDetailsBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock;
 
--(void)getHostFingerprintList:(SDAPIFingerprintListSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
+-(void)getHostFingerprintList:(SDAPIFingerprintListSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock;
 
--(void)apiStatus:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
+-(void)apiStatus:(SDSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock;
 
 @end
 
 @interface SDAPI (SyncFolderHandling)
 
--(void)createSyncFolder:(NSURL *)localFolder success:(SDAPICreateSyncFolderSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
+-(void)createSyncFolder:(NSURL * _Nonnull)localFolder success:(SDAPICreateSyncFolderSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock;
 
--(void)readSyncFoldersWithSuccess:(SDAPIReadSyncFoldersSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
+-(void)readSyncFoldersWithSuccess:(SDAPIReadSyncFoldersSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock;
 
--(void)deleteSyncFolder:(NSNumber *)folderId success:(SDAPIDeleteSyncFoldersSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
+-(void)deleteSyncFolder:(NSNumber * _Nonnull)folderId success:(SDAPIDeleteSyncFoldersSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock;
 
 @end
