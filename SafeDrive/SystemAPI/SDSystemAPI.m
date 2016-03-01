@@ -46,7 +46,7 @@
 #pragma mark
 #pragma mark Public API
 
-+(SDSystemAPI *)sharedAPI {
++(SDSystemAPI * _Nonnull)sharedAPI {
     static SDSystemAPI *localInstance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -91,7 +91,7 @@
 
 #pragma mark - System information
 
-- (NSString *)machineSerialNumber {
+- (NSString * _Nullable)machineSerialNumber {
     NSString *serial = nil;
     io_service_t platformExpert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("IOPlatformExpertDevice"));
     if (platformExpert) {
@@ -105,7 +105,7 @@
     return serial;
 }
 
--(NSString *)en0MAC {
+-(NSString * _Nonnull)en0MAC {
 	int	   mib[6];
     size_t len;
 	char   *buf;
@@ -142,14 +142,14 @@
     return mac;
 }
 
--(NSString *)currentOSVersion {
+-(NSString * _Nullable)currentOSVersion {
     NSDictionary *systemVersionDictionary = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
 
     NSString *systemVersion = [systemVersionDictionary objectForKey:@"ProductVersion"];
     return systemVersion;
 }
 
--(NSString *)currentVolumeName {
+-(NSString * _Nonnull)currentVolumeName {
     NSString *volumeName = [[NSUserDefaults standardUserDefaults] objectForKey:SDCurrentVolumeNameKey];
     if (!volumeName) {
         volumeName = SDDefaultVolumeName;
@@ -165,7 +165,7 @@
     [[NSUserDefaults standardUserDefaults] setBool:mountAtLaunch forKey:SDMountAtLaunchKey];
 }
 
--(NSDictionary *)detailsForMount:(NSURL *)mountURL {
+-(NSDictionary * _Nullable)detailsForMount:(NSURL * _Nonnull)mountURL {
     NSDictionary *mountpointInfo;
     NSError *error;
     mountpointInfo = [[NSFileManager defaultManager] attributesOfFileSystemForPath:mountURL.path error:&error];
@@ -174,7 +174,7 @@
 }
 
 
--(BOOL)checkForMountedVolume:(NSURL *)mountURL {
+-(BOOL)checkForMountedVolume:(NSURL * _Nonnull)mountURL {
     NSArray *mountedVolumes = [[NSFileManager defaultManager] mountedVolumeURLsIncludingResourceValuesForKeys:@[NSURLVolumeNameKey] options:NSVolumeEnumerationSkipHiddenVolumes];
     for (NSURL *mountedVolumeURL in mountedVolumes) {
         if ([mountedVolumeURL.path isEqualToString:mountURL.path]) {
@@ -184,7 +184,7 @@
     return NO;
 }
 
--(void)checkForMountedVolume:(NSURL *)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)checkForMountedVolume:(NSURL * _Nonnull)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"Mount check called on background thread");
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -207,7 +207,7 @@
 
 
 
--(void)ejectMount:(NSURL *)mountURL success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)ejectMount:(NSURL * _Nonnull)mountURL success:(SDSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
     NSError *error;
     BOOL ejectSuccess = [[NSWorkspace sharedWorkspace] unmountAndEjectDeviceAtURL:mountURL error:&error];
     if (ejectSuccess && successBlock) successBlock();
@@ -220,7 +220,7 @@
     return [[NSBundle mainBundle] isLoginItem];
 }
 
--(NSError *)enableAutostart {
+-(NSError * _Nullable)enableAutostart {
     NSError *loginItemError = nil;
     [[NSBundle mainBundle] addToLoginItems];
     if (!self.autostart) {
@@ -229,7 +229,7 @@
     return loginItemError;
 }
 
--(NSError *)disableAutostart {
+-(NSError * _Nullable)disableAutostart {
     NSError *loginItemError = nil;
     [[NSBundle mainBundle] removeFromLoginItems];
     if (self.autostart) {
@@ -238,7 +238,7 @@
     return loginItemError;
 }
 
--(NSDictionary *)retrieveCredentialsFromKeychainForService:(NSString *)service {
+-(NSDictionary<NSString *, NSString *>* _Nullable)retrieveCredentialsFromKeychainForService:(NSString * _Nonnull)service {
     NSDictionary *credentials = nil;
     NSError *error;
 
@@ -255,7 +255,7 @@
     return credentials;
 }
 
--(NSError *)insertCredentialsInKeychainForService:(NSString *)service account:(NSString *)account password:(NSString *)password {
+-(NSError * _Nullable)insertCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password {
 
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
                                                                                     account:nil
@@ -292,7 +292,7 @@
     return nil;
 }
 
--(NSError *)removeCredentialsInKeychainForService:(NSString *)service account:(NSString *)account {
+-(NSError * _Nullable)removeCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account {
 
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
                                                                                     account:account

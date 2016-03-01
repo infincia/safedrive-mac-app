@@ -6,39 +6,39 @@
 
 @interface SDSystemAPI : NSObject
 
-@property (nonatomic, readonly) NSString *currentVolumeName;
+@property (nonatomic, readonly) NSString * _Nonnull currentVolumeName;
 @property (nonatomic) BOOL mountAtLaunch;
 
-+(SDSystemAPI *)sharedAPI;
++(SDSystemAPI * _Nonnull)sharedAPI;
 
 -(BOOL)isOSXFUSEInstalled;
 
 -(BOOL)isSSHFSInstalled;
 
--(NSString *)machineSerialNumber;
+-(NSString * _Nullable)machineSerialNumber;
 
--(NSString *)en0MAC;
+-(NSString * _Nonnull)en0MAC;
 
--(NSString *)currentOSVersion;
+-(NSString * _Nullable)currentOSVersion;
 
--(NSDictionary *)detailsForMount:(NSURL *)mountURL;
+-(NSDictionary * _Nullable)detailsForMount:(NSURL * _Nonnull)mountURL;
 
--(BOOL)checkForMountedVolume:(NSURL *)mountURL;
+-(BOOL)checkForMountedVolume:(NSURL * _Nonnull)mountURL;
 
--(void)checkForMountedVolume:(NSURL *)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
+-(void)checkForMountedVolume:(NSURL * _Nonnull)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock;
 
--(void)ejectMount:(NSURL *)mountURL success:(SDSuccessBlock)success failure:(SDFailureBlock)failure;
+-(void)ejectMount:(NSURL * _Nonnull)mountURL success:(SDSuccessBlock _Nonnull)success failure:(SDFailureBlock _Nonnull)failure;
 
 -(BOOL)autostart;
 
--(NSError *)enableAutostart;
+-(NSError * _Nullable)enableAutostart;
 
--(NSError *)disableAutostart;
+-(NSError * _Nullable)disableAutostart;
 
--(NSDictionary *)retrieveCredentialsFromKeychainForService:(NSString *)service;
+-(NSDictionary<NSString *, NSString *>* _Nullable)retrieveCredentialsFromKeychainForService:(NSString * _Nonnull)service;
 
--(NSError *)insertCredentialsInKeychainForService:(NSString *)service account:(NSString *)account password:(NSString *)password;
+-(NSError * _Nullable)insertCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password;
 
--(NSError *)removeCredentialsInKeychainForService:(NSString *)service account:(NSString *)account;
+-(NSError * _Nullable)removeCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account;
 
 @end
