@@ -21,8 +21,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.syncState = SDSyncStateIdle;
-        self.syncing = NO;
         self.syncTask = nil;
         self.syncFailure = NO;
     }

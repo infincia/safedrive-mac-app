@@ -6,8 +6,6 @@
 
 @interface SDSyncController : NSObject
 
-@property enum SDSyncState syncState;
-@property (getter=isSyncing) BOOL syncing;
 
 +(SDSyncController *)sharedAPI;
 
