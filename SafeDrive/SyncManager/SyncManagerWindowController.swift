@@ -6,7 +6,6 @@ import Cocoa
 
 import Realm
 import RealmSwift
-import Realm
 
 class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, SDAccountProtocol {
     @IBOutlet var syncListView: NSOutlineView!
