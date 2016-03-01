@@ -11,18 +11,18 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBOutlet var syncListView: NSOutlineView!
     @IBOutlet var spinner: NSProgressIndicator!
     
-    var sharedSystemAPI = SDSystemAPI.sharedAPI()
+    private var sharedSystemAPI = SDSystemAPI.sharedAPI()
     
-    var sharedSafedriveAPI = SDAPI.sharedAPI()
+    private var sharedSafedriveAPI = SDAPI.sharedAPI()
     
     private var accountController = AccountController.sharedAccountController
     
     var syncController = SDSyncController.sharedAPI()
     
-    var mac = Machine(name: NSHost.currentHost().localizedName!, uniqueClientID: "-1")
     
-    let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
+    private var mac = Machine(name: NSHost.currentHost().localizedName!, uniqueClientID: "-1")
     
+    private let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
     // MARK: Initializers
     
     override init(window: NSWindow?) {
