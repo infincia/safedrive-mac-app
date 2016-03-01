@@ -9,7 +9,8 @@
 #import "SDAPI.h"
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
-#import "SDAccountController.h"
+
+#import "SafeDrive-Swift.h"
 
 #import <Crashlytics/Crashlytics.h>
 
@@ -50,7 +51,7 @@
     self.safeDriveAPI = [SDAPI sharedAPI];
     self.mountController = [SDMountController sharedAPI];
     self.sharedSystemAPI = [SDSystemAPI sharedAPI];
-    self.accountController = [SDAccountController sharedAccountController];
+    self.accountController = [AccountController sharedAccountController];
 
     self.passwordField.focusRingType = NSFocusRingTypeNone;
 

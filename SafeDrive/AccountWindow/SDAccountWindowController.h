@@ -3,10 +3,11 @@
 //
 
 @import Cocoa;
-@class SDAccountController;
+
+@class AccountController;
 
 @interface SDAccountWindowController : NSWindowController <SDMountStateProtocol, SDVolumeEventProtocol>
 
 -(IBAction)signIn:(id)sender;
-@property SDAccountController *accountController;
+@property AccountController *accountController;
 @end

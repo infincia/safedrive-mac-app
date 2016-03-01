@@ -14,7 +14,6 @@
 #import "SDSystemAPI.h"
 #import "SDAPI.h"
 
-#import "SDAccountController.h"
 #import "SDSyncController.h"
 
 #import "SDDropdownMenuController.h"
