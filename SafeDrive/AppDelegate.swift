@@ -66,7 +66,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         
         // initialize error handler, from this point on SDLog() and SDErrorHandlerReport() should be safe to use
         SDErrorHandlerInitialize()
-        
+        SDLog("SafeDrive build \(CFBundleVersion) starting")
+
         
         PFMoveToApplicationsFolderIfNecessary()
         self.serviceManager = SDServiceManager.sharedServiceManager()
