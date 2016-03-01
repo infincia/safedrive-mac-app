@@ -8,10 +8,14 @@
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
 
+#import "SafeDrive-Swift.h"
+
+
 @interface SDDropdownMenuController ()
 @property SDAPI *safeDriveAPI;
 @property SDMountController *mountController;
 @property SDSystemAPI *sharedSystemAPI;
+@property AccountController *sharedAccountController;
 
 -(void)setMenuBarImage:(NSImage *)image;
 -(void)disconnectVolume;
@@ -28,6 +32,8 @@
         self.safeDriveAPI = [SDAPI sharedAPI];
         self.mountController = [SDMountController sharedAPI];
         self.sharedSystemAPI = [SDSystemAPI sharedAPI];
+        self.sharedAccountController = [AccountController sharedAccountController];
+        
 
         // register SDMountStateProtocol notifications
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mountStateMounted:) name:SDMountStateMountedNotification object:nil];
