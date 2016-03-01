@@ -78,6 +78,22 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignIn:", name: SDAccountSignInNotification, object: nil)
     }
     
+    override func windowDidLoad() {
+        self.window?.backgroundColor = NSColor.whiteColor()
+        
+        let aWindow: INAppStoreWindow = self.window as! INAppStoreWindow
+        aWindow.titleBarHeight = 24.0
+        aWindow.showsBaselineSeparator = false
+        let topColor: NSColor = NSColor.whiteColor()
+        aWindow.titleBarStartColor = topColor
+        aWindow.titleBarEndColor = topColor
+        aWindow.baselineSeparatorColor = topColor
+        aWindow.inactiveTitleBarEndColor = topColor
+        aWindow.inactiveTitleBarStartColor = topColor
+        aWindow.inactiveBaselineSeparatorColor = topColor
+
+    }
+    
     // MARK: UI Actions
     
     @IBAction func addSyncFolder(sender: AnyObject) {

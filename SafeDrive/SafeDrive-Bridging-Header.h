@@ -18,6 +18,8 @@
 
 #import "SDMountController.h"
 
+@import INAppStoreWindow;
+
 #import "SDAccountWindowController.h"
 #import "SDPreferencesWindowController.h"
 
