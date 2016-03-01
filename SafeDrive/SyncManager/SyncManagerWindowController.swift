@@ -356,12 +356,19 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 print("no item at \(self.syncListView.selectedRow)")
                 return
             }
+            
             if let added = syncItem.added {
                 self.addedField.stringValue = added.toRelativeString(abbreviated: true, maxUnits:1)
             }
+            else {
+                self.addedField.stringValue = ""
+            }
+            
             if let lastSync = syncItem.lastSync {
                 self.lastSyncField.stringValue = lastSync.toRelativeString(abbreviated: true, maxUnits:1)
-
+            }
+            else {
+                self.lastSyncField.stringValue = ""
             }
             
             switch syncItem.syncFrequency {
