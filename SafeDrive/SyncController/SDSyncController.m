@@ -3,7 +3,6 @@
 //
 
 #import "SDSyncController.h"
-#import "SDSystemAPI.h"
 #import <dispatch/dispatch.h>
 
 #import <NMSSH/NMSSH.h>
@@ -12,8 +11,6 @@
 
 @property NSTask *syncTask;
 @property BOOL syncFailure;
-@property SDSystemAPI *sharedSystemAPI;
-
 
 -(void)createRemoteDirectory:(NSURL *)serverURL password:(NSString *)password success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
 
@@ -26,7 +23,6 @@
     if (self) {
         self.syncState = SDSyncStateIdle;
         self.syncing = NO;
-        self.sharedSystemAPI = [SDSystemAPI sharedAPI];
         self.syncTask = nil;
         self.syncFailure = NO;
     }
