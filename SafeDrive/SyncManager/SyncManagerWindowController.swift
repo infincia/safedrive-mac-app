@@ -11,6 +11,12 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBOutlet var syncListView: NSOutlineView!
     @IBOutlet var spinner: NSProgressIndicator!
     
+    @IBOutlet var addedField: NSTextField!
+
+    @IBOutlet var lastSyncField: NSTextField!
+
+    @IBOutlet var scheduleSelection: NSSegmentedControl!
+
     private var sharedSystemAPI = SDSystemAPI.sharedAPI()
     
     private var sharedSafedriveAPI = SDAPI.sharedAPI()
@@ -345,10 +351,67 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     func outlineViewSelectionDidChange(notification: NSNotification) {
         if self.syncListView.selectedRow != -1 {
-            let syncItem: SyncFolder = self.syncListView.itemAtRow(self.syncListView.selectedRow) as! SyncFolder
-            // visually selecting specific sync folders in the list is disabled for now but this would be the place to
-            // do something with them, like display recent sync info or folder stats in the lower window pane
+            guard let syncItem: SyncFolder = self.syncListView.itemAtRow(self.syncListView.selectedRow) as? SyncFolder else {
+                print("no item at \(self.syncListView.selectedRow)")
+                return
+            }
+            if let added = syncItem.added {
+                self.addedField.stringValue = added.toRelativeString(abbreviated: true, maxUnits:1)
+            }
+            if let lastSync = syncItem.lastSync {
+                self.lastSyncField.stringValue = lastSync.toRelativeString(abbreviated: true, maxUnits:1)
+
+            }
+            
+            switch syncItem.syncFrequency {
+            case "hourly":
+                self.scheduleSelection.setSelected(true, forSegment: 0)
+            case "daily":
+                self.scheduleSelection.setSelected(true, forSegment: 1)
+            case "weekly":
+                self.scheduleSelection.setSelected(true, forSegment: 2)
+            case "monthly":
+                self.scheduleSelection.setSelected(true, forSegment: 3)
+            default:
+                self.scheduleSelection.selectedSegment = -1
+            }
         }
+    }
+    
+    @IBAction func setSyncFrequencyForFolder(sender: AnyObject) {
+        if self.syncListView.selectedRow != -1 {
+            let syncItem: SyncFolder = self.syncListView.itemAtRow(self.syncListView.selectedRow) as! SyncFolder
+            
+            let control: NSSegmentedControl = sender as! NSSegmentedControl
+            
+            var syncFrequency: String
+            
+            switch control.selectedSegment {
+            case 0:
+                syncFrequency = "hourly"
+            case 1:
+                syncFrequency = "daily"
+            case 2:
+                syncFrequency = "weekly"
+            case 3:
+                syncFrequency = "monthly"
+            default:
+                syncFrequency = "minute"
+            }
+            
+            let realm = try! Realm()
+            print("setting \(syncItem.name!) folder to \(syncFrequency) schedule")
+
+            try! realm.write {
+                syncItem.syncFrequency = syncFrequency
+            }
+        }
+
+        
+    }
+    
+    private func configureLowerPanel() {
+        
     }
     
 }
