@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="SDDropdownMenuController">
+        <customObject id="-2" userLabel="File's Owner" customClass="DropdownController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
                 <outlet property="connectMenuItem" destination="UpL-Lb-jBl" id="8CB-n0-sus"/>
                 <outlet property="preferencesMenuItem" destination="BHr-Vz-MCm" id="hmK-Se-VdA"/>

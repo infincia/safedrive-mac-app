@@ -16,7 +16,8 @@
 
 #import "SDSyncController.h"
 
-#import "SDDropdownMenuController.h"
+#import "SDMountController.h"
+
 #import "SDAccountWindowController.h"
 #import "SDPreferencesWindowController.h"
 

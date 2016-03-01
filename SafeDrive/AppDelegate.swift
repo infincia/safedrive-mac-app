@@ -10,7 +10,7 @@ import Crashlytics
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol {
-    private var dropdownMenuController: SDDropdownMenuController!
+    private var dropdownMenuController: DropdownController!
     private var accountWindowController: SDAccountWindowController!
     private var preferencesWindowController: SDPreferencesWindowController!
     
@@ -90,7 +90,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
             self.syncScheduler.syncRunLoop()
         }
-        self.dropdownMenuController = SDDropdownMenuController()
+        self.dropdownMenuController = DropdownController()
         
         self.accountWindowController = SDAccountWindowController(windowNibName: "SDAccountWindow")
         _ = self.accountWindowController.window!

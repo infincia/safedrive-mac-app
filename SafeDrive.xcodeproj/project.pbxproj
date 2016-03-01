@@ -23,7 +23,6 @@
 		AA31684B1A192D27006CC0EB /* SDPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168491A192D26006CC0EB /* SDPreferencesWindowController.m */; };
 		AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168531A192DC2006CC0EB /* SDAPI.m */; };
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
-		AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */; };
 		AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
 		AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */; };
@@ -44,7 +43,6 @@
 		AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5C1AA11BB26C6A006A0C8C /* SDAppXPCDelegate.m */; };
 		AA61F84B1C05356D00D992FE /* SDSyncController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA61F84A1C05356D00D992FE /* SDSyncController.m */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
-		AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */; };
 		AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
 		AAA88BC11C825451009BE1C7 /* SyncManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC01C825451009BE1C7 /* SyncManagerWindowController.swift */; };
@@ -63,6 +61,8 @@
 		AAA88BD41C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
 		AAA88BD51C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
 		AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD61C851F17009BE1C7 /* AccountController.swift */; };
+		AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD81C857FFB009BE1C7 /* DropdownController.swift */; };
+		AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAA88BDE1C85F5F7009BE1C7 /* DropdownMenu.xib */; };
 		AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */; };
 		AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */; };
 		AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */ = {isa = PBXBuildFile; fileRef = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -228,8 +228,6 @@
 		AA3168501A192D87006CC0EB /* SDMountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDMountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3168521A192DC2006CC0EB /* SDAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AA3168531A192DC2006CC0EB /* SDAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AA3168591A195426006CC0EB /* SDDropdownMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDDropdownMenuController.h; path = StatusItem/SDDropdownMenuController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDDropdownMenuController.m; path = StatusItem/SDDropdownMenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDConstants.h; path = Shared/SDConstants.h; sourceTree = "<group>"; };
 		AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDConstants.m; path = Shared/SDConstants.m; sourceTree = "<group>"; };
 		AA4E77311A3E6E640054BBCA /* SDTestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestConstants.h; sourceTree = "<group>"; };
@@ -263,7 +261,6 @@
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
-		AA7319511A2F95A7003E2391 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDDropdownMenu.xib; sourceTree = "<group>"; };
 		AA7B460E1C46F18600EA8889 /* SDErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDErrorHandler.h; path = ErrorHandler/SDErrorHandler.h; sourceTree = "<group>"; };
 		AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDErrorHandler.m; path = ErrorHandler/SDErrorHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableRowView.swift; path = SyncManager/SyncManagerTableRowView.swift; sourceTree = "<group>"; };
@@ -275,6 +272,8 @@
 		AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncTask.swift; path = Shared/SyncTask.swift; sourceTree = "<group>"; };
 		AAA88BD61C851F17009BE1C7 /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountController.swift; path = AccountController/AccountController.swift; sourceTree = "<group>"; };
+		AAA88BD81C857FFB009BE1C7 /* DropdownController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DropdownController.swift; path = DropdownController/DropdownController.swift; sourceTree = "<group>"; };
+		AAA88BDD1C85F5F7009BE1C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DropdownMenu.xib; sourceTree = "<group>"; };
 		AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
 		AAEA529F1A81A3EA00BF862C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = safedriveaskpass/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -525,9 +524,8 @@
 		AA3168581A1953CF006CC0EB /* Dropdown Menu */ = {
 			isa = PBXGroup;
 			children = (
-				AA3168591A195426006CC0EB /* SDDropdownMenuController.h */,
-				AA31685A1A195426006CC0EB /* SDDropdownMenuController.m */,
-				AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */,
+				AAA88BDE1C85F5F7009BE1C7 /* DropdownMenu.xib */,
+				AAA88BD81C857FFB009BE1C7 /* DropdownController.swift */,
 			);
 			name = "Dropdown Menu";
 			sourceTree = "<group>";
@@ -873,8 +871,8 @@
 				AA543C7A1BFC57B50008FB8B /* Bandwidth-Icon.png in Resources */,
 				AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */,
 				AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */,
+				AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */,
 				AA543C781BFC57B50008FB8B /* General-icon.png in Resources */,
-				AA7319501A2F95A7003E2391 /* SDDropdownMenu.xib in Resources */,
 				AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */,
 				AA543C791BFC57B50008FB8B /* Account-Icon.png in Resources */,
 				AA543C7B1BFC57B50008FB8B /* Status-Icon.png in Resources */,
@@ -1142,11 +1140,11 @@
 				AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */,
 				AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */,
+				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,
 				AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */,
 				AAA88BC11C825451009BE1C7 /* SyncManagerWindowController.swift in Sources */,
 				AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */,
 				AAEED2D31A7D76F200B92993 /* SDDataSizeTransformer.m in Sources */,
-				AA31685B1A195426006CC0EB /* SDDropdownMenuController.m in Sources */,
 				AAA88BC91C8385AA009BE1C7 /* Machine.swift in Sources */,
 				AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */,
 				AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */,
@@ -1258,13 +1256,13 @@
 			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
-		AA7319521A2F95A7003E2391 /* SDDropdownMenu.xib */ = {
+		AAA88BDE1C85F5F7009BE1C7 /* DropdownMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				AA7319511A2F95A7003E2391 /* Base */,
+				AAA88BDD1C85F5F7009BE1C7 /* Base */,
 			);
-			name = SDDropdownMenu.xib;
-			path = StatusItem;
+			name = DropdownMenu.xib;
+			path = DropdownController;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
