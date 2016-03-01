@@ -5,17 +5,12 @@
 
 #import "SDAppXPCDelegate.h"
 
-#import "SDSyncController.h"
-
 @interface SDAppXPCDelegate ()
-@property SDSyncController *syncController;
 @end
 @implementation SDAppXPCDelegate
 
 -(instancetype)init {
     self = [super init];
-    self.syncController = [SDSyncController sharedAPI];
-
     return self;
 }
 
