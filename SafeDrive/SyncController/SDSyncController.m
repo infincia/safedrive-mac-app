@@ -100,7 +100,7 @@
 #pragma mark Public API
 
 -(void)startSyncTaskWithLocalURL:(NSURL *)localURL serverURL:(NSURL *)serverURL password:(NSString *)password restore:(BOOL)restore success:(SDSyncResultBlock)successBlock failure:(SDSyncResultBlock)failureBlock {
-    NSAssert([NSThread currentThread] == [NSThread mainThread], @"Sync task started from background thread");
+    NSAssert([NSThread currentThread] != [NSThread mainThread], @"Sync task started from main thread");
 
     self.syncFailure = NO;
     
