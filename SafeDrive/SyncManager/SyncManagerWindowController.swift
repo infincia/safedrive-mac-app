@@ -211,7 +211,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         let button: NSButton = sender as! NSButton
         let uniqueID: Int = button.tag
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            self.syncScheduler.sync(uniqueID)
+            self.syncScheduler.queueSyncJob(uniqueID)
         }
     }
     

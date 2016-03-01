@@ -116,9 +116,7 @@ class SyncScheduler {
                 for folder in folders {
                     let uniqueID = folder.uniqueID
                     SDLog("Sync job added to queue for folder: \(folder.name)")
-                    dispatch_sync(dispatch_get_main_queue(), {() -> Void in
-                        self.syncQueue.append(uniqueID)
-                    })
+                    self.queueSyncJob(uniqueID)
                 }
             }
             else {
@@ -127,6 +125,12 @@ class SyncScheduler {
 
             NSThread.sleepForTimeInterval(60)
         }
+    }
+    
+    func queueSyncJob(uniqueID: Int) {
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            self.syncQueue.append(uniqueID)
+        })
     }
     
     func syncRunLoop() {
