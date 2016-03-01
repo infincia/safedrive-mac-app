@@ -1,9 +1,5 @@
-//
-//  SafeDriveService-Bridging-Header.h
-//  SafeDrive
-//
-//  Created by steve on 2/25/16.
-//  Copyright © 2016 Infincia LLC. All rights reserved.
+
+//  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
