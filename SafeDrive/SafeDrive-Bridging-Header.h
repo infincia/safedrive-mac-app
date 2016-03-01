@@ -25,5 +25,7 @@
 
 @import LetsMove;
 
+@import AFNetworking;
+
 #import "SDServiceXPCRouter.h"
 #import "SDServiceManager.h"
