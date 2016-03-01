@@ -21,7 +21,7 @@ class SyncFolder: Object {
     
     var url: NSURL? {
         if let path = self.path {
-            return NSURL(fileURLWithPath: path)
+            return NSURL(fileURLWithPath: path, isDirectory: true)
         }
         return nil
     }
