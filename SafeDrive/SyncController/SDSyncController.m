@@ -102,11 +102,6 @@
 -(void)startSyncTaskWithLocalURL:(NSURL *)localURL serverURL:(NSURL *)serverURL password:(NSString *)password restore:(BOOL)restore success:(SDSyncResultBlock)successBlock failure:(SDSyncResultBlock)failureBlock {
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"Sync task started from background thread");
 
-    if (self.syncTask.isRunning) {
-        NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
-        failureBlock(localURL, error);
-        return;
-    }
     self.syncFailure = NO;
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
