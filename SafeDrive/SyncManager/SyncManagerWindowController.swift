@@ -383,11 +383,13 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             default:
                 self.scheduleSelection.selectedSegment = -1
             }
+            self.scheduleSelection.enabled = true
         }
         else {
             self.addedField.stringValue = ""
             self.lastSyncField.stringValue = ""
             self.scheduleSelection.selectedSegment = -1
+            self.scheduleSelection.enabled = false
         }
     }
     
