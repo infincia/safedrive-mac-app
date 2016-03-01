@@ -163,8 +163,7 @@ class SyncScheduler {
             }
             
             if folder.syncing {
-                SDLog("Sync canceled for local URL: %@", folder.url!)
-
+                SDLog("Sync for \(folder.name) already in progress, cancelling")
                 //NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
                 return
             }
@@ -175,7 +174,7 @@ class SyncScheduler {
             let folderName: String = folder.name!
             
             let localFolder: NSURL = folder.url!
-            SDLog("Sync started for local URL: %@", localFolder)
+            SDLog("Sync started for \(localFolder)")
 
             let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
             let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(NSHost.currentHost().localizedName!, isDirectory: true)
@@ -192,7 +191,7 @@ class SyncScheduler {
                 self.syncControllers.append(syncController)
             })
             syncController.startSyncTaskWithLocalURL(localFolder, serverURL: remote, password: self.accountController.password, restore: false, success: { (syncURL: NSURL, error: NSError?) -> Void in
-                SDLog("Sync finished for local URL: %@", localFolder)
+                SDLog("Sync finished for \(localFolder)")
                 let realm = try! Realm()
                 try! realm.write {
                     realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "lastSync": NSDate()], update: true)
@@ -201,8 +200,7 @@ class SyncScheduler {
                 self.syncControllers.removeAtIndex(self.syncControllers.indexOf(syncController)!)
             }, failure: { (syncURL: NSURL, error: NSError?) -> Void in
                 SDErrorHandlerReport(error)
-                SDLog("Sync failed for local URL: %@", localFolder)
-                SDLog("Sync error: %@", error!.localizedDescription)
+                SDLog("Sync failed for \(localFolder): \(error!.localizedDescription)")
                 let realm = try! Realm()
                 try! realm.write {
                     realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false], update: true)
