@@ -80,7 +80,6 @@ class SyncScheduler {
                 NSThread.sleepForTimeInterval(1)
                 continue
             }
-            SDLog("Sync scheduler loop")
             realm.refresh()
 
             let currentDate = NSDate()
@@ -114,7 +113,6 @@ class SyncScheduler {
                 folders = realm.objects(SyncFolder).filter("syncFrequency == 'minute' AND syncing == false")
             }
             if self.reachabilityManager.reachableViaWiFi {
-                print("WiFi/Ethernet connectivity present, scheduling \(folders.count) for sync")
                 for folder in folders {
                     let uniqueID = folder.uniqueID
                     SDLog("Sync job added to queue for folder: \(folder.name)")
@@ -124,7 +122,7 @@ class SyncScheduler {
                 }
             }
             else {
-                print("No WiFi/Ethernet connectivity, deferring \(folders.count) folders")
+                //SDLog("No WiFi/Ethernet connectivity, deferring \(folders.count) folders")
             }
 
             NSThread.sleepForTimeInterval(60)
