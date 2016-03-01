@@ -127,6 +127,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     }
                     
                     self.readSyncFolders(self)
+                    self.syncScheduler.queueSyncJob(folderID)
 
                 }, failure: { (apiError: NSError) -> Void in
                     SDErrorHandlerReport(apiError)
