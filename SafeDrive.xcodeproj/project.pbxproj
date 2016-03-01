@@ -69,6 +69,7 @@
 		AAF945F41C80162700B972C3 /* io.safedrive.SafeDrive.Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */; };
 		AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946031C815D5A00B972C3 /* FinderSync.swift */; };
 		AAF946081C815D5A00B972C3 /* SafeDriveFinder.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAF945FF1C815D5A00B972C3 /* SafeDriveFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */; };
 		AAF946141C823A0E00B972C3 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF946121C823A0E00B972C3 /* Realm.framework */; };
 		AAF946151C823A0E00B972C3 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF946121C823A0E00B972C3 /* Realm.framework */; };
 		AAF946161C823A0E00B972C3 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF946121C823A0E00B972C3 /* Realm.framework */; };
@@ -286,6 +287,7 @@
 		AAF946031C815D5A00B972C3 /* FinderSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderSync.swift; sourceTree = "<group>"; };
 		AAF946051C815D5A00B972C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAF9460C1C815E3500B972C3 /* SafeDriveFinder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeDriveFinder-Bridging-Header.h"; sourceTree = "<group>"; };
+		AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncScheduler.swift; sourceTree = "<group>"; };
 		AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SafeDrive-Bridging-Header.h"; sourceTree = "<group>"; };
 		AAF946121C823A0E00B972C3 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1/Realm.framework"; sourceTree = "<group>"; };
 		AAF946131C823A0E00B972C3 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1/RealmSwift.framework"; sourceTree = "<group>"; };
@@ -598,6 +600,7 @@
 			children = (
 				AA61F8491C05356D00D992FE /* SDSyncController.h */,
 				AA61F84A1C05356D00D992FE /* SDSyncController.m */,
+				AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */,
 			);
 			path = SyncController;
 			sourceTree = "<group>";
@@ -1124,6 +1127,7 @@
 				AA0A7D151A19670600DCB77E /* SDAccountWindowController.m in Sources */,
 				AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */,
 				AA5449611BC3667300826A0B /* SDServiceManager.m in Sources */,
+				AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */,
 				AA31684B1A192D27006CC0EB /* SDPreferencesWindowController.m in Sources */,
 				AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */,
 				AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */,

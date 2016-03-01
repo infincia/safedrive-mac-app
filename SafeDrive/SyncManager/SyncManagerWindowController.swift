@@ -17,7 +17,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     private var accountController = AccountController.sharedAccountController
     
-    var syncController = SDSyncController.sharedAPI()
+    private var syncScheduler = SyncScheduler.sharedSyncScheduler
     
     
     private var mac = Machine(name: NSHost.currentHost().localizedName!, uniqueClientID: "-1")
@@ -192,55 +192,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBAction func startSyncItemNow(sender: AnyObject) {
         let button: NSButton = sender as! NSButton
         let uniqueID: Int = button.tag
-
-        let realm = try! Realm()
-        let folder = realm.objects(SyncFolder).filter("uniqueID == \(uniqueID)").first
-
-        try! realm.write {
-            realm.create(SyncFolder.self, value: ["uniqueID": uniqueID, "syncing": true], update: true)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+            self.syncScheduler.sync(uniqueID)
         }
-        let folderName: String = folder!.name!
-        
-        let localFolder: NSURL = folder!.url!
-        
-        let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
-        let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(NSHost.currentHost().localizedName!, isDirectory: true)
-        let remoteFolder: NSURL = machineFolder.URLByAppendingPathComponent(folderName, isDirectory: true)
-        let urlComponents: NSURLComponents = NSURLComponents()
-        urlComponents.user = self.accountController.internalUserName
-        urlComponents.host = self.accountController.remoteHost
-        urlComponents.path = remoteFolder.path
-        urlComponents.port = self.accountController.remotePort
-        let remote: NSURL = urlComponents.URL!
-        
-        self.syncListView.reloadItem(self.mac, reloadChildren: true)
-        
-        self.syncController.startSyncTaskWithLocalURL(localFolder, serverURL: remote, password: self.accountController.password, restore: false, success: { (syncURL: NSURL, error: NSError?) -> Void in
-            SDLog("Sync finished for local URL: %@", localFolder)
-
-            let realm = try! Realm()
-            try! realm.write {
-                realm.create(SyncFolder.self, value: ["uniqueID": uniqueID, "syncing": false, "lastSync": NSDate()], update: true)
-            }
-            self.syncListView.reloadItem(self.mac, reloadChildren: true)
-
-        }, failure: { (syncURL: NSURL, error: NSError?) -> Void in
-            SDErrorHandlerReport(error)
-            SDLog("Sync failed for local URL: %@", localFolder)
-            SDLog("Sync error: %@", error!.localizedDescription)
-
-            let realm = try! Realm()
-            try! realm.write {
-                realm.create(SyncFolder.self, value: ["uniqueID": uniqueID, "syncing": false], update: true)
-            }
-            self.syncListView.reloadItem(self.mac, reloadChildren: true)
-            let alert: NSAlert = NSAlert()
-            alert.messageText = NSLocalizedString("Error", comment: "")
-            alert.informativeText = error!.localizedDescription
-            alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
-            alert.runModal()
-
-        })
     }
     
     // MARK: SDAccountProtocol
