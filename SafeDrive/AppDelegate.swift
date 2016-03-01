@@ -98,11 +98,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         self.preferencesWindowController = SDPreferencesWindowController(windowNibName: "SDPreferencesWindow")
         _ = self.preferencesWindowController.window!
         
-    
-        //self.aboutWindowController =
-        //self.aboutWindowController.useTextViewForAcknowledgments = true
-        //var websiteURLPath: String = "https://\(SDWebDomain)"
-        //self.aboutWindowController.appWebsiteURL = NSURL(string: websiteURLPath)!
+        
+        self.aboutWindowController = DCOAboutWindowController()
+        self.aboutWindowController.useTextViewForAcknowledgments = true
+        let websiteURLPath: String = "https://\(SDWebDomain)"
+        self.aboutWindowController.appWebsiteURL = NSURL(string: websiteURLPath)!
         
         self.syncManagerWindowController = SyncManagerWindowController()
         _ = syncManagerWindowController.window!
@@ -144,7 +144,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     func applicationShouldOpenAboutWindow(notification: NSNotification) {
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
             NSApp.activateIgnoringOtherApps(true)
-            //self.aboutWindowController.showWindow(nil)
+            self.aboutWindowController.showWindow(nil)
         })
     }
     
