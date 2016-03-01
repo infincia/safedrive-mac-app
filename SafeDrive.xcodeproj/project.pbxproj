@@ -1356,7 +1356,6 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1",
@@ -1384,7 +1383,6 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1",
