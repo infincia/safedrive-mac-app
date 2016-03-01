@@ -19,10 +19,12 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     private var syncScheduler = SyncScheduler.sharedSyncScheduler
     
+    private var token: RealmSwift.NotificationToken?
     
     private var mac = Machine(name: NSHost.currentHost().localizedName!, uniqueClientID: "-1")
     
     private let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
+    
     // MARK: Initializers
     
     override init(window: NSWindow?) {
@@ -55,6 +57,15 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         catch {
             print("failed to write machine to realm!!!")
             
+        }
+        
+        self.token = realm.objects(SyncFolder).addNotificationBlock { results, error in
+            
+            guard let results = results else {
+                return
+            }
+            self.syncListView.reloadItem(self.mac, reloadChildren: true)
+
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignIn:", name: SDAccountSignInNotification, object: nil)
