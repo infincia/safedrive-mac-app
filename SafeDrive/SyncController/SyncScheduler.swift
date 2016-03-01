@@ -81,6 +81,7 @@ class SyncScheduler {
                 continue
             }
             SDLog("Sync scheduler loop")
+            realm.refresh()
 
             let currentDate = NSDate()
             //let folders = realm.objects(SyncFolder).filter("syncing == false")
