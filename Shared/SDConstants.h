@@ -157,8 +157,8 @@ typedef void(^SDMountFailureBlock)(NSURL * _Nonnull mountURL, NSError * _Nonnull
 
 typedef void(^SDAPIClientRegistrationSuccessBlock)(NSString * _Nonnull sessionToken);
 
-typedef void(^SDAPIAccountStatusBlock)(NSDictionary * _Nonnull accountStatus);
-typedef void(^SDAPIAccountDetailsBlock)(NSDictionary * _Nonnull accountDetails);
+typedef void(^SDAPIAccountStatusBlock)(NSDictionary <NSString *, NSObject *>* _Nullable accountStatus);
+typedef void(^SDAPIAccountDetailsBlock)(NSDictionary <NSString *, NSObject *>* _Nullable accountDetails);
 
 typedef void(^SDAPIFingerprintListSuccessBlock)(NSDictionary * _Nonnull fingerprintPairs);
 
