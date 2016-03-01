@@ -14,7 +14,6 @@
 @property BOOL syncFailure;
 @property SDSystemAPI *sharedSystemAPI;
 
--(void)syncLoop;
 
 -(void)createRemoteDirectory:(NSURL *)serverURL password:(NSString *)password success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
 
@@ -398,18 +397,6 @@
         failureBlock(localURL, apiError);
     }];
 
-}
-
-
--(void)syncLoop {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (;;) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                // manually scheduled jobs go here, not being used at the moment
-            });
-            [NSThread sleepForTimeInterval:1];
-        }
-    });
 }
 
 @end
