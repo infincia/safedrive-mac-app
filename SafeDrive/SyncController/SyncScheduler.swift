@@ -113,14 +113,20 @@ class SyncScheduler {
                 // check for minute syncs
                 folders = realm.objects(SyncFolder).filter("syncFrequency == 'minute' AND syncing == false")
             }
-            print("Scheduling \(folders.count) for sync")
-            for folder in folders {
-                let uniqueID = folder.uniqueID
-                dispatch_sync(dispatch_get_main_queue(), {() -> Void in
-                    self.syncQueue.append(uniqueID)
-                    SDLog("Sync job added to queue for folder: \(uniqueID)")
-                })
+            if self.reachabilityManager.reachableViaWiFi {
+                print("WiFi/Ethernet connectivity present, scheduling \(folders.count) for sync")
+                for folder in folders {
+                    let uniqueID = folder.uniqueID
+                    SDLog("Sync job added to queue for folder: \(folder.name)")
+                    dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                        self.syncQueue.append(uniqueID)
+                    })
+                }
             }
+            else {
+                print("No WiFi/Ethernet connectivity, deferring \(folders.count) folders")
+            }
+
             NSThread.sleepForTimeInterval(60)
         }
     }
