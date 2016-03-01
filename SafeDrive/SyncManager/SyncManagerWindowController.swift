@@ -377,6 +377,11 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.scheduleSelection.selectedSegment = -1
             }
         }
+        else {
+            self.addedField.stringValue = ""
+            self.lastSyncField.stringValue = ""
+            self.scheduleSelection.selectedSegment = -1
+        }
     }
     
     @IBAction func setSyncFrequencyForFolder(sender: AnyObject) {
