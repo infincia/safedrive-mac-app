@@ -243,8 +243,19 @@ class FinderSync: FIFinderSync {
     }
     
     @IBAction func restoreItems(sender: AnyObject) {
-        var target: NSURL = FIFinderSyncController.defaultController().targetedURL()!
-        var items: [AnyObject] = FIFinderSyncController.defaultController().selectedItemURLs()!
+        guard let target: NSURL = FIFinderSyncController.defaultController().targetedURL() else {
+            return
+        }
+        // not using individual item urls yet
+        //let items: [AnyObject] = FIFinderSyncController.defaultController().selectedItemURLs()!
+        
+        let folder: SyncFolder? = self.syncFolderForURL(target)
+        if let folder = folder {
+            let app = self.appConnection.remoteObjectProxyWithErrorHandler { error in
+                print("remote proxy error: \(error)")
+            } as! SDAppXPCProtocol
+            app.displayRestoreWindowForURLs([folder.url!])
+        }
     }
     
     @IBAction func openRestoreWindow(sender: AnyObject) {
