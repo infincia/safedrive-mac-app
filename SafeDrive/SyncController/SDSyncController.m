@@ -27,16 +27,6 @@
     return self;
 }
 
-
-+(SDSyncController *)sharedAPI {
-    static SDSyncController *localInstance;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        localInstance = [[SDSyncController alloc] init];
-    });
-    return localInstance;
-}
-
 -(void)createRemoteDirectory:(NSURL *)serverURL password:(NSString *)password success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
     NMSSHLogger *l = [NMSSHLogger sharedLogger];
     l.logLevel = NMSSHLogLevelWarn;
