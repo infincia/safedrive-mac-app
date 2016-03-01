@@ -70,8 +70,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             guard let results = results else {
                 return
             }
+            let selectedIndexes = self.syncListView.selectedRowIndexes
             self.syncListView.reloadItem(self.mac, reloadChildren: true)
-
+            self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: true)
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignIn:", name: SDAccountSignInNotification, object: nil)
