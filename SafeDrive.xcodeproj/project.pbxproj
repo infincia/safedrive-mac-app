@@ -59,6 +59,9 @@
 		AAA88BCF1C83D243009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
 		AAA88BD01C83D3DB009BE1C7 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC81C8385A9009BE1C7 /* Machine.swift */; };
 		AAA88BD11C83D3DB009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
+		AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
+		AAA88BD41C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
+		AAA88BD51C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
 		AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD61C851F17009BE1C7 /* AccountController.swift */; };
 		AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */; };
 		AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */; };
@@ -270,6 +273,7 @@
 		AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFolder.swift; path = Shared/SyncFolder.swift; sourceTree = "<group>"; };
 		AAA88BC81C8385A9009BE1C7 /* Machine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Machine.swift; path = Shared/Machine.swift; sourceTree = "<group>"; };
 		AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncTask.swift; path = Shared/SyncTask.swift; sourceTree = "<group>"; };
 		AAA88BD61C851F17009BE1C7 /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountController.swift; path = AccountController/AccountController.swift; sourceTree = "<group>"; };
 		AAB617BA1A7B0FCA0003CD30 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
@@ -541,6 +545,7 @@
 			children = (
 				AAA88BC81C8385A9009BE1C7 /* Machine.swift */,
 				AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */,
+				AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */,
 				AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */,
 				AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */,
 				AAF945FA1C801F6100B972C3 /* SDAppXPCProtocol.h */,
@@ -1133,6 +1138,7 @@
 				AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */,
 				AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
+				AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 				AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */,
 				AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */,
@@ -1177,6 +1183,7 @@
 				AA5754101C8004660040E8B0 /* ServiceListenerDelegate.swift in Sources */,
 				AA5754051C7FFCC10040E8B0 /* AppDelegate.swift in Sources */,
 				AAA88BCC1C83D240009BE1C7 /* Machine.swift in Sources */,
+				AAA88BD41C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1185,6 +1192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAA88BCF1C83D243009BE1C7 /* SyncFolder.swift in Sources */,
+				AAA88BD51C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 				AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */,
 				AAA88BCD1C83D241009BE1C7 /* Machine.swift in Sources */,
 			);
