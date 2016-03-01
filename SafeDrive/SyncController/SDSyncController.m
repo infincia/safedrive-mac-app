@@ -27,8 +27,6 @@
     return self;
 }
 
-#pragma mark
-#pragma mark Public API
 
 +(SDSyncController *)sharedAPI {
     static SDSyncController *localInstance;
@@ -97,6 +95,9 @@
         [session disconnect];
     });
 }
+
+#pragma mark
+#pragma mark Public API
 
 -(void)startSyncTaskWithLocalURL:(NSURL *)localURL serverURL:(NSURL *)serverURL password:(NSString *)password restore:(BOOL)restore success:(SDSyncResultBlock)successBlock failure:(SDSyncResultBlock)failureBlock {
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"Sync task started from background thread");
