@@ -130,8 +130,8 @@ class SyncScheduler {
     }
     
     func queueSyncJob(uniqueID: Int) {
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
-            self.syncQueue.append(uniqueID)
+        dispatch_sync(syncDispatchQueue, {() -> Void in
+            self.syncQueue.insert(uniqueID, atIndex: 0)
         })
     }
     
