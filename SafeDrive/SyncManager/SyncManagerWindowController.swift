@@ -371,14 +371,14 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             }
             
             if let added = syncItem.added {
-                self.addedField.stringValue = added.toRelativeString(abbreviated: true, maxUnits:1)
+                self.addedField.stringValue = added.toMediumDateString()
             }
             else {
                 self.addedField.stringValue = ""
             }
             
             if let lastSync = syncItem.lastSync {
-                self.lastSyncField.stringValue = lastSync.toRelativeString(abbreviated: true, maxUnits:1)
+                self.lastSyncField.stringValue = lastSync.toMediumString()
             }
             else {
                 self.lastSyncField.stringValue = ""
