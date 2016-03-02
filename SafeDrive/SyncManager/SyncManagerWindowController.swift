@@ -345,12 +345,10 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             if syncFolder.syncing {
                 tableCellView.syncStatus.startAnimation(self)
                 tableCellView.syncNowButton.enabled = false
-                tableCellView.syncNowButton.hidden = true
             }
             else {
                 tableCellView.syncStatus.stopAnimation(self)
                 tableCellView.syncNowButton.enabled = true
-                tableCellView.syncNowButton.hidden = false
             }
 
         }
