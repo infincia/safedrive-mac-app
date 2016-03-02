@@ -36,6 +36,7 @@ target 'SafeDrive' do
     pod 'DCOAboutWindow', '0.2.0'
     pod 'LetsMove', '~> 1.20'
     pod 'Sparkle', '1.13.1'
+    pod 'STPrivilegedTask', '1.0.1'
 end
 
 
