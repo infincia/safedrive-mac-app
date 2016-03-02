@@ -150,8 +150,6 @@ class SyncScheduler {
                     NSThread.sleepForTimeInterval(1)
                     continue
                 }
-                //SDLog("Sync started for \(uniqueID)")
-
                 self.sync(uniqueID)
             }
             else {
