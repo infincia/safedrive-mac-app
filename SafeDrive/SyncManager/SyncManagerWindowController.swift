@@ -227,9 +227,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBAction func startSyncItemNow(sender: AnyObject) {
         let button: NSButton = sender as! NSButton
         let uniqueID: Int = button.tag
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            self.syncScheduler.queueSyncJob(uniqueID)
-        }
+        self.syncScheduler.queueSyncJob(uniqueID)
     }
     
     // MARK: SDAccountProtocol
