@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     private var serviceManager: SDServiceManager!
     private var syncManagerWindowController: SyncManagerWindowController!
     
-    private var syncScheduler = SyncScheduler.sharedSyncScheduler
+    private var syncScheduler: SyncScheduler?
     
     var CFBundleVersion = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as! String
 
@@ -96,17 +96,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             NSThread.sleepForTimeInterval(2)
             self.serviceRouter = SDServiceXPCRouter()
         })
-        
+        self.syncScheduler = SyncScheduler.sharedSyncScheduler
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
             do {
-                try self.syncScheduler.syncSchedulerLoop()
+                try self.syncScheduler?.syncSchedulerLoop()
             }
             catch {
                 print("Error starting scheduler: \(error)")
             }
         }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            self.syncScheduler.syncRunLoop()
+            self.syncScheduler?.syncRunLoop()
         }
         self.dropdownMenuController = DropdownController()
         
