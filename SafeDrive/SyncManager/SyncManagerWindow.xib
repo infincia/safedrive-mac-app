@@ -219,7 +219,7 @@
                                                                             <constraint firstAttribute="width" constant="15" id="nNy-6s-WyB"/>
                                                                         </constraints>
                                                                         <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSRefreshFreestandingTemplate" imagePosition="above" alignment="left" controlSize="small" imageScaling="proportionallyUpOrDown" inset="2" id="jYM-rh-bHb">
-                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                            <behavior key="behavior" lightByContents="YES"/>
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                         </buttonCell>
                                                                         <connections>
