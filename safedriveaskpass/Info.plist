@@ -11,8 +11,8 @@
 	<key>CFBundleName</key>
 	<string>SafeDrive</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.9.6</string>
+	<string>0.9.7</string>
 	<key>CFBundleVersion</key>
-	<string>518</string>
+	<string>520</string>
 </dict>
 </plist>
