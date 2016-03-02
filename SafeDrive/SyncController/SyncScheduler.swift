@@ -4,6 +4,8 @@
 
 import Foundation
 
+import Crashlytics
+
 import Realm
 import RealmSwift
 
@@ -171,7 +173,11 @@ class SyncScheduler {
     private func sync(folderID: Int) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
             
-            let realm = try! Realm()
+            guard let realm = try? Realm() else {
+                SDLog("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
             
             guard let folder = realm.objects(SyncFolder).filter("uniqueID == \(folderID)").first else {
                 return
@@ -207,7 +213,11 @@ class SyncScheduler {
             })
             syncController.startSyncTaskWithLocalURL(localFolder, serverURL: remote, password: self.accountController.password, restore: false, success: { (syncURL: NSURL, error: NSError?) -> Void in
                 SDLog("Sync finished for \(localFolder)")
-                let realm = try! Realm()
+                guard let realm = try? Realm() else {
+                    SDLog("failed to create realm!!!")
+                    Crashlytics.sharedInstance().crash()
+                    return
+                }
                 try! realm.write {
                     realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "lastSync": NSDate()], update: true)
                 }
@@ -216,7 +226,11 @@ class SyncScheduler {
             }, failure: { (syncURL: NSURL, error: NSError?) -> Void in
                 SDErrorHandlerReport(error)
                 SDLog("Sync failed for \(localFolder): \(error!.localizedDescription)")
-                let realm = try! Realm()
+                guard let realm = try? Realm() else {
+                    SDLog("failed to create realm!!!")
+                    Crashlytics.sharedInstance().crash()
+                    return
+                }
                 try! realm.write {
                     realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false], update: true)
                 }

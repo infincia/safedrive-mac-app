@@ -70,6 +70,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
         
         PFMoveToApplicationsFolderIfNecessary()
+        guard let groupURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db") else {
+            SDLog("Failed to obtain group container, this is a fatal error")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
+        
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtURL(groupURL, withIntermediateDirectories: true, attributes: nil)
+        }
+        catch {
+            SDLog("Failed to create group container, this is a fatal error")
+            Crashlytics.sharedInstance().crash()
+        }
+        
+        //let dbURL: NSURL = groupURL.URLByAppendingPathComponent("sync.realm")
+
+        
         self.serviceManager = SDServiceManager.sharedServiceManager()
         self.serviceManager.deployService()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in

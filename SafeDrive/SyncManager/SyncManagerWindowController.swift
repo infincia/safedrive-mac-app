@@ -4,6 +4,8 @@
 
 import Cocoa
 
+import Crashlytics
+
 import Realm
 import RealmSwift
 
@@ -50,7 +52,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         Realm.Configuration.defaultConfiguration = config
         
         guard let realm = try? Realm() else {
-            print("failed to create realm!!!")
+            SDLog("failed to create realm!!!")
+            Crashlytics.sharedInstance().crash()
             return
         }
         
@@ -113,7 +116,11 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.spinner.startAnimation(self)
                 
                 self.sharedSafedriveAPI.createSyncFolder(panel.URL!, success: { (folderID: Int) -> Void in
-                    let realm = try! Realm()
+                    guard let realm = try? Realm() else {
+                        SDLog("failed to create realm!!!")
+                        Crashlytics.sharedInstance().crash()
+                        return
+                    }
                     
                     let syncFolder = SyncFolder(name: panel.URL!.lastPathComponent!, url: panel.URL!, uniqueID: folderID)
                     
@@ -149,11 +156,16 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         self.spinner.startAnimation(self)
         self.sharedSafedriveAPI.deleteSyncFolder(uniqueID, success: {() -> Void in
             
-            let syncFolders = try! Realm().objects(SyncFolder)
+            guard let realm = try? Realm() else {
+                SDLog("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            
+            let syncFolders = realm.objects(SyncFolder)
             
             let syncFolder = syncFolders.filter("uniqueID == \(uniqueID)")
             
-            let realm = try! Realm()
             try! realm.write {
                 realm.delete(syncFolder)
             }
@@ -195,7 +207,11 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     
                     let addedDate: NSDate = NSDate(timeIntervalSince1970: addedUnixDate/1000)
                     
-                    let realm = try! Realm()
+                    guard let realm = try? Realm() else {
+                        SDLog("failed to create realm!!!")
+                        Crashlytics.sharedInstance().crash()
+                        return
+                    }
                     
                     try! realm.write {
                         // we update the local database with any info the server has to ensure they're in sync
@@ -254,7 +270,13 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         }
         
         // check if the candidate sync path is a parent or subdirectory of an existing registered sync folder
-        let syncFolders = try! Realm().objects(SyncFolder)
+        guard let realm = try? Realm() else {
+            print("failed to create realm!!!")
+            let errorInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open local database, this is a fatal error", comment: "")]
+            throw NSError(domain: SDErrorSyncDomain, code: SDSystemError.Unknown.rawValue, userInfo: errorInfo)
+        }
+        
+        let syncFolders = realm.objects(SyncFolder)
         if SyncFolder.hasConflictingFolderRegistered(url.path!, syncFolders: syncFolders) {
             let errorInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")]
             throw NSError(domain: SDErrorSyncDomain, code: SDSystemError.FolderConflict.rawValue, userInfo: errorInfo)
@@ -277,7 +299,12 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
         if item is Machine {
-            let syncFolders = try! Realm().objects(SyncFolder)
+            guard let realm = try? Realm() else {
+                print("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return 0
+            }
+            let syncFolders = realm.objects(SyncFolder)
             return syncFolders.count
         }
         else if item is SyncFolder {
@@ -289,7 +316,12 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
         if item is Machine {
-            let syncFolders = try! Realm().objects(SyncFolder)
+            guard let realm = try? Realm() else {
+                SDLog("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return ""
+            }
+            let syncFolders = realm.objects(SyncFolder)
             return syncFolders[index]
         }
         return self.mac
@@ -427,7 +459,11 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 syncFrequency = "minute"
             }
             
-            let realm = try! Realm()
+            guard let realm = try? Realm() else {
+                SDLog("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
             print("setting \(syncItem.name!) folder to \(syncFrequency) schedule")
 
             try! realm.write {
