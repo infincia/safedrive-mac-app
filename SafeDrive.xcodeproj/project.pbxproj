@@ -422,8 +422,6 @@
 		AA3168151A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXGroup;
 			children = (
-				AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */,
-				AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */,
 				AAAF1A401BF59446008E7865 /* Account Controller */,
 				AA31683B1A192CD2006CC0EB /* AccountWindow */,
 				AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */,
@@ -433,6 +431,8 @@
 				AA31684D1A192D64006CC0EB /* MountController */,
 				AA3168471A192D26006CC0EB /* PreferencesWindow */,
 				AA2E550E1A774DED00647637 /* Resources */,
+				AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */,
+				AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */,
 				AA31684E1A192D64006CC0EB /* SafeDriveAPI */,
 				AA73194F1A2F89F2003E2391 /* SDProtocols.h */,
 				AA54495E1BC3664F00826A0B /* ServiceManager */,
@@ -541,14 +541,14 @@
 		AA3D8EBA1C3D80A100CF0A3C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */,
 				AAA88BC81C8385A9009BE1C7 /* Machine.swift */,
-				AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */,
-				AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */,
+				AAF945FA1C801F6100B972C3 /* SDAppXPCProtocol.h */,
 				AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */,
 				AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */,
-				AAF945FA1C801F6100B972C3 /* SDAppXPCProtocol.h */,
 				AAF945F71C801EFE00B972C3 /* SDServiceXPCProtocol.h */,
-				AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */,
+				AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */,
+				AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -575,13 +575,13 @@
 		AA5754031C7FFCC10040E8B0 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				AAF945F81C801F1200B972C3 /* SafeDriveService.entitlements */,
-				AA5754131C80091F0040E8B0 /* SafeDriveService-Bridging-Header.h */,
 				AA5754041C7FFCC10040E8B0 /* AppDelegate.swift */,
-				AA57540F1C8004660040E8B0 /* ServiceListenerDelegate.swift */,
 				AA5754061C7FFCC10040E8B0 /* Assets.xcassets */,
-				AA5754081C7FFCC10040E8B0 /* MainMenu.xib */,
 				AA57540B1C7FFCC10040E8B0 /* Info.plist */,
+				AA5754081C7FFCC10040E8B0 /* MainMenu.xib */,
+				AA5754131C80091F0040E8B0 /* SafeDriveService-Bridging-Header.h */,
+				AAF945F81C801F1200B972C3 /* SafeDriveService.entitlements */,
+				AA57540F1C8004660040E8B0 /* ServiceListenerDelegate.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -662,8 +662,8 @@
 			children = (
 				AAF946031C815D5A00B972C3 /* FinderSync.swift */,
 				AAF946051C815D5A00B972C3 /* Info.plist */,
-				AAF946011C815D5A00B972C3 /* Supporting Files */,
 				AAF9460C1C815E3500B972C3 /* SafeDriveFinder-Bridging-Header.h */,
+				AAF946011C815D5A00B972C3 /* Supporting Files */,
 			);
 			path = Finder;
 			sourceTree = "<group>";
