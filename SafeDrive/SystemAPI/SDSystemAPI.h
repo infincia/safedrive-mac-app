@@ -11,10 +11,6 @@
 
 +(SDSystemAPI * _Nonnull)sharedAPI;
 
--(BOOL)isOSXFUSEInstalled;
-
--(BOOL)isSSHFSInstalled;
-
 -(NSString * _Nullable)machineSerialNumber;
 
 -(NSString * _Nonnull)en0MAC;

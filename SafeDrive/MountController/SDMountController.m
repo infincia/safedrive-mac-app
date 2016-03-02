@@ -68,19 +68,6 @@
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    if (![self.sharedSystemAPI isOSXFUSEInstalled]) {
-        NSError *osxfuseError = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorOSXFUSEMissing userInfo:@{NSLocalizedDescriptionKey: @"OSXFUSE is not installed"}];
-        failureBlock(mountURL, osxfuseError);
-        return;
-    }
-
-    if (![self.sharedSystemAPI isSSHFSInstalled]) {
-        NSError *sshfsError = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSSHFSMissing userInfo:@{NSLocalizedDescriptionKey: @"SSHFS is not installed"}];
-        failureBlock(mountURL, sshfsError);
-        return;
-    }
-
-
     NSError *createError;
     BOOL createSuccess = [fileManager createDirectoryAtURL:mountURL withIntermediateDirectories:YES attributes:nil error:&createError];
     if (!createSuccess) {
