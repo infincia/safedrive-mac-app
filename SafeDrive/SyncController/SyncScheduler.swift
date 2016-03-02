@@ -13,15 +13,15 @@ class SyncScheduler {
     
     static let sharedSyncScheduler = SyncScheduler()
     
-    let accountController = AccountController.sharedAccountController
+    private let accountController = AccountController.sharedAccountController
 
-    var syncControllers = [SDSyncController]()
+    private var syncControllers = [SDSyncController]()
     
-    var reachabilityManager: AFNetworkReachabilityManager
+    private var reachabilityManager: AFNetworkReachabilityManager
     
-    var running: Bool = true
+    private var running: Bool = true
     
-    var syncQueue = [Int]()
+    private var syncQueue = [Int]()
     
     let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
     
@@ -157,7 +157,7 @@ class SyncScheduler {
     }
     
     
-    func sync(folderID: Int) {
+    private func sync(folderID: Int) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
             
             let realm = try! Realm()
