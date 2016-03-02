@@ -135,21 +135,24 @@ class SyncScheduler {
         })
     }
     
+    private func dequeueSyncJob() -> Int? {
+        var uniqueID: Int?
+        dispatch_sync(syncDispatchQueue, {() -> Void in
+            uniqueID = self.syncQueue.popLast()
+        })
+        return uniqueID
+    }
+    
     func syncRunLoop() {
         while self.running {
             if self.accountController.signedIn {
-                var uniqueID: Int?
-                dispatch_sync(dispatch_get_main_queue(), {() -> Void in
-                    uniqueID = self.syncQueue.popLast()
-                })
-                guard let folderID = uniqueID else {
-                    //SDLog("Sync failed to pop")
+                guard let uniqueID = self.dequeueSyncJob() else {
                     NSThread.sleepForTimeInterval(1)
                     continue
                 }
                 //SDLog("Sync started for \(uniqueID)")
 
-                self.sync(folderID)
+                self.sync(uniqueID)
             }
             else {
                 //SDLog("Sync deferred until sign-in")
