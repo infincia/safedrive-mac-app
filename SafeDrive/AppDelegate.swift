@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     private var serviceManager: SDServiceManager!
     private var syncManagerWindowController: SyncManagerWindowController!
     
-    private var syncScheduler = SyncScheduler()
+    private var syncScheduler = SyncScheduler.sharedSyncScheduler
     
     var CFBundleVersion = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as! String
 
