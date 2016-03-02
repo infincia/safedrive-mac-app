@@ -47,6 +47,7 @@
 		AA76DC231C8779D2007B320E /* InstallerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* InstallerWindowController.swift */; };
 		AA76DC271C8787EE007B320E /* sshfs-2.5.0 in Copy Files */ = {isa = PBXBuildFile; fileRef = AA76DC251C8787D6007B320E /* sshfs-2.5.0 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA76DC291C879076007B320E /* InstallerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA76DC281C879076007B320E /* InstallerWindow.xib */; };
+		AA76DC2B1C879B77007B320E /* Install OSXFUSE 2.8.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AA76DC2A1C879B77007B320E /* Install OSXFUSE 2.8.pkg */; };
 		AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
 		AAA88BC11C825451009BE1C7 /* SyncManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC01C825451009BE1C7 /* SyncManagerWindowController.swift */; };
@@ -270,6 +271,7 @@
 		AA76DC221C8779D2007B320E /* InstallerWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InstallerWindowController.swift; path = Installer/InstallerWindowController.swift; sourceTree = "<group>"; };
 		AA76DC251C8787D6007B320E /* sshfs-2.5.0 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "sshfs-2.5.0"; path = "Bundled Dependencies/sshfs-2.5.0"; sourceTree = "<group>"; };
 		AA76DC281C879076007B320E /* InstallerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InstallerWindow.xib; path = Installer/InstallerWindow.xib; sourceTree = "<group>"; };
+		AA76DC2A1C879B77007B320E /* Install OSXFUSE 2.8.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Install OSXFUSE 2.8.pkg"; path = "Bundled Dependencies/Install OSXFUSE 2.8.pkg"; sourceTree = "<group>"; };
 		AA7B460E1C46F18600EA8889 /* SDErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDErrorHandler.h; path = ErrorHandler/SDErrorHandler.h; sourceTree = "<group>"; };
 		AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDErrorHandler.m; path = ErrorHandler/SDErrorHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableRowView.swift; path = SyncManager/SyncManagerTableRowView.swift; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 		AA76DC241C8787AB007B320E /* Bundled Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				AA76DC2A1C879B77007B320E /* Install OSXFUSE 2.8.pkg */,
 				AA76DC251C8787D6007B320E /* sshfs-2.5.0 */,
 			);
 			name = "Bundled Dependencies";
@@ -906,6 +909,7 @@
 				AA543C791BFC57B50008FB8B /* Account-Icon.png in Resources */,
 				AA543C7B1BFC57B50008FB8B /* Status-Icon.png in Resources */,
 				AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */,
+				AA76DC2B1C879B77007B320E /* Install OSXFUSE 2.8.pkg in Resources */,
 				AA76DC291C879076007B320E /* InstallerWindow.xib in Resources */,
 				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
