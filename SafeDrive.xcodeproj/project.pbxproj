@@ -43,6 +43,7 @@
 		AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5C1AA11BB26C6A006A0C8C /* SDAppXPCDelegate.m */; };
 		AA61F84B1C05356D00D992FE /* SDSyncController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA61F84A1C05356D00D992FE /* SDSyncController.m */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
+		AA76DC271C8787EE007B320E /* sshfs-2.5.0 in Copy Files */ = {isa = PBXBuildFile; fileRef = AA76DC251C8787D6007B320E /* sshfs-2.5.0 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
 		AAA88BC11C825451009BE1C7 /* SyncManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC01C825451009BE1C7 /* SyncManagerWindowController.swift */; };
@@ -157,6 +158,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				AA76DC271C8787EE007B320E /* sshfs-2.5.0 in Copy Files */,
 				AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */,
 			);
 			name = "Copy Files";
@@ -261,6 +263,7 @@
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
+		AA76DC251C8787D6007B320E /* sshfs-2.5.0 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "sshfs-2.5.0"; path = "Bundled Dependencies/sshfs-2.5.0"; sourceTree = "<group>"; };
 		AA7B460E1C46F18600EA8889 /* SDErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDErrorHandler.h; path = ErrorHandler/SDErrorHandler.h; sourceTree = "<group>"; };
 		AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDErrorHandler.m; path = ErrorHandler/SDErrorHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableRowView.swift; path = SyncManager/SyncManagerTableRowView.swift; sourceTree = "<group>"; };
@@ -394,6 +397,7 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AA76DC241C8787AB007B320E /* Bundled Dependencies */,
 				AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */,
 				AA3D8EBA1C3D80A100CF0A3C /* Shared */,
 				AA3168151A191B72006CC0EB /* SafeDrive */,
@@ -606,6 +610,14 @@
 				AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */,
 			);
 			path = SyncController;
+			sourceTree = "<group>";
+		};
+		AA76DC241C8787AB007B320E /* Bundled Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				AA76DC251C8787D6007B320E /* sshfs-2.5.0 */,
+			);
+			name = "Bundled Dependencies";
 			sourceTree = "<group>";
 		};
 		AA7B460D1C46F0F900EA8889 /* ErrorHandler */ = {

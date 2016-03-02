@@ -105,10 +105,17 @@
 
     self.sshfsTask = [[NSTask alloc] init];
 
-    [self.sshfsTask setLaunchPath:SDDefaultSSHFSPath];
-
-
-
+    NSString *sshfsPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"sshfs-2.5.0"];
+    
+    if (sshfsPath != nil) {
+        [self.sshfsTask setLaunchPath:sshfsPath];
+    }
+    else {
+        NSString *message = NSLocalizedString(@"SSHFS missing, contact SafeDrive support", @"");
+        NSError *sshfsError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorAskpassMissing userInfo:@{NSLocalizedDescriptionKey: message}];
+        failureBlock(mountURL, sshfsError);
+        return;
+    }
 
 
 #pragma mark - Set custom environment variables for sshfs subprocess
