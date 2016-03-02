@@ -82,7 +82,7 @@ void SDLogv(NSString *format, va_list arguments) {
     NSLog(@"%@", st);
 #endif
     // for RELEASE builds, redirect logs to the buffer in case there is an error
-    dispatch_async(errorQueue, ^{
+    dispatch_sync(errorQueue, ^{
         [logBuffer addObject:st];
         _shiftLog();
         _saveLog();
@@ -93,7 +93,7 @@ void SDErrorHandlerReport(NSError *error) {
 // don't even add error reports to the log unless we're in a RELEASE build
 #ifndef DEBUG
     // using archived NSError so the array can be serialized as a plist
-    dispatch_async(errorQueue, ^{
+    dispatch_sync(errorQueue, ^{
         NSArray *whitelistErrorDomains = @[SDErrorDomain, SDErrorSyncDomain, SDErrorSSHFSDomain, SDErrorAccountDomain, SDErrorAPIDomain];
         BOOL isAllowedErrorDomain = NO;
         for (NSString *whitelistedDomain in whitelistErrorDomains) {
@@ -115,7 +115,7 @@ void SDUncaughtExceptionHandler(NSException *exception) {
     NSArray *stack = [exception callStackReturnAddresses];
     NSLog(@"Stack trace: %@", stack);
 
-    dispatch_async(errorQueue, ^{
+    dispatch_sync(errorQueue, ^{
         NSDictionary *report = @{ @"stack": stack,
                                   @"log": logBuffer,
                                   @"user": currentUser ?: @"" };
