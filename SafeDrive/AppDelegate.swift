@@ -20,6 +20,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     private var syncManagerWindowController: SyncManagerWindowController!
     
     private var syncScheduler: SyncScheduler?
+    private var installWindowController: InstallerWindowController?
+
     
     var CFBundleVersion = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as! String
 
@@ -70,69 +72,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
         
         PFMoveToApplicationsFolderIfNecessary()
-        guard let groupURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db") else {
-            SDLog("Failed to obtain group container, this is a fatal error")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
         
-        do {
-            try NSFileManager.defaultManager().createDirectoryAtURL(groupURL, withIntermediateDirectories: true, attributes: nil)
-        }
-        catch {
-            SDLog("Failed to create group container, this is a fatal error")
-            Crashlytics.sharedInstance().crash()
-        }
-        
-        //let dbURL: NSURL = groupURL.URLByAppendingPathComponent("sync.realm")
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldFinishLaunch:", name: SDApplicationShouldFinishLaunch, object: nil)
 
-        
-        self.serviceManager = SDServiceManager.sharedServiceManager()
-        self.serviceManager.deployService()
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
-            self.serviceManager.unloadService()
-            NSThread.sleepForTimeInterval(1)
-            self.serviceManager.loadService()
-            NSThread.sleepForTimeInterval(2)
-            self.serviceRouter = SDServiceXPCRouter()
-        })
-        self.syncScheduler = SyncScheduler.sharedSyncScheduler
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            do {
-                try self.syncScheduler?.syncSchedulerLoop()
-            }
-            catch {
-                print("Error starting scheduler: \(error)")
-            }
-        }
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            self.syncScheduler?.syncRunLoop()
-        }
-        self.dropdownMenuController = DropdownController()
-        
-        self.accountWindowController = SDAccountWindowController(windowNibName: "SDAccountWindow")
-        _ = self.accountWindowController.window!
-        
-        self.preferencesWindowController = SDPreferencesWindowController(windowNibName: "SDPreferencesWindow")
-        _ = self.preferencesWindowController.window!
-        
-        
-        self.aboutWindowController = DCOAboutWindowController()
-        self.aboutWindowController.useTextViewForAcknowledgments = true
-        let websiteURLPath: String = "https://\(SDWebDomain)"
-        self.aboutWindowController.appWebsiteURL = NSURL(string: websiteURLPath)!
-        
-        self.syncManagerWindowController = SyncManagerWindowController()
-        _ = syncManagerWindowController.window!
+        self.installWindowController = InstallerWindowController()
+        _ = self.installWindowController!.window!
 
-        // register SDApplicationControlProtocol notifications
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenAccountWindow:", name: SDApplicationShouldOpenAccountWindow, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenPreferencesWindow:", name: SDApplicationShouldOpenPreferencesWindow, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenAboutWindow:", name: SDApplicationShouldOpenAboutWindow, object: nil)
-        NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenAboutWindow, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenSyncWindow:", name: SDApplicationShouldOpenSyncWindow, object: nil)
-
-        
     }
 
     
@@ -170,6 +115,73 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
             NSApp.activateIgnoringOtherApps(true)
             self.syncManagerWindowController.showWindow(nil)
+        })
+    }
+    
+    func applicationShouldFinishLaunch(notification: NSNotification) {
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            
+            guard let groupURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db") else {
+                SDLog("Failed to obtain group container, this is a fatal error")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            
+            do {
+                try NSFileManager.defaultManager().createDirectoryAtURL(groupURL, withIntermediateDirectories: true, attributes: nil)
+            }
+            catch {
+                SDLog("Failed to create group container, this is a fatal error")
+                Crashlytics.sharedInstance().crash()
+            }
+            
+            //let dbURL: NSURL = groupURL.URLByAppendingPathComponent("sync.realm")
+            
+            
+            self.serviceManager = SDServiceManager.sharedServiceManager()
+            self.serviceManager.deployService()
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+                self.serviceManager.unloadService()
+                NSThread.sleepForTimeInterval(1)
+                self.serviceManager.loadService()
+                NSThread.sleepForTimeInterval(2)
+                self.serviceRouter = SDServiceXPCRouter()
+            })
+            self.syncScheduler = SyncScheduler.sharedSyncScheduler
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+                do {
+                    try self.syncScheduler?.syncSchedulerLoop()
+                }
+                catch {
+                    print("Error starting scheduler: \(error)")
+                }
+            }
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+                self.syncScheduler?.syncRunLoop()
+            }
+            self.dropdownMenuController = DropdownController()
+            
+            self.accountWindowController = SDAccountWindowController(windowNibName: "SDAccountWindow")
+            _ = self.accountWindowController.window!
+            
+            self.preferencesWindowController = SDPreferencesWindowController(windowNibName: "SDPreferencesWindow")
+            _ = self.preferencesWindowController.window!
+            
+            
+            self.aboutWindowController = DCOAboutWindowController()
+            self.aboutWindowController.useTextViewForAcknowledgments = true
+            let websiteURLPath: String = "https://\(SDWebDomain)"
+            self.aboutWindowController.appWebsiteURL = NSURL(string: websiteURLPath)!
+            
+            self.syncManagerWindowController = SyncManagerWindowController()
+            _ = self.syncManagerWindowController.window!
+            
+            // register SDApplicationControlProtocol notifications
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenAccountWindow:", name: SDApplicationShouldOpenAccountWindow, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenPreferencesWindow:", name: SDApplicationShouldOpenPreferencesWindow, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenAboutWindow:", name: SDApplicationShouldOpenAboutWindow, object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenAboutWindow, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenSyncWindow:", name: SDApplicationShouldOpenSyncWindow, object: nil)
         })
     }
     

@@ -10,7 +10,16 @@ class InstallerWindowController: NSWindowController, NSOpenSavePanelDelegate {
 
     @IBOutlet var spinner: NSProgressIndicator!
     
+    @IBOutlet var next: NSButton!
+    
     private var installer = Installer()
+    
+    private var osxfuseIsInstalled = false
+    
+    private var promptedForInstall = false
+    
+    private var osxfuseDispatchQueue = dispatch_queue_create("io.safedrive.Installer.OSXFUSEQueue", DISPATCH_QUEUE_SERIAL);
+
     
     // MARK: Initializers
     
@@ -27,7 +36,9 @@ class InstallerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     }
     
     override func windowDidLoad() {
-        self.window?.backgroundColor = NSColor.whiteColor()
+        self.window?.level = Int(CGWindowLevelForKey(CGWindowLevelKey.StatusWindowLevelKey))
+
+        self.window!.backgroundColor = NSColor.whiteColor()
         
         let aWindow: INAppStoreWindow = self.window as! INAppStoreWindow
         aWindow.titleBarHeight = 24.0
@@ -39,14 +50,43 @@ class InstallerWindowController: NSWindowController, NSOpenSavePanelDelegate {
         aWindow.inactiveTitleBarEndColor = topColor
         aWindow.inactiveTitleBarStartColor = topColor
         aWindow.inactiveBaselineSeparatorColor = topColor
-        
+        self.checkDependencies()
     }
+
+    private func checkDependencies() {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+            while !self.installer.isOSXFUSEInstalled() {
+                if !self.promptedForInstall {
+                    self.promptedForInstall = true
+                    dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                        self.showWindow(self)
+                    })
+                }
+                NSThread.sleepForTimeInterval(1)
+            }
+            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldFinishLaunch, object: nil)
+                self.osxfuseIsInstalled = true
+                self.spinner.stopAnimation(self)
+                self.next.enabled = true
+                self.close()
+            })
+        })
+    }
+    
     
     // MARK: UI Actions
     
-    @IBAction func installDependencies(sender: AnyObject) {
-   
+    @IBAction func next(sender: AnyObject) {
+        if self.osxfuseIsInstalled {
+            NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldFinishLaunch, object: nil)
+        }
+        else {
+            self.installer.installOSXFUSE()
+            self.spinner.startAnimation(self)
+            self.next.enabled = false
+        }
     }
-    
     
 }

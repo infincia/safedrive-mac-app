@@ -48,7 +48,7 @@ NSString *const SDApplicationShouldOpenPreferencesWindow  = @"SDApplicationShoul
 NSString *const SDApplicationShouldOpenAccountWindow      = @"SDApplicationShouldOpenAccountWindow";
 NSString *const SDApplicationShouldOpenAboutWindow        = @"SDApplicationShouldOpenAboutWindow";
 NSString *const SDApplicationShouldOpenSyncWindow        = @"SDApplicationShouldOpenSyncWindow";
-
+NSString *const SDApplicationShouldFinishLaunch          = @"SDApplicationShouldFinishLaunch";
 
 NSString *const SDAPIDidEnterMaintenancePeriod            = @"SDAPIDidEnterMaintenancePeriod";
 NSString *const SDAPIDidBecomeReachable                   = @"SDAPIDidBecomeReachable";

@@ -5,18 +5,6 @@
 import Foundation
 
 class Installer {
-    var promptedForOSXFUSE = false
-    
-    func dependencyCheck() {
-        // check for OSXFUSE first
-        while !isOSXFUSEInstalled() {
-            if !promptedForOSXFUSE {
-                promptedForOSXFUSE = true
-                installOSXFUSE()
-            }
-            NSThread.sleepForTimeInterval(1)
-        }
-    }
     
     func installOSXFUSE() {
         let osxfuseURL = NSBundle.mainBundle().URLForResource("Install OSXFUSE 2.8", withExtension: "pkg", subdirectory: nil)
