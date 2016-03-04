@@ -7,6 +7,8 @@ end
 
 def shared_pods
     pod 'AFNetworking', '3.0.4'
+    pod 'Alamofire', ' ~> 3.2'
+
     pod 'Fabric', '1.6.6'
     pod 'Crashlytics', '3.7.0'
     pod 'NMSSH', '~> 2.2'
