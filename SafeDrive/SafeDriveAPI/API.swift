@@ -101,7 +101,7 @@ class API: NSObject {
             "language": languageCode,
             "uniqueClientId": identifier]
         
-        Alamofire.request(.POST, "client/register", parameters: postParameters, encoding: .JSON)
+        Alamofire.request(.POST, "https://\(SDAPIDomainTesting)/api/1/client/register", parameters: postParameters, encoding: .JSON)
             .validate()
             .responseJSON { response in
                 print(response.request)  // original URL request
@@ -139,7 +139,7 @@ class API: NSObject {
 
     
     func accountStatusForUser(user: String, success successBlock: SDAPIAccountStatusBlock, failure failureBlock: SDFailureBlock) {
-        Alamofire.request(.GET, "account/status", headers: ["SD-Auth-Token": self.sessionToken!])
+        Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/account/status", headers: ["SD-Auth-Token": self.sessionToken!])
             .validate()
             .responseJSON { response in
                 print(response.request)  // original URL request
@@ -168,7 +168,7 @@ class API: NSObject {
     }
     
     func accountDetailsForUser(user: String, success successBlock: SDAPIAccountDetailsBlock, failure failureBlock: SDFailureBlock) {
-        Alamofire.request(.GET, "account/details", headers: ["SD-Auth-Token": self.sessionToken!])
+        Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/account/details", headers: ["SD-Auth-Token": self.sessionToken!])
             .validate()
             .responseJSON { response in
                 print(response.request)  // original URL request
@@ -201,7 +201,7 @@ class API: NSObject {
     func createSyncFolder(localFolder: NSURL, success successBlock: SDAPICreateSyncFolderSuccessBlock, failure failureBlock: SDFailureBlock) {
         let postParameters = ["folderName": localFolder.lastPathComponent!, "folderPath": localFolder.path!]
         
-        Alamofire.request(.POST, "folder", parameters: postParameters, encoding: .JSON, headers: ["SD-Auth-Token": self.sessionToken!])
+        Alamofire.request(.POST, "https://\(SDAPIDomainTesting)/api/1/folder", parameters: postParameters, encoding: .JSON, headers: ["SD-Auth-Token": self.sessionToken!])
             .validate()
             .responseJSON { response in
                 print(response.request)  // original URL request
@@ -231,7 +231,7 @@ class API: NSObject {
     }
     
     func readSyncFoldersWithSuccess(successBlock: SDAPIReadSyncFoldersSuccessBlock, failure failureBlock: SDFailureBlock) {
-        Alamofire.request(.GET, "folder", headers: ["SD-Auth-Token": self.sessionToken!])
+        Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/folder", headers: ["SD-Auth-Token": self.sessionToken!])
             .validate()
             .responseJSON { response in
                 print(response.request)  // original URL request
@@ -261,7 +261,7 @@ class API: NSObject {
     
     func deleteSyncFolder(folderId: Int, success successBlock: SDAPIDeleteSyncFoldersSuccessBlock, failure failureBlock: SDFailureBlock) {
         let folderIds = ["folderIds": folderId]
-        Alamofire.request(.DELETE, "folder", parameters: folderIds, encoding: .URLEncodedInURL, headers: ["SD-Auth-Token": self.sessionToken!])
+        Alamofire.request(.DELETE, "https://\(SDAPIDomainTesting)/api/1/folder", parameters: folderIds, encoding: .URLEncodedInURL, headers: ["SD-Auth-Token": self.sessionToken!])
             .validate()
             .responseJSON { response in
                 print(response.request)  // original URL request
@@ -287,7 +287,7 @@ class API: NSObject {
     // MARK: Unused
     
     func getHostFingerprintList(successBlock: SDAPIFingerprintListSuccessBlock, failure failureBlock: SDFailureBlock) {
-        Alamofire.request(.GET, "fingerprints")
+        Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/fingerprints")
             .validate()
             .responseJSON { response in
                 print(response.request)  // original URL request
@@ -316,7 +316,7 @@ class API: NSObject {
     }
     
     func apiStatus(successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
-        Alamofire.request(.GET, "status")
+        Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/status")
             .validate()
             .responseJSON { response in
                 print(response.request)  // original URL request
