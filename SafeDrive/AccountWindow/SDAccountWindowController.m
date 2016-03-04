@@ -6,7 +6,7 @@
 #import <INAppStoreWindow/INAppStoreWindow.h>
 #import <dispatch/dispatch.h>
 
-#import "SDAPI.h"
+#import "SafeDrive-Swift.h"
 #import "SDMountController.h"
 #import "SDSystemAPI.h"
 
@@ -25,7 +25,7 @@
 @property IBOutlet NSTextField *errorField;
 @property IBOutlet NSProgressIndicator *spinner;
 
-@property SDAPI *safeDriveAPI;
+@property API *safeDriveAPI;
 @property SDMountController *mountController;
 @property SDSystemAPI *sharedSystemAPI;
 
@@ -48,7 +48,7 @@
     [super windowDidLoad];
     [self.window setLevel:NSStatusWindowLevel];
     
-    self.safeDriveAPI = [SDAPI sharedAPI];
+    self.safeDriveAPI = [API sharedAPI];
     self.mountController = [SDMountController sharedAPI];
     self.sharedSystemAPI = [SDSystemAPI sharedAPI];
     self.accountController = [AccountController sharedAccountController];

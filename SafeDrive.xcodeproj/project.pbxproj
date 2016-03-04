@@ -21,7 +21,6 @@
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31682C1A191B72006CC0EB /* SafeDriveTests.m */; };
 		AA31684B1A192D27006CC0EB /* SDPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168491A192D26006CC0EB /* SDPreferencesWindowController.m */; };
-		AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168531A192DC2006CC0EB /* SDAPI.m */; };
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
 		AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
@@ -233,8 +232,6 @@
 		AA3168491A192D26006CC0EB /* SDPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDPreferencesWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA31684F1A192D87006CC0EB /* SDMountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDMountController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AA3168501A192D87006CC0EB /* SDMountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDMountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AA3168521A192DC2006CC0EB /* SDAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		AA3168531A192DC2006CC0EB /* SDAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDConstants.h; path = Shared/SDConstants.h; sourceTree = "<group>"; };
 		AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDConstants.m; path = Shared/SDConstants.m; sourceTree = "<group>"; };
 		AA4E77311A3E6E640054BBCA /* SDTestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestConstants.h; sourceTree = "<group>"; };
@@ -530,8 +527,6 @@
 		AA31684E1A192D64006CC0EB /* SafeDriveAPI */ = {
 			isa = PBXGroup;
 			children = (
-				AA3168521A192DC2006CC0EB /* SDAPI.h */,
-				AA3168531A192DC2006CC0EB /* SDAPI.m */,
 				AA76DC2C1C88D4C6007B320E /* API.swift */,
 			);
 			path = SafeDriveAPI;
@@ -1177,7 +1172,6 @@
 				AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
-				AA3168541A192DC2006CC0EB /* SDAPI.m in Sources */,
 				AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */,
 				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,

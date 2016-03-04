@@ -12,7 +12,7 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     @IBOutlet var syncPreferencesMenuItem: NSMenuItem!
     
     
-    private var safeDriveAPI = SDAPI.sharedAPI()
+    private var safeDriveAPI = API.sharedAPI
     private var mountController = SDMountController.sharedAPI()
     private var sharedSystemAPI = SDSystemAPI.sharedAPI()
     

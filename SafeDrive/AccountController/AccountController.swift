@@ -22,7 +22,7 @@ class AccountController: NSObject {
     var signedIn: Bool = false
     
     private var sharedSystemAPI = SDSystemAPI.sharedAPI()
-    private var sharedSafedriveAPI = SDAPI.sharedAPI()
+    private var sharedSafedriveAPI = API.sharedAPI
     
     
     override init() {

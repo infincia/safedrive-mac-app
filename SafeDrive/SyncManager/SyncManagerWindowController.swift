@@ -21,7 +21,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     private var sharedSystemAPI = SDSystemAPI.sharedAPI()
     
-    private var sharedSafedriveAPI = SDAPI.sharedAPI()
+    private var sharedSafedriveAPI = API.sharedAPI
     
     private var accountController = AccountController.sharedAccountController
     

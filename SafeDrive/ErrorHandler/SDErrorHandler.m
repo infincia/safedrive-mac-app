@@ -3,7 +3,7 @@
 //
 
 #import "SDErrorHandler.h"
-#import "SDAPI.h"
+#import "SafeDrive-Swift.h"
 
 static NSMutableArray * logBuffer;
 static NSMutableArray * errors;
@@ -152,7 +152,8 @@ void _startReportQueue() {
                     
                     //note: passing the same queue we're in here is only OK because the called method uses it
                     //      with dispatch_async, if that were not the case this would deadlock forever
-                    [[SDAPI sharedAPI] reportError:error forUser:reportUser withLog:reportLog completionQueue:errorQueue success:^{
+                    
+                    [[API sharedAPI] reportError:error forUser:reportUser withLog:reportLog completionQueue:errorQueue success:^{
                         
                         _saveErrors();
                    
