@@ -191,7 +191,7 @@ class API: NSObject {
                 case .Success:
                     guard let JSON = response.result.value as? [String: AnyObject],
                           let folderID: Int = JSON["id"] as? Int else {
-                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error"])
+                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error: folder:create"])
                         failureBlock(responseError)
                         return
                     }
@@ -215,7 +215,7 @@ class API: NSObject {
                 switch response.result {
                 case .Success:
                     guard let JSON = response.result.value as? [[String: NSObject]] else {
-                            let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error"])
+                            let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error: folder:read"])
                             failureBlock(responseError)
                             return
                     }
@@ -261,7 +261,7 @@ class API: NSObject {
                 switch response.result {
                 case .Success:
                     guard let JSON = response.result.value as? [String: String] else {
-                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error"])
+                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error: fingerprints"])
                         failureBlock(responseError)
                         return
                     }
