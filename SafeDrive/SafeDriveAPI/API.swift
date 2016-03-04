@@ -47,7 +47,7 @@ class API: NSObject {
     
     func reportError(error: NSError, forUser user: String, withLog log: [String], completionQueue queue: dispatch_queue_t, success successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
         var postParameters = [String : AnyObject]()
-        let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion)"
+        let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
         postParameters["operatingSystem"] = os
         let clientVersion: String = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
         postParameters["clientVersion"] = clientVersion
