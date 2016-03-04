@@ -12,7 +12,7 @@ import Crashlytics
 class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol {
     private var dropdownMenuController: DropdownController!
     private var accountWindowController: SDAccountWindowController!
-    private var preferencesWindowController: SDPreferencesWindowController!
+    private var preferencesWindowController: PreferencesWindowController!
     
     private var aboutWindowController: DCOAboutWindowController!
     private var serviceRouter: SDServiceXPCRouter!
@@ -164,7 +164,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.accountWindowController = SDAccountWindowController(windowNibName: "SDAccountWindow")
             _ = self.accountWindowController.window!
             
-            self.preferencesWindowController = SDPreferencesWindowController(windowNibName: "SDPreferencesWindow")
+            self.preferencesWindowController = PreferencesWindowController()
             _ = self.preferencesWindowController.window!
             
             

@@ -22,7 +22,6 @@
 @import INAppStoreWindow;
 
 #import "SDAccountWindowController.h"
-#import "SDPreferencesWindowController.h"
 
 @import DCOAboutWindow;
 

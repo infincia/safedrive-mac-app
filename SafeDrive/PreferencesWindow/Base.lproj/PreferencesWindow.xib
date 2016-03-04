@@ -5,13 +5,23 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="SDPreferencesWindowController">
+        <customObject id="-2" userLabel="File's Owner" customClass="PreferencesWindowController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
                 <outlet property="accountButton" destination="Vv2-Cb-tgb" id="KzM-cf-oTX"/>
+                <outlet property="accountExpirationField" destination="E5M-1Q-InX" id="LkU-RU-4lX"/>
+                <outlet property="accountStatusField" destination="deU-cR-Cba" id="URx-Ir-KGh"/>
+                <outlet property="assignedStorageField" destination="0QK-rc-ZL3" id="P4F-lC-Pkx"/>
+                <outlet property="availableStorageField" destination="hkB-8m-LwU" id="TVS-Qd-0JJ"/>
                 <outlet property="bandwidthButton" destination="c1p-SX-QFQ" id="DGw-yJ-IW2"/>
                 <outlet property="generalButton" destination="50Q-kb-XJw" id="o0T-OI-nQx"/>
+                <outlet property="mountStatusField" destination="Yg4-O1-zL4" id="3FZ-F1-1QS"/>
+                <outlet property="serviceStatusField" destination="I8E-Hm-VKG" id="Isr-Mm-UvP"/>
                 <outlet property="statusButton" destination="Y3b-ju-7in" id="Ycb-MT-wyg"/>
                 <outlet property="tabView" destination="XTW-H7-MsH" id="bZw-tq-D6r"/>
+                <outlet property="usedStorageField" destination="I9m-Gd-YKy" id="0qE-46-6k9"/>
+                <outlet property="volumeFreespaceField" destination="cac-Lo-ph0" id="cfo-CN-VzF"/>
+                <outlet property="volumeSizeField" destination="mHr-NL-W41" id="58D-KL-qhu"/>
+                <outlet property="volumeUsageBar" destination="VpF-cu-Njk" id="vcT-4j-S2U"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -35,11 +45,12 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="General" identifier="1" id="Tr0-rv-ChU">
-                                <view key="view" id="BGg-1E-DvT">
+                                <view key="view" ambiguous="YES" id="BGg-1E-DvT">
+                                    <rect key="frame" x="0.0" y="0.0" width="351" height="279"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DFf-pg-Q7a">
-                                            <rect key="frame" x="33" y="-36" width="285" height="18"/>
+                                            <rect key="frame" x="33" y="243" width="285" height="18"/>
                                             <buttonCell key="cell" type="check" title="Start SafeDrive at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="PNJ-M0-iQ9">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" size="12" name="Raleway-Light"/>
@@ -55,7 +66,7 @@
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pvd-Ip-ebE">
-                                            <rect key="frame" x="33" y="-66" width="285" height="18"/>
+                                            <rect key="frame" x="33" y="213" width="285" height="18"/>
                                             <buttonCell key="cell" type="check" title="Mount volume automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0WR-rs-tJE">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" size="12" name="Raleway-Light"/>
@@ -83,14 +94,6 @@
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <connections>
-                                                <binding destination="-2" name="displayPatternValue1" keyPath="self.assignedStorage" id="Myw-PS-oGN">
-                                                    <dictionary key="options">
-                                                        <string key="NSDisplayPattern">%{value1}@</string>
-                                                        <string key="NSValueTransformerName">SDDataSizeTransformer</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UqL-cq-z3R">
                                             <rect key="frame" x="60" y="121" width="111" height="18"/>
@@ -107,13 +110,6 @@
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <connections>
-                                                <binding destination="-2" name="displayPatternValue1" keyPath="self.accountStatus" id="VSW-27-21H">
-                                                    <dictionary key="options">
-                                                        <string key="NSDisplayPattern">%{value1}@</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zg2-h0-Vo7">
                                             <rect key="frame" x="60" y="96" width="111" height="18"/>
@@ -130,13 +126,6 @@
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <connections>
-                                                <binding destination="-2" name="displayPatternValue1" keyPath="self.expirationDate" id="dXe-Wn-kxz">
-                                                    <dictionary key="options">
-                                                        <string key="NSDisplayPattern">%{value1}@</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I9m-Gd-YKy">
                                             <rect key="frame" x="179" y="188" width="120" height="17"/>
@@ -145,14 +134,14 @@
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <connections>
-                                                <binding destination="-2" name="displayPatternValue1" keyPath="self.usedStorage" id="KTa-TD-KyW">
-                                                    <dictionary key="options">
-                                                        <string key="NSDisplayPattern">%{value1}@</string>
-                                                        <string key="NSValueTransformerName">SDDataSizeTransformer</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkB-8m-LwU">
+                                            <rect key="frame" x="179" y="156" width="120" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="AdR-a9-VN1">
+                                                <font key="font" size="12" name="Raleway-Light"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
                                         </textField>
                                     </subviews>
                                 </view>
@@ -164,7 +153,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Status" identifier="" id="dQJ-J2-1uw">
-                                <view key="view" ambiguous="YES" id="HrL-80-KKL">
+                                <view key="view" id="HrL-80-KKL">
                                     <rect key="frame" x="0.0" y="0.0" width="351" height="279"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -191,14 +180,6 @@
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <connections>
-                                                <binding destination="-2" name="displayPatternValue1" keyPath="self.volumeTotalSpace" id="toI-fw-JUa">
-                                                    <dictionary key="options">
-                                                        <string key="NSDisplayPattern">%{value1}@</string>
-                                                        <string key="NSValueTransformerName">SDDataSizeTransformer</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cac-Lo-ph0">
                                             <rect key="frame" x="183" y="179" width="147" height="17"/>
@@ -207,14 +188,6 @@
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <connections>
-                                                <binding destination="-2" name="displayPatternValue1" keyPath="self.volumeFreeSpace" id="elw-lT-I5D">
-                                                    <dictionary key="options">
-                                                        <string key="NSDisplayPattern">%{value1}@</string>
-                                                        <string key="NSValueTransformerName">SDDataSizeTransformer</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Miu-7i-xBb">
                                             <rect key="frame" x="29" y="229" width="150" height="17"/>
@@ -231,27 +204,9 @@
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <connections>
-                                                <binding destination="-2" name="value" keyPath="self.volumeMountState" id="IDD-5i-OFc"/>
-                                            </connections>
                                         </textField>
                                         <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="VpF-cu-Njk">
                                             <rect key="frame" x="31" y="145" width="297" height="20"/>
-                                            <connections>
-                                                <binding destination="-2" name="maxValue" keyPath="self.volumeTotalSpace" id="dCZ-BV-bp3">
-                                                    <dictionary key="options">
-                                                        <integer key="NSNotApplicablePlaceholder" value="1"/>
-                                                        <integer key="NSNullPlaceholder" value="1"/>
-                                                    </dictionary>
-                                                </binding>
-                                                <binding destination="-2" name="value" keyPath="self.volumeUsedSpace" previousBinding="dCZ-BV-bp3" id="Fec-ei-R1Z">
-                                                    <dictionary key="options">
-                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                                        <integer key="NSNotApplicablePlaceholder" value="0"/>
-                                                        <integer key="NSNullPlaceholder" value="0"/>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
                                         </progressIndicator>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VgD-5i-jzK">
                                             <rect key="frame" x="29" y="254" width="150" height="17"/>
@@ -268,9 +223,6 @@
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <connections>
-                                                <binding destination="-2" name="value" keyPath="self.serviceStatus" id="o9w-sv-1cI"/>
-                                            </connections>
                                         </textField>
                                     </subviews>
                                 </view>

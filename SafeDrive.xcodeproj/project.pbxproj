@@ -11,7 +11,7 @@
 		7304AA053B6B9154CFFDF0E3 /* Pods_SafeDriveFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1169D271386AF89774EE8A /* Pods_SafeDriveFinder.framework */; };
 		A45C2D767E0C6802573535E1 /* Pods_SafeDriveService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC5F0B8A3B11CCA2364971B3 /* Pods_SafeDriveService.framework */; };
 		AA0A7D151A19670600DCB77E /* SDAccountWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0A7D131A19670600DCB77E /* SDAccountWindowController.m */; };
-		AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* SDPreferencesWindow.xib */; };
+		AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */; };
 		AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */; };
 		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
@@ -20,7 +20,6 @@
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31682C1A191B72006CC0EB /* SafeDriveTests.m */; };
-		AA31684B1A192D27006CC0EB /* SDPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168491A192D26006CC0EB /* SDPreferencesWindowController.m */; };
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
 		AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
@@ -48,6 +47,7 @@
 		AA76DC291C879076007B320E /* InstallerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA76DC281C879076007B320E /* InstallerWindow.xib */; };
 		AA76DC2B1C879B77007B320E /* Install OSXFUSE 2.8.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AA76DC2A1C879B77007B320E /* Install OSXFUSE 2.8.pkg */; };
 		AA76DC2D1C88D4C6007B320E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2C1C88D4C6007B320E /* API.swift */; };
+		AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */; };
 		AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
 		AAA88BC11C825451009BE1C7 /* SyncManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC01C825451009BE1C7 /* SyncManagerWindowController.swift */; };
@@ -215,7 +215,7 @@
 		7A8EB5F8F78ED848C64BE0AE /* Pods-SafeDriveFinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.debug.xcconfig"; sourceTree = "<group>"; };
 		AA0A7D121A19670600DCB77E /* SDAccountWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDAccountWindowController.h; path = SafeDrive/AccountWindow/SDAccountWindowController.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AA0A7D131A19670600DCB77E /* SDAccountWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountWindowController.m; path = SafeDrive/AccountWindow/SDAccountWindowController.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDPreferencesWindow.xib; sourceTree = "<group>"; };
+		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreferencesWindow.xib; sourceTree = "<group>"; };
 		AA0A7D1F1A19682D00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDAccountWindow.xib; sourceTree = "<group>"; };
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA13CB9D1A7212F000A91C7A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = safedriveaskpass/main.m; sourceTree = SOURCE_ROOT; };
@@ -228,8 +228,6 @@
 		AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeDriveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA31682B1A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA31682C1A191B72006CC0EB /* SafeDriveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SafeDriveTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AA3168481A192D26006CC0EB /* SDPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDPreferencesWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		AA3168491A192D26006CC0EB /* SDPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDPreferencesWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA31684F1A192D87006CC0EB /* SDMountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDMountController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AA3168501A192D87006CC0EB /* SDMountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDMountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDConstants.h; path = Shared/SDConstants.h; sourceTree = "<group>"; };
@@ -271,6 +269,7 @@
 		AA76DC281C879076007B320E /* InstallerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InstallerWindow.xib; path = Installer/InstallerWindow.xib; sourceTree = "<group>"; };
 		AA76DC2A1C879B77007B320E /* Install OSXFUSE 2.8.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Install OSXFUSE 2.8.pkg"; path = "Bundled Dependencies/Install OSXFUSE 2.8.pkg"; sourceTree = "<group>"; };
 		AA76DC2C1C88D4C6007B320E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		AA7B460E1C46F18600EA8889 /* SDErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDErrorHandler.h; path = ErrorHandler/SDErrorHandler.h; sourceTree = "<group>"; };
 		AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDErrorHandler.m; path = ErrorHandler/SDErrorHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableRowView.swift; path = SyncManager/SyncManagerTableRowView.swift; sourceTree = "<group>"; };
@@ -508,9 +507,8 @@
 				AA543C731BFC57B50008FB8B /* Account-Icon.png */,
 				AA543C741BFC57B50008FB8B /* Bandwidth-Icon.png */,
 				AA543C751BFC57B50008FB8B /* Status-Icon.png */,
-				AA3168481A192D26006CC0EB /* SDPreferencesWindowController.h */,
-				AA3168491A192D26006CC0EB /* SDPreferencesWindowController.m */,
-				AA0A7D1B1A19682000DCB77E /* SDPreferencesWindow.xib */,
+				AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */,
+				AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */,
 			);
 			path = PreferencesWindow;
 			sourceTree = "<group>";
@@ -900,7 +898,7 @@
 				AA2E55101A774E0000647637 /* known_hosts in Resources */,
 				AA543C7A1BFC57B50008FB8B /* Bandwidth-Icon.png in Resources */,
 				AAB617BB1A7B0FCA0003CD30 /* Credits.rtf in Resources */,
-				AA0A7D191A19682000DCB77E /* SDPreferencesWindow.xib in Resources */,
+				AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */,
 				AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */,
 				AA543C781BFC57B50008FB8B /* General-icon.png in Resources */,
 				AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */,
@@ -1164,7 +1162,6 @@
 				AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */,
 				AA5449611BC3667300826A0B /* SDServiceManager.m in Sources */,
 				AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */,
-				AA31684B1A192D27006CC0EB /* SDPreferencesWindowController.m in Sources */,
 				AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */,
 				AA76DC2D1C88D4C6007B320E /* API.swift in Sources */,
 				AA76DC211C8762A9007B320E /* Installer.swift in Sources */,
@@ -1174,6 +1171,7 @@
 				AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 				AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */,
+				AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */,
 				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,
 				AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */,
 				AAA88BC11C825451009BE1C7 /* SyncManagerWindowController.swift in Sources */,
@@ -1256,12 +1254,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		AA0A7D1B1A19682000DCB77E /* SDPreferencesWindow.xib */ = {
+		AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				AA0A7D1A1A19682000DCB77E /* Base */,
 			);
-			name = SDPreferencesWindow.xib;
+			name = PreferencesWindow.xib;
 			sourceTree = "<group>";
 		};
 		AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */ = {
