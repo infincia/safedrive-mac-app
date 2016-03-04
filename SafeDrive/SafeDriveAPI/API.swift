@@ -110,13 +110,13 @@ class API: NSObject {
                 print(response.result)   // result of response serialization
                 switch response.result {
                 case .Success:
-                    guard let JSON = response.result.value as? [String: String] else {
-                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error"])
+                    guard let JSON = response.result.value as? [String: AnyObject] else {
+                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error: client/register"])
                         failureBlock(responseError)
                         return
                     }
                     SDLog("Client registered: \(JSON)")
-                    guard let token = JSON["token"] else {
+                    guard let token = JSON["token"] as? String else {
                         let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Validation error"])
                         failureBlock(responseError)
                         return
@@ -149,8 +149,8 @@ class API: NSObject {
                 
                 switch response.result {
                 case .Success:
-                    guard let JSON = response.result.value as? [String: String] else {
-                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error"])
+                    guard let JSON = response.result.value as? [String: NSObject] else {
+                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error: account/status"])
                         failureBlock(responseError)
                         return
                     }
@@ -178,8 +178,8 @@ class API: NSObject {
                 
                 switch response.result {
                 case .Success:
-                    guard let JSON = response.result.value as? [String: String] else {
-                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error"])
+                    guard let JSON = response.result.value as? [String: NSObject] else {
+                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error: account/details"])
                         failureBlock(responseError)
                         return
                     }
