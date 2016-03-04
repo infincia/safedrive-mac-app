@@ -9,6 +9,8 @@
 #import "SDAppXPCProtocol.h"
 #import "SDServiceXPCProtocol.h"
 
+#import "HKTHashProvider.h"
+
 #import "SDErrorHandler.h"
 
 #import "SDSystemAPI.h"
