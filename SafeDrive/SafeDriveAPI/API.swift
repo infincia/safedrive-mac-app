@@ -10,23 +10,19 @@ class API: NSObject {
     static let sharedAPI = API()
 
     var reachabilityManager: AFNetworkReachabilityManager
-    var apiManager: AFHTTPSessionManager
     var sharedSystemAPI = SDSystemAPI.sharedAPI()
-    var baseURL: NSURL?
     
     private var _session: String?
     
     var sessionToken: String? {
         get {
             if let session = self.sharedSystemAPI.retrieveCredentialsFromKeychainForService(SDSessionServiceName){
-                self.apiManager.requestSerializer.setValue(session["password"], forHTTPHeaderField: "SD-Auth-Token")
                 return session["password"]
             }
             return nil
         }
         set(newToken) {
             _session = newToken
-            self.apiManager.requestSerializer.setValue(_session, forHTTPHeaderField: "SD-Auth-Token")
         }
     }
     
@@ -45,22 +41,12 @@ class API: NSObject {
             }
         }
         self.reachabilityManager.startMonitoring()
-        
-        self.baseURL = NSURL(string: "https://\(SDAPIDomainTesting)/api/1/")
-        self.apiManager = AFHTTPSessionManager(baseURL: self.baseURL)
-        self.apiManager.requestSerializer = AFJSONRequestSerializer()
-        // may not be necessary
-        self.apiManager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        self.apiManager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Accept")
-        self.apiManager.responseSerializer = AFJSONResponseSerializer()
-
-        
     }
     
     // MARK: Telemetry API
     
     func reportError(error: NSError, forUser user: String, withLog log: [String], completionQueue queue: dispatch_queue_t, success successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
-        var postParameters = [NSObject : AnyObject]()
+        var postParameters = [String : AnyObject]()
         let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion)"
         postParameters["operatingSystem"] = os
         let clientVersion: String = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
@@ -77,17 +63,27 @@ class API: NSObject {
         postParameters["context"] = error.domain
         
         postParameters["log"] = log.description
+
+        Alamofire.request(.POST, "https://\(SDAPIDomainTesting)/api/1/error/log", parameters: postParameters, encoding: .JSON)
+            .validate()
+            .responseJSON { response in
+                print(response.request)  // original URL request
+                print(response.result.value)   // result of response serialization
+                
+                switch response.result {
+                case .Success:
+                    successBlock()
+                case .Failure(let error):
+                    print("Error: \(error)")
+                    guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
+                        failureBlock(error)
+                        return
+                    }
+                    let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    failureBlock(responseError)
+                }
+        }
         
-        let manager: AFHTTPSessionManager = AFHTTPSessionManager(baseURL: self.baseURL, sessionConfiguration: NSURLSessionConfiguration.ephemeralSessionConfiguration())
-        
-        manager.responseSerializer = AFJSONResponseSerializer()
-        manager.requestSerializer = AFJSONRequestSerializer()
-        manager.POST("error/log", parameters: postParameters, progress: nil, success: {(task: NSURLSessionTask, responseObject: AnyObject?) -> Void in
-            successBlock()
-        }, failure: {(task: NSURLSessionTask?, error: NSError) -> Void in
-            NSLog("Error: %@", error)
-            failureBlock(error)
-        })
     }
     
     // MARK: Account API
