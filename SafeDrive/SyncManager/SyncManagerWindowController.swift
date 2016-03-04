@@ -187,7 +187,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBAction func readSyncFolders(sender: AnyObject) {
         self.spinner.startAnimation(self)
         
-        self.sharedSafedriveAPI.readSyncFoldersWithSuccess({ (folders: [[NSObject : AnyObject]]) -> Void in
+        self.sharedSafedriveAPI.readSyncFoldersWithSuccess({ (folders: [[String : NSObject]]) -> Void in
             for folder in folders {
                 /*
                 Current sync folder model:
@@ -198,29 +198,28 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 "addedDate" : 1435864769463
                 */
                 
-                if let folder = folder as? [String: AnyObject] {
-                    let folderName = folder["folderName"] as! String
-                    let folderPath = folder["folderPath"]  as! String
-                    let folderId = folder["id"] as! Int
-                    
-                    let addedUnixDate: Double = folder["addedDate"] as! Double
-                    
-                    let addedDate: NSDate = NSDate(timeIntervalSince1970: addedUnixDate/1000)
-                    
-                    guard let realm = try? Realm() else {
-                        SDLog("failed to create realm!!!")
-                        Crashlytics.sharedInstance().crash()
-                        return
-                    }
-                    
-                    try! realm.write {
-                        // we update the local database with any info the server has to ensure they're in sync
-                        // because the local database is storing things the remote server does not, we need to ensure
-                        // that we don't blow away any of those local properties on existing objects, so
-                        // we use Realm.create() instead of Realm.add()
-                        realm.create(SyncFolder.self, value: ["uniqueID": folderId, "name": folderName, "path": folderPath, "machine": self.mac, "added": addedDate], update: true)
-                    }
+                let folderName = folder["folderName"] as! String
+                let folderPath = folder["folderPath"]  as! String
+                let folderId = folder["id"] as! Int
+                
+                let addedUnixDate: Double = folder["addedDate"] as! Double
+                
+                let addedDate: NSDate = NSDate(timeIntervalSince1970: addedUnixDate/1000)
+                
+                guard let realm = try? Realm() else {
+                    SDLog("failed to create realm!!!")
+                    Crashlytics.sharedInstance().crash()
+                    return
                 }
+                
+                try! realm.write {
+                    // we update the local database with any info the server has to ensure they're in sync
+                    // because the local database is storing things the remote server does not, we need to ensure
+                    // that we don't blow away any of those local properties on existing objects, so
+                    // we use Realm.create() instead of Realm.add()
+                    realm.create(SyncFolder.self, value: ["uniqueID": folderId, "name": folderName, "path": folderPath, "machine": self.mac, "added": addedDate], update: true)
+                }
+                
 
             }
             

@@ -164,7 +164,7 @@ typedef void(^SDAPIAccountDetailsBlock)(NSDictionary <NSString *, NSObject *>* _
 typedef void(^SDAPIFingerprintListSuccessBlock)(NSDictionary * _Nonnull fingerprintPairs);
 
 typedef void(^SDAPICreateSyncFolderSuccessBlock)(NSInteger folderID);
-typedef void(^SDAPIReadSyncFoldersSuccessBlock)(NSArray<NSDictionary*> * _Nonnull folders);
+typedef void(^SDAPIReadSyncFoldersSuccessBlock)(NSArray<NSDictionary<NSString *, NSObject *>*> * _Nonnull folders);
 typedef void(^SDAPIDeleteSyncFoldersSuccessBlock)();
 
 
