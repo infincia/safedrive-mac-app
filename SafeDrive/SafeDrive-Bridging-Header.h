@@ -28,8 +28,6 @@
 
 @import LetsMove;
 
-@import AFNetworking;
-
 @import STPrivilegedTask;
 
 #import "SDServiceXPCRouter.h"
