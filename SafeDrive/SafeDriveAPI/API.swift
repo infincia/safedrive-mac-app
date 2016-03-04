@@ -6,6 +6,92 @@
 import Foundation
 import Alamofire
 
+enum Endpoint: URLRequestConvertible {
+    static let baseURLString = "https://\(SDAPIDomainTesting)/api/1"
+    static var SessionToken: String?
+
+    case ErrorLog([String:AnyObject])
+    case RegisterClient([String:AnyObject])
+    case AccountStatus
+    case AccountDetails
+    case CreateFolder([String:AnyObject])
+    case ReadFolders
+    case DeleteFolder([String:Int])
+    case HostFingerprints
+    case APIStatus
+
+    var method: Alamofire.Method {
+        switch self {
+        case .ErrorLog:
+            return .POST
+        case .RegisterClient:
+            return .POST
+        case .AccountStatus:
+            return .GET
+        case .AccountDetails:
+            return .GET
+        case .CreateFolder:
+            return .POST
+        case .ReadFolders:
+            return .GET
+        case .DeleteFolder:
+            return .DELETE
+        case .HostFingerprints:
+            return .GET
+        case .APIStatus:
+            return .GET
+        }
+    }
+
+    var path: String {
+        switch self {
+        case .ErrorLog:
+            return "/error/log"
+        case .RegisterClient:
+            return "/client/register"
+        case .AccountStatus:
+            return "/account/status"
+        case .AccountDetails:
+            return "/account/details"
+        case .CreateFolder:
+            return "/folder"
+        case .ReadFolders:
+            return "/folder"
+        case .DeleteFolder:
+            return "/folder"
+        case .HostFingerprints:
+            return "/fingerprints"
+        case .APIStatus:
+            return "/status"
+        }
+    }
+    
+    // MARK: URLRequestConvertible
+    
+    var URLRequest: NSMutableURLRequest {
+        let URL = NSURL(string: Endpoint.baseURLString)!
+        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
+        mutableURLRequest.HTTPMethod = method.rawValue
+        
+        if let token = API.sharedAPI.sessionToken {
+            mutableURLRequest.setValue(token, forHTTPHeaderField: "SD-Auth-Token")
+        }
+        
+        switch self {
+        case .ErrorLog(let parameters):
+            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+        case .RegisterClient(let parameters):
+            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+        case .CreateFolder(let parameters):
+            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+        case .DeleteFolder(let parameters):
+            return Alamofire.ParameterEncoding.URLEncodedInURL.encode(mutableURLRequest, parameters: parameters).0
+        default:
+            return mutableURLRequest
+        }
+    }
+}
+
 class API: NSObject {
     static let sharedAPI = API()
 
@@ -64,7 +150,7 @@ class API: NSObject {
         
         postParameters["log"] = log.description
 
-        Alamofire.request(.POST, "https://\(SDAPIDomainTesting)/api/1/error/log", parameters: postParameters, encoding: .JSON)
+        Alamofire.request(Endpoint.ErrorLog(postParameters))
             .validate()
             .responseJSON { response in
                 switch response.result {
@@ -98,7 +184,7 @@ class API: NSObject {
             "language": languageCode,
             "uniqueClientId": identifier]
         
-        Alamofire.request(.POST, "https://\(SDAPIDomainTesting)/api/1/client/register", parameters: postParameters, encoding: .JSON)
+        Alamofire.request(Endpoint.RegisterClient(postParameters))
             .validate()
             .responseJSON { response in
                 switch response.result {
@@ -132,7 +218,7 @@ class API: NSObject {
 
     
     func accountStatusForUser(user: String, success successBlock: SDAPIAccountStatusBlock, failure failureBlock: SDFailureBlock) {
-        Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/account/status", headers: ["SD-Auth-Token": self.sessionToken!])
+        Alamofire.request(Endpoint.AccountStatus)
             .validate()
             .responseJSON { response in
                 switch response.result {
@@ -156,7 +242,7 @@ class API: NSObject {
     }
     
     func accountDetailsForUser(user: String, success successBlock: SDAPIAccountDetailsBlock, failure failureBlock: SDFailureBlock) {
-        Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/account/details", headers: ["SD-Auth-Token": self.sessionToken!])
+        Alamofire.request(Endpoint.AccountDetails)
             .validate()
             .responseJSON { response in
                 switch response.result {
@@ -184,7 +270,7 @@ class API: NSObject {
     func createSyncFolder(localFolder: NSURL, success successBlock: SDAPICreateSyncFolderSuccessBlock, failure failureBlock: SDFailureBlock) {
         let postParameters = ["folderName": localFolder.lastPathComponent!, "folderPath": localFolder.path!]
         
-        Alamofire.request(.POST, "https://\(SDAPIDomainTesting)/api/1/folder", parameters: postParameters, encoding: .JSON, headers: ["SD-Auth-Token": self.sessionToken!])
+        Alamofire.request(Endpoint.CreateFolder(postParameters))
             .validate()
             .responseJSON { response in
                 switch response.result {
@@ -209,7 +295,7 @@ class API: NSObject {
     }
     
     func readSyncFoldersWithSuccess(successBlock: SDAPIReadSyncFoldersSuccessBlock, failure failureBlock: SDFailureBlock) {
-        Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/folder", headers: ["SD-Auth-Token": self.sessionToken!])
+        Alamofire.request(Endpoint.ReadFolders)
             .validate()
             .responseJSON { response in
                 switch response.result {
@@ -234,7 +320,7 @@ class API: NSObject {
     
     func deleteSyncFolder(folderId: Int, success successBlock: SDAPIDeleteSyncFoldersSuccessBlock, failure failureBlock: SDFailureBlock) {
         let folderIds = ["folderIds": folderId]
-        Alamofire.request(.DELETE, "https://\(SDAPIDomainTesting)/api/1/folder", parameters: folderIds, encoding: .URLEncodedInURL, headers: ["SD-Auth-Token": self.sessionToken!])
+        Alamofire.request(Endpoint.DeleteFolder(folderIds))
             .validate()
             .responseJSON { response in
                 switch response.result {
