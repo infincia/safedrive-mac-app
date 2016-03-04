@@ -9,8 +9,8 @@ import Alamofire
 class API: NSObject {
     static let sharedAPI = API()
 
-    var reachabilityManager: AFNetworkReachabilityManager
-    var sharedSystemAPI = SDSystemAPI.sharedAPI()
+    private var reachabilityManager = NetworkReachabilityManager(host: SDAPIDomainTesting)
+    private var sharedSystemAPI = SDSystemAPI.sharedAPI()
     
     private var _session: String?
     
@@ -27,20 +27,20 @@ class API: NSObject {
     }
     
     override init() {
-        self.reachabilityManager = AFNetworkReachabilityManager(forDomain: SDAPIDomainTesting)
-        self.reachabilityManager.setReachabilityStatusChangeBlock { (status: AFNetworkReachabilityStatus) -> Void in
+        self.reachabilityManager?.listener = { status in
             switch status {
             case .Unknown:
-                print("AFNetworkReachabilityStatusUnknown")
+                print("ReachabilityStatusUnknown")
             case .NotReachable:
-                print("AFNetworkReachabilityStatusNotReachable")
-            case .ReachableViaWWAN:
-                print("AFNetworkReachabilityStatusReachableViaWWAN")
-            case .ReachableViaWiFi:
-                print("AFNetworkReachabilityStatusReachableViaWiFi")
+                print("ReachabilityStatusNotReachable")
+            case .Reachable(.WWAN):
+                print("ReachabilityStatusWWAN")
+            case .Reachable(.EthernetOrWiFi):
+                print("ReachabilityStatusEthernetOrWiFi")
             }
         }
-        self.reachabilityManager.startMonitoring()
+        
+        self.reachabilityManager?.startListening()
     }
     
     // MARK: Telemetry API

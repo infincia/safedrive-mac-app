@@ -11,6 +11,8 @@ import RealmSwift
 
 import SwiftDate
 
+import Alamofire
+
 class SyncScheduler {
     
     static let sharedSyncScheduler = SyncScheduler()
@@ -19,8 +21,8 @@ class SyncScheduler {
 
     private var syncControllers = [SDSyncController]()
     
-    private var reachabilityManager: AFNetworkReachabilityManager
-    
+    private var reachabilityManager = NetworkReachabilityManager(host: SDAPIDomainTesting)
+
     private var running: Bool = true
     
     private var syncQueue = [Int]()
@@ -30,20 +32,20 @@ class SyncScheduler {
     let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
     
     init() {
-        self.reachabilityManager = AFNetworkReachabilityManager(forDomain: SDAPIDomainTesting)
-        self.reachabilityManager.setReachabilityStatusChangeBlock { (status: AFNetworkReachabilityStatus) -> Void in
+        self.reachabilityManager?.listener = { status in
             switch status {
             case .Unknown:
-                print("AFNetworkReachabilityStatusUnknown")
+                print("ReachabilityStatusUnknown")
             case .NotReachable:
-                print("AFNetworkReachabilityStatusNotReachable")
-            case .ReachableViaWWAN:
-                print("AFNetworkReachabilityStatusReachableViaWWAN")
-            case .ReachableViaWiFi:
-                print("AFNetworkReachabilityStatusReachableViaWiFi")
+                print("ReachabilityStatusNotReachable")
+            case .Reachable(.WWAN):
+                print("ReachabilityStatusWWAN")
+            case .Reachable(.EthernetOrWiFi):
+                print("ReachabilityStatusEthernetOrWiFi")
             }
         }
-        self.reachabilityManager.startMonitoring()
+        
+        self.reachabilityManager?.startListening()
     }
 
     
@@ -124,7 +126,7 @@ class SyncScheduler {
                 let minuteFolders = realm.objects(SyncFolder).filter("syncFrequency == 'minute' AND syncing == false")
                 folders.appendContentsOf(minuteFolders)
             }
-            if self.reachabilityManager.reachableViaWiFi {
+            if self.reachabilityManager!.isReachableOnEthernetOrWiFi {
                 for folder in folders {
                     let uniqueID = folder.uniqueID
                     SDLog("Sync job added to queue for folder: \(folder.name)")
