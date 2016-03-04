@@ -67,9 +67,6 @@ class API: NSObject {
         Alamofire.request(.POST, "https://\(SDAPIDomainTesting)/api/1/error/log", parameters: postParameters, encoding: .JSON)
             .validate()
             .responseJSON { response in
-                print(response.request)  // original URL request
-                print(response.result.value)   // result of response serialization
-                
                 switch response.result {
                 case .Success:
                     successBlock()
@@ -104,10 +101,6 @@ class API: NSObject {
         Alamofire.request(.POST, "https://\(SDAPIDomainTesting)/api/1/client/register", parameters: postParameters, encoding: .JSON)
             .validate()
             .responseJSON { response in
-                print(response.request)  // original URL request
-                print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
                 switch response.result {
                 case .Success:
                     guard let JSON = response.result.value as? [String: AnyObject] else {
@@ -142,11 +135,6 @@ class API: NSObject {
         Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/account/status", headers: ["SD-Auth-Token": self.sessionToken!])
             .validate()
             .responseJSON { response in
-                print(response.request)  // original URL request
-                print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
-                
                 switch response.result {
                 case .Success:
                     guard let JSON = response.result.value as? [String: NSObject] else {
@@ -171,11 +159,6 @@ class API: NSObject {
         Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/account/details", headers: ["SD-Auth-Token": self.sessionToken!])
             .validate()
             .responseJSON { response in
-                print(response.request)  // original URL request
-                print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
-                
                 switch response.result {
                 case .Success:
                     guard let JSON = response.result.value as? [String: NSObject] else {
@@ -204,11 +187,6 @@ class API: NSObject {
         Alamofire.request(.POST, "https://\(SDAPIDomainTesting)/api/1/folder", parameters: postParameters, encoding: .JSON, headers: ["SD-Auth-Token": self.sessionToken!])
             .validate()
             .responseJSON { response in
-                print(response.request)  // original URL request
-                print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
-                
                 switch response.result {
                 case .Success:
                     guard let JSON = response.result.value as? [String: AnyObject],
@@ -234,11 +212,6 @@ class API: NSObject {
         Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/folder", headers: ["SD-Auth-Token": self.sessionToken!])
             .validate()
             .responseJSON { response in
-                print(response.request)  // original URL request
-                print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
-                
                 switch response.result {
                 case .Success:
                     guard let JSON = response.result.value as? [[String: NSObject]] else {
@@ -264,11 +237,6 @@ class API: NSObject {
         Alamofire.request(.DELETE, "https://\(SDAPIDomainTesting)/api/1/folder", parameters: folderIds, encoding: .URLEncodedInURL, headers: ["SD-Auth-Token": self.sessionToken!])
             .validate()
             .responseJSON { response in
-                print(response.request)  // original URL request
-                print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
-                
                 switch response.result {
                 case .Success:
                     successBlock()
@@ -290,11 +258,6 @@ class API: NSObject {
         Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/fingerprints")
             .validate()
             .responseJSON { response in
-                print(response.request)  // original URL request
-                print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
-                
                 switch response.result {
                 case .Success:
                     guard let JSON = response.result.value as? [String: String] else {
@@ -318,12 +281,7 @@ class API: NSObject {
     func apiStatus(successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
         Alamofire.request(.GET, "https://\(SDAPIDomainTesting)/api/1/status")
             .validate()
-            .responseJSON { response in
-                print(response.request)  // original URL request
-                print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
-                
+            .responseJSON { response in                
                 switch response.result {
                 case .Success:
                     successBlock()
