@@ -157,7 +157,7 @@ class API: NSObject {
                 case .Success:
                     successBlock()
                 case .Failure(let error):
-                    print("Error: \(error)")
+                    print("Error error/log: \(error)")
                     guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
                         failureBlock(error)
                         return
@@ -204,7 +204,7 @@ class API: NSObject {
                     self.sharedSystemAPI.insertCredentialsInKeychainForService(SDSessionServiceName, account: user, password: token)
                     successBlock(token)
                 case .Failure(let error):
-                    print("Error: \(error)")
+                    print("Error client/register: \(error)")
                     guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
                         failureBlock(error)
                         return
@@ -230,7 +230,7 @@ class API: NSObject {
                     }
                     successBlock(JSON)
                 case .Failure(let error):
-                    print("Error: \(error)")
+                    print("Error account/status: \(error)")
                     guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
                         failureBlock(error)
                         return
@@ -254,7 +254,7 @@ class API: NSObject {
                     }
                     successBlock(JSON)
                 case .Failure(let error):
-                    print("Error: \(error)")
+                    print("Error account/details: \(error)")
                     guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
                         failureBlock(error)
                         return
@@ -283,7 +283,7 @@ class API: NSObject {
                     }
                     successBlock(folderID)
                 case .Failure(let error):
-                    print("Error: \(error)")
+                    print("Error folder:create: \(error)")
                     guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
                         failureBlock(error)
                         return
@@ -307,7 +307,7 @@ class API: NSObject {
                     }
                     successBlock(JSON)
                 case .Failure(let error):
-                    print("Error: \(error)")
+                    print("Error folder:read: \(error)")
                     guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
                         failureBlock(error)
                         return
@@ -327,7 +327,7 @@ class API: NSObject {
                 case .Success:
                     successBlock()
                 case .Failure(let error):
-                    print("Error: \(error)")
+                    print("Error folder:delete: \(error)")
                     guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
                         failureBlock(error)
                         return
@@ -353,7 +353,7 @@ class API: NSObject {
                     }
                     successBlock(JSON)
                 case .Failure(let error):
-                    print("Error: \(error)")
+                    print("Error fingerprints: \(error)")
                     guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
                         failureBlock(error)
                         return
@@ -372,7 +372,7 @@ class API: NSObject {
                 case .Success:
                     successBlock()
                 case .Failure(let error):
-                    print("Error: \(error)")
+                    print("Error status: \(error)")
                     guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
                         failureBlock(error)
                         return
