@@ -6,7 +6,7 @@
 import Foundation
 import Alamofire
 
-class API {
+class API: NSObject {
     static let sharedAPI = API()
 
     var reachabilityManager: AFNetworkReachabilityManager
@@ -30,7 +30,7 @@ class API {
         }
     }
     
-    init() {
+    override init() {
         self.reachabilityManager = AFNetworkReachabilityManager(forDomain: SDAPIDomainTesting)
         self.reachabilityManager.setReachabilityStatusChangeBlock { (status: AFNetworkReachabilityStatus) -> Void in
             switch status {
