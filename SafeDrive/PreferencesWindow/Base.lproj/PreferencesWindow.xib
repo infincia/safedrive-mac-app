@@ -46,11 +46,10 @@
                         <tabViewItems>
                             <tabViewItem label="General" identifier="1" id="Tr0-rv-ChU">
                                 <view key="view" ambiguous="YES" id="BGg-1E-DvT">
-                                    <rect key="frame" x="0.0" y="0.0" width="351" height="279"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DFf-pg-Q7a">
-                                            <rect key="frame" x="33" y="243" width="285" height="18"/>
+                                            <rect key="frame" x="33" y="-36" width="285" height="18"/>
                                             <buttonCell key="cell" type="check" title="Start SafeDrive at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="PNJ-M0-iQ9">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" size="12" name="Raleway-Light"/>
@@ -66,7 +65,7 @@
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pvd-Ip-ebE">
-                                            <rect key="frame" x="33" y="213" width="285" height="18"/>
+                                            <rect key="frame" x="33" y="-66" width="285" height="18"/>
                                             <buttonCell key="cell" type="check" title="Mount volume automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0WR-rs-tJE">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" size="12" name="Raleway-Light"/>
