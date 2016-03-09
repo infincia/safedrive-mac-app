@@ -189,9 +189,12 @@ class SyncScheduler {
                 //NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
                 return
             }
-            
+            let uuid = NSUUID()
+            let syncDate = NSDate()
             try! realm.write {
                 realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": true], update: true)
+                let syncTask = SyncTask(syncFolder: folder, syncDate: syncDate, uuid: uuid.UUIDString)
+                realm.add(syncTask)
             }
             let folderName: String = folder.name!
             
@@ -219,8 +222,11 @@ class SyncScheduler {
                     Crashlytics.sharedInstance().crash()
                     return
                 }
+                
                 try! realm.write {
                     realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "lastSync": NSDate()], update: true)
+                    let duration = NSDate().timeIntervalSinceDate(syncDate)
+                    realm.create(SyncTask.self, value: ["uuid": uuid.UUIDString, "success": true, "duration": duration], update: true)
                 }
                 
                 self.syncControllers.removeAtIndex(self.syncControllers.indexOf(syncController)!)
@@ -234,6 +240,8 @@ class SyncScheduler {
                 }
                 try! realm.write {
                     realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false], update: true)
+                    let duration = NSDate().timeIntervalSinceDate(syncDate)
+                    realm.create(SyncTask.self, value: ["uuid": uuid.UUIDString, "success": true, "duration": duration, "message": error!.localizedDescription], update: true)
                 }
                 let alert: NSAlert = NSAlert()
                 alert.messageText = NSLocalizedString("Error", comment: "")
