@@ -154,6 +154,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 }
                 catch {
                     print("Error starting scheduler: \(error)")
+                    Crashlytics.sharedInstance().crash()
                 }
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
