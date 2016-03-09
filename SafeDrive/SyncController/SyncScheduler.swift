@@ -86,58 +86,62 @@ class SyncScheduler {
                 NSThread.sleepForTimeInterval(1)
                 continue
             }
-            realm.refresh()
-
-            let currentDate = NSDate()
-            //let folders = realm.objects(SyncFolder).filter("syncing == false")
-            //print("Checking \(folders.count) for sync: \(folders)")
-            
-            var folders = [SyncFolder]()
-            
-            // only trigger in the first minute of each hour
-            // this would run twice per hour if we did not sleep thread for 60 seconds
-            if currentDate.minute == 0 {
-                if currentDate.hour == 0 {
-                    if currentDate.day == 1 {
-                        // first of the month for monthly syncs
-                        //print("Monthly sync")
-                        let monthlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'monthly' AND syncing == false")
-                        folders.appendContentsOf(monthlyFolders)
+            autoreleasepool {
+                realm.refresh()
+                
+                let currentDate = NSDate()
+                //let folders = realm.objects(SyncFolder).filter("syncing == false")
+                //print("Checking \(folders.count) for sync: \(folders)")
+                
+                var folders = [SyncFolder]()
+                
+                // only trigger in the first minute of each hour
+                // this would run twice per hour if we did not sleep thread for 60 seconds
+                if currentDate.minute == 0 {
+                    
+                    if currentDate.hour == 0 {
+                        if currentDate.day == 1 {
+                            // first of the month for monthly syncs
+                            //print("Monthly sync")
+                            let monthlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'monthly' AND syncing == false")
+                            folders.appendContentsOf(monthlyFolders)
+                        }
+                        if currentDate.weekday == 1 {
+                            //print("Weekly sync")
+                            // first day of the week for weekly syncs
+                            let weeklyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'weekly' AND syncing == false")
+                            folders.appendContentsOf(weeklyFolders)
+                        }
+                        //print("Daily sync")
+                        // first hour of the day for daily syncs
+                        let dailyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'daily' AND syncing == false")
+                        folders.appendContentsOf(dailyFolders)
                     }
-                    if currentDate.weekday == 1 {
-                        //print("Weekly sync")
-                        // first day of the week for weekly syncs
-                        let weeklyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'weekly' AND syncing == false")
-                        folders.appendContentsOf(weeklyFolders)
+                    // default, check for hourly syncs
+                    //print("Hourly sync")
+                    let hourlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'hourly' AND syncing == false")
+                    folders.appendContentsOf(hourlyFolders)
+                    
+                }
+                else {
+                    // check for minute syncs
+                    let minuteFolders = realm.objects(SyncFolder).filter("syncFrequency == 'minute' AND syncing == false")
+                    folders.appendContentsOf(minuteFolders)
+                }
+                if self.reachabilityManager!.isReachableOnEthernetOrWiFi {
+                    for folder in folders {
+                        let uniqueID = folder.uniqueID
+                        SDLog("Sync job added to queue for folder: \(folder.name)")
+                        self.queueSyncJob(uniqueID)
                     }
-                    //print("Daily sync")
-                    // first hour of the day for daily syncs
-                    let dailyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'daily' AND syncing == false")
-                    folders.appendContentsOf(dailyFolders)
                 }
-                // default, check for hourly syncs
-                //print("Hourly sync")
-                let hourlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'hourly' AND syncing == false")
-                folders.appendContentsOf(hourlyFolders)
-
-            }
-            else {
-                // check for minute syncs
-                let minuteFolders = realm.objects(SyncFolder).filter("syncFrequency == 'minute' AND syncing == false")
-                folders.appendContentsOf(minuteFolders)
-            }
-            if self.reachabilityManager!.isReachableOnEthernetOrWiFi {
-                for folder in folders {
-                    let uniqueID = folder.uniqueID
-                    SDLog("Sync job added to queue for folder: \(folder.name)")
-                    self.queueSyncJob(uniqueID)
+                else {
+                    //SDLog("No WiFi/Ethernet connectivity, deferring \(folders.count) folders")
                 }
+                
+                NSThread.sleepForTimeInterval(60)
+                
             }
-            else {
-                //SDLog("No WiFi/Ethernet connectivity, deferring \(folders.count) folders")
-            }
-
-            NSThread.sleepForTimeInterval(60)
         }
     }
     
