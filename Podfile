@@ -2,15 +2,15 @@ platform :osx, '10.9'
 
 def keychain_pods
     pod 'MCSMKeychainItem',  :git => 'https://github.com/ObjColumnist/MCSMKeychainItem.git', :commit => 'dfac30c6e9dac4ee1e8deaae5a742a65523e92aa',  :branch => 'master'
-    pod 'UICKeyChainStore', '~> 2.1.0'
+    pod 'UICKeyChainStore', '2.1.0'
 end
 
 def shared_pods
-    pod 'Alamofire', ' ~> 3.2'
+    pod 'Alamofire', '3.2'
     pod 'Fabric', '1.6.6'
     pod 'Crashlytics', '3.7.0'
-    pod 'NMSSH', '~> 2.2'
-    pod 'SwiftDate', '~> 1.2'
+    pod 'NMSSH', '2.2.4'
+    pod 'SwiftDate', '1.2'
 end
 
 target 'safedriveaskpass' do
@@ -34,7 +34,7 @@ target 'SafeDrive' do
     pod 'IYLoginItem', '0.1'
     pod 'INAppStoreWindow', '1.4'
     pod 'DCOAboutWindow', '0.2.0'
-    pod 'LetsMove', '~> 1.20'
+    pod 'LetsMove', '1.20'
     pod 'Sparkle', '1.13.1'
     pod 'STPrivilegedTask', '1.0.1'
 end
