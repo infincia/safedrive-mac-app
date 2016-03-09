@@ -40,6 +40,9 @@
 		AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */; };
 		AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5C1AA11BB26C6A006A0C8C /* SDAppXPCDelegate.m */; };
 		AA61F84B1C05356D00D992FE /* SDSyncController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA61F84A1C05356D00D992FE /* SDSyncController.m */; };
+		AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
+		AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
+		AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
 		AA76DC211C8762A9007B320E /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC201C8762A9007B320E /* Installer.swift */; };
 		AA76DC231C8779D2007B320E /* InstallerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* InstallerWindowController.swift */; };
@@ -259,6 +262,7 @@
 		AA5C1AA11BB26C6A006A0C8C /* SDAppXPCDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDAppXPCDelegate.m; path = SafeDrive/SDAppXPCDelegate.m; sourceTree = SOURCE_ROOT; };
 		AA61F8491C05356D00D992FE /* SDSyncController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncController.h; sourceTree = "<group>"; };
 		AA61F84A1C05356D00D992FE /* SDSyncController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncController.m; sourceTree = "<group>"; };
+		AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+next.swift"; path = "Shared/NSDate+next.swift"; sourceTree = "<group>"; };
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
@@ -555,6 +559,7 @@
 				AAF945F71C801EFE00B972C3 /* SDServiceXPCProtocol.h */,
 				AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */,
 				AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */,
+				AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1176,6 +1181,7 @@
 				AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */,
 				AAA88BC31C8267C0009BE1C7 /* ErrorHandler.swift in Sources */,
 				AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */,
+				AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */,
 				AA61F84B1C05356D00D992FE /* SDSyncController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1204,6 +1210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAA88BCE1C83D243009BE1C7 /* SyncFolder.swift in Sources */,
+				AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */,
 				AA5754101C8004660040E8B0 /* ServiceListenerDelegate.swift in Sources */,
 				AA5754051C7FFCC10040E8B0 /* AppDelegate.swift in Sources */,
 				AAA88BCC1C83D240009BE1C7 /* Machine.swift in Sources */,
@@ -1219,6 +1226,7 @@
 				AAA88BD51C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 				AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */,
 				AAA88BCD1C83D241009BE1C7 /* Machine.swift in Sources */,
+				AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
