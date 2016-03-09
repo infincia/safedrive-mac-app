@@ -47,11 +47,6 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     convenience init() {
         self.init(windowNibName: "SyncManagerWindow")
-        var config = Realm.Configuration()
-        
-        config.path = dbURL.path
-        
-        Realm.Configuration.defaultConfiguration = config
         
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")

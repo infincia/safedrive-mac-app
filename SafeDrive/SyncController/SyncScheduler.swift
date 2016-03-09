@@ -50,11 +50,6 @@ class SyncScheduler {
 
     
     func syncSchedulerLoop() throws {
-        var config = Realm.Configuration()
-        
-        config.path = dbURL.path
-        
-        Realm.Configuration.defaultConfiguration = config
         
         guard let realm = try? Realm() else {
             let errorInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open Realm database, this is a fatal error", comment: "")]

@@ -7,6 +7,9 @@ import Cocoa
 import Fabric
 import Crashlytics
 
+import RealmSwift
+import Realm
+
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol {
@@ -135,8 +138,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 Crashlytics.sharedInstance().crash()
             }
             
-            //let dbURL: NSURL = groupURL.URLByAppendingPathComponent("sync.realm")
+            let dbURL: NSURL = groupURL.URLByAppendingPathComponent("sync.realm")
+            let config = Realm.Configuration(
+                path: dbURL.path,
+                // Set the new schema version. This must be greater than the previously used
+                // version (if you've never set a schema version before, the version is 0).
+                schemaVersion: 2,
+                migrationBlock: { migration, oldSchemaVersion in
+
+                    if (oldSchemaVersion < 1) {
+                        // No changes, just new properties
+                    }
+                    if (oldSchemaVersion < 2) {
+                        // No changes, just new properties
+                    }
+            })
             
+            Realm.Configuration.defaultConfiguration = config
+            
+            guard let realm = try? Realm() else {
+                SDLog("failed to create migrated realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
             
             self.serviceManager = SDServiceManager.sharedServiceManager()
             self.serviceManager.deployService()
