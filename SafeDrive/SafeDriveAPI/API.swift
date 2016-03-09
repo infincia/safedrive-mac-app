@@ -204,15 +204,18 @@ class API: NSObject {
                     self.sharedSystemAPI.insertCredentialsInKeychainForService(SDSessionServiceName, account: user, password: token)
                     successBlock(token)
                 case .Failure(let error):
-                    print("Error client/register: \(error)")
-                    guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
-                        failureBlock(error)
-                        return
+                    guard let data = response.data,
+                              JSON = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: String],
+                              message: String = JSON?["message"] else {
+                            print("Error client/register: \(error)")
+                            failureBlock(error)
+                            return
                     }
                     let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error client/register: \(responseError)")
                     failureBlock(responseError)
                 }
-        }
+            }
         
     }
 
@@ -230,12 +233,15 @@ class API: NSObject {
                     }
                     successBlock(JSON)
                 case .Failure(let error):
-                    print("Error account/status: \(error)")
-                    guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
-                        failureBlock(error)
-                        return
+                    guard let data = response.data,
+                        JSON = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: String],
+                        message: String = JSON?["message"] else {
+                            print("Error account/status: \(error)")
+                            failureBlock(error)
+                            return
                     }
                     let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error account/status: \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -254,12 +260,15 @@ class API: NSObject {
                     }
                     successBlock(JSON)
                 case .Failure(let error):
-                    print("Error account/details: \(error)")
-                    guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
-                        failureBlock(error)
-                        return
+                    guard let data = response.data,
+                        JSON = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: String],
+                        message: String = JSON?["message"] else {
+                            print("Error account/details: \(error)")
+                            failureBlock(error)
+                            return
                     }
                     let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error account/details: \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -283,12 +292,15 @@ class API: NSObject {
                     }
                     successBlock(folderID)
                 case .Failure(let error):
-                    print("Error folder:create: \(error)")
-                    guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
-                        failureBlock(error)
-                        return
+                    guard let data = response.data,
+                        JSON = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: String],
+                        message: String = JSON?["message"] else {
+                            print("Error folder/create: \(error)")
+                            failureBlock(error)
+                            return
                     }
                     let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error folder/create: \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -307,12 +319,15 @@ class API: NSObject {
                     }
                     successBlock(JSON)
                 case .Failure(let error):
-                    print("Error folder:read: \(error)")
-                    guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
-                        failureBlock(error)
-                        return
+                    guard let data = response.data,
+                        JSON = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: String],
+                        message: String = JSON?["message"] else {
+                            print("Error folder/read: \(error)")
+                            failureBlock(error)
+                            return
                     }
                     let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error folder/read: \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -327,12 +342,15 @@ class API: NSObject {
                 case .Success:
                     successBlock()
                 case .Failure(let error):
-                    print("Error folder:delete: \(error)")
-                    guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
-                        failureBlock(error)
-                        return
+                    guard let data = response.data,
+                        JSON = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: String],
+                        message: String = JSON?["message"] else {
+                            print("Error folder/delete: \(error)")
+                            failureBlock(error)
+                            return
                     }
                     let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error folder/delete: \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -353,12 +371,15 @@ class API: NSObject {
                     }
                     successBlock(JSON)
                 case .Failure(let error):
-                    print("Error fingerprints: \(error)")
-                    guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
-                        failureBlock(error)
-                        return
+                    guard let data = response.data,
+                        JSON = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: String],
+                        message: String = JSON?["message"] else {
+                            print("Error fingerprints: \(error)")
+                            failureBlock(error)
+                            return
                     }
                     let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error fingerprints: \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -372,12 +393,15 @@ class API: NSObject {
                 case .Success:
                     successBlock()
                 case .Failure(let error):
-                    print("Error status: \(error)")
-                    guard let JSON = response.result.value as? [String: String], let message: String = JSON["message"] else {
-                        failureBlock(error)
-                        return
+                    guard let data = response.data,
+                        JSON = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: String],
+                        message: String = JSON?["message"] else {
+                            print("Error status: \(error)")
+                            failureBlock(error)
+                            return
                     }
                     let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error status: \(responseError)")
                     failureBlock(responseError)
                 }
         }
