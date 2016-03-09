@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="addedField" destination="fbe-cW-HQi" id="Jq0-A4-z9R"/>
                 <outlet property="lastSyncField" destination="j52-br-Lit" id="cGX-9a-IwA"/>
+                <outlet property="nextSyncField" destination="xA0-4Y-iCQ" id="hMb-Bc-1Ra"/>
                 <outlet property="scheduleSelection" destination="3kf-wf-hll" id="W0w-tC-rdX"/>
                 <outlet property="spinner" destination="Zkz-Sf-qG1" id="RBj-RB-O01"/>
                 <outlet property="syncListView" destination="FBp-sJ-WN8" id="vzi-cx-r8L"/>
@@ -83,11 +84,30 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xA0-4Y-iCQ">
+                                    <rect key="frame" x="93" y="34" width="204" height="17"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="N/A" id="G4c-90-O4Y">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F2e-Ky-gNd">
+                                    <rect key="frame" x="19" y="34" width="70" height="17"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Next Sync:" id="obX-mq-sgJ">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="fbe-cW-HQi" secondAttribute="trailing" constant="20" symbolic="YES" id="GGE-qT-IOg"/>
+                                <constraint firstItem="F2e-Ky-gNd" firstAttribute="baseline" secondItem="xA0-4Y-iCQ" secondAttribute="baseline" id="HyL-WO-cTp"/>
                                 <constraint firstItem="3kf-wf-hll" firstAttribute="top" secondItem="YYe-7d-ONn" secondAttribute="top" constant="20" symbolic="YES" id="Nzv-Rr-UB9"/>
+                                <constraint firstItem="xA0-4Y-iCQ" firstAttribute="leading" secondItem="F2e-Ky-gNd" secondAttribute="trailing" constant="8" id="Vto-DD-tWw"/>
                                 <constraint firstItem="j52-br-Lit" firstAttribute="trailing" secondItem="fbe-cW-HQi" secondAttribute="trailing" id="W0z-dW-fOo"/>
+                                <constraint firstItem="xA0-4Y-iCQ" firstAttribute="trailing" secondItem="j52-br-Lit" secondAttribute="trailing" id="aWw-rr-Oio"/>
                                 <constraint firstItem="fbe-cW-HQi" firstAttribute="leading" secondItem="oNd-Sd-EJe" secondAttribute="trailing" constant="8" symbolic="YES" id="ikc-Ww-CgQ"/>
                                 <constraint firstItem="3kf-wf-hll" firstAttribute="centerX" secondItem="YYe-7d-ONn" secondAttribute="centerX" id="kck-mG-X86"/>
                                 <constraint firstItem="Y54-ra-3Ue" firstAttribute="top" secondItem="oNd-Sd-EJe" secondAttribute="bottom" constant="8" symbolic="YES" id="mBf-6F-iEB"/>
@@ -95,8 +115,10 @@
                                 <constraint firstItem="fbe-cW-HQi" firstAttribute="leading" secondItem="j52-br-Lit" secondAttribute="leading" id="tcD-p7-KuQ"/>
                                 <constraint firstItem="j52-br-Lit" firstAttribute="leading" secondItem="Y54-ra-3Ue" secondAttribute="trailing" constant="8" symbolic="YES" id="ubf-cf-TNx"/>
                                 <constraint firstItem="oNd-Sd-EJe" firstAttribute="leading" secondItem="YYe-7d-ONn" secondAttribute="leading" constant="43" id="vGF-Wz-Dvv"/>
+                                <constraint firstItem="xA0-4Y-iCQ" firstAttribute="leading" secondItem="j52-br-Lit" secondAttribute="leading" id="vQR-C8-FRX"/>
                                 <constraint firstItem="Y54-ra-3Ue" firstAttribute="baseline" secondItem="j52-br-Lit" secondAttribute="baseline" id="xTF-7T-vjU"/>
                                 <constraint firstItem="oNd-Sd-EJe" firstAttribute="top" secondItem="3kf-wf-hll" secondAttribute="bottom" constant="25" id="z98-lz-RxT"/>
+                                <constraint firstItem="F2e-Ky-gNd" firstAttribute="top" secondItem="Y54-ra-3Ue" secondAttribute="bottom" constant="8" symbolic="YES" id="zhZ-Fc-qwQ"/>
                             </constraints>
                         </view>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -115,7 +137,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="21" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="16" outlineTableColumn="Tu7-4S-NVJ" id="FBp-sJ-WN8">
-                                                <rect key="frame" x="0.0" y="0.0" width="315" height="250"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="315" height="0.0"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <size key="intercellSpacing" width="2" height="3"/>
                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
