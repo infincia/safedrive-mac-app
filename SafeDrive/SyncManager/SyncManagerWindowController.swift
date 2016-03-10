@@ -137,8 +137,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     SDErrorHandlerReport(apiError)
                     self.spinner.stopAnimation(self)
                     let alert: NSAlert = NSAlert()
-                    alert.messageText = NSLocalizedString("Error", comment: "")
-                    alert.informativeText = apiError.localizedDescription
+                    alert.messageText = NSLocalizedString("Error adding folder to your account", comment: "")
+                    alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
                     alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
                     alert.runModal()
                 })
@@ -174,8 +174,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             SDErrorHandlerReport(apiError)
             self.spinner.stopAnimation(self)
             let alert: NSAlert = NSAlert()
-            alert.messageText = NSLocalizedString("Error", comment: "")
-            alert.informativeText = apiError.localizedDescription
+            alert.messageText = NSLocalizedString("Error removing folder from your account", comment: "")
+            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
             alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
             alert.runModal()
         })
@@ -229,8 +229,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             SDErrorHandlerReport(error)
             self.spinner.stopAnimation(self)
             let alert: NSAlert = NSAlert()
-            alert.messageText = NSLocalizedString("Error", comment: "")
-            alert.informativeText = error.localizedDescription
+            alert.messageText = NSLocalizedString("Error reading folders from your account", comment: "")
+            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
             alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
             alert.runModal()
         })
