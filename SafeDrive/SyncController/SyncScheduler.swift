@@ -244,8 +244,8 @@ class SyncScheduler {
                     realm.create(SyncTask.self, value: ["uuid": uuid.UUIDString, "success": true, "duration": duration, "message": error!.localizedDescription], update: true)
                 }
                 let alert: NSAlert = NSAlert()
-                alert.messageText = NSLocalizedString("Error", comment: "")
-                alert.informativeText = error!.localizedDescription
+                alert.messageText = NSLocalizedString("Error syncing folder", comment: "")
+                alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
                 alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
                 alert.runModal()
                     
