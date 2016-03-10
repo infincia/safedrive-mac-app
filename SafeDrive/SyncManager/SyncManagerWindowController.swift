@@ -415,16 +415,16 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             switch syncItem.syncFrequency {
             case "hourly":
                 self.scheduleSelection.setSelected(true, forSegment: 0)
-                self.nextSyncField.stringValue = date.nextHour()?.toMediumString() ?? ""
+                self.nextSyncField.stringValue = NSDate().nextHour()?.toMediumString() ?? ""
             case "daily":
                 self.scheduleSelection.setSelected(true, forSegment: 1)
-                self.nextSyncField.stringValue = date.nextDay()?.toMediumString() ?? ""
+                self.nextSyncField.stringValue = NSDate().nextDay()?.toMediumString() ?? ""
             case "weekly":
                 self.scheduleSelection.setSelected(true, forSegment: 2)
-                self.nextSyncField.stringValue = date.nextWeek()?.toMediumString() ?? ""
+                self.nextSyncField.stringValue = NSDate().nextWeek()?.toMediumString() ?? ""
             case "monthly":
                 self.scheduleSelection.setSelected(true, forSegment: 3)
-                self.nextSyncField.stringValue = date.nextMonth()?.toMediumString() ?? ""
+                self.nextSyncField.stringValue = NSDate().nextMonth()?.toMediumString() ?? ""
             default:
                 self.scheduleSelection.selectedSegment = -1
                 self.nextSyncField.stringValue = ""
