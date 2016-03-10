@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     
     private var aboutWindowController: DCOAboutWindowController!
     private var serviceRouter: SDServiceXPCRouter!
-    private var serviceManager: SDServiceManager!
+    private var serviceManager: ServiceManager!
     private var syncManagerWindowController: SyncManagerWindowController!
     
     private var syncScheduler: SyncScheduler?
@@ -162,7 +162,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 return
             }
             
-            self.serviceManager = SDServiceManager.sharedServiceManager()
+            self.serviceManager = ServiceManager.sharedServiceManager
             self.serviceManager.deployService()
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
                 self.serviceManager.unloadService()

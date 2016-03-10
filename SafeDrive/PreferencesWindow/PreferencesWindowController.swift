@@ -8,7 +8,7 @@ import Cocoa
 class PreferencesWindowController: NSWindowController, SDMountStateProtocol, SDAccountProtocol, SDServiceStatusProtocol  {
     
     var sharedSystemAPI = SDSystemAPI.sharedAPI()
-    private var sharedServiceManager = SDServiceManager.sharedServiceManager()
+    private var sharedServiceManager = ServiceManager.sharedServiceManager
     
     @IBOutlet var tabView: NSTabView!
     

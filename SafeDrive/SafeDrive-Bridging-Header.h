@@ -29,5 +29,6 @@
 
 @import STPrivilegedTask;
 
+@import ServiceManagement;
+
 #import "SDServiceXPCRouter.h"
-#import "SDServiceManager.h"

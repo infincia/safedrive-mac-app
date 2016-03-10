@@ -31,7 +31,6 @@
 		AA543C7B1BFC57B50008FB8B /* Status-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C751BFC57B50008FB8B /* Status-Icon.png */; };
 		AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */; };
 		AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */; };
-		AA5449611BC3667300826A0B /* SDServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5449601BC3667300826A0B /* SDServiceManager.m */; };
 		AA5754051C7FFCC10040E8B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5754041C7FFCC10040E8B0 /* AppDelegate.swift */; };
 		AA5754071C7FFCC10040E8B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA5754061C7FFCC10040E8B0 /* Assets.xcassets */; };
 		AA57540A1C7FFCC10040E8B0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA5754081C7FFCC10040E8B0 /* MainMenu.xib */; };
@@ -43,6 +42,7 @@
 		AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
+		AA6C5BBD1C9125D4001C2869 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
 		AA76DC211C8762A9007B320E /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC201C8762A9007B320E /* Installer.swift */; };
 		AA76DC231C8779D2007B320E /* InstallerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* InstallerWindowController.swift */; };
@@ -246,8 +246,6 @@
 		AA543C751BFC57B50008FB8B /* Status-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Status-Icon.png"; sourceTree = "<group>"; };
 		AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Light.ttf"; sourceTree = "<group>"; };
 		AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
-		AA54495F1BC3667300826A0B /* SDServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDServiceManager.h; path = ServiceManager/SDServiceManager.h; sourceTree = "<group>"; };
-		AA5449601BC3667300826A0B /* SDServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDServiceManager.m; path = ServiceManager/SDServiceManager.m; sourceTree = "<group>"; };
 		AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDriveService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5754041C7FFCC10040E8B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA5754061C7FFCC10040E8B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -263,6 +261,7 @@
 		AA61F8491C05356D00D992FE /* SDSyncController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncController.h; sourceTree = "<group>"; };
 		AA61F84A1C05356D00D992FE /* SDSyncController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncController.m; sourceTree = "<group>"; };
 		AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+next.swift"; path = "Shared/NSDate+next.swift"; sourceTree = "<group>"; };
+		AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = ServiceManager/ServiceManager.swift; sourceTree = "<group>"; };
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
@@ -577,8 +576,7 @@
 		AA54495E1BC3664F00826A0B /* ServiceManager */ = {
 			isa = PBXGroup;
 			children = (
-				AA54495F1BC3667300826A0B /* SDServiceManager.h */,
-				AA5449601BC3667300826A0B /* SDServiceManager.m */,
+				AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */,
 			);
 			name = ServiceManager;
 			sourceTree = "<group>";
@@ -1160,8 +1158,8 @@
 				AA76DC231C8779D2007B320E /* InstallerWindowController.swift in Sources */,
 				AA0A7D151A19670600DCB77E /* SDAccountWindowController.m in Sources */,
 				AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */,
-				AA5449611BC3667300826A0B /* SDServiceManager.m in Sources */,
 				AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */,
+				AA6C5BBD1C9125D4001C2869 /* ServiceManager.swift in Sources */,
 				AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */,
 				AA76DC2D1C88D4C6007B320E /* API.swift in Sources */,
 				AA76DC211C8762A9007B320E /* Installer.swift in Sources */,
