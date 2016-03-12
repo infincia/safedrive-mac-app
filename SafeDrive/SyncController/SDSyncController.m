@@ -69,6 +69,7 @@
                     NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
                     
                     dispatch_sync(dispatch_get_main_queue(), ^{
+                        self.syncFailure = YES;
                         failureBlock(error);
                     });
                 }
@@ -77,6 +78,7 @@
             else {
                 NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"SFTP: failed to connect"}];
                 dispatch_sync(dispatch_get_main_queue(), ^{
+                    self.syncFailure = YES;
                     failureBlock(error);
                 });
             }
@@ -91,8 +93,6 @@
 
 -(void)startSyncTaskWithLocalURL:(NSURL *)localURL serverURL:(NSURL *)serverURL password:(NSString *)password restore:(BOOL)restore success:(SDSyncResultBlock)successBlock failure:(SDSyncResultBlock)failureBlock {
     NSAssert([NSThread currentThread] != [NSThread mainThread], @"Sync task started from main thread");
-
-    self.syncFailure = NO;
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isDirectory;
@@ -102,6 +102,7 @@
     else {
         NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: @"Local directory not found"}];
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.syncFailure = YES;
             failureBlock(localURL, error);
         });
         return;
@@ -139,6 +140,7 @@
     else {
         NSError *askpassError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorAskpassMissing userInfo:@{NSLocalizedDescriptionKey: @"Askpass helper missing"}];
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.syncFailure = YES;
             failureBlock(localURL, askpassError);
         });
         return;
@@ -379,6 +381,7 @@
         [self.syncTask launch];
     } failure:^(NSError * _Nonnull apiError) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.syncFailure = YES;
             failureBlock(localURL, apiError);
         });
     }];
