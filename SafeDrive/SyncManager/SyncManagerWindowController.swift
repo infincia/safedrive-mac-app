@@ -434,6 +434,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         else {
             self.addedField.stringValue = ""
             self.lastSyncField.stringValue = ""
+            self.nextSyncField.stringValue = ""
             self.scheduleSelection.selectedSegment = -1
             self.scheduleSelection.enabled = false
         }
