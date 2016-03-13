@@ -241,7 +241,7 @@ class SyncScheduler {
                 try! realm.write {
                     realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false], update: true)
                     let duration = NSDate().timeIntervalSinceDate(syncDate)
-                    realm.create(SyncTask.self, value: ["uuid": uuid.UUIDString, "success": true, "duration": duration, "message": error!.localizedDescription], update: true)
+                    realm.create(SyncTask.self, value: ["uuid": uuid.UUIDString, "success": false, "duration": duration, "message": error!.localizedDescription], update: true)
                 }
                 let alert: NSAlert = NSAlert()
                 alert.messageText = NSLocalizedString("Error syncing folder", comment: "")
