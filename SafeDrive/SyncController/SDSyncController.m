@@ -368,6 +368,22 @@
                 }
             });
         }
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (weakSelf.syncFailure) {
+                    // do nothing, failureBlock already called elsewhere
+                }
+                else {
+                    // since rsync returned a non-zero exit code AND we have not yet called failureBlock,
+                    // we must call it as a catch-all.
+                    
+                    // This codepath should rarely if ever be used, if it does we'll need to log the entire
+                    // output of rsync and report it to the telemetry API to be examined
+                    NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
+                    failureBlock(localURL, error);
+                }
+            });
+        }
     }];
 
 
