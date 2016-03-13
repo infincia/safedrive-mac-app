@@ -336,6 +336,12 @@
             </connections>
             <point key="canvasLocation" x="236.5" y="341.5"/>
         </window>
+        <viewController id="lcJ-ZY-hV1" userLabel="Popover View Controller"/>
+        <popover id="T3V-iJ-6gi">
+            <connections>
+                <outlet property="contentViewController" destination="lcJ-ZY-hV1" id="q6v-bx-zyS"/>
+            </connections>
+        </popover>
     </objects>
     <resources>
         <image name="NSCaution" width="32" height="32"/>
