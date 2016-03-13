@@ -143,17 +143,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 path: dbURL.path,
                 // Set the new schema version. This must be greater than the previously used
                 // version (if you've never set a schema version before, the version is 0).
-                schemaVersion: 3,
+                schemaVersion: 4,
                 migrationBlock: { migration, oldSchemaVersion in
-
-                    if (oldSchemaVersion < 1) {
-                        // No changes, just new properties
-                    }
-                    if (oldSchemaVersion < 2) {
-                        // No changes, just new properties
-                    }
-                    if (oldSchemaVersion < 3) {
-                        // No changes, just new properties
+                    if (oldSchemaVersion < 4) {
+                        // No data changes, just new/removed properties
                     }
             })
             

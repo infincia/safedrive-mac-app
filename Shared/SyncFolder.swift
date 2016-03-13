@@ -15,7 +15,6 @@ class SyncFolder: Object {
     dynamic var syncFrequency: String = "daily"
     
     dynamic var added: NSDate? = nil
-    dynamic var lastSync: NSDate? = nil
     
     dynamic var machine: Machine? = nil
     
