@@ -415,6 +415,17 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             
             let syncTasks = realm.objects(SyncTask)
             
+            if let syncTask = syncTasks.filter("syncFolder.uniqueID == \(syncItem.uniqueID)").sorted("syncDate").last {
+                print(syncTask)
+                self.failedSyncButton.enabled = !syncTask.success
+                self.failedSyncButton.hidden = syncTask.success
+                self.failedSyncButton.toolTip = syncTask.message
+            }
+            else {
+                self.failedSyncButton.enabled = false
+                self.failedSyncButton.hidden = true
+            }
+            
             if let syncTask = syncTasks.filter("syncFolder.uniqueID == \(syncItem.uniqueID) AND success == true").sorted("syncDate").last,
                 lastSync = syncTask.syncDate {
                     self.lastSyncField.stringValue = lastSync.toMediumString()
@@ -448,6 +459,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.nextSyncField.stringValue = ""
             self.scheduleSelection.selectedSegment = -1
             self.scheduleSelection.enabled = false
+            self.failedSyncButton.enabled = false
+            self.failedSyncButton.hidden = true
+
         }
     }
     
