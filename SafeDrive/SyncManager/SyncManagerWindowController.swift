@@ -18,6 +18,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBOutlet var lastSyncField: NSTextField!
     
     @IBOutlet var nextSyncField: NSTextField!
+    
+    @IBOutlet var failedSyncButton: NSButton!
 
     @IBOutlet var scheduleSelection: NSSegmentedControl!
 

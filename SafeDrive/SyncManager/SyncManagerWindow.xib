@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="SyncManagerWindowController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
                 <outlet property="addedField" destination="fbe-cW-HQi" id="Jq0-A4-z9R"/>
+                <outlet property="failedSyncButton" destination="BMq-jW-OF3" id="4hv-F4-pmU"/>
                 <outlet property="lastSyncField" destination="j52-br-Lit" id="cGX-9a-IwA"/>
                 <outlet property="nextSyncField" destination="xA0-4Y-iCQ" id="hMb-Bc-1Ra"/>
                 <outlet property="scheduleSelection" destination="3kf-wf-hll" id="W0w-tC-rdX"/>
@@ -100,6 +101,13 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
+                                <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BMq-jW-OF3">
+                                    <rect key="frame" x="266" y="20" width="29" height="19"/>
+                                    <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSCaution" imagePosition="only" alignment="center" enabled="NO" state="on" imageScaling="proportionallyDown" inset="2" id="gdB-n4-TEP">
+                                        <behavior key="behavior" lightByContents="YES"/>
+                                        <font key="font" metaFont="cellTitle"/>
+                                    </buttonCell>
+                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="fbe-cW-HQi" secondAttribute="trailing" constant="20" symbolic="YES" id="GGE-qT-IOg"/>
@@ -330,6 +338,7 @@
         </window>
     </objects>
     <resources>
+        <image name="NSCaution" width="32" height="32"/>
         <image name="NSRefreshFreestandingTemplate" width="14" height="14"/>
     </resources>
 </document>
