@@ -95,41 +95,38 @@ FOUNDATION_EXPORT NSString *const SDErrorSyncDomain;
 FOUNDATION_EXPORT NSString *const SDErrorSSHFSDomain;
 FOUNDATION_EXPORT NSString *const SDErrorAccountDomain;
 FOUNDATION_EXPORT NSString *const SDErrorAPIDomain;
+FOUNDATION_EXPORT NSString *const SDMountErrorDomain;
+
 
 FOUNDATION_EXPORT NSUInteger const SDErrorNone;
 
 NS_ASSUME_NONNULL_END
 
-#pragma mark - Mount related errors
+#pragma mark - SSH related errors
 
 typedef NS_ENUM(NSInteger, SDSSHError) {
     SDSSHErrorUnknown                   = -1000,
-    SDSSHErrorAuthorization             = 1002,
-    SDSSHErrorTimeout                   = 1003,
-    SDSSHErrorMountFailed               = 1004,
-    SDSSHErrorUnmountFailed             = 1005,
-    SDSSHErrorAlreadyMounted            = 1006,
-    SDSSHErrorAskpassMissing            = 1007,
-    SDSSHErrorHostFingerprintChanged    = 1008,
-    SDSSHErrorHostKeyVerificationFailed = 1009,
-    SDSSHErrorOSXFUSEMissing            = 1010,
-    SDSSHErrorSSHFSMissing              = 1011,
-    SDSSHErrorDirectoryMissing          = 1012,
-    SDSSHErrorSyncFailed                = 1013,
-    SDSSHErrorSyncAlreadyRunning        = 1014,
-    SDSSHErrorRemoteEnvironment         = 1015
+    SDSSHErrorAuthorization             = 1001,
+    SDSSHErrorTimeout                   = 1002,
+    SDSSHErrorHostFingerprintChanged    = 1003,
+    SDSSHErrorHostKeyVerificationFailed = 1004,
+    SDSSHErrorDirectoryMissing          = 1005,
+    SDSSHErrorRemoteEnvironment         = 1016
 };
 
 #pragma mark - System API related errors
 
 typedef NS_ENUM(NSInteger, SDSystemError) {
     SDSystemErrorUnknown                  = -2000,
-    SDSystemErrorAddLoginItemFailed       = 2002,
-    SDSystemErrorRemoveLoginItemFailed    = 2003,
-    SDSystemErrorAddKeychainItemFailed    = 2004,
-    SDSystemErrorRemoveKeychainItemFailed = 2005,
-    SDSystemErrorFilePermissionDenied     = 2006,
-    SDSystemErrorFolderConflict           = 2007
+    SDSystemErrorAddLoginItemFailed       = 2001,
+    SDSystemErrorRemoveLoginItemFailed    = 2002,
+    SDSystemErrorAddKeychainItemFailed    = 2003,
+    SDSystemErrorRemoveKeychainItemFailed = 2004,
+    SDSystemErrorFilePermissionDenied     = 2005,
+    SDSystemErrorOSXFUSEMissing           = 2006,
+    SDSystemErrorSSHFSMissing             = 2007,
+    SDSystemErrorAskpassMissing           = 2008
+
 };
 
 #pragma mark - SafeDrive API related errors
@@ -138,6 +135,26 @@ typedef NS_ENUM(NSInteger, SDAPIError) {
     SDAPIErrorUnknown       = -3000,
     SDAPIErrorAuthorization = 3001,
     SDAPIErrorMaintenance   = 3002
+};
+
+#pragma mark - Sync errors
+
+typedef NS_ENUM(NSInteger, SDSyncError) {
+    SDSyncErrorUnknown                   = -4000,
+    SDSyncErrorTimeout                   = 4001,
+    SDSyncErrorDirectoryMissing          = 4002,
+    SDSyncErrorSyncFailed                = 4003,
+    SDSyncErrorAlreadyRunning            = 4004,
+    SDSyncErrorRemoteEnvironment         = 4005,
+    SDSyncErrorFolderConflict            = 4006,
+};
+
+
+typedef NS_ENUM(NSInteger, SDMountError) {
+    SDMountErrorUnknown                  = -5000,
+    SDMountErrorMountFailed              = 5001,
+    SDMountErrorUnmountFailed            = 5002,
+    SDMountErrorAlreadyMounted           = 5003
 };
 
 #pragma mark - Sync state

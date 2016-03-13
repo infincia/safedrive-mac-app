@@ -68,6 +68,9 @@ NSString *const SDErrorSyncDomain = @"io.safedrive.sync";
 NSString *const SDErrorSSHFSDomain = @"io.safedrive.sshfs";
 NSString *const SDErrorAccountDomain = @"io.safedrive.account";
 NSString *const SDErrorAPIDomain = @"io.safedrive.api";
+NSString *const SDMountErrorDomain = @"io.safedrive.mount";
+
+
 
 NSUInteger const SDErrorNone = 0;
 
@@ -79,28 +82,15 @@ NSUInteger const SDErrorNone = 0;
             return @"SDSSHErrorAuthorization";
         case SDSSHErrorTimeout:
             return @"SDSSHErrorTimeout";
-        case SDSSHErrorMountFailed:
-            return @"SDSSHErrorMountFailed";
-        case SDSSHErrorUnmountFailed:
-            return @"SDSSHErrorUnmountFailed";
-        case SDSSHErrorAlreadyMounted:
-            return @"SDSSHErrorAlreadyMounted";
-        case SDSSHErrorAskpassMissing:
-            return @"SDSSHErrorAskpassMissing";
         case SDSSHErrorHostFingerprintChanged:
             return @"SDSSHErrorHostFingerprintChanged";
         case SDSSHErrorHostKeyVerificationFailed:
             return @"SDSSHErrorHostKeyVerificationFailed";
-        case SDSSHErrorOSXFUSEMissing:
-            return @"SDSSHErrorOSXFUSEMissing";
-        case SDSSHErrorSSHFSMissing:
-            return @"SDSSHErrorSSHFSMissing";
         case SDSSHErrorDirectoryMissing:
             return @"SDSSHErrorDirectoryMissing";
-        case SDSSHErrorSyncFailed:
-            return @"SDSSHErrorSyncFailed";
-        case SDSSHErrorSyncAlreadyRunning:
-            return @"SDSSHErrorSyncAlreadyRunning";
+        case SDSSHErrorRemoteEnvironment:
+            return @"SDSSHErrorRemoteEnvironment";
+            
             
         case SDSystemErrorUnknown:
             return @"SDSystemErrorUnknown";
@@ -114,6 +104,13 @@ NSUInteger const SDErrorNone = 0;
             return @"SDSystemErrorRemoveKeychainItemFailed";
         case SDSystemErrorFilePermissionDenied:
             return @"SDSystemErrorFilePermissionDenied";
+        case SDSystemErrorOSXFUSEMissing:
+            return @"SDSystemErrorOSXFUSEMissing";
+        case SDSystemErrorSSHFSMissing:
+            return @"SDSystemErrorSSHFSMissing";
+        case SDSystemErrorAskpassMissing:
+            return @"SDSystemErrorAskpassMissing";
+
 
         case SDAPIErrorUnknown:
             return @"SDAPIErrorUnknown";
@@ -121,7 +118,31 @@ NSUInteger const SDErrorNone = 0;
             return @"SDAPIErrorAuthorization";
         case SDAPIErrorMaintenance:
             return @"SDAPIErrorMaintenance";
+
+        case SDSyncErrorUnknown:
+            return @"SDSyncErrorUnknown";
+        case SDSyncErrorTimeout:
+            return @"SDSyncErrorTimeout";
+        case SDSyncErrorDirectoryMissing:
+            return @"SDSyncErrorDirectoryMissing";
+        case SDSyncErrorSyncFailed:
+            return @"SDSyncErrorSyncFailed";
+        case SDSyncErrorAlreadyRunning:
+            return @"SDSyncErrorAlreadyRunning";
+        case SDSyncErrorRemoteEnvironment:
+            return @"SDSyncErrorRemoteEnvironment";
+        case SDSyncErrorFolderConflict:
+            return @"SDSyncErrorFolderConflict";
             
+        case SDMountErrorUnknown:
+            return @"SDMountErrorUnknown";
+        case SDMountErrorMountFailed:
+            return @"SDMountErrorMountFailed";
+        case SDMountErrorAlreadyMounted:
+            return @"SDMountErrorAlreadyMounted";
+        case SDMountErrorUnmountFailed:
+            return @"SDMountErrorUnmountFailed";
+
         default:
             return [NSString stringWithFormat:@"Unknown: %ld", error.code];
     }
