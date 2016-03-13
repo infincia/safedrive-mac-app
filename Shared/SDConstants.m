@@ -74,77 +74,86 @@ NSString *const SDMountErrorDomain = @"io.safedrive.mount";
 
 NSUInteger const SDErrorNone = 0;
 
- NSString * _Nullable SDErrorToString(NSError *error) {
-    switch (error.code) {
-        case SDSSHErrorUnknown:
-            return @"SDSSHErrorUnknown";
-        case SDSSHErrorAuthorization:
-            return @"SDSSHErrorAuthorization";
-        case SDSSHErrorTimeout:
-            return @"SDSSHErrorTimeout";
-        case SDSSHErrorHostFingerprintChanged:
-            return @"SDSSHErrorHostFingerprintChanged";
-        case SDSSHErrorHostKeyVerificationFailed:
-            return @"SDSSHErrorHostKeyVerificationFailed";
-        case SDSSHErrorDirectoryMissing:
-            return @"SDSSHErrorDirectoryMissing";
-        case SDSSHErrorRemoteEnvironment:
-            return @"SDSSHErrorRemoteEnvironment";
-            
-            
-        case SDSystemErrorUnknown:
-            return @"SDSystemErrorUnknown";
-        case SDSystemErrorAddLoginItemFailed:
-            return @"SDSystemErrorAddLoginItemFailed";
-        case SDSystemErrorRemoveLoginItemFailed:
-            return @"SDSystemErrorRemoveLoginItemFailed";
-        case SDSystemErrorAddKeychainItemFailed:
-            return @"SDSystemErrorAddKeychainItemFailed";
-        case SDSystemErrorRemoveKeychainItemFailed:
-            return @"SDSystemErrorRemoveKeychainItemFailed";
-        case SDSystemErrorFilePermissionDenied:
-            return @"SDSystemErrorFilePermissionDenied";
-        case SDSystemErrorOSXFUSEMissing:
-            return @"SDSystemErrorOSXFUSEMissing";
-        case SDSystemErrorSSHFSMissing:
-            return @"SDSystemErrorSSHFSMissing";
-        case SDSystemErrorAskpassMissing:
-            return @"SDSystemErrorAskpassMissing";
-
-
-        case SDAPIErrorUnknown:
-            return @"SDAPIErrorUnknown";
-        case SDAPIErrorAuthorization:
-            return @"SDAPIErrorAuthorization";
-        case SDAPIErrorMaintenance:
-            return @"SDAPIErrorMaintenance";
-
-        case SDSyncErrorUnknown:
-            return @"SDSyncErrorUnknown";
-        case SDSyncErrorTimeout:
-            return @"SDSyncErrorTimeout";
-        case SDSyncErrorDirectoryMissing:
-            return @"SDSyncErrorDirectoryMissing";
-        case SDSyncErrorSyncFailed:
-            return @"SDSyncErrorSyncFailed";
-        case SDSyncErrorAlreadyRunning:
-            return @"SDSyncErrorAlreadyRunning";
-        case SDSyncErrorRemoteEnvironment:
-            return @"SDSyncErrorRemoteEnvironment";
-        case SDSyncErrorFolderConflict:
-            return @"SDSyncErrorFolderConflict";
-            
-        case SDMountErrorUnknown:
-            return @"SDMountErrorUnknown";
-        case SDMountErrorMountFailed:
-            return @"SDMountErrorMountFailed";
-        case SDMountErrorAlreadyMounted:
-            return @"SDMountErrorAlreadyMounted";
-        case SDMountErrorUnmountFailed:
-            return @"SDMountErrorUnmountFailed";
-
-        default:
-            return [NSString stringWithFormat:@"Unknown: %ld", error.code];
-    }
-    return nil;
+// This will be unnecessary once SDError enums are Swift w/String values, but it's safe as long as error.code is cast
+// as a specific kind of SDError enum, the compiler will warn if any cases are missing
+NSString * _Nullable SDErrorToString(NSError *error) {
+     switch ((enum SDSSHError)error.code) {
+         case SDSSHErrorUnknown:
+             return @"SDSSHErrorUnknown";
+         case SDSSHErrorAuthorization:
+             return @"SDSSHErrorAuthorization";
+         case SDSSHErrorTimeout:
+             return @"SDSSHErrorTimeout";
+         case SDSSHErrorHostFingerprintChanged:
+             return @"SDSSHErrorHostFingerprintChanged";
+         case SDSSHErrorHostKeyVerificationFailed:
+             return @"SDSSHErrorHostKeyVerificationFailed";
+         case SDSSHErrorDirectoryMissing:
+             return @"SDSSHErrorDirectoryMissing";
+         case SDSSHErrorRemoteEnvironment:
+             return @"SDSSHErrorRemoteEnvironment";
+     }
+     
+     
+     switch ((enum SDSystemError)error.code) {
+         case SDSystemErrorUnknown:
+             return @"SDSystemErrorUnknown";
+         case SDSystemErrorAddLoginItemFailed:
+             return @"SDSystemErrorAddLoginItemFailed";
+         case SDSystemErrorRemoveLoginItemFailed:
+             return @"SDSystemErrorRemoveLoginItemFailed";
+         case SDSystemErrorAddKeychainItemFailed:
+             return @"SDSystemErrorAddKeychainItemFailed";
+         case SDSystemErrorRemoveKeychainItemFailed:
+             return @"SDSystemErrorRemoveKeychainItemFailed";
+         case SDSystemErrorFilePermissionDenied:
+             return @"SDSystemErrorFilePermissionDenied";
+         case SDSystemErrorOSXFUSEMissing:
+             return @"SDSystemErrorOSXFUSEMissing";
+         case SDSystemErrorSSHFSMissing:
+             return @"SDSystemErrorSSHFSMissing";
+         case SDSystemErrorAskpassMissing:
+             return @"SDSystemErrorAskpassMissing";
+     }
+     
+     
+     switch ((enum SDAPIError)error.code) {
+         case SDAPIErrorUnknown:
+             return @"SDAPIErrorUnknown";
+         case SDAPIErrorAuthorization:
+             return @"SDAPIErrorAuthorization";
+         case SDAPIErrorMaintenance:
+             return @"SDAPIErrorMaintenance";
+     }
+     
+     
+     switch ((enum SDSyncError)error.code) {
+         case SDSyncErrorUnknown:
+             return @"SDSyncErrorUnknown";
+         case SDSyncErrorTimeout:
+             return @"SDSyncErrorTimeout";
+         case SDSyncErrorDirectoryMissing:
+             return @"SDSyncErrorDirectoryMissing";
+         case SDSyncErrorSyncFailed:
+             return @"SDSyncErrorSyncFailed";
+         case SDSyncErrorAlreadyRunning:
+             return @"SDSyncErrorAlreadyRunning";
+         case SDSyncErrorRemoteEnvironment:
+             return @"SDSyncErrorRemoteEnvironment";
+         case SDSyncErrorFolderConflict:
+             return @"SDSyncErrorFolderConflict";
+     }
+     
+     
+     switch ((enum SDMountError)error.code) {
+         case SDMountErrorUnknown:
+             return @"SDMountErrorUnknown";
+         case SDMountErrorMountFailed:
+             return @"SDMountErrorMountFailed";
+         case SDMountErrorAlreadyMounted:
+             return @"SDMountErrorAlreadyMounted";
+         case SDMountErrorUnmountFailed:
+             return @"SDMountErrorUnmountFailed";
+     }
+     return nil;
 }
