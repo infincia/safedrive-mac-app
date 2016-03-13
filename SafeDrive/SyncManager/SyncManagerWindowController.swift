@@ -407,8 +407,17 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.addedField.stringValue = ""
             }
             
-            if let lastSync = syncItem.lastSync {
-                self.lastSyncField.stringValue = lastSync.toMediumString()
+            guard let realm = try? Realm() else {
+                SDLog("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            
+            let syncTasks = realm.objects(SyncTask)
+            
+            if let syncTask = syncTasks.filter("syncFolder.uniqueID == \(syncItem.uniqueID) AND success == true").sorted("syncDate").last,
+                lastSync = syncTask.syncDate {
+                    self.lastSyncField.stringValue = lastSync.toMediumString()
             }
             else {
                 self.lastSyncField.stringValue = ""
