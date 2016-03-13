@@ -211,7 +211,7 @@ class API: NSObject {
                             failureBlock(error)
                             return
                     }
-                    let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    let responseError: NSError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     print("Error client/register: \(responseError)")
                     failureBlock(responseError)
                 }
@@ -240,7 +240,7 @@ class API: NSObject {
                             failureBlock(error)
                             return
                     }
-                    let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    let responseError: NSError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     print("Error account/status: \(responseError)")
                     failureBlock(responseError)
                 }
@@ -267,7 +267,7 @@ class API: NSObject {
                             failureBlock(error)
                             return
                     }
-                    let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    let responseError: NSError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     print("Error account/details: \(responseError)")
                     failureBlock(responseError)
                 }

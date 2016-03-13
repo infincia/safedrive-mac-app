@@ -275,7 +275,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         let syncFolders = realm.objects(SyncFolder)
         if SyncFolder.hasConflictingFolderRegistered(url.path!, syncFolders: syncFolders) {
             let errorInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")]
-            throw NSError(domain: SDErrorSyncDomain, code: SDSystemError.FolderConflict.rawValue, userInfo: errorInfo)
+            throw NSError(domain: SDErrorSyncDomain, code: SDSyncError.FolderConflict.rawValue, userInfo: errorInfo)
         }
     }
     

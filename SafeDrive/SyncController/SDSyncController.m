@@ -100,7 +100,7 @@
 
     }
     else {
-        NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: @"Local directory not found"}];
+        NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSyncErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: @"Local directory not found"}];
         dispatch_async(dispatch_get_main_queue(), ^{
             self.syncFailure = YES;
             failureBlock(localURL, error);
@@ -138,7 +138,7 @@
         [rsyncEnvironment setObject:safeDriveAskpassPath forKey:@"SSH_ASKPASS"];
     }
     else {
-        NSError *askpassError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorAskpassMissing userInfo:@{NSLocalizedDescriptionKey: @"Askpass helper missing"}];
+        NSError *askpassError = [NSError errorWithDomain:SDErrorSyncDomain code:SDSystemErrorAskpassMissing userInfo:@{NSLocalizedDescriptionKey: @"Askpass helper missing"}];
         dispatch_async(dispatch_get_main_queue(), ^{
             self.syncFailure = YES;
             failureBlock(localURL, askpassError);
@@ -234,18 +234,18 @@
         else if ([outputString rangeOfString:@"No such file or directory"].length > 0) {
             NSString *msg = [NSString stringWithFormat:@"That path does not exist on the server: %@", serverPath];
 
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
         }
         else if ([outputString rangeOfString:@"Not a directory"].length > 0) {
             NSString *msg = [NSString stringWithFormat:@"That path does not exist on the server: %@", serverPath];
 
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
         }
         else if ([outputString rangeOfString:@"Permission denied"].length > 0) {
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
         }
         else if ([outputString rangeOfString:@"Error resolving hostname"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"Error resolving hostname, contact support"}];
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"Error resolving hostname, contact support"}];
         }
         else if ([outputString rangeOfString:@"remote host has disconnected"].length > 0) {
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Sync failed, check username and password"}];
@@ -257,7 +257,7 @@
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorHostKeyVerificationFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server key verification failed!"}];
         }
         else {
-            error = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
+            error = [NSError errorWithDomain:SDErrorDomain code:SDSyncErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
             /*
                 for the moment we don't want to call the failure block here, as 
                 not everything that comes through stderr indicates a mount 
@@ -297,23 +297,23 @@
              */
         }
         else if ([errorString rangeOfString:@"connection unexpectedly closed"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server closed connection unexpectedly"}];
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server closed connection unexpectedly"}];
         }
         else if ([errorString rangeOfString:@"No such file or directory"].length > 0) {
             NSString *msg = [NSString stringWithFormat:@"That path does not exist on the server: %@", serverPath];
             
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
         }
         else if ([errorString rangeOfString:@"Not a directory"].length > 0) {
             NSString *msg = [NSString stringWithFormat:@"That path does not exist on the server: %@", serverPath];
             
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
         }
         else if ([errorString rangeOfString:@"Permission denied"].length > 0) {
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
         }
         else if ([errorString rangeOfString:@"Error resolving hostname"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"Error resolving hostname, contact support"}];
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"Error resolving hostname, contact support"}];
         }
         else if ([errorString rangeOfString:@"remote host has disconnected"].length > 0) {
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Sync failed, check username and password"}];
@@ -325,7 +325,7 @@
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorHostKeyVerificationFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server key verification failed!"}];
         }
         else {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
+            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
             /*
              for the moment we don't want to call the failure block here, as
              not everything that comes through stderr indicates a mount
