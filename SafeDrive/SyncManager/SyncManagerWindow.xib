@@ -36,7 +36,7 @@
                             <subviews>
                                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3kf-wf-hll">
                                     <rect key="frame" x="31" y="124" width="252" height="24"/>
-                                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="SmP-El-AAJ">
+                                    <segmentedCell key="cell" enabled="NO" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="SmP-El-AAJ">
                                         <font key="font" metaFont="system"/>
                                         <segments>
                                             <segment label="Hourly"/>
