@@ -84,6 +84,17 @@ class AccountController: NSObject {
         })
     }
     
+    func signOutWithSuccess(successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
+        self.sharedSystemAPI.removeCredentialsInKeychainForService(SDSessionServiceName)
+        self.sharedSystemAPI.removeCredentialsInKeychainForService(SDSSHServiceName)
+        self.sharedSystemAPI.removeCredentialsInKeychainForService(SDServiceName)
+
+        // reset crashlytics email and telemetry API username
+        Crashlytics.sharedInstance().setUserEmail(nil)
+        SDErrorHandlerSetUser(nil)
+
+    }
+    
     // MARK: Private
     
     private func accountStatusFromString(string: String) -> SDAccountStatus {
