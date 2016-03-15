@@ -44,6 +44,14 @@ class AccountController: NSObject {
         guard let email = self.email, password = self.password else {
             return
         }
+        
+        self.signOutWithSuccess({ () -> Void in
+            //
+        }, failure:{ (error) -> Void in
+            //
+        })
+        
+        
         let keychainError: NSError? = self.sharedSystemAPI.insertCredentialsInKeychainForService(SDServiceName, account: email, password: password)
         
         if let keychainError = keychainError {
