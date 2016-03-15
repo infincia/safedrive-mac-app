@@ -37,4 +37,6 @@
 
 -(NSError * _Nullable)removeCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account;
 
+-(NSError * _Nullable)removeCredentialsInKeychainForService:(NSString * _Nonnull)service;
+
 @end
