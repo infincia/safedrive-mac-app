@@ -55,6 +55,7 @@ NSString *const SDAPIDidBecomeReachable                   = @"SDAPIDidBecomeReac
 NSString *const SDAPIDidBecomeUnreachable                 = @"SDAPIDidBecomeUnreachable";
 
 NSString *const SDAccountSignInNotification               = @"SDAccountSignInNotification";
+NSString *const SDAccountSignOutNotification              = @"SDAccountSignOutNotification";
 NSString *const SDAccountStatusNotification               = @"SDAccountStatusNotification";
 NSString *const SDAccountDetailsNotification              = @"SDAccountDetailsNotification";
 

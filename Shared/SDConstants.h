@@ -65,6 +65,7 @@ FOUNDATION_EXPORT NSString *const SDAPIDidBecomeReachable;
 FOUNDATION_EXPORT NSString *const SDAPIDidBecomeUnreachable;
 
 FOUNDATION_EXPORT NSString *const SDAccountSignInNotification;
+FOUNDATION_EXPORT NSString *const SDAccountSignOutNotification;
 FOUNDATION_EXPORT NSString *const SDAccountStatusNotification;
 FOUNDATION_EXPORT NSString *const SDAccountDetailsNotification;
 
