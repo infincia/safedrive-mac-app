@@ -6,8 +6,8 @@ def keychain_pods
 end
 
 def shared_pods
-    pod 'Alamofire', '3.2'
-    pod 'Fabric', '1.6.6'
+    pod 'Alamofire', '3.2.1'
+    pod 'Fabric', '1.6.7'
     pod 'Crashlytics', '3.7.0'
     pod 'NMSSH', '2.2.4'
     pod 'SwiftDate', '1.2'
@@ -35,7 +35,7 @@ target 'SafeDrive' do
     pod 'INAppStoreWindow', '1.4'
     pod 'DCOAboutWindow', '0.2.0'
     pod 'LetsMove', '1.20'
-    pod 'Sparkle', '1.13.1'
+    pod 'Sparkle', '1.14.0'
     pod 'STPrivilegedTask', '1.0.1'
 end
 
