@@ -44,7 +44,10 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "volumeShouldUnmount:", name: SDVolumeShouldUnmountNotification, object: nil)
         
         // register SDAccountProtocol notifications
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignIn:", name: SDAccountSignInNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignOut:", name: SDAccountSignOutNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveAccountStatus:", name: SDAccountStatusNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveAccountDetails:", name: SDAccountDetailsNotification, object: nil)
 
     }
     
