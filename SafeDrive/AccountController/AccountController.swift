@@ -97,6 +97,8 @@ class AccountController: NSObject {
         self.sharedSystemAPI.removeCredentialsInKeychainForService(SDSSHServiceName)
         self.sharedSystemAPI.removeCredentialsInKeychainForService(SDServiceName)
 
+        self.signedIn = false
+
         // reset crashlytics email and telemetry API username
         Crashlytics.sharedInstance().setUserEmail(nil)
         SDErrorHandlerSetUser(nil)
