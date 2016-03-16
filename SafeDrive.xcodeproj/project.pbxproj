@@ -301,8 +301,8 @@
 		AAF9460C1C815E3500B972C3 /* SafeDriveFinder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeDriveFinder-Bridging-Header.h"; sourceTree = "<group>"; };
 		AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncScheduler.swift; sourceTree = "<group>"; };
 		AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SafeDrive-Bridging-Header.h"; sourceTree = "<group>"; };
-		AAF946121C823A0E00B972C3 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1/Realm.framework"; sourceTree = "<group>"; };
-		AAF946131C823A0E00B972C3 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1/RealmSwift.framework"; sourceTree = "<group>"; };
+		AAF946121C823A0E00B972C3 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1/Realm.framework"; sourceTree = "<group>"; };
+		AAF946131C823A0E00B972C3 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1/RealmSwift.framework"; sourceTree = "<group>"; };
 		AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableCellView.swift; path = SyncManager/SyncManagerTableCellView.swift; sourceTree = "<group>"; };
 		AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "update-version.sh"; sourceTree = "<group>"; };
 		BE2D8449BAB0BAC9033667C6 /* Pods-safedriveaskpass.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.release.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.release.xcconfig"; sourceTree = "<group>"; };
@@ -1396,7 +1396,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1",
+					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
@@ -1423,7 +1423,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1",
+					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
@@ -1537,7 +1537,7 @@
 					"\"$CONFIGURATION_BUILD_DIR/UICKeyChainStore-framework\"",
 					"\"${PODS_ROOT}/Crashlytics/OSX\"",
 					"\"${PODS_ROOT}/Fabric/OSX\"",
-					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1",
+					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Service/Info.plist;
@@ -1568,7 +1568,7 @@
 					"\"$CONFIGURATION_BUILD_DIR/UICKeyChainStore-framework\"",
 					"\"${PODS_ROOT}/Crashlytics/OSX\"",
 					"\"${PODS_ROOT}/Fabric/OSX\"",
-					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1",
+					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Service/Info.plist;
@@ -1589,7 +1589,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Finder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
@@ -1611,7 +1611,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.3/osx/swift-2.1.1";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Finder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
