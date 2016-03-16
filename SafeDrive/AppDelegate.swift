@@ -152,7 +152,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             
             Realm.Configuration.defaultConfiguration = config
             
-            guard let realm = try? Realm() else {
+            guard let _ = try? Realm() else {
                 SDLog("failed to create migrated realm!!!")
                 Crashlytics.sharedInstance().crash()
                 return

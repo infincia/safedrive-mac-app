@@ -69,7 +69,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         
         self.token = realm.objects(SyncFolder).addNotificationBlock { results, error in
             
-            guard let results = results else {
+            guard let _ = results else {
                 return
             }
             let selectedIndexes = self.syncListView.selectedRowIndexes
