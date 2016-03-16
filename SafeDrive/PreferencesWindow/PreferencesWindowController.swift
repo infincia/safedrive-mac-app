@@ -96,6 +96,7 @@ class PreferencesWindowController: NSWindowController, SDMountStateProtocol, SDA
     
         // register SDAccountProtocol notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignIn:", name: SDAccountSignInNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignOut:", name: SDAccountSignOutNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveAccountStatus:", name: SDAccountStatusNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveAccountDetails:", name: SDAccountDetailsNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveServiceStatus:", name: SDServiceStatusNotification, object: nil)

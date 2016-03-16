@@ -78,6 +78,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignIn:", name: SDAccountSignInNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignOut:", name: SDAccountSignOutNotification, object: nil)
+
     }
     
     override func windowDidLoad() {
