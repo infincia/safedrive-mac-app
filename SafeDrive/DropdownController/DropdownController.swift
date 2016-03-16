@@ -97,6 +97,10 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         self.enableMenuItems(true)
     }
     
+    func didSignOut(notification: NSNotification) {
+        self.enableMenuItems(false)
+    }
+    
     func didReceiveAccountDetails(notification: NSNotification) {
     }
     

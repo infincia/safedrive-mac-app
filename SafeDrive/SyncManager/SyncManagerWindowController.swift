@@ -250,6 +250,10 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         self.readSyncFolders(self)
     }
     
+    func didSignOut(notification: NSNotification) {
+        self.close()
+    }
+    
     func didReceiveAccountDetails(notification: NSNotification) {
     }
     

@@ -167,6 +167,10 @@ class PreferencesWindowController: NSWindowController, SDMountStateProtocol, SDA
         
     }
     
+    func didSignOut(notification: NSNotification) {
+        
+    }
+    
     func didReceiveAccountStatus(notification: NSNotification) {
         if let accountStatus = notification.object as? [String: AnyObject],
                status = accountStatus["status"] as? String {
