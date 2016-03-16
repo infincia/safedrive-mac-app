@@ -100,6 +100,7 @@ class AccountController: NSObject {
         // reset crashlytics email and telemetry API username
         Crashlytics.sharedInstance().setUserEmail(nil)
         SDErrorHandlerSetUser(nil)
+        successBlock()
 
     }
     
