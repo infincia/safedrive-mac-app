@@ -1531,12 +1531,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$CONFIGURATION_BUILD_DIR/AFNetworking\"",
-					"\"$CONFIGURATION_BUILD_DIR/MCSMKeychainItem-framework\"",
-					"\"$CONFIGURATION_BUILD_DIR/NMSSH\"",
-					"\"$CONFIGURATION_BUILD_DIR/UICKeyChainStore-framework\"",
-					"\"${PODS_ROOT}/Crashlytics/OSX\"",
-					"\"${PODS_ROOT}/Fabric/OSX\"",
 					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
