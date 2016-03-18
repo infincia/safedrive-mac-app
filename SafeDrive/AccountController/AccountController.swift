@@ -80,7 +80,7 @@ class AccountController: NSObject {
                         failureBlock(keychainError)
                         return
                     }
-                    NSNotificationCenter.defaultCenter().postNotificationName(SDAccountSignInNotification, object: nil)
+                    NSNotificationCenter.defaultCenter().postNotificationName(SDAccountSignInNotification, object: clientID)
                     successBlock()
                 }
             }, failure: { (error: NSError) -> Void in
