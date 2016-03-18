@@ -202,7 +202,7 @@ class API: NSObject {
                     }
                     self.sessionToken = token
                     self.sharedSystemAPI.insertCredentialsInKeychainForService(SDSessionServiceName, account: user, password: token)
-                    successBlock(token)
+                    successBlock(token, identifier)
                 case .Failure(let error):
                     guard let data = response.data,
                               JSON = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: String],

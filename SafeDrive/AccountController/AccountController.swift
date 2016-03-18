@@ -62,7 +62,7 @@ class AccountController: NSObject {
         Crashlytics.sharedInstance().setUserEmail(email)
         SDErrorHandlerSetUser(email)
         
-        self.sharedSafedriveAPI.registerMachineWithUser(email, password: password, success: { (sessionToken: String) -> Void in
+        self.sharedSafedriveAPI.registerMachineWithUser(email, password: password, success: { (sessionToken: String, clientID: String) -> Void in
             self.sharedSafedriveAPI.accountStatusForUser(email, success: { (accountStatus: [String : NSObject]?) -> Void in
                 SDLog("SafeDrive accountStatusForUser success in account controller")
                 self.signedIn = true
