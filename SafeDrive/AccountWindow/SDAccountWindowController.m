@@ -133,6 +133,7 @@
         SDErrorHandlerReport(apiError);
         [self displayError:apiError forDuration:10];
         [self.spinner stopAnimation:self];
+        [self showWindow:nil];
     }];
     
 }
