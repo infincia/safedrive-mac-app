@@ -119,14 +119,90 @@ NSString * _Nonnull SDErrorToString(NSError *error) {
      
      
      switch ((enum SDAPIError)error.code) {
+             // Client errors
          case SDAPIErrorUnknown:
              return @"SDAPIErrorUnknown";
-         case SDAPIErrorAuthorization:
-             return @"SDAPIErrorAuthorization";
-         case SDAPIErrorMaintenance:
-             return @"SDAPIErrorMaintenance";
+         case SDAPIErrorBadRequest:
+             return @"SDAPIErrorBadRequest";
+         case SDAPIErrorUnauthorized:
+             return @"SDAPIErrorUnauthorized";
+         case SDAPIErrorPaymentRequired:
+             return @"SDAPIErrorPaymentRequired";
+         case SDAPIErrorForbidden:
+             return @"SDAPIErrorForbidden";
+         case SDAPIErrorNotFound:
+             return @"SDAPIErrorNotFound";
+         case SDAPIErrorMethodNotAllowed:
+             return @"SDAPIErrorMethodNotAllowed";
+         case SDAPIErrorProxyAuthenticationRequired:
+             return @"SDAPIErrorProxyAuthenticationRequired";
+         case SDAPIErrorRequestTimeout:
+             return @"SDAPIErrorRequestTimeout";
+         case SDAPIErrorConflict:
+             return @"SDAPIErrorConflict";
+         case SDAPIErrorGone:
+             return @"SDAPIErrorGone";
+         case SDAPIErrorLengthRequired:
+             return @"SDAPIErrorLengthRequired";
+         case SDAPIErrorPreconditionFailed:
+             return @"SDAPIErrorPreconditionFailed";
+         case SDAPIErrorPayloadTooLarge:
+             return @"SDAPIErrorPayloadTooLarge";
+         case SDAPIErrorURITooLong:
+             return @"SDAPIErrorURITooLong";
+         case SDAPIErrorUnsupportedMediaType:
+             return @"SDAPIErrorUnsupportedMediaType";
+         case SDAPIErrorRangeNotSatisfiable:
+             return @"SDAPIErrorRangeNotSatisfiable";
+         case SDAPIErrorExpectationFailed:
+             return @"SDAPIErrorExpectationFailed";
+         case SDAPIErrorImATeapot:
+             return @"SDAPIErrorImATeapot";
+         case SDAPIErrorMisdirectedRequest:
+             return @"SDAPIErrorMisdirectedRequest";
+         case SDAPIErrorUnprocessableEntity:
+             return @"SDAPIErrorUnprocessableEntity";
+         case SDAPIErrorLocked:
+             return @"SDAPIErrorLocked";
+         case SDAPIErrorFailedDependency:
+             return @"SDAPIErrorFailedDependency";
+         case SDAPIErrorUpgradeRequired:
+             return @"SDAPIErrorUpgradeRequired";
+         case SDAPIErrorPreconditionRequired:
+             return @"SDAPIErrorPreconditionRequired";
+         case SDAPIErrorTooManyRequests:
+             return @"SDAPIErrorTooManyRequests";
+         case SDAPIErrorRequestHeaderFieldsTooLarge:
+             return @"SDAPIErrorRequestHeaderFieldsTooLarge";
+         case SDAPIErrorUnavailableForLegalReasons:
+             return @"SDAPIErrorUnavailableForLegalReasons";
+
+             
+             // Server errors
+         case SDAPIErrorInternalServerError:
+             return @"SDAPIErrorInternalServerError";
+         case SDAPIErrorNotImplemented:
+             return @"SDAPIErrorNotImplemented";
+         case SDAPIErrorBadGateway:
+             return @"SDAPIErrorBadGateway";
+         case SDAPIErrorServiceUnavailable:
+             return @"SDAPIErrorServiceUnavailable";
+         case SDAPIErrorGatewayTimeout:
+             return @"SDAPIErrorGatewayTimeout";
+         case SDAPIErrorHTTPVersionNotSupported:
+             return @"SDAPIErrorHTTPVersionNotSupported";
+         case SDAPIErrorVariantAlsoNegotiates:
+             return @"SDAPIErrorVariantAlsoNegotiates";
+         case SDAPIErrorInsufficientStorage:
+             return @"SDAPIErrorInsufficientStorage";
+         case SDAPIErrorLoopDetected:
+             return @"SDAPIErrorLoopDetected";
+         case SDAPIErrorNotExtended:
+             return @"SDAPIErrorNotExtended";
+         case SDAPIErrorNetworkAuthenticationRequired:
+             return @"SDAPIErrorNetworkAuthenticationRequired";
      }
-     
+    
      
      switch ((enum SDSyncError)error.code) {
          case SDSyncErrorUnknown:

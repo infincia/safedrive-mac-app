@@ -133,9 +133,48 @@ typedef NS_ENUM(NSInteger, SDSystemError) {
 #pragma mark - SafeDrive API related errors
 
 typedef NS_ENUM(NSInteger, SDAPIError) {
-    SDAPIErrorUnknown       = -3000,
-    SDAPIErrorAuthorization = 3001,
-    SDAPIErrorMaintenance   = 3002
+    // Client errors
+    SDAPIErrorUnknown                       = -1,
+    SDAPIErrorBadRequest                    = 400,
+    SDAPIErrorUnauthorized                  = 401,
+    SDAPIErrorPaymentRequired               = 402,
+    SDAPIErrorForbidden                     = 403,
+    SDAPIErrorNotFound                      = 404,
+    SDAPIErrorMethodNotAllowed              = 406,
+    SDAPIErrorProxyAuthenticationRequired   = 407,
+    SDAPIErrorRequestTimeout                = 408,
+    SDAPIErrorConflict                      = 409,
+    SDAPIErrorGone                          = 410,
+    SDAPIErrorLengthRequired                = 411,
+    SDAPIErrorPreconditionFailed            = 412,
+    SDAPIErrorPayloadTooLarge               = 413,
+    SDAPIErrorURITooLong                    = 414,
+    SDAPIErrorUnsupportedMediaType          = 415,
+    SDAPIErrorRangeNotSatisfiable           = 416,
+    SDAPIErrorExpectationFailed             = 417,
+    SDAPIErrorImATeapot                     = 418, // yes, really...
+    SDAPIErrorMisdirectedRequest            = 421,
+    SDAPIErrorUnprocessableEntity           = 422,
+    SDAPIErrorLocked                        = 423,
+    SDAPIErrorFailedDependency              = 424,
+    SDAPIErrorUpgradeRequired               = 426,
+    SDAPIErrorPreconditionRequired          = 428,
+    SDAPIErrorTooManyRequests               = 429,
+    SDAPIErrorRequestHeaderFieldsTooLarge   = 431,
+    SDAPIErrorUnavailableForLegalReasons    = 451,
+    
+    // Server errors
+    SDAPIErrorInternalServerError           = 500,
+    SDAPIErrorNotImplemented                = 501,
+    SDAPIErrorBadGateway                    = 502,
+    SDAPIErrorServiceUnavailable            = 503,
+    SDAPIErrorGatewayTimeout                = 504,
+    SDAPIErrorHTTPVersionNotSupported       = 505,
+    SDAPIErrorVariantAlsoNegotiates         = 506,
+    SDAPIErrorInsufficientStorage           = 507,
+    SDAPIErrorLoopDetected                  = 508,
+    SDAPIErrorNotExtended                   = 510,
+    SDAPIErrorNetworkAuthenticationRequired = 511
 };
 
 #pragma mark - Sync errors
