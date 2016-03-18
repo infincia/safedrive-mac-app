@@ -102,6 +102,7 @@ class AccountController: NSObject {
         // reset crashlytics email and telemetry API username
         Crashlytics.sharedInstance().setUserEmail(nil)
         SDErrorHandlerSetUser(nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(SDAccountSignOutNotification, object: nil)
         successBlock()
 
     }
