@@ -77,7 +77,7 @@ NSUInteger const SDErrorNone = 0;
 
 // This will be unnecessary once SDError enums are Swift w/String values, but it's safe as long as error.code is cast
 // as a specific kind of SDError enum, the compiler will warn if any cases are missing
-NSString * _Nullable SDErrorToString(NSError *error) {
+NSString * _Nonnull SDErrorToString(NSError *error) {
      switch ((enum SDSSHError)error.code) {
          case SDSSHErrorUnknown:
              return @"SDSSHErrorUnknown";
@@ -156,5 +156,5 @@ NSString * _Nullable SDErrorToString(NSError *error) {
          case SDMountErrorUnmountFailed:
              return @"SDMountErrorUnmountFailed";
      }
-     return nil;
+     return @"Unknown";
 }

@@ -190,4 +190,4 @@ typedef void(^SDSyncResultBlock)(NSURL * _Nonnull syncURL, NSError * _Nullable s
 
 #pragma mark - Global functions
 
-NSString * _Nullable SDErrorToString(NSError * _Nonnull error);
+NSString * _Nonnull SDErrorToString(NSError * _Nonnull error);
