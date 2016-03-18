@@ -211,8 +211,10 @@ class API: NSObject {
                             failureBlock(error)
                             return
                     }
-                    let responseError: NSError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
-                    print("Error client/register: \(responseError)")
+                    let statusCode = response.response?.statusCode ?? -1
+                    let errorCode = SDAPIError(rawValue: statusCode)!
+                    let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error client/register \(SDErrorToString(responseError)): \(responseError)")
                     failureBlock(responseError)
                 }
             }
@@ -240,8 +242,10 @@ class API: NSObject {
                             failureBlock(error)
                             return
                     }
-                    let responseError: NSError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
-                    print("Error account/status: \(responseError)")
+                    let statusCode = response.response?.statusCode ?? -1
+                    let errorCode = SDAPIError(rawValue: statusCode)!
+                    let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error account/status \(SDErrorToString(responseError)): \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -267,8 +271,10 @@ class API: NSObject {
                             failureBlock(error)
                             return
                     }
-                    let responseError: NSError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
-                    print("Error account/details: \(responseError)")
+                    let statusCode = response.response?.statusCode ?? -1
+                    let errorCode = SDAPIError(rawValue: statusCode)!
+                    let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error account/details \(SDErrorToString(responseError)): \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -299,8 +305,10 @@ class API: NSObject {
                             failureBlock(error)
                             return
                     }
-                    let responseError: NSError = NSError(domain: SDErrorSyncDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
-                    print("Error folder/create: \(responseError)")
+                    let statusCode = response.response?.statusCode ?? -1
+                    let errorCode = SDAPIError(rawValue: statusCode)!
+                    let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error folder/create \(SDErrorToString(responseError)): \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -326,8 +334,10 @@ class API: NSObject {
                             failureBlock(error)
                             return
                     }
-                    let responseError: NSError = NSError(domain: SDErrorSyncDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
-                    print("Error folder/read: \(responseError)")
+                    let statusCode = response.response?.statusCode ?? -1
+                    let errorCode = SDAPIError(rawValue: statusCode)!
+                    let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error folder/read \(SDErrorToString(responseError)): \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -349,8 +359,10 @@ class API: NSObject {
                             failureBlock(error)
                             return
                     }
-                    let responseError: NSError = NSError(domain: SDErrorSyncDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
-                    print("Error folder/delete: \(responseError)")
+                    let statusCode = response.response?.statusCode ?? -1
+                    let errorCode = SDAPIError(rawValue: statusCode)!
+                    let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error folder/delete \(SDErrorToString(responseError)): \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -378,8 +390,10 @@ class API: NSObject {
                             failureBlock(error)
                             return
                     }
-                    let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
-                    print("Error fingerprints: \(responseError)")
+                    let statusCode = response.response?.statusCode ?? -1
+                    let errorCode = SDAPIError(rawValue: statusCode)!
+                    let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error fingerprints \(SDErrorToString(responseError)): \(responseError)")
                     failureBlock(responseError)
                 }
         }
@@ -400,8 +414,10 @@ class API: NSObject {
                             failureBlock(error)
                             return
                     }
-                    let responseError: NSError = NSError(domain: SDErrorAPIDomain , code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
-                    print("Error status: \(responseError)")
+                    let statusCode = response.response?.statusCode ?? -1
+                    let errorCode = SDAPIError(rawValue: statusCode)!
+                    let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    print("Error status \(SDErrorToString(responseError)): \(responseError)")
                     failureBlock(responseError)
                 }
         }
