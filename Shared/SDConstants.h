@@ -197,6 +197,15 @@ typedef NS_ENUM(NSInteger, SDMountError) {
     SDMountErrorAlreadyMounted           = 5003
 };
 
+#pragma mark - Database errors
+
+typedef NS_ENUM(NSInteger, SDDatabaseError) {
+    SDDatabaseErrorUnknown                  = -6000,
+    SDDatabaseErrorOpenFailed               = 6001,
+    SDDatabaseErrorMigrationFailed          = 6002,
+    SDDatabaseErrorWriteFailed              = 6003
+};
+
 #pragma mark - Sync state
 
 typedef NS_ENUM(NSInteger, SDSyncState) {
