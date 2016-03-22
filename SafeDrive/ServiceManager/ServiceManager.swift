@@ -24,7 +24,7 @@ class ServiceManager: NSObject {
     
     private func serviceLoop() {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
-            for ; ;  {
+            while true {
                 let serviceStatus: Bool = self.serviceStatus
                 dispatch_async(dispatch_get_main_queue(), {() -> Void in
                     NSNotificationCenter.defaultCenter().postNotificationName(SDServiceStatusNotification, object: serviceStatus)

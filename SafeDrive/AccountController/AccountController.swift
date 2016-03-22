@@ -132,7 +132,7 @@ class AccountController: NSObject {
     
     private func accountLoop() {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
-            for ;; {
+            while true {
                 guard let email = self.email else {
                     NSThread.sleepForTimeInterval(1)
                     continue
