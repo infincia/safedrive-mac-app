@@ -35,19 +35,19 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         super.init()
         NSBundle.mainBundle().loadNibNamed("DropdownMenu", owner: self, topLevelObjects: nil)
         // register SDMountStateProtocol notifications
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "mountStateMounted:", name: SDMountStateMountedNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "mountStateUnmounted:", name: SDMountStateUnmountedNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "mountStateDetails:", name: SDMountStateDetailsNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted(_:)), name: SDMountStateMountedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted(_:)), name: SDMountStateUnmountedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails(_:)), name: SDMountStateDetailsNotification, object: nil)
         // register SDVolumeEventProtocol notifications
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "volumeDidMount:", name: SDVolumeDidMountNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "volumeDidUnmount:", name: SDVolumeDidUnmountNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "volumeShouldUnmount:", name: SDVolumeShouldUnmountNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: SDVolumeDidMountNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: SDVolumeDidUnmountNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount(_:)), name: SDVolumeShouldUnmountNotification, object: nil)
         
         // register SDAccountProtocol notifications
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignIn:", name: SDAccountSignInNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSignOut:", name: SDAccountSignOutNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveAccountStatus:", name: SDAccountStatusNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveAccountDetails:", name: SDAccountDetailsNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignIn(_:)), name: SDAccountSignInNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: SDAccountSignOutNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus(_:)), name: SDAccountStatusNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails(_:)), name: SDAccountDetailsNotification, object: nil)
 
     }
     

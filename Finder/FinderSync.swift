@@ -221,19 +221,19 @@ class FinderSync: FIFinderSync {
         case .ContextualMenuForItems:
             /* contextual menu for one or more files/directories */
             m = NSMenu()
-            m!.addItemWithTitle("SafeDrive: Restore Items", action: "restoreItems:", keyEquivalent: "")
+            m!.addItemWithTitle("SafeDrive: Restore Items", action: #selector(FinderSync.restoreItems(_:)), keyEquivalent: "")
         case .ContextualMenuForContainer:
             /* contextual menu for the directory being displayed */
             m = NSMenu()
-            m!.addItemWithTitle("SafeDrive: Restore Folder", action: "restoreItems:", keyEquivalent: "")
+            m!.addItemWithTitle("SafeDrive: Restore Folder", action: #selector(FinderSync.restoreItems(_:)), keyEquivalent: "")
         case .ContextualMenuForSidebar:
             /* contextual menu for an item in the sidebar */
             break
         case .ToolbarItemMenu:
             m = NSMenu()
-            m!.addItemWithTitle("SafeDrive Support", action: "support:", keyEquivalent: "")
-            m!.addItemWithTitle("SafeDrive Sync Preferences", action: "openRestoreWindow:", keyEquivalent: "")
-            m!.addItemWithTitle("SafeDrive Preferences Window", action: "openPreferencesWindow:", keyEquivalent: "")
+            m!.addItemWithTitle("SafeDrive Support", action: #selector(FinderSync.support(_:)), keyEquivalent: "")
+            m!.addItemWithTitle("SafeDrive Sync Preferences", action: #selector(FinderSync.openRestoreWindow(_:)), keyEquivalent: "")
+            m!.addItemWithTitle("SafeDrive Preferences Window", action: #selector(FinderSync.openPreferencesWindow(_:)), keyEquivalent: "")
         }
         return m!
     }

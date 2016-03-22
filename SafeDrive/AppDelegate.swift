@@ -76,7 +76,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         
         PFMoveToApplicationsFolderIfNecessary()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldFinishLaunch:", name: SDApplicationShouldFinishLaunch, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishLaunch(_:)), name: SDApplicationShouldFinishLaunch, object: nil)
 
         self.installWindowController = InstallerWindowController()
         _ = self.installWindowController!.window!
@@ -198,11 +198,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             _ = self.syncManagerWindowController.window!
             
             // register SDApplicationControlProtocol notifications
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenAccountWindow:", name: SDApplicationShouldOpenAccountWindow, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenPreferencesWindow:", name: SDApplicationShouldOpenPreferencesWindow, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenAboutWindow:", name: SDApplicationShouldOpenAboutWindow, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAccountWindow(_:)), name: SDApplicationShouldOpenAccountWindow, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenPreferencesWindow(_:)), name: SDApplicationShouldOpenPreferencesWindow, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAboutWindow(_:)), name: SDApplicationShouldOpenAboutWindow, object: nil)
             NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenAboutWindow, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationShouldOpenSyncWindow:", name: SDApplicationShouldOpenSyncWindow, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.applicationShouldOpenSyncWindow(_:)), name: SDApplicationShouldOpenSyncWindow, object: nil)
         })
     }
     
