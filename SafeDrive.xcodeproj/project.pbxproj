@@ -17,6 +17,18 @@
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA13CB9F1A7212F000A91C7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13CB9D1A7212F000A91C7A /* main.m */; };
 		AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1A460F1BEDE685004A5310 /* HKTHashProvider.m */; };
+		AA1B5EEA1CA1B4A5005DCB81 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */; };
+		AA1B5EEB1CA1B4A5005DCB81 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */; };
+		AA1B5EEC1CA1B4CF005DCB81 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */; };
+		AA1B5EED1CA1B4CF005DCB81 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */; };
+		AA1B5EEE1CA1B510005DCB81 /* Realm.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA1B5EEF1CA1B510005DCB81 /* RealmSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA1B5EF01CA1B519005DCB81 /* Realm.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA1B5EF11CA1B519005DCB81 /* RealmSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA1B5EF21CA1B54C005DCB81 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */; };
+		AA1B5EF31CA1B54F005DCB81 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */; };
+		AA1B5EF41CA1B55F005DCB81 /* Realm.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA1B5EF51CA1B55F005DCB81 /* RealmSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31682C1A191B72006CC0EB /* SafeDriveTests.m */; };
@@ -80,18 +92,6 @@
 		AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946031C815D5A00B972C3 /* FinderSync.swift */; };
 		AAF946081C815D5A00B972C3 /* SafeDriveFinder.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAF945FF1C815D5A00B972C3 /* SafeDriveFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */; };
-		AAF946141C823A0E00B972C3 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF946121C823A0E00B972C3 /* Realm.framework */; };
-		AAF946151C823A0E00B972C3 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF946121C823A0E00B972C3 /* Realm.framework */; };
-		AAF946161C823A0E00B972C3 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF946121C823A0E00B972C3 /* Realm.framework */; };
-		AAF946171C823A0E00B972C3 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF946131C823A0E00B972C3 /* RealmSwift.framework */; };
-		AAF946181C823A0E00B972C3 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF946131C823A0E00B972C3 /* RealmSwift.framework */; };
-		AAF946191C823A0E00B972C3 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF946131C823A0E00B972C3 /* RealmSwift.framework */; };
-		AAF9461B1C823A7C00B972C3 /* Realm.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAF946121C823A0E00B972C3 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AAF9461C1C823A7C00B972C3 /* RealmSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAF946131C823A0E00B972C3 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AAF9461E1C823A9200B972C3 /* Realm.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAF946121C823A0E00B972C3 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AAF9461F1C823A9200B972C3 /* RealmSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAF946131C823A0E00B972C3 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AAF946211C823AAC00B972C3 /* Realm.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAF946121C823A0E00B972C3 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AAF946221C823AAC00B972C3 /* RealmSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAF946131C823A0E00B972C3 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */; };
 		F8B7D76D32B3621C67AD41C7 /* Pods_SafeDrive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D55F61C44C96A06D0FFDC7F /* Pods_SafeDrive.framework */; };
 /* End PBXBuildFile section */
@@ -176,8 +176,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AAF9461B1C823A7C00B972C3 /* Realm.framework in CopyFiles */,
-				AAF9461C1C823A7C00B972C3 /* RealmSwift.framework in CopyFiles */,
+				AA1B5EF01CA1B519005DCB81 /* Realm.framework in CopyFiles */,
+				AA1B5EF11CA1B519005DCB81 /* RealmSwift.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,8 +187,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AAF9461E1C823A9200B972C3 /* Realm.framework in CopyFiles */,
-				AAF9461F1C823A9200B972C3 /* RealmSwift.framework in CopyFiles */,
+				AA1B5EF41CA1B55F005DCB81 /* Realm.framework in CopyFiles */,
+				AA1B5EF51CA1B55F005DCB81 /* RealmSwift.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,8 +198,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AAF946211C823AAC00B972C3 /* Realm.framework in CopyFiles */,
-				AAF946221C823AAC00B972C3 /* RealmSwift.framework in CopyFiles */,
+				AA1B5EEE1CA1B510005DCB81 /* Realm.framework in CopyFiles */,
+				AA1B5EEF1CA1B510005DCB81 /* RealmSwift.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +223,8 @@
 		AA13CB9D1A7212F000A91C7A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = safedriveaskpass/main.m; sourceTree = SOURCE_ROOT; };
 		AA1A460E1BEDE685004A5310 /* HKTHashProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKTHashProvider.h; sourceTree = "<group>"; };
 		AA1A460F1BEDE685004A5310 /* HKTHashProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKTHashProvider.m; sourceTree = "<group>"; };
+		AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/Mac/Realm.framework; sourceTree = "<group>"; };
+		AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/Mac/RealmSwift.framework; sourceTree = "<group>"; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
 		AA3168131A191B72006CC0EB /* SafeDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3168171A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -301,8 +303,6 @@
 		AAF9460C1C815E3500B972C3 /* SafeDriveFinder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeDriveFinder-Bridging-Header.h"; sourceTree = "<group>"; };
 		AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncScheduler.swift; sourceTree = "<group>"; };
 		AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SafeDrive-Bridging-Header.h"; sourceTree = "<group>"; };
-		AAF946121C823A0E00B972C3 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1/Realm.framework"; sourceTree = "<group>"; };
-		AAF946131C823A0E00B972C3 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1/RealmSwift.framework"; sourceTree = "<group>"; };
 		AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableCellView.swift; path = SyncManager/SyncManagerTableCellView.swift; sourceTree = "<group>"; };
 		AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "update-version.sh"; sourceTree = "<group>"; };
 		BE2D8449BAB0BAC9033667C6 /* Pods-safedriveaskpass.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.release.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.release.xcconfig"; sourceTree = "<group>"; };
@@ -315,8 +315,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAF946141C823A0E00B972C3 /* Realm.framework in Frameworks */,
-				AAF946171C823A0E00B972C3 /* RealmSwift.framework in Frameworks */,
+				AA1B5EEA1CA1B4A5005DCB81 /* Realm.framework in Frameworks */,
+				AA1B5EEB1CA1B4A5005DCB81 /* RealmSwift.framework in Frameworks */,
 				F8B7D76D32B3621C67AD41C7 /* Pods_SafeDrive.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,9 +340,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAF946151C823A0E00B972C3 /* Realm.framework in Frameworks */,
 				A45C2D767E0C6802573535E1 /* Pods_SafeDriveService.framework in Frameworks */,
-				AAF946181C823A0E00B972C3 /* RealmSwift.framework in Frameworks */,
+				AA1B5EF21CA1B54C005DCB81 /* Realm.framework in Frameworks */,
+				AA1B5EF31CA1B54F005DCB81 /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,9 +350,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAF946161C823A0E00B972C3 /* Realm.framework in Frameworks */,
-				AAF946191C823A0E00B972C3 /* RealmSwift.framework in Frameworks */,
 				7304AA053B6B9154CFFDF0E3 /* Pods_SafeDriveFinder.framework in Frameworks */,
+				AA1B5EEC1CA1B4CF005DCB81 /* Realm.framework in Frameworks */,
+				AA1B5EED1CA1B4CF005DCB81 /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,8 +377,8 @@
 		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AAF946121C823A0E00B972C3 /* Realm.framework */,
-				AAF946131C823A0E00B972C3 /* RealmSwift.framework */,
+				AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */,
+				AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */,
 				AA4E77411A3E9B830054BBCA /* libPods-MCSMKeychainItem.a */,
 				2F58E3589AEF1D92EE613835 /* libPods-safedriveaskpass.a */,
 				CD1169D271386AF89774EE8A /* Pods_SafeDriveFinder.framework */,
@@ -1396,7 +1396,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
@@ -1423,7 +1423,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
@@ -1531,7 +1531,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Service/Info.plist;
@@ -1562,7 +1562,7 @@
 					"\"$CONFIGURATION_BUILD_DIR/UICKeyChainStore-framework\"",
 					"\"${PODS_ROOT}/Crashlytics/OSX\"",
 					"\"${PODS_ROOT}/Fabric/OSX\"",
-					"$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Service/Info.plist;
@@ -1583,7 +1583,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/Mac";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Finder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
@@ -1605,7 +1605,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../Libraries/realm-swift-0.98.5/osx/swift-2.1.1";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/Mac";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Finder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
