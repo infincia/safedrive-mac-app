@@ -27,6 +27,8 @@ DerivedData
 #
 Pods
 
+# Carthage
+Carthage
 
 # OSX Noise
 .DS_Store
