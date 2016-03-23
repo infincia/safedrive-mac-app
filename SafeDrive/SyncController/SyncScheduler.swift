@@ -175,6 +175,9 @@ class SyncScheduler {
         }
     }
     
+    func stop() {
+        self.running = false
+    }
     
     private func sync(folderID: Int) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
