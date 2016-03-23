@@ -12,7 +12,7 @@ import Realm
 
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol {
+class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol, SDAccountProtocol {
     private var dropdownMenuController: DropdownController!
     private var accountWindowController: SDAccountWindowController!
     private var preferencesWindowController: PreferencesWindowController!
@@ -20,7 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     private var aboutWindowController: DCOAboutWindowController!
     private var serviceRouter: SDServiceXPCRouter!
     private var serviceManager: ServiceManager!
-    private var syncManagerWindowController: SyncManagerWindowController!
+    private var syncManagerWindowController: SyncManagerWindowController?
     
     private var syncScheduler: SyncScheduler?
     private var installWindowController: InstallerWindowController?
@@ -117,7 +117,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     func applicationShouldOpenSyncWindow(notification: NSNotification) {
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
             NSApp.activateIgnoringOtherApps(true)
-            self.syncManagerWindowController.showWindow(nil)
+            self.syncManagerWindowController?.showWindow(nil)
         })
     }
     
@@ -168,18 +168,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 self.serviceRouter = SDServiceXPCRouter()
             })
             self.syncScheduler = SyncScheduler.sharedSyncScheduler
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-                do {
-                    try self.syncScheduler?.syncSchedulerLoop()
-                }
-                catch {
-                    print("Error starting scheduler: \(error)")
-                    Crashlytics.sharedInstance().crash()
-                }
-            }
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-                self.syncScheduler?.syncRunLoop()
-            }
+
             self.dropdownMenuController = DropdownController()
             
             self.accountWindowController = SDAccountWindowController(windowNibName: "SDAccountWindow")
@@ -193,9 +182,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.aboutWindowController.useTextViewForAcknowledgments = true
             let websiteURLPath: String = "https://\(SDWebDomain)"
             self.aboutWindowController.appWebsiteURL = NSURL(string: websiteURLPath)!
-            
-            self.syncManagerWindowController = SyncManagerWindowController()
-            _ = self.syncManagerWindowController.window!
+
             
             // register SDApplicationControlProtocol notifications
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAccountWindow(_:)), name: SDApplicationShouldOpenAccountWindow, object: nil)
@@ -203,7 +190,49 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAboutWindow(_:)), name: SDApplicationShouldOpenAboutWindow, object: nil)
             NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenAboutWindow, object: nil)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.applicationShouldOpenSyncWindow(_:)), name: SDApplicationShouldOpenSyncWindow, object: nil)
+            
+            // register SDAccountProtocol notifications
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignIn(_:)), name: SDAccountSignInNotification, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: SDAccountSignOutNotification, object: nil)
         })
+    }
+    
+    // MARK: SDAccountProtocol
+    
+    func didSignIn(notification: NSNotification) {
+        guard let uniqueClientID = notification.object as? String else {
+            return
+        }
+        assert(NSThread.isMainThread(), "Not main thread!!!")
+        self.syncScheduler!.running = true
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+            do {
+                try self.syncScheduler?.syncSchedulerLoop(uniqueClientID)
+            }
+            catch {
+                print("Error starting scheduler: \(error)")
+                Crashlytics.sharedInstance().crash()
+            }
+        }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+            self.syncScheduler?.syncRunLoop()
+        }
+        self.syncManagerWindowController = SyncManagerWindowController(uniqueClientID: uniqueClientID)
+        _ = self.syncManagerWindowController!.window!
+    }
+    
+    func didSignOut(notification: NSNotification) {
+        assert(NSThread.isMainThread(), "Not main thread!!!")
+        self.syncScheduler?.stop()
+        self.syncManagerWindowController?.close()
+        self.syncManagerWindowController = nil
+    }
+    
+    func didReceiveAccountDetails(notification: NSNotification) {
+    }
+    
+    func didReceiveAccountStatus(notification: NSNotification) {
     }
     
 }

@@ -34,6 +34,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     private var token: RealmSwift.NotificationToken?
     
     private var mac = Machine(name: NSHost.currentHost().localizedName!, uniqueClientID: "-1")
+    private var uniqueClientID: String!
     
     private let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
     
@@ -47,8 +48,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init() {
+    convenience init(uniqueClientID: String) {
         self.init(windowNibName: "SyncManagerWindow")
+        self.uniqueClientID = uniqueClientID
         
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")
