@@ -475,7 +475,6 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
                 Crashlytics.sharedInstance().crash()
                 return
             }
-            print("setting \(syncItem.name!) folder to \(syncFrequency) schedule")
 
             try! realm.write {
                 syncItem.syncFrequency = syncFrequency
