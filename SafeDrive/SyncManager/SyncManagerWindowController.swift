@@ -9,7 +9,7 @@ import Crashlytics
 import Realm
 import RealmSwift
 
-class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, SDAccountProtocol {
+class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     @IBOutlet var syncListView: NSOutlineView!
     @IBOutlet var spinner: NSProgressIndicator!
     
@@ -77,8 +77,6 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: true)
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignIn(_:)), name: SDAccountSignInNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: SDAccountSignOutNotification, object: nil)
 
     }
     
@@ -244,22 +242,6 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         let button: NSButton = sender as! NSButton
         let uniqueID: Int = button.tag
         self.syncScheduler.queueSyncJob(uniqueID)
-    }
-    
-    // MARK: SDAccountProtocol
-    
-    func didSignIn(notification: NSNotification) {
-        self.readSyncFolders(self)
-    }
-    
-    func didSignOut(notification: NSNotification) {
-        self.close()
-    }
-    
-    func didReceiveAccountDetails(notification: NSNotification) {
-    }
-    
-    func didReceiveAccountStatus(notification: NSNotification) {
     }
     
     // MARK: NSOpenSavePanelDelegate
