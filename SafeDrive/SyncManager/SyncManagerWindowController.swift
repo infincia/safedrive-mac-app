@@ -169,9 +169,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
             try! realm.write {
                 realm.delete(syncFolder)
             }
-            
-            self.syncListView.reloadItem(self.mac, reloadChildren: true)
-            self.syncListView.expandItem(self.mac, expandChildren: true)
+            self.reload()
             self.spinner.stopAnimation(self)
         }, failure: {(apiError: NSError) -> Void in
             SDErrorHandlerReport(apiError)
@@ -222,9 +220,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
                 
 
             }
+            self.reload()
             
-            self.syncListView.reloadItem(self.mac, reloadChildren: true)
-            self.syncListView.expandItem(self.mac, expandChildren: true)
             self.spinner.stopAnimation(self)
 
             
@@ -273,8 +270,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     // MARK: NSOutlineViewDelegate/Datasource
     
     func outlineView(outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
-        self.syncListView.reloadItem(self.mac, reloadChildren: true)
-        self.syncListView.expandItem(self.mac, expandChildren: true)
+        self.reload()
     }
     
     func outlineView(outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
@@ -492,6 +488,15 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     
     private func configureLowerPanel() {
         
+    }
+    
+    
+    private func reload() {
+        assert(NSThread.isMainThread(), "Not main thread!!!")
+        let selectedIndexes = self.syncListView.selectedRowIndexes
+        self.syncListView.reloadItem(self.mac, reloadChildren: true)
+        self.syncListView.expandItem(self.mac, expandChildren: true)
+        self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: true)
     }
     
 }
