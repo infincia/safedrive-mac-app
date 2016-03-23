@@ -28,7 +28,24 @@ class SyncScheduler {
     
     private var reachabilityManager = NetworkReachabilityManager(host: SDAPIDomainTesting)
 
-    var running: Bool = false
+    private var _running = false
+    
+    private let runQueue = dispatch_queue_create("io.safedrive.runQueue", DISPATCH_QUEUE_CONCURRENT)
+    
+    var running: Bool {
+        get {
+            var r: Bool?
+            dispatch_sync(runQueue) {
+                r = self._running
+            }
+            return r!
+        }
+        set (newValue) {
+            dispatch_barrier_sync(runQueue) {
+                self._running = newValue
+            }
+        }
+    }
     
     private var syncQueue = [SyncEvent]()
     
