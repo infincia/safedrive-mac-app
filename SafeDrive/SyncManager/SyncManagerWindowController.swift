@@ -340,15 +340,14 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     
     func outlineView(outlineView: NSOutlineView, viewForTableColumn tableColumn: NSTableColumn, item: AnyObject) -> NSView {
         var tableCellView: SyncManagerTableCellView
-        if self.outlineView(outlineView, isGroupItem: item) {
-            let machine = item as! Machine
+        if item is Machine {
             tableCellView = outlineView.makeViewWithIdentifier("MachineView", owner: self) as! SyncManagerTableCellView
-            tableCellView.textField!.stringValue = machine.name!
+            tableCellView.textField!.stringValue = self.mac.name!
             let cellImage: NSImage = NSImage(named: NSImageNameComputer)!
             cellImage.size = NSMakeSize(15.0, 15.0)
             tableCellView.imageView!.image = cellImage
         }
-        else {
+        else if item is SyncFolder {
             let syncFolder = item as! SyncFolder
             tableCellView = outlineView.makeViewWithIdentifier("FolderView", owner: self) as! SyncManagerTableCellView
             tableCellView.textField!.stringValue = syncFolder.name!
