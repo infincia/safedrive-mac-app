@@ -23,7 +23,7 @@ class SyncScheduler {
     
     private var reachabilityManager = NetworkReachabilityManager(host: SDAPIDomainTesting)
 
-    private var running: Bool = true
+    var running: Bool = false
     
     private var syncQueue = [Int]()
     
