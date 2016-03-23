@@ -424,7 +424,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@", syncItem).sorted("syncDate").last {
                 self.failedSyncButton.enabled = !syncTask.success
                 self.failedSyncButton.hidden = syncTask.success
-                self.failedSyncButton.toolTip = syncTask.message
+                self.failedSyncButton.toolTip = NSLocalizedString("Last sync failed, click here for details", comment: "") //syncTask.message
             }
             else {
                 self.failedSyncButton.enabled = false
