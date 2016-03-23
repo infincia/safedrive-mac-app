@@ -13,6 +13,11 @@ import SwiftDate
 
 import Alamofire
 
+struct SyncEvent {
+    let uniqueClientID: String
+    let folderID: Int
+}
+
 class SyncScheduler {
     
     static let sharedSyncScheduler = SyncScheduler()
