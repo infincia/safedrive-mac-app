@@ -30,7 +30,7 @@ class SyncScheduler {
 
     var running: Bool = false
     
-    private var syncQueue = [Int]()
+    private var syncQueue = [SyncEvent]()
     
     private var syncDispatchQueue = dispatch_queue_create("io.safedrive.SyncScheduler.SyncQueue", DISPATCH_QUEUE_SERIAL);
     
@@ -82,12 +82,16 @@ class SyncScheduler {
         SDLog("Sync scheduler starting")
 
         while self.running {
-            if !self.accountController.signedIn {
-                NSThread.sleepForTimeInterval(1)
-                continue
-            }
+            
             autoreleasepool {
                 realm.refresh()
+                
+                guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(uniqueClientID)'").last else {
+                    NSThread.sleepForTimeInterval(1)
+                    // NOTE: this returns from the autoreleasepool closure and functions as a "continue" statement
+                    //       it does NOT return from syncSchedulerLoop()
+                    return
+                }
                 
                 let currentDate = NSDate()
                 //let folders = realm.objects(SyncFolder).filter("syncing == false")
@@ -103,36 +107,36 @@ class SyncScheduler {
                         if currentDate.day == 1 {
                             // first of the month for monthly syncs
                             //print("Monthly sync")
-                            let monthlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'monthly' AND syncing == false")
+                            let monthlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'monthly' AND syncing == false AND machine == %@", currentMachine)
                             folders.appendContentsOf(monthlyFolders)
                         }
                         if currentDate.weekday == 1 {
                             //print("Weekly sync")
                             // first day of the week for weekly syncs
-                            let weeklyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'weekly' AND syncing == false")
+                            let weeklyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'weekly' AND syncing == false AND machine == %@", currentMachine)
                             folders.appendContentsOf(weeklyFolders)
                         }
                         //print("Daily sync")
                         // first hour of the day for daily syncs
-                        let dailyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'daily' AND syncing == false")
+                        let dailyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'daily' AND syncing == false AND machine == %@", currentMachine)
                         folders.appendContentsOf(dailyFolders)
                     }
                     // default, check for hourly syncs
                     //print("Hourly sync")
-                    let hourlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'hourly' AND syncing == false")
+                    let hourlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'hourly' AND syncing == false AND machine == %@", currentMachine)
                     folders.appendContentsOf(hourlyFolders)
                     
                 }
                 else {
                     // check for minute syncs
-                    let minuteFolders = realm.objects(SyncFolder).filter("syncFrequency == 'minute' AND syncing == false")
+                    let minuteFolders = realm.objects(SyncFolder).filter("syncFrequency == 'minute' AND syncing == false AND machine == %@", currentMachine)
                     folders.appendContentsOf(minuteFolders)
                 }
                 if self.reachabilityManager!.isReachableOnEthernetOrWiFi {
                     for folder in folders {
-                        let uniqueID = folder.uniqueID
+                        let folderID = folder.uniqueID
                         SDLog("Sync job added to queue for folder: \(folder.name)")
-                        self.queueSyncJob(uniqueID)
+                        self.queueSyncJob(uniqueClientID, folderID: folderID)
                     }
                 }
                 else {
@@ -145,31 +149,25 @@ class SyncScheduler {
         }
     }
     
-    func queueSyncJob(uniqueID: Int) {
+    func queueSyncJob(uniqueClientID: String, folderID: Int) {
         dispatch_sync(syncDispatchQueue, {() -> Void in
-            self.syncQueue.insert(uniqueID, atIndex: 0)
+            let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID)
+            self.syncQueue.insert(syncEvent, atIndex: 0)
         })
     }
     
-    private func dequeueSyncJob() -> Int? {
-        var uniqueID: Int?
+    private func dequeueSyncJob() -> SyncEvent? {
+        var syncEvent: SyncEvent?
         dispatch_sync(syncDispatchQueue, {() -> Void in
-            uniqueID = self.syncQueue.popLast()
+            syncEvent = self.syncQueue.popLast()
         })
-        return uniqueID
+        return syncEvent
     }
     
     func syncRunLoop() {
         while self.running {
-            if self.accountController.signedIn {
-                guard let uniqueID = self.dequeueSyncJob() else {
-                    NSThread.sleepForTimeInterval(1)
-                    continue
-                }
-                self.sync(uniqueID)
-            }
-            else {
-                //SDLog("Sync deferred until sign-in")
+            if let syncEvent = self.dequeueSyncJob() {
+                self.sync(syncEvent)
             }
             NSThread.sleepForTimeInterval(1)
         }
@@ -179,7 +177,7 @@ class SyncScheduler {
         self.running = false
     }
     
-    private func sync(folderID: Int) {
+    private func sync(syncEvent: SyncEvent) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
             
             guard let realm = try? Realm() else {
@@ -188,7 +186,16 @@ class SyncScheduler {
                 return
             }
             
-            guard let folder = realm.objects(SyncFolder).filter("uniqueID == \(folderID)").first else {
+            let uniqueClientID = syncEvent.uniqueClientID
+            let folderID = syncEvent.folderID
+            
+            guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(uniqueClientID)'").last else {
+                SDLog("failed to get current machine from realm!!!")
+                return
+            }
+
+            guard let folder = realm.objects(SyncFolder).filter("uniqueID == \(folderID) AND machine == %@", currentMachine).first else {
+                SDLog("failed to get sync folder for machine from realm!!!")
                 return
             }
             

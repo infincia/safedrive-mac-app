@@ -33,7 +33,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     
     private var token: RealmSwift.NotificationToken?
     
-    private var mac = Machine(name: NSHost.currentHost().localizedName!, uniqueClientID: "-1")
+    private var mac: Machine!
+    
     private var uniqueClientID: String!
     
     private let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
@@ -61,7 +62,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
         do {
             try realm.write {
                 let machineName = NSHost.currentHost().localizedName!
-                realm.create(Machine.self, value: ["uniqueClientID": "-1", "name": machineName], update: true)
+                realm.create(Machine.self, value: ["uniqueClientID": self.uniqueClientID, "name": machineName], update: true)
             }
         }
         catch {
@@ -70,16 +71,13 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
             return
         }
         
-        self.token = realm.objects(SyncFolder).addNotificationBlock { results, error in
-            
-            guard let _ = results else {
-                return
-            }
-            let selectedIndexes = self.syncListView.selectedRowIndexes
-            self.syncListView.reloadItem(self.mac, reloadChildren: true)
-            self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: true)
+        guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last else {
+            SDLog("failed to get current machine in realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
         }
         
+        self.mac = currentMachine
 
     }
     
@@ -96,7 +94,20 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
         aWindow.inactiveTitleBarEndColor = topColor
         aWindow.inactiveTitleBarStartColor = topColor
         aWindow.inactiveBaselineSeparatorColor = topColor
-
+        
+        guard let realm = try? Realm() else {
+            SDLog("failed to create realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
+        
+        self.token = realm.objects(SyncFolder).addNotificationBlock { results, error in
+            assert(NSThread.isMainThread(), "Not main thread!!!")
+            self.reload()
+        }
+        
+        
+        self.readSyncFolders(self)
     }
     
     // MARK: UI Actions
@@ -136,7 +147,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
                     }
                     
                     self.readSyncFolders(self)
-                    self.syncScheduler.queueSyncJob(folderID)
+                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID)
 
                 }, failure: { (apiError: NSError) -> Void in
                     SDErrorHandlerReport(apiError)
@@ -163,10 +174,12 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
                 Crashlytics.sharedInstance().crash()
                 return
             }
-            
+            guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last else {
+                return
+            }
             let syncFolders = realm.objects(SyncFolder)
             
-            let syncFolder = syncFolders.filter("uniqueID == \(uniqueID)")
+            let syncFolder = syncFolders.filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine)
             
             try! realm.write {
                 realm.delete(syncFolder)
@@ -211,13 +224,15 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
                     Crashlytics.sharedInstance().crash()
                     return
                 }
-                
+                guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last else {
+                    return
+                }
                 try! realm.write {
                     // we update the local database with any info the server has to ensure they're in sync
                     // because the local database is storing things the remote server does not, we need to ensure
                     // that we don't blow away any of those local properties on existing objects, so
                     // we use Realm.create() instead of Realm.add()
-                    realm.create(SyncFolder.self, value: ["uniqueID": folderId, "name": folderName, "path": folderPath, "machine": self.mac, "added": addedDate], update: true)
+                    realm.create(SyncFolder.self, value: ["uniqueID": folderId, "name": folderName, "path": folderPath, "machine": currentMachine, "added": addedDate], update: true)
                 }
                 
 
@@ -240,8 +255,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     
     @IBAction func startSyncItemNow(sender: AnyObject) {
         let button: NSButton = sender as! NSButton
-        let uniqueID: Int = button.tag
-        self.syncScheduler.queueSyncJob(uniqueID)
+        let folderID: Int = button.tag
+        self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID)
     }
     
     // MARK: NSOpenSavePanelDelegate
@@ -289,7 +304,10 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
                 Crashlytics.sharedInstance().crash()
                 return 0
             }
-            let syncFolders = realm.objects(SyncFolder)
+            guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(uniqueClientID)'").last else {
+                return 0
+            }
+            let syncFolders = realm.objects(SyncFolder).filter("machine == %@", currentMachine)
             return syncFolders.count
         }
         else if item is SyncFolder {
@@ -300,13 +318,13 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     }
     
     func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
+        guard let realm = try? Realm() else {
+            SDLog("failed to create realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return ""
+        }
         if item is Machine {
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return ""
-            }
-            let syncFolders = realm.objects(SyncFolder)
+            let syncFolders = realm.objects(SyncFolder).filter("machine == %@", self.mac)
             return syncFolders[index]
         }
         return self.mac
@@ -366,7 +384,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
                 tableCellView.syncStatus.stopAnimation(self)
                 tableCellView.syncNowButton.enabled = true
             }
-
+        }
+        else {
+            tableCellView = outlineView.makeViewWithIdentifier("FolderView", owner: self) as! SyncManagerTableCellView
         }
         tableCellView.representedSyncItem = item
 
@@ -400,9 +420,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
             }
             
             let syncTasks = realm.objects(SyncTask)
-            
-            if let syncTask = syncTasks.filter("syncFolder.uniqueID == \(syncItem.uniqueID)").sorted("syncDate").last {
-                print(syncTask)
+
+            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@", syncItem).sorted("syncDate").last {
                 self.failedSyncButton.enabled = !syncTask.success
                 self.failedSyncButton.hidden = syncTask.success
                 self.failedSyncButton.toolTip = syncTask.message
@@ -412,7 +431,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
                 self.failedSyncButton.hidden = true
             }
             
-            if let syncTask = syncTasks.filter("syncFolder.uniqueID == \(syncItem.uniqueID) AND success == true").sorted("syncDate").last,
+            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
                 lastSync = syncTask.syncDate {
                     self.lastSyncField.stringValue = lastSync.toMediumString()
             }
