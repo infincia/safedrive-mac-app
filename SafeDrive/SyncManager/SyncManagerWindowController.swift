@@ -429,7 +429,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.failedSyncButton.toolTip = NSLocalizedString("Last sync failed, click here for details", comment: "")
                 self.failedSyncButton.action = #selector(self.showFailurePopover)
                 let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
-                failureView.message.stringValue = syncTask.message!
+                failureView.message.stringValue = syncTask.message ?? ""
             }
             else {
                 self.failedSyncButton.enabled = false
