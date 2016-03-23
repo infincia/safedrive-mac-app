@@ -114,16 +114,7 @@ class API: NSObject {
     
     override init() {
         self.reachabilityManager?.listener = { status in
-            switch status {
-            case .Unknown:
-                print("ReachabilityStatusUnknown")
-            case .NotReachable:
-                print("ReachabilityStatusNotReachable")
-            case .Reachable(.WWAN):
-                print("ReachabilityStatusWWAN")
-            case .Reachable(.EthernetOrWiFi):
-                print("ReachabilityStatusEthernetOrWiFi")
-            }
+
         }
         
         self.reachabilityManager?.startListening()
