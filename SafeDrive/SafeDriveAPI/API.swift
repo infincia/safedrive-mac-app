@@ -138,7 +138,7 @@ class API: NSObject {
         let clientVersion: String = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
         postParameters["clientVersion"] = clientVersion
         if !user.isEmpty {
-            let macAddress: String = self.sharedSystemAPI.en0MAC()
+            let macAddress: String = self.sharedSystemAPI.en0MAC()!
             let machineIdConcatenation: String = macAddress.stringByAppendingString(user)
             let identifier: String = HKTHashProvider.sha256(machineIdConcatenation.dataUsingEncoding(NSUTF8StringEncoding))
             postParameters["uniqueClientId"] = identifier
@@ -174,7 +174,7 @@ class API: NSObject {
     func registerMachineWithUser(user: String, password: String, success successBlock: SDAPIClientRegistrationSuccessBlock, failure failureBlock: SDFailureBlock) {
         let languageCode: String = NSLocale.preferredLanguages()[0]
         let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
-        let macAddress: String = self.sharedSystemAPI.en0MAC()
+        let macAddress: String = self.sharedSystemAPI.en0MAC()!
         let machineIdConcatenation: String = macAddress.stringByAppendingString(user)
         let identifier: String = HKTHashProvider.sha256(machineIdConcatenation.dataUsingEncoding(NSUTF8StringEncoding))
         

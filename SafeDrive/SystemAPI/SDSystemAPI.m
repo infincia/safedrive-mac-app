@@ -71,7 +71,7 @@
     return serial;
 }
 
--(NSString * _Nonnull)en0MAC {
+-(NSString * _Nullable)en0MAC {
 	int	   mib[6];
     size_t len;
 	char   *buf;
@@ -88,16 +88,16 @@
 	mib[5] = if_nametoindex("en0");
 
 	if (sysctl(mib, 6, NULL, &len, NULL, 0) < 0) {
-        return mac;
+        return nil;
 	}
 
 	if ((buf = malloc(len)) == NULL) {
-        return mac;
+        return nil;
 	}
 
 	if (sysctl(mib, 6, buf, &len, NULL, 0) < 0) {
 		free(buf);
-        return mac;
+        return nil;
 	}
 
 	ifm = (struct if_msghdr *)buf;

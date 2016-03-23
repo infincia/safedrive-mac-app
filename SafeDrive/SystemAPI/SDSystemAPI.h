@@ -13,7 +13,7 @@
 
 -(NSString * _Nullable)machineSerialNumber;
 
--(NSString * _Nonnull)en0MAC;
+-(NSString * _Nullable)en0MAC;
 
 -(NSString * _Nullable)currentOSVersion;
 
