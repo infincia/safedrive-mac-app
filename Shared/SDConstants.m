@@ -232,5 +232,15 @@ NSString * _Nonnull SDErrorToString(NSError *error) {
          case SDMountErrorUnmountFailed:
              return @"SDMountErrorUnmountFailed";
      }
+    switch ((enum SDDatabaseError)error.code) {
+        case SDDatabaseErrorUnknown:
+            return @"SDDatabaseErrorUnknown";
+        case SDDatabaseErrorOpenFailed:
+            return @"SDDatabaseErrorOpenFailed";
+        case SDDatabaseErrorWriteFailed:
+            return @"SDDatabaseErrorWriteFailed";
+        case SDDatabaseErrorMigrationFailed:
+            return @"SDDatabaseErrorMigrationFailed";
+    }
      return @"Unknown";
 }
