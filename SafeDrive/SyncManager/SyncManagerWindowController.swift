@@ -257,7 +257,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
         guard let realm = try? Realm() else {
             print("failed to create realm!!!")
             let errorInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open local database, this is a fatal error", comment: "")]
-            throw NSError(domain: SDErrorSyncDomain, code: SDSystemError.Unknown.rawValue, userInfo: errorInfo)
+            throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.OpenFailed.rawValue, userInfo: errorInfo)
         }
         
         let syncFolders = realm.objects(SyncFolder)
