@@ -29,6 +29,7 @@
 		AA1B5EF31CA1B54F005DCB81 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */; };
 		AA1B5EF41CA1B55F005DCB81 /* Realm.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA1B5EF51CA1B55F005DCB81 /* RealmSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31682C1A191B72006CC0EB /* SafeDriveTests.m */; };
@@ -225,6 +226,7 @@
 		AA1A460F1BEDE685004A5310 /* HKTHashProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKTHashProvider.m; sourceTree = "<group>"; };
 		AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/Mac/Realm.framework; sourceTree = "<group>"; };
 		AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/Mac/RealmSwift.framework; sourceTree = "<group>"; };
+		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncFailurePopoverView.swift; sourceTree = "<group>"; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
 		AA3168131A191B72006CC0EB /* SafeDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3168171A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -662,6 +664,7 @@
 				AAA88BC41C829846009BE1C7 /* SyncManagerWindow.xib */,
 				AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */,
 				AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */,
+				AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */,
 			);
 			name = SyncManager;
 			sourceTree = "<group>";
@@ -1155,6 +1158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */,
 				AA76DC231C8779D2007B320E /* InstallerWindowController.swift in Sources */,
 				AA0A7D151A19670600DCB77E /* SDAccountWindowController.m in Sources */,
 				AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */,

@@ -9,7 +9,7 @@ import Crashlytics
 import Realm
 import RealmSwift
 
-class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
+class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, NSPopoverDelegate {
     @IBOutlet var syncListView: NSOutlineView!
     @IBOutlet var spinner: NSProgressIndicator!
     
@@ -22,6 +22,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     @IBOutlet var failedSyncButton: NSButton!
 
     @IBOutlet var scheduleSelection: NSSegmentedControl!
+    
+    @IBOutlet var failurePopover: NSPopover!
 
     private var sharedSystemAPI = SDSystemAPI.sharedAPI()
     
@@ -424,11 +426,18 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@", syncItem).sorted("syncDate").last {
                 self.failedSyncButton.enabled = !syncTask.success
                 self.failedSyncButton.hidden = syncTask.success
-                self.failedSyncButton.toolTip = NSLocalizedString("Last sync failed, click here for details", comment: "") //syncTask.message
+                self.failedSyncButton.toolTip = NSLocalizedString("Last sync failed, click here for details", comment: "")
+                self.failedSyncButton.action = #selector(self.showFailurePopover)
+                let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
+                failureView.message.stringValue = syncTask.message!
             }
             else {
                 self.failedSyncButton.enabled = false
                 self.failedSyncButton.hidden = true
+                self.failedSyncButton.toolTip = nil
+                self.failedSyncButton.action = nil
+                let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
+                failureView.message.stringValue = ""
             }
             
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
@@ -516,6 +525,11 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
         self.syncListView.reloadItem(self.mac, reloadChildren: true)
         self.syncListView.expandItem(self.mac, expandChildren: true)
         self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: true)
+    }
+    
+    @objc
+    private func showFailurePopover() {
+        self.failurePopover.showRelativeToRect(self.failedSyncButton.bounds, ofView: self.failedSyncButton, preferredEdge: .MinY)
     }
     
 }
