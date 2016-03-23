@@ -63,8 +63,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate {
             }
         }
         catch {
-            print("failed to write machine to realm!!!")
-            
+            SDLog("failed to update machine in realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
         }
         
         self.token = realm.objects(SyncFolder).addNotificationBlock { results, error in
