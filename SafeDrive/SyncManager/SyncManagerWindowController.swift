@@ -61,18 +61,6 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             return
         }
         
-        do {
-            try realm.write {
-                let machineName = NSHost.currentHost().localizedName!
-                realm.create(Machine.self, value: ["uniqueClientID": self.uniqueClientID, "name": machineName], update: true)
-            }
-        }
-        catch {
-            SDLog("failed to update machine in realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
-        
         guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last else {
             SDLog("failed to get current machine in realm!!!")
             Crashlytics.sharedInstance().crash()

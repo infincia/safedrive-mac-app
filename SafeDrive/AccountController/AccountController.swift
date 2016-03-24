@@ -4,7 +4,8 @@
 
 import Foundation
 import Crashlytics
-
+import Realm
+import RealmSwift
 
 class AccountController: NSObject {
     static let sharedAccountController = AccountController()
@@ -78,6 +79,23 @@ class AccountController: NSObject {
                     if let keychainError = keychainError {
                         SDErrorHandlerReport(keychainError)
                         failureBlock(keychainError)
+                        return
+                    }
+                    guard let realm = try? Realm() else {
+                        SDLog("failed to create realm!!!")
+                        Crashlytics.sharedInstance().crash()
+                        return
+                    }
+                    
+                    do {
+                        try realm.write {
+                            let machineName = NSHost.currentHost().localizedName!
+                            realm.create(Machine.self, value: ["uniqueClientID": clientID, "name": machineName], update: true)
+                        }
+                    }
+                    catch {
+                        SDLog("failed to update machine in realm!!!")
+                        Crashlytics.sharedInstance().crash()
                         return
                     }
                     NSNotificationCenter.defaultCenter().postNotificationName(SDAccountSignInNotification, object: clientID)
