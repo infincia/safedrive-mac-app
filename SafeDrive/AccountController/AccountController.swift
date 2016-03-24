@@ -65,7 +65,6 @@ class AccountController: NSObject {
         
         self.sharedSafedriveAPI.registerMachineWithUser(email, password: password, success: { (sessionToken: String, clientID: String) -> Void in
             self.sharedSafedriveAPI.accountStatusForUser(email, success: { (accountStatus: [String : NSObject]?) -> Void in
-                SDLog("SafeDrive accountStatusForUser success in account controller")
                 self.signedIn = true
                 if let accountStatus = accountStatus {
                     SDLog("Account status: %@", accountStatus)
