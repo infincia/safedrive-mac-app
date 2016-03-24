@@ -215,6 +215,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     return
                 }
                 guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last else {
+                    SDLog("failed to get machine from realm!!!")
+                    Crashlytics.sharedInstance().crash()
                     return
                 }
                 try! realm.write {
