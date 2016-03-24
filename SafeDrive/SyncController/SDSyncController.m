@@ -76,7 +76,7 @@
                 [sftp disconnect];
             }
             else {
-                NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"SFTP: failed to connect"}];
+                NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"SFTP: authorization failed"}];
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     self.syncFailure = YES;
                     failureBlock(error);
