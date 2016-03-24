@@ -88,9 +88,15 @@ class AccountController: NSObject {
                     }
                     
                     do {
+                        let machineName = NSHost.currentHost().localizedName!
+
+                        
+                        let currentMachine = Machine()
+                        currentMachine.name = machineName
+                        currentMachine.uniqueClientID = clientID
+                        
                         try realm.write {
-                            let machineName = NSHost.currentHost().localizedName!
-                            realm.create(Machine.self, value: ["uniqueClientID": clientID, "name": machineName], update: true)
+                            realm.add(currentMachine, update: true)
                         }
                     }
                     catch {
