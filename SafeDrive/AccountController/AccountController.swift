@@ -52,6 +52,31 @@ class AccountController: NSObject {
             //
         })
         
+        if let storedCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychainForService(SDServiceName),
+               storedEmail = storedCredentials["account"] {
+            if storedEmail != email {
+                // reset SyncFolder and SyncTask in database, user has changed since last sign-in
+                guard let realm = try? Realm() else {
+                    SDLog("failed to create realm!!!")
+                    Crashlytics.sharedInstance().crash()
+                    return
+                }
+                
+                do {
+                    try realm.write {
+                        realm.delete(realm.objects(SyncFolder))
+                        realm.delete(realm.objects(SyncTask))
+                    }
+                }
+                catch {
+                    SDLog("failed to delete old data in realm!!!")
+                    Crashlytics.sharedInstance().crash()
+                    return
+                }
+            }
+            
+        }
+        
         
         let keychainError: NSError? = self.sharedSystemAPI.insertCredentialsInKeychainForService(SDServiceName, account: email, password: password)
         
