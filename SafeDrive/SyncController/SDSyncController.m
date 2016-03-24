@@ -83,6 +83,13 @@
                 });
             }
         }
+        else {
+            NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorTimeout userInfo:@{NSLocalizedDescriptionKey: @"SFTP: failed to connect"}];
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                self.syncFailure = YES;
+                failureBlock(error);
+            });
+        }
         // all cases should end up disconnecting the session
         [session disconnect];
     });
