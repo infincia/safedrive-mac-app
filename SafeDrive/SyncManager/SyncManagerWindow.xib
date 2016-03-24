@@ -356,7 +356,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="165" id="WvU-he-fGk"/>
                     </constraints>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Multiline Label" id="fM7-xh-g1e">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" placeholderString="Error" id="fM7-xh-g1e">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
