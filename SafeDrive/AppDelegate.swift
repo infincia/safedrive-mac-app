@@ -145,6 +145,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 // version (if you've never set a schema version before, the version is 0).
                 schemaVersion: 6,
                 migrationBlock: { migration, oldSchemaVersion in
+                    SDLog("Migrating db version \(oldSchemaVersion) to 6")
                     migration.enumerate(Machine.className()) { oldObject, newObject in
                         if oldSchemaVersion < 6 {
                             migration.delete(newObject!)
