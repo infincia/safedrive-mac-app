@@ -16,6 +16,8 @@ class SyncFolder: Object {
     
     dynamic var added: NSDate? = nil
     
+    dynamic var syncTime: NSDate? = nil
+    
     dynamic var machine: Machine? = nil
     
     var url: NSURL? {
@@ -30,6 +32,12 @@ class SyncFolder: Object {
         self.name = name
         self.path = url.absoluteString
         self.uniqueID = uniqueID
+        
+        let components = NSDateComponents()
+        components.hour = 0
+        components.minute = 0
+        let calendar = NSCalendar.currentCalendar()
+        self.syncTime = calendar.dateFromComponents(components)
     }
     
     convenience required init(name: String, path: String, uniqueID: Int) {
@@ -37,6 +45,12 @@ class SyncFolder: Object {
         self.name = name
         self.path = path
         self.uniqueID = uniqueID
+        
+        let components = NSDateComponents()
+        components.hour = 0
+        components.minute = 0
+        let calendar = NSCalendar.currentCalendar()
+        self.syncTime = calendar.dateFromComponents(components)
     }
     
     override static func primaryKey() -> String? {
