@@ -143,7 +143,9 @@
                                             <items>
                                                 <menuItem title="Hourly" id="Flb-HK-mJs"/>
                                                 <menuItem title="Daily" id="rZb-TY-VGn"/>
-                                                <menuItem state="on" id="X18-R8-1s7"/>
+                                                <menuItem title="Weekly" id="X18-R8-1s7">
+                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                </menuItem>
                                             </items>
                                         </menu>
                                     </popUpButtonCell>
