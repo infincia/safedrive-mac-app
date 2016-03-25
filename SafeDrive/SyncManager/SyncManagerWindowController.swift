@@ -219,15 +219,15 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     Crashlytics.sharedInstance().crash()
                     return
                 }
-                try! realm.write {
-                    // we update the local database with any info the server has to ensure they're in sync
-                    // because the local database is storing things the remote server does not, we need to ensure
-                    // that we don't blow away any of those local properties on existing objects, so
-                    // we use Realm.create() instead of Realm.add()
-                    realm.create(SyncFolder.self, value: ["uniqueID": folderId, "name": folderName, "path": folderPath, "machine": currentMachine, "added": addedDate], update: true)
-                }
+                let syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: folderId)
+                syncFolder.machine = currentMachine
                 
-
+                // this is the only place where the `added` property should be set on SyncFolders
+                syncFolder.added = addedDate
+                
+                try! realm.write {
+                    realm.add(syncFolder, update: true)
+                }
             }
             self.reload()
             
