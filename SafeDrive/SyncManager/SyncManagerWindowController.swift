@@ -500,12 +500,6 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 syncItem.syncFrequency = syncFrequency
             }
         }
-
-        
-    }
-    
-    private func configureLowerPanel() {
-        
     }
     
     
