@@ -511,10 +511,12 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     private func reload() {
         assert(NSThread.isMainThread(), "Not main thread!!!")
+        let oldFirstResponder = self.window?.firstResponder
         let selectedIndexes = self.syncListView.selectedRowIndexes
         self.syncListView.reloadItem(self.mac, reloadChildren: true)
         self.syncListView.expandItem(self.mac, expandChildren: true)
         self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: true)
+        self.window?.makeFirstResponder(oldFirstResponder)
     }
     
     @objc
