@@ -436,7 +436,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.failedSyncButton.toolTip = nil
                 self.failedSyncButton.action = nil
                 let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
-                failureView.message.stringValue = ""
+                failureView.message.stringValue = NSLocalizedString("Never synced", comment: "")
             }
             
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
