@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		012680177E533E466AC87FE2 /* Pods_SafeDriveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30366353CB0B34C9A41FBDA9 /* Pods_SafeDriveTests.framework */; };
 		1BF01FE19BCFCD03459A8323 /* libPods-safedriveaskpass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F58E3589AEF1D92EE613835 /* libPods-safedriveaskpass.a */; };
 		7304AA053B6B9154CFFDF0E3 /* Pods_SafeDriveFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1169D271386AF89774EE8A /* Pods_SafeDriveFinder.framework */; };
 		A45C2D767E0C6802573535E1 /* Pods_SafeDriveService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC5F0B8A3B11CCA2364971B3 /* Pods_SafeDriveService.framework */; };
@@ -32,7 +33,6 @@
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
-		AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA31682C1A191B72006CC0EB /* SafeDriveTests.m */; };
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
 		AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
@@ -56,6 +56,7 @@
 		AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBD1C9125D4001C2869 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */; };
+		AA6DCB2E1CA57D50001473B0 /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
 		AA76DC211C8762A9007B320E /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC201C8762A9007B320E /* Installer.swift */; };
 		AA76DC231C8779D2007B320E /* InstallerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* InstallerWindowController.swift */; };
@@ -76,8 +77,6 @@
 		AAA88BCD1C83D241009BE1C7 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC81C8385A9009BE1C7 /* Machine.swift */; };
 		AAA88BCE1C83D243009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
 		AAA88BCF1C83D243009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
-		AAA88BD01C83D3DB009BE1C7 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC81C8385A9009BE1C7 /* Machine.swift */; };
-		AAA88BD11C83D3DB009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
 		AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
 		AAA88BD41C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
 		AAA88BD51C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
@@ -212,8 +211,11 @@
 		20AE37BB28CC713D42C305A5 /* Pods-SafeDriveFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.release.xcconfig"; sourceTree = "<group>"; };
 		2AF739FC659AF44971553AE9 /* Pods-SafeDriveService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveService.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveService/Pods-SafeDriveService.release.xcconfig"; sourceTree = "<group>"; };
 		2F58E3589AEF1D92EE613835 /* libPods-safedriveaskpass.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-safedriveaskpass.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30366353CB0B34C9A41FBDA9 /* Pods_SafeDriveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDriveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37C31FA73431CC72328C7A49 /* Pods-safedriveaskpass.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.debug.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.debug.xcconfig"; sourceTree = "<group>"; };
 		4DB687DE7661DC80E407B429 /* Pods-SafeDriveService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveService.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveService/Pods-SafeDriveService.debug.xcconfig"; sourceTree = "<group>"; };
+		504B0B45B9C4F40F0F3F96FC /* Pods-SafeDriveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.release.xcconfig"; sourceTree = "<group>"; };
+		6BF568F16C6EFDFA67B42C40 /* Pods-SafeDriveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6D55F61C44C96A06D0FFDC7F /* Pods_SafeDrive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDrive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A8EB5F8F78ED848C64BE0AE /* Pods-SafeDriveFinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.debug.xcconfig"; sourceTree = "<group>"; };
 		AA0A7D121A19670600DCB77E /* SDAccountWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDAccountWindowController.h; path = SafeDrive/AccountWindow/SDAccountWindowController.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -266,6 +268,8 @@
 		AA61F84A1C05356D00D992FE /* SDSyncController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncController.m; sourceTree = "<group>"; };
 		AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+next.swift"; path = "Shared/NSDate+next.swift"; sourceTree = "<group>"; };
 		AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = ServiceManager/ServiceManager.swift; sourceTree = "<group>"; };
+		AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTests.swift; sourceTree = "<group>"; };
+		AA6DCB2F1CA57DB5001473B0 /* SafeDriveTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeDriveTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
@@ -327,6 +331,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				012680177E533E466AC87FE2 /* Pods_SafeDriveTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +377,8 @@
 				2AF739FC659AF44971553AE9 /* Pods-SafeDriveService.release.xcconfig */,
 				7A8EB5F8F78ED848C64BE0AE /* Pods-SafeDriveFinder.debug.xcconfig */,
 				20AE37BB28CC713D42C305A5 /* Pods-SafeDriveFinder.release.xcconfig */,
+				6BF568F16C6EFDFA67B42C40 /* Pods-SafeDriveTests.debug.xcconfig */,
+				504B0B45B9C4F40F0F3F96FC /* Pods-SafeDriveTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -386,6 +393,7 @@
 				CD1169D271386AF89774EE8A /* Pods_SafeDriveFinder.framework */,
 				EC5F0B8A3B11CCA2364971B3 /* Pods_SafeDriveService.framework */,
 				6D55F61C44C96A06D0FFDC7F /* Pods_SafeDrive.framework */,
+				30366353CB0B34C9A41FBDA9 /* Pods_SafeDriveTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -475,7 +483,9 @@
 			children = (
 				AA4E77311A3E6E640054BBCA /* SDTestConstants.h */,
 				AA4E77321A3E6E640054BBCA /* SDTestConstants.m */,
+				AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */,
 				AA31682C1A191B72006CC0EB /* SafeDriveTests.m */,
+				AA6DCB2F1CA57DB5001473B0 /* SafeDriveTests-Bridging-Header.h */,
 				AA31682A1A191B72006CC0EB /* Supporting Files */,
 			);
 			path = SafeDriveTests;
@@ -741,9 +751,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA3168331A191B72006CC0EB /* Build configuration list for PBXNativeTarget "SafeDriveTests" */;
 			buildPhases = (
+				648EA120575E73C9367694B0 /* 📦 Check Pods Manifest.lock */,
 				AA3168221A191B72006CC0EB /* Sources */,
 				AA3168231A191B72006CC0EB /* Frameworks */,
 				AA3168241A191B72006CC0EB /* Resources */,
+				114FFCF6505AC1BD58942895 /* 📦 Embed Pods Frameworks */,
+				AB42006DA0A9BC8C8E75F491 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -959,6 +972,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		114FFCF6505AC1BD58942895 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		21D167D45265FF92D488DB5E /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1034,6 +1062,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SafeDriveService/Pods-SafeDriveService-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		648EA120575E73C9367694B0 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		AAE474851BFBC1E200B1A555 /* Fabric.io */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1075,6 +1118,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "sh \"update-version.sh\"";
+		};
+		AB42006DA0A9BC8C8E75F491 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		ACAF538C728AC8861D11CCAB /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1192,10 +1250,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAA88BD11C83D3DB009BE1C7 /* SyncFolder.swift in Sources */,
-				AA31682D1A191B72006CC0EB /* SafeDriveTests.m in Sources */,
 				AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */,
-				AAA88BD01C83D3DB009BE1C7 /* Machine.swift in Sources */,
+				AA6DCB2E1CA57D50001473B0 /* UnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1455,12 +1511,14 @@
 		};
 		AA3168341A191B72006CC0EB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6BF568F16C6EFDFA67B42C40 /* Pods-SafeDriveTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1471,24 +1529,28 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safedrive.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SafeDriveTests/SafeDriveTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SafeDrive.app/Contents/MacOS/SafeDrive";
 			};
 			name = Debug;
 		};
 		AA3168351A191B72006CC0EB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 504B0B45B9C4F40F0F3F96FC /* Pods-SafeDriveTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = SafeDriveTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safedrive.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SafeDriveTests/SafeDriveTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SafeDrive.app/Contents/MacOS/SafeDrive";
 			};
 			name = Release;
