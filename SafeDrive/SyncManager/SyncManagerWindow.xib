@@ -150,7 +150,7 @@
                                         </menu>
                                     </popUpButtonCell>
                                     <connections>
-                                        <action selector="setSyncSchedule:" target="-2" id="mig-ha-y6U"/>
+                                        <action selector="setSyncFrequencyForFolder:" target="-2" id="HnL-ht-qVX"/>
                                     </connections>
                                 </popUpButton>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XXH-zR-eeV">
