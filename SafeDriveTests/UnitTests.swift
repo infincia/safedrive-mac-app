@@ -29,5 +29,10 @@ class UnitTests: XCTestCase {
         let homeSyncFolder = SyncFolder(name: "Home", path: "/Users/user", uniqueID: -1)
         XCTAssertTrue(SyncFolder.hasConflictingFolderRegistered("/", syncFolders: [homeSyncFolder]));
     }
+    
+    func test_SyncFolder_hasConflictingFolderRegistered_substring() {
+        let testFolder = SyncFolder(name: "Home", path: "/Users/user/test", uniqueID: -1)
+        XCTAssertFalse(SyncFolder.hasConflictingFolderRegistered("/Users/user/test2", syncFolders: [testFolder]));
+    }
 
 }
