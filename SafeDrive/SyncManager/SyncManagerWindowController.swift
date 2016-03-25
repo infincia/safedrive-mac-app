@@ -20,8 +20,10 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBOutlet var nextSyncField: NSTextField!
     
     @IBOutlet var failedSyncButton: NSButton!
+    
+    @IBOutlet var syncTimePicker: NSDatePicker!
 
-    @IBOutlet var scheduleSelection: NSSegmentedControl!
+    @IBOutlet var scheduleSelection: NSPopUpButton!
     
     @IBOutlet var failurePopover: NSPopover!
 
@@ -405,6 +407,13 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.addedField.stringValue = ""
             }
             
+            if let syncTime = syncItem.syncTime {
+                self.syncTimePicker.dateValue = syncTime
+            }
+            else {
+                SDLog("Failed to load date in sync manager")
+            }
+            
             guard let realm = try? Realm() else {
                 SDLog("failed to create realm!!!")
                 Crashlytics.sharedInstance().crash()
@@ -440,20 +449,35 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             
             switch syncItem.syncFrequency {
             case "hourly":
-                self.scheduleSelection.setSelected(true, forSegment: 0)
+                self.scheduleSelection.selectItemAtIndex(0)
                 self.nextSyncField.stringValue = NSDate().nextHour()?.toMediumString() ?? ""
+                self.syncTimePicker.enabled = false
+                self.syncTimePicker.hidden = true
+                let components = NSDateComponents()
+                components.hour = 0
+                components.minute = 0
+                let calendar = NSCalendar.currentCalendar()
+                self.syncTimePicker.dateValue = calendar.dateFromComponents(components)!
             case "daily":
-                self.scheduleSelection.setSelected(true, forSegment: 1)
+                self.scheduleSelection.selectItemAtIndex(1)
                 self.nextSyncField.stringValue = NSDate().nextDay()?.toMediumString() ?? ""
+                self.syncTimePicker.enabled = true
+                self.syncTimePicker.hidden = false
             case "weekly":
-                self.scheduleSelection.setSelected(true, forSegment: 2)
+                self.scheduleSelection.selectItemAtIndex(2)
                 self.nextSyncField.stringValue = NSDate().nextWeek()?.toMediumString() ?? ""
+                self.syncTimePicker.enabled = true
+                self.syncTimePicker.hidden = false
             case "monthly":
-                self.scheduleSelection.setSelected(true, forSegment: 3)
+                self.scheduleSelection.selectItemAtIndex(3)
                 self.nextSyncField.stringValue = NSDate().nextMonth()?.toMediumString() ?? ""
+                self.syncTimePicker.enabled = true
+                self.syncTimePicker.hidden = false
             default:
-                self.scheduleSelection.selectedSegment = -1
+                self.scheduleSelection.selectItemAtIndex(-1)
                 self.nextSyncField.stringValue = ""
+                self.syncTimePicker.enabled = false
+                self.syncTimePicker.hidden = false
             }
             self.scheduleSelection.enabled = true
         }
@@ -461,10 +485,17 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.addedField.stringValue = ""
             self.lastSyncField.stringValue = ""
             self.nextSyncField.stringValue = ""
-            self.scheduleSelection.selectedSegment = -1
+            self.scheduleSelection.selectItemAtIndex(-1)
             self.scheduleSelection.enabled = false
             self.failedSyncButton.enabled = false
             self.failedSyncButton.hidden = true
+            self.syncTimePicker.enabled = false
+            self.syncTimePicker.hidden = true
+            let components = NSDateComponents()
+            components.hour = 0
+            components.minute = 0
+            let calendar = NSCalendar.currentCalendar()
+            self.syncTimePicker.dateValue = calendar.dateFromComponents(components)!
 
         }
     }
@@ -473,11 +504,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         if self.syncListView.selectedRow != -1 {
             let syncItem: SyncFolder = self.syncListView.itemAtRow(self.syncListView.selectedRow) as! SyncFolder
             
-            let control: NSSegmentedControl = sender as! NSSegmentedControl
-            
             var syncFrequency: String
             
-            switch control.selectedSegment {
+            switch self.scheduleSelection.selectedTag() {
             case 0:
                 syncFrequency = "hourly"
             case 1:
@@ -487,7 +516,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             case 3:
                 syncFrequency = "monthly"
             default:
-                syncFrequency = "minute"
+                syncFrequency = "daily"
             }
             
             guard let realm = try? Realm() else {
@@ -518,4 +547,20 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         self.failurePopover.showRelativeToRect(self.failedSyncButton.bounds, ofView: self.failedSyncButton, preferredEdge: .MinY)
     }
     
+    @IBAction
+    func setSyncTime(sender: AnyObject) {
+        if self.syncListView.selectedRow != -1 {
+            let syncItem: SyncFolder = self.syncListView.itemAtRow(self.syncListView.selectedRow) as! SyncFolder
+            
+            guard let realm = try? Realm() else {
+                SDLog("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            
+            try! realm.write {
+                syncItem.syncTime = self.syncTimePicker.dateValue
+            }
+        }
+    }
 }

@@ -13,9 +13,10 @@
                 <outlet property="failurePopover" destination="T3V-iJ-6gi" id="0g8-hy-kPE"/>
                 <outlet property="lastSyncField" destination="j52-br-Lit" id="cGX-9a-IwA"/>
                 <outlet property="nextSyncField" destination="xA0-4Y-iCQ" id="hMb-Bc-1Ra"/>
-                <outlet property="scheduleSelection" destination="3kf-wf-hll" id="W0w-tC-rdX"/>
+                <outlet property="scheduleSelection" destination="yfP-H5-Voh" id="pgA-sg-utP"/>
                 <outlet property="spinner" destination="Zkz-Sf-qG1" id="RBj-RB-O01"/>
                 <outlet property="syncListView" destination="FBp-sJ-WN8" id="vzi-cx-r8L"/>
+                <outlet property="syncTimePicker" destination="uWU-me-iLj" id="Py9-De-ooj"/>
                 <outlet property="window" destination="MYk-Wm-cmP" id="hNj-3N-fQa"/>
             </connections>
         </customObject>
@@ -36,23 +37,8 @@
                             <rect key="frame" x="1" y="1" width="315" height="167"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3kf-wf-hll">
-                                    <rect key="frame" x="31" y="124" width="252" height="24"/>
-                                    <segmentedCell key="cell" enabled="NO" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="SmP-El-AAJ">
-                                        <font key="font" metaFont="system"/>
-                                        <segments>
-                                            <segment label="Hourly"/>
-                                            <segment label="Daily"/>
-                                            <segment label="Weekly"/>
-                                            <segment label="Monthly"/>
-                                        </segments>
-                                    </segmentedCell>
-                                    <connections>
-                                        <action selector="setSyncFrequencyForFolder:" target="-2" id="0aH-yV-Z6A"/>
-                                    </connections>
-                                </segmentedControl>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fbe-cW-HQi">
-                                    <rect key="frame" x="93" y="84" width="204" height="17"/>
+                                    <rect key="frame" x="84" y="70" width="204" height="17"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="N/A" id="KrU-aw-bkd">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -60,7 +46,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="j52-br-Lit">
-                                    <rect key="frame" x="93" y="59" width="204" height="17"/>
+                                    <rect key="frame" x="84" y="45" width="204" height="17"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="N/A" id="VHu-lm-B7v">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -68,7 +54,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oNd-Sd-EJe">
-                                    <rect key="frame" x="41" y="84" width="48" height="17"/>
+                                    <rect key="frame" x="32" y="70" width="48" height="17"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="44" id="Cv9-At-ucC"/>
                                     </constraints>
@@ -78,8 +64,33 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7fa-Zd-5qn">
+                                    <rect key="frame" x="186" y="130" width="16" height="17"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="12" id="Fg1-e6-1q4"/>
+                                    </constraints>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="at" id="Zo5-pS-JaJ">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="-2" name="hidden" keyPath="syncTimePicker.hidden" id="BN5-L3-nMg"/>
+                                    </connections>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HFl-7V-x6s">
+                                    <rect key="frame" x="42" y="130" width="38" height="17"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="34" id="gAh-AP-0m9"/>
+                                    </constraints>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sync:" id="60Y-Wc-Hb0">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y54-ra-3Ue">
-                                    <rect key="frame" x="22" y="59" width="67" height="17"/>
+                                    <rect key="frame" x="13" y="45" width="67" height="17"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Last Sync:" id="4lL-mi-bhf">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -87,7 +98,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xA0-4Y-iCQ">
-                                    <rect key="frame" x="93" y="34" width="204" height="17"/>
+                                    <rect key="frame" x="84" y="20" width="204" height="17"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="N/A" id="G4c-90-O4Y">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -95,15 +106,64 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F2e-Ky-gNd">
-                                    <rect key="frame" x="19" y="34" width="70" height="17"/>
+                                    <rect key="frame" x="10" y="20" width="70" height="17"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Next Sync:" id="obX-mq-sgJ">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BMq-jW-OF3">
-                                    <rect key="frame" x="266" y="20" width="29" height="19"/>
+                                <datePicker hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uWU-me-iLj">
+                                    <rect key="frame" x="208" y="127" width="96" height="22"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="94" id="XNj-pD-ZjE"/>
+                                    </constraints>
+                                    <datePickerCell key="cell" controlSize="small" enabled="NO" borderStyle="bezel" alignment="left" id="DD0-OU-acO">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <date key="date" timeIntervalSinceReferenceDate="-595969200">
+                                            <!--1982-02-12 05:00:00 +0000-->
+                                        </date>
+                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <datePickerElements key="datePickerElements" hour="YES" minute="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="-2" id="0GP-cj-6Pf"/>
+                                        </connections>
+                                    </datePickerCell>
+                                    <connections>
+                                        <action selector="setSyncTime:" target="-2" id="J3d-Ek-oox"/>
+                                    </connections>
+                                </datePicker>
+                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yfP-H5-Voh">
+                                    <rect key="frame" x="84" y="123" width="99" height="26"/>
+                                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="X18-R8-1s7" id="hix-RX-eJy">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="menu"/>
+                                        <menu key="menu" id="uxx-ik-MO1">
+                                            <items>
+                                                <menuItem title="Hourly" id="Flb-HK-mJs"/>
+                                                <menuItem title="Daily" id="rZb-TY-VGn"/>
+                                                <menuItem state="on" id="X18-R8-1s7"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <action selector="setSyncSchedule:" target="-2" id="mig-ha-y6U"/>
+                                    </connections>
+                                </popUpButton>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XXH-zR-eeV">
+                                    <rect key="frame" x="33" y="95" width="47" height="17"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Status:" id="giT-28-IRv">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BMq-jW-OF3">
+                                    <rect key="frame" x="86" y="94" width="29" height="19"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="29" id="Sie-ED-2Ly"/>
+                                    </constraints>
                                     <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSCaution" imagePosition="only" alignment="center" enabled="NO" state="on" imageScaling="proportionallyDown" inset="2" id="gdB-n4-TEP">
                                         <behavior key="behavior" lightByContents="YES"/>
                                         <font key="font" metaFont="cellTitle"/>
@@ -111,22 +171,33 @@
                                 </button>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="fbe-cW-HQi" secondAttribute="trailing" constant="20" symbolic="YES" id="GGE-qT-IOg"/>
+                                <constraint firstItem="yfP-H5-Voh" firstAttribute="leading" secondItem="fbe-cW-HQi" secondAttribute="leading" id="56U-GT-E7Y"/>
+                                <constraint firstAttribute="trailing" secondItem="fbe-cW-HQi" secondAttribute="trailing" constant="29" id="GGE-qT-IOg"/>
                                 <constraint firstItem="F2e-Ky-gNd" firstAttribute="baseline" secondItem="xA0-4Y-iCQ" secondAttribute="baseline" id="HyL-WO-cTp"/>
-                                <constraint firstItem="3kf-wf-hll" firstAttribute="top" secondItem="YYe-7d-ONn" secondAttribute="top" constant="20" symbolic="YES" id="Nzv-Rr-UB9"/>
+                                <constraint firstItem="yfP-H5-Voh" firstAttribute="baseline" secondItem="7fa-Zd-5qn" secondAttribute="baseline" id="Idw-Cn-2KE"/>
+                                <constraint firstItem="HFl-7V-x6s" firstAttribute="top" secondItem="YYe-7d-ONn" secondAttribute="top" constant="20" symbolic="YES" id="LTs-sg-Cvu"/>
+                                <constraint firstItem="7fa-Zd-5qn" firstAttribute="trailing" secondItem="oNd-Sd-EJe" secondAttribute="trailing" constant="122" id="LcK-hB-r44"/>
+                                <constraint firstItem="uWU-me-iLj" firstAttribute="leading" secondItem="7fa-Zd-5qn" secondAttribute="trailing" constant="8" symbolic="YES" id="N61-Cq-IF0"/>
+                                <constraint firstItem="oNd-Sd-EJe" firstAttribute="top" secondItem="7fa-Zd-5qn" secondAttribute="bottom" constant="43" id="RU1-vU-dQT"/>
+                                <constraint firstItem="7fa-Zd-5qn" firstAttribute="leading" secondItem="yfP-H5-Voh" secondAttribute="trailing" constant="8" symbolic="YES" id="V6G-0e-m32"/>
                                 <constraint firstItem="xA0-4Y-iCQ" firstAttribute="leading" secondItem="F2e-Ky-gNd" secondAttribute="trailing" constant="8" id="Vto-DD-tWw"/>
                                 <constraint firstItem="j52-br-Lit" firstAttribute="trailing" secondItem="fbe-cW-HQi" secondAttribute="trailing" id="W0z-dW-fOo"/>
                                 <constraint firstItem="xA0-4Y-iCQ" firstAttribute="trailing" secondItem="j52-br-Lit" secondAttribute="trailing" id="aWw-rr-Oio"/>
+                                <constraint firstItem="7fa-Zd-5qn" firstAttribute="top" secondItem="HFl-7V-x6s" secondAttribute="bottom" constant="-17" id="ati-MP-Vfb"/>
+                                <constraint firstItem="BMq-jW-OF3" firstAttribute="centerY" secondItem="XXH-zR-eeV" secondAttribute="centerY" id="bip-Ze-tSG"/>
+                                <constraint firstItem="XXH-zR-eeV" firstAttribute="trailing" secondItem="oNd-Sd-EJe" secondAttribute="trailing" id="hU4-tD-Qk5"/>
                                 <constraint firstItem="fbe-cW-HQi" firstAttribute="leading" secondItem="oNd-Sd-EJe" secondAttribute="trailing" constant="8" symbolic="YES" id="ikc-Ww-CgQ"/>
-                                <constraint firstItem="3kf-wf-hll" firstAttribute="centerX" secondItem="YYe-7d-ONn" secondAttribute="centerX" id="kck-mG-X86"/>
                                 <constraint firstItem="Y54-ra-3Ue" firstAttribute="top" secondItem="oNd-Sd-EJe" secondAttribute="bottom" constant="8" symbolic="YES" id="mBf-6F-iEB"/>
+                                <constraint firstItem="BMq-jW-OF3" firstAttribute="trailing" secondItem="uWU-me-iLj" secondAttribute="trailing" constant="-187" id="nhJ-iJ-mkM"/>
                                 <constraint firstItem="fbe-cW-HQi" firstAttribute="baseline" secondItem="oNd-Sd-EJe" secondAttribute="baseline" id="rUG-l1-nTa"/>
+                                <constraint firstItem="oNd-Sd-EJe" firstAttribute="top" secondItem="XXH-zR-eeV" secondAttribute="bottom" constant="8" symbolic="YES" id="sLL-An-9Bn"/>
                                 <constraint firstItem="fbe-cW-HQi" firstAttribute="leading" secondItem="j52-br-Lit" secondAttribute="leading" id="tcD-p7-KuQ"/>
                                 <constraint firstItem="j52-br-Lit" firstAttribute="leading" secondItem="Y54-ra-3Ue" secondAttribute="trailing" constant="8" symbolic="YES" id="ubf-cf-TNx"/>
-                                <constraint firstItem="oNd-Sd-EJe" firstAttribute="leading" secondItem="YYe-7d-ONn" secondAttribute="leading" constant="43" id="vGF-Wz-Dvv"/>
+                                <constraint firstItem="oNd-Sd-EJe" firstAttribute="leading" secondItem="YYe-7d-ONn" secondAttribute="leading" constant="34" id="vGF-Wz-Dvv"/>
                                 <constraint firstItem="xA0-4Y-iCQ" firstAttribute="leading" secondItem="j52-br-Lit" secondAttribute="leading" id="vQR-C8-FRX"/>
+                                <constraint firstItem="HFl-7V-x6s" firstAttribute="trailing" secondItem="7fa-Zd-5qn" secondAttribute="trailing" constant="-122" id="vnV-Fd-tCg"/>
+                                <constraint firstItem="7fa-Zd-5qn" firstAttribute="centerY" secondItem="uWU-me-iLj" secondAttribute="centerY" constant="-1.5" id="x6U-JZ-se8"/>
                                 <constraint firstItem="Y54-ra-3Ue" firstAttribute="baseline" secondItem="j52-br-Lit" secondAttribute="baseline" id="xTF-7T-vjU"/>
-                                <constraint firstItem="oNd-Sd-EJe" firstAttribute="top" secondItem="3kf-wf-hll" secondAttribute="bottom" constant="25" id="z98-lz-RxT"/>
                                 <constraint firstItem="F2e-Ky-gNd" firstAttribute="top" secondItem="Y54-ra-3Ue" secondAttribute="bottom" constant="8" symbolic="YES" id="zhZ-Fc-qwQ"/>
                             </constraints>
                         </view>
@@ -158,7 +229,7 @@
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                         </tableHeaderCell>
-                                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="W8B-6V-YNb">
+                                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" title="Text Cell" id="W8B-6V-YNb">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
