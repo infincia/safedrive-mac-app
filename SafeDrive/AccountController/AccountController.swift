@@ -122,8 +122,15 @@ class AccountController: NSObject {
                     }
                     
                     do {
-
+                        /* 
+                            Once a Machine entity is created for this uniqueClientID, we never modify it without special handling.
+                         
+                            The Machine.name property is used to decide which path on the server to sync to, so we cannot allow
+                            it to be overwritten every time the local hostname changes.
+                         
                         
+                        
+                         */
                         var currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(clientID)'").last
                         
                         if currentMachine == nil {
