@@ -434,7 +434,14 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             let syncTasks = realm.objects(SyncTask)
 
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@", syncItem).sorted("syncDate").last {
-                if syncTask.success {
+                if syncItem.syncing {
+                    self.syncStatusButton.image = NSImage(named: NSImageNameStatusPartiallyAvailable)
+                    self.syncFailureInfoButton.action = nil
+                    self.syncFailureInfoButton.hidden = true
+                    self.syncFailureInfoButton.enabled = false
+                    self.syncFailureInfoButton.toolTip = ""
+                }
+                else if syncTask.success {
                     self.syncStatusButton.image = NSImage(named: NSImageNameStatusAvailable)
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.hidden = true
