@@ -12,6 +12,8 @@ import RealmSwift
 class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, NSPopoverDelegate {
     @IBOutlet var syncListView: NSOutlineView!
     @IBOutlet var spinner: NSProgressIndicator!
+    
+    @IBOutlet var pathIndicator: NSPathControl!
 
     @IBOutlet var lastSyncField: NSTextField!
     
@@ -415,6 +417,13 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             }
             else {
                 SDLog("Failed to load date in sync manager")
+            }
+            
+            if let syncURL = syncItem.url {
+                self.pathIndicator.URL = syncURL
+            }
+            else {
+                SDLog("Failed to load path in sync manager")
             }
             
             guard let realm = try? Realm() else {
