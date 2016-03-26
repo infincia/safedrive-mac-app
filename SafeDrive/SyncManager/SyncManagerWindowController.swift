@@ -223,14 +223,23 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     Crashlytics.sharedInstance().crash()
                     return
                 }
-                let syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: folderId)
-                syncFolder.machine = currentMachine
                 
-                // this is the only place where the `added` property should be set on SyncFolders
-                syncFolder.added = addedDate
+                // try to retrieve and modify existing record if possible, avoids overwriting preferences only stored in entity
+                // while still ensuring entities will have a default set on them for things like sync time
+                var syncFolder = realm.objects(SyncFolder).filter("uniqueID == \(folderId)").last
+                
+                if syncFolder == nil {
+                    syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: folderId)
+                }
                 
                 try! realm.write {
-                    realm.add(syncFolder, update: true)
+                    
+                    syncFolder!.machine = currentMachine
+                    
+                    // this is the only place where the `added` property should be set on SyncFolders
+                    syncFolder!.added = addedDate
+                    
+                    realm.add(syncFolder!, update: true)
                 }
             }
             self.reload()
