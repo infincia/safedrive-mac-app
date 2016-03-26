@@ -403,7 +403,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     //--------------------------
     // Selection tracking
     //--------------------------
-    
+    // NOTE: This really needs to be refactored into a view to limite how massive this VC is becoming
     func outlineViewSelectionDidChange(notification: NSNotification) {
         if self.syncListView.selectedRow != -1 {
             guard let syncItem: SyncFolder = self.syncListView.itemAtRow(self.syncListView.selectedRow) as? SyncFolder else {
