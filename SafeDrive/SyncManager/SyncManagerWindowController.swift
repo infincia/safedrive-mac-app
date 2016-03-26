@@ -12,8 +12,6 @@ import RealmSwift
 class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, NSPopoverDelegate {
     @IBOutlet var syncListView: NSOutlineView!
     @IBOutlet var spinner: NSProgressIndicator!
-    
-    @IBOutlet var addedField: NSTextField!
 
     @IBOutlet var lastSyncField: NSTextField!
     
@@ -412,13 +410,6 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 return
             }
             
-            if let added = syncItem.added {
-                self.addedField.stringValue = added.toMediumDateString()
-            }
-            else {
-                self.addedField.stringValue = ""
-            }
-            
             if let syncTime = syncItem.syncTime {
                 self.syncTimePicker.dateValue = syncTime
             }
@@ -510,7 +501,6 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.scheduleSelection.enabled = true
         }
         else {
-            self.addedField.stringValue = ""
             self.lastSyncField.stringValue = ""
             self.nextSyncField.stringValue = ""
             self.scheduleSelection.selectItemAtIndex(-1)
