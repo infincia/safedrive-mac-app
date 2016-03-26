@@ -529,7 +529,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             
             var syncFrequency: String
             
-            switch self.scheduleSelection.selectedTag() {
+            switch self.scheduleSelection.indexOfSelectedItem {
             case 0:
                 syncFrequency = "hourly"
             case 1:
