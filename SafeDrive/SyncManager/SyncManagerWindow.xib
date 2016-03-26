@@ -32,7 +32,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="351" height="489"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box autoresizesSubviews="NO" title="Sync Schedule" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="cB6-hb-tAm">
+                    <box autoresizesSubviews="NO" title="Sync Folder Details" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="cB6-hb-tAm">
                         <rect key="frame" x="17" y="16" width="317" height="183"/>
                         <view key="contentView" id="YYe-7d-ONn">
                             <rect key="frame" x="1" y="1" width="315" height="167"/>
