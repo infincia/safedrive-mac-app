@@ -135,11 +135,6 @@ class SyncScheduler {
                     folders.appendContentsOf(hourlyFolders)
                     
                 }
-                else {
-                    // check for minute syncs
-                    let minuteFolders = realm.objects(SyncFolder).filter("syncFrequency == 'minute' AND syncing == false AND machine == %@", currentMachine)
-                    folders.appendContentsOf(minuteFolders)
-                }
                 if self.reachabilityManager!.isReachableOnEthernetOrWiFi {
                     for folder in folders {
                         let folderID = folder.uniqueID
