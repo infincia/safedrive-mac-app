@@ -230,7 +230,7 @@ class SyncScheduler {
             SDLog("Sync started for \(localFolder)")
 
             let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
-            let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(NSHost.currentHost().localizedName!, isDirectory: true)
+            let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(folder.machine!.name!, isDirectory: true)
             let remoteFolder: NSURL = machineFolder.URLByAppendingPathComponent(folderName, isDirectory: true)
             let urlComponents: NSURLComponents = NSURLComponents()
             urlComponents.user = self.accountController.internalUserName
