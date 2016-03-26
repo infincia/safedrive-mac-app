@@ -52,6 +52,16 @@ class AccountController: NSObject {
             //
         })
         
+        /*
+ 
+            This is a workaround for SyncFolders not having a truly unique primary key on the server side,
+            we have to clear the table before allowing a different account to sign in and store SyncFolders, 
+            or things will get into an inconsistent state.
+         
+            A better solution would likely be to use separate realm files for each username, but that greatly
+            complicates things and will take some planning to do.
+         
+        */
         if let storedCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychainForService(SDServiceName),
                storedEmail = storedCredentials["account"] {
             if storedEmail != email {
