@@ -100,7 +100,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.reload()
         }
         
-        
+        self.scheduleSelection.selectItemAtIndex(-1)
+
         self.readSyncFolders(self)
     }
     
