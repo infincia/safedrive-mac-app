@@ -125,7 +125,7 @@
                                 </datePicker>
                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yfP-H5-Voh">
                                     <rect key="frame" x="84" y="124" width="81" height="26"/>
-                                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="hix-RX-eJy">
+                                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="hix-RX-eJy">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="uxx-ik-MO1">
@@ -155,12 +155,12 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="29" id="mfF-Gu-L3a"/>
                                     </constraints>
-                                    <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSStatusPartiallyAvailable" imagePosition="only" alignment="center" enabled="NO" state="on" imageScaling="proportionallyDown" inset="2" id="gdB-n4-TEP">
+                                    <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSStatusNone" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="gdB-n4-TEP">
                                         <behavior key="behavior" lightByContents="YES"/>
                                         <font key="font" metaFont="cellTitle"/>
                                     </buttonCell>
                                 </button>
-                                <button verticalHuggingPriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="l64-Ur-RNY">
+                                <button hidden="YES" verticalHuggingPriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="l64-Ur-RNY">
                                     <rect key="frame" x="105" y="92" width="29" height="19"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="29" id="yKF-3G-ASd"/>
@@ -457,6 +457,6 @@
     <resources>
         <image name="NSRefreshFreestandingTemplate" width="14" height="14"/>
         <image name="NSRevealFreestandingTemplate" width="14" height="14"/>
-        <image name="NSStatusPartiallyAvailable" width="16" height="16"/>
+        <image name="NSStatusNone" width="16" height="16"/>
     </resources>
 </document>
