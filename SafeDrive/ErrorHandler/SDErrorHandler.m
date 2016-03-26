@@ -94,7 +94,7 @@ void SDErrorHandlerReport(NSError *error) {
 #ifndef DEBUG
     // using archived NSError so the array can be serialized as a plist
     dispatch_sync(errorQueue, ^{
-        NSArray *whitelistErrorDomains = @[SDErrorDomain, SDErrorSyncDomain, SDErrorSSHFSDomain, SDErrorAccountDomain, SDErrorAPIDomain, SDMountErrorDomain, SDSystemError];
+        NSArray *whitelistErrorDomains = @[SDErrorDomain, SDErrorSyncDomain, SDErrorSSHFSDomain, SDErrorAccountDomain, SDErrorAPIDomain, SDMountErrorDomain];
         BOOL isAllowedErrorDomain = NO;
         for (NSString *whitelistedDomain in whitelistErrorDomains) {
             if ([error.domain isEqualToString:whitelistedDomain]) {
