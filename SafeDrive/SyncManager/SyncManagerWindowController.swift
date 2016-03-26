@@ -19,7 +19,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     @IBOutlet var nextSyncField: NSTextField!
     
-    @IBOutlet var failedSyncButton: NSButton!
+    @IBOutlet var syncFailureInfoButton: NSButton!
+
+    @IBOutlet var syncStatusButton: NSButton!
     
     @IBOutlet var syncTimePicker: NSDatePicker!
 
@@ -423,20 +425,29 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             let syncTasks = realm.objects(SyncTask)
 
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@", syncItem).sorted("syncDate").last {
-                self.failedSyncButton.enabled = !syncTask.success
-                self.failedSyncButton.hidden = syncTask.success
-                self.failedSyncButton.toolTip = NSLocalizedString("Last sync failed, click here for details", comment: "")
-                self.failedSyncButton.action = #selector(self.showFailurePopover)
+                if syncTask.success {
+                    self.syncStatusButton.image = NSImage(named: NSImageNameStatusAvailable)
+                    self.syncFailureInfoButton.action = nil
+                    self.syncFailureInfoButton.hidden = true
+                    self.syncFailureInfoButton.enabled = false
+                    self.syncFailureInfoButton.toolTip = ""
+                }
+                else {
+                    self.syncStatusButton.image = NSImage(named: NSImageNameCaution)
+                    self.syncFailureInfoButton.action = #selector(self.showFailurePopover)
+                    self.syncFailureInfoButton.hidden = false
+                    self.syncFailureInfoButton.enabled = true
+                    self.syncFailureInfoButton.toolTip = NSLocalizedString("Last sync failed, click here for details", comment: "")
+                }
                 let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
                 failureView.message.stringValue = syncTask.message ?? ""
             }
             else {
-                self.failedSyncButton.enabled = false
-                self.failedSyncButton.hidden = true
-                self.failedSyncButton.toolTip = nil
-                self.failedSyncButton.action = nil
-                let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
-                failureView.message.stringValue = NSLocalizedString("Never synced", comment: "")
+                self.syncStatusButton.image = NSImage(named: NSImageNameStatusPartiallyAvailable)
+                self.syncFailureInfoButton.action = nil
+                self.syncFailureInfoButton.hidden = true
+                self.syncFailureInfoButton.enabled = false
+                self.syncFailureInfoButton.toolTip = nil
             }
             
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
@@ -487,8 +498,11 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.nextSyncField.stringValue = ""
             self.scheduleSelection.selectItemAtIndex(-1)
             self.scheduleSelection.enabled = false
-            self.failedSyncButton.enabled = false
-            self.failedSyncButton.hidden = true
+            self.syncStatusButton.image = NSImage(named: NSImageNameStatusNone)
+            self.syncFailureInfoButton.action = nil
+            self.syncFailureInfoButton.hidden = true
+            self.syncFailureInfoButton.enabled = false
+            self.syncFailureInfoButton.toolTip = nil
             self.syncTimePicker.enabled = false
             self.syncTimePicker.hidden = true
             let components = NSDateComponents()
@@ -544,7 +558,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     @objc
     private func showFailurePopover() {
-        self.failurePopover.showRelativeToRect(self.failedSyncButton.bounds, ofView: self.failedSyncButton, preferredEdge: .MinY)
+        self.failurePopover.showRelativeToRect(self.syncFailureInfoButton.bounds, ofView: self.syncFailureInfoButton, preferredEdge: .MinY)
     }
     
     @IBAction
