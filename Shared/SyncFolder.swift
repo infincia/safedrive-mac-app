@@ -30,7 +30,7 @@ class SyncFolder: Object {
     convenience required init(name: String, url: NSURL, uniqueID: Int) {
         self.init()
         self.name = name
-        self.path = url.absoluteString
+        self.path = url.path
         self.uniqueID = uniqueID
         
         let components = NSDateComponents()
