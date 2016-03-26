@@ -480,17 +480,17 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.syncTimePicker.dateValue = calendar.dateFromComponents(components)!
             case "daily":
                 self.scheduleSelection.selectItemAtIndex(1)
-                self.nextSyncField.stringValue = NSDate().nextDay()?.toMediumString() ?? ""
+                self.nextSyncField.stringValue = NSDate().nextDayAt((syncItem.syncTime?.hour)!, minute: (syncItem.syncTime?.minute)!)?.toMediumString() ?? ""
                 self.syncTimePicker.enabled = true
                 self.syncTimePicker.hidden = false
             case "weekly":
                 self.scheduleSelection.selectItemAtIndex(2)
-                self.nextSyncField.stringValue = NSDate().nextWeek()?.toMediumString() ?? ""
+                self.nextSyncField.stringValue = NSDate().nextWeekAt((syncItem.syncTime?.hour)!, minute: (syncItem.syncTime?.minute)!)?.toMediumString() ?? ""
                 self.syncTimePicker.enabled = true
                 self.syncTimePicker.hidden = false
             case "monthly":
                 self.scheduleSelection.selectItemAtIndex(3)
-                self.nextSyncField.stringValue = NSDate().nextMonth()?.toMediumString() ?? ""
+                self.nextSyncField.stringValue = NSDate().nextMonthAt((syncItem.syncTime?.hour)!, minute: (syncItem.syncTime?.minute)!)?.toMediumString() ?? ""
                 self.syncTimePicker.enabled = true
                 self.syncTimePicker.hidden = false
             default:
