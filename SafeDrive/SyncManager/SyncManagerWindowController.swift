@@ -442,7 +442,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.syncFailureInfoButton.toolTip = ""
                 }
                 else {
-                    self.syncStatusButton.image = NSImage(named: NSImageNameCaution)
+                    self.syncStatusButton.image = NSImage(named: NSImageNameStatusUnavailable)
                     self.syncFailureInfoButton.action = #selector(self.showFailurePopover)
                     self.syncFailureInfoButton.hidden = false
                     self.syncFailureInfoButton.enabled = true
