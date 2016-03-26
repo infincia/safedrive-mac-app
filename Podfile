@@ -6,7 +6,7 @@ def keychain_pods
 end
 
 def shared_pods
-    pod 'Alamofire', '3.2.1'
+    pod 'Alamofire', '3.3.0'
     pod 'Fabric', '1.6.7'
     pod 'Crashlytics', '3.7.0'
     pod 'NMSSH', '2.2.4'
