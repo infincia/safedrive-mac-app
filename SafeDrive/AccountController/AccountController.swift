@@ -236,7 +236,6 @@ class AccountController: NSObject {
                             NSNotificationCenter.defaultCenter().postNotificationName(SDAccountStatusNotification, object: accountStatus)
                         })
                         
-                        SDLog("Account status: %@", accountStatus)
                         self.internalUserName = accountStatus["userName"] as? String
                         
                         self.remotePort = accountStatus["port"] as! Int
