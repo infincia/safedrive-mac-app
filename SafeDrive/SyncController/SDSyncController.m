@@ -208,7 +208,7 @@
         
         NSString *local = [NSString stringWithFormat:@"%@/", localPath];
         
-        taskArguments = @[@"-e", @"ssh -o StrictHostKeyChecking=no", @"-r", remote, local];
+        taskArguments = @[@"-e", @"ssh -o StrictHostKeyChecking=no", @"--delete", @"-rlpt", remote, local];
     }
     else {
         NSString *local = [NSString stringWithFormat:@"%@/", localURL.path];
@@ -216,7 +216,7 @@
         NSString *remote = [NSString stringWithFormat:@"%@@%@:\"%@/\"", user, host, serverPath];
         
         // recursive, local and remote paths
-        taskArguments = @[@"-e", @"ssh -o StrictHostKeyChecking=no", @"-r", local, remote];
+        taskArguments = @[@"-e", @"ssh -o StrictHostKeyChecking=no", @"--delete", @"-rlpt", local, remote];
 
     }
     [self.syncTask setArguments:taskArguments];
