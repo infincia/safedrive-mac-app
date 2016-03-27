@@ -155,8 +155,9 @@ class SyncScheduler {
                 else {
                     //SDLog("No WiFi/Ethernet connectivity, deferring \(folders.count) folders")
                 }
-                
-                NSThread.sleepForTimeInterval(60)
+                // keep loop in sync with clock time to the next minute
+                let sleepSeconds = 60 - currentDate.second
+                NSThread.sleepForTimeInterval(Double(sleepSeconds))
                 
             }
         }
