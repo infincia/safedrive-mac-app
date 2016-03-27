@@ -103,6 +103,9 @@ class AccountController: NSObject {
                 self.signedIn = true
                 if let accountStatus = accountStatus {
                     SDLog("Account status: %@", accountStatus)
+                    dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                        NSNotificationCenter.defaultCenter().postNotificationName(SDAccountStatusNotification, object: accountStatus)
+                    })
                     self.internalUserName = accountStatus["userName"] as? String
                     
                     self.remotePort = accountStatus["port"] as! Int
@@ -154,6 +157,21 @@ class AccountController: NSObject {
             }, failure: { (error: NSError) -> Void in
                 failureBlock(error);
 
+            })
+            
+            self.sharedSafedriveAPI.accountDetailsForUser(email, success: {(accountDetails: [String : NSObject]?) -> Void in
+                if let accountDetails = accountDetails {
+                    dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                        NSNotificationCenter.defaultCenter().postNotificationName(SDAccountDetailsNotification, object: accountDetails)
+                    })
+                }
+                
+                }, failure: {(apiError: NSError) -> Void in
+                    #if DEBUG
+                        SDLog("Account details retrieval failed: %@", apiError.localizedDescription)
+                        // don't report these for now, they're almost always going to be network failures
+                        // SDErrorHandlerReport(apiError);
+                    #endif
             })
         }, failure: { (error: NSError) -> Void in
             failureBlock(error);
@@ -209,6 +227,8 @@ class AccountController: NSObject {
                     NSThread.sleepForTimeInterval(1)
                     continue
                 }
+                NSThread.sleepForTimeInterval(60 * 5) // 5 minutes
+
                 self.sharedSafedriveAPI.accountStatusForUser(email, success: {(accountStatus: [String : NSObject]?) -> Void in
 
                     if let accountStatus = accountStatus {
@@ -246,7 +266,6 @@ class AccountController: NSObject {
                     // SDErrorHandlerReport(apiError);
                     #endif
                 })
-                NSThread.sleepForTimeInterval(60 * 5) // 5 minutes
             }
         })
     }
