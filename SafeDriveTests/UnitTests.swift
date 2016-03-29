@@ -34,5 +34,11 @@ class UnitTests: XCTestCase {
         let testFolder = SyncFolder(name: "Home", path: "/Users/user/test", uniqueID: -1)
         XCTAssertFalse(SyncFolder.hasConflictingFolderRegistered("/Users/user/test2", syncFolders: [testFolder]));
     }
+    
+    func test_SDSystemAPI_en0MAC() {
+        let mac = SDSystemAPI.sharedAPI().en0MAC()
+        XCTAssertNotNil(mac);
+        NSLog("MAC en0: \(mac)")
+    }
 
 }

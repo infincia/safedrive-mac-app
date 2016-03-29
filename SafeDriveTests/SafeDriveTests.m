@@ -68,13 +68,6 @@
     }];
 }
 
--(void)test_SDSystemAPI_en0MAC {
-    XCTAssertNotNil([SDSystemAPI sharedAPI]);
-    NSString *mac = [[SDSystemAPI sharedAPI] en0MAC];
-    XCTAssertNotNil(mac);
-    NSLog(@"MAC en0: %@", mac);
-}
-
 -(void)test_SDAPI_registerMachine {
     XCTAssertNotNil([SDAPI sharedAPI]);
     XCTestExpectation *expectation = [self expectationWithDescription:@"test_SDAPI_registerMachine"];
