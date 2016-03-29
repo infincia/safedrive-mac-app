@@ -229,61 +229,6 @@
     outputPipeHandle.readabilityHandler = ^( NSFileHandle *handle ) {
         NSString *outputString = [[NSString alloc] initWithData:[handle availableData] encoding:NSUTF8StringEncoding];
         SDLog(@"Rsync Task stdout output: %@", outputString);
-
-        NSError *error;
-        if ([outputString rangeOfString:@"Could not chdir to home directory"].length > 0) {
-            /*
-             NSString *msg = [NSString stringWithFormat:@"Could not chdir to home directory"];
-            
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorRemoteEnvironment userInfo:@{NSLocalizedDescriptionKey: msg}];
-             */
-        }
-        else if ([outputString rangeOfString:@"No such file or directory"].length > 0) {
-            NSString *msg = [NSString stringWithFormat:@"That path does not exist on the server: %@", serverPath];
-
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
-        }
-        else if ([outputString rangeOfString:@"Not a directory"].length > 0) {
-            NSString *msg = [NSString stringWithFormat:@"That path does not exist on the server: %@", serverPath];
-
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
-        }
-        else if ([outputString rangeOfString:@"Permission denied"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Permission denied"}];
-        }
-        else if ([outputString rangeOfString:@"Error resolving hostname"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorSyncFailed userInfo:@{NSLocalizedDescriptionKey: @"Error resolving hostname, contact support"}];
-        }
-        else if ([outputString rangeOfString:@"remote host has disconnected"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorAuthorization userInfo:@{NSLocalizedDescriptionKey: @"Sync failed, check username and password"}];
-        }
-        else if ([outputString rangeOfString:@"REMOTE HOST IDENTIFICATION HAS CHANGED"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorHostFingerprintChanged userInfo:@{NSLocalizedDescriptionKey: @"Warning: server fingerprint changed!"}];
-        }
-        else if ([outputString rangeOfString:@"Host key verification failed"].length > 0) {
-            error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorHostKeyVerificationFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server key verification failed!"}];
-        }
-        else {
-            error = [NSError errorWithDomain:SDErrorDomain code:SDSyncErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
-            /*
-                for the moment we don't want to call the failure block here, as 
-                not everything that comes through stderr indicates a mount 
-                failure.
-
-                testing is required to discover and handle the stderr output that 
-                we actually need to handle and ignore the rest.
-
-            */
-            // failureBlock(mountURL, mountError);
-            return;
-        }
-        if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.syncFailure = YES;
-                failureBlock(localURL, error);
-            });
-            SDLog(@"Rsync task stdout error: %@, %@", SDErrorToString(error), error.localizedDescription);
-        }
     };
     [self.syncTask setStandardOutput:outputPipe];
 
