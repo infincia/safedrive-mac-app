@@ -182,6 +182,7 @@ class SyncScheduler {
         while self.running {
             if let syncEvent = self.dequeueSyncJob() {
                 self.sync(syncEvent)
+                continue
             }
             NSThread.sleepForTimeInterval(1)
         }
