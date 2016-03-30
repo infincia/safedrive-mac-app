@@ -9,7 +9,6 @@ def shared_pods
     pod 'Alamofire', '3.3.0'
     pod 'Fabric', '1.6.7'
     pod 'Crashlytics', '3.7.0'
-    pod 'NMSSH', '2.2.4'
     pod 'SwiftDate', '1.2'
 end
 

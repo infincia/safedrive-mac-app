@@ -37,6 +37,8 @@
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
 		AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
+		AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; };
+		AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */; };
 		AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C711BFC57B50008FB8B /* Settings-Background.png */; };
 		AA543C781BFC57B50008FB8B /* General-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C721BFC57B50008FB8B /* General-icon.png */; };
@@ -177,6 +179,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */,
 				AA1B5EF01CA1B519005DCB81 /* Realm.framework in CopyFiles */,
 				AA1B5EF11CA1B519005DCB81 /* RealmSwift.framework in CopyFiles */,
 			);
@@ -246,6 +249,7 @@
 		AA4E77321A3E6E640054BBCA /* SDTestConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTestConstants.m; sourceTree = "<group>"; };
 		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4E77411A3E9B830054BBCA /* libPods-MCSMKeychainItem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-MCSMKeychainItem.a"; path = "../../../Users/steve/Library/Developer/Xcode/DerivedData/SafeDrive-chuvxsgbhfnlbyfxzkgdnlscvvoy/Build/Products/Debug/libPods-MCSMKeychainItem.a"; sourceTree = "<group>"; };
+		AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NMSSH.framework; path = Carthage/Build/Mac/NMSSH.framework; sourceTree = "<group>"; };
 		AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Storage-Status-backing.png"; sourceTree = "<group>"; };
 		AA543C711BFC57B50008FB8B /* Settings-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-Background.png"; sourceTree = "<group>"; };
 		AA543C721BFC57B50008FB8B /* General-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "General-icon.png"; sourceTree = "<group>"; };
@@ -323,6 +327,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */,
 				AA1B5EEA1CA1B4A5005DCB81 /* Realm.framework in Frameworks */,
 				AA1B5EEB1CA1B4A5005DCB81 /* RealmSwift.framework in Frameworks */,
 				F8B7D76D32B3621C67AD41C7 /* Pods_SafeDrive.framework in Frameworks */,
@@ -388,6 +393,7 @@
 		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */,
 				AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */,
 				AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */,
 				AA4E77411A3E9B830054BBCA /* libPods-MCSMKeychainItem.a */,
