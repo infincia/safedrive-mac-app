@@ -229,7 +229,7 @@ class SyncScheduler {
             let folderName: String = folder.name!
             
             let localFolder: NSURL = folder.url!
-            SDLog("Sync started for \(localFolder.path)")
+            SDLog("Sync started for \(localFolder.path!)")
 
             let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
             let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(folder.machine!.name!, isDirectory: true)
@@ -246,7 +246,7 @@ class SyncScheduler {
                 self.syncControllers.append(syncController)
             })
             syncController.startSyncTaskWithLocalURL(localFolder, serverURL: remote, password: self.accountController.password, restore: false, success: { (syncURL: NSURL, error: NSError?) -> Void in
-                SDLog("Sync finished for \(localFolder.path)")
+                SDLog("Sync finished for \(localFolder.path!)")
                 guard let realm = try? Realm() else {
                     SDLog("failed to create realm!!!")
                     Crashlytics.sharedInstance().crash()
@@ -262,7 +262,7 @@ class SyncScheduler {
                 self.syncControllers.removeAtIndex(self.syncControllers.indexOf(syncController)!)
             }, failure: { (syncURL: NSURL, error: NSError?) -> Void in
                 SDErrorHandlerReport(error)
-                SDLog("Sync failed for \(localFolder): \(error!.localizedDescription)")
+                SDLog("Sync failed for \(localFolder.path!): \(error!.localizedDescription)")
                 guard let realm = try? Realm() else {
                     SDLog("failed to create realm!!!")
                     Crashlytics.sharedInstance().crash()
