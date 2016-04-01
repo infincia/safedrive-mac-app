@@ -1,2 +1,3 @@
 github "realm/realm-cocoa" == 0.98.6
 github "infincia/NMSSH"
+github "infincia/FontAwesome.swift" == 0.7.1.1

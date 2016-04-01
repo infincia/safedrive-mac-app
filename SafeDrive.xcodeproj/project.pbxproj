@@ -96,6 +96,8 @@
 		AAF946081C815D5A00B972C3 /* SafeDriveFinder.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAF945FF1C815D5A00B972C3 /* SafeDriveFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */; };
 		AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */; };
+		AAFF8ACC1CADBFF90040B4B5 /* FontAwesome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFF8ACA1CADBFD50040B4B5 /* FontAwesome.framework */; };
+		AAFF8ACD1CADBFF90040B4B5 /* FontAwesome.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAFF8ACA1CADBFD50040B4B5 /* FontAwesome.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8B7D76D32B3621C67AD41C7 /* Pods_SafeDrive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D55F61C44C96A06D0FFDC7F /* Pods_SafeDrive.framework */; };
 /* End PBXBuildFile section */
 
@@ -180,6 +182,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */,
+				AAFF8ACD1CADBFF90040B4B5 /* FontAwesome.framework in CopyFiles */,
 				AA1B5EF01CA1B519005DCB81 /* Realm.framework in CopyFiles */,
 				AA1B5EF11CA1B519005DCB81 /* RealmSwift.framework in CopyFiles */,
 			);
@@ -317,6 +320,7 @@
 		AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SafeDrive-Bridging-Header.h"; sourceTree = "<group>"; };
 		AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableCellView.swift; path = SyncManager/SyncManagerTableCellView.swift; sourceTree = "<group>"; };
 		AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "update-version.sh"; sourceTree = "<group>"; };
+		AAFF8ACA1CADBFD50040B4B5 /* FontAwesome.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesome.framework; path = Carthage/Build/Mac/FontAwesome.framework; sourceTree = "<group>"; };
 		BE2D8449BAB0BAC9033667C6 /* Pods-safedriveaskpass.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.release.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.release.xcconfig"; sourceTree = "<group>"; };
 		CD1169D271386AF89774EE8A /* Pods_SafeDriveFinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDriveFinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC5F0B8A3B11CCA2364971B3 /* Pods_SafeDriveService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDriveService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -331,6 +335,7 @@
 				AA1B5EEA1CA1B4A5005DCB81 /* Realm.framework in Frameworks */,
 				AA1B5EEB1CA1B4A5005DCB81 /* RealmSwift.framework in Frameworks */,
 				F8B7D76D32B3621C67AD41C7 /* Pods_SafeDrive.framework in Frameworks */,
+				AAFF8ACC1CADBFF90040B4B5 /* FontAwesome.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +398,7 @@
 		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AAFF8ACA1CADBFD50040B4B5 /* FontAwesome.framework */,
 				AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */,
 				AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */,
 				AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */,
