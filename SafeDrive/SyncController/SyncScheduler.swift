@@ -148,7 +148,6 @@ class SyncScheduler {
                 if self.reachabilityManager!.isReachableOnEthernetOrWiFi {
                     for folder in folders {
                         let folderID = folder.uniqueID
-                        SDLog("Sync job added to queue for folder: \(folder.name)")
                         self.queueSyncJob(uniqueClientID, folderID: folderID)
                     }
                 }
@@ -215,7 +214,7 @@ class SyncScheduler {
             }
             
             if folder.syncing {
-                SDLog("Sync for \(folder.name) already in progress, cancelling")
+                SDLog("Sync for \(folder.name!) already in progress, cancelling")
                 //NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
                 return
             }
