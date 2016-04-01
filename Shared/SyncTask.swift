@@ -23,6 +23,8 @@ class SyncTask: Object {
     // use for error messages if sync fails
     dynamic var message: String?
     
+    // stored PID of rsync process
+    dynamic var pid: Int = 0
     
     convenience required init(syncFolder: SyncFolder, syncDate: NSDate, uuid: String) {
         self.init()

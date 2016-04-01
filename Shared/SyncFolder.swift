@@ -12,6 +12,7 @@ class SyncFolder: Object {
     dynamic var path: String?
     dynamic var uniqueID: Int = 0
     dynamic var syncing: Bool = false
+    dynamic var restoring: Bool = false
     dynamic var syncFrequency: String = "daily"
     
     dynamic var added: NSDate? = nil
