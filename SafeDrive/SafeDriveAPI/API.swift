@@ -185,7 +185,6 @@ class API: NSObject {
                         failureBlock(responseError)
                         return
                     }
-                    SDLog("Client registered: \(JSON)")
                     guard let token = JSON["token"] as? String else {
                         let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Validation error"])
                         failureBlock(responseError)

@@ -238,8 +238,6 @@
     NSFileHandle *errorPipeHandle = [errorPipe fileHandleForReading];
     errorPipeHandle.readabilityHandler = ^( NSFileHandle *handle ) {
         NSString *errorString = [[NSString alloc] initWithData:[handle availableData] encoding:NSUTF8StringEncoding];
-        SDLog(@"Rsync Task stderr output: %@", errorString);
-        
         NSError *error;
         if ([errorString rangeOfString:@"Could not chdir to home directory"].length > 0) {
             /*
@@ -288,6 +286,7 @@
              
              */
             // failureBlock(mountURL, mountError);
+            SDLog(@"Rsync Task stderr output: %@", errorString);
             return;
         }
         if (error) {
@@ -345,7 +344,7 @@
 #pragma mark - Launch subprocess and return
 
     [self createRemoteDirectory:serverURL password:password success:^{
-        SDLog(@"Launching Rsync with arguments: %@", taskArguments);
+        //SDLog(@"Launching Rsync with arguments: %@", taskArguments);
         [self.syncTask launch];
     } failure:^(NSError * _Nonnull apiError) {
         dispatch_async(dispatch_get_main_queue(), ^{

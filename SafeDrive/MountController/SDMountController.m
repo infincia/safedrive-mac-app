@@ -229,8 +229,6 @@
     NSFileHandle *outputPipeHandle = [outputPipe fileHandleForReading];
     outputPipeHandle.readabilityHandler = ^( NSFileHandle *handle ) {
         NSString *outputString = [[NSString alloc] initWithData:[handle availableData] encoding:NSUTF8StringEncoding];
-        SDLog(@"SSHFS Task output: %@", outputString);
-
         NSError *mountError;
         if ([outputString rangeOfString:@"No such file or directory"].length > 0) {
             mountError = [NSError errorWithDomain:SDMountErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"Server could not find that volume name"}];
@@ -281,6 +279,7 @@
                 we actually need to handle and ignore the rest.
 
             */
+            SDLog(@"SSHFS Task output: %@", outputString);
             // failureBlock(mountURL, mountError);
             return;
         }
