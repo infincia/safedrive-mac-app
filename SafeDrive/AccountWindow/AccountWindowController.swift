@@ -105,14 +105,12 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         let sshURL: NSURL = urlComponents.URL!
 
         self.mountController.startMountTaskWithVolumeName(volumeName, sshURL: sshURL, success: { (mountURL, error) in
-            SDLog("SafeDrive startMountTaskWithVolumeName success in account window");
             /*
              now check for a successful mount. if after 30 seconds there is no volume
              mounted, it is a fair bet that an error occurred in the meantime
              */
             
             self.sharedSystemAPI.checkForMountedVolume(mountURL, withTimeout: 30, success: {() -> Void in
-                SDLog("SafeDrive checkForMountedVolume success in account window")
                 NSNotificationCenter.defaultCenter().postNotificationName(SDVolumeDidMountNotification, object: nil)
                 self.resetErrorDisplay()
                 self.spinner.stopAnimation(self)
