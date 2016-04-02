@@ -14,7 +14,7 @@ import Realm
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol, SDAccountProtocol {
     private var dropdownMenuController: DropdownController!
-    private var accountWindowController: SDAccountWindowController!
+    private var accountWindowController: AccountWindowController!
     private var preferencesWindowController: PreferencesWindowController!
     
     private var aboutWindowController: DCOAboutWindowController!
@@ -184,7 +184,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
             self.dropdownMenuController = DropdownController()
             
-            self.accountWindowController = SDAccountWindowController(windowNibName: "SDAccountWindow")
+            self.accountWindowController = AccountWindowController()
             _ = self.accountWindowController.window!
             
             self.preferencesWindowController = PreferencesWindowController()

@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="SDAccountWindowController">
+        <customObject id="-2" userLabel="File's Owner" customClass="AccountWindowController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
                 <outlet property="emailField" destination="fMW-gW-mXX" id="HyL-NF-FOg"/>
                 <outlet property="errorField" destination="NQX-gH-k3k" id="klR-Jw-JGQ"/>

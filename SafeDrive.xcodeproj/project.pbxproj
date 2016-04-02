@@ -11,9 +11,8 @@
 		1BF01FE19BCFCD03459A8323 /* libPods-safedriveaskpass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F58E3589AEF1D92EE613835 /* libPods-safedriveaskpass.a */; };
 		7304AA053B6B9154CFFDF0E3 /* Pods_SafeDriveFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1169D271386AF89774EE8A /* Pods_SafeDriveFinder.framework */; };
 		A45C2D767E0C6802573535E1 /* Pods_SafeDriveService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC5F0B8A3B11CCA2364971B3 /* Pods_SafeDriveService.framework */; };
-		AA0A7D151A19670600DCB77E /* SDAccountWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0A7D131A19670600DCB77E /* SDAccountWindowController.m */; };
 		AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */; };
-		AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */; };
+		AA0A7D1E1A19682D00DCB77E /* AccountWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D201A19682D00DCB77E /* AccountWindow.xib */; };
 		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA13CB9F1A7212F000A91C7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13CB9D1A7212F000A91C7A /* main.m */; };
@@ -89,6 +88,7 @@
 		AAB617BB1A7B0FCA0003CD30 /* Changelog.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BA1A7B0FCA0003CD30 /* Changelog.rtf */; };
 		AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */; };
 		AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7D5CC1CAF85C0001F9A8E /* FlatWindow.swift */; };
+		AAB7D5D31CB06A62001F9A8E /* AccountWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7D5D21CB06A62001F9A8E /* AccountWindowController.swift */; };
 		AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */ = {isa = PBXBuildFile; fileRef = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
 		AAF945F31C80125A00B972C3 /* SafeDriveService.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -226,10 +226,8 @@
 		6BF568F16C6EFDFA67B42C40 /* Pods-SafeDriveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6D55F61C44C96A06D0FFDC7F /* Pods_SafeDrive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDrive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A8EB5F8F78ED848C64BE0AE /* Pods-SafeDriveFinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.debug.xcconfig"; sourceTree = "<group>"; };
-		AA0A7D121A19670600DCB77E /* SDAccountWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDAccountWindowController.h; path = SafeDrive/AccountWindow/SDAccountWindowController.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		AA0A7D131A19670600DCB77E /* SDAccountWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDAccountWindowController.m; path = SafeDrive/AccountWindow/SDAccountWindowController.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreferencesWindow.xib; sourceTree = "<group>"; };
-		AA0A7D1F1A19682D00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SDAccountWindow.xib; sourceTree = "<group>"; };
+		AA0A7D1F1A19682D00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AccountWindow.xib; sourceTree = "<group>"; };
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA13CB9D1A7212F000A91C7A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = safedriveaskpass/main.m; sourceTree = SOURCE_ROOT; };
 		AA1A460E1BEDE685004A5310 /* HKTHashProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKTHashProvider.h; sourceTree = "<group>"; };
@@ -306,6 +304,7 @@
 		AAB617BA1A7B0FCA0003CD30 /* Changelog.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Changelog.rtf; sourceTree = "<group>"; };
 		AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
 		AAB7D5CC1CAF85C0001F9A8E /* FlatWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlatWindow.swift; path = FlatWindow/FlatWindow.swift; sourceTree = "<group>"; };
+		AAB7D5D21CB06A62001F9A8E /* AccountWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountWindowController.swift; path = SafeDrive/AccountWindow/AccountWindowController.swift; sourceTree = SOURCE_ROOT; };
 		AAEA529F1A81A3EA00BF862C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = safedriveaskpass/Info.plist; sourceTree = SOURCE_ROOT; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -520,9 +519,8 @@
 		AA31683B1A192CD2006CC0EB /* AccountWindow */ = {
 			isa = PBXGroup;
 			children = (
-				AA0A7D121A19670600DCB77E /* SDAccountWindowController.h */,
-				AA0A7D131A19670600DCB77E /* SDAccountWindowController.m */,
-				AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */,
+				AA0A7D201A19682D00DCB77E /* AccountWindow.xib */,
+				AAB7D5D21CB06A62001F9A8E /* AccountWindowController.swift */,
 			);
 			name = AccountWindow;
 			path = LoginWindow;
@@ -941,7 +939,7 @@
 				AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */,
 				AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */,
 				AA543C781BFC57B50008FB8B /* General-icon.png in Resources */,
-				AA0A7D1E1A19682D00DCB77E /* SDAccountWindow.xib in Resources */,
+				AA0A7D1E1A19682D00DCB77E /* AccountWindow.xib in Resources */,
 				AA543C791BFC57B50008FB8B /* Account-Icon.png in Resources */,
 				AA543C7B1BFC57B50008FB8B /* Status-Icon.png in Resources */,
 				AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */,
@@ -1245,7 +1243,6 @@
 			files = (
 				AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */,
 				AA76DC231C8779D2007B320E /* InstallerWindowController.swift in Sources */,
-				AA0A7D151A19670600DCB77E /* SDAccountWindowController.m in Sources */,
 				AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */,
 				AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */,
 				AA6C5BBD1C9125D4001C2869 /* ServiceManager.swift in Sources */,
@@ -1266,6 +1263,7 @@
 				AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */,
 				AAA88BC91C8385AA009BE1C7 /* Machine.swift in Sources */,
 				AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */,
+				AAB7D5D31CB06A62001F9A8E /* AccountWindowController.swift in Sources */,
 				AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */,
 				AAA88BC31C8267C0009BE1C7 /* ErrorHandler.swift in Sources */,
 				AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */,
@@ -1350,12 +1348,12 @@
 			name = PreferencesWindow.xib;
 			sourceTree = "<group>";
 		};
-		AA0A7D201A19682D00DCB77E /* SDAccountWindow.xib */ = {
+		AA0A7D201A19682D00DCB77E /* AccountWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				AA0A7D1F1A19682D00DCB77E /* Base */,
 			);
-			name = SDAccountWindow.xib;
+			name = AccountWindow.xib;
 			path = SafeDrive/AccountWindow;
 			sourceTree = SOURCE_ROOT;
 		};
