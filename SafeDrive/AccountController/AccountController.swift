@@ -101,6 +101,8 @@ class AccountController: NSObject {
         self.sharedSafedriveAPI.registerMachineWithUser(email, password: password, success: { (sessionToken: String, clientID: String) -> Void in
             self.sharedSafedriveAPI.accountStatusForUser(email, success: { (accountStatus: [String : NSObject]?) -> Void in
                 self.signedIn = true
+                Crashlytics.sharedInstance().setUserIdentifier(clientID)
+
                 if let accountStatus = accountStatus {
                     dispatch_async(dispatch_get_main_queue(), {() -> Void in
                         NSNotificationCenter.defaultCenter().postNotificationName(SDAccountStatusNotification, object: accountStatus)
