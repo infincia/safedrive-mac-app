@@ -54,7 +54,6 @@ class FlatWindow: NSWindow {
         let offset = 8
         let size = 9
         self.closeButton.frame = NSRect(x: offset + 4, y: Int(self.frame.height) - size - offset, width: size, height: size)
-        Swift.print("\(self.closeButton.bounds)")
         self.contentView?.addSubview(self.closeButton)
 
     }
