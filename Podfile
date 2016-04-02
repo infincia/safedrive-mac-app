@@ -31,7 +31,6 @@ target 'SafeDrive' do
     keychain_pods
     shared_pods
     pod 'IYLoginItem', '0.1'
-    pod 'INAppStoreWindow', '1.4'
     pod 'DCOAboutWindow', '0.2.0'
     pod 'LetsMove', '1.20'
     pod 'Sparkle', '1.14.0'

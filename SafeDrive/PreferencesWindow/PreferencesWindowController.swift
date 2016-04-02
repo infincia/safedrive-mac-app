@@ -67,24 +67,7 @@ class PreferencesWindowController: NSWindowController, SDMountStateProtocol, SDA
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        
-        self.window?.level = Int(CGWindowLevelForKey(CGWindowLevelKey.StatusWindowLevelKey))
 
-        self.window?.backgroundColor = NSColor.whiteColor()
-        
-        let aWindow: INAppStoreWindow = self.window as! INAppStoreWindow
-        aWindow.titleBarHeight = 24.0
-        aWindow.showsBaselineSeparator = false
-        let topColor: NSColor = NSColor.whiteColor()
-        aWindow.titleBarStartColor = topColor
-        aWindow.titleBarEndColor = topColor
-        aWindow.baselineSeparatorColor = topColor
-        aWindow.inactiveTitleBarEndColor = topColor
-        aWindow.inactiveTitleBarStartColor = topColor
-        aWindow.inactiveBaselineSeparatorColor = topColor
-        
-
-        
         // register SDVolumeEventProtocol notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: SDVolumeDidMountNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: SDVolumeDidUnmountNotification, object: nil)

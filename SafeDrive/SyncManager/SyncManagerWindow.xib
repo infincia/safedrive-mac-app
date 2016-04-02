@@ -23,15 +23,18 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Sync Management" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="MYk-Wm-cmP" userLabel="SyncManager" customClass="INAppStoreWindow">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+        <window title="Sync Management" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="MYk-Wm-cmP" userLabel="SyncManager" customClass="FlatWindow" customModule="SafeDrive" customModuleProvider="target">
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="351" height="489"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
-            <view key="contentView" id="BV2-eZ-qeH">
+            <view key="contentView" id="BV2-eZ-qeH" customClass="FlatWindowView" customModule="SafeDrive" customModuleProvider="target">
                 <rect key="frame" x="0.0" y="0.0" width="351" height="489"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Agp-LB-AMc" customClass="FlatWindowBackgroundView" customModule="SafeDrive" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="351" height="489"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Blank Window" id="QXN-zW-xfI"/>
+                    </imageView>
                     <box autoresizesSubviews="NO" title="Sync Folder Details" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="cB6-hb-tAm">
                         <rect key="frame" x="17" y="16" width="317" height="183"/>
                         <view key="contentView" id="YYe-7d-ONn">
@@ -161,7 +164,7 @@
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" title="Synchronized Folders" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="pjh-ee-EgP">
+                    <box autoresizesSubviews="NO" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="pjh-ee-EgP">
                         <rect key="frame" x="17" y="203" width="317" height="266"/>
                         <view key="contentView" id="va5-7j-otD">
                             <rect key="frame" x="1" y="1" width="315" height="250"/>
@@ -403,6 +406,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="Blank Window" width="351" height="501"/>
         <image name="NSRefreshFreestandingTemplate" width="14" height="14"/>
         <image name="NSRevealFreestandingTemplate" width="14" height="14"/>
         <image name="NSStatusNone" width="16" height="16"/>
