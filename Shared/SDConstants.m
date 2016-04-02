@@ -73,7 +73,7 @@ NSString *const SDMountErrorDomain = @"io.safedrive.mount";
 
 
 
-NSUInteger const SDErrorNone = 0;
+NSInteger const SDErrorNone = 0;
 
 // This will be unnecessary once SDError enums are Swift w/String values, but it's safe as long as error.code is cast
 // as a specific kind of SDError enum, the compiler will warn if any cases are missing

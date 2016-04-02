@@ -99,7 +99,7 @@ FOUNDATION_EXPORT NSString *const SDErrorAPIDomain;
 FOUNDATION_EXPORT NSString *const SDMountErrorDomain;
 
 
-FOUNDATION_EXPORT NSUInteger const SDErrorNone;
+FOUNDATION_EXPORT NSInteger const SDErrorNone;
 
 NS_ASSUME_NONNULL_END
 
