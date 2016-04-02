@@ -87,7 +87,7 @@ class SyncScheduler {
             let syncFolders = realm.objects(SyncFolder)
             syncFolders.setValue(false, forKey: "syncing")
         }
-        SDLog("Sync scheduler starting")
+        SDLog("Sync scheduler running")
 
         while self.running {
             
