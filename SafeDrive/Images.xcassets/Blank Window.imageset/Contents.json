@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "LoginScreen.png",
+      "filename" : "BlankWindow.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "LoginScreen@2x.png",
+      "filename" : "BlankWindow@2x.png",
       "scale" : "2x"
     },
     {
