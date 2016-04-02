@@ -228,7 +228,6 @@ class SyncScheduler {
             let folderName: String = folder.name!
             
             let localFolder: NSURL = folder.url!
-            SDLog("Sync started for \(localFolder.path!)")
 
             let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
             let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(folder.machine!.name!, isDirectory: true)
@@ -244,6 +243,7 @@ class SyncScheduler {
             dispatch_sync(dispatch_get_main_queue(), {() -> Void in
                 self.syncControllers.append(syncController)
             })
+            SDLog("Syncing from \(localFolder.path!)/ to \(remote.path!)/")
             syncController.startSyncTaskWithLocalURL(localFolder, serverURL: remote, password: self.accountController.password, restore: false, success: { (syncURL: NSURL, error: NSError?) -> Void in
                 SDLog("Sync finished for \(localFolder.path!)")
                 guard let realm = try? Realm() else {

@@ -49,16 +49,13 @@
             [session authenticateByPassword:password];
             
             if (session.isAuthorized) {
-                SDLog(@"SFTP: authentication succeeded");
                 NMSFTP *sftp = [NMSFTP connectWithSession:session];
                 if ([sftp directoryExistsAtPath:machineDirectory]) {
-                    SDLog(@"SFTP: sync directory exists");
                     dispatch_sync(dispatch_get_main_queue(), ^{
                         successBlock();
                     });
                 }
                 else if ([sftp createDirectoryAtPath:machineDirectory]) {
-                    SDLog(@"SFTP: creating sync directory");
                     dispatch_sync(dispatch_get_main_queue(), ^{
                         successBlock();
                     });
@@ -124,7 +121,6 @@
     NSString *fullServerPath = [serverURL path];
     NSString *serverPath = [fullServerPath substringFromIndex:1];
     NSString *localPath = [localURL path];
-    SDLog(@"Syncing from %@/ to: /%@/", localPath, serverPath);
 
 
 #pragma mark - Create the subprocess to be configured below
@@ -344,7 +340,6 @@
 #pragma mark - Launch subprocess and return
 
     [self createRemoteDirectory:serverURL password:password success:^{
-        //SDLog(@"Launching Rsync with arguments: %@", taskArguments);
         [self.syncTask launch];
     } failure:^(NSError * _Nonnull apiError) {
         dispatch_async(dispatch_get_main_queue(), ^{
