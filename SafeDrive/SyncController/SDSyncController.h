@@ -6,6 +6,10 @@
 
 @interface SDSyncController : NSObject
 
+@property NSInteger uniqueID;
+
+-(void)stopSyncTask;
+    
 -(void)startSyncTaskWithLocalURL:(NSURL *)localURL serverURL:(NSURL *)serverURL password:(NSString *)password restore:(BOOL)restore success:(SDSyncResultBlock)successBlock failure:(SDSyncResultBlock)failureBlock;
 
 

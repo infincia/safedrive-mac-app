@@ -253,6 +253,31 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID)
     }
     
+    @IBAction func stopSyncItemNow(sender: AnyObject) {
+        let button: NSButton = sender as! NSButton
+        let folderID: Int = button.tag
+        let alert = NSAlert()
+        alert.addButtonWithTitle("No")
+        alert.addButtonWithTitle("Yes")
+        
+        alert.messageText = "Cancel sync?"
+        alert.informativeText = "This folder is currently syncing, do you want to cancel?"
+        alert.alertStyle = .InformationalAlertStyle
+        
+        alert.beginSheetModalForWindow(self.window!) { (response) in
+            
+            switch response {
+            case NSAlertFirstButtonReturn:
+                return
+            case NSAlertSecondButtonReturn:
+                self.syncScheduler.cancel(folderID)
+                break
+            default:
+                return
+            }
+        }
+    }
+    
     // MARK: NSOpenSavePanelDelegate
     
     func panel(sender: AnyObject, validateURL url: NSURL) throws {
@@ -372,11 +397,19 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             tableCellView.syncNowButton.tag = syncFolder.uniqueID
             if syncFolder.syncing {
                 tableCellView.syncStatus.startAnimation(self)
-                tableCellView.syncNowButton.enabled = false
+                tableCellView.syncNowButton.enabled = true
+                tableCellView.syncNowButton.target = self
+                tableCellView.syncNowButton.action = #selector(self.stopSyncItemNow(_:))
+                tableCellView.syncNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
+
             }
             else {
                 tableCellView.syncStatus.stopAnimation(self)
                 tableCellView.syncNowButton.enabled = true
+                tableCellView.syncNowButton.target = self
+                tableCellView.syncNowButton.action = #selector(self.startSyncItemNow(_:))
+                tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
+
             }
         }
         else {

@@ -11,7 +11,7 @@
 
 @property NSTask *syncTask;
 @property BOOL syncFailure;
-
+@property BOOL syncTerminated;
 
 @end
 
@@ -22,6 +22,8 @@
     if (self) {
         self.syncTask = nil;
         self.syncFailure = NO;
+        self.uniqueID = -1;
+        self.syncTerminated = NO;
     }
     return self;
 }
@@ -132,6 +134,17 @@
 
 #pragma mark
 #pragma mark Public API
+
+-(void)stopSyncTask {
+    self.syncTerminated = YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        while (self.syncTask.isRunning) {
+            [self.syncTask terminate];
+            [NSThread sleepForTimeInterval:0.1];
+        }
+    });
+
+}
 
 -(void)startSyncTaskWithLocalURL:(NSURL *)localURL serverURL:(NSURL *)serverURL password:(NSString *)password restore:(BOOL)restore success:(SDSyncResultBlock)successBlock failure:(SDSyncResultBlock)failureBlock {
     NSAssert([NSThread currentThread] != [NSThread mainThread], @"Sync task started from main thread");
@@ -362,6 +375,12 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (weakSelf.syncFailure) {
                     // do nothing, failureBlock already called elsewhere
+                }
+                else if (weakSelf.syncTerminated) {
+                    // rsync returned a non-zero exit code because cancel/terminate was called by the user
+
+                    NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSyncErrorCancelled userInfo:@{NSLocalizedDescriptionKey: @"Sync cancelled"}];
+                    failureBlock(localURL, error);
                 }
                 else {
                     // since rsync returned a non-zero exit code AND we have not yet called failureBlock,

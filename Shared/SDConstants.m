@@ -222,6 +222,8 @@ NSString * _Nonnull SDErrorToString(NSError *error) {
              return @"SDSyncErrorRemoteEnvironment";
          case SDSyncErrorFolderConflict:
              return @"SDSyncErrorFolderConflict";
+         case SDSyncErrorCancelled:
+             return @"SDSyncErrorCancelled";
      }
      
      

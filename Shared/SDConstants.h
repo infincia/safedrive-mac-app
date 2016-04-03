@@ -197,6 +197,8 @@ typedef NS_ENUM(NSInteger, SDSyncError) {
     SDSyncErrorAlreadyRunning            = 4004,
     SDSyncErrorRemoteEnvironment         = 4005,
     SDSyncErrorFolderConflict            = 4006,
+    SDSyncErrorCancelled                 = 4007
+
 };
 
 

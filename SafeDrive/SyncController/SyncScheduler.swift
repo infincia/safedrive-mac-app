@@ -192,6 +192,14 @@ class SyncScheduler {
         self.running = false
     }
     
+    func cancel(uniqueID: Int) {
+        for syncController in self.syncControllers {
+            if syncController.uniqueID == uniqueID {
+                syncController.stopSyncTask()
+            }
+        }
+    }
+    
     private func sync(syncEvent: SyncEvent) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
             
@@ -241,6 +249,8 @@ class SyncScheduler {
             let remote: NSURL = urlComponents.URL!
             
             let syncController = SDSyncController()
+            syncController.uniqueID = folder.uniqueID
+            
             dispatch_sync(dispatch_get_main_queue(), {() -> Void in
                 self.syncControllers.append(syncController)
             })
