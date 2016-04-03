@@ -5,6 +5,8 @@
 #import "SDErrorHandler.h"
 #import "SafeDrive-Swift.h"
 
+#import <Crashlytics/Crashlytics.h>
+
 static NSMutableArray * logBuffer;
 static NSMutableArray * errors;
 static dispatch_queue_t errorQueue;
@@ -77,9 +79,11 @@ void SDLog(NSString *format, ...) {
 
 void SDLogv(NSString *format, va_list arguments) {
     NSString *st = [[NSString alloc] initWithFormat:format arguments:arguments];
+    // pass through to Crashlytics
 #ifdef DEBUG
-    // pass through to NSLog for compatibility during development
-    NSLog(@"%@", st);
+    CLSNSLog(@"%@", st);
+#else
+    CLSLog(@"%@", st);
 #endif
     // for RELEASE builds, redirect logs to the buffer in case there is an error
     dispatch_sync(errorQueue, ^{
@@ -91,6 +95,7 @@ void SDLogv(NSString *format, va_list arguments) {
 
 void SDErrorHandlerReport(NSError *error) {
 // don't even add error reports to the log unless we're in a RELEASE build
+    [CrashlyticsKit recordError:error];
 #ifndef DEBUG
     // using archived NSError so the array can be serialized as a plist
     dispatch_sync(errorQueue, ^{
