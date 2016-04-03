@@ -52,7 +52,7 @@ class InstallerWindowController: NSWindowController, NSOpenSavePanelDelegate {
                 NSThread.sleepForTimeInterval(1)
             }
             dispatch_sync(dispatch_get_main_queue(), {() -> Void in
-                NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldFinishLaunch, object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldFinishConfiguration, object: nil)
                 self.osxfuseIsInstalled = true
                 self.spinner.stopAnimation(self)
                 self.next.enabled = true
@@ -66,7 +66,7 @@ class InstallerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     
     @IBAction func next(sender: AnyObject) {
         if self.osxfuseIsInstalled {
-            NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldFinishLaunch, object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldFinishConfiguration, object: nil)
         }
         else {
             self.installer.installOSXFUSE()

@@ -57,7 +57,7 @@ FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenPreferencesWindow;
 FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenAccountWindow;
 FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenAboutWindow;
 FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenSyncWindow;
-FOUNDATION_EXPORT NSString *const SDApplicationShouldFinishLaunch;
+FOUNDATION_EXPORT NSString *const SDApplicationShouldFinishConfiguration;
 
 
 FOUNDATION_EXPORT NSString *const SDAPIDidEnterMaintenancePeriod;

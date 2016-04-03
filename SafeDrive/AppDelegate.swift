@@ -77,7 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         
         PFMoveToApplicationsFolderIfNecessary()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishLaunch(_:)), name: SDApplicationShouldFinishLaunch, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration(_:)), name: SDApplicationShouldFinishConfiguration, object: nil)
 
         self.installWindowController = InstallerWindowController()
         _ = self.installWindowController!.window!
@@ -122,7 +122,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         })
     }
     
-    func applicationShouldFinishLaunch(notification: NSNotification) {
+    func applicationShouldFinishConfiguration(notification: NSNotification) {
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
             
             guard let groupURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db") else {
