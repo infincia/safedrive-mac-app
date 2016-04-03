@@ -233,25 +233,22 @@
 
 #pragma mark - Set Rsync subprocess arguments
 
-    NSArray *taskArguments;
+    NSArray *commonArguments = @[@"-e", @"ssh -o StrictHostKeyChecking=no", @"--delete", @"-rlpt"];
+    NSMutableArray *taskArguments = [NSMutableArray arrayWithArray:commonArguments];
+
+    NSString *remote = [NSString stringWithFormat:@"%@@%@:\"%@/\"", user, host, serverPath];
+    
+    NSString *local = [NSString stringWithFormat:@"%@/", localURL.path];
     
     // restore just reverses the local and remote path arguments to the rsync command,
     // is not as well tested as normal sync
     if (restore) {
-        NSString *remote = [NSString stringWithFormat:@"%@@%@:\"%@/\"", user, host, serverPath];
-        
-        NSString *local = [NSString stringWithFormat:@"%@/", localPath];
-        
-        taskArguments = @[@"-e", @"ssh -o StrictHostKeyChecking=no", @"--delete", @"-rlpt", remote, local];
+        [taskArguments addObject:remote];
+        [taskArguments addObject:local];
     }
     else {
-        NSString *local = [NSString stringWithFormat:@"%@/", localURL.path];
-        
-        NSString *remote = [NSString stringWithFormat:@"%@@%@:\"%@/\"", user, host, serverPath];
-        
-        // recursive, local and remote paths
-        taskArguments = @[@"-e", @"ssh -o StrictHostKeyChecking=no", @"--delete", @"-rlpt", local, remote];
-
+        [taskArguments addObject:local];
+        [taskArguments addObject:remote];
     }
     [self.syncTask setArguments:taskArguments];
 
