@@ -83,13 +83,12 @@
             
             [[self.serviceConnection remoteObjectProxyWithErrorHandler:^(NSError * error) {
 
-                NSLog(@"Error: %@", error);
             }] sendAppEndpoint:self.appListener.endpoint reply:^(BOOL success) {
 
             }];
         }
         [[self.serviceConnection  remoteObjectProxyWithErrorHandler:^(NSError * error) {
-            NSLog(@"Error: %@", error);
+
         }] protocolVersion:^(NSNumber *version) {
 
             if ([version integerValue] != kSDServiceXPCProtocolVersion) {
