@@ -309,7 +309,6 @@
         [task.standardOutput fileHandleForReading].readabilityHandler = nil;
         [task.standardError fileHandleForReading].readabilityHandler = nil;
         if (task.terminationStatus == 0) {
-            SDLog(@"Task exited cleanly, running successBlock");
             dispatch_sync(dispatch_get_main_queue(), ^{
                 weakSelf.mountURL = mountURL;
                 successBlock(mountURL, nil);
