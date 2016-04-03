@@ -85,7 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
     
     func applicationWillTerminate(aNotification: NSNotification) {
-        print("SafeDrive build \(CFBundleVersion), protocol version \(kSDAppXPCProtocolVersion) exiting")
+        SDLog("SafeDrive build \(CFBundleVersion), protocol version \(kSDAppXPCProtocolVersion) exiting")
         NSNotificationCenter.defaultCenter().postNotificationName(SDVolumeShouldUnmountNotification, object: nil)
         
     }
@@ -224,7 +224,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 try self.syncScheduler?.syncSchedulerLoop(uniqueClientID)
             }
             catch {
-                print("Error starting scheduler: \(error)")
+                SDLog("Error starting scheduler: \(error)")
                 Crashlytics.sharedInstance().crash()
             }
         }

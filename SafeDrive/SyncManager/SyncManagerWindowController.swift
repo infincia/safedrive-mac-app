@@ -266,7 +266,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         
         // check if the candidate sync path is a parent or subdirectory of an existing registered sync folder
         guard let realm = try? Realm() else {
-            print("failed to create realm!!!")
+            SDLog("failed to create realm!!!")
             let errorInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open local database, this is a fatal error", comment: "")]
             throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.OpenFailed.rawValue, userInfo: errorInfo)
         }
@@ -294,7 +294,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
         if item is Machine {
             guard let realm = try? Realm() else {
-                print("failed to create realm!!!")
+                SDLog("failed to create realm!!!")
                 Crashlytics.sharedInstance().crash()
                 return 0
             }
@@ -396,7 +396,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     func outlineViewSelectionDidChange(notification: NSNotification) {
         if self.syncListView.selectedRow != -1 {
             guard let syncItem: SyncFolder = self.syncListView.itemAtRow(self.syncListView.selectedRow) as? SyncFolder else {
-                print("no item at \(self.syncListView.selectedRow)")
+                SDLog("no item at \(self.syncListView.selectedRow)")
                 return
             }
             
