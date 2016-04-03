@@ -140,6 +140,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             }
             
             let dbURL: NSURL = groupURL.URLByAppendingPathComponent("sync.realm")
+            self.serviceManager = ServiceManager.sharedServiceManager
+            self.serviceManager.unloadService()
             let config = Realm.Configuration(
                 path: dbURL.path,
                 // Set the new schema version. This must be greater than the previously used
@@ -171,11 +173,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 Crashlytics.sharedInstance().crash()
                 return
             }
-            
-            self.serviceManager = ServiceManager.sharedServiceManager
+
             self.serviceManager.deployService()
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
-                self.serviceManager.unloadService()
                 self.serviceManager.loadService()
                 self.serviceRouter = SDServiceXPCRouter()
             })
