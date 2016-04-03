@@ -14,11 +14,6 @@ class FinderSync: FIFinderSync {
     var serviceConnection: NSXPCConnection!
     
     let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
-
-    
-    var syncFolders: Results<SyncFolder>? {
-        return try? Realm().objects(SyncFolder)
-    }
     
     var token: RealmSwift.NotificationToken?
     
@@ -285,7 +280,7 @@ class FinderSync: FIFinderSync {
     }
     
     func syncFolderForURL(url: NSURL) -> SyncFolder? {
-        guard let syncFolders = self.syncFolders else {
+        guard let syncFolders = try? Realm().objects(SyncFolder) else {
             return nil
         }
         for item: SyncFolder in syncFolders {
