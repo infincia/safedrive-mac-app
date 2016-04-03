@@ -364,7 +364,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         else if item is SyncFolder {
             let syncFolder = item as! SyncFolder
             tableCellView = outlineView.makeViewWithIdentifier("FolderView", owner: self) as! SyncManagerTableCellView
-            tableCellView.textField!.stringValue = syncFolder.name!
+            tableCellView.textField!.stringValue = syncFolder.name!.capitalizedString
             let cellImage: NSImage = NSWorkspace.sharedWorkspace().iconForFileType(NSFileTypeForHFSTypeCode(OSType(kGenericFolderIcon)))
             cellImage.size = NSMakeSize(15.0, 15.0)
             tableCellView.imageView!.image = cellImage
