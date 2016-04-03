@@ -273,7 +273,7 @@ class API: NSObject {
     // MARK: Sync folder handling
     
     func createSyncFolder(localFolder: NSURL, success successBlock: SDAPICreateSyncFolderSuccessBlock, failure failureBlock: SDFailureBlock) {
-        let postParameters = ["folderName": localFolder.lastPathComponent!, "folderPath": localFolder.path!]
+        let postParameters = ["folderName": localFolder.lastPathComponent!.lowercaseString, "folderPath": localFolder.path!]
         
         Alamofire.request(Endpoint.CreateFolder(postParameters))
             .validate()
