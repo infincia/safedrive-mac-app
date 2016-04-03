@@ -8,21 +8,11 @@ class FlatWindowView: NSView {
     override var mouseDownCanMoveWindow:Bool {
         return true
     }
-    override func awakeFromNib() {
-        self.wantsLayer = true
-        self.layer?.backgroundColor = NSColor.clearColor().CGColor
-    }
-    
 }
 
 class FlatWindowBackgroundView: NSImageView {
     override var mouseDownCanMoveWindow:Bool {
         return true
-    }
-    
-    override func awakeFromNib() {
-        self.wantsLayer = true
-        self.layer?.backgroundColor = NSColor.clearColor().CGColor
     }
 }
 
