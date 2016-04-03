@@ -113,7 +113,7 @@ class ServiceManager: NSObject {
     
     func unloadService() {
         var jobError: Unmanaged<CFError>? = nil
-        if !SMJobRemove(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString), nil, false, &jobError) {
+        if !SMJobRemove(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString), nil, true, &jobError) {
             if let error = jobError?.takeRetainedValue() {
                 SDLog("Unload service error: \(error)")
                 SDErrorHandlerReport(((error as Any) as! NSError))

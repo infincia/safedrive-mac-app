@@ -176,9 +176,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.serviceManager.deployService()
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
                 self.serviceManager.unloadService()
-                NSThread.sleepForTimeInterval(1)
                 self.serviceManager.loadService()
-                NSThread.sleepForTimeInterval(2)
                 self.serviceRouter = SDServiceXPCRouter()
             })
             self.syncScheduler = SyncScheduler.sharedSyncScheduler
