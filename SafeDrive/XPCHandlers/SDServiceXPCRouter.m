@@ -86,6 +86,7 @@
             }] sendAppEndpoint:self.appListener.endpoint reply:^(BOOL success) {
 
             }];
+            [NSThread sleepForTimeInterval:1];
         }
         [[self.serviceConnection  remoteObjectProxyWithErrorHandler:^(NSError * error) {
 
