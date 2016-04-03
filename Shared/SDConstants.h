@@ -103,6 +103,14 @@ FOUNDATION_EXPORT NSInteger const SDErrorNone;
 
 NS_ASSUME_NONNULL_END
 
+#pragma mark - SFTP operations
+
+typedef NS_ENUM(NSInteger, SDSFTPOperation) {
+    SDSFTPOperationCreateFolder,
+    SDSFTPOperationDeleteFolder,
+    SDSFTPOperationMoveFolder
+};
+
 #pragma mark - SSH related errors
 
 typedef NS_ENUM(NSInteger, SDSSHError) {
@@ -112,7 +120,9 @@ typedef NS_ENUM(NSInteger, SDSSHError) {
     SDSSHErrorHostFingerprintChanged    = 1003,
     SDSSHErrorHostKeyVerificationFailed = 1004,
     SDSSHErrorDirectoryMissing          = 1005,
-    SDSSHErrorRemoteEnvironment         = 1016
+    SDSSHErrorRemoteEnvironment         = 1016,
+    SDSSHErrorSFTPOperationFailure      = 1017,
+
 };
 
 #pragma mark - System API related errors

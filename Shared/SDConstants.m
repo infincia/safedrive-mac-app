@@ -93,8 +93,11 @@ NSString * _Nonnull SDErrorToString(NSError *error) {
              return @"SDSSHErrorDirectoryMissing";
          case SDSSHErrorRemoteEnvironment:
              return @"SDSSHErrorRemoteEnvironment";
+         case SDSSHErrorSFTPOperationFailure:
+             return @"SDSSHErrorSFTPOperationFailure";
+
      }
-     
+    
      
      switch ((enum SDSystemError)error.code) {
          case SDSystemErrorUnknown:

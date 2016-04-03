@@ -12,7 +12,6 @@
 @property NSTask *syncTask;
 @property BOOL syncFailure;
 
--(void)createRemoteDirectory:(NSURL *)serverURL password:(NSString *)password success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock;
 
 @end
 
@@ -27,7 +26,7 @@
     return self;
 }
 
--(void)createRemoteDirectory:(NSURL *)serverURL password:(NSString *)password success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
+-(void)SFTPOperation:(SDSFTPOperation)op remoteDirectory:(NSURL *)serverURL password:(NSString *)password success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
     NMSSHLogger *l = [NMSSHLogger sharedLogger];
     l.logLevel = NMSSHLogLevelWarn;
     [l setLogBlock:^(NMSSHLogLevel level, NSString *format) {
@@ -50,25 +49,63 @@
             
             if (session.isAuthorized) {
                 NMSFTP *sftp = [NMSFTP connectWithSession:session];
-                if ([sftp directoryExistsAtPath:machineDirectory]) {
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        successBlock();
-                    });
-                }
-                else if ([sftp createDirectoryAtPath:machineDirectory]) {
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        successBlock();
-                    });
-                }
-                else {
-                    NSString *msg = [NSString stringWithFormat:@"SFTP: failed to create path: %@", machineDirectory];
-                    SDLog(msg);
-                    NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
-                    
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        self.syncFailure = YES;
-                        failureBlock(error);
-                    });
+                switch (op) {
+                    case SDSFTPOperationMoveFolder:
+                        if ([sftp moveItemAtPath:serverPath toPath:SDDefaultRsyncPath]) {
+                            dispatch_sync(dispatch_get_main_queue(), ^{
+                                successBlock();
+                            });
+                        }
+                        else {
+                            NSString *msg = [NSString stringWithFormat:@"SFTP: failed to move path: %@", serverPath];
+                            SDLog(msg);
+                            NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSFTPOperationFailure userInfo:@{NSLocalizedDescriptionKey: msg}];
+                            
+                            dispatch_sync(dispatch_get_main_queue(), ^{
+                                failureBlock(error);
+                            });
+                        }
+                        break;
+                    case SDSFTPOperationCreateFolder:
+                        if ([sftp directoryExistsAtPath:machineDirectory]) {
+                            dispatch_sync(dispatch_get_main_queue(), ^{
+                                successBlock();
+                            });
+                        }
+                        else if ([sftp createDirectoryAtPath:machineDirectory]) {
+                            dispatch_sync(dispatch_get_main_queue(), ^{
+                                successBlock();
+                            });
+                        }
+                        else {
+                            NSString *msg = [NSString stringWithFormat:@"SFTP: failed to create path: %@", machineDirectory];
+                            SDLog(msg);
+                            NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorDirectoryMissing userInfo:@{NSLocalizedDescriptionKey: msg}];
+                            
+                            dispatch_sync(dispatch_get_main_queue(), ^{
+                                self.syncFailure = YES;
+                                failureBlock(error);
+                            });
+                        }
+                        break;
+                    case SDSFTPOperationDeleteFolder:
+                        if ([sftp removeDirectoryAtPath:serverPath]) {
+                            dispatch_sync(dispatch_get_main_queue(), ^{
+                                successBlock();
+                            });
+                        }
+                        else {
+                            NSString *msg = [NSString stringWithFormat:@"SFTP: failed to remove path: %@", serverPath];
+                            SDLog(msg);
+                            NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSFTPOperationFailure userInfo:@{NSLocalizedDescriptionKey: msg}];
+                            
+                            dispatch_sync(dispatch_get_main_queue(), ^{
+                                failureBlock(error);
+                            });
+                        }
+                        break;
+                    default:
+                        break;
                 }
                 [sftp disconnect];
             }
@@ -347,15 +384,15 @@
 
 #pragma mark - Launch subprocess and return
 
-    [self createRemoteDirectory:serverURL password:password success:^{
+    [self SFTPOperation:SDSFTPOperationCreateFolder remoteDirectory:serverURL password:password success:^{
         [self.syncTask launch];
+
     } failure:^(NSError * _Nonnull apiError) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.syncFailure = YES;
             failureBlock(localURL, apiError);
         });
     }];
-
 }
 
 @end
