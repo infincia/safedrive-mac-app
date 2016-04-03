@@ -93,6 +93,7 @@ class SyncScheduler {
             
             autoreleasepool {
                 realm.refresh()
+                realm.invalidate()
                 
                 guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(uniqueClientID)'").last else {
                     NSThread.sleepForTimeInterval(1)
