@@ -101,22 +101,22 @@ class ServiceManager: NSObject {
     func loadService() {
         let servicePlist: NSURL = NSBundle.mainBundle().URLForResource("io.safedrive.SafeDrive.Service", withExtension: "plist")!
         let jobDict = NSDictionary(contentsOfFile: servicePlist.path!)
-        let jobError: UnsafeMutablePointer<Unmanaged<CFError>?> = nil
+        var jobError: Unmanaged<CFError>? = nil
 
-        if !SMJobSubmit(kSMDomainUserLaunchd, jobDict!, nil, jobError) {
-            if let error = jobError.memory?.takeRetainedValue() {
-                SDErrorHandlerReport(((error as Any) as! NSError))
+        if !SMJobSubmit(kSMDomainUserLaunchd, jobDict!, nil, &jobError) {
+            if let error = jobError?.takeRetainedValue() {
                 SDLog("Load service error: \(error)")
+                SDErrorHandlerReport(((error as Any) as! NSError))
             }
         }
     }
     
     func unloadService() {
-        let jobError: UnsafeMutablePointer<Unmanaged<CFError>?> = nil
-        if !SMJobRemove(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString), nil, false, jobError) {
-            if let error = jobError.memory?.takeRetainedValue() {
-                SDErrorHandlerReport(((error as Any) as! NSError))
+        var jobError: Unmanaged<CFError>? = nil
+        if !SMJobRemove(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString), nil, false, &jobError) {
+            if let error = jobError?.takeRetainedValue() {
                 SDLog("Unload service error: \(error)")
+                SDErrorHandlerReport(((error as Any) as! NSError))
             }
         }
     }
