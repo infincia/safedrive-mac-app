@@ -139,9 +139,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 Crashlytics.sharedInstance().crash()
             }
             
-            let dbURL: NSURL = groupURL.URLByAppendingPathComponent("sync.realm")
             self.serviceManager = ServiceManager.sharedServiceManager
             self.serviceManager.unloadService()
+
+            let dbURL = groupURL.URLByAppendingPathComponent("sync.realm")
+            let newdbURL = dbURL.URLByAppendingPathExtension("new")
+            
             let config = Realm.Configuration(
                 path: dbURL.path,
                 // Set the new schema version. This must be greater than the previously used
@@ -168,10 +171,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             
             Realm.Configuration.defaultConfiguration = config
             
-            guard let _ = try? Realm() else {
-                SDLog("failed to create migrated realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
+            autoreleasepool {
+                let fileManager = NSFileManager.defaultManager()
+                
+                do {
+                    try fileManager.removeItemAtURL(newdbURL)
+                }
+                catch {
+                    // ignored, file may not exist at all, but if it does and we can't remove it we'll crash next and get a report
+                }
+                let realm = try! Realm(path: dbURL.path!)
+                try! realm.writeCopyToPath(newdbURL.path!)
+                try! fileManager.removeItemAtURL(dbURL)
+                try! fileManager.moveItemAtURL(newdbURL, toURL: dbURL)
             }
 
             self.serviceManager.deployService()
