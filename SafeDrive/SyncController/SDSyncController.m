@@ -34,13 +34,14 @@
     }];
     
     NSString *host = [serverURL host];
-    //unused NSNumber *port = [serverURL port];
+    NSNumber *port = [serverURL port];
     NSString *user = [serverURL user];
     NSString *serverPath = [serverURL path];
     NSString *machineDirectory = [serverPath stringByDeletingLastPathComponent];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NMSSHSession *session = [NMSSHSession connectToHost:host
+                                                       port:port.integerValue
                                                withUsername:user];
         
         if (session.isConnected) {
