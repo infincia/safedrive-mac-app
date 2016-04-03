@@ -58,16 +58,16 @@ class ServiceManager: NSObject {
                 try NSFileManager.defaultManager().removeItemAtURL(launchAgentDestinationURL)
             }
             catch {
-                SDErrorHandlerReport(((error as Any) as! NSError))
                 SDLog("Error removing old launch agent: \(error)")
+                SDErrorHandlerReport(((error as Any) as! NSError))
             }
         }
         do {
             try fileManager.copyItemAtURL(launchAgentSourceURL, toURL: launchAgentDestinationURL)
         }
         catch {
-            SDErrorHandlerReport(((error as Any) as! NSError))
             SDLog("Error copying launch agent: \(error)")
+            SDErrorHandlerReport(((error as Any) as! NSError))
         }
 
         // copy background service to ~/Library/Application Support/SafeDrive/
@@ -75,8 +75,8 @@ class ServiceManager: NSObject {
             try fileManager.createDirectoryAtURL(safeDriveApplicationSupportURL, withIntermediateDirectories: true, attributes: nil)
         }
         catch {
-            SDErrorHandlerReport(((error as Any) as! NSError))
             SDLog("Error creating support directory: \(error)")
+            SDErrorHandlerReport(((error as Any) as! NSError))
         }
 
         if fileManager.fileExistsAtPath(serviceDestinationURL.path!) {
@@ -84,16 +84,16 @@ class ServiceManager: NSObject {
                 try fileManager.removeItemAtURL(serviceDestinationURL)
             }
             catch {
-                SDErrorHandlerReport(((error as Any) as! NSError))
                 SDLog("Error removing old service: \(error)")
+                SDErrorHandlerReport(((error as Any) as! NSError))
             }
         }
         do {
             try fileManager.copyItemAtURL(serviceSourceURL, toURL: serviceDestinationURL)
         }
         catch {
-            SDErrorHandlerReport(((error as Any) as! NSError))
             SDLog("Error copying service: \(error)")
+            SDErrorHandlerReport(((error as Any) as! NSError))
         }
 
     }
