@@ -318,7 +318,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             return ""
         }
         if item is Machine {
-            let syncFolders = realm.objects(SyncFolder).filter("machine == %@", self.mac)
+            let syncFolders = realm.objects(SyncFolder).filter("machine == %@", self.mac).sorted("name")
             return syncFolders[index]
         }
         return self.mac
