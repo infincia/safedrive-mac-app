@@ -12,7 +12,7 @@ import Realm
 
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol, SDAccountProtocol {
+class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol, SDAccountProtocol, CrashlyticsDelegate {
     private var dropdownMenuController: DropdownController!
     private var accountWindowController: AccountWindowController!
     private var preferencesWindowController: PreferencesWindowController!
@@ -31,6 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         NSUserDefaults.standardUserDefaults().registerDefaults(["NSApplicationCrashOnExceptions": true])
+        Crashlytics.sharedInstance().delegate = self
         Fabric.with([Crashlytics.self])
         
         /*
@@ -246,6 +247,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     }
     
     func didReceiveAccountStatus(notification: NSNotification) {
+    }
+    
+    // MARK: CrashlyticsDelegate
+    
+    func crashlyticsDidDetectReportForLastExecution(report: CLSReport, completionHandler: (Bool) -> Void) {
+        //
+        // always submit the report to Crashlytics
+        completionHandler(true)
+        
+        // show an alert telling the user a crash report was generated, allow them to opt out of seeing more alerts
+        CrashAlert.show()
+        
     }
     
 }
