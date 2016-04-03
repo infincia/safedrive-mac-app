@@ -270,6 +270,14 @@
         else if ([errorString rangeOfString:@"Host key verification failed"].length > 0) {
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorHostKeyVerificationFailed userInfo:@{NSLocalizedDescriptionKey: @"Warning: server key verification failed!"}];
         }
+        else if ([errorString rangeOfString:@"differs from the key for the IP address"].length > 0) {
+            
+            // silence host key mismatch for now
+            // example: Warning: the ECDSA host key for 'sftp-client.safedrive.io' differs from the key for the IP address '185.104.180.61'
+            //NSString *msg = [NSString stringWithFormat:@"Host key mismatch"];
+            
+            //error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorHostFingerprintChanged userInfo:@{NSLocalizedDescriptionKey: msg}];
+        }
         else {
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
             /*
