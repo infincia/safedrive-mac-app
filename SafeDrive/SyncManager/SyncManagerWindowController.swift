@@ -215,9 +215,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last else {
                         return
                     }
-                    let syncFolders = realm.objects(SyncFolder)
                     
-                    let syncFolder = syncFolders.filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
+                    let syncFolder = realm.objects(SyncFolder).filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
                     let syncTasks = realm.objects(SyncTask).filter("syncFolder == %@", syncFolder)
                     
                     try! realm.write {
