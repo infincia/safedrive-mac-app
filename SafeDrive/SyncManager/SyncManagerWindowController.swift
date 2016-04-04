@@ -236,7 +236,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                         alert.runModal()
                 })
             }, failure: { (error) in
-                //SDErrorHandlerReport(error)
+                SDErrorHandlerReport(error)
                 self.spinner.stopAnimation(self)
                 let alert: NSAlert = NSAlert()
                 alert.messageText = NSLocalizedString("Error moving folder to Storage", comment: "")
