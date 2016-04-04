@@ -32,7 +32,11 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
     
     override func windowDidLoad() {
         super.windowDidLoad()
-    
+        
+        let window = self.window as! FlatWindow
+        
+        window.keepOnTop = true
+        
         self.passwordField.focusRingType = .None
         
         // reset error field to empty before display
