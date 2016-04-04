@@ -84,7 +84,6 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         }
         
         self.token = realm.objects(SyncFolder).addNotificationBlock { results, error in
-            assert(NSThread.isMainThread(), "Not main thread!!!")
             self.reload()
         }
         
