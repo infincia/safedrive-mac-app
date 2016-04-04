@@ -53,8 +53,12 @@
             if (session.isAuthorized) {
                 NMSFTP *sftp = [NMSFTP connectWithSession:session];
                 switch (op) {
-                    case SDSFTPOperationMoveFolder:
-                        if ([sftp moveItemAtPath:serverPath toPath:SDDefaultRsyncPath]) {
+                    case SDSFTPOperationMoveFolder: {
+                        NSURL *storageDir = [NSURL URLWithString:@"/storage/Storage/"];
+                        NSURL *destinationDir = [storageDir URLByAppendingPathComponent:serverURL.lastPathComponent isDirectory:YES];
+                        SDLog(@"Moving SyncFolder %@ to %@", serverPath, destinationDir.path);
+
+                        if ([sftp moveItemAtPath:serverPath toPath:destinationDir.path]) {
                             dispatch_sync(dispatch_get_main_queue(), ^{
                                 successBlock();
                             });
@@ -69,6 +73,7 @@
                             });
                         }
                         break;
+                    }
                     case SDSFTPOperationCreateFolder:
                         if ([sftp directoryExistsAtPath:machineDirectory]) {
                             dispatch_sync(dispatch_get_main_queue(), ^{
