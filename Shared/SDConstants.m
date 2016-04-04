@@ -10,6 +10,9 @@ NSString *const SDDefaultVolumeName = @"SafeDrive";
 NSString *const SDDefaultServerPath = @"/storage";
 NSInteger const SDDefaultServerPort = 22;
 
+NSString *const SDBuildVersionLastKey = @"SDBuildVersionLastKey";
+
+
 #pragma mark - NSUserDefaults keys
 
 NSString *const SDCurrentVolumeNameKey = @"currentVolumeName";

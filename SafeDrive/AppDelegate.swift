@@ -28,6 +28,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     
     var CFBundleVersion = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as! String
 
+    let SDBuildVersionLast = NSUserDefaults.standardUserDefaults().integerForKey(SDBuildVersionLastKey)
+
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         NSUserDefaults.standardUserDefaults().registerDefaults(["NSApplicationCrashOnExceptions": true])
@@ -39,6 +41,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         SDLog("SafeDrive build \(CFBundleVersion)")
 
         
+        if Int(CFBundleVersion)! < SDBuildVersionLast {
+            let alert: NSAlert = NSAlert()
+            alert.messageText = "Unsupported downgrade"
+            alert.addButtonWithTitle("Quit")
+            alert.informativeText = "Your currently installed version of SafeDrive is older than the previously installed version.\n\nThis is unsupported and can cause data loss or crashes.\n\nPlease reinstall the newest version available."
+
+            alert.runModal()
+            NSApp.terminate(nil)
+        }
+        NSUserDefaults.standardUserDefaults().setInteger(Int(CFBundleVersion)!, forKey: SDBuildVersionLastKey)
+
         PFMoveToApplicationsFolderIfNecessary()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration(_:)), name: SDApplicationShouldFinishConfiguration, object: nil)

@@ -12,6 +12,8 @@ FOUNDATION_EXPORT NSString *const SDDefaultVolumeName;
 FOUNDATION_EXPORT NSString *const SDDefaultServerPath;
 FOUNDATION_EXPORT NSInteger const SDDefaultServerPort;
 
+FOUNDATION_EXPORT NSString *const SDBuildVersionLastKey;
+
 #pragma mark - NSUserDefaults keys
 
 FOUNDATION_EXPORT NSString *const SDCurrentVolumeNameKey;
