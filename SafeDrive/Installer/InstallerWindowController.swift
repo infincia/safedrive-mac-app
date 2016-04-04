@@ -36,6 +36,11 @@ class InstallerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     }
     
     override func windowDidLoad() {
+        
+        let window = self.window as! FlatWindow
+        
+        window.keepOnTop = true
+        
         self.checkDependencies()
     }
 
