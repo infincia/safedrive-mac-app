@@ -57,8 +57,25 @@
                         NSURL *storageDir = [NSURL URLWithString:@"/storage/Storage/"];
                         NSURL *destinationDir = [storageDir URLByAppendingPathComponent:serverURL.lastPathComponent isDirectory:YES];
                         SDLog(@"Moving SyncFolder %@ to %@", serverPath, destinationDir.path);
-
-                        if ([sftp moveItemAtPath:serverPath toPath:destinationDir.path]) {
+                        if ([sftp fileExistsAtPath:destinationDir.path]) {
+                            NSString *msg = [NSString stringWithFormat:@"SFTP: File with conflicting name found: %@", serverURL.lastPathComponent];
+                            SDLog(msg);
+                            NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSFTPOperationFailure userInfo:@{NSLocalizedDescriptionKey: msg}];
+                            
+                            dispatch_sync(dispatch_get_main_queue(), ^{
+                                failureBlock(error);
+                            });
+                        }
+                        else if ([sftp directoryExistsAtPath:destinationDir.path]) {
+                            NSString *msg = [NSString stringWithFormat:@"SFTP: Folder already exists: %@", serverURL.lastPathComponent];
+                            SDLog(msg);
+                            NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSFTPOperationFailure userInfo:@{NSLocalizedDescriptionKey: msg}];
+                            
+                            dispatch_sync(dispatch_get_main_queue(), ^{
+                                failureBlock(error);
+                            });
+                        }
+                        else if ([sftp moveItemAtPath:serverPath toPath:destinationDir.path]) {
                             dispatch_sync(dispatch_get_main_queue(), ^{
                                 successBlock();
                             });
