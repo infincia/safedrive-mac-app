@@ -10,7 +10,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT NSString *const SDDefaultVolumeName;
 FOUNDATION_EXPORT NSString *const SDDefaultServerPath;
-FOUNDATION_EXPORT NSString *const SDDefaultServerHostname;
 FOUNDATION_EXPORT NSInteger const SDDefaultServerPort;
 
 #pragma mark - NSUserDefaults keys
