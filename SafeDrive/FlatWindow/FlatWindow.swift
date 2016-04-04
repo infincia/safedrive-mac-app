@@ -29,7 +29,6 @@ class FlatWindow: NSWindow {
     }
     
     override func awakeFromNib() {
-        self.level = Int(CGWindowLevelForKey(CGWindowLevelKey.StatusWindowLevelKey))
         self.opaque = false
         self.closeButton.image = NSImage(named: NSImageNameStopProgressTemplate)
         self.closeButton.bordered = false
