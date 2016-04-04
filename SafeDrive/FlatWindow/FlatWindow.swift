@@ -19,6 +19,18 @@ class FlatWindowBackgroundView: NSImageView {
 
 class FlatWindow: NSWindow {
     var closeButton = NSButton(frame: NSZeroRect)
+    
+    var _keepOnTop = false
+    
+    var keepOnTop: Bool {
+        get {
+            return _keepOnTop
+        }
+        set (newValue) {
+            _keepOnTop = newValue
+            self.level = Int(CGWindowLevelForKey(CGWindowLevelKey.StatusWindowLevelKey))
+        }
+    }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
