@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     private var installWindowController: InstallerWindowController?
 
     
-    var CFBundleVersion = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as! String
+    var CFBundleVersion = Int((NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]) as! String)!
 
     let SDBuildVersionLast = NSUserDefaults.standardUserDefaults().integerForKey(SDBuildVersionLastKey)
 
@@ -41,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         SDLog("SafeDrive build \(CFBundleVersion)")
 
         
-        if Int(CFBundleVersion)! < SDBuildVersionLast {
+        if CFBundleVersion < SDBuildVersionLast {
             let alert: NSAlert = NSAlert()
             alert.messageText = "Unsupported downgrade"
             alert.addButtonWithTitle("Quit")
@@ -50,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             alert.runModal()
             NSApp.terminate(nil)
         }
-        NSUserDefaults.standardUserDefaults().setInteger(Int(CFBundleVersion)!, forKey: SDBuildVersionLastKey)
+        NSUserDefaults.standardUserDefaults().setInteger(CFBundleVersion, forKey: SDBuildVersionLastKey)
 
         PFMoveToApplicationsFolderIfNecessary()
         
