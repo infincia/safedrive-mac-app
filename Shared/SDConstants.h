@@ -122,6 +122,7 @@ typedef NS_ENUM(NSInteger, SDSSHError) {
     SDSSHErrorDirectoryMissing          = 1005,
     SDSSHErrorRemoteEnvironment         = 1016,
     SDSSHErrorSFTPOperationFailure      = 1017,
+    SDSSHErrorSFTPOperationFolderConflict = 1018
 
 };
 

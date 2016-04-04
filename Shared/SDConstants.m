@@ -95,6 +95,8 @@ NSString * _Nonnull SDErrorToString(NSError *error) {
              return @"SDSSHErrorRemoteEnvironment";
          case SDSSHErrorSFTPOperationFailure:
              return @"SDSSHErrorSFTPOperationFailure";
+         case SDSSHErrorSFTPOperationFolderConflict:
+             return @"SDSSHErrorSFTPOperationFolderConflict";
 
      }
     

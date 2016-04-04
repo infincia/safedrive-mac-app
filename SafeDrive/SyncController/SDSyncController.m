@@ -60,7 +60,7 @@
                         if ([sftp fileExistsAtPath:destinationDir.path]) {
                             NSString *msg = [NSString stringWithFormat:@"SFTP: File with conflicting name found: %@", serverURL.lastPathComponent];
                             SDLog(msg);
-                            NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSFTPOperationFailure userInfo:@{NSLocalizedDescriptionKey: msg}];
+                            NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSFTPOperationFolderConflict userInfo:@{NSLocalizedDescriptionKey: msg}];
                             
                             dispatch_sync(dispatch_get_main_queue(), ^{
                                 failureBlock(error);
@@ -69,7 +69,7 @@
                         else if ([sftp directoryExistsAtPath:destinationDir.path]) {
                             NSString *msg = [NSString stringWithFormat:@"SFTP: Folder already exists: %@", serverURL.lastPathComponent];
                             SDLog(msg);
-                            NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSFTPOperationFailure userInfo:@{NSLocalizedDescriptionKey: msg}];
+                            NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSFTPOperationFolderConflict userInfo:@{NSLocalizedDescriptionKey: msg}];
                             
                             dispatch_sync(dispatch_get_main_queue(), ^{
                                 failureBlock(error);
