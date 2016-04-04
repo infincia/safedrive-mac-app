@@ -212,9 +212,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                         Crashlytics.sharedInstance().crash()
                         return
                     }
-                    guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last else {
-                        return
-                    }
+                    
+                    let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last!
                     
                     let syncFolder = realm.objects(SyncFolder).filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
                     let syncTasks = realm.objects(SyncTask).filter("syncFolder == %@", syncFolder)
