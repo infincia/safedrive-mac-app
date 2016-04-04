@@ -149,9 +149,35 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         let button: NSButton = sender as! NSButton
         let uniqueID: Int = button.tag
         SDLog("Deleting sync folder ID: %lu", uniqueID)
-        self.spinner.startAnimation(self)
-        self.sharedSafedriveAPI.deleteSyncFolder(uniqueID, success: {() -> Void in
+        let alert = NSAlert()
+        alert.addButtonWithTitle("Cancel")
+        alert.addButtonWithTitle("Move to Storage folder")
+        // built on SFTP's rmdir command, but that doesn't work unless the dir is empty. Disabled for now.
+        //alert.addButtonWithTitle("Delete")
+
+        alert.messageText = "Stop syncing this folder?"
+        alert.informativeText = "If you remove a sync folder from your account, the remote files will be moved to your Storage folder"
+        alert.alertStyle = .InformationalAlertStyle
+        
+        alert.beginSheetModalForWindow(self.window!) { (response) in
             
+            var op: SDSFTPOperation
+            switch response {
+            case NSAlertFirstButtonReturn:
+                print("Cancel")
+                return
+            case NSAlertSecondButtonReturn:
+                op = .MoveFolder
+                print("Move")
+                break
+            case NSAlertThirdButtonReturn:
+                op = .DeleteFolder
+                print("Delete")
+                break
+            default:
+                return
+            }
+            self.spinner.startAnimation(self)
             guard let realm = try? Realm() else {
                 SDLog("failed to create realm!!!")
                 Crashlytics.sharedInstance().crash()
@@ -162,22 +188,63 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             }
             let syncFolders = realm.objects(SyncFolder)
             
-            let syncFolder = syncFolders.filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine)
+            let syncFolder = syncFolders.filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
             
-            try! realm.write {
-                realm.delete(syncFolder)
-            }
-            self.reload()
-            self.spinner.stopAnimation(self)
-        }, failure: {(apiError: NSError) -> Void in
-            SDErrorHandlerReport(apiError)
-            self.spinner.stopAnimation(self)
-            let alert: NSAlert = NSAlert()
-            alert.messageText = NSLocalizedString("Error removing folder from your account", comment: "")
-            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
-            alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
-            alert.runModal()
-        })
+            let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
+            let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(syncFolder.machine!.name!, isDirectory: true)
+            let remoteFolder: NSURL = machineFolder.URLByAppendingPathComponent(syncFolder.name!, isDirectory: true)
+            let urlComponents: NSURLComponents = NSURLComponents()
+            urlComponents.user = self.accountController.internalUserName
+            urlComponents.password = self.accountController.password
+            urlComponents.host = self.accountController.remoteHost
+            urlComponents.path = remoteFolder.path
+            urlComponents.port = self.accountController.remotePort
+            let remote: NSURL = urlComponents.URL!
+            
+            
+            let syncController = SDSyncController()
+            syncController.uniqueID = uniqueID
+            syncController.SFTPOperation(op, remoteDirectory: remote, password: self.accountController.password, success: { 
+                self.sharedSafedriveAPI.deleteSyncFolder(uniqueID, success: {() -> Void in
+                    
+                    guard let realm = try? Realm() else {
+                        SDLog("failed to create realm!!!")
+                        Crashlytics.sharedInstance().crash()
+                        return
+                    }
+                    guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last else {
+                        return
+                    }
+                    let syncFolders = realm.objects(SyncFolder)
+                    
+                    let syncFolder = syncFolders.filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
+                    let syncTasks = realm.objects(SyncTask).filter("syncFolder == %@", syncFolder)
+                    
+                    try! realm.write {
+                        realm.delete(syncFolder)
+                        realm.delete(syncTasks)
+                    }
+                    self.reload()
+                    self.spinner.stopAnimation(self)
+                    }, failure: {(apiError: NSError) -> Void in
+                        SDErrorHandlerReport(apiError)
+                        self.spinner.stopAnimation(self)
+                        let alert: NSAlert = NSAlert()
+                        alert.messageText = NSLocalizedString("Error removing folder from your account", comment: "")
+                        alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                        alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
+                        alert.runModal()
+                })
+            }, failure: { (error) in
+                //SDErrorHandlerReport(error)
+                self.spinner.stopAnimation(self)
+                let alert: NSAlert = NSAlert()
+                alert.messageText = NSLocalizedString("Error removing folder from your account", comment: "")
+                alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
+                alert.runModal()
+            })
+        }
     }
     
     @IBAction func readSyncFolders(sender: AnyObject) {
