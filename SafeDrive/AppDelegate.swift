@@ -34,42 +34,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         Crashlytics.sharedInstance().delegate = self
         Fabric.with([Crashlytics.self])
         
-        /*
-        var dateFormatter: NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMM d yyyy"
-        var localeUS: NSLocale = NSLocale(localeIdentifier: "en_US")
-        dateFormatter.locale = localeUS
-        var compileDate: NSDate = dateFormatter.dateFromString(String.stringWithUTF8String(__DATE__))
-        var components: NSDateComponents = NSCalendar.currentCalendar().components(NSWeekCalendarUnit, fromDate: compileDate, toDate: NSDate(), options: 0)
-
-        // Expired after 4 weeks
-        if components.week() > 4 {
-            var alert: NSAlert = NSAlert()
-            alert.messageText = "This beta of SafeDrive has expired."
-            alert.addButtonWithTitle("OK")
-            alert.informativeText = "Please obtain a new version from safedrive.io"
-            if alert.runModal() {
-                NSApp.terminate(nil)
-            }
-        }
-        else {
-            var alert: NSAlert = NSAlert()
-            alert.messageText = "This is a beta build of SafeDrive."
-            alert.addButtonWithTitle("OK")
-            var weekComponent: NSDateComponents = NSDateComponents()
-            weekComponent.week = 4
-            var theCalendar: NSCalendar = NSCalendar.currentCalendar()
-            var expirationDate: NSDate = theCalendar.dateByAddingComponents(weekComponent, toDate: compileDate, options: 0)
-            alert.informativeText = "It will expire on \(expirationDate)"
-            if alert.runModal() {
-                
-            }
-        }
-
-        */
-        
-        
-        
         // initialize error handler, from this point on SDLog() and SDErrorHandlerReport() should be safe to use
         SDErrorHandlerInitialize()
         SDLog("SafeDrive build \(CFBundleVersion)")
