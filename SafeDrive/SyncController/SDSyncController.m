@@ -314,22 +314,22 @@
     outputPipeHandle.readabilityHandler = ^( NSFileHandle *handle ) {
       
         NSString *outputString = [[NSString alloc] initWithData:[handle availableData] encoding:NSUTF8StringEncoding];
-        SDLog(@"Rsync Task stdout output: %@", outputString);
-        NSString *progressRegex  = @"to-chk=([0-9]+)/([0-9]+)";
+        NSString *fullRegex  = @"^\\s*([0-9,]+)\\s+([0-9%]+)\\s+([0-9\\.A-Za-z/]+)";
         // example: "              0   0%    0.00kB/s    0:00:00 (xfr#0, to-chk=0/11)"
-        if ([outputString isMatchedByRegex:progressRegex]) {
-            NSArray *matches = [outputString arrayOfCaptureComponentsMatchedByRegex:progressRegex];
+        if ([outputString isMatchedByRegex:fullRegex]) {
+            NSArray *matches = [outputString arrayOfCaptureComponentsMatchedByRegex:fullRegex];
             if (matches.count == 1) {
                 NSArray *capturedValues = matches[0];
-                if (capturedValues.count == 3) {
-                    NSString *current = capturedValues[1];
-                    NSString *total = capturedValues[2];
-                    double percentage = (current.doubleValue / total.doubleValue) * 100;
+                if (capturedValues.count >= 3) {
+                    NSString *percent = capturedValues[2];
                     dispatch_async(self.syncProgressQueue, ^{
-                        progressBlock(percentage);
+                        progressBlock(percent.doubleValue);
                     });
                 }
             }
+        }
+        else {
+            SDLog(@"Rsync Task stdout output: %@", outputString);
         }
 
     };
