@@ -106,7 +106,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         let promptString: String = NSLocalizedString("Select", comment: "Button title")
         panel.prompt = promptString
         
-        panel.beginWithCompletionHandler({(result: Int) -> Void in
+        panel.beginSheetModalForWindow(self.window!) { (result)  in
             if result == NSFileHandlingPanelOKButton {
                 self.spinner.startAnimation(self)
                 
@@ -141,7 +141,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     alert.runModal()
                 })
             }
-        })
+        }
     }
     
     @IBAction func removeSyncFolder(sender: AnyObject) {
