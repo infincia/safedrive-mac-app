@@ -92,7 +92,7 @@
 
     self.sshfsTask = [[NSTask alloc] init];
 
-    NSString *sshfsPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"sshfs-2.5.0"];
+    NSString *sshfsPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"sshfs-2.7"];
     
     if (sshfsPath != nil) {
         [self.sshfsTask setLaunchPath:sshfsPath];
