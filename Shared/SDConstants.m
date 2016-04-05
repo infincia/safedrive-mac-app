@@ -123,6 +123,8 @@ NSString * _Nonnull SDErrorToString(NSError *error) {
              return @"SDSystemErrorSSHFSMissing";
          case SDSystemErrorAskpassMissing:
              return @"SDSystemErrorAskpassMissing";
+         case SDSystemErrorRsyncMissing:
+             return @"SDSystemErrorRsyncMissing";
      }
      
      
