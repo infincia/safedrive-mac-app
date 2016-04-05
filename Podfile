@@ -10,6 +10,7 @@ def shared_pods
     pod 'Fabric', '1.6.7'
     pod 'Crashlytics', '3.7.0'
     pod 'SwiftDate', '1.2'
+    pod 'RegexKitLite', '4.0'
 end
 
 target 'safedriveaskpass' do
