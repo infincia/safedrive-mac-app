@@ -7,12 +7,14 @@
 
 #import <NMSSH/NMSSH.h>
 
+#import <RegexKitLite/RegexKitLite.h>
+
 @interface SDSyncController ()
 
 @property NSTask *syncTask;
 @property BOOL syncFailure;
 @property BOOL syncTerminated;
-
+@property dispatch_queue_t syncProgressQueue;
 @end
 
 @implementation SDSyncController
@@ -24,6 +26,7 @@
         self.syncFailure = NO;
         self.uniqueID = -1;
         self.syncTerminated = NO;
+        self.syncProgressQueue = dispatch_queue_create("io.safedrive.SafeDrive.syncprogress", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
@@ -301,9 +304,28 @@
 
     NSPipe *outputPipe = [NSPipe pipe];
     NSFileHandle *outputPipeHandle = [outputPipe fileHandleForReading];
+
     outputPipeHandle.readabilityHandler = ^( NSFileHandle *handle ) {
+      
         NSString *outputString = [[NSString alloc] initWithData:[handle availableData] encoding:NSUTF8StringEncoding];
         SDLog(@"Rsync Task stdout output: %@", outputString);
+        NSString *progressRegex  = @"to-chk=([0-9]+)/([0-9]+)";
+        // example: "              0   0%    0.00kB/s    0:00:00 (xfr#0, to-chk=0/11)"
+        if ([outputString isMatchedByRegex:progressRegex]) {
+            NSArray *matches = [outputString arrayOfCaptureComponentsMatchedByRegex:progressRegex];
+            if (matches.count == 1) {
+                NSArray *capturedValues = matches[0];
+                if (capturedValues.count == 3) {
+                    NSString *current = capturedValues[1];
+                    NSString *total = capturedValues[2];
+                    double percentage = (current.doubleValue / total.doubleValue) * 100;
+                    dispatch_async(self.syncProgressQueue, ^{
+                        progressBlock(percentage);
+                    });
+                }
+            }
+        }
+
     };
     [self.syncTask setStandardOutput:outputPipe];
 
