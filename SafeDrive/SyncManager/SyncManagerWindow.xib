@@ -12,6 +12,7 @@
                 <outlet property="lastSyncField" destination="j52-br-Lit" id="cGX-9a-IwA"/>
                 <outlet property="nextSyncField" destination="xA0-4Y-iCQ" id="hMb-Bc-1Ra"/>
                 <outlet property="pathIndicator" destination="xsK-s6-O6j" id="M9y-9C-eUU"/>
+                <outlet property="progress" destination="WgV-4L-VxV" id="l7d-ZH-xCr"/>
                 <outlet property="scheduleSelection" destination="yfP-H5-Voh" id="pgA-sg-utP"/>
                 <outlet property="spinner" destination="Zkz-Sf-qG1" id="RBj-RB-O01"/>
                 <outlet property="syncFailureInfoButton" destination="l64-Ur-RNY" id="ggS-Xq-HdG"/>
@@ -144,7 +145,7 @@
                                     </buttonCell>
                                 </button>
                                 <pathControl verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xsK-s6-O6j">
-                                    <rect key="frame" x="12" y="127" width="290" height="20"/>
+                                    <rect key="frame" x="12" y="117" width="290" height="20"/>
                                     <pathCell key="cell" controlSize="small" selectable="YES" alignment="left" id="FuL-jj-qst">
                                         <font key="font" metaFont="smallSystem"/>
                                         <url key="url" string="file:///"/>
@@ -159,6 +160,9 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
+                                <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="WgV-4L-VxV">
+                                    <rect key="frame" x="15" y="144" width="287" height="12"/>
+                                </progressIndicator>
                             </subviews>
                         </view>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>

@@ -13,6 +13,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBOutlet var syncListView: NSOutlineView!
     @IBOutlet var spinner: NSProgressIndicator!
     
+    @IBOutlet var progress: NSProgressIndicator!
+
     @IBOutlet var pathIndicator: NSPathControl!
 
     @IBOutlet var lastSyncField: NSTextField!
@@ -37,8 +39,10 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     private var syncScheduler = SyncScheduler.sharedSyncScheduler
     
-    private var token: RealmSwift.NotificationToken?
+    private var syncFolderToken: RealmSwift.NotificationToken?
     
+    private var syncTaskToken: RealmSwift.NotificationToken?
+
     private var mac: Machine!
     
     private var uniqueClientID: String!
@@ -83,7 +87,11 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             return
         }
         
-        self.token = realm.objects(SyncFolder).addNotificationBlock { results, error in
+        self.syncFolderToken = realm.objects(SyncFolder).addNotificationBlock { results, error in
+            self.reload()
+        }
+        
+        self.syncTaskToken = realm.objects(SyncTask).addNotificationBlock { results, error in
             self.reload()
         }
         
@@ -520,7 +528,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 Crashlytics.sharedInstance().crash()
                 return
             }
-            
+            self.progress.maxValue = 100.0
+            self.progress.minValue = 0.0
             let syncTasks = realm.objects(SyncTask)
 
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@", syncItem).sorted("syncDate").last {
@@ -530,6 +539,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.syncFailureInfoButton.hidden = true
                     self.syncFailureInfoButton.enabled = false
                     self.syncFailureInfoButton.toolTip = ""
+                    self.progress.startAnimation(nil)
+
+                    self.progress.doubleValue = syncTask.progress
                 }
                 else if syncTask.success {
                     self.syncStatusButton.image = NSImage(named: NSImageNameStatusAvailable)
@@ -537,6 +549,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.syncFailureInfoButton.hidden = true
                     self.syncFailureInfoButton.enabled = false
                     self.syncFailureInfoButton.toolTip = ""
+                    self.progress.stopAnimation(nil)
+
+                    self.progress.doubleValue = 100.0
                 }
                 else {
                     self.syncStatusButton.image = NSImage(named: NSImageNameStatusUnavailable)
@@ -544,6 +559,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.syncFailureInfoButton.hidden = false
                     self.syncFailureInfoButton.enabled = true
                     self.syncFailureInfoButton.toolTip = NSLocalizedString("Last sync failed, click here for details", comment: "")
+                    self.progress.stopAnimation(nil)
+
+                    self.progress.doubleValue = 0.0
                 }
                 let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
                 failureView.message.stringValue = syncTask.message ?? ""
@@ -554,6 +572,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.syncFailureInfoButton.hidden = true
                 self.syncFailureInfoButton.enabled = false
                 self.syncFailureInfoButton.toolTip = nil
+                self.progress.stopAnimation(nil)
+                
+                self.progress.doubleValue = 0.0
             }
             
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
