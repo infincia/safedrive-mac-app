@@ -60,8 +60,7 @@
                         NSURL *storageDir = [NSURL URLWithString:@"/storage/Storage/"];
                         NSDate *now = [NSDate new];
                         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                        dateFormatter.dateStyle = NSDateFormatterShortStyle;
-                        dateFormatter.timeStyle = NSDateFormatterShortStyle;
+                        dateFormatter.dateFormat = @"yyyy-MM-dd@HH-mm-ss";
                         dateFormatter.locale = [NSLocale currentLocale];
                         NSString *dateString = [dateFormatter stringFromDate:now];
                         NSString *newName = [NSString stringWithFormat:@"%@ - %@", serverURL.lastPathComponent, dateString];
