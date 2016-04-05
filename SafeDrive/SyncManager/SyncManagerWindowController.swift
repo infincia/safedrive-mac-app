@@ -636,6 +636,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             components.minute = 0
             let calendar = NSCalendar.currentCalendar()
             self.syncTimePicker.dateValue = calendar.dateFromComponents(components)!
+            self.pathIndicator.URL = nil
 
         }
     }
