@@ -31,8 +31,6 @@ FOUNDATION_EXPORT NSString *const SDWebDomain;
 FOUNDATION_EXPORT NSString *const SDDefaultSSHFSPath;
 FOUNDATION_EXPORT NSString *const SDDefaultOSXFUSEFSPath;
 
-FOUNDATION_EXPORT NSString *const SDDefaultRsyncPath;
-
 #pragma mark - Keychain constants
 
 

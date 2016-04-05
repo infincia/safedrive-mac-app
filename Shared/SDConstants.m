@@ -24,10 +24,6 @@ NSString *const SDAPIDomainTesting = @"testing.safedrive.io";
 NSString *const SDAPIDomain = @"safedrive.io";
 NSString *const SDWebDomain = @"safedrive.io";
 
-#pragma mark - Common paths
-
-NSString *const SDDefaultRsyncPath = @"/usr/bin/rsync";
-
 #pragma mark - Keychain constants
 
 

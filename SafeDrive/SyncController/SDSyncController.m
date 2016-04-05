@@ -199,9 +199,18 @@
 #pragma mark - Create the subprocess to be configured below
 
     self.syncTask = [[NSTask alloc] init];
-
-    [self.syncTask setLaunchPath:SDDefaultRsyncPath];
-
+    
+    NSString *rsyncPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"rsync-3.1.2"];
+    
+    if (rsyncPath != nil) {
+        [self.syncTask setLaunchPath:rsyncPath];
+    }
+    else {
+        NSString *message = NSLocalizedString(@"Rsync missing, contact SafeDrive support", @"");
+        NSError *rsyncError = [NSError errorWithDomain:SDMountErrorDomain code:SDSystemErrorRsyncMissing userInfo:@{NSLocalizedDescriptionKey: message}];
+        failureBlock(localURL, rsyncError);
+        return;
+    }
 
 #pragma mark - Set custom environment variables for sshfs subprocess
 
