@@ -214,12 +214,16 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     
                     let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last!
                     
-                    let syncFolder = realm.objects(SyncFolder).filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
-                    let syncTasks = realm.objects(SyncTask).filter("syncFolder == %@", syncFolder)
+                    let syncTasks = realm.objects(SyncTask).filter("syncFolder.uniqueID == \(uniqueID)")
+
+                    try! realm.write {
+                        realm.delete(syncTasks)
+                    }
                     
+                    let syncFolder = realm.objects(SyncFolder).filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
+
                     try! realm.write {
                         realm.delete(syncFolder)
-                        realm.delete(syncTasks)
                     }
                     self.reload()
                     self.spinner.stopAnimation(self)
