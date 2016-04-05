@@ -126,9 +126,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 path: dbURL.path,
                 // Set the new schema version. This must be greater than the previously used
                 // version (if you've never set a schema version before, the version is 0).
-                schemaVersion: 7,
+                schemaVersion: 8,
                 migrationBlock: { migration, oldSchemaVersion in
-                    SDLog("Migrating db version \(oldSchemaVersion) to 7")
+                    SDLog("Migrating db version \(oldSchemaVersion) to 8")
                     migration.enumerate(Machine.className()) { oldObject, newObject in
                         if oldSchemaVersion < 6 {
                             migration.delete(newObject!)
