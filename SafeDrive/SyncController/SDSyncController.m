@@ -276,7 +276,7 @@
 
 
 #pragma mark - Set Rsync subprocess arguments
-    NSString *sshCommand = [NSString stringWithFormat:@"ssh -o StrictHostKeyChecking=no"];
+    NSString *sshCommand = [NSString stringWithFormat:@"ssh -o StrictHostKeyChecking=no -p %@", port];
     NSArray *commonArguments = @[@"-e", sshCommand, @"--delete", @"-rlptv", @"--info=progress2"];
     NSMutableArray *taskArguments = [NSMutableArray arrayWithArray:commonArguments];
 
