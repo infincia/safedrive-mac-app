@@ -31,6 +31,8 @@
 		AA1B5EF51CA1B55F005DCB81 /* RealmSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
 		AA278BFF1CA78E970088B03F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AA278BFE1CA78E970088B03F /* Credits.rtf */; };
+		AA2DAB251CB3293F00951762 /* rsync-3.1.2 in Resources */ = {isa = PBXBuildFile; fileRef = AA2DAB241CB3293F00951762 /* rsync-3.1.2 */; };
+		AA2DAB261CB32A6800951762 /* rsync-3.1.2 in Copy Files */ = {isa = PBXBuildFile; fileRef = AA2DAB241CB3293F00951762 /* rsync-3.1.2 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
@@ -171,6 +173,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				AA2DAB261CB32A6800951762 /* rsync-3.1.2 in Copy Files */,
 				AA76DC271C8787EE007B320E /* sshfs-2.5.0 in Copy Files */,
 				AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */,
 			);
@@ -237,6 +240,7 @@
 		AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/Mac/RealmSwift.framework; sourceTree = "<group>"; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncFailurePopoverView.swift; sourceTree = "<group>"; };
 		AA278BFE1CA78E970088B03F /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		AA2DAB241CB3293F00951762 /* rsync-3.1.2 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "rsync-3.1.2"; path = "Bundled Dependencies/rsync-3.1.2"; sourceTree = "<group>"; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
 		AA3168131A191B72006CC0EB /* SafeDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3168171A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -660,6 +664,7 @@
 		AA76DC241C8787AB007B320E /* Bundled Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				AA2DAB241CB3293F00951762 /* rsync-3.1.2 */,
 				AA76DC2A1C879B77007B320E /* Install OSXFUSE 2.8.pkg */,
 				AA76DC251C8787D6007B320E /* sshfs-2.5.0 */,
 			);
@@ -949,6 +954,7 @@
 				AA76DC2B1C879B77007B320E /* Install OSXFUSE 2.8.pkg in Resources */,
 				AA76DC291C879076007B320E /* InstallerWindow.xib in Resources */,
 				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
+				AA2DAB251CB3293F00951762 /* rsync-3.1.2 in Resources */,
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
 				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
 				AA278BFF1CA78E970088B03F /* Credits.rtf in Resources */,
