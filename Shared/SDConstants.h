@@ -26,11 +26,6 @@ FOUNDATION_EXPORT NSString *const SDAPIDomainTesting;
 FOUNDATION_EXPORT NSString *const SDAPIDomain;
 FOUNDATION_EXPORT NSString *const SDWebDomain;
 
-#pragma mark - Common paths
-
-FOUNDATION_EXPORT NSString *const SDDefaultSSHFSPath;
-FOUNDATION_EXPORT NSString *const SDDefaultOSXFUSEFSPath;
-
 #pragma mark - Keychain constants
 
 
@@ -245,7 +240,7 @@ typedef void(^SDAPICreateSyncFolderSuccessBlock)(NSInteger folderID);
 typedef void(^SDAPIReadSyncFoldersSuccessBlock)(NSArray<NSDictionary<NSString *, NSObject *>*> * _Nonnull folders);
 typedef void(^SDAPIDeleteSyncFoldersSuccessBlock)();
 
-typedef void(^SDSyncProgressBlock)(NSInteger progress);
+typedef void(^SDSyncProgressBlock)(double progress);
 typedef void(^SDSyncResultBlock)(NSURL * _Nonnull syncURL, NSError * _Nullable syncError);
 
 #pragma mark - Global functions
