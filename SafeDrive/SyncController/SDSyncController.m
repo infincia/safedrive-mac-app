@@ -58,7 +58,14 @@
                 switch (op) {
                     case SDSFTPOperationMoveFolder: {
                         NSURL *storageDir = [NSURL URLWithString:@"/storage/Storage/"];
-                        NSURL *destinationDir = [storageDir URLByAppendingPathComponent:serverURL.lastPathComponent isDirectory:YES];
+                        NSDate *now = [NSDate new];
+                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                        dateFormatter.dateStyle = NSDateFormatterShortStyle;
+                        dateFormatter.timeStyle = NSDateFormatterShortStyle;
+                        dateFormatter.locale = [NSLocale currentLocale];
+                        NSString *dateString = [dateFormatter stringFromDate:now];
+                        NSString *newName = [NSString stringWithFormat:@"%@ - %@", serverURL.lastPathComponent, dateString];
+                        NSURL *destinationDir = [storageDir URLByAppendingPathComponent:newName isDirectory:YES];
                         SDLog(@"Moving SyncFolder %@ to %@", serverPath, destinationDir.path);
                         if ([sftp fileExistsAtPath:destinationDir.path]) {
                             NSString *msg = [NSString stringWithFormat:@"SFTP: File with conflicting name found: %@", serverURL.lastPathComponent];
