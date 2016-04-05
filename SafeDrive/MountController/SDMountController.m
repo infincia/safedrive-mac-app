@@ -268,6 +268,12 @@
         else if ([outputString rangeOfString:@"failed to mount"].length > 0) {
             mountError = [NSError errorWithDomain:SDMountErrorDomain code:SDMountErrorMountFailed userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
         }
+        else if ([outputString rangeOfString:@"g_slice_set_config: assertion"].length > 0) {
+            /*
+             Ignore this, minor bug in sshfs use of glib
+             
+             */
+        }
         else {
             mountError = [NSError errorWithDomain:SDMountErrorDomain code:SDMountErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
             /*
