@@ -90,11 +90,14 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     private func disconnectVolume() {
         let volumeName: String = self.sharedSystemAPI.currentVolumeName
         SDLog("Dismounting volume: %@", volumeName)
-        self.mountController.unmountVolumeWithName(volumeName, success: { (mountURL: NSURL?, mountError: NSError?) -> Void in
-            //
-        }, failure: { (mountURL: NSURL, mountError: NSError) -> Void in
-            //
-        })
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+            self.mountController.unmountVolumeWithName(volumeName, success: { (mountURL: NSURL?, mountError: NSError?) -> Void in
+                //
+                }, failure: { (mountURL: NSURL, mountError: NSError) -> Void in
+                    //
+            })
+        }
+
     }
     
     // MARK: SDAccountProtocol
