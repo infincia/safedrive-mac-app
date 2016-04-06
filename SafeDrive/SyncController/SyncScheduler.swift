@@ -103,8 +103,6 @@ class SyncScheduler {
                 }
                 
                 let currentDate = NSDate()
-                //let folders = realm.objects(SyncFolder).filter("syncing == false")
-                //print("Checking \(folders.count) for sync: \(folders)")
                 
                 let components = NSDateComponents()
                 components.hour = currentDate.hour

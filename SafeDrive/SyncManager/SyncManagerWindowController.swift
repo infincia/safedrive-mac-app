@@ -173,15 +173,12 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             var op: SDSFTPOperation
             switch response {
             case NSAlertFirstButtonReturn:
-                print("Cancel")
                 return
             case NSAlertSecondButtonReturn:
                 op = .MoveFolder
-                print("Move")
                 break
             case NSAlertThirdButtonReturn:
                 op = .DeleteFolder
-                print("Delete")
                 break
             default:
                 return
