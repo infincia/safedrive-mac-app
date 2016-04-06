@@ -314,6 +314,7 @@
     outputPipeHandle.readabilityHandler = ^( NSFileHandle *handle ) {
       
         NSString *outputString = [[NSString alloc] initWithData:[handle availableData] encoding:NSUTF8StringEncoding];
+        NSString *whitespaceRegex  = @"^\\s+$";
         NSString *fullRegex  = @"^\\s*([0-9,]+)\\s+([0-9%]+)\\s+([0-9\\.A-Za-z/]+)";
         // example: "              0   0%    0.00kB/s    0:00:00 (xfr#0, to-chk=0/11)"
         if ([outputString isMatchedByRegex:fullRegex]) {
@@ -329,6 +330,9 @@
                     });
                 }
             }
+        }
+        else if ([outputString isMatchedByRegex:whitespaceRegex]) {
+            // skip all whitespace lines
         }
         else {
             SDLog(@"Rsync Task stdout output: %@", outputString);
