@@ -33,9 +33,9 @@
 
 -(void)SFTPOperation:(SDSFTPOperation)op remoteDirectory:(NSURL *)serverURL password:(NSString *)password success:(SDSuccessBlock)successBlock failure:(SDFailureBlock)failureBlock {
     NMSSHLogger *l = [NMSSHLogger sharedLogger];
-    l.logLevel = NMSSHLogLevelWarn;
+    l.logLevel = NMSSHLogLevelError;
     [l setLogBlock:^(NMSSHLogLevel level, NSString *format) {
-        SDLog(@"%@", format);
+        //SDLog(@"%@", format);
     }];
     
     NSString *host = [serverURL host];
