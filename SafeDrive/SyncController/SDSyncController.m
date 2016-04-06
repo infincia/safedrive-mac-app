@@ -391,6 +391,9 @@
             
             //error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorHostFingerprintChanged userInfo:@{NSLocalizedDescriptionKey: msg}];
         }
+        else if ([errorString rangeOfString:@"received SIGINT, SIGTERM, or SIGHUP"].length > 0) {
+            // silence signals
+        }
         else {
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
             /*
