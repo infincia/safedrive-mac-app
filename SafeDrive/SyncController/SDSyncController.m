@@ -402,8 +402,8 @@
              we actually need to handle and ignore the rest.
              
              */
-            // failureBlock(mountURL, mountError);
-            SDLog(@"Rsync Task stderr output: %@", errorString);
+            // failureBlock(localURL, mountError);
+            SDLog(@"Rsync: %@", errorString);
             return;
         }
         if (error) {
@@ -411,7 +411,7 @@
                 self.syncFailure = YES;
                 failureBlock(localURL, error);
             });
-            SDLog(@"Rsync task stderr: %@, %@", SDErrorToString(error), error.localizedDescription);
+            SDLog(@"Rsync: %@, %@", SDErrorToString(error), error.localizedDescription);
         }
     };
     [self.syncTask setStandardError:errorPipe];
