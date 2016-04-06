@@ -395,7 +395,7 @@
             error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSyncErrorUnknown userInfo:@{NSLocalizedDescriptionKey: @"An unknown error occurred, contact support"}];
             /*
              for the moment we don't want to call the failure block here, as
-             not everything that comes through stderr indicates a mount
+             not everything that comes through stderr indicates a sync
              failure.
              
              testing is required to discover and handle the stderr output that
