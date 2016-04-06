@@ -21,6 +21,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     @IBOutlet var nextSyncField: NSTextField!
     
+    @IBOutlet var syncProgressField: NSTextField!
+
     @IBOutlet var syncFailureInfoButton: NSButton!
 
     @IBOutlet var syncStatusButton: NSButton!
@@ -542,6 +544,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.progress.startAnimation(nil)
 
                     self.progress.doubleValue = syncTask.progress
+                    self.syncProgressField.stringValue = "\(syncTask.progress)% @ \(syncTask.bandwidth)"
+
                 }
                 else if syncTask.success {
                     self.syncStatusButton.image = NSImage(named: NSImageNameStatusAvailable)
@@ -552,6 +556,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.progress.stopAnimation(nil)
 
                     self.progress.doubleValue = 100.0
+                    self.syncProgressField.stringValue = ""
+
                 }
                 else {
                     self.syncStatusButton.image = NSImage(named: NSImageNameStatusUnavailable)
@@ -562,6 +568,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.progress.stopAnimation(nil)
 
                     self.progress.doubleValue = 0.0
+                    self.syncProgressField.stringValue = ""
+
                 }
                 let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
                 failureView.message.stringValue = syncTask.message ?? ""
@@ -575,6 +583,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.progress.stopAnimation(nil)
                 
                 self.progress.doubleValue = 0.0
+                
+                self.syncProgressField.stringValue = ""
             }
             
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
@@ -637,6 +647,8 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             let calendar = NSCalendar.currentCalendar()
             self.syncTimePicker.dateValue = calendar.dateFromComponents(components)!
             self.pathIndicator.URL = nil
+            self.progress.doubleValue = 0.0
+            self.syncProgressField.stringValue = ""
 
         }
     }
