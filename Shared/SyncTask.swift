@@ -26,6 +26,9 @@ class SyncTask: Object {
     // sync progress in percentage
     dynamic var progress: Double = 0.0
     
+    // sync bandwidth
+    dynamic var bandwidth: String = "0.00kB/s"
+    
     convenience required init(syncFolder: SyncFolder, syncDate: NSDate, uuid: String) {
         self.init()
         self.syncFolder = syncFolder
