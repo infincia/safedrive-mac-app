@@ -322,8 +322,10 @@
                 NSArray *capturedValues = matches[0];
                 if (capturedValues.count >= 3) {
                     NSString *percent = capturedValues[2];
+                    NSString *bandwidth = capturedValues[3];
+
                     dispatch_async(self.syncProgressQueue, ^{
-                        progressBlock(percent.doubleValue);
+                        progressBlock(percent.doubleValue, bandwidth);
                     });
                 }
             }

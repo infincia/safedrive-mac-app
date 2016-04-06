@@ -255,7 +255,7 @@ class SyncScheduler {
                 self.syncControllers.append(syncController)
             })
             SDLog("Syncing from \(localFolder.path!)/ to \(remote.path!)/")
-            syncController.startSyncTaskWithLocalURL(localFolder, serverURL: remote, password: self.accountController.password, restore: false, progress: { (percent) in
+            syncController.startSyncTaskWithLocalURL(localFolder, serverURL: remote, password: self.accountController.password, restore: false, progress: { (percent, bandwidth) in
                 // use for updating sync progress
                 // WARNING: this block may be called more often than once per second on a background serial queue, DO NOT block it for long
                 guard let realm = try? Realm() else {
@@ -265,7 +265,7 @@ class SyncScheduler {
                 }
                 
                 try! realm.write {
-                    realm.create(SyncTask.self, value: ["uuid": uuid.UUIDString, "progress": percent], update: true)
+                    realm.create(SyncTask.self, value: ["uuid": uuid.UUIDString, "progress": percent, "bandwidth": bandwidth], update: true)
                 }
             }, success: { (syncURL: NSURL, error: NSError?) -> Void in
                 SDLog("Sync finished for \(localFolder.path!)")

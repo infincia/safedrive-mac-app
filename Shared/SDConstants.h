@@ -240,7 +240,7 @@ typedef void(^SDAPICreateSyncFolderSuccessBlock)(NSInteger folderID);
 typedef void(^SDAPIReadSyncFoldersSuccessBlock)(NSArray<NSDictionary<NSString *, NSObject *>*> * _Nonnull folders);
 typedef void(^SDAPIDeleteSyncFoldersSuccessBlock)();
 
-typedef void(^SDSyncProgressBlock)(double progress);
+typedef void(^SDSyncProgressBlock)(double progress, NSString *bandwidth);
 typedef void(^SDSyncResultBlock)(NSURL * _Nonnull syncURL, NSError * _Nullable syncError);
 
 #pragma mark - Global functions
