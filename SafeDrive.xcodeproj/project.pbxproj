@@ -48,13 +48,13 @@
 		AA543C7B1BFC57B50008FB8B /* Status-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C751BFC57B50008FB8B /* Status-Icon.png */; };
 		AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */; };
 		AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */; };
+		AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */; };
 		AA5754051C7FFCC10040E8B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5754041C7FFCC10040E8B0 /* AppDelegate.swift */; };
 		AA5754071C7FFCC10040E8B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA5754061C7FFCC10040E8B0 /* Assets.xcassets */; };
 		AA57540A1C7FFCC10040E8B0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA5754081C7FFCC10040E8B0 /* MainMenu.xib */; };
 		AA5754101C8004660040E8B0 /* ServiceListenerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57540F1C8004660040E8B0 /* ServiceListenerDelegate.swift */; };
 		AA5754121C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */; };
 		AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */; };
-		AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5C1AA11BB26C6A006A0C8C /* SDAppXPCDelegate.m */; };
 		AA61F84B1C05356D00D992FE /* SDSyncController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA61F84A1C05356D00D992FE /* SDSyncController.m */; };
 		AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
@@ -262,6 +262,7 @@
 		AA543C751BFC57B50008FB8B /* Status-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Status-Icon.png"; sourceTree = "<group>"; };
 		AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Light.ttf"; sourceTree = "<group>"; };
 		AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
+		AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCDelegate.swift; path = SafeDrive/XPCHandlers/AppXPCDelegate.swift; sourceTree = SOURCE_ROOT; };
 		AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDriveService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5754041C7FFCC10040E8B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA5754061C7FFCC10040E8B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -272,8 +273,6 @@
 		AA5754131C80091F0040E8B0 /* SafeDriveService-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeDriveService-Bridging-Header.h"; sourceTree = "<group>"; };
 		AA5C1A9D1BB26C40006A0C8C /* SDServiceXPCRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDServiceXPCRouter.h; path = SafeDrive/XPCHandlers/SDServiceXPCRouter.h; sourceTree = SOURCE_ROOT; };
 		AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDServiceXPCRouter.m; path = SafeDrive/XPCHandlers/SDServiceXPCRouter.m; sourceTree = SOURCE_ROOT; };
-		AA5C1AA01BB26C6A006A0C8C /* SDAppXPCDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDAppXPCDelegate.h; path = SafeDrive/SDAppXPCDelegate.h; sourceTree = SOURCE_ROOT; };
-		AA5C1AA11BB26C6A006A0C8C /* SDAppXPCDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDAppXPCDelegate.m; path = SafeDrive/SDAppXPCDelegate.m; sourceTree = SOURCE_ROOT; };
 		AA61F8491C05356D00D992FE /* SDSyncController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncController.h; sourceTree = "<group>"; };
 		AA61F84A1C05356D00D992FE /* SDSyncController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncController.m; sourceTree = "<group>"; };
 		AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+next.swift"; path = "Shared/NSDate+next.swift"; sourceTree = "<group>"; };
@@ -627,8 +626,7 @@
 			children = (
 				AA5C1A9D1BB26C40006A0C8C /* SDServiceXPCRouter.h */,
 				AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */,
-				AA5C1AA01BB26C6A006A0C8C /* SDAppXPCDelegate.h */,
-				AA5C1AA11BB26C6A006A0C8C /* SDAppXPCDelegate.m */,
+				AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */,
 			);
 			name = XPC;
 			path = ServiceRouter;
@@ -1256,6 +1254,7 @@
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 				AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */,
+				AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */,
 				AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */,
 				AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */,
 				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,
@@ -1267,7 +1266,6 @@
 				AAB7D5D31CB06A62001F9A8E /* AccountWindowController.swift in Sources */,
 				AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */,
 				AAA88BC31C8267C0009BE1C7 /* ErrorHandler.swift in Sources */,
-				AA5C1AA21BB26C6A006A0C8C /* SDAppXPCDelegate.m in Sources */,
 				AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */,
 				AAB7D5D51CB09943001F9A8E /* CrashAlert.swift in Sources */,
 				AA61F84B1C05356D00D992FE /* SDSyncController.m in Sources */,

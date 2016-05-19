@@ -6,7 +6,7 @@
 #import "SDServiceXPCRouter.h"
 #import "SDServiceXPCProtocol.h"
 
-#import "SDAppXPCDelegate.h"
+#import "SafeDrive-Swift.h"
 #import "SDAppXPCProtocol.h"
 
 @import ServiceManagement;
@@ -17,7 +17,7 @@
 
 @property NSDecimalNumber *currentServiceVersion;
 
-@property SDAppXPCDelegate *appXPCDelegate;
+@property AppXPCDelegate *appXPCDelegate;
 
 @end
 
@@ -26,7 +26,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.appXPCDelegate = [[SDAppXPCDelegate alloc] init];
+        self.appXPCDelegate = [[AppXPCDelegate alloc] init];
         self.appListener = [self createAppListener];
         
         self.currentServiceVersion = [NSDecimalNumber decimalNumberWithString:@"0"];
