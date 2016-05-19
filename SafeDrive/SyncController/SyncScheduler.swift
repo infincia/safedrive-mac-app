@@ -78,6 +78,42 @@ class SyncScheduler {
         guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(uniqueClientID)'").last else {
             return
         }
+        
+        /*
+            Check for folders that are supposedly restoring, which means SafeDrive was killed or crashed while a restore
+            was in progress.
+         
+            We have no other option but to display a warning when this happens, rsync will have exited in a half-synced state.
+ 
+        */
+        
+        for folder in realm.objects(SyncFolder).filter("restoring == true AND machine == %@", currentMachine) {
+            let alert = NSAlert()
+            alert.addButtonWithTitle("No")
+            alert.addButtonWithTitle("Yes")
+            
+            alert.messageText = "Continue restore?"
+            alert.informativeText = "SafeDrive could not finish restoring the \(folder.name!) folder, would you like to continue now? \n\nWarning: If you decline, the folder will resume syncing to the server, which may result in data loss"
+            alert.alertStyle = .InformationalAlertStyle
+            
+            alert.beginSheetModalForWindow(NSApp.mainWindow!) { (response) in
+                
+                switch response {
+                case NSAlertFirstButtonReturn:
+                    try! realm.write {
+                        folder.syncing = false
+                        folder.restoring = false
+                    }
+                    return
+                case NSAlertSecondButtonReturn:
+                    self.queueSyncJob(uniqueClientID, folderID: folder.uniqueID, direction: .Reverse)
+                    break
+                default:
+                    return
+                }
+            }
+        }
+        
         /* 
             Reset all sync folders at startup.
         
