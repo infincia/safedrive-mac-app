@@ -106,6 +106,10 @@ class SyncScheduler {
                     }
                     return
                 case NSAlertSecondButtonReturn:
+                    try! realm.write {
+                        folder.syncing = false
+                        folder.restoring = false
+                    }
                     self.queueSyncJob(uniqueClientID, folderID: folder.uniqueID, direction: .Reverse)
                     break
                 default:
