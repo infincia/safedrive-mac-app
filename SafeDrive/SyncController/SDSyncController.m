@@ -291,7 +291,7 @@
 
     NSString *remote = [NSString stringWithFormat:@"%@@%@:\"%@/\"", user, host, serverPath];
     
-    NSString *local = [NSString stringWithFormat:@"%@/", localURL.path];
+    NSString *local = [NSString stringWithFormat:@"%@/", localPath];
     
     // restore just reverses the local and remote path arguments to the rsync command,
     // is not as well tested as normal sync
