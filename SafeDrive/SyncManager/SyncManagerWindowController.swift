@@ -139,7 +139,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     }
                     
                     self.readSyncFolders(self)
-                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID)
+                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .Forward)
 
                 }, failure: { (apiError: NSError) -> Void in
                     SDErrorHandlerReport(apiError)
@@ -325,7 +325,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBAction func startSyncItemNow(sender: AnyObject) {
         let button: NSButton = sender as! NSButton
         let folderID: Int = button.tag
-        self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID)
+        self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .Forward)
     }
     
     @IBAction func stopSyncItemNow(sender: AnyObject) {

@@ -13,9 +13,15 @@ import SwiftDate
 
 import Alamofire
 
+enum SyncDirection {
+    case Forward
+    case Reverse
+}
+
 struct SyncEvent {
     let uniqueClientID: String
     let folderID: Int
+    let direction: SyncDirection
 }
 
 class SyncScheduler {
@@ -147,7 +153,7 @@ class SyncScheduler {
                 if self.reachabilityManager!.isReachableOnEthernetOrWiFi {
                     for folder in folders {
                         let folderID = folder.uniqueID
-                        self.queueSyncJob(uniqueClientID, folderID: folderID)
+                        self.queueSyncJob(uniqueClientID, folderID: folderID, direction: .Forward)
                     }
                 }
                 else {
@@ -161,9 +167,9 @@ class SyncScheduler {
         }
     }
     
-    func queueSyncJob(uniqueClientID: String, folderID: Int) {
+    func queueSyncJob(uniqueClientID: String, folderID: Int, direction: SyncDirection) {
         dispatch_sync(syncDispatchQueue, {() -> Void in
-            let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID)
+            let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID, direction: direction)
             self.syncQueue.insert(syncEvent, atIndex: 0)
         })
     }
@@ -209,6 +215,10 @@ class SyncScheduler {
             
             let uniqueClientID = syncEvent.uniqueClientID
             let folderID = syncEvent.folderID
+            var isRestore: Bool = false
+            if syncEvent.direction == .Reverse {
+                isRestore = true
+            }
             
             guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(uniqueClientID)'").last else {
                 SDLog("failed to get current machine from realm!!!")
