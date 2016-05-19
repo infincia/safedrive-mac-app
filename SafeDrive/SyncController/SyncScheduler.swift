@@ -90,7 +90,7 @@ class SyncScheduler {
         
         */
         try! realm.write {
-            let syncFolders = realm.objects(SyncFolder)
+            let syncFolders = realm.objects(SyncFolder).filter("restoring == false")
             syncFolders.setValue(false, forKey: "syncing")
         }
         SDLog("Sync scheduler running")
