@@ -1,2 +1,2 @@
-github "realm/realm-cocoa" == 0.98.6
-github "infincia/NMSSH" == 2.2.5.1
+github "realm/realm-cocoa"
+github "infincia/NMSSH"
