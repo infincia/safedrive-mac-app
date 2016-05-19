@@ -516,16 +516,37 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             tableCellView.imageView!.image = cellImage
             tableCellView.removeButton.tag = syncFolder.uniqueID
             tableCellView.syncNowButton.tag = syncFolder.uniqueID
-            if syncFolder.syncing {
-                tableCellView.syncStatus.startAnimation(self)
-                tableCellView.syncNowButton.enabled = true
+            tableCellView.restoreNowButton.tag = syncFolder.uniqueID
+
+            if syncFolder.syncing || syncFolder.restoring {
+                tableCellView.restoreNowButton.enabled = false
+                tableCellView.restoreNowButton.target = self
+                tableCellView.restoreNowButton.action = #selector(self.stopSyncNow(_:))
+                
+                tableCellView.syncNowButton.enabled = false
                 tableCellView.syncNowButton.target = self
                 tableCellView.syncNowButton.action = #selector(self.stopSyncNow(_:))
-                tableCellView.syncNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
-
             }
+            
+            if syncFolder.syncing {
+                tableCellView.syncStatus.startAnimation(self)
+                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
+                tableCellView.syncNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
+            }
+            else if syncFolder.restoring {
+                tableCellView.syncStatus.startAnimation(self)
+                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
+                tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
+            }
+
             else {
                 tableCellView.syncStatus.stopAnimation(self)
+                
+                tableCellView.restoreNowButton.enabled = true
+                tableCellView.restoreNowButton.target = self
+                tableCellView.restoreNowButton.action = #selector(self.startRestoreNow(_:))
+                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
+                
                 tableCellView.syncNowButton.enabled = true
                 tableCellView.syncNowButton.target = self
                 tableCellView.syncNowButton.action = #selector(self.startSyncNow(_:))
@@ -578,17 +599,28 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             let syncTasks = realm.objects(SyncTask)
 
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@", syncItem).sorted("syncDate").last {
-                if syncItem.syncing {
+                
+                if syncItem.restoring {
+                    self.syncStatus.stringValue = "Restoring"
+                    self.syncFailureInfoButton.action = nil
+                    self.syncFailureInfoButton.hidden = true
+                    self.syncFailureInfoButton.enabled = false
+                    self.syncFailureInfoButton.toolTip = ""
+                    self.progress.startAnimation(nil)
+                    
+                    self.progress.doubleValue = syncTask.progress
+                    self.syncProgressField.stringValue = "\(syncTask.progress)% @ \(syncTask.bandwidth)"
+                }
+                else if syncItem.syncing {
                     self.syncStatus.stringValue = "Syncing"
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.hidden = true
                     self.syncFailureInfoButton.enabled = false
                     self.syncFailureInfoButton.toolTip = ""
                     self.progress.startAnimation(nil)
-
+                    
                     self.progress.doubleValue = syncTask.progress
                     self.syncProgressField.stringValue = "\(syncTask.progress)% @ \(syncTask.bandwidth)"
-
                 }
                 else if syncTask.success {
                     self.syncStatus.stringValue = "Waiting"
