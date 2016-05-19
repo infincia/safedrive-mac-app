@@ -327,6 +327,11 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         let folderID: Int = button.tag
         startSync(folderID)
     }
+    
+    @IBAction func startRestoreNow(sender: AnyObject) {
+        let button: NSButton = sender as! NSButton
+        let folderID: Int = button.tag
+        startRestore(folderID)
     }
     
     @IBAction func stopSyncNow(sender: AnyObject) {
@@ -341,6 +346,33 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .Forward)
     }
     
+    func startRestore(folderID: Int) {
+        
+        let alert = NSAlert()
+        alert.addButtonWithTitle("No")
+        alert.addButtonWithTitle("Yes")
+        
+        alert.messageText = "Restore folder?"
+        alert.informativeText = "This will restore the selected folder contents from your SafeDrive.\n\nWarning: Any local files that have not been previously synced to SafeDrive may be lost."
+        alert.alertStyle = .InformationalAlertStyle
+        
+        alert.beginSheetModalForWindow(self.window!) { (response) in
+            
+            switch response {
+            case NSAlertFirstButtonReturn:
+                return
+            case NSAlertSecondButtonReturn:
+                // cancel any sync in progress so we don't have two rsync processes overwriting each other
+                self.syncScheduler.cancel(folderID) {
+                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .Reverse)
+                }
+                break
+            default:
+                return
+            }
+        }
+    }
+
     func stopSync(folderID: Int) {
 
         let alert = NSAlert()
