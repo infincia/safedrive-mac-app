@@ -33,7 +33,7 @@ class FinderSync: FIFinderSync {
         
         var config = Realm.Configuration()
         
-        config.path = dbURL.path
+        config.fileURL = dbURL
         
         Realm.Configuration.defaultConfiguration = config
         

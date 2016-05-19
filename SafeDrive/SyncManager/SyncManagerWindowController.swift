@@ -88,13 +88,13 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             Crashlytics.sharedInstance().crash()
             return
         }
-        
-        self.syncFolderToken = realm.objects(SyncFolder).addNotificationBlock { results, error in
-            self.reload()
+
+        self.syncFolderToken = realm.objects(SyncFolder).addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            self?.reload()
         }
         
-        self.syncTaskToken = realm.objects(SyncTask).addNotificationBlock { results, error in
-            self.reload()
+        self.syncTaskToken = realm.objects(SyncTask).addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            self?.reload()
         }
         
         self.scheduleSelection.selectItemAtIndex(-1)

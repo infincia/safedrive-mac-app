@@ -123,7 +123,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             let newdbURL = dbURL.URLByAppendingPathExtension("new")
             
             let config = Realm.Configuration(
-                path: dbURL.path,
+                fileURL: dbURL,
                 // Set the new schema version. This must be greater than the previously used
                 // version (if you've never set a schema version before, the version is 0).
                 schemaVersion: 9,
@@ -157,8 +157,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 catch {
                     // ignored, file may not exist at all, but if it does and we can't remove it we'll crash next and get a report
                 }
-                let realm = try! Realm(path: dbURL.path!)
-                try! realm.writeCopyToPath(newdbURL.path!)
+                let realm = try! Realm(fileURL: dbURL)
+                try! realm.writeCopyToURL(newdbURL)
                 try! fileManager.removeItemAtURL(dbURL)
                 try! fileManager.moveItemAtURL(newdbURL, toURL: dbURL)
             }
