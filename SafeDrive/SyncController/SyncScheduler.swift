@@ -75,6 +75,9 @@ class SyncScheduler {
             throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.OpenFailed.rawValue, userInfo: errorInfo)
         }
         
+        guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(uniqueClientID)'").last else {
+            return
+        }
         /* 
             Reset all sync folders at startup.
         
@@ -90,7 +93,7 @@ class SyncScheduler {
         
         */
         try! realm.write {
-            let syncFolders = realm.objects(SyncFolder).filter("restoring == false")
+            let syncFolders = realm.objects(SyncFolder).filter("restoring == false AND machine == %@", currentMachine)
             syncFolders.setValue(false, forKey: "syncing")
         }
         SDLog("Sync scheduler running")
