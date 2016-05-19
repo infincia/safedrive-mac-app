@@ -166,13 +166,16 @@
 #pragma mark
 #pragma mark Public API
 
--(void)stopSyncTask {
+-(void)stopSyncTask:(SDSuccessBlock)completion {
     self.syncTerminated = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         while (self.syncTask.isRunning) {
             [self.syncTask terminate];
             [NSThread sleepForTimeInterval:0.1];
         }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion();
+        });
     });
 
 }

@@ -196,12 +196,16 @@ class SyncScheduler {
         self.running = false
     }
     
-    func cancel(uniqueID: Int) {
+    func cancel(uniqueID: Int, completion: SDSuccessBlock) {
         for syncController in self.syncControllers {
             if syncController.uniqueID == uniqueID {
-                syncController.stopSyncTask()
+                syncController.stopSyncTask() {
+                    completion()
+                    return
+                }
             }
         }
+        completion()
     }
     
     private func sync(syncEvent: SyncEvent) {

@@ -357,7 +357,9 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             case NSAlertFirstButtonReturn:
                 return
             case NSAlertSecondButtonReturn:
-                self.syncScheduler.cancel(folderID)
+                self.syncScheduler.cancel(folderID) {
+                    
+                }
                 break
             default:
                 return
