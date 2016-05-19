@@ -25,7 +25,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     @IBOutlet var syncFailureInfoButton: NSButton!
 
-    @IBOutlet var syncStatusButton: NSButton!
+    @IBOutlet var syncStatus: NSTextField!
     
     @IBOutlet var syncTimePicker: NSDatePicker!
 
@@ -547,7 +547,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@", syncItem).sorted("syncDate").last {
                 if syncItem.syncing {
-                    self.syncStatusButton.image = NSImage(named: NSImageNameStatusPartiallyAvailable)
+                    self.syncStatus.stringValue = "Syncing"
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.hidden = true
                     self.syncFailureInfoButton.enabled = false
@@ -559,7 +559,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
                 }
                 else if syncTask.success {
-                    self.syncStatusButton.image = NSImage(named: NSImageNameStatusAvailable)
+                    self.syncStatus.stringValue = "Waiting"
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.hidden = true
                     self.syncFailureInfoButton.enabled = false
@@ -571,7 +571,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
                 }
                 else {
-                    self.syncStatusButton.image = NSImage(named: NSImageNameStatusUnavailable)
+                    self.syncStatus.stringValue = "Failed"
                     self.syncFailureInfoButton.action = #selector(self.showFailurePopover)
                     self.syncFailureInfoButton.hidden = false
                     self.syncFailureInfoButton.enabled = true
@@ -586,7 +586,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 failureView.message.stringValue = syncTask.message ?? ""
             }
             else {
-                self.syncStatusButton.image = NSImage(named: NSImageNameStatusPartiallyAvailable)
+                self.syncStatus.stringValue = "Unknown"
                 self.syncFailureInfoButton.action = nil
                 self.syncFailureInfoButton.hidden = true
                 self.syncFailureInfoButton.enabled = false
@@ -645,7 +645,7 @@ class SyncManagerWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.nextSyncField.stringValue = ""
             self.scheduleSelection.selectItemAtIndex(-1)
             self.scheduleSelection.enabled = false
-            self.syncStatusButton.image = NSImage(named: NSImageNameStatusNone)
+            self.syncStatus.stringValue = "Unknown"
             self.syncFailureInfoButton.action = nil
             self.syncFailureInfoButton.hidden = true
             self.syncFailureInfoButton.enabled = false

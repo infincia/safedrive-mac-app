@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
@@ -18,7 +18,7 @@
                 <outlet property="syncFailureInfoButton" destination="l64-Ur-RNY" id="ggS-Xq-HdG"/>
                 <outlet property="syncListView" destination="FBp-sJ-WN8" id="vzi-cx-r8L"/>
                 <outlet property="syncProgressField" destination="it3-Tm-2hq" id="4qX-i4-Bxj"/>
-                <outlet property="syncStatusButton" destination="BMq-jW-OF3" id="VZI-fQ-ByJ"/>
+                <outlet property="syncStatus" destination="V1Z-AU-INg" id="JyO-H9-nrr"/>
                 <outlet property="syncTimePicker" destination="uWU-me-iLj" id="Py9-De-ooj"/>
                 <outlet property="window" destination="MYk-Wm-cmP" id="hNj-3N-fQa"/>
             </connections>
@@ -46,6 +46,14 @@
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j52-br-Lit">
                                     <rect key="frame" x="84" y="90" width="204" height="17"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="N/A" id="VHu-lm-B7v">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V1Z-AU-INg">
+                                    <rect key="frame" x="84" y="114" width="80" height="17"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Waiting" id="INb-eQ-PTU">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -129,15 +137,8 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button verticalHuggingPriority="752" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BMq-jW-OF3">
-                                    <rect key="frame" x="78" y="112" width="29" height="19"/>
-                                    <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSStatusNone" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="gdB-n4-TEP">
-                                        <behavior key="behavior" lightByContents="YES"/>
-                                        <font key="font" metaFont="cellTitle"/>
-                                    </buttonCell>
-                                </button>
                                 <button hidden="YES" verticalHuggingPriority="752" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l64-Ur-RNY">
-                                    <rect key="frame" x="105" y="112" width="29" height="19"/>
+                                    <rect key="frame" x="160" y="112" width="29" height="19"/>
                                     <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSRevealFreestandingTemplate" imagePosition="only" alignment="center" enabled="NO" state="on" imageScaling="proportionallyDown" inset="2" id="TIG-0U-zoo">
                                         <behavior key="behavior" lightByContents="YES"/>
                                         <font key="font" metaFont="cellTitle"/>
@@ -279,7 +280,7 @@
                                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Mt4-SE-Wgf"/>
                                                                     </imageView>
                                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wRM-aU-l0H" userLabel="Label">
-                                                                        <rect key="frame" x="17" y="2" width="186" height="17"/>
+                                                                        <rect key="frame" x="17" y="2" width="160" height="17"/>
                                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Folder Row" id="hWu-hn-C2z">
                                                                             <font key="font" metaFont="system"/>
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -296,7 +297,7 @@
                                                                             <action selector="removeSyncFolder:" target="-2" id="eSa-dz-2i8"/>
                                                                         </connections>
                                                                     </button>
-                                                                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qlo-gm-kmU">
+                                                                    <button toolTip="Sync this folder" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qlo-gm-kmU">
                                                                         <rect key="frame" x="230" y="1" width="15" height="17"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="15" id="nNy-6s-WyB"/>
@@ -309,13 +310,26 @@
                                                                             <action selector="startSyncNow:" target="-2" id="VB4-gd-K0s"/>
                                                                         </connections>
                                                                     </button>
+                                                                    <button toolTip="Restore this folder" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nos-O1-l7s">
+                                                                        <rect key="frame" x="207" y="1" width="15" height="17"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="15" id="ueO-8r-BYf"/>
+                                                                        </constraints>
+                                                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSInvalidDataFreestandingTemplate" imagePosition="above" alignment="left" controlSize="small" imageScaling="proportionallyUpOrDown" inset="2" id="PZx-rf-nmk">
+                                                                            <behavior key="behavior" lightByContents="YES"/>
+                                                                            <font key="font" metaFont="smallSystem"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <action selector="startRestoreNow:" target="-2" id="tpX-f6-48p"/>
+                                                                        </connections>
+                                                                    </button>
                                                                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="cmb-YC-xUe">
-                                                                        <rect key="frame" x="209" y="2" width="16" height="16"/>
+                                                                        <rect key="frame" x="183" y="2" width="16" height="16"/>
                                                                     </progressIndicator>
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="Tmc-6I-jUI" firstAttribute="leading" secondItem="cr8-aL-DI3" secondAttribute="leading" id="5QK-ce-HYk"/>
-                                                                    <constraint firstItem="Qlo-gm-kmU" firstAttribute="leading" secondItem="wRM-aU-l0H" secondAttribute="trailing" constant="29" id="5XI-eS-JRg"/>
+                                                                    <constraint firstItem="Qlo-gm-kmU" firstAttribute="leading" secondItem="wRM-aU-l0H" secondAttribute="trailing" constant="55" id="5XI-eS-JRg"/>
                                                                     <constraint firstItem="Tmc-6I-jUI" firstAttribute="centerY" secondItem="cr8-aL-DI3" secondAttribute="centerY" id="A7I-vh-sJ3"/>
                                                                     <constraint firstItem="Qlo-gm-kmU" firstAttribute="bottom" secondItem="yLW-hh-a3A" secondAttribute="bottom" id="BBe-va-Cwo"/>
                                                                     <constraint firstItem="wRM-aU-l0H" firstAttribute="top" secondItem="Tmc-6I-jUI" secondAttribute="top" constant="2" id="Cj8-cm-d7A"/>
@@ -323,14 +337,17 @@
                                                                     <constraint firstItem="yLW-hh-a3A" firstAttribute="leading" secondItem="Qlo-gm-kmU" secondAttribute="trailing" constant="2" id="OFi-fh-IEM"/>
                                                                     <constraint firstItem="Qlo-gm-kmU" firstAttribute="top" secondItem="cmb-YC-xUe" secondAttribute="top" id="UJv-F1-sqp"/>
                                                                     <constraint firstItem="Tmc-6I-jUI" firstAttribute="bottom" secondItem="yLW-hh-a3A" secondAttribute="bottom" constant="1" id="aQt-Tg-XI6"/>
+                                                                    <constraint firstItem="Nos-O1-l7s" firstAttribute="baseline" secondItem="Qlo-gm-kmU" secondAttribute="baseline" id="glt-Zf-fQv"/>
                                                                     <constraint firstAttribute="trailing" secondItem="yLW-hh-a3A" secondAttribute="trailing" constant="9" id="mtw-nN-e1f"/>
-                                                                    <constraint firstItem="Qlo-gm-kmU" firstAttribute="leading" secondItem="cmb-YC-xUe" secondAttribute="leading" constant="21" id="nvx-Ze-0t3"/>
+                                                                    <constraint firstItem="Qlo-gm-kmU" firstAttribute="leading" secondItem="cmb-YC-xUe" secondAttribute="leading" constant="47" id="nvx-Ze-0t3"/>
                                                                     <constraint firstItem="wRM-aU-l0H" firstAttribute="bottom" secondItem="Tmc-6I-jUI" secondAttribute="bottom" constant="-2" id="oHO-ZV-d8r"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="wRM-aU-l0H" secondAttribute="trailing" constant="112" id="ou7-6T-Jic"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="wRM-aU-l0H" secondAttribute="trailing" constant="138" id="ou7-6T-Jic"/>
+                                                                    <constraint firstItem="Nos-O1-l7s" firstAttribute="leading" secondItem="cmb-YC-xUe" secondAttribute="trailing" constant="8" symbolic="YES" id="yqv-Ug-DKH"/>
                                                                 </constraints>
                                                                 <connections>
                                                                     <outlet property="imageView" destination="Tmc-6I-jUI" id="as0-ec-LA5"/>
                                                                     <outlet property="removeButton" destination="yLW-hh-a3A" id="Rvb-vP-rMW"/>
+                                                                    <outlet property="restoreNowButton" destination="Nos-O1-l7s" id="vLE-6q-nPC"/>
                                                                     <outlet property="syncNowButton" destination="Qlo-gm-kmU" id="Is7-3Q-oew"/>
                                                                     <outlet property="syncStatus" destination="cmb-YC-xUe" id="By0-6X-ilE"/>
                                                                     <outlet property="textField" destination="wRM-aU-l0H" id="EU6-EI-Oyi"/>
@@ -428,8 +445,8 @@
     </objects>
     <resources>
         <image name="Blank Window" width="351" height="501"/>
+        <image name="NSInvalidDataFreestandingTemplate" width="14" height="14"/>
         <image name="NSRefreshFreestandingTemplate" width="14" height="14"/>
         <image name="NSRevealFreestandingTemplate" width="14" height="14"/>
-        <image name="NSStatusNone" width="16" height="16"/>
     </resources>
 </document>
