@@ -306,7 +306,7 @@
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                         </buttonCell>
                                                                         <connections>
-                                                                            <action selector="startSyncItemNow:" target="-2" id="VB4-gd-K0s"/>
+                                                                            <action selector="startSyncNow:" target="-2" id="VB4-gd-K0s"/>
                                                                         </connections>
                                                                     </button>
                                                                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="cmb-YC-xUe">
