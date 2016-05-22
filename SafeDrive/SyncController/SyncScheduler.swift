@@ -285,7 +285,7 @@ class SyncScheduler {
             let uuid = NSUUID()
             let syncDate = NSDate()
             try! realm.write {
-                realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": true, "restoring": true], update: true)
+                realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": true, "restoring": isRestore], update: true)
                 let syncTask = SyncTask(syncFolder: folder, syncDate: syncDate, uuid: uuid.UUIDString)
                 realm.add(syncTask)
             }
