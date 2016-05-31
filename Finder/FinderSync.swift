@@ -17,8 +17,23 @@ class FinderSync: FIFinderSync {
     
     var token: RealmSwift.NotificationToken?
     
+    var syncFolders: Results<SyncFolder>?
+    
     override init() {
         super.init()
+
+        var config = Realm.Configuration()
+        
+        config.fileURL = dbURL
+        
+        Realm.Configuration.defaultConfiguration = config
+        
+        guard let realm = try? Realm() else {
+            print("failed to create realm!!!")
+            return
+        }
+        
+        self.syncFolders = realm.objects(SyncFolder)
         
         // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
         FIFinderSyncController.defaultController().setBadgeImage(NSImage(named: NSImageNameStatusAvailable)!, label: "Idle", forBadgeIdentifier: "idle")
@@ -31,37 +46,26 @@ class FinderSync: FIFinderSync {
             self.serviceReconnectionLoop()
         })
         
-        var config = Realm.Configuration()
-        
-        config.fileURL = dbURL
-        
-        Realm.Configuration.defaultConfiguration = config
-        
-        guard let realm = try? Realm() else {
-            print("failed to create realm!!!")
-            return
-        }
-        
-        self.token = realm.objects(SyncFolder).addNotificationBlock { results, error in
-            
-            guard let results = results else {
-                return
+        token = self.syncFolders!.addNotificationBlock({ (changes) in
+            switch changes {
+            case .Initial(_):
+                break
+            case .Update(_, _, _, let modifications):
+                var s = [NSURL]()
+
+                for index in modifications {
+                    let folder = self.syncFolders![index]
+                    let u = folder.url!
+                    s.append(u)
+                    // force update of badges when top level folders change
+                    self.requestBadgeIdentifierForURL(u)
+                }
+                FIFinderSyncController.defaultController().directoryURLs = Set<NSURL>(s)
+                break
+            case .Error:
+                break
             }
-            
-            var s = [NSURL]()
-            
-            for folder in results {
-                let u = folder.url!
-                s.append(u)
-                // force update of badges when top level folders change
-                self.requestBadgeIdentifierForURL(u)
-                
-            }
-            
-            FIFinderSyncController.defaultController().directoryURLs = Set<NSURL>(s)
-        
-            
-        }
+        })
         
     }
     
