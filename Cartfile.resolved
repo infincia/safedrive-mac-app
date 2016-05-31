@@ -1,2 +1,2 @@
 github "infincia/NMSSH" "2.2.5.1"
-github "realm/realm-cocoa" "v0.102.1"
+github "realm/realm-cocoa" "v1.0.0"
