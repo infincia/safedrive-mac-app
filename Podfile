@@ -36,7 +36,7 @@ target 'SafeDrive' do
     pod 'LetsMove', '1.20'
     pod 'Sparkle', '1.14.0'
     pod 'STPrivilegedTask', '1.0.1'
-    
+    pod 'TSMarkdownParser'
     target 'SafeDriveTests' do
         inherit! :search_paths
     end
