@@ -32,7 +32,7 @@ class SyncScheduler {
 
     private var syncControllers = [SDSyncController]()
     
-    private var reachabilityManager = NetworkReachabilityManager(host: SDAPIDomainStaging)
+    private var reachabilityManager = NetworkReachabilityManager(host: API.domain)
 
     private var _running = false
     

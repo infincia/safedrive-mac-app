@@ -7,7 +7,7 @@ import Foundation
 import Alamofire
 
 enum Endpoint: URLRequestConvertible {
-    static let baseURLString = "https://\(SDAPIDomainStaging)/api/1"
+    static let baseURLString = "https://\(API.domain)/api/1"
     static var SessionToken: String?
 
     case ErrorLog([String:AnyObject])
@@ -93,9 +93,15 @@ enum Endpoint: URLRequestConvertible {
 }
 
 class API: NSObject {
+    #if DEBUG
+    static let domain = SDAPIDomainStaging
+    #else
+    static let domain = SDAPIDomainProduction
+    #endif
+    
     static let sharedAPI = API()
 
-    private var reachabilityManager = NetworkReachabilityManager(host: SDAPIDomainStaging)
+    private var reachabilityManager = NetworkReachabilityManager(host: API.domain)
     private var sharedSystemAPI = SDSystemAPI.sharedAPI()
     
     private var _session: String?
@@ -361,7 +367,7 @@ class API: NSObject {
     // MARK: Unused
     
     func getHostFingerprintList(successBlock: SDAPIFingerprintListSuccessBlock, failure failureBlock: SDFailureBlock) {
-        Alamofire.request(.GET, "https://\(SDAPIDomainStaging)/api/1/fingerprints")
+        Alamofire.request(.GET, "https://\(API.domain)/api/1/fingerprints")
             .validate()
             .responseJSON { response in
                 switch response.result {
@@ -390,7 +396,7 @@ class API: NSObject {
     }
     
     func apiStatus(successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
-        Alamofire.request(.GET, "https://\(SDAPIDomainStaging)/api/1/status")
+        Alamofire.request(.GET, "https://\(API.domain)/api/1/status")
             .validate()
             .responseJSON { response in                
                 switch response.result {
