@@ -221,17 +221,12 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     }
     
     func setTab(index: NSInteger) {
-        print("selecting tab")
         guard let newView = viewForIndex(index) else {
-            print("Failed to get view")
             return
         }
-        print("selecting tab \(index)")
         for view in containerView.subviews {
-            print("removing \(view)")
             view.removeFromSuperview()
         }
-        print("Adding view \(newView)")
         containerView.addSubview(newView)
         self.resetButtons()
         //button.highlighted = true
