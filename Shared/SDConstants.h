@@ -23,7 +23,7 @@ FOUNDATION_EXPORT NSString *const SDMountAtLaunchKey;
 #pragma mark - SafeDrive API constants
 
 FOUNDATION_EXPORT NSString *const SDAPIDomainStaging;
-FOUNDATION_EXPORT NSString *const SDAPIDomain;
+FOUNDATION_EXPORT NSString *const SDAPIDomainProduction;
 FOUNDATION_EXPORT NSString *const SDWebDomain;
 
 #pragma mark - Keychain constants
