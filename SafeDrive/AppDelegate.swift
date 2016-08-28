@@ -37,7 +37,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         
         // initialize error handler, from this point on SDLog() and SDErrorHandlerReport() should be safe to use
         SDErrorHandlerInitialize()
-        SDLog("SafeDrive build \(CFBundleVersion)")
+        #if DEBUG
+        SDLog("SafeDrive staging build \(CFBundleVersion)")
+        #else
+        SDLog("SafeDrive release build \(CFBundleVersion)")
+        #endif
+
 
         
         if CFBundleVersion < SDBuildVersionLast {
