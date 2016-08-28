@@ -6,9 +6,9 @@ def keychain_pods
 end
 
 def shared_pods
-    pod 'Alamofire', '3.4.0'
-    pod 'Fabric', '1.6.7'
-    pod 'Crashlytics', '3.7.0'
+    pod 'Alamofire', '3.4.1'
+    pod 'Fabric', '1.6.8'
+    pod 'Crashlytics', '3.7.3'
     pod 'SwiftDate', '1.2'
     pod 'RegexKitLite', '4.0'
 end
