@@ -26,8 +26,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
     
     var CFBundleVersion = Int((NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]) as! String)!
+    
+    var CFBundleShortVersionString = (NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"]) as! String!
 
     let SDBuildVersionLast = NSUserDefaults.standardUserDefaults().integerForKey(SDBuildVersionLastKey)
+    
+    var environment: String = "STAGING"
 
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
@@ -39,8 +43,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         SDErrorHandlerInitialize()
         #if DEBUG
         SDLog("SafeDrive staging build \(CFBundleVersion)")
+        environment = "STAGING"
         #else
         SDLog("SafeDrive release build \(CFBundleVersion)")
+        environment = "RELEASE"
         #endif
 
 
@@ -189,6 +195,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.aboutWindowController = DCOAboutWindowController()
             self.aboutWindowController.useTextViewForAcknowledgments = true
             self.aboutWindowController.appCredits = TSMarkdownParser.standardParser().attributedStringFromMarkdown(markdown)
+            let version = "Version \(self.CFBundleShortVersionString)-\(self.environment) (Build \(self.CFBundleVersion))"
+            self.aboutWindowController.appVersion = version
             let websiteURLPath: String = "https://\(SDWebDomain)"
             self.aboutWindowController.appWebsiteURL = NSURL(string: websiteURLPath)!
 
