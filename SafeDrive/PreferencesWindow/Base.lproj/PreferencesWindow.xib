@@ -371,6 +371,9 @@
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                     </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="addSyncFolder:" target="-2" id="U0p-Bo-p6n"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
@@ -414,6 +417,9 @@
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                     </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="removeSyncFolder:" target="-2" id="VJs-kk-XUG"/>
+                                                                    </connections>
                                                                 </button>
                                                                 <button toolTip="Sync this folder" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jRl-l8-cwR">
                                                                     <rect key="frame" x="230" y="1" width="15" height="17"/>
