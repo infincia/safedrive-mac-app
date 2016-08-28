@@ -179,9 +179,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.accountWindowController = AccountWindowController()
             _ = self.accountWindowController.window!
             
-            
+            let markdownURL = NSBundle.mainBundle().URLForResource("Changelog.md", withExtension: nil)
+        
+            let data = NSFileManager.defaultManager().contentsAtPath(markdownURL!.path!)
+        
+            let markdown = String(data: data!, encoding: NSUTF8StringEncoding)!
+        
+
             self.aboutWindowController = DCOAboutWindowController()
             self.aboutWindowController.useTextViewForAcknowledgments = true
+            self.aboutWindowController.appCredits = TSMarkdownParser.standardParser().attributedStringFromMarkdown(markdown)
             let websiteURLPath: String = "https://\(SDWebDomain)"
             self.aboutWindowController.appWebsiteURL = NSURL(string: websiteURLPath)!
 
