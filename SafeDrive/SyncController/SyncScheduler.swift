@@ -335,8 +335,9 @@ class SyncScheduler {
                     let duration = NSDate().timeIntervalSinceDate(syncDate)
                     realm.create(SyncTask.self, value: ["uuid": uuid.UUIDString, "success": true, "duration": duration], update: true)
                 }
-                
-                self.syncControllers.removeAtIndex(self.syncControllers.indexOf(syncController)!)
+                if let index = self.syncControllers.indexOf(syncController) {
+                    self.syncControllers.removeAtIndex(index)
+                }
             }, failure: { (syncURL: NSURL, error: NSError?) -> Void in
                 SDErrorHandlerReport(error)
                 SDLog("Sync failed for \(localFolder.path!): \(error!.localizedDescription)")
@@ -350,8 +351,9 @@ class SyncScheduler {
                     let duration = NSDate().timeIntervalSinceDate(syncDate)
                     realm.create(SyncTask.self, value: ["uuid": uuid.UUIDString, "success": false, "duration": duration, "message": error!.localizedDescription], update: true)
                 }
-                    
-                self.syncControllers.removeAtIndex(self.syncControllers.indexOf(syncController)!)
+                if let index = self.syncControllers.indexOf(syncController) {
+                    self.syncControllers.removeAtIndex(index)
+                }
                     
             })
         })
