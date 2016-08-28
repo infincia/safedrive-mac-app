@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PreferencesWindowController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
                 <outlet property="accountButton" destination="Vv2-Cb-tgb" id="KzM-cf-oTX"/>
-                <outlet property="accountExpirationField" destination="E5M-1Q-InX" id="LkU-RU-4lX"/>
-                <outlet property="accountStatusField" destination="deU-cR-Cba" id="URx-Ir-KGh"/>
-                <outlet property="assignedStorageField" destination="0QK-rc-ZL3" id="P4F-lC-Pkx"/>
-                <outlet property="availableStorageField" destination="hkB-8m-LwU" id="TVS-Qd-0JJ"/>
+                <outlet property="accountExpirationField" destination="AbA-9f-zsf" id="3R4-b3-r0n"/>
+                <outlet property="accountStatusField" destination="su2-0t-CGk" id="Xyb-eK-fLT"/>
+                <outlet property="accountView" destination="Z3b-vj-IhT" id="XM6-a3-gJc"/>
+                <outlet property="assignedStorageField" destination="fKc-az-M95" id="wa3-xU-5qv"/>
+                <outlet property="availableStorageField" destination="jEO-oE-b3P" id="0Wv-iy-oyB"/>
                 <outlet property="bandwidthButton" destination="c1p-SX-QFQ" id="DGw-yJ-IW2"/>
+                <outlet property="bandwidthView" destination="xqp-Tx-tcF" id="bxz-TR-6eG"/>
+                <outlet property="containerView" destination="KW5-2C-bQX" id="vRk-b2-fTS"/>
+                <outlet property="failurePopover" destination="1yy-mh-Jnb" id="7F0-aH-kDA"/>
                 <outlet property="generalButton" destination="50Q-kb-XJw" id="o0T-OI-nQx"/>
-                <outlet property="mountStatusField" destination="Yg4-O1-zL4" id="3FZ-F1-1QS"/>
-                <outlet property="serviceStatusField" destination="I8E-Hm-VKG" id="Isr-Mm-UvP"/>
+                <outlet property="generalView" destination="KeH-nF-XhM" id="9lB-Lr-WAh"/>
+                <outlet property="mountStatusField" destination="dAi-Wu-Tfy" id="gsZ-dK-ItM"/>
+                <outlet property="progress" destination="zj3-DB-yCx" id="Jav-ug-EkR"/>
+                <outlet property="scheduleSelection" destination="OmI-TW-sx5" id="Yes-NV-iuM"/>
+                <outlet property="serviceStatusField" destination="CTS-LC-Kd9" id="Y1P-ei-PEh"/>
+                <outlet property="spinner" destination="Iyw-4D-YDA" id="UI2-DO-nxI"/>
                 <outlet property="statusButton" destination="Y3b-ju-7in" id="Ycb-MT-wyg"/>
-                <outlet property="tabView" destination="XTW-H7-MsH" id="bZw-tq-D6r"/>
-                <outlet property="usedStorageField" destination="I9m-Gd-YKy" id="0qE-46-6k9"/>
-                <outlet property="volumeFreespaceField" destination="cac-Lo-ph0" id="cfo-CN-VzF"/>
-                <outlet property="volumeSizeField" destination="mHr-NL-W41" id="58D-KL-qhu"/>
-                <outlet property="volumeUsageBar" destination="VpF-cu-Njk" id="vcT-4j-S2U"/>
+                <outlet property="statusView" destination="zC8-Z9-bt7" id="iZ0-Je-Lcf"/>
+                <outlet property="syncButton" destination="Ys7-cS-i9h" id="VRg-3z-WgJ"/>
+                <outlet property="syncFailureInfoButton" destination="nuB-bR-vrs" id="kvb-vo-L9t"/>
+                <outlet property="syncListView" destination="lRd-e6-jN6" id="2V1-qi-9TS"/>
+                <outlet property="syncProgressField" destination="LiW-g6-iuN" id="tWo-Fz-ab3"/>
+                <outlet property="syncStatus" destination="ZwZ-c1-Kwt" id="xpe-GG-IsJ"/>
+                <outlet property="syncTimePicker" destination="4jK-xw-LzI" id="9oQ-Jx-jJa"/>
+                <outlet property="syncView" destination="vjY-w3-vEM" id="slJ-ZF-sdr"/>
+                <outlet property="usedStorageField" destination="w45-e7-euf" id="rM3-M6-4Xa"/>
+                <outlet property="volumeFreespaceField" destination="jWM-gY-s0k" id="4dt-uT-zra"/>
+                <outlet property="volumeSizeField" destination="7cv-gh-tuI" id="ZLA-TW-XBf"/>
+                <outlet property="volumeUsageBar" destination="Feh-8o-3Rx" id="SCF-5D-V5M"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -39,197 +55,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="351" height="501"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Settings-Background" id="e21-zo-JrP"/>
                     </imageView>
-                    <tabView fixedFrame="YES" drawsBackground="NO" type="noTabsNoBorder" initialItem="Tr0-rv-ChU" translatesAutoresizingMaskIntoConstraints="NO" id="XTW-H7-MsH">
-                        <rect key="frame" x="0.0" y="51" width="351" height="279"/>
-                        <font key="font" metaFont="system"/>
-                        <tabViewItems>
-                            <tabViewItem label="General" identifier="1" id="Tr0-rv-ChU">
-                                <view key="view" ambiguous="YES" id="BGg-1E-DvT">
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DFf-pg-Q7a">
-                                            <rect key="frame" x="33" y="-36" width="285" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Start SafeDrive at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="PNJ-M0-iQ9">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <binding destination="-2" name="value" keyPath="self.autostart" id="Qgp-bn-tsG">
-                                                    <dictionary key="options">
-                                                        <integer key="NSNoSelectionPlaceholder" value="0"/>
-                                                        <integer key="NSNullPlaceholder" value="0"/>
-                                                        <bool key="NSValidatesImmediately" value="YES"/>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
-                                        </button>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pvd-Ip-ebE">
-                                            <rect key="frame" x="33" y="-66" width="285" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Mount volume automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0WR-rs-tJE">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <binding destination="-2" name="value" keyPath="self.sharedSystemAPI.mountAtLaunch" id="h5g-lC-Xew"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                </view>
-                            </tabViewItem>
-                            <tabViewItem label="Account" identifier="2" id="TEc-pJ-Rmk">
-                                <view key="view" id="dbo-3A-0ev">
-                                    <rect key="frame" x="0.0" y="0.0" width="351" height="279"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T1w-v0-4ij">
-                                            <rect key="frame" x="0.0" y="47" width="351" height="222"/>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" imageScaling="proportionallyDown" image="Storage-Status-backing" id="1n9-YT-RZd"/>
-                                        </imageView>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0QK-rc-ZL3">
-                                            <rect key="frame" x="179" y="221" width="120" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="wcd-1J-Pl4">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UqL-cq-z3R">
-                                            <rect key="frame" x="60" y="121" width="111" height="18"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Account Status" id="GXv-4e-a2z">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" red="0.46274509800000002" green="0.50196078430000002" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="deU-cR-Cba">
-                                            <rect key="frame" x="179" y="122" width="120" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="9gD-C8-FOL">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zg2-h0-Vo7">
-                                            <rect key="frame" x="60" y="96" width="111" height="18"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Account Expiration" id="g0K-pR-Bgl">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" red="0.46274509800000002" green="0.50196078430000002" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E5M-1Q-InX">
-                                            <rect key="frame" x="179" y="97" width="120" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="38n-H1-Cer">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I9m-Gd-YKy">
-                                            <rect key="frame" x="179" y="188" width="120" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="UkX-Jx-gsq">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkB-8m-LwU">
-                                            <rect key="frame" x="179" y="156" width="120" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="AdR-a9-VN1">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                    </subviews>
-                                </view>
-                            </tabViewItem>
-                            <tabViewItem label="Bandwidth" identifier="" id="dE8-gh-gqI">
-                                <view key="view" id="p7U-l6-SWd">
-                                    <rect key="frame" x="0.0" y="0.0" width="351" height="279"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </view>
-                            </tabViewItem>
-                            <tabViewItem label="Status" identifier="" id="dQJ-J2-1uw">
-                                <view key="view" id="HrL-80-KKL">
-                                    <rect key="frame" x="0.0" y="0.0" width="351" height="279"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Mg-5I-cfE">
-                                            <rect key="frame" x="29" y="204" width="150" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Volume Size:" id="RIs-Pv-Jt8">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sfa-ZP-V5M">
-                                            <rect key="frame" x="29" y="179" width="150" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Volume Free Space:" id="HHn-nb-e6T">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHr-NL-W41">
-                                            <rect key="frame" x="183" y="204" width="147" height="17"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="-" id="XId-Yi-qz9">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cac-Lo-ph0">
-                                            <rect key="frame" x="183" y="179" width="147" height="17"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="-" id="EhK-k7-8br">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Miu-7i-xBb">
-                                            <rect key="frame" x="29" y="229" width="150" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Mounted:" id="kvC-v6-l3N">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yg4-O1-zL4">
-                                            <rect key="frame" x="183" y="229" width="147" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Unmounted" id="aW6-5F-TLE">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="VpF-cu-Njk">
-                                            <rect key="frame" x="31" y="145" width="297" height="20"/>
-                                        </progressIndicator>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VgD-5i-jzK">
-                                            <rect key="frame" x="29" y="254" width="150" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Background Service:" id="cLw-5J-zPf">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I8E-Hm-VKG">
-                                            <rect key="frame" x="183" y="254" width="147" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Stopped" id="CgH-iX-ik5">
-                                                <font key="font" size="12" name="Raleway-Light"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                    </subviews>
-                                </view>
-                            </tabViewItem>
-                        </tabViewItems>
-                    </tabView>
+                    <button focusRingType="none" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50Q-kb-XJw">
+                        <rect key="frame" x="0.0" y="363" width="62" height="59"/>
+                        <buttonCell key="cell" type="square" title="General" bezelStyle="shadowlessSquare" image="General Button" imagePosition="above" alignment="center" focusRingType="none" inset="2" id="dwC-vx-xwb">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="10" name="Raleway-Light"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="selectTab:" target="-2" id="BfG-1g-oQ2"/>
+                        </connections>
+                    </button>
                     <button focusRingType="none" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vv2-Cb-tgb">
-                        <rect key="frame" x="104" y="362" width="62" height="61"/>
-                        <buttonCell key="cell" type="square" title="Account" bezelStyle="shadowlessSquare" image="Account-Icon" imagePosition="above" alignment="center" focusRingType="none" inset="2" id="NPT-Vf-wdt">
+                        <rect key="frame" x="68" y="362" width="62" height="61"/>
+                        <buttonCell key="cell" type="square" title="Account" bezelStyle="shadowlessSquare" image="Account Button" imagePosition="above" alignment="center" focusRingType="none" inset="2" id="NPT-Vf-wdt">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="10" name="Raleway-Light"/>
                         </buttonCell>
@@ -238,8 +76,8 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="c1p-SX-QFQ">
-                        <rect key="frame" x="179" y="362" width="62" height="53"/>
-                        <buttonCell key="cell" type="square" title="Bandwidth" bezelStyle="shadowlessSquare" image="Bandwidth-Icon" imagePosition="above" alignment="center" inset="2" id="SKZ-9M-ZFJ">
+                        <rect key="frame" x="144" y="362" width="62" height="53"/>
+                        <buttonCell key="cell" type="square" title="Bandwidth" bezelStyle="shadowlessSquare" image="Bandwidth Button" imagePosition="above" alignment="center" inset="2" id="SKZ-9M-ZFJ">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="10" name="Raleway-Light"/>
                         </buttonCell>
@@ -248,8 +86,8 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="Y3b-ju-7in">
-                        <rect key="frame" x="252" y="362" width="62" height="56"/>
-                        <buttonCell key="cell" type="square" title="Status" bezelStyle="shadowlessSquare" image="Status-Icon" imagePosition="above" alignment="center" inset="2" id="Jpe-nv-weI">
+                        <rect key="frame" x="216" y="362" width="62" height="56"/>
+                        <buttonCell key="cell" type="square" title="Status" bezelStyle="shadowlessSquare" image="Status Button" imagePosition="above" alignment="center" inset="2" id="Jpe-nv-weI">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="10" name="Raleway-Light"/>
                         </buttonCell>
@@ -257,31 +95,556 @@
                             <action selector="selectTab:" target="-2" id="PFW-ZB-pQh"/>
                         </connections>
                     </button>
-                    <button focusRingType="none" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50Q-kb-XJw">
-                        <rect key="frame" x="36" y="362" width="62" height="60"/>
-                        <buttonCell key="cell" type="square" title="General" bezelStyle="shadowlessSquare" image="General-icon" imagePosition="above" alignment="center" focusRingType="none" inset="2" id="dwC-vx-xwb">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                    <button fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="Ys7-cS-i9h">
+                        <rect key="frame" x="286" y="362" width="62" height="56"/>
+                        <buttonCell key="cell" type="square" title="Sync" bezelStyle="shadowlessSquare" image="Account Button" imagePosition="above" alignment="center" inset="2" id="32c-zi-qaX">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="10" name="Raleway-Light"/>
                         </buttonCell>
                         <connections>
-                            <action selector="selectTab:" target="-2" id="BfG-1g-oQ2"/>
+                            <action selector="selectTab:" target="-2" id="9Ol-BN-u8b"/>
                         </connections>
                     </button>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KW5-2C-bQX" userLabel="Container View">
+                        <rect key="frame" x="0.0" y="62" width="351" height="281"/>
+                    </customView>
+                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Iyw-4D-YDA">
+                        <rect key="frame" x="315" y="470" width="16" height="16"/>
+                    </progressIndicator>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="277.5" y="215.5"/>
+            <point key="canvasLocation" x="249.5" y="213.5"/>
         </window>
+        <viewController id="X3G-VU-Oc4" userLabel="Popover View Controller">
+            <connections>
+                <outlet property="view" destination="Pnk-Eo-Zdr" id="BIZ-HI-j91"/>
+            </connections>
+        </viewController>
+        <popover id="1yy-mh-Jnb">
+            <connections>
+                <outlet property="contentViewController" destination="X3G-VU-Oc4" id="EyX-a6-Ai3"/>
+            </connections>
+        </popover>
         <userDefaultsController representsSharedInstance="YES" id="5W4-7o-gwy"/>
+        <view id="KeH-nF-XhM" userLabel="General View">
+            <rect key="frame" x="0.0" y="0.0" width="351" height="281"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KcK-ac-cnU">
+                    <rect key="frame" x="33" y="245" width="285" height="18"/>
+                    <buttonCell key="cell" type="check" title="Start SafeDrive at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1ie-s5-kcc">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="12" name="Raleway-Light"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.autostart" id="mxV-Bl-gnh">
+                            <dictionary key="options">
+                                <integer key="NSNoSelectionPlaceholder" value="0"/>
+                                <integer key="NSNullPlaceholder" value="0"/>
+                                <bool key="NSValidatesImmediately" value="YES"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Ue-ib-U8G">
+                    <rect key="frame" x="33" y="215" width="285" height="18"/>
+                    <buttonCell key="cell" type="check" title="Mount volume automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0FP-Pr-0Xb">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="12" name="Raleway-Light"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.sharedSystemAPI.mountAtLaunch" id="zB5-ow-KsX"/>
+                    </connections>
+                </button>
+            </subviews>
+        </view>
+        <view id="Z3b-vj-IhT" userLabel="Account View">
+            <rect key="frame" x="0.0" y="0.0" width="351" height="281"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="phg-gs-rlJ">
+                    <rect key="frame" x="0.0" y="49" width="351" height="222"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" imageScaling="proportionallyDown" image="Storage-Status-backing" id="qZI-of-a8E"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fKc-az-M95">
+                    <rect key="frame" x="179" y="223" width="120" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="YHK-ad-MgJ">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5IG-Da-33I">
+                    <rect key="frame" x="60" y="123" width="111" height="18"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Account Status" id="ls0-ss-Q3M">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" red="0.46274509800000002" green="0.50196078430000002" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="su2-0t-CGk">
+                    <rect key="frame" x="179" y="124" width="120" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="RdK-0f-tjt">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4o5-LS-sTh">
+                    <rect key="frame" x="60" y="98" width="111" height="18"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Account Expiration" id="hI7-w1-916">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" red="0.46274509800000002" green="0.50196078430000002" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AbA-9f-zsf">
+                    <rect key="frame" x="179" y="99" width="120" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="Hwz-Yo-xhN">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w45-e7-euf">
+                    <rect key="frame" x="179" y="190" width="120" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="Z7h-lO-QAg">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jEO-oE-b3P">
+                    <rect key="frame" x="179" y="158" width="120" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" placeholderString="Unknown" id="jlV-4v-Hxs">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <point key="canvasLocation" x="692.5" y="338.5"/>
+        </view>
+        <view id="xqp-Tx-tcF" userLabel="Bandwidth View">
+            <rect key="frame" x="0.0" y="0.0" width="351" height="281"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+        </view>
+        <view id="zC8-Z9-bt7" userLabel="Status View">
+            <rect key="frame" x="0.0" y="0.0" width="351" height="281"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PSS-7z-LeT">
+                    <rect key="frame" x="29" y="206" width="150" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Volume Size:" id="yCU-iF-inG">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B8t-Ir-yfi">
+                    <rect key="frame" x="29" y="181" width="150" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Volume Free Space:" id="M7T-Cq-HFE">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7cv-gh-tuI">
+                    <rect key="frame" x="183" y="206" width="147" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="-" id="qUF-2E-d5k">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jWM-gY-s0k">
+                    <rect key="frame" x="183" y="181" width="147" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="-" id="SfX-TI-mgk">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9pC-Up-2u6">
+                    <rect key="frame" x="29" y="231" width="150" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Mounted:" id="q50-P1-gD1">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dAi-Wu-Tfy">
+                    <rect key="frame" x="183" y="231" width="147" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Unmounted" id="saD-E5-f2F">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="Feh-8o-3Rx">
+                    <rect key="frame" x="31" y="147" width="297" height="20"/>
+                </progressIndicator>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vci-Jw-qzh">
+                    <rect key="frame" x="29" y="256" width="150" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Background Service:" id="Y6x-lG-Nfe">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CTS-LC-Kd9">
+                    <rect key="frame" x="183" y="256" width="147" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Stopped" id="2bn-f9-aSc">
+                        <font key="font" size="12" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <point key="canvasLocation" x="692.5" y="16.5"/>
+        </view>
+        <view id="vjY-w3-vEM" userLabel="Sync View">
+            <rect key="frame" x="0.0" y="0.0" width="351" height="281"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <box autoresizesSubviews="NO" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="1yw-eS-vkd" userLabel="Sync Folder List">
+                    <rect key="frame" x="14" y="143" width="317" height="138"/>
+                    <view key="contentView" id="VTE-C6-4hh">
+                        <rect key="frame" x="1" y="1" width="315" height="122"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="Gyq-4t-GOb">
+                                <rect key="frame" x="0.0" y="3" width="315" height="121"/>
+                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="AC8-bx-FtC">
+                                    <rect key="frame" x="0.0" y="0.0" width="315" height="121"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="21" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="16" outlineTableColumn="e3e-JX-9iM" id="lRd-e6-jN6">
+                                            <rect key="frame" x="0.0" y="0.0" width="315" height="121"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <size key="intercellSpacing" width="2" height="3"/>
+                                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                                            <color key="gridColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                                            <tableColumns>
+                                                <tableColumn width="313" minWidth="40" maxWidth="1000" id="e3e-JX-9iM">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                    </tableHeaderCell>
+                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" title="Text Cell" id="lTq-LO-Xch">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                                                    </textFieldCell>
+                                                    <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="label"/>
+                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
+                                                    <prototypeCellViews>
+                                                        <tableCellView identifier="MachineView" id="i56-pc-Hvv" userLabel="MachineView" customClass="SyncManagerTableCellView" customModule="SafeDrive" customModuleProvider="target">
+                                                            <rect key="frame" x="1" y="1" width="313" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fiJ-8Q-nn4" userLabel="Image">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="17" height="21"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="17" id="k5L-hf-ZYx"/>
+                                                                    </constraints>
+                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="4CL-mX-pLv"/>
+                                                                </imageView>
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="oMJ-by-3zR" userLabel="Label">
+                                                                    <rect key="frame" x="17" y="2" width="226" height="17"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Machine Row" id="1qX-ko-wSC">
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W5g-V0-7dh">
+                                                                    <rect key="frame" x="242" y="-5" width="67" height="28"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="57" id="DxP-re-2ZS"/>
+                                                                    </constraints>
+                                                                    <buttonCell key="cell" type="push" title="Add" bezelStyle="rounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="Yng-We-Mcm">
+                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                    </buttonCell>
+                                                                </button>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="W5g-V0-7dh" firstAttribute="top" secondItem="oMJ-by-3zR" secondAttribute="top" id="0PZ-au-zs1"/>
+                                                                <constraint firstItem="fiJ-8Q-nn4" firstAttribute="bottom" secondItem="oMJ-by-3zR" secondAttribute="bottom" constant="2" id="1vP-HY-G7e"/>
+                                                                <constraint firstItem="oMJ-by-3zR" firstAttribute="top" secondItem="fiJ-8Q-nn4" secondAttribute="top" constant="2" id="JMq-uM-ww9"/>
+                                                                <constraint firstAttribute="trailing" secondItem="W5g-V0-7dh" secondAttribute="trailing" constant="9" id="JnE-AN-HYR"/>
+                                                                <constraint firstItem="oMJ-by-3zR" firstAttribute="leading" secondItem="fiJ-8Q-nn4" secondAttribute="trailing" constant="2" id="Rxm-KV-nBw"/>
+                                                                <constraint firstItem="fiJ-8Q-nn4" firstAttribute="leading" secondItem="i56-pc-Hvv" secondAttribute="leading" id="b20-yp-zfm"/>
+                                                                <constraint firstAttribute="trailing" secondItem="oMJ-by-3zR" secondAttribute="trailing" constant="72" id="yck-oO-a2y"/>
+                                                                <constraint firstItem="oMJ-by-3zR" firstAttribute="centerY" secondItem="i56-pc-Hvv" secondAttribute="centerY" id="zYJ-V9-rM9"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <outlet property="addButton" destination="W5g-V0-7dh" id="iyf-ti-4du"/>
+                                                                <outlet property="imageView" destination="fiJ-8Q-nn4" id="cYK-kc-kap"/>
+                                                                <outlet property="textField" destination="oMJ-by-3zR" id="5xs-Ff-was"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                        <tableCellView identifier="FolderView" id="aCb-Lb-UrB" userLabel="FolderView" customClass="SyncManagerTableCellView" customModule="SafeDrive" customModuleProvider="target">
+                                                            <rect key="frame" x="1" y="25" width="313" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9GP-Rb-dbG" userLabel="Image">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="17" height="21"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="17" id="okk-6F-iSu"/>
+                                                                    </constraints>
+                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="dd9-aB-jfM"/>
+                                                                </imageView>
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="VYj-QB-gRg" userLabel="Label">
+                                                                    <rect key="frame" x="17" y="2" width="160" height="17"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Folder Row" id="eQd-3w-qUL">
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qWh-QW-3qw">
+                                                                    <rect key="frame" x="242" y="-5" width="67" height="28"/>
+                                                                    <buttonCell key="cell" type="push" title="Remove" bezelStyle="rounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="2FQ-Rw-LRZ">
+                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                    </buttonCell>
+                                                                </button>
+                                                                <button toolTip="Sync this folder" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jRl-l8-cwR">
+                                                                    <rect key="frame" x="230" y="1" width="15" height="17"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="15" id="jiC-gJ-fuM"/>
+                                                                    </constraints>
+                                                                    <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSRefreshFreestandingTemplate" imagePosition="above" alignment="left" controlSize="small" imageScaling="proportionallyUpOrDown" inset="2" id="dPe-N3-kfQ">
+                                                                        <behavior key="behavior" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                    </buttonCell>
+                                                                </button>
+                                                                <button toolTip="Restore this folder" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i4p-yV-C6K">
+                                                                    <rect key="frame" x="207" y="1" width="15" height="17"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="15" id="0Ke-Dy-X6C"/>
+                                                                    </constraints>
+                                                                    <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSInvalidDataFreestandingTemplate" imagePosition="above" alignment="left" controlSize="small" imageScaling="proportionallyUpOrDown" inset="2" id="tah-vj-V6X">
+                                                                        <behavior key="behavior" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                    </buttonCell>
+                                                                </button>
+                                                                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="IWm-Nm-7Vt">
+                                                                    <rect key="frame" x="183" y="2" width="16" height="16"/>
+                                                                </progressIndicator>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="jRl-l8-cwR" firstAttribute="top" secondItem="IWm-Nm-7Vt" secondAttribute="top" id="0r8-4b-pN9"/>
+                                                                <constraint firstItem="9GP-Rb-dbG" firstAttribute="leading" secondItem="aCb-Lb-UrB" secondAttribute="leading" id="5uZ-ys-TR2"/>
+                                                                <constraint firstItem="qWh-QW-3qw" firstAttribute="leading" secondItem="jRl-l8-cwR" secondAttribute="trailing" constant="2" id="DgM-Qo-12s"/>
+                                                                <constraint firstItem="jRl-l8-cwR" firstAttribute="bottom" secondItem="qWh-QW-3qw" secondAttribute="bottom" id="E4c-28-fV0"/>
+                                                                <constraint firstItem="i4p-yV-C6K" firstAttribute="leading" secondItem="IWm-Nm-7Vt" secondAttribute="trailing" constant="8" symbolic="YES" id="J1E-pI-uLO"/>
+                                                                <constraint firstItem="jRl-l8-cwR" firstAttribute="leading" secondItem="VYj-QB-gRg" secondAttribute="trailing" constant="55" id="JLt-u0-EcL"/>
+                                                                <constraint firstItem="VYj-QB-gRg" firstAttribute="top" secondItem="9GP-Rb-dbG" secondAttribute="top" constant="2" id="PHf-uw-nHE"/>
+                                                                <constraint firstItem="VYj-QB-gRg" firstAttribute="bottom" secondItem="9GP-Rb-dbG" secondAttribute="bottom" constant="-2" id="Ufh-7c-3CF"/>
+                                                                <constraint firstItem="i4p-yV-C6K" firstAttribute="baseline" secondItem="jRl-l8-cwR" secondAttribute="baseline" id="ayG-CK-3TS"/>
+                                                                <constraint firstItem="jRl-l8-cwR" firstAttribute="leading" secondItem="IWm-Nm-7Vt" secondAttribute="leading" constant="47" id="bHy-HF-eH6"/>
+                                                                <constraint firstAttribute="trailing" secondItem="qWh-QW-3qw" secondAttribute="trailing" constant="9" id="cTQ-Q0-Zll"/>
+                                                                <constraint firstAttribute="trailing" secondItem="VYj-QB-gRg" secondAttribute="trailing" constant="138" id="f13-zK-XrK"/>
+                                                                <constraint firstItem="9GP-Rb-dbG" firstAttribute="centerY" secondItem="aCb-Lb-UrB" secondAttribute="centerY" id="lNC-xB-xqP"/>
+                                                                <constraint firstItem="VYj-QB-gRg" firstAttribute="leading" secondItem="9GP-Rb-dbG" secondAttribute="trailing" constant="2" id="yWE-ag-KRf"/>
+                                                                <constraint firstItem="9GP-Rb-dbG" firstAttribute="bottom" secondItem="qWh-QW-3qw" secondAttribute="bottom" constant="1" id="ycD-9e-dt4"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <outlet property="imageView" destination="9GP-Rb-dbG" id="Qvb-So-boT"/>
+                                                                <outlet property="removeButton" destination="qWh-QW-3qw" id="Lqt-Kk-xvk"/>
+                                                                <outlet property="restoreNowButton" destination="i4p-yV-C6K" id="YCs-PB-9jj"/>
+                                                                <outlet property="syncNowButton" destination="jRl-l8-cwR" id="tob-dr-SXH"/>
+                                                                <outlet property="syncStatus" destination="IWm-Nm-7Vt" id="Sdr-UX-mhs"/>
+                                                                <outlet property="textField" destination="VYj-QB-gRg" id="A75-AS-9go"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                    </prototypeCellViews>
+                                                </tableColumn>
+                                            </tableColumns>
+                                            <connections>
+                                                <outlet property="dataSource" destination="-2" id="Xdb-6K-xP2"/>
+                                                <outlet property="delegate" destination="-2" id="NOl-If-Sxc"/>
+                                            </connections>
+                                        </outlineView>
+                                    </subviews>
+                                    <nil key="backgroundColor"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="SKB-iE-qnn">
+                                    <rect key="frame" x="0.0" y="-16" width="0.0" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Wtq-as-5zG">
+                                    <rect key="frame" x="-16" y="0.0" width="16" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                    </view>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </box>
+                <box autoresizesSubviews="NO" title="Sync Folder Details" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="Tqa-jV-DfI">
+                    <rect key="frame" x="14" y="6" width="317" height="133"/>
+                    <view key="contentView" id="KnD-k4-8iP">
+                        <rect key="frame" x="1" y="1" width="315" height="117"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZwZ-c1-Kwt">
+                                <rect key="frame" x="84" y="59" width="80" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Waiting" id="uC4-KY-jdK">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="751" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s7T-g2-0R3">
+                                <rect key="frame" x="168" y="86" width="16" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="at" id="Ezq-oc-4Ll">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="hidden" keyPath="syncTimePicker.hidden" id="EKn-a8-myL"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LiW-g6-iuN">
+                                <rect key="frame" x="84" y="33" width="204" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="N/A" id="Gx1-Ct-9w3">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fqs-NM-vRc">
+                                <rect key="frame" x="18" y="33" width="62" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Progress:" id="sHy-h8-eGs">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OmI-TW-sx5">
+                                <rect key="frame" x="84" y="79" width="81" height="26"/>
+                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="4UI-M6-pDA">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="Lo6-IG-uUX">
+                                        <items>
+                                            <menuItem title="Hourly" id="fgL-7h-ah3"/>
+                                            <menuItem title="Daily" id="8ri-xa-ZM1"/>
+                                            <menuItem title="Weekly" id="QPv-Yn-Wbp">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="setSyncFrequencyForFolder:" target="-2" id="nFs-AA-O8p"/>
+                                </connections>
+                            </popUpButton>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kyM-Eh-1ar">
+                                <rect key="frame" x="33" y="60" width="47" height="16"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Status:" id="JkU-I0-wZe">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button hidden="YES" verticalHuggingPriority="752" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nuB-bR-vrs">
+                                <rect key="frame" x="160" y="57" width="29" height="19"/>
+                                <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSRevealFreestandingTemplate" imagePosition="only" alignment="center" enabled="NO" state="on" imageScaling="proportionallyDown" inset="2" id="mom-R3-Wn8">
+                                    <behavior key="behavior" lightByContents="YES"/>
+                                    <font key="font" metaFont="cellTitle"/>
+                                </buttonCell>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TCi-qb-fAm">
+                                <rect key="frame" x="42" y="85" width="38" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sync:" id="C02-3f-8jc">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="zj3-DB-yCx">
+                                <rect key="frame" x="14" y="13" width="287" height="12"/>
+                            </progressIndicator>
+                            <datePicker hidden="YES" horizontalHuggingPriority="249" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4jK-xw-LzI">
+                                <rect key="frame" x="190" y="83" width="114" height="22"/>
+                                <datePickerCell key="cell" controlSize="small" enabled="NO" borderStyle="bezel" alignment="left" id="rEM-pv-RCV">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <date key="date" timeIntervalSinceReferenceDate="-595969200">
+                                        <!--1982-02-12 05:00:00 +0000-->
+                                    </date>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <datePickerElements key="datePickerElements" hour="YES" minute="YES"/>
+                                </datePickerCell>
+                                <connections>
+                                    <action selector="setSyncTime:" target="-2" id="Rqd-5Z-ZCO"/>
+                                </connections>
+                            </datePicker>
+                        </subviews>
+                    </view>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstItem="1yw-eS-vkd" firstAttribute="top" secondItem="vjY-w3-vEM" secondAttribute="top" id="9Wr-ft-4eU"/>
+                <constraint firstItem="1yw-eS-vkd" firstAttribute="leading" secondItem="vjY-w3-vEM" secondAttribute="leading" constant="17" id="Cv7-VA-s0n"/>
+                <constraint firstItem="Tqa-jV-DfI" firstAttribute="leading" secondItem="1yw-eS-vkd" secondAttribute="leading" id="WeY-Ol-Yhi"/>
+                <constraint firstItem="Tqa-jV-DfI" firstAttribute="top" secondItem="1yw-eS-vkd" secondAttribute="bottom" constant="8" symbolic="YES" id="d1J-Ve-L6g"/>
+                <constraint firstItem="Tqa-jV-DfI" firstAttribute="trailing" secondItem="1yw-eS-vkd" secondAttribute="trailing" id="hE0-HP-omQ"/>
+                <constraint firstAttribute="bottom" secondItem="1yw-eS-vkd" secondAttribute="bottom" constant="147" id="hNj-k5-Kag"/>
+                <constraint firstAttribute="trailing" secondItem="1yw-eS-vkd" secondAttribute="trailing" constant="23" id="mxv-4i-et1"/>
+                <constraint firstAttribute="bottom" secondItem="Tqa-jV-DfI" secondAttribute="bottom" constant="10" id="ztR-Ps-hiK"/>
+            </constraints>
+            <point key="canvasLocation" x="692.5" y="673.5"/>
+        </view>
+        <customView id="Pnk-Eo-Zdr" userLabel="Sync failure popover" customClass="SyncFailurePopoverView" customModule="SafeDrive" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="351" height="205"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="311" translatesAutoresizingMaskIntoConstraints="NO" id="jDV-MF-dk0">
+                    <rect key="frame" x="18" y="20" width="315" height="165"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="165" id="Vag-ok-HTm"/>
+                    </constraints>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" placeholderString="Error" id="bWA-Z5-gs3">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="jDV-MF-dk0" firstAttribute="leading" secondItem="Pnk-Eo-Zdr" secondAttribute="leading" constant="20" symbolic="YES" id="Ef1-Bv-0lF"/>
+                <constraint firstItem="jDV-MF-dk0" firstAttribute="top" secondItem="Pnk-Eo-Zdr" secondAttribute="top" constant="20" symbolic="YES" id="R3V-IM-C60"/>
+                <constraint firstAttribute="trailing" secondItem="jDV-MF-dk0" secondAttribute="trailing" constant="20" symbolic="YES" id="tSb-if-xZo"/>
+            </constraints>
+            <connections>
+                <outlet property="message" destination="jDV-MF-dk0" id="7s3-jF-Cnn"/>
+            </connections>
+            <point key="canvasLocation" x="236.5" y="750.5"/>
+        </customView>
     </objects>
     <resources>
-        <image name="Account-Icon" width="41" height="41"/>
-        <image name="Bandwidth-Icon" width="55" height="32"/>
-        <image name="General-icon" width="40" height="39"/>
+        <image name="Account Button" width="41" height="41"/>
+        <image name="Bandwidth Button" width="55" height="32"/>
+        <image name="General Button" width="40" height="39"/>
+        <image name="NSInvalidDataFreestandingTemplate" width="14" height="14"/>
+        <image name="NSRefreshFreestandingTemplate" width="14" height="14"/>
+        <image name="NSRevealFreestandingTemplate" width="14" height="14"/>
         <image name="Settings-Background" width="351" height="501"/>
-        <image name="Status-Icon" width="36" height="35"/>
+        <image name="Status Button" width="36" height="35"/>
         <image name="Storage-Status-backing" width="265" height="124"/>
     </resources>
 </document>

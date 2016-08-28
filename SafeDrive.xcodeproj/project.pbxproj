@@ -42,10 +42,6 @@
 		AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */; };
 		AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C711BFC57B50008FB8B /* Settings-Background.png */; };
-		AA543C781BFC57B50008FB8B /* General-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C721BFC57B50008FB8B /* General-icon.png */; };
-		AA543C791BFC57B50008FB8B /* Account-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C731BFC57B50008FB8B /* Account-Icon.png */; };
-		AA543C7A1BFC57B50008FB8B /* Bandwidth-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C741BFC57B50008FB8B /* Bandwidth-Icon.png */; };
-		AA543C7B1BFC57B50008FB8B /* Status-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C751BFC57B50008FB8B /* Status-Icon.png */; };
 		AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */; };
 		AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */; };
 		AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */; };
@@ -70,9 +66,7 @@
 		AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */; };
 		AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
-		AAA88BC11C825451009BE1C7 /* SyncManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC01C825451009BE1C7 /* SyncManagerWindowController.swift */; };
 		AAA88BC31C8267C0009BE1C7 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC21C8267C0009BE1C7 /* ErrorHandler.swift */; };
-		AAA88BC51C829846009BE1C7 /* SyncManagerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAA88BC41C829846009BE1C7 /* SyncManagerWindow.xib */; };
 		AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
 		AAA88BC91C8385AA009BE1C7 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC81C8385A9009BE1C7 /* Machine.swift */; };
 		AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */; };
@@ -234,7 +228,7 @@
 		AA1A460F1BEDE685004A5310 /* HKTHashProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKTHashProvider.m; sourceTree = "<group>"; };
 		AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/Mac/Realm.framework; sourceTree = "<group>"; };
 		AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/Mac/RealmSwift.framework; sourceTree = "<group>"; };
-		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncFailurePopoverView.swift; sourceTree = "<group>"; };
+		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
 		AA278BFE1CA78E970088B03F /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		AA2DAB241CB3293F00951762 /* rsync-3.1.2 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "rsync-3.1.2"; path = "Bundled Dependencies/rsync-3.1.2"; sourceTree = "<group>"; };
 		AA2DAB271CB3664200951762 /* sshfs-2.7 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "sshfs-2.7"; path = "Bundled Dependencies/sshfs-2.7"; sourceTree = "<group>"; };
@@ -256,10 +250,6 @@
 		AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NMSSH.framework; path = Carthage/Build/Mac/NMSSH.framework; sourceTree = "<group>"; };
 		AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Storage-Status-backing.png"; sourceTree = "<group>"; };
 		AA543C711BFC57B50008FB8B /* Settings-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-Background.png"; sourceTree = "<group>"; };
-		AA543C721BFC57B50008FB8B /* General-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "General-icon.png"; sourceTree = "<group>"; };
-		AA543C731BFC57B50008FB8B /* Account-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Account-Icon.png"; sourceTree = "<group>"; };
-		AA543C741BFC57B50008FB8B /* Bandwidth-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bandwidth-Icon.png"; sourceTree = "<group>"; };
-		AA543C751BFC57B50008FB8B /* Status-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Status-Icon.png"; sourceTree = "<group>"; };
 		AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Light.ttf"; sourceTree = "<group>"; };
 		AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCDelegate.swift; path = SafeDrive/XPCHandlers/AppXPCDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -290,10 +280,8 @@
 		AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		AA7B460E1C46F18600EA8889 /* SDErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDErrorHandler.h; path = ErrorHandler/SDErrorHandler.h; sourceTree = "<group>"; };
 		AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDErrorHandler.m; path = ErrorHandler/SDErrorHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableRowView.swift; path = SyncManager/SyncManagerTableRowView.swift; sourceTree = "<group>"; };
-		AAA88BC01C825451009BE1C7 /* SyncManagerWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerWindowController.swift; path = SyncManager/SyncManagerWindowController.swift; sourceTree = "<group>"; };
+		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableRowView.swift; path = ../PreferencesWindow/SyncManagerTableRowView.swift; sourceTree = "<group>"; };
 		AAA88BC21C8267C0009BE1C7 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
-		AAA88BC41C829846009BE1C7 /* SyncManagerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SyncManagerWindow.xib; path = SyncManager/SyncManagerWindow.xib; sourceTree = "<group>"; };
 		AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFolder.swift; path = Shared/SyncFolder.swift; sourceTree = "<group>"; };
 		AAA88BC81C8385A9009BE1C7 /* Machine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Machine.swift; path = Shared/Machine.swift; sourceTree = "<group>"; };
 		AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -320,7 +308,7 @@
 		AAF9460C1C815E3500B972C3 /* SafeDriveFinder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeDriveFinder-Bridging-Header.h"; sourceTree = "<group>"; };
 		AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncScheduler.swift; sourceTree = "<group>"; };
 		AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SafeDrive-Bridging-Header.h"; sourceTree = "<group>"; };
-		AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableCellView.swift; path = SyncManager/SyncManagerTableCellView.swift; sourceTree = "<group>"; };
+		AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableCellView.swift; path = ../PreferencesWindow/SyncManagerTableCellView.swift; sourceTree = "<group>"; };
 		AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "update-version.sh"; sourceTree = "<group>"; };
 		BE2D8449BAB0BAC9033667C6 /* Pods-safedriveaskpass.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.release.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.release.xcconfig"; sourceTree = "<group>"; };
 		CD1169D271386AF89774EE8A /* Pods_SafeDriveFinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDriveFinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -474,7 +462,6 @@
 				AA54495E1BC3664F00826A0B /* ServiceManager */,
 				AA3168161A191B72006CC0EB /* Supporting Files */,
 				AA61F8481C05356D00D992FE /* SyncController */,
-				AAAA91291BC7679B00A17250 /* SyncManager */,
 				AAF85BFB1A23A4BC0063B54F /* SystemAPI */,
 				AA9E7DE31A79505600E3C3E8 /* Utilities */,
 				AA5C1A951BB234DD006A0C8C /* XPC */,
@@ -529,12 +516,11 @@
 			children = (
 				AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */,
 				AA543C711BFC57B50008FB8B /* Settings-Background.png */,
-				AA543C721BFC57B50008FB8B /* General-icon.png */,
-				AA543C731BFC57B50008FB8B /* Account-Icon.png */,
-				AA543C741BFC57B50008FB8B /* Bandwidth-Icon.png */,
-				AA543C751BFC57B50008FB8B /* Status-Icon.png */,
 				AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */,
 				AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */,
+				AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */,
+				AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */,
+				AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */,
 			);
 			path = PreferencesWindow;
 			sourceTree = "<group>";
@@ -680,18 +666,6 @@
 				AA1A460F1BEDE685004A5310 /* HKTHashProvider.m */,
 			);
 			path = Utilities;
-			sourceTree = "<group>";
-		};
-		AAAA91291BC7679B00A17250 /* SyncManager */ = {
-			isa = PBXGroup;
-			children = (
-				AAA88BC01C825451009BE1C7 /* SyncManagerWindowController.swift */,
-				AAA88BC41C829846009BE1C7 /* SyncManagerWindow.xib */,
-				AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */,
-				AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */,
-				AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */,
-			);
-			name = SyncManager;
 			sourceTree = "<group>";
 		};
 		AAAF1A401BF59446008E7865 /* Account Controller */ = {
@@ -933,14 +907,10 @@
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */,
 				AA2E55101A774E0000647637 /* known_hosts in Resources */,
-				AA543C7A1BFC57B50008FB8B /* Bandwidth-Icon.png in Resources */,
 				AAB617BB1A7B0FCA0003CD30 /* Changelog.rtf in Resources */,
 				AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */,
 				AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */,
-				AA543C781BFC57B50008FB8B /* General-icon.png in Resources */,
 				AA0A7D1E1A19682D00DCB77E /* AccountWindow.xib in Resources */,
-				AA543C791BFC57B50008FB8B /* Account-Icon.png in Resources */,
-				AA543C7B1BFC57B50008FB8B /* Status-Icon.png in Resources */,
 				AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */,
 				AA76DC2B1C879B77007B320E /* Install OSXFUSE 2.8.pkg in Resources */,
 				AA76DC291C879076007B320E /* InstallerWindow.xib in Resources */,
@@ -948,7 +918,6 @@
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
 				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
 				AA278BFF1CA78E970088B03F /* Credits.rtf in Resources */,
-				AAA88BC51C829846009BE1C7 /* SyncManagerWindow.xib in Resources */,
 				AA7319421A2F7EEB003E2391 /* Main.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1259,7 +1228,6 @@
 				AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */,
 				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,
 				AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */,
-				AAA88BC11C825451009BE1C7 /* SyncManagerWindowController.swift in Sources */,
 				AA7B46101C46F18600EA8889 /* SDErrorHandler.m in Sources */,
 				AAA88BC91C8385AA009BE1C7 /* Machine.swift in Sources */,
 				AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */,

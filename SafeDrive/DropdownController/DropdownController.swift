@@ -9,8 +9,6 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     @IBOutlet var statusItemMenu: NSMenu!
     @IBOutlet var connectMenuItem: NSMenuItem!
     @IBOutlet var preferencesMenuItem: NSMenuItem!
-    @IBOutlet var syncPreferencesMenuItem: NSMenuItem!
-    
     
     private var safeDriveAPI = API.sharedAPI
     private var mountController = SDMountController.sharedAPI()
@@ -78,13 +76,8 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenAboutWindow, object: nil)
     }
     
-    @IBAction func openSyncWindow(sender: AnyObject) {
-        NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenSyncWindow, object: nil)
-    }
-    
     private func enableMenuItems(enabled: Bool) {
         self.preferencesMenuItem.enabled = enabled
-        self.syncPreferencesMenuItem.enabled = enabled
     }
     
     private func disconnectVolume() {

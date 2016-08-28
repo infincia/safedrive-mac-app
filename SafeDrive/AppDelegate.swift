@@ -20,7 +20,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     private var aboutWindowController: DCOAboutWindowController!
     private var serviceRouter: SDServiceXPCRouter!
     private var serviceManager: ServiceManager!
-    private var syncManagerWindowController: SyncManagerWindowController?
     
     private var syncScheduler: SyncScheduler?
     private var installWindowController: InstallerWindowController?
@@ -95,7 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     func applicationShouldOpenSyncWindow(notification: NSNotification) {
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
             NSApp.activateIgnoringOtherApps(true)
-            self.syncManagerWindowController?.showWindow(nil)
+            self.preferencesWindowController?.showWindow(nil)
         })
     }
     
@@ -175,9 +174,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.accountWindowController = AccountWindowController()
             _ = self.accountWindowController.window!
             
-            self.preferencesWindowController = PreferencesWindowController()
-            _ = self.preferencesWindowController.window!
-            
             
             self.aboutWindowController = DCOAboutWindowController()
             self.aboutWindowController.useTextViewForAcknowledgments = true
@@ -219,15 +215,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
             self.syncScheduler?.syncRunLoop()
         }
-        self.syncManagerWindowController = SyncManagerWindowController(uniqueClientID: uniqueClientID)
-        _ = self.syncManagerWindowController!.window!
+        self.preferencesWindowController = PreferencesWindowController(uniqueClientID: uniqueClientID)
+        _ = self.preferencesWindowController!.window!
     }
     
     func didSignOut(notification: NSNotification) {
         assert(NSThread.isMainThread(), "Not main thread!!!")
         self.syncScheduler?.stop()
-        self.syncManagerWindowController?.close()
-        self.syncManagerWindowController = nil
+        self.preferencesWindowController?.close()
+        self.preferencesWindowController = nil
     }
     
     func didReceiveAccountDetails(notification: NSNotification) {
