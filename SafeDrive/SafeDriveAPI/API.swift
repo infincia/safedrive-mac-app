@@ -143,7 +143,7 @@ class API: NSObject {
 
         Alamofire.request(Endpoint.ErrorLog(postParameters))
             .validate()
-            .responseString { response in
+            .responseJSON { response in
                 switch response.result {
                 case .Success:
                     successBlock()
