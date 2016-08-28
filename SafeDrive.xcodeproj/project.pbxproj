@@ -30,7 +30,6 @@
 		AA1B5EF41CA1B55F005DCB81 /* Realm.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA1B5EF51CA1B55F005DCB81 /* RealmSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
-		AA278BFF1CA78E970088B03F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AA278BFE1CA78E970088B03F /* Credits.rtf */; };
 		AA2DAB261CB32A6800951762 /* rsync-3.1.2 in Copy Files */ = {isa = PBXBuildFile; fileRef = AA2DAB241CB3293F00951762 /* rsync-3.1.2 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA2DAB291CB3664D00951762 /* sshfs-2.7 in Copy Files */ = {isa = PBXBuildFile; fileRef = AA2DAB271CB3664200951762 /* sshfs-2.7 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
@@ -52,6 +51,8 @@
 		AA5754121C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */; };
 		AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */; };
 		AA61F84B1C05356D00D992FE /* SDSyncController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA61F84A1C05356D00D992FE /* SDSyncController.m */; };
+		AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
+		AA650CF31D73A381008DA5CB /* Changelog.md in Resources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
@@ -80,7 +81,6 @@
 		AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD61C851F17009BE1C7 /* AccountController.swift */; };
 		AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD81C857FFB009BE1C7 /* DropdownController.swift */; };
 		AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAA88BDE1C85F5F7009BE1C7 /* DropdownMenu.xib */; };
-		AAB617BB1A7B0FCA0003CD30 /* Changelog.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BA1A7B0FCA0003CD30 /* Changelog.rtf */; };
 		AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */; };
 		AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7D5CC1CAF85C0001F9A8E /* FlatWindow.swift */; };
 		AAB7D5D31CB06A62001F9A8E /* AccountWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7D5D21CB06A62001F9A8E /* AccountWindowController.swift */; };
@@ -229,7 +229,6 @@
 		AA1B5EE81CA1B4A5005DCB81 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/Mac/Realm.framework; sourceTree = "<group>"; };
 		AA1B5EE91CA1B4A5005DCB81 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/Mac/RealmSwift.framework; sourceTree = "<group>"; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
-		AA278BFE1CA78E970088B03F /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		AA2DAB241CB3293F00951762 /* rsync-3.1.2 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "rsync-3.1.2"; path = "Bundled Dependencies/rsync-3.1.2"; sourceTree = "<group>"; };
 		AA2DAB271CB3664200951762 /* sshfs-2.7 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "sshfs-2.7"; path = "Bundled Dependencies/sshfs-2.7"; sourceTree = "<group>"; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
@@ -265,6 +264,7 @@
 		AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDServiceXPCRouter.m; path = SafeDrive/XPCHandlers/SDServiceXPCRouter.m; sourceTree = SOURCE_ROOT; };
 		AA61F8491C05356D00D992FE /* SDSyncController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSyncController.h; sourceTree = "<group>"; };
 		AA61F84A1C05356D00D992FE /* SDSyncController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSyncController.m; sourceTree = "<group>"; };
+		AA650CF11D73A29A008DA5CB /* Changelog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
 		AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+next.swift"; path = "Shared/NSDate+next.swift"; sourceTree = "<group>"; };
 		AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = ServiceManager/ServiceManager.swift; sourceTree = "<group>"; };
 		AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTests.swift; sourceTree = "<group>"; };
@@ -289,7 +289,6 @@
 		AAA88BD61C851F17009BE1C7 /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountController.swift; path = AccountController/AccountController.swift; sourceTree = "<group>"; };
 		AAA88BD81C857FFB009BE1C7 /* DropdownController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DropdownController.swift; path = DropdownController/DropdownController.swift; sourceTree = "<group>"; };
 		AAA88BDD1C85F5F7009BE1C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DropdownMenu.xib; sourceTree = "<group>"; };
-		AAB617BA1A7B0FCA0003CD30 /* Changelog.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Changelog.rtf; sourceTree = "<group>"; };
 		AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
 		AAB7D5CC1CAF85C0001F9A8E /* FlatWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlatWindow.swift; path = FlatWindow/FlatWindow.swift; sourceTree = "<group>"; };
 		AAB7D5D21CB06A62001F9A8E /* AccountWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountWindowController.swift; path = SafeDrive/AccountWindow/AccountWindowController.swift; sourceTree = SOURCE_ROOT; };
@@ -405,8 +404,7 @@
 				AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */,
 				AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */,
 				AA2E550F1A774E0000647637 /* known_hosts */,
-				AA278BFE1CA78E970088B03F /* Credits.rtf */,
-				AAB617BA1A7B0FCA0003CD30 /* Changelog.rtf */,
+				AA650CF11D73A29A008DA5CB /* Changelog.md */,
 				AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */,
 			);
 			path = Resources;
@@ -902,12 +900,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA650CF31D73A381008DA5CB /* Changelog.md in Resources */,
 				AAF945F41C80162700B972C3 /* io.safedrive.SafeDrive.Service.plist in Resources */,
 				AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */,
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */,
 				AA2E55101A774E0000647637 /* known_hosts in Resources */,
-				AAB617BB1A7B0FCA0003CD30 /* Changelog.rtf in Resources */,
 				AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */,
 				AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */,
 				AA0A7D1E1A19682D00DCB77E /* AccountWindow.xib in Resources */,
@@ -917,7 +915,6 @@
 				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
 				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
-				AA278BFF1CA78E970088B03F /* Credits.rtf in Resources */,
 				AA7319421A2F7EEB003E2391 /* Main.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1219,6 +1216,7 @@
 				AA76DC211C8762A9007B320E /* Installer.swift in Sources */,
 				AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */,
 				AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */,
+				AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */,
 				AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
