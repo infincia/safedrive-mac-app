@@ -20,7 +20,7 @@ NSString *const SDMountAtLaunchKey = @"mountAtLaunch";
 
 #pragma mark - SafeDrive API constants
 
-NSString *const SDAPIDomainTesting = @"testing.safedrive.io";
+NSString *const SDAPIDomainStaging = @"staging.safedrive.io";
 NSString *const SDAPIDomain = @"safedrive.io";
 NSString *const SDWebDomain = @"safedrive.io";
 
