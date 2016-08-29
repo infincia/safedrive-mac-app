@@ -30,3 +30,5 @@
 #import "SDServiceXPCRouter.h"
 
 @import TSMarkdownParser;
+
+@import Sparkle;

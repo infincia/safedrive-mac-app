@@ -9,7 +9,7 @@ import Crashlytics
 
 import RealmSwift
 import Realm
-
+import Sparkle
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol, SDAccountProtocol, CrashlyticsDelegate {
@@ -41,12 +41,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         
         // initialize error handler, from this point on SDLog() and SDErrorHandlerReport() should be safe to use
         SDErrorHandlerInitialize()
+        let updater = SUUpdater.sharedUpdater()
+
         #if DEBUG
         SDLog("SafeDrive staging build \(CFBundleVersion)")
         environment = "STAGING"
+        updater.feedURL = NSURL(string: "https://cdn.infincia.com/safedrive/appcast.xml")
+
         #else
         SDLog("SafeDrive release build \(CFBundleVersion)")
         environment = "RELEASE"
+        updater.feedURL = NSURL(string: "https://cdn.infincia.com/safedrive-release/appcast.xml")
         #endif
 
 
