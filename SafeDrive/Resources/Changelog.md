@@ -4,6 +4,10 @@ If you find a bug, please report it to the person you obtained the build from.
 
 #### Changelog
 
+**Changes in 0.9.17**
+
+- Add separate update channel for release builds
+
 **Changes in 0.9.16**
 
 - Merge sync manager and preferences window together
