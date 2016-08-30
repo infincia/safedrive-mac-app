@@ -234,9 +234,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 Crashlytics.sharedInstance().crash()
             }
         }
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            self.syncScheduler?.syncRunLoop()
-        }
         self.preferencesWindowController = PreferencesWindowController(uniqueClientID: uniqueClientID)
         _ = self.preferencesWindowController!.window!
     }

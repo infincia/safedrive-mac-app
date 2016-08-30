@@ -212,26 +212,8 @@ class SyncScheduler {
     func queueSyncJob(uniqueClientID: String, folderID: Int, direction: SyncDirection) {
         dispatch_sync(syncDispatchQueue, {() -> Void in
             let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID, direction: direction)
-            self.syncQueue.insert(syncEvent, atIndex: 0)
+            self.sync(syncEvent)
         })
-    }
-
-    private func dequeueSyncJob() -> SyncEvent? {
-        var syncEvent: SyncEvent?
-        dispatch_sync(syncDispatchQueue, {() -> Void in
-            syncEvent = self.syncQueue.popLast()
-        })
-        return syncEvent
-    }
-
-    func syncRunLoop() {
-        while self.running {
-            if let syncEvent = self.dequeueSyncJob() {
-                self.sync(syncEvent)
-                continue
-            }
-            NSThread.sleepForTimeInterval(1)
-        }
     }
 
     func stop() {
