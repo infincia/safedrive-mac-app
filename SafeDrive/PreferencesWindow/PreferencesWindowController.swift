@@ -412,7 +412,6 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         let alert = NSAlert()
         alert.addButtonWithTitle("Cancel")
         alert.addButtonWithTitle("Move to Storage folder")
-        // built on SFTP's rmdir command, but that doesn't work unless the dir is empty. Disabled for now.
         alert.addButtonWithTitle("Delete")
 
         alert.messageText = "Stop syncing this folder?"
