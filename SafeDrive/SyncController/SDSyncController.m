@@ -66,31 +66,17 @@
                         NSString *newName = [NSString stringWithFormat:@"%@ - %@", serverURL.lastPathComponent, dateString];
                         NSURL *destinationDir = [storageDir URLByAppendingPathComponent:newName isDirectory:YES];
                         SDLog(@"Moving SyncFolder %@ to %@", serverPath, destinationDir.path);
-                        if ([sftp fileExistsAtPath:destinationDir.path]) {
-                            NSString *msg = [NSString stringWithFormat:@"SFTP: File with conflicting name found: %@", serverURL.lastPathComponent];
-                            SDLog(msg);
-                            NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSFTPOperationFolderConflict userInfo:@{NSLocalizedDescriptionKey: msg}];
-                            
-                            dispatch_sync(dispatch_get_main_queue(), ^{
-                                failureBlock(error);
-                            });
-                        }
-                        else if ([sftp directoryExistsAtPath:destinationDir.path]) {
-                            NSString *msg = [NSString stringWithFormat:@"SFTP: Folder already exists: %@", serverURL.lastPathComponent];
-                            SDLog(msg);
-                            NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSFTPOperationFolderConflict userInfo:@{NSLocalizedDescriptionKey: msg}];
-                            
-                            dispatch_sync(dispatch_get_main_queue(), ^{
-                                failureBlock(error);
-                            });
-                        }
-                        else if ([sftp moveItemAtPath:serverPath toPath:destinationDir.path]) {
+                        // we do a remote SSH command instead of SFTP, mv is more reliable apparently
+                        NSError *moveError;
+                        NSString *command = [NSString stringWithFormat:@"mv \"%@\" \"%@\"", serverPath, destinationDir.path];
+                        [channel execute:command error:&moveError timeout:@30];
+                        if (!moveError) {
                             dispatch_sync(dispatch_get_main_queue(), ^{
                                 successBlock();
                             });
                         }
                         else {
-                            NSString *msg = [NSString stringWithFormat:@"SFTP: failed to move path: %@", serverPath];
+                            NSString *msg = [NSString stringWithFormat:@"SSH: failed to move path: %@. %@", serverPath, moveError.localizedDescription];
                             SDLog(msg);
                             NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSFTPOperationFailure userInfo:@{NSLocalizedDescriptionKey: msg}];
                             
