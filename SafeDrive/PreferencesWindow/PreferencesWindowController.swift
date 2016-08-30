@@ -415,7 +415,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         alert.addButtonWithTitle("Delete")
 
         alert.messageText = "Stop syncing this folder?"
-        alert.informativeText = "If you remove a sync folder from your account, the remote files will be moved to your Storage folder"
+        alert.informativeText = "The synced files will be deleted from SafeDrive or moved to your Storage folder.\n\nWhich one would you like to do?"
         alert.alertStyle = .InformationalAlertStyle
         
         alert.beginSheetModalForWindow(self.window!) { (response) in
