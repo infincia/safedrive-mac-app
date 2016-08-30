@@ -350,6 +350,14 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     // MARK: UI Actions
 
+    @IBAction func loadAccountPage(sender: AnyObject) {
+        // Open the safedrive account page in users default browser
+        if let _ = self.accountController.email,
+               url = NSURL(string: "https://\(API.domain)/#/en/dashboard/account/details") {
+            NSWorkspace.sharedWorkspace().openURL(url)
+        }
+    }
+
     @IBAction func addSyncFolder(sender: AnyObject) {
         let panel: NSOpenPanel = NSOpenPanel()
         panel.delegate = self
