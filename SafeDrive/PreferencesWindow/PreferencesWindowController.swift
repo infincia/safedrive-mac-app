@@ -11,11 +11,11 @@ import Realm
 import RealmSwift
 
 enum ViewType: Int {
-    case General = 0
-    case Account = 1
-    case Bandwidth = 2
-    case Status = 3
-    case Sync = 4
+    case General
+    case Account
+    case Sync
+    case Encryption
+    case Status
 }
 
 
@@ -39,7 +39,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     // MARK: Tab selections
     @IBOutlet var generalButton: NSButton!
     @IBOutlet var accountButton: NSButton!
-    @IBOutlet var bandwidthButton: NSButton!
+    @IBOutlet var encryptionButton: NSButton!
     @IBOutlet var statusButton: NSButton!
     @IBOutlet var syncButton: NSButton!
 
@@ -47,7 +47,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     @IBOutlet var generalView: NSView!
     @IBOutlet var accountView: NSView!
-    @IBOutlet var bandwidthView: NSView!
+    @IBOutlet var encryptionView: NSView!
     @IBOutlet var statusView: NSView!
     @IBOutlet var syncView: NSView!
 
@@ -62,7 +62,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBOutlet var accountStatusField: NSTextField!
     @IBOutlet var accountExpirationField: NSTextField!
 
-    // MARK: Bandwidth Tab
+    // MARK: Encryption Tab
 
     // MARK: Status Tab
     @IBOutlet var serviceStatusField: NSTextField!
@@ -235,7 +235,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     private func resetButtons() {
         //self.generalButton.highlighted = false
         //self.accountButton.highlighted = false
-        //self.bandwidthButton.highlighted = false
+        //self.encryptionButton.highlighted = false
         //self.statusButton.highlighted = false
     }
 
@@ -248,8 +248,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             return generalView
         case .Account:
             return accountView
-        case .Bandwidth:
-            return bandwidthView
+        case .Encryption:
+            return encryptionView
         case .Status:
             return statusView
         case .Sync:

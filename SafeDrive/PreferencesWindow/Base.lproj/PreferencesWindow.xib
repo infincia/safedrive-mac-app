@@ -14,9 +14,9 @@
                 <outlet property="accountView" destination="Z3b-vj-IhT" id="XM6-a3-gJc"/>
                 <outlet property="assignedStorageField" destination="fKc-az-M95" id="wa3-xU-5qv"/>
                 <outlet property="availableStorageField" destination="jEO-oE-b3P" id="0Wv-iy-oyB"/>
-                <outlet property="bandwidthButton" destination="c1p-SX-QFQ" id="DGw-yJ-IW2"/>
-                <outlet property="bandwidthView" destination="xqp-Tx-tcF" id="bxz-TR-6eG"/>
                 <outlet property="containerView" destination="KW5-2C-bQX" id="vRk-b2-fTS"/>
+                <outlet property="encryptionButton" destination="Y3b-ju-7in" id="eWO-14-eTB"/>
+                <outlet property="encryptionView" destination="xqp-Tx-tcF" id="gyg-7x-iOL"/>
                 <outlet property="failurePopover" destination="1yy-mh-Jnb" id="7F0-aH-kDA"/>
                 <outlet property="generalButton" destination="50Q-kb-XJw" id="o0T-OI-nQx"/>
                 <outlet property="generalView" destination="KeH-nF-XhM" id="9lB-Lr-WAh"/>
@@ -25,9 +25,9 @@
                 <outlet property="scheduleSelection" destination="OmI-TW-sx5" id="Yes-NV-iuM"/>
                 <outlet property="serviceStatusField" destination="CTS-LC-Kd9" id="Y1P-ei-PEh"/>
                 <outlet property="spinner" destination="Iyw-4D-YDA" id="UI2-DO-nxI"/>
-                <outlet property="statusButton" destination="Y3b-ju-7in" id="Ycb-MT-wyg"/>
+                <outlet property="statusButton" destination="Ys7-cS-i9h" id="E9X-Dj-B0l"/>
                 <outlet property="statusView" destination="zC8-Z9-bt7" id="iZ0-Je-Lcf"/>
-                <outlet property="syncButton" destination="Ys7-cS-i9h" id="VRg-3z-WgJ"/>
+                <outlet property="syncButton" destination="c1p-SX-QFQ" id="bqC-W9-gZv"/>
                 <outlet property="syncFailureInfoButton" destination="nuB-bR-vrs" id="kvb-vo-L9t"/>
                 <outlet property="syncListView" destination="lRd-e6-jN6" id="2V1-qi-9TS"/>
                 <outlet property="syncProgressField" destination="LiW-g6-iuN" id="tWo-Fz-ab3"/>
@@ -56,7 +56,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Settings-Background" id="e21-zo-JrP"/>
                     </imageView>
                     <button focusRingType="none" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50Q-kb-XJw">
-                        <rect key="frame" x="0.0" y="363" width="62" height="59"/>
+                        <rect key="frame" x="0.0" y="363" width="62" height="60"/>
                         <buttonCell key="cell" type="square" title="General" bezelStyle="shadowlessSquare" image="General Button" imagePosition="above" alignment="center" focusRingType="none" inset="2" id="dwC-vx-xwb">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="10" name="Raleway-Light"/>
@@ -66,7 +66,7 @@
                         </connections>
                     </button>
                     <button focusRingType="none" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vv2-Cb-tgb">
-                        <rect key="frame" x="68" y="362" width="62" height="61"/>
+                        <rect key="frame" x="68" y="363" width="62" height="60"/>
                         <buttonCell key="cell" type="square" title="Account" bezelStyle="shadowlessSquare" image="Account Button" imagePosition="above" alignment="center" focusRingType="none" inset="2" id="NPT-Vf-wdt">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="10" name="Raleway-Light"/>
@@ -76,8 +76,8 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="c1p-SX-QFQ">
-                        <rect key="frame" x="144" y="362" width="62" height="53"/>
-                        <buttonCell key="cell" type="square" title="Bandwidth" bezelStyle="shadowlessSquare" image="Bandwidth Button" imagePosition="above" alignment="center" inset="2" id="SKZ-9M-ZFJ">
+                        <rect key="frame" x="144" y="361" width="62" height="60"/>
+                        <buttonCell key="cell" type="square" title="Sync Prefs" bezelStyle="shadowlessSquare" image="General Button" imagePosition="above" alignment="center" imageScaling="proportionallyDown" inset="2" id="SKZ-9M-ZFJ">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="10" name="Raleway-Light"/>
                         </buttonCell>
@@ -86,8 +86,8 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="Y3b-ju-7in">
-                        <rect key="frame" x="216" y="362" width="62" height="56"/>
-                        <buttonCell key="cell" type="square" title="Status" bezelStyle="shadowlessSquare" image="Status Button" imagePosition="above" alignment="center" inset="2" id="Jpe-nv-weI">
+                        <rect key="frame" x="216" y="360" width="62" height="60"/>
+                        <buttonCell key="cell" type="square" title="Encryption" bezelStyle="shadowlessSquare" image="Bandwidth Button" imagePosition="above" alignment="center" imageScaling="proportionallyDown" inset="2" id="Jpe-nv-weI">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="10" name="Raleway-Light"/>
                         </buttonCell>
@@ -96,8 +96,8 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="Ys7-cS-i9h">
-                        <rect key="frame" x="286" y="362" width="62" height="56"/>
-                        <buttonCell key="cell" type="square" title="Sync" bezelStyle="shadowlessSquare" image="Account Button" imagePosition="above" alignment="center" inset="2" id="32c-zi-qaX">
+                        <rect key="frame" x="286" y="361" width="62" height="60"/>
+                        <buttonCell key="cell" type="square" title="Status" bezelStyle="shadowlessSquare" image="Status Button" imagePosition="above" alignment="center" inset="2" id="32c-zi-qaX">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="10" name="Raleway-Light"/>
                         </buttonCell>
@@ -228,7 +228,7 @@
             </subviews>
             <point key="canvasLocation" x="692.5" y="338.5"/>
         </view>
-        <view id="xqp-Tx-tcF" userLabel="Bandwidth View">
+        <view id="xqp-Tx-tcF" userLabel="Encryption View">
             <rect key="frame" x="0.0" y="0.0" width="351" height="281"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
         </view>
