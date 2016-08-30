@@ -4,6 +4,17 @@ If you find a bug, please report it to the person you obtained the build from.
 
 #### Changelog
 
+**Changes in 0.9.18**
+
+- Add ability to delete sync folders when removing them from the account
+    - Resolves [SD-86](https://jira.safedrive.io/browse/SD-86)
+    
+- Automatically select first row in sync manager when folders load
+    - Resolves [SD-99](https://jira.safedrive.io/browse/SD-99)
+    
+- Use shell mv command instead of sftp when removing sync folders
+    - Resolves [SD-85](https://jira.safedrive.io/browse/SD-85)
+
 **Changes in 0.9.17**
 
 - Add separate update channel for release builds
