@@ -4,18 +4,18 @@
 
 import Cocoa
 
-class SyncManagerTableRowView : NSTableRowView {
-    
+class SyncManagerTableRowView: NSTableRowView {
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
+
     }
-    
+
     required override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-        
+
     }
-    
+
     override func drawBackgroundInRect(dirtyRect: NSRect) {
         // no background
     }

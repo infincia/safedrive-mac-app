@@ -9,7 +9,7 @@
 import Cocoa
 
 class SyncFailurePopoverView: NSView {
-    
+
     @IBOutlet var message: NSTextField!
 
     override func drawRect(dirtyRect: NSRect) {
@@ -17,5 +17,5 @@ class SyncFailurePopoverView: NSView {
 
         // Drawing code here.
     }
-    
+
 }

@@ -65,18 +65,18 @@ enum Endpoint: URLRequestConvertible {
             return "/status"
         }
     }
-    
+
     // MARK: URLRequestConvertible
-    
+
     var URLRequest: NSMutableURLRequest {
         let URL = NSURL(string: Endpoint.baseURLString)!
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
-        
+
         if let token = API.sharedAPI.sessionToken {
             mutableURLRequest.setValue(token, forHTTPHeaderField: "SD-Auth-Token")
         }
-        
+
         switch self {
         case .ErrorLog(let parameters):
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
@@ -98,17 +98,17 @@ class API: NSObject {
     #else
     static let domain = SDAPIDomainProduction
     #endif
-    
+
     static let sharedAPI = API()
 
     private var reachabilityManager = NetworkReachabilityManager(host: API.domain)
     private var sharedSystemAPI = SDSystemAPI.sharedAPI()
-    
+
     private var _session: String?
-    
+
     var sessionToken: String? {
         get {
-            if let session = self.sharedSystemAPI.retrieveCredentialsFromKeychainForService(SDSessionServiceName){
+            if let session = self.sharedSystemAPI.retrieveCredentialsFromKeychainForService(SDSessionServiceName) {
                 return session["password"]
             }
             return nil
@@ -117,17 +117,17 @@ class API: NSObject {
             _session = newToken
         }
     }
-    
+
     override init() {
         self.reachabilityManager?.listener = { status in
 
         }
-        
+
         self.reachabilityManager?.startListening()
     }
-    
+
     // MARK: Telemetry API
-    
+
     func reportError(error: NSError, forUser user: String, withLog log: [String], completionQueue queue: dispatch_queue_t, success successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
         var postParameters = [String : AnyObject]()
         let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
@@ -142,9 +142,9 @@ class API: NSObject {
         }
 
         postParameters["description"] = error.localizedDescription
-        
+
         postParameters["context"] = error.domain
-        
+
         postParameters["log"] = log.description
 
         Alamofire.request(Endpoint.ErrorLog(postParameters))
@@ -163,24 +163,24 @@ class API: NSObject {
                     failureBlock(responseError)
                 }
         }
-        
+
     }
-    
+
     // MARK: Account API
-    
+
     func registerMachineWithUser(user: String, password: String, success successBlock: SDAPIClientRegistrationSuccessBlock, failure failureBlock: SDFailureBlock) {
         let languageCode: String = NSLocale.preferredLanguages()[0]
         let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
         let macAddress: String = self.sharedSystemAPI.en0MAC()!
         let machineIdConcatenation: String = macAddress.stringByAppendingString(user)
         let identifier: String = HKTHashProvider.sha256(machineIdConcatenation.dataUsingEncoding(NSUTF8StringEncoding))
-        
+
         let postParameters = ["email": user,
             "password": password,
             "operatingSystem": os,
             "language": languageCode,
             "uniqueClientId": identifier]
-        
+
         Alamofire.request(Endpoint.RegisterClient(postParameters))
             .validate()
             .responseJSON { response in
@@ -214,10 +214,10 @@ class API: NSObject {
                     failureBlock(responseError)
                 }
             }
-        
+
     }
 
-    
+
     func accountStatusForUser(user: String, success successBlock: SDAPIAccountStatusBlock, failure failureBlock: SDFailureBlock) {
         Alamofire.request(Endpoint.AccountStatus)
             .validate()
@@ -246,7 +246,7 @@ class API: NSObject {
                 }
         }
     }
-    
+
     func accountDetailsForUser(user: String, success successBlock: SDAPIAccountDetailsBlock, failure failureBlock: SDFailureBlock) {
         Alamofire.request(Endpoint.AccountDetails)
             .validate()
@@ -275,12 +275,12 @@ class API: NSObject {
                 }
         }
     }
-    
+
     // MARK: Sync folder handling
-    
+
     func createSyncFolder(localFolder: NSURL, success successBlock: SDAPICreateSyncFolderSuccessBlock, failure failureBlock: SDFailureBlock) {
         let postParameters = ["folderName": localFolder.lastPathComponent!.lowercaseString, "folderPath": localFolder.path!]
-        
+
         Alamofire.request(Endpoint.CreateFolder(postParameters))
             .validate()
             .responseJSON { response in
@@ -309,7 +309,7 @@ class API: NSObject {
                 }
         }
     }
-    
+
     func readSyncFoldersWithSuccess(successBlock: SDAPIReadSyncFoldersSuccessBlock, failure failureBlock: SDFailureBlock) {
         Alamofire.request(Endpoint.ReadFolders)
             .validate()
@@ -338,7 +338,7 @@ class API: NSObject {
                 }
         }
     }
-    
+
     func deleteSyncFolder(folderId: Int, success successBlock: SDAPIDeleteSyncFoldersSuccessBlock, failure failureBlock: SDFailureBlock) {
         let folderIds = ["folderIds": folderId]
         Alamofire.request(Endpoint.DeleteFolder(folderIds))
@@ -363,9 +363,9 @@ class API: NSObject {
                 }
         }
     }
-    
+
     // MARK: Unused
-    
+
     func getHostFingerprintList(successBlock: SDAPIFingerprintListSuccessBlock, failure failureBlock: SDFailureBlock) {
         Alamofire.request(.GET, "https://\(API.domain)/api/1/fingerprints")
             .validate()
@@ -394,11 +394,11 @@ class API: NSObject {
                 }
         }
     }
-    
+
     func apiStatus(successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
         Alamofire.request(.GET, "https://\(API.domain)/api/1/status")
             .validate()
-            .responseJSON { response in                
+            .responseJSON { response in
                 switch response.result {
                 case .Success:
                     successBlock()

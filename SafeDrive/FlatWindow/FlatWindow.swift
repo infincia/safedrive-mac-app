@@ -5,13 +5,13 @@
 import Cocoa
 
 class FlatWindowView: NSView {
-    override var mouseDownCanMoveWindow:Bool {
+    override var mouseDownCanMoveWindow: Bool {
         return true
     }
 }
 
 class FlatWindowBackgroundView: NSImageView {
-    override var mouseDownCanMoveWindow:Bool {
+    override var mouseDownCanMoveWindow: Bool {
         return true
     }
 }
@@ -19,9 +19,9 @@ class FlatWindowBackgroundView: NSImageView {
 
 class FlatWindow: NSWindow {
     var closeButton = NSButton(frame: NSZeroRect)
-    
+
     var _keepOnTop = false
-    
+
     var keepOnTop: Bool {
         get {
             return _keepOnTop
@@ -35,11 +35,11 @@ class FlatWindow: NSWindow {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     required override init(contentRect: NSRect, styleMask aStyle: Int, backing bufferingType: NSBackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: aStyle, backing: bufferingType, defer: flag)
     }
-    
+
     override func awakeFromNib() {
         self.opaque = false
         self.closeButton.image = NSImage(named: NSImageNameStopProgressTemplate)
@@ -54,31 +54,31 @@ class FlatWindow: NSWindow {
         self.contentView?.addSubview(self.closeButton)
 
     }
-    
+
     override var movableByWindowBackground: Bool {
         get {
             return true
         }
         set {
-            
+
         }
     }
-    
+
     override var canBecomeKeyWindow: Bool {
         get {
             return true
         }
         set {
-            
+
         }
     }
-    
+
     override var canBecomeMainWindow: Bool {
         get {
             return true
         }
         set {
-            
+
         }
     }
 }

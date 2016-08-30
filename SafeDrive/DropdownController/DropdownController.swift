@@ -9,26 +9,26 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     @IBOutlet var statusItemMenu: NSMenu!
     @IBOutlet var connectMenuItem: NSMenuItem!
     @IBOutlet var preferencesMenuItem: NSMenuItem!
-    
+
     private var safeDriveAPI = API.sharedAPI
     private var mountController = SDMountController.sharedAPI()
     private var sharedSystemAPI = SDSystemAPI.sharedAPI()
-    
-    
+
+
     var sharedAccountController = AccountController.sharedAccountController
-    
-    private var menuBarImage : NSImage? {
+
+    private var menuBarImage: NSImage? {
         get {
             return self.statusItem?.image
         }
-        
+
         set(image) {
             // needed for OS X 10.10's dark mode
             image?.template = true
             self.statusItem?.image = image
         }
     }
-    
+
     override init() {
         super.init()
         NSBundle.mainBundle().loadNibNamed("DropdownMenu", owner: self, topLevelObjects: nil)
@@ -40,7 +40,7 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: SDVolumeDidMountNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: SDVolumeDidUnmountNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount(_:)), name: SDVolumeShouldUnmountNotification, object: nil)
-        
+
         // register SDAccountProtocol notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignIn(_:)), name: SDAccountSignInNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: SDAccountSignOutNotification, object: nil)
@@ -48,7 +48,7 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails(_:)), name: SDAccountDetailsNotification, object: nil)
 
     }
-    
+
     override func awakeFromNib() {
         self.statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSSquareStatusItemLength)
         // menu loaded from SDDropdownMenu.xib
@@ -58,28 +58,27 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         self.menuBarImage = NSImage(named: NSImageNameLockLockedTemplate)
         self.enableMenuItems(false)
     }
-    
+
     @IBAction func toggleMount(sender: AnyObject) {
         if self.mountController.mounted {
             self.disconnectVolume()
-        }
-        else {
+        } else {
             NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenAccountWindow, object: nil)
         }
     }
-    
+
     @IBAction func openPreferencesWindow(sender: AnyObject) {
         NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenPreferencesWindow, object: nil)
     }
-    
+
     @IBAction func openAboutWindow(sender: AnyObject) {
         NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenAboutWindow, object: nil)
     }
-    
+
     private func enableMenuItems(enabled: Bool) {
         self.preferencesMenuItem.enabled = enabled
     }
-    
+
     private func disconnectVolume() {
         let volumeName: String = self.sharedSystemAPI.currentVolumeName
         SDLog("Dismounting volume: %@", volumeName)
@@ -92,51 +91,51 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         }
 
     }
-    
+
     // MARK: SDAccountProtocol
-    
+
     func didSignIn(notification: NSNotification) {
         self.enableMenuItems(true)
     }
-    
+
     func didSignOut(notification: NSNotification) {
         self.enableMenuItems(false)
     }
-    
+
     func didReceiveAccountDetails(notification: NSNotification) {
     }
-    
+
     func didReceiveAccountStatus(notification: NSNotification) {
     }
-    
+
     // MARK: SDVolumeEventProtocol methods
 
     func volumeDidMount(notification: NSNotification) {
     }
-    
+
     func volumeDidUnmount(notification: NSNotification) {
     }
-    
+
     func volumeSubprocessDidTerminate(notification: NSNotification) {
     }
-    
+
     func volumeShouldUnmount(notification: NSNotification) {
         self.disconnectVolume()
     }
-    
+
     // MARK: SDMountStateProtocol methods
 
     func mountStateMounted(notification: NSNotification) {
         self.connectMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
         self.menuBarImage = NSImage(named: NSImageNameLockUnlockedTemplate)
     }
-    
+
     func mountStateUnmounted(notification: NSNotification) {
         self.connectMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
         self.menuBarImage = NSImage(named: NSImageNameLockLockedTemplate)
     }
-    
+
     func mountStateDetails(notification: NSNotification) {
-    
+
     }
 }

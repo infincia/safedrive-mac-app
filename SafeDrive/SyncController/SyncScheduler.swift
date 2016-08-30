@@ -25,19 +25,19 @@ struct SyncEvent {
 }
 
 class SyncScheduler {
-    
+
     static let sharedSyncScheduler = SyncScheduler()
-    
+
     private let accountController = AccountController.sharedAccountController
 
     private var syncControllers = [SDSyncController]()
-    
+
     private var reachabilityManager = NetworkReachabilityManager(host: API.domain)
 
     private var _running = false
-    
+
     private let runQueue = dispatch_queue_create("io.safedrive.runQueue", DISPATCH_QUEUE_CONCURRENT)
-    
+
     var running: Bool {
         get {
             var r: Bool?
@@ -52,52 +52,52 @@ class SyncScheduler {
             }
         }
     }
-    
+
     private var syncQueue = [SyncEvent]()
-    
-    private var syncDispatchQueue = dispatch_queue_create("io.safedrive.SyncScheduler.SyncQueue", DISPATCH_QUEUE_SERIAL);
-    
+
+    private var syncDispatchQueue = dispatch_queue_create("io.safedrive.SyncScheduler.SyncQueue", DISPATCH_QUEUE_SERIAL)
+
     let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
-    
+
     init() {
         self.reachabilityManager?.listener = { status in
 
         }
-        
+
         self.reachabilityManager?.startListening()
     }
 
-    
+
     func syncSchedulerLoop(uniqueClientID: String) throws {
-        
+
         guard let realm = try? Realm() else {
             let errorInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open Realm database, this is a fatal error", comment: "")]
             throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.OpenFailed.rawValue, userInfo: errorInfo)
         }
-        
+
         guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(uniqueClientID)'").last else {
             return
         }
-        
+
         /*
             Check for folders that are supposedly restoring, which means SafeDrive was killed or crashed while a restore
             was in progress.
-         
+
             We have no other option but to display a warning when this happens, rsync will have exited in a half-synced state.
- 
+
         */
-        
+
         for folder in realm.objects(SyncFolder).filter("restoring == true AND machine == %@", currentMachine) {
             let alert = NSAlert()
             alert.addButtonWithTitle("No")
             alert.addButtonWithTitle("Yes")
-            
+
             alert.messageText = "Continue restore?"
             alert.informativeText = "SafeDrive could not finish restoring the \(folder.name!) folder, would you like to continue now? \n\nWarning: If you decline, the folder will resume syncing to the server, which may result in data loss"
             alert.alertStyle = .InformationalAlertStyle
-            
+
             alert.beginSheetModalForWindow(NSApp.mainWindow!) { (response) in
-                
+
                 switch response {
                 case NSAlertFirstButtonReturn:
                     try! realm.write {
@@ -117,20 +117,20 @@ class SyncScheduler {
                 }
             }
         }
-        
-        /* 
+
+        /*
             Reset all sync folders at startup.
-        
+
             Prevents the following issue:
-            
+
             1) App starts syncing FolderA, sets its "syncing" field to true in the database
             2) App exits/crashes during sync
             3) App starts again
             4) App refuses to sync folderA again because the "syncing" field is still set to true
-        
+
             We can do this because sync tasks ALWAYS exit when the app does, so it is not possible for a sync to have been
             running if the app wasn't.
-        
+
         */
         try! realm.write {
             let syncFolders = realm.objects(SyncFolder).filter("restoring == false AND machine == %@", currentMachine)
@@ -139,84 +139,83 @@ class SyncScheduler {
         SDLog("Sync scheduler running")
 
         while self.running {
-            
+
             autoreleasepool {
                 realm.refresh()
                 realm.invalidate()
-                
+
                 guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(uniqueClientID)'").last else {
                     NSThread.sleepForTimeInterval(1)
                     // NOTE: this returns from the autoreleasepool closure and functions as a "continue" statement
                     //       it does NOT return from syncSchedulerLoop()
                     return
                 }
-                
+
                 let currentDate = NSDate()
-                
+
                 let components = NSDateComponents()
                 components.hour = currentDate.hour
                 components.minute = currentDate.minute
                 let calendar = NSCalendar.currentCalendar()
                 let syncDate = calendar.dateFromComponents(components)!
-                
+
                 var folders = [SyncFolder]()
-                
+
                 // only trigger in the first minute of each hour
                 // this would run twice per hour if we did not sleep thread for 60 seconds
-                
-                
+
+
                 if currentDate.minute == 0 {
                     // first minute of each hour for hourly syncs
                     // NOTE: this scheduler ignores syncTime on purpose, hourly syncs always run at xx:00
                     let hourlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'hourly' AND syncing == false AND machine == %@", currentMachine)
                     folders.appendContentsOf(hourlyFolders)
                 }
-                
-                
+
+
                 if currentDate.day == 1 {
                     // first of the month for monthly syncs
                     let monthlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'monthly' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
                     folders.appendContentsOf(monthlyFolders)
                 }
-                
-                
+
+
                 if currentDate.weekday == 1 {
                     // first day of the week for weekly syncs
                     let weeklyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'weekly' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
                     folders.appendContentsOf(weeklyFolders)
                 }
-                
-                
+
+
                 // daily syncs at arbitrary times based on syncTime property
                 let dailyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'daily' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
                 folders.appendContentsOf(dailyFolders)
-                
-                
-                
+
+
+
                 if self.reachabilityManager!.isReachableOnEthernetOrWiFi {
                     for folder in folders {
                         let folderID = folder.uniqueID
                         self.queueSyncJob(uniqueClientID, folderID: folderID, direction: .Forward)
                     }
-                }
-                else {
+                } else {
                     //SDLog("No WiFi/Ethernet connectivity, deferring \(folders.count) folders")
                 }
                 // keep loop in sync with clock time to the next minute
                 let sleepSeconds = 60 - currentDate.second
                 NSThread.sleepForTimeInterval(Double(sleepSeconds))
-                
+
             }
         }
     }
-    
+
     func queueSyncJob(uniqueClientID: String, folderID: Int, direction: SyncDirection) {
         dispatch_sync(syncDispatchQueue, {() -> Void in
             let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID, direction: direction)
             self.syncQueue.insert(syncEvent, atIndex: 0)
         })
     }
-    
+
     private func dequeueSyncJob() -> SyncEvent? {
         var syncEvent: SyncEvent?
         dispatch_sync(syncDispatchQueue, {() -> Void in
@@ -224,7 +223,7 @@ class SyncScheduler {
         })
         return syncEvent
     }
-    
+
     func syncRunLoop() {
         while self.running {
             if let syncEvent = self.dequeueSyncJob() {
@@ -234,11 +233,11 @@ class SyncScheduler {
             NSThread.sleepForTimeInterval(1)
         }
     }
-    
+
     func stop() {
         self.running = false
     }
-    
+
     func cancel(uniqueID: Int, completion: SDSuccessBlock) {
         for syncController in self.syncControllers {
             if syncController.uniqueID == uniqueID {
@@ -250,23 +249,23 @@ class SyncScheduler {
         }
         completion()
     }
-    
+
     private func sync(syncEvent: SyncEvent) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
-            
+
             guard let realm = try? Realm() else {
                 SDLog("failed to create realm!!!")
                 Crashlytics.sharedInstance().crash()
                 return
             }
-            
+
             let uniqueClientID = syncEvent.uniqueClientID
             let folderID = syncEvent.folderID
             var isRestore: Bool = false
             if syncEvent.direction == .Reverse {
                 isRestore = true
             }
-            
+
             guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(uniqueClientID)'").last else {
                 SDLog("failed to get current machine from realm!!!")
                 return
@@ -276,7 +275,7 @@ class SyncScheduler {
                 SDLog("failed to get sync folder for machine from realm!!!")
                 return
             }
-            
+
             if folder.syncing {
                 SDLog("Sync for \(folder.name!) already in progress, cancelling")
                 //NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
@@ -290,7 +289,7 @@ class SyncScheduler {
                 realm.add(syncTask)
             }
             let folderName: String = folder.name!
-            
+
             let localFolder: NSURL = folder.url!
 
             let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
@@ -302,10 +301,10 @@ class SyncScheduler {
             urlComponents.path = remoteFolder.path
             urlComponents.port = self.accountController.remotePort
             let remote: NSURL = urlComponents.URL!
-            
+
             let syncController = SDSyncController()
             syncController.uniqueID = folder.uniqueID
-            
+
             dispatch_sync(dispatch_get_main_queue(), {() -> Void in
                 self.syncControllers.append(syncController)
             })
@@ -318,7 +317,7 @@ class SyncScheduler {
                     Crashlytics.sharedInstance().crash()
                     return
                 }
-                
+
                 try! realm.write {
                     realm.create(SyncTask.self, value: ["uuid": uuid.UUIDString, "progress": percent, "bandwidth": bandwidth], update: true)
                 }
@@ -329,7 +328,7 @@ class SyncScheduler {
                     Crashlytics.sharedInstance().crash()
                     return
                 }
-                
+
                 try! realm.write {
                     realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "restoring": false], update: true)
                     let duration = NSDate().timeIntervalSinceDate(syncDate)
@@ -354,7 +353,7 @@ class SyncScheduler {
                 if let index = self.syncControllers.indexOf(syncController) {
                     self.syncControllers.removeAtIndex(index)
                 }
-                    
+
             })
         })
     }

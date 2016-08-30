@@ -5,14 +5,14 @@
 import Foundation
 
 class Installer {
-    
+
     func installOSXFUSE() {
         let osxfuseURL = NSBundle.mainBundle().URLForResource("Install OSXFUSE 2.8", withExtension: "pkg", subdirectory: nil)
         let privilegedTask = STPrivilegedTask()
         privilegedTask.setLaunchPath("/usr/sbin/installer")
         privilegedTask.setArguments(["-store", "-pkg", (osxfuseURL?.path)!, "-target", "/"])
         let err = privilegedTask.launch()
-        
+
         if (err != errAuthorizationSuccess) {
             if (err == errAuthorizationCanceled) {
                 SDLog("User cancelled installer")
@@ -23,7 +23,7 @@ class Installer {
             SDLog("Installer launched")
         }
     }
-    
+
     func isOSXFUSEInstalled() -> Bool {
         let pipe: NSPipe = NSPipe()
         let task: NSTask = NSTask()
@@ -38,4 +38,3 @@ class Installer {
         return false
     }
 }
-

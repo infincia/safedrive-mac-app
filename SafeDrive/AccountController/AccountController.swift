@@ -9,58 +9,58 @@ import RealmSwift
 
 class AccountController: NSObject {
     static let sharedAccountController = AccountController()
-    
+
     var accountStatus: SDAccountStatus = .Unknown
-    
+
     var email: String?
     var internalUserName: String?
     var password: String?
-    
+
     var remoteHost: String?
     var remotePort: NSNumber?
-    
+
     var hasCredentials: Bool = false
     var signedIn: Bool = false
-    
+
     private var sharedSystemAPI = SDSystemAPI.sharedAPI()
     private var sharedSafedriveAPI = API.sharedAPI
-    
-    
+
+
     override init() {
         super.init()
         if let credentials = self.sharedSystemAPI.retrieveCredentialsFromKeychainForService(SDServiceName) {
             self.email = credentials["account"]
             self.password = credentials["password"]
-            
+
             Crashlytics.sharedInstance().setUserEmail(self.email)
-            
+
             SDErrorHandlerSetUser(self.email)
             self.hasCredentials = true
         }
         self.accountLoop()
 
     }
-    
+
     func signInWithSuccess(successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
         guard let email = self.email, password = self.password else {
             return
         }
-        
+
         self.signOutWithSuccess({ () -> Void in
             //
-        }, failure:{ (error) -> Void in
+        }, failure: { (error) -> Void in
             //
         })
-        
+
         /*
- 
+
             This is a workaround for SyncFolders not having a truly unique primary key on the server side,
-            we have to clear the table before allowing a different account to sign in and store SyncFolders, 
+            we have to clear the table before allowing a different account to sign in and store SyncFolders,
             or things will get into an inconsistent state.
-         
+
             A better solution would likely be to use separate realm files for each username, but that greatly
             complicates things and will take some planning to do.
-         
+
         */
         if let storedCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychainForService(SDServiceName),
                storedEmail = storedCredentials["account"] {
@@ -71,25 +71,24 @@ class AccountController: NSObject {
                     Crashlytics.sharedInstance().crash()
                     return
                 }
-                
+
                 do {
                     try realm.write {
                         realm.delete(realm.objects(SyncFolder))
                         realm.delete(realm.objects(SyncTask))
                     }
-                }
-                catch {
+                } catch {
                     SDLog("failed to delete old data in realm!!!")
                     Crashlytics.sharedInstance().crash()
                     return
                 }
             }
-            
+
         }
-        
-        
+
+
         let keychainError: NSError? = self.sharedSystemAPI.insertCredentialsInKeychainForService(SDServiceName, account: email, password: password)
-        
+
         if let keychainError = keychainError {
             SDErrorHandlerReport(keychainError)
             failureBlock(keychainError)
@@ -97,7 +96,7 @@ class AccountController: NSObject {
         }
         Crashlytics.sharedInstance().setUserEmail(email)
         SDErrorHandlerSetUser(email)
-        
+
         self.sharedSafedriveAPI.registerMachineWithUser(email, password: password, success: { (sessionToken: String, clientID: String) -> Void in
             self.sharedSafedriveAPI.accountStatusForUser(email, success: { (accountStatus: [String : NSObject]?) -> Void in
                 self.signedIn = true
@@ -108,11 +107,11 @@ class AccountController: NSObject {
                         NSNotificationCenter.defaultCenter().postNotificationName(SDAccountStatusNotification, object: accountStatus)
                     })
                     self.internalUserName = accountStatus["userName"] as? String
-                    
+
                     self.remotePort = accountStatus["port"] as! Int
-                    
+
                     self.remoteHost = accountStatus["host"] as? String
-                
+
                     let keychainError: NSError? = self.sharedSystemAPI.insertCredentialsInKeychainForService(SDSSHServiceName, account: self.internalUserName!, password: self.password!)
                     if let keychainError = keychainError {
                         SDErrorHandlerReport(keychainError)
@@ -124,30 +123,29 @@ class AccountController: NSObject {
                         Crashlytics.sharedInstance().crash()
                         return
                     }
-                    
+
                     do {
-                        /* 
+                        /*
                             Once a Machine entity is created for this uniqueClientID, we never modify it without special handling.
-                         
+
                             The Machine.name property is used to decide which path on the server to sync to, so we cannot allow
                             it to be overwritten every time the local hostname changes.
-                         
-                        
-                        
+
+
+
                          */
                         var currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(clientID)'").last
-                        
+
                         if currentMachine == nil {
                             let machineName = NSHost.currentHost().localizedName!
 
                             currentMachine = Machine(name: machineName, uniqueClientID: clientID)
-                            
+
                             try realm.write {
                                 realm.add(currentMachine!, update: true)
                             }
                         }
-                    }
-                    catch {
+                    } catch {
                         SDLog("failed to update machine in realm!!!")
                         Crashlytics.sharedInstance().crash()
                         return
@@ -156,17 +154,17 @@ class AccountController: NSObject {
                     successBlock()
                 }
             }, failure: { (error: NSError) -> Void in
-                failureBlock(error);
+                failureBlock(error)
 
             })
-            
+
             self.sharedSafedriveAPI.accountDetailsForUser(email, success: {(accountDetails: [String : NSObject]?) -> Void in
                 if let accountDetails = accountDetails {
                     dispatch_async(dispatch_get_main_queue(), {() -> Void in
                         NSNotificationCenter.defaultCenter().postNotificationName(SDAccountDetailsNotification, object: accountDetails)
                     })
                 }
-                
+
                 }, failure: {(apiError: NSError) -> Void in
                     #if DEBUG
                         SDLog("Account details retrieval failed: %@", apiError.localizedDescription)
@@ -175,10 +173,10 @@ class AccountController: NSObject {
                     #endif
             })
         }, failure: { (error: NSError) -> Void in
-            failureBlock(error);
+            failureBlock(error)
         })
     }
-    
+
     func signOutWithSuccess(successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
         self.sharedSystemAPI.removeCredentialsInKeychainForService(SDSessionServiceName)
         self.sharedSystemAPI.removeCredentialsInKeychainForService(SDSSHServiceName)
@@ -193,9 +191,9 @@ class AccountController: NSObject {
         successBlock()
 
     }
-    
+
     // MARK: Private
-    
+
     private func accountStatusFromString(string: String) -> SDAccountStatus {
         switch string {
         case "active":
@@ -216,7 +214,7 @@ class AccountController: NSObject {
             return .Unknown
         }
     }
-    
+
     private func accountLoop() {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
             while true {
@@ -236,14 +234,14 @@ class AccountController: NSObject {
                         dispatch_async(dispatch_get_main_queue(), {() -> Void in
                             NSNotificationCenter.defaultCenter().postNotificationName(SDAccountStatusNotification, object: accountStatus)
                         })
-                        
+
                         self.internalUserName = accountStatus["userName"] as? String
-                        
+
                         self.remotePort = accountStatus["port"] as! Int
-                        
+
                         self.remoteHost = accountStatus["host"] as? String
                     }
-                    
+
                 }, failure: {(apiError: NSError) -> Void in
                     #if DEBUG
                     SDLog("Account status retrieval failed: %@", apiError.localizedDescription)
@@ -251,7 +249,7 @@ class AccountController: NSObject {
                     // SDErrorHandlerReport(apiError);
                     #endif
                 })
-                
+
                 self.sharedSafedriveAPI.accountDetailsForUser(email, success: {(accountDetails: [String : NSObject]?) -> Void in
                     if let accountDetails = accountDetails {
                         dispatch_async(dispatch_get_main_queue(), {() -> Void in
@@ -269,5 +267,5 @@ class AccountController: NSObject {
             }
         })
     }
-    
+
 }

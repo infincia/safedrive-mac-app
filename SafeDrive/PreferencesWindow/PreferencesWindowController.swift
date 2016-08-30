@@ -19,41 +19,41 @@ enum ViewType: Int {
 }
 
 
-class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, NSPopoverDelegate, SDMountStateProtocol, SDAccountProtocol, SDServiceStatusProtocol  {
-    
+class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, NSPopoverDelegate, SDMountStateProtocol, SDAccountProtocol, SDServiceStatusProtocol {
+
     private var sharedSafedriveAPI = API.sharedAPI
-    
+
     private var accountController = AccountController.sharedAccountController
-    
+
     private var syncScheduler = SyncScheduler.sharedSyncScheduler
-    
+
     var sharedSystemAPI = SDSystemAPI.sharedAPI()
     private var sharedServiceManager = ServiceManager.sharedServiceManager
-    
-    
+
+
     // ********************************************************
     // MARK: View management
-    
+
     @IBOutlet var containerView: NSView!
-    
+
     // MARK: Tab selections
     @IBOutlet var generalButton: NSButton!
     @IBOutlet var accountButton: NSButton!
     @IBOutlet var bandwidthButton: NSButton!
     @IBOutlet var statusButton: NSButton!
     @IBOutlet var syncButton: NSButton!
-    
+
     // MARK: Tab views
-    
+
     @IBOutlet var generalView: NSView!
     @IBOutlet var accountView: NSView!
     @IBOutlet var bandwidthView: NSView!
     @IBOutlet var statusView: NSView!
     @IBOutlet var syncView: NSView!
 
-    
+
     // MARK: General Tab
-    
+
     // MARK: Account tab
     @IBOutlet var assignedStorageField: NSTextField!
     @IBOutlet var usedStorageField: NSTextField!
@@ -61,19 +61,19 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     @IBOutlet var accountStatusField: NSTextField!
     @IBOutlet var accountExpirationField: NSTextField!
-    
+
     // MARK: Bandwidth Tab
-    
+
     // MARK: Status Tab
     @IBOutlet var serviceStatusField: NSTextField!
     @IBOutlet var mountStatusField: NSTextField!
     @IBOutlet var volumeSizeField: NSTextField!
-    
+
     @IBOutlet var volumeFreespaceField: NSTextField!
-    
+
     @IBOutlet var volumeUsageBar: NSProgressIndicator!
-    
-    
+
+
     // ********************************************************
 
 
@@ -85,8 +85,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             var autostartError: NSError?
             if newValue == true {
                 autostartError = self.sharedSystemAPI.enableAutostart()
-            }
-            else {
+            } else {
                 autostartError = self.sharedSystemAPI.disableAutostart()
             }
             if (autostartError != nil) {
@@ -94,88 +93,88 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             }
         }
     }
-    
+
     // Sync handling
     // TODO: move these and associated logic inside an NSView subclass
-    
+
     @IBOutlet var syncListView: NSOutlineView!
     @IBOutlet var spinner: NSProgressIndicator!
-    
+
     @IBOutlet var progress: NSProgressIndicator!
 
     //@IBOutlet var pathIndicator: NSPathControl!
 
     //@IBOutlet var lastSyncField: NSTextField!
-    
+
     //@IBOutlet var nextSyncField: NSTextField!
-    
+
     @IBOutlet var syncProgressField: NSTextField!
 
     @IBOutlet var syncFailureInfoButton: NSButton!
 
     @IBOutlet var syncStatus: NSTextField!
-    
+
     @IBOutlet var syncTimePicker: NSDatePicker!
 
     @IBOutlet var scheduleSelection: NSPopUpButton!
-    
+
     @IBOutlet var failurePopover: NSPopover!
-    
-    
-    
+
+
+
     private var syncFolderToken: RealmSwift.NotificationToken?
-    
+
     private var syncTaskToken: RealmSwift.NotificationToken?
 
     private var mac: Machine!
-    
+
     private var uniqueClientID: String!
-    
+
     private let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
-    
-    
-    
+
+
+
     // Initialization
-    
+
     convenience init() {
         self.init(windowNibName: "PreferencesWindow")
     }
-    
+
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-    
+
     convenience init(uniqueClientID: String) {
         self.init(windowNibName: "PreferencesWindow")
         self.uniqueClientID = uniqueClientID
-        
+
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")
             Crashlytics.sharedInstance().crash()
             return
         }
-        
+
         guard let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last else {
             SDLog("failed to get current machine in realm!!!")
             Crashlytics.sharedInstance().crash()
             return
         }
-        
+
         self.mac = currentMachine
 
     }
 
     // Window handling
-    
+
     override func windowDidLoad() {
         super.windowDidLoad()
-        
+
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")
             Crashlytics.sharedInstance().crash()
             return
         }
-        
+
         // register SDVolumeEventProtocol notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: SDVolumeDidMountNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: SDVolumeDidUnmountNotification, object: nil)
@@ -184,33 +183,33 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted(_:)), name: SDMountStateUnmountedNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails(_:)), name: SDMountStateDetailsNotification, object: nil)
 
-    
+
         // register SDAccountProtocol notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignIn(_:)), name: SDAccountSignInNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: SDAccountSignOutNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus(_:)), name: SDAccountStatusNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails(_:)), name: SDAccountDetailsNotification, object: nil)
-        
+
         // register SDServiceStatusProtcol notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDServiceStatusProtocol.didReceiveServiceStatus(_:)), name: SDServiceStatusNotification, object: nil)
 
-        
-        
-        
+
+
+
         self.syncFolderToken = realm.objects(SyncFolder).addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             self?.reload()
         }
-        
+
         self.syncTaskToken = realm.objects(SyncTask).addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             self?.reload()
         }
-        
+
         self.scheduleSelection.selectItemAtIndex(-1)
 
         self.readSyncFolders(self)
-        
+
         self.setTab(0)
-        
+
     }
 
     @IBAction func selectTab(sender: AnyObject) {
@@ -219,7 +218,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             setTab(button.tag)
         }
     }
-    
+
     func setTab(index: NSInteger) {
         guard let newView = viewForIndex(index) else {
             return
@@ -230,16 +229,16 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         containerView.addSubview(newView)
         self.resetButtons()
         //button.highlighted = true
-        
+
     }
-    
+
     private func resetButtons() {
         //self.generalButton.highlighted = false
         //self.accountButton.highlighted = false
         //self.bandwidthButton.highlighted = false
         //self.statusButton.highlighted = false
     }
-    
+
     private func viewForIndex(index: Int) -> NSView? {
         guard let viewType = ViewType(rawValue: index) else {
             return nil
@@ -257,29 +256,29 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             return syncView
         }
     }
-    
-    
+
+
     // MARK: SDMountStatusProtocol
-    
+
     func volumeDidMount(notification: NSNotification) {
     }
-    
+
     func volumeDidUnmount(notification: NSNotification) {
     }
-    
+
     func mountSubprocessDidTerminate(notification: NSNotification) {
     }
-    
+
     // MARK: SDMountStateProtocol
-    
+
     func mountStateMounted(notification: NSNotification) {
         self.mountStatusField.stringValue = NSLocalizedString("Mounted", comment: "String for volume mount status of mounted")
     }
-    
+
     func mountStateUnmounted(notification: NSNotification) {
         self.mountStatusField.stringValue = NSLocalizedString("Unmounted", comment: "String for volume mount status of unmounted")
     }
-    
+
     func mountStateDetails(notification: NSNotification) {
         if let mountDetails = notification.object as? [String: AnyObject],
                volumeTotalSpace = mountDetails[NSFileSystemSize] as? Int,
@@ -290,9 +289,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.volumeUsageBar.maxValue = Double(volumeTotalSpace)
             self.volumeUsageBar.minValue = 0
             self.volumeUsageBar.doubleValue = Double(volumeUsedSpace)
-                
-        }
-        else {
+
+        } else {
             self.volumeSizeField.stringValue = NSLocalizedString("Unmounted", comment: "String for volume mount status of mounted")
             self.volumeFreespaceField.stringValue = NSLocalizedString("Unmounted", comment: "String for volume mount status of unmounted")
             self.volumeUsageBar.maxValue = 1
@@ -300,28 +298,27 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.volumeUsageBar.doubleValue = 0
         }
     }
-    
+
     // MARK: SDAccountProtocol
-    
+
     func didSignIn(notification: NSNotification) {
-        
+
     }
-    
+
     func didSignOut(notification: NSNotification) {
-        
+
     }
-    
+
     func didReceiveAccountStatus(notification: NSNotification) {
         if let accountStatus = notification.object as? [String: AnyObject],
                status = accountStatus["status"] as? String {
             self.accountStatusField.stringValue = status.capitalizedString
-        }
-        else {
+        } else {
             self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
 
         }
     }
-    
+
     func didReceiveAccountDetails(notification: NSNotification) {
         if let accountDetails = notification.object as? [String: AnyObject],
                assignedStorage = accountDetails["assignedStorage"] as? Int,
@@ -329,32 +326,30 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                expirationDate = accountDetails["expirationDate"] as? Double {
                 self.assignedStorageField.stringValue = NSByteCountFormatter.stringFromByteCount(Int64(assignedStorage), countStyle: .File)
                 self.usedStorageField.stringValue = NSByteCountFormatter.stringFromByteCount(Int64(usedStorage), countStyle: .File)
-                
+
                 let date: NSDate = NSDate(timeIntervalSince1970: expirationDate / 1000)
                 let dateFormatter: NSDateFormatter = NSDateFormatter()
                 dateFormatter.locale = NSLocale.currentLocale()
                 dateFormatter.timeStyle = .NoStyle
                 dateFormatter.dateStyle = .ShortStyle
                 self.accountExpirationField.stringValue = dateFormatter.stringFromDate(date)
-        }
-        else {
+        } else {
             SDLog("Validation failed: didReceiveAccountDetails")
         }
     }
- 
+
     // MARK: SDServiceStatusProtocol
-    
+
     func didReceiveServiceStatus(notification: NSNotification) {
         if let status = notification.object as? Int {
             self.serviceStatusField.stringValue = status == 1 ? "Running" : "Stopped"
-        }
-        else {
+        } else {
             SDLog("Validation failed: didReceiveServiceStatus")
         }
     }
-    
+
     // MARK: UI Actions
-    
+
     @IBAction func addSyncFolder(sender: AnyObject) {
         let panel: NSOpenPanel = NSOpenPanel()
         panel.delegate = self
@@ -366,29 +361,29 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         panel.title = panelTitle
         let promptString: String = NSLocalizedString("Select", comment: "Button title")
         panel.prompt = promptString
-        
+
         panel.beginSheetModalForWindow(self.window!) { (result)  in
             if result == NSFileHandlingPanelOKButton {
                 self.spinner.startAnimation(self)
-                
+
                 self.sharedSafedriveAPI.createSyncFolder(panel.URL!, success: { (folderID: Int) -> Void in
                     guard let realm = try? Realm() else {
                         SDLog("failed to create realm!!!")
                         Crashlytics.sharedInstance().crash()
                         return
                     }
-                    
+
                     let syncFolder = SyncFolder(name: panel.URL!.lastPathComponent!, url: panel.URL!, uniqueID: folderID)
-                    
+
                     // this is the only place where the `added` property should be set on SyncFolders
                     syncFolder.added = NSDate()
-                    
+
                     syncFolder.machine = self.mac
-                    
+
                     try! realm.write {
                         realm.add(syncFolder, update: true)
                     }
-                    
+
                     self.readSyncFolders(self)
                     self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .Forward)
 
@@ -404,7 +399,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             }
         }
     }
-    
+
     @IBAction func removeSyncFolder(sender: AnyObject) {
         let button: NSButton = sender as! NSButton
         let uniqueID: Int = button.tag
@@ -417,9 +412,9 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         alert.messageText = "Stop syncing this folder?"
         alert.informativeText = "The synced files will be deleted from SafeDrive or moved to your Storage folder.\n\nWhich one would you like to do?"
         alert.alertStyle = .InformationalAlertStyle
-        
+
         alert.beginSheetModalForWindow(self.window!) { (response) in
-            
+
             var op: SDSFTPOperation
             switch response {
             case NSAlertFirstButtonReturn:
@@ -443,9 +438,9 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 return
             }
             let syncFolders = realm.objects(SyncFolder)
-            
+
             let syncFolder = syncFolders.filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
-            
+
             let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
             let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(syncFolder.machine!.name!, isDirectory: true)
             let remoteFolder: NSURL = machineFolder.URLByAppendingPathComponent(syncFolder.name!, isDirectory: true)
@@ -456,27 +451,27 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             urlComponents.path = remoteFolder.path
             urlComponents.port = self.accountController.remotePort
             let remote: NSURL = urlComponents.URL!
-            
-            
+
+
             let syncController = SDSyncController()
             syncController.uniqueID = uniqueID
-            syncController.SFTPOperation(op, remoteDirectory: remote, password: self.accountController.password, success: { 
+            syncController.SFTPOperation(op, remoteDirectory: remote, password: self.accountController.password, success: {
                 self.sharedSafedriveAPI.deleteSyncFolder(uniqueID, success: {() -> Void in
-                    
+
                     guard let realm = try? Realm() else {
                         SDLog("failed to create realm!!!")
                         Crashlytics.sharedInstance().crash()
                         return
                     }
-                    
+
                     let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last!
-                    
+
                     let syncTasks = realm.objects(SyncTask).filter("syncFolder.uniqueID == \(uniqueID)")
 
                     try! realm.write {
                         realm.delete(syncTasks)
                     }
-                    
+
                     let syncFolder = realm.objects(SyncFolder).filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
 
                     try! realm.write {
@@ -504,29 +499,29 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             })
         }
     }
-    
+
     @IBAction func readSyncFolders(sender: AnyObject) {
         self.spinner.startAnimation(self)
-        
+
         self.sharedSafedriveAPI.readSyncFoldersWithSuccess({ (folders: [[String : NSObject]]) -> Void in
             for folder in folders {
                 /*
                 Current sync folder model:
-                
+
                 "id" : 1,
                 "folderName" : "Music",
                 "folderPath" : /Volumes/MacOS/Music,
                 "addedDate" : 1435864769463
                 */
-                
+
                 let folderName = folder["folderName"] as! String
                 let folderPath = folder["folderPath"]  as! String
                 let folderId = folder["id"] as! Int
-                
+
                 let addedUnixDate: Double = folder["addedDate"] as! Double
-                
+
                 let addedDate: NSDate = NSDate(timeIntervalSince1970: addedUnixDate/1000)
-                
+
                 guard let realm = try? Realm() else {
                     SDLog("failed to create realm!!!")
                     Crashlytics.sharedInstance().crash()
@@ -537,30 +532,30 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     Crashlytics.sharedInstance().crash()
                     return
                 }
-                
+
                 // try to retrieve and modify existing record if possible, avoids overwriting preferences only stored in entity
                 // while still ensuring entities will have a default set on them for things like sync time
                 var syncFolder = realm.objects(SyncFolder).filter("uniqueID == \(folderId)").last
-                
+
                 if syncFolder == nil {
                     syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: folderId)
                 }
-                
+
                 try! realm.write {
-                    
+
                     syncFolder!.machine = currentMachine
-                    
+
                     // this is the only place where the `added` property should be set on SyncFolders
                     syncFolder!.added = addedDate
-                    
+
                     realm.add(syncFolder!, update: true)
                 }
             }
             self.reload()
-            
+
             self.spinner.stopAnimation(self)
 
-            
+
         }, failure: { (error: NSError) -> Void in
             SDErrorHandlerReport(error)
             self.spinner.stopAnimation(self)
@@ -571,44 +566,44 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             alert.runModal()
         })
     }
-    
+
     @IBAction func startSyncNow(sender: AnyObject) {
         let button: NSButton = sender as! NSButton
         let folderID: Int = button.tag
         startSync(folderID)
     }
-    
+
     @IBAction func startRestoreNow(sender: AnyObject) {
         let button: NSButton = sender as! NSButton
         let folderID: Int = button.tag
         startRestore(folderID)
     }
-    
+
     @IBAction func stopSyncNow(sender: AnyObject) {
         let button: NSButton = sender as! NSButton
         let folderID: Int = button.tag
         stopSync(folderID)
     }
 
-    
+
     // MARK: Sync control
-    
+
     func startSync(folderID: Int) {
         self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .Forward)
     }
-    
+
     func startRestore(folderID: Int) {
-        
+
         let alert = NSAlert()
         alert.addButtonWithTitle("No")
         alert.addButtonWithTitle("Yes")
-        
+
         alert.messageText = "Restore folder?"
         alert.informativeText = "This will restore the selected folder contents from your SafeDrive.\n\nWarning: Any local files that have not been previously synced to SafeDrive may be lost."
         alert.alertStyle = .InformationalAlertStyle
-        
+
         alert.beginSheetModalForWindow(self.window!) { (response) in
-            
+
             switch response {
             case NSAlertFirstButtonReturn:
                 return
@@ -629,19 +624,19 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         let alert = NSAlert()
         alert.addButtonWithTitle("No")
         alert.addButtonWithTitle("Yes")
-        
+
         alert.messageText = "Cancel sync?"
         alert.informativeText = "This folder is currently syncing, do you want to cancel?"
         alert.alertStyle = .InformationalAlertStyle
-        
+
         alert.beginSheetModalForWindow(self.window!) { (response) in
-            
+
             switch response {
             case NSAlertFirstButtonReturn:
                 return
             case NSAlertSecondButtonReturn:
                 self.syncScheduler.cancel(folderID) {
-                    
+
                 }
                 break
             default:
@@ -649,45 +644,45 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             }
         }
     }
-    
+
     // MARK: NSOpenSavePanelDelegate
-    
+
     func panel(sender: AnyObject, validateURL url: NSURL) throws {
         let fileManager: NSFileManager = NSFileManager.defaultManager()
-        
+
         // check if the candidate sync path is actually writable and readable
         if !fileManager.isWritableFileAtPath(url.path!) {
             let errorInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, read/write permission denied", comment: "String informing the user that they do not have permission to read/write to the selected directory")]
             throw NSError(domain: SDErrorSyncDomain, code: SDSystemError.FilePermissionDenied.rawValue, userInfo: errorInfo)
         }
-        
+
         // check if the candidate sync path is a parent or subdirectory of an existing registered sync folder
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")
             let errorInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open local database, this is a fatal error", comment: "")]
             throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.OpenFailed.rawValue, userInfo: errorInfo)
         }
-        
+
         let syncFolders = realm.objects(SyncFolder)
         if SyncFolder.hasConflictingFolderRegistered(url.path!, syncFolders: syncFolders) {
             let errorInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")]
             throw NSError(domain: SDErrorSyncDomain, code: SDSyncError.FolderConflict.rawValue, userInfo: errorInfo)
         }
     }
-    
+
     // MARK: NSOutlineViewDelegate/Datasource
-    
+
     func outlineView(outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
         self.reload()
     }
-    
+
     func outlineView(outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
         if item is Machine {
             return true
         }
         return false
     }
-    
+
     func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
         if item is Machine {
             guard let realm = try? Realm() else {
@@ -700,14 +695,13 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             }
             let syncFolders = realm.objects(SyncFolder).filter("machine == %@", currentMachine)
             return syncFolders.count
-        }
-        else if item is SyncFolder {
+        } else if item is SyncFolder {
             return 0
         }
         // Root
         return 1
     }
-    
+
     func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")
@@ -727,28 +721,28 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         }
         return false
     }
-    
+
     func outlineView(outlineView: NSOutlineView, shouldSelectItem item: AnyObject) -> Bool {
         return !self.outlineView(outlineView, isGroupItem: item)
     }
-    
+
     func outlineView(outlineView: NSOutlineView, shouldShowCellExpansionForTableColumn tableColumn: NSTableColumn, item: AnyObject) -> Bool {
         return true
     }
-    
+
     func outlineView(outlineView: NSOutlineView, shouldShowOutlineCellForItem item: AnyObject) -> Bool {
         return false
     }
-    
+
     func outlineView(outlineView: NSOutlineView, shouldCollapseItem item: AnyObject) -> Bool {
         return false
     }
-    
+
     func outlineView(outlineView: NSOutlineView, rowViewForItem item: AnyObject) -> NSTableRowView {
         let v: SyncManagerTableRowView = SyncManagerTableRowView()
         return v
     }
-    
+
     func outlineView(outlineView: NSOutlineView, viewForTableColumn tableColumn: NSTableColumn, item: AnyObject) -> NSView {
         var tableCellView: SyncManagerTableCellView
         if item is Machine {
@@ -757,8 +751,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             let cellImage: NSImage = NSImage(named: NSImageNameComputer)!
             cellImage.size = NSMakeSize(15.0, 15.0)
             tableCellView.imageView!.image = cellImage
-        }
-        else if item is SyncFolder {
+        } else if item is SyncFolder {
             let syncFolder = item as! SyncFolder
             tableCellView = outlineView.makeViewWithIdentifier("FolderView", owner: self) as! SyncManagerTableCellView
             tableCellView.textField!.stringValue = syncFolder.name!.capitalizedString
@@ -773,48 +766,44 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 tableCellView.restoreNowButton.enabled = false
                 tableCellView.restoreNowButton.target = self
                 tableCellView.restoreNowButton.action = #selector(self.stopSyncNow(_:))
-                
+
                 tableCellView.syncNowButton.enabled = false
                 tableCellView.syncNowButton.target = self
                 tableCellView.syncNowButton.action = #selector(self.stopSyncNow(_:))
             }
-            
+
             if syncFolder.syncing {
                 tableCellView.syncStatus.startAnimation(self)
                 tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
                 tableCellView.syncNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
-            }
-            else if syncFolder.restoring {
+            } else if syncFolder.restoring {
                 tableCellView.syncStatus.startAnimation(self)
                 tableCellView.restoreNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
                 tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
-            }
-
-            else {
+            } else {
                 tableCellView.syncStatus.stopAnimation(self)
-                
+
                 tableCellView.restoreNowButton.enabled = true
                 tableCellView.restoreNowButton.target = self
                 tableCellView.restoreNowButton.action = #selector(self.startRestoreNow(_:))
                 tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
-                
+
                 tableCellView.syncNowButton.enabled = true
                 tableCellView.syncNowButton.target = self
                 tableCellView.syncNowButton.action = #selector(self.startSyncNow(_:))
                 tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
 
             }
-        }
-        else {
+        } else {
             tableCellView = outlineView.makeViewWithIdentifier("FolderView", owner: self) as! SyncManagerTableCellView
         }
         tableCellView.representedSyncItem = item
 
-        return tableCellView;
-        
+        return tableCellView
+
     }
-    
-    
+
+
     //--------------------------
     // Selection tracking
     //--------------------------
@@ -825,21 +814,20 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 SDLog("no item at \(self.syncListView.selectedRow)")
                 return
             }
-            
+
             if let syncTime = syncItem.syncTime {
                 self.syncTimePicker.dateValue = syncTime
-            }
-            else {
+            } else {
                 SDLog("Failed to load date in sync manager")
             }
-            
+
             /*if let syncURL = syncItem.url {
                 self.pathIndicator.URL = syncURL
             }
             else {
                 SDLog("Failed to load path in sync manager")
             }*/
-            
+
             guard let realm = try? Realm() else {
                 SDLog("failed to create realm!!!")
                 Crashlytics.sharedInstance().crash()
@@ -850,7 +838,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             let syncTasks = realm.objects(SyncTask)
 
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@", syncItem).sorted("syncDate").last {
-                
+
                 if syncItem.restoring {
                     self.syncStatus.stringValue = "Restoring"
                     self.syncFailureInfoButton.action = nil
@@ -858,22 +846,20 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.syncFailureInfoButton.enabled = false
                     self.syncFailureInfoButton.toolTip = ""
                     self.progress.startAnimation(nil)
-                    
+
                     self.progress.doubleValue = syncTask.progress
                     self.syncProgressField.stringValue = "\(syncTask.progress)% @ \(syncTask.bandwidth)"
-                }
-                else if syncItem.syncing {
+                } else if syncItem.syncing {
                     self.syncStatus.stringValue = "Syncing"
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.hidden = true
                     self.syncFailureInfoButton.enabled = false
                     self.syncFailureInfoButton.toolTip = ""
                     self.progress.startAnimation(nil)
-                    
+
                     self.progress.doubleValue = syncTask.progress
                     self.syncProgressField.stringValue = "\(syncTask.progress)% @ \(syncTask.bandwidth)"
-                }
-                else if syncTask.success {
+                } else if syncTask.success {
                     self.syncStatus.stringValue = "Waiting"
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.hidden = true
@@ -884,8 +870,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.progress.doubleValue = 100.0
                     self.syncProgressField.stringValue = ""
 
-                }
-                else {
+                } else {
                     self.syncStatus.stringValue = "Failed"
                     self.syncFailureInfoButton.action = #selector(self.showFailurePopover)
                     self.syncFailureInfoButton.hidden = false
@@ -899,20 +884,19 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 }
                 let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
                 failureView.message.stringValue = syncTask.message ?? ""
-            }
-            else {
+            } else {
                 self.syncStatus.stringValue = "Unknown"
                 self.syncFailureInfoButton.action = nil
                 self.syncFailureInfoButton.hidden = true
                 self.syncFailureInfoButton.enabled = false
                 self.syncFailureInfoButton.toolTip = nil
                 self.progress.stopAnimation(nil)
-                
+
                 self.progress.doubleValue = 0.0
-                
+
                 self.syncProgressField.stringValue = ""
             }
-            
+
             /*if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
                 lastSync = syncTask.syncDate {
                     self.lastSyncField.stringValue = lastSync.toMediumString()
@@ -920,7 +904,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             else {
                 self.lastSyncField.stringValue = ""
             }*/
-            
+
             switch syncItem.syncFrequency {
             case "hourly":
                 self.scheduleSelection.selectItemAtIndex(0)
@@ -954,8 +938,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.syncTimePicker.hidden = false
             }
             self.scheduleSelection.enabled = true
-        }
-        else {
+        } else {
             //self.lastSyncField.stringValue = ""
             //self.nextSyncField.stringValue = ""
             self.scheduleSelection.selectItemAtIndex(-1)
@@ -978,13 +961,13 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
         }
     }
-    
+
     @IBAction func setSyncFrequencyForFolder(sender: AnyObject) {
         if self.syncListView.selectedRow != -1 {
             let syncItem: SyncFolder = self.syncListView.itemAtRow(self.syncListView.selectedRow) as! SyncFolder
-            
+
             var syncFrequency: String
-            
+
             switch self.scheduleSelection.indexOfSelectedItem {
             case 0:
                 syncFrequency = "hourly"
@@ -997,7 +980,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             default:
                 syncFrequency = "daily"
             }
-            
+
             guard let realm = try? Realm() else {
                 SDLog("failed to create realm!!!")
                 Crashlytics.sharedInstance().crash()
@@ -1009,8 +992,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             }
         }
     }
-    
-    
+
+
     private func reload() {
         assert(NSThread.isMainThread(), "Not main thread!!!")
         let oldFirstResponder = self.window?.firstResponder
@@ -1020,23 +1003,23 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: true)
         self.window?.makeFirstResponder(oldFirstResponder)
     }
-    
+
     @objc
     private func showFailurePopover() {
         self.failurePopover.showRelativeToRect(self.syncFailureInfoButton.bounds, ofView: self.syncFailureInfoButton, preferredEdge: .MinY)
     }
-    
+
     @IBAction
     func setSyncTime(sender: AnyObject) {
         if self.syncListView.selectedRow != -1 {
             let syncItem: SyncFolder = self.syncListView.itemAtRow(self.syncListView.selectedRow) as! SyncFolder
-            
+
             guard let realm = try? Realm() else {
                 SDLog("failed to create realm!!!")
                 Crashlytics.sharedInstance().crash()
                 return
             }
-            
+
             try! realm.write {
                 syncItem.syncTime = self.syncTimePicker.dateValue
             }

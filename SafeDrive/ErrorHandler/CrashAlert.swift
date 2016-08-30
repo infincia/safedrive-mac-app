@@ -17,9 +17,9 @@ class CrashAlert {
                     alert.informativeText = "A crash report has been submitted automatically"
                     alert.alertStyle = .WarningAlertStyle
                     alert.showsSuppressionButton = true
-                    
+
                     alert.runModal()
-                    
+
                     let shouldSuppressAlerts = Bool(alert.suppressionButton!.state)
 
                     NSUserDefaults.standardUserDefaults().setBool(shouldSuppressAlerts, forKey: "suppressCrashAlerts")
