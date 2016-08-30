@@ -413,7 +413,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         alert.addButtonWithTitle("Cancel")
         alert.addButtonWithTitle("Move to Storage folder")
         // built on SFTP's rmdir command, but that doesn't work unless the dir is empty. Disabled for now.
-        //alert.addButtonWithTitle("Delete")
+        alert.addButtonWithTitle("Delete")
 
         alert.messageText = "Stop syncing this folder?"
         alert.informativeText = "If you remove a sync folder from your account, the remote files will be moved to your Storage folder"

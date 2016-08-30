@@ -48,7 +48,7 @@
         NMSSHSession *session = [NMSSHSession connectToHost:host
                                                        port:port.integerValue
                                                withUsername:user];
-        
+        NMSSHChannel *channel = session.channel;
         if (session.isConnected) {
             // this can be swapped out for a key method as needed
             [session authenticateByPassword:password];
@@ -122,14 +122,19 @@
                             });
                         }
                         break;
-                    case SDSFTPOperationDeleteFolder:
-                        if ([sftp removeDirectoryAtPath:serverPath]) {
+                    case SDSFTPOperationDeleteFolder: {
+                        // we do a remote SSH command instead of SFTP, as there is no "rm -rf" command in SFTP
+                        NSError *removeError;
+                        NSString *command = [NSString stringWithFormat:@"rm -rf \"%@\"", serverPath];
+                        [channel execute:command error:&removeError timeout:@30];
+                        
+                        if (!removeError) {
                             dispatch_sync(dispatch_get_main_queue(), ^{
                                 successBlock();
                             });
                         }
                         else {
-                            NSString *msg = [NSString stringWithFormat:@"SFTP: failed to remove path: %@", serverPath];
+                            NSString *msg = [NSString stringWithFormat:@"SSH: failed to remove path: %@. %@", serverPath, removeError.localizedDescription];
                             SDLog(msg);
                             NSError *error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorSFTPOperationFailure userInfo:@{NSLocalizedDescriptionKey: msg}];
                             
@@ -138,6 +143,7 @@
                             });
                         }
                         break;
+                    }
                     default:
                         break;
                 }
@@ -158,7 +164,8 @@
                 failureBlock(error);
             });
         }
-        // all cases should end up disconnecting the session
+        // all cases should end up disconnecting the session and channel
+        [channel closeShell];
         [session disconnect];
     });
 }
