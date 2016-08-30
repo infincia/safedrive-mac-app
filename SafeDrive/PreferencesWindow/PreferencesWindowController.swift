@@ -555,6 +555,13 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
             self.spinner.stopAnimation(self)
 
+            // select the first row automatically
+            let count = self.syncListView!.numberOfRows
+            if count >= 1 {
+                let indexSet = NSIndexSet(index: 1)
+                self.syncListView!.selectRowIndexes(indexSet, byExtendingSelection: false)
+                self.syncListView!.becomeFirstResponder()
+            }
 
         }, failure: { (error: NSError) -> Void in
             SDErrorHandlerReport(error)
