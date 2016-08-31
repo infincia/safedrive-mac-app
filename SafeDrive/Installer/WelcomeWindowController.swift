@@ -6,7 +6,7 @@ import Cocoa
 
 import Crashlytics
 
-class InstallerWindowController: NSWindowController, NSOpenSavePanelDelegate {
+class WelcomeWindowController: NSWindowController, NSOpenSavePanelDelegate {
 
     @IBOutlet var spinner: NSProgressIndicator!
 
@@ -32,7 +32,7 @@ class InstallerWindowController: NSWindowController, NSOpenSavePanelDelegate {
     }
 
     convenience init() {
-        self.init(windowNibName: "InstallerWindow")
+        self.init(windowNibName: "WelcomeWindow")
     }
 
     override func windowDidLoad() {

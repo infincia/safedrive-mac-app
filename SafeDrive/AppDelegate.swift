@@ -22,7 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     private var serviceManager: ServiceManager!
 
     private var syncScheduler: SyncScheduler?
-    private var installWindowController: InstallerWindowController?
+    private var welcomeWindowController: WelcomeWindowController?
 
 
     var CFBundleVersion = Int((NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]) as! String)!
@@ -71,8 +71,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration(_:)), name: SDApplicationShouldFinishConfiguration, object: nil)
 
-        self.installWindowController = InstallerWindowController()
-        _ = self.installWindowController!.window!
+        self.welcomeWindowController = WelcomeWindowController()
+        _ = self.welcomeWindowController!.window!
 
     }
 
