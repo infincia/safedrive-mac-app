@@ -61,13 +61,13 @@ class SyncFolder: Object {
     class func hasConflictingFolderRegistered<S : SequenceType where S.Generator.Element == SyncFolder>(testFolder: String, syncFolders: S) -> Bool {
         let testURL = NSURL(fileURLWithPath: testFolder, isDirectory: true)
         for folder in syncFolders  {
-            let registeredPath: String = folder.url!.absoluteString
+            let registeredPath: String = folder.url!.absoluteString!
             let options: NSStringCompareOptions = [.AnchoredSearch, .CaseInsensitiveSearch]
             // check if testFolder is a parent or subdirectory of an existing folder
-            if testURL.absoluteString.rangeOfString(registeredPath, options: options) != nil {
+            if testURL.absoluteString!.rangeOfString(registeredPath, options: options) != nil {
                 return true
             }
-            if registeredPath.rangeOfString(testURL.absoluteString, options: options) != nil {
+            if registeredPath.rangeOfString(testURL.absoluteString!, options: options) != nil {
                 return true
             }
         }

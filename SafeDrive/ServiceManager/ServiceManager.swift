@@ -46,12 +46,12 @@ class ServiceManager: NSObject {
 
         let safeDriveApplicationSupportURL = applicationSupportURL.URLByAppendingPathComponent("SafeDrive", isDirectory: true)
 
-        let serviceDestinationURL = safeDriveApplicationSupportURL.URLByAppendingPathComponent("SafeDriveService.app", isDirectory: true)
+        let serviceDestinationURL = safeDriveApplicationSupportURL!.URLByAppendingPathComponent("SafeDriveService.app", isDirectory: true)
 
-        let serviceSourceURL = NSBundle.mainBundle().URLForResource("SafeDriveService", withExtension: "app", subdirectory: "../PlugIns")!
+        let serviceSourceURL = NSBundle.mainBundle().bundleURL.URLByAppendingPathComponent("Contents/PlugIns/SafeDriveService.app", isDirectory: true)!
 
         // copy launch agent to ~/Library/LaunchAgents/
-        let launchAgentDestinationURL = launchAgentsURL.URLByAppendingPathComponent("io.safedrive.SafeDrive.Service.plist", isDirectory: false)
+        let launchAgentDestinationURL = launchAgentsURL!.URLByAppendingPathComponent("io.safedrive.SafeDrive.Service.plist", isDirectory: false)!
         let launchAgentSourceURL: NSURL = NSBundle.mainBundle().URLForResource("io.safedrive.SafeDrive.Service", withExtension: "plist")!
         if NSFileManager.defaultManager().fileExistsAtPath(launchAgentDestinationURL.path!) {
             do {
@@ -70,22 +70,22 @@ class ServiceManager: NSObject {
 
         // copy background service to ~/Library/Application Support/SafeDrive/
         do {
-            try fileManager.createDirectoryAtURL(safeDriveApplicationSupportURL, withIntermediateDirectories: true, attributes: nil)
+            try fileManager.createDirectoryAtURL(safeDriveApplicationSupportURL!, withIntermediateDirectories: true, attributes: nil)
         } catch {
             SDLog("Error creating support directory: \(error)")
             SDErrorHandlerReport(((error as Any) as! NSError))
         }
 
-        if fileManager.fileExistsAtPath(serviceDestinationURL.path!) {
+        if fileManager.fileExistsAtPath(serviceDestinationURL!.path!) {
             do {
-                try fileManager.removeItemAtURL(serviceDestinationURL)
+                try fileManager.removeItemAtURL(serviceDestinationURL!)
             } catch {
                 SDLog("Error removing old service: \(error)")
                 SDErrorHandlerReport(((error as Any) as! NSError))
             }
         }
         do {
-            try fileManager.copyItemAtURL(serviceSourceURL, toURL: serviceDestinationURL)
+            try fileManager.copyItemAtURL(serviceSourceURL, toURL: serviceDestinationURL!)
         } catch {
             SDLog("Error copying service: \(error)")
             SDErrorHandlerReport(((error as Any) as! NSError))

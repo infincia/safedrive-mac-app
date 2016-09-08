@@ -134,7 +134,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.serviceManager.unloadService()
 
             let dbURL = groupURL.URLByAppendingPathComponent("sync.realm")
-            let newdbURL = dbURL.URLByAppendingPathExtension("new")
+            let newdbURL = dbURL!.URLByAppendingPathExtension("new")
 
             let config = Realm.Configuration(
                 fileURL: dbURL,
@@ -166,14 +166,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 let fileManager = NSFileManager.defaultManager()
 
                 do {
-                    try fileManager.removeItemAtURL(newdbURL)
+                    try fileManager.removeItemAtURL(newdbURL!)
                 } catch {
                     // ignored, file may not exist at all, but if it does and we can't remove it we'll crash next and get a report
                 }
-                let realm = try! Realm(fileURL: dbURL)
-                try! realm.writeCopyToURL(newdbURL)
-                try! fileManager.removeItemAtURL(dbURL)
-                try! fileManager.moveItemAtURL(newdbURL, toURL: dbURL)
+                let realm = try! Realm(fileURL: dbURL!)
+                try! realm.writeCopyToURL(newdbURL!)
+                try! fileManager.removeItemAtURL(dbURL!)
+                try! fileManager.moveItemAtURL(newdbURL!, toURL: dbURL!)
             }
 
             self.serviceManager.deployService()

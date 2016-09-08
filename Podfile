@@ -6,11 +6,13 @@ def keychain_pods
 end
 
 def shared_pods
-    pod 'Alamofire', '3.4.1'
+    pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :tag => '3.5.0'
     pod 'Fabric', '1.6.8'
-    pod 'Crashlytics', '3.7.3'
+    pod 'Crashlytics', '3.8'
     pod 'SwiftDate', '1.2'
     pod 'RegexKitLite', '4.0'
+    pod 'Realm', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
+    pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
 end
 
 target 'safedriveaskpass' do
@@ -25,6 +27,7 @@ end
 
 target 'SafeDriveFinder' do
     use_frameworks!
+    shared_pods
 end
 
 target 'SafeDrive' do

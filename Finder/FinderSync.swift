@@ -13,7 +13,7 @@ class FinderSync: FIFinderSync {
     var appConnection: NSXPCConnection!
     var serviceConnection: NSXPCConnection!
 
-    let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
+    let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")!
 
     var token: RealmSwift.NotificationToken?
 

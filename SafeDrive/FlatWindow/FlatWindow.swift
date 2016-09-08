@@ -31,20 +31,12 @@ class FlatWindow: NSWindow {
             self.level = Int(CGWindowLevelForKey(CGWindowLevelKey.StatusWindowLevelKey))
         }
     }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-
-    required override init(contentRect: NSRect, styleMask aStyle: Int, backing bufferingType: NSBackingStoreType, defer flag: Bool) {
-        super.init(contentRect: contentRect, styleMask: aStyle, backing: bufferingType, defer: flag)
-    }
-
+    
     override func awakeFromNib() {
         self.opaque = false
         self.closeButton.image = NSImage(named: NSImageNameStopProgressTemplate)
         self.closeButton.bordered = false
-        self.closeButton.setButtonType(.MomentaryChangeButton)
+        self.closeButton.setButtonType(.MomentaryChange)
         self.closeButton.target = self
         self.closeButton.action = #selector(self.windowController!.close)
         self.backgroundColor = NSColor.clearColor()

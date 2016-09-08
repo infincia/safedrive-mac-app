@@ -70,7 +70,7 @@ enum Endpoint: URLRequestConvertible {
 
     var URLRequest: NSMutableURLRequest {
         let URL = NSURL(string: Endpoint.baseURLString)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
+        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path)!)
         mutableURLRequest.HTTPMethod = method.rawValue
 
         if let token = API.sharedAPI.sessionToken {

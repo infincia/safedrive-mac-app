@@ -57,7 +57,7 @@ class SyncScheduler {
 
     private var syncDispatchQueue = dispatch_queue_create("io.safedrive.SyncScheduler.SyncQueue", DISPATCH_QUEUE_SERIAL)
 
-    let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
+    let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")!
 
     init() {
         self.reachabilityManager?.listener = { status in
@@ -94,7 +94,7 @@ class SyncScheduler {
 
             alert.messageText = "Continue restore?"
             alert.informativeText = "SafeDrive could not finish restoring the \(folder.name!) folder, would you like to continue now? \n\nWarning: If you decline, the folder will resume syncing to the server, which may result in data loss"
-            alert.alertStyle = .InformationalAlertStyle
+            alert.alertStyle = .Informational
 
             alert.beginSheetModalForWindow(NSApp.mainWindow!) { (response) in
 
@@ -275,8 +275,8 @@ class SyncScheduler {
             let localFolder: NSURL = folder.url!
 
             let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
-            let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(folder.machine!.name!, isDirectory: true)
-            let remoteFolder: NSURL = machineFolder.URLByAppendingPathComponent(folderName, isDirectory: true)
+            let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(folder.machine!.name!, isDirectory: true)!
+            let remoteFolder: NSURL = machineFolder.URLByAppendingPathComponent(folderName, isDirectory: true)!
             let urlComponents: NSURLComponents = NSURLComponents()
             urlComponents.user = self.accountController.internalUserName
             urlComponents.host = self.accountController.remoteHost

@@ -15,7 +15,7 @@ class CrashAlert {
                     alert.addButtonWithTitle("OK")
                     alert.messageText = "SafeDrive crashed :("
                     alert.informativeText = "A crash report has been submitted automatically"
-                    alert.alertStyle = .WarningAlertStyle
+                    alert.alertStyle = .Warning
                     alert.showsSuppressionButton = true
 
                     alert.runModal()

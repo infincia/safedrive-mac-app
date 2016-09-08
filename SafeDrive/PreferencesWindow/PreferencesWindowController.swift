@@ -130,7 +130,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     private var uniqueClientID: String!
 
-    private let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")
+    private let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")!
 
 
 
@@ -419,7 +419,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
         alert.messageText = "Stop syncing this folder?"
         alert.informativeText = "The synced files will be deleted from SafeDrive or moved to your Storage folder.\n\nWhich one would you like to do?"
-        alert.alertStyle = .InformationalAlertStyle
+        alert.alertStyle = .Informational
 
         alert.beginSheetModalForWindow(self.window!) { (response) in
 
@@ -450,8 +450,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             let syncFolder = syncFolders.filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
 
             let defaultFolder: NSURL = NSURL(string: SDDefaultServerPath)!
-            let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(syncFolder.machine!.name!, isDirectory: true)
-            let remoteFolder: NSURL = machineFolder.URLByAppendingPathComponent(syncFolder.name!, isDirectory: true)
+            let machineFolder: NSURL = defaultFolder.URLByAppendingPathComponent(syncFolder.machine!.name!, isDirectory: true)!
+            let remoteFolder: NSURL = machineFolder.URLByAppendingPathComponent(syncFolder.name!, isDirectory: true)!
             let urlComponents: NSURLComponents = NSURLComponents()
             urlComponents.user = self.accountController.internalUserName
             urlComponents.password = self.accountController.password
@@ -615,7 +615,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
         alert.messageText = "Restore folder?"
         alert.informativeText = "This will restore the selected folder contents from your SafeDrive.\n\nWarning: Any local files that have not been previously synced to SafeDrive may be lost."
-        alert.alertStyle = .InformationalAlertStyle
+        alert.alertStyle = .Informational
 
         alert.beginSheetModalForWindow(self.window!) { (response) in
 
@@ -642,7 +642,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
         alert.messageText = "Cancel sync?"
         alert.informativeText = "This folder is currently syncing, do you want to cancel?"
-        alert.alertStyle = .InformationalAlertStyle
+        alert.alertStyle = .Informational
 
         alert.beginSheetModalForWindow(self.window!) { (response) in
 
