@@ -176,7 +176,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 try! fileManager.moveItemAtURL(newdbURL!, toURL: dbURL!)
             }
 
-            self.serviceManager.deployService()
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
                 self.serviceManager.loadService()
                 self.serviceRouter = SDServiceXPCRouter()
