@@ -259,7 +259,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         completionHandler(true)
 
         // show an alert telling the user a crash report was generated, allow them to opt out of seeing more alerts
-        CrashAlert.show()
+        //CrashAlert.show()
 
     }
 
