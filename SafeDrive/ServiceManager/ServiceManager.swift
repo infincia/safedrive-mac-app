@@ -56,39 +56,39 @@ class ServiceManager: NSObject {
         if NSFileManager.defaultManager().fileExistsAtPath(launchAgentDestinationURL.path!) {
             do {
                 try NSFileManager.defaultManager().removeItemAtURL(launchAgentDestinationURL)
-            } catch {
+            } catch let error as NSError {
                 SDLog("Error removing old launch agent: \(error)")
-                SDErrorHandlerReport(((error as Any) as! NSError))
+                SDErrorHandlerReport(error)
             }
         }
         do {
             try fileManager.copyItemAtURL(launchAgentSourceURL, toURL: launchAgentDestinationURL)
-        } catch {
+        } catch let error as NSError {
             SDLog("Error copying launch agent: \(error)")
-            SDErrorHandlerReport(((error as Any) as! NSError))
+            SDErrorHandlerReport(error)
         }
 
         // copy background service to ~/Library/Application Support/SafeDrive/
         do {
             try fileManager.createDirectoryAtURL(safeDriveApplicationSupportURL!, withIntermediateDirectories: true, attributes: nil)
-        } catch {
+        } catch let error as NSError {
             SDLog("Error creating support directory: \(error)")
-            SDErrorHandlerReport(((error as Any) as! NSError))
+            SDErrorHandlerReport(error)
         }
 
         if fileManager.fileExistsAtPath(serviceDestinationURL!.path!) {
             do {
                 try fileManager.removeItemAtURL(serviceDestinationURL!)
-            } catch {
+            } catch let error as NSError {
                 SDLog("Error removing old service: \(error)")
-                SDErrorHandlerReport(((error as Any) as! NSError))
+                SDErrorHandlerReport(error)
             }
         }
         do {
             try fileManager.copyItemAtURL(serviceSourceURL, toURL: serviceDestinationURL!)
-        } catch {
+        } catch let error as NSError {
             SDLog("Error copying service: \(error)")
-            SDErrorHandlerReport(((error as Any) as! NSError))
+            SDErrorHandlerReport(error)
         }
 
     }
@@ -99,9 +99,9 @@ class ServiceManager: NSObject {
         var jobError: Unmanaged<CFError>? = nil
 
         if !SMJobSubmit(kSMDomainUserLaunchd, jobDict!, nil, &jobError) {
-            if let error = jobError?.takeRetainedValue() {
+            if let error = jobError?.takeRetainedValue() as NSError? {
                 SDLog("Load service error: \(error)")
-                SDErrorHandlerReport(((error as Any) as! NSError))
+                SDErrorHandlerReport(error)
             }
         }
     }
@@ -109,9 +109,9 @@ class ServiceManager: NSObject {
     func unloadService() {
         var jobError: Unmanaged<CFError>? = nil
         if !SMJobRemove(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString), nil, true, &jobError) {
-            if let error = jobError?.takeRetainedValue() {
+            if let error = jobError?.takeRetainedValue() as NSError? {
                 SDLog("Unload service error: \(error)")
-                SDErrorHandlerReport(((error as Any) as! NSError))
+                SDErrorHandlerReport(error)
             }
         }
     }
