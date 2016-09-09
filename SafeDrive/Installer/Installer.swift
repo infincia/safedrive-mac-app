@@ -4,8 +4,41 @@
 
 import Foundation
 
+protocol InstallerDelegate {
+    func needsDependencies()
+    func didValidateDependencies()
+}
+
 class Installer {
 
+    var delegate: InstallerDelegate
+    
+    var needsUpdate: Bool = false
+    
+    private var promptedForInstall = false
+    
+    init(delegate: InstallerDelegate) {
+        self.delegate = delegate
+    }
+
+    func checkRequirements() {
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+            while !self.isOSXFUSEInstalled() {
+                if !self.promptedForInstall {
+                    self.promptedForInstall = true
+                    dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                        self.delegate.needsDependencies()
+                    })
+                }
+                NSThread.sleepForTimeInterval(1)
+            }
+            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                self.delegate.didValidateDependencies()
+            })
+        })
+    }
+    
     func installOSXFUSE() {
         let osxfuseURL = NSBundle.mainBundle().URLForResource("Install OSXFUSE 2.8", withExtension: "pkg", subdirectory: nil)
         let privilegedTask = STPrivilegedTask()

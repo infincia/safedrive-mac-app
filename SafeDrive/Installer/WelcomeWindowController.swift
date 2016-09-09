@@ -5,18 +5,18 @@
 import Cocoa
 
 import Crashlytics
+import Realm
+import RealmSwift
 
-class WelcomeWindowController: NSWindowController, NSOpenSavePanelDelegate {
+class WelcomeWindowController: NSWindowController, NSOpenSavePanelDelegate, InstallerDelegate {
 
     @IBOutlet var spinner: NSProgressIndicator!
 
     @IBOutlet var next: NSButton!
 
-    private var installer = Installer()
+    private var installer: Installer!
 
     private var osxfuseIsInstalled = false
-
-    private var promptedForInstall = false
 
     private var osxfuseDispatchQueue = dispatch_queue_create("io.safedrive.Installer.OSXFUSEQueue", DISPATCH_QUEUE_SERIAL)
 
@@ -40,37 +40,17 @@ class WelcomeWindowController: NSWindowController, NSOpenSavePanelDelegate {
         let window = self.window as! FlatWindow
 
         window.keepOnTop = true
+        
+        self.installer = Installer(delegate: self)
 
-        self.checkDependencies()
-    }
-
-    private func checkDependencies() {
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
-            while !self.installer.isOSXFUSEInstalled() {
-                if !self.promptedForInstall {
-                    self.promptedForInstall = true
-                    dispatch_sync(dispatch_get_main_queue(), {() -> Void in
-                        self.showWindow(self)
-                    })
-                }
-                NSThread.sleepForTimeInterval(1)
-            }
-            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
-                NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldFinishConfiguration, object: nil)
-                self.osxfuseIsInstalled = true
-                self.spinner.stopAnimation(self)
-                self.next.enabled = true
-                self.close()
-            })
-        })
+        self.installer.checkRequirements()
     }
 
 
     // MARK: UI Actions
 
     @IBAction func next(sender: AnyObject) {
-        if self.osxfuseIsInstalled {
+        if self.installer.isOSXFUSEInstalled() {
             NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldFinishConfiguration, object: nil)
         } else {
             self.installer.installOSXFUSE()
@@ -79,4 +59,16 @@ class WelcomeWindowController: NSWindowController, NSOpenSavePanelDelegate {
         }
     }
 
+    // MARK: Installer Delegate
+    
+    func needsDependencies() {
+        self.showWindow(self)
+    }
+    
+    func didValidateDependencies() {
+        NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldFinishConfiguration, object: nil)
+        self.spinner.stopAnimation(self)
+        self.next.enabled = true
+        self.close()
+    }
 }
