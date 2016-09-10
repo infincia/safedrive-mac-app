@@ -10,9 +10,10 @@ import RealmSwift
 
 class FinderSync: FIFinderSync {
 
-    var appConnection: NSXPCConnection!
-    var serviceConnection: NSXPCConnection!
 
+    var appConnection: NSXPCConnection?
+    var serviceConnection: NSXPCConnection?
+    
     let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")!
 
     var token: RealmSwift.NotificationToken?
@@ -75,8 +76,12 @@ class FinderSync: FIFinderSync {
         outer: while true {
             if (self.serviceConnection == nil) {
                 self.serviceConnection = self.createServiceConnection()
-
-                let service = self.serviceConnection.remoteObjectProxyWithErrorHandler { error in
+                guard let s = self.serviceConnection else {
+                    NSThread.sleepForTimeInterval(1)
+                    continue outer
+                }
+                
+                let service = s.remoteObjectProxyWithErrorHandler { error in
                     NSLog("remote proxy error: %@", error)
                 } as! SDServiceXPCProtocol
 
@@ -87,14 +92,21 @@ class FinderSync: FIFinderSync {
             }
             if (self.appConnection == nil) {
                 FIFinderSyncController.defaultController().directoryURLs = Set<NSURL>()
-                let service = self.serviceConnection.remoteObjectProxyWithErrorHandler { error in
+                guard let s = self.serviceConnection else {
+                    NSThread.sleepForTimeInterval(1)
+                    continue outer
+                }
+                let service = s.remoteObjectProxyWithErrorHandler { error in
                     print("remote proxy error: \(error)")
                 } as! SDServiceXPCProtocol
 
                 service.getAppEndpoint({ endpoint in
                     self.appConnection = self.createAppConnectionFromEndpoint(endpoint)
-
-                    let app = self.appConnection.remoteObjectProxyWithErrorHandler() { error in
+                    guard let a = self.appConnection else {
+                        NSThread.sleepForTimeInterval(1)
+                        return
+                    }
+                    let app = a.remoteObjectProxyWithErrorHandler() { error in
                         print("remote proxy error: \(error)")
                     } as! SDAppXPCProtocol
 
@@ -246,7 +258,11 @@ class FinderSync: FIFinderSync {
 
         let folder: SyncFolder? = self.syncFolderForURL(target)
         if let folder = folder {
-            let app = self.appConnection.remoteObjectProxyWithErrorHandler { error in
+            guard let a = self.appConnection else {
+                print("App connection not found")
+                return
+            }
+            let app = a.remoteObjectProxyWithErrorHandler { error in
                 print("remote proxy error: \(error)")
             } as! SDAppXPCProtocol
             app.displayRestoreWindowForURLs([folder.url!])
@@ -254,7 +270,11 @@ class FinderSync: FIFinderSync {
     }
 
     @IBAction func openRestoreWindow(sender: AnyObject) {
-        let app = self.appConnection.remoteObjectProxyWithErrorHandler { error in
+        guard let a = self.appConnection else {
+            print("App connection not found")
+            return
+        }
+        let app = a.remoteObjectProxyWithErrorHandler { error in
             print("remote proxy error: \(error)")
         } as! SDAppXPCProtocol
 
@@ -262,7 +282,11 @@ class FinderSync: FIFinderSync {
     }
 
     @IBAction func openPreferencesWindow(sender: AnyObject) {
-        let app = self.appConnection.remoteObjectProxyWithErrorHandler { error in
+        guard let a = self.appConnection else {
+            print("App connection not found")
+            return
+        }
+        let app = a.remoteObjectProxyWithErrorHandler { error in
             print("remote proxy error: \(error)")
         } as! SDAppXPCProtocol
 
