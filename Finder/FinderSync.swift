@@ -72,7 +72,7 @@ class FinderSync: FIFinderSync {
     // MARK: - Service handling
 
     func serviceReconnectionLoop() {
-        while true {
+        outer: while true {
             if (self.serviceConnection == nil) {
                 self.serviceConnection = self.createServiceConnection()
 
