@@ -228,8 +228,7 @@ class FinderSync: FIFinderSync {
         case .ToolbarItemMenu:
             m = NSMenu()
             m!.addItemWithTitle("SafeDrive Support", action: #selector(FinderSync.support(_:)), keyEquivalent: "")
-            m!.addItemWithTitle("SafeDrive Sync Preferences", action: #selector(FinderSync.openRestoreWindow(_:)), keyEquivalent: "")
-            m!.addItemWithTitle("SafeDrive Preferences Window", action: #selector(FinderSync.openPreferencesWindow(_:)), keyEquivalent: "")
+            m!.addItemWithTitle("SafeDrive Preferences", action: #selector(FinderSync.openPreferencesWindow(_:)), keyEquivalent: "")
         }
         return m!
     }
