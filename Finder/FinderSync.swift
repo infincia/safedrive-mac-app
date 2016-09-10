@@ -28,12 +28,9 @@ class FinderSync: FIFinderSync {
         config.fileURL = dbURL
 
         Realm.Configuration.defaultConfiguration = config
-
-        guard let realm = try? Realm() else {
-            print("failed to create realm!!!")
-            return
-        }
-
+        
+        let realm = try! Realm()
+        
         self.syncFolders = realm.objects(SyncFolder)
 
         // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
