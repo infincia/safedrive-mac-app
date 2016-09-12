@@ -8,7 +8,7 @@ end
 def shared_pods
     pod 'Fabric', '1.6.8'
     pod 'Crashlytics', '3.8'
-    pod 'SwiftDate', '1.2'
+    #pod 'SwiftDate', git: 'https://github.com/malcommac/SwiftDate.git', branch: 'feature/swift-3.0'
     pod 'RegexKitLite', '4.0'
     pod 'Realm', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
     pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true

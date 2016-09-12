@@ -9,8 +9,6 @@ import Crashlytics
 import Realm
 import RealmSwift
 
-import SwiftDate
-
 enum SyncDirection {
     case Forward
     case Reverse
@@ -140,9 +138,13 @@ class SyncScheduler {
 
                 let currentDate = NSDate()
 
+                let unitFlags: NSCalendarUnit = [.Hour, .Day, .Month, .Year]
+                let currentDateComponents = NSCalendar.currentCalendar().components(unitFlags, fromDate: currentDate)
+ 
+
                 let components = NSDateComponents()
-                components.hour = currentDate.hour
-                components.minute = currentDate.minute
+                components.hour = currentDateComponents.hour
+                components.minute = currentDateComponents.minute
                 let calendar = NSCalendar.currentCalendar()
                 let syncDate = calendar.dateFromComponents(components)!
 
@@ -152,7 +154,7 @@ class SyncScheduler {
                 // this would run twice per hour if we did not sleep thread for 60 seconds
 
 
-                if currentDate.minute == 0 {
+                if currentDateComponents.minute == 0 {
                     // first minute of each hour for hourly syncs
                     // NOTE: this scheduler ignores syncTime on purpose, hourly syncs always run at xx:00
                     let hourlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'hourly' AND syncing == false AND machine == %@", currentMachine)
@@ -160,14 +162,14 @@ class SyncScheduler {
                 }
 
 
-                if currentDate.day == 1 {
+                if currentDateComponents.day == 1 {
                     // first of the month for monthly syncs
                     let monthlyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'monthly' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
                     folders.appendContentsOf(monthlyFolders)
                 }
 
 
-                if currentDate.weekday == 1 {
+                if currentDateComponents.weekday == 1 {
                     // first day of the week for weekly syncs
                     let weeklyFolders = realm.objects(SyncFolder).filter("syncFrequency == 'weekly' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
                     folders.appendContentsOf(weeklyFolders)
@@ -186,7 +188,7 @@ class SyncScheduler {
                 }
 
                 // keep loop in sync with clock time to the next minute
-                let sleepSeconds = 60 - currentDate.second
+                let sleepSeconds = 60 - currentDateComponents.second
                 NSThread.sleepForTimeInterval(Double(sleepSeconds))
 
             }
