@@ -810,6 +810,7 @@
 					AA3168121A191B72006CC0EB = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = G738Z89QKM;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
@@ -825,6 +826,7 @@
 					AA3168251A191B72006CC0EB = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = G738Z89QKM;
+						LastSwiftMigration = 0800;
 						TestTargetID = AA3168121A191B72006CC0EB;
 					};
 					AA4E77391A3E9B1D0054BBCA = {
@@ -834,6 +836,7 @@
 					AA5754011C7FFCC00040E8B0 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = G738Z89QKM;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
@@ -843,6 +846,7 @@
 					AAF945FE1C815D5A00B972C3 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = G738Z89QKM;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -1425,7 +1429,7 @@
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "SafeDrive/SafeDrive-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1458,7 +1462,7 @@
 				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "SafeDrive/SafeDrive-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1484,7 +1488,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safedrive.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SafeDriveTests/SafeDriveTests-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SafeDrive.app/Contents/MacOS/SafeDrive";
 			};
 			name = Debug;
@@ -1507,7 +1511,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safedrive.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SafeDriveTests/SafeDriveTests-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SafeDrive.app/Contents/MacOS/SafeDrive";
 			};
 			name = Release;
@@ -1579,7 +1583,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Service/SafeDriveService-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1611,7 +1615,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.Service;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Service/SafeDriveService-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1638,7 +1642,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Finder/SafeDriveFinder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1664,7 +1668,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Finder/SafeDriveFinder-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

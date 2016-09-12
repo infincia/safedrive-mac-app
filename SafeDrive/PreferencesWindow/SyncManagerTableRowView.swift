@@ -16,7 +16,7 @@ class SyncManagerTableRowView: NSTableRowView {
 
     }
 
-    override func drawBackgroundInRect(dirtyRect: NSRect) {
+    override func drawBackground(in dirtyRect: NSRect) {
         // no background
     }
 }

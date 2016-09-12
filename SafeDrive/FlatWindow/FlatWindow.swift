@@ -28,18 +28,18 @@ class FlatWindow: NSWindow {
         }
         set (newValue) {
             _keepOnTop = newValue
-            self.level = Int(CGWindowLevelForKey(CGWindowLevelKey.StatusWindowLevelKey))
+            self.level = Int(CGWindowLevelForKey(CGWindowLevelKey.statusWindow))
         }
     }
     
     override func awakeFromNib() {
-        self.opaque = false
+        self.isOpaque = false
         self.closeButton.image = NSImage(named: NSImageNameStopProgressTemplate)
-        self.closeButton.bordered = false
-        self.closeButton.setButtonType(.MomentaryChange)
+        self.closeButton.isBordered = false
+        self.closeButton.setButtonType(.momentaryChange)
         self.closeButton.target = self
         self.closeButton.action = #selector(self.windowController!.close)
-        self.backgroundColor = NSColor.clearColor()
+        self.backgroundColor = NSColor.clear
         let offset = 8
         let size = 9
         self.closeButton.frame = NSRect(x: offset + 4, y: Int(self.frame.height) - size - offset, width: size, height: size)
@@ -47,7 +47,7 @@ class FlatWindow: NSWindow {
 
     }
 
-    override var movableByWindowBackground: Bool {
+    override var isMovableByWindowBackground: Bool {
         get {
             return true
         }
@@ -56,7 +56,7 @@ class FlatWindow: NSWindow {
         }
     }
 
-    override var canBecomeKeyWindow: Bool {
+    override var canBecomeKey: Bool {
         get {
             return true
         }
@@ -65,7 +65,7 @@ class FlatWindow: NSWindow {
         }
     }
 
-    override var canBecomeMainWindow: Bool {
+    override var canBecomeMain: Bool {
         get {
             return true
         }

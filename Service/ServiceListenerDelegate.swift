@@ -8,38 +8,38 @@ class ServiceListenerDelegate: NSObject, NSXPCListenerDelegate, SDServiceXPCProt
 
     var appEndpoint: NSXPCListenerEndpoint?
 
-    func listener(listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+    func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
 
-        let serviceInterface = NSXPCInterface(withProtocol: SDServiceXPCProtocol.self)
+        let serviceInterface = NSXPCInterface(with: SDServiceXPCProtocol.self)
         newConnection.exportedInterface = serviceInterface
         newConnection.exportedObject = self
         newConnection.resume()
         return true
     }
 
-    func sendMessage(message: String, reply replyBlock: (String) -> Void) {
+    func sendMessage(_ message: String, reply replyBlock: @escaping (String) -> Void) {
         replyBlock("Got message: \(message)")
 
     }
 
-    func ping(replyBlock: (String) -> Void) {
+    func ping(_ replyBlock: @escaping (String) -> Void) {
         replyBlock("ack")
 
     }
 
-    func protocolVersion(replyBlock: (NSNumber) -> Void) {
-        replyBlock(kSDServiceXPCProtocolVersion)
+    func protocolVersion(_ replyBlock: @escaping (NSNumber) -> Void) {
+        replyBlock(NSNumber(integerLiteral: kSDServiceXPCProtocolVersion))
 
     }
 
-    func getAppEndpoint(replyBlock: (NSXPCListenerEndpoint) -> Void) {
+    func getAppEndpoint(_ replyBlock: @escaping (NSXPCListenerEndpoint) -> Void) {
         guard let endpoint = self.appEndpoint else {
             return
         }
         replyBlock(endpoint)
     }
 
-    func sendAppEndpoint(endpoint: NSXPCListenerEndpoint, reply replyBlock: (Bool) -> Void) {
+    func sendAppEndpoint(_ endpoint: NSXPCListenerEndpoint, reply replyBlock: @escaping (Bool) -> Void) {
         self.appEndpoint = endpoint
         replyBlock(true)
     }

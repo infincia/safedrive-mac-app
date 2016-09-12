@@ -14,7 +14,7 @@ class FinderSync: FIFinderSync {
     var appConnection: NSXPCConnection?
     var serviceConnection: NSXPCConnection?
     
-    let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")!
+    let dbURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db")!.appendingPathComponent("sync.realm")
     
     var token: RealmSwift.NotificationToken?
     
@@ -32,34 +32,34 @@ class FinderSync: FIFinderSync {
         
         let realm = try! Realm()
         
-        self.syncFolders = realm.objects(SyncFolder)
+        self.syncFolders = realm.allObjects(ofType: SyncFolder.self)
         
         // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
-        FIFinderSyncController.defaultController().setBadgeImage(NSImage(named: NSImageNameStatusAvailable)!, label: "Idle", forBadgeIdentifier: "idle")
-        FIFinderSyncController.defaultController().setBadgeImage(NSImage(named: NSImageNameStatusPartiallyAvailable)!, label: "Syncing", forBadgeIdentifier: "syncing")
-        FIFinderSyncController.defaultController().setBadgeImage(NSImage(named: NSImageNameStatusUnavailable)!, label: "Error", forBadgeIdentifier: "error")
+        FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImageNameStatusAvailable)!, label: "Idle", forBadgeIdentifier: "idle")
+        FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImageNameStatusPartiallyAvailable)!, label: "Syncing", forBadgeIdentifier: "syncing")
+        FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImageNameStatusUnavailable)!, label: "Error", forBadgeIdentifier: "error")
         
-        FIFinderSyncController.defaultController().directoryURLs = Set<NSURL>()
+        FIFinderSyncController.default().directoryURLs = Set<URL>()
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             self.serviceReconnectionLoop()
         })
         
-        token = self.syncFolders!.addNotificationBlock({ (changes) in
+        token = self.syncFolders!.addNotificationBlock(block: { (changes) in
             switch changes {
             case .Initial(_):
                 break
             case .Update(_, _, _, let modifications):
-                var s = [NSURL]()
+                var s = [URL]()
                 
                 for index in modifications {
                     let folder = self.syncFolders![index]
                     let u = folder.url!
                     s.append(u)
                     // force update of badges when top level folders change
-                    self.requestBadgeIdentifierForURL(u)
+                    self.requestBadgeIdentifier(for: u)
                 }
-                FIFinderSyncController.defaultController().directoryURLs = Set<NSURL>(s)
+                FIFinderSyncController.default().directoryURLs = Set<URL>(s)
                 break
             case .Error:
                 break
@@ -75,12 +75,12 @@ class FinderSync: FIFinderSync {
             if (self.serviceConnection == nil) {
                 self.serviceConnection = self.createServiceConnection()
                 guard let s = self.serviceConnection else {
-                    NSThread.sleepForTimeInterval(1)
+                    Thread.sleep(forTimeInterval: 1)
                     continue outer
                 }
                 
                 let service = s.remoteObjectProxyWithErrorHandler { error in
-                    NSLog("remote proxy error: %@", error)
+                    print("remote proxy error: %@", error)
                 } as! SDServiceXPCProtocol
                 
                 service.ping({ reply in
@@ -89,9 +89,9 @@ class FinderSync: FIFinderSync {
                 })
             }
             if (self.appConnection == nil) {
-                FIFinderSyncController.defaultController().directoryURLs = Set<NSURL>()
+                FIFinderSyncController.default().directoryURLs = Set<URL>()
                 guard let s = self.serviceConnection else {
-                    NSThread.sleepForTimeInterval(1)
+                    Thread.sleep(forTimeInterval: 1)
                     continue outer
                 }
                 let service = s.remoteObjectProxyWithErrorHandler { error in
@@ -101,7 +101,7 @@ class FinderSync: FIFinderSync {
                 service.getAppEndpoint({ endpoint in
                     self.appConnection = self.createAppConnectionFromEndpoint(endpoint)
                     guard let a = self.appConnection else {
-                        NSThread.sleepForTimeInterval(1)
+                        Thread.sleep(forTimeInterval: 1)
                         return
                     }
                     let app = a.remoteObjectProxyWithErrorHandler() { error in
@@ -114,25 +114,25 @@ class FinderSync: FIFinderSync {
                 })
                 
             }
-            NSThread.sleepForTimeInterval(1)
+            Thread.sleep(forTimeInterval: 1)
         }
     }
     
     func createServiceConnection() -> NSXPCConnection {
-        let newConnection: NSXPCConnection = NSXPCConnection(machServiceName: "io.safedrive.SafeDrive.Service", options: NSXPCConnectionOptions(rawValue: 0))
+        let newConnection: NSXPCConnection = NSXPCConnection(machServiceName: "io.safedrive.SafeDrive.Service", options: NSXPCConnection.Options(rawValue: 0))
         
-        let serviceInterface: NSXPCInterface = NSXPCInterface(withProtocol:SDServiceXPCProtocol.self)
+        let serviceInterface: NSXPCInterface = NSXPCInterface(with:SDServiceXPCProtocol.self)
         
         newConnection.remoteObjectInterface = serviceInterface
         
         newConnection.interruptionHandler = {() -> Void in
-            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            DispatchQueue.main.async(execute: {() -> Void in
                 //print("Service connection interrupted")
             })
         }
         
         newConnection.invalidationHandler = {() -> Void in
-            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            DispatchQueue.main.async(execute: {() -> Void in
                 //print("Service connection invalidated")
                 self.serviceConnection = nil
             })
@@ -142,22 +142,22 @@ class FinderSync: FIFinderSync {
         return newConnection
     }
     
-    func createAppConnectionFromEndpoint(endpoint: NSXPCListenerEndpoint) -> NSXPCConnection {
+    func createAppConnectionFromEndpoint(_ endpoint: NSXPCListenerEndpoint) -> NSXPCConnection {
         let newConnection: NSXPCConnection = NSXPCConnection(listenerEndpoint: endpoint)
         
-        let appInterface: NSXPCInterface = NSXPCInterface(withProtocol:SDAppXPCProtocol.self)
+        let appInterface: NSXPCInterface = NSXPCInterface(with:SDAppXPCProtocol.self)
         
         newConnection.remoteObjectInterface = appInterface
         
         
         newConnection.interruptionHandler = {() -> Void in
-            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            DispatchQueue.main.async(execute: {() -> Void in
                 //print("App connection interrupted")
                 
             })
         }
         newConnection.invalidationHandler = {() -> Void in
-            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            DispatchQueue.main.async(execute: {() -> Void in
                 //print("App connection invalidated")
                 self.appConnection = nil
                 
@@ -170,30 +170,30 @@ class FinderSync: FIFinderSync {
     
     // MARK: - Primary Finder Sync protocol methods
     
-    override func beginObservingDirectoryAtURL(url: NSURL) {
+    override func beginObservingDirectory(at url: URL) {
         // The user is now seeing the container's contents.
         // If they see it in more than one view at a time, we're only told once.
-        NSLog("beginObservingDirectoryAtURL: %@", url.filePathURL!)
+        print("beginObservingDirectoryAtURL: %@", (url as NSURL).filePathURL!)
     }
     
     
-    override func endObservingDirectoryAtURL(url: NSURL) {
+    override func endObservingDirectory(at url: URL) {
         // The user is no longer seeing the container's contents.
-        NSLog("endObservingDirectoryAtURL: %@", url.filePathURL!)
+        print("endObservingDirectoryAtURL: %@", (url as NSURL).filePathURL!)
     }
     
-    override func requestBadgeIdentifierForURL(url: NSURL) {
+    override func requestBadgeIdentifier(for url: URL) {
         guard let syncFolder = self.syncFolderForURL(url) else {
             print("error")
             return
         }
         
-        var fileAttributes: [NSObject : AnyObject]
+        var fileAttributes: [AnyHashable: Any]
         
         do {
-            try fileAttributes = NSFileManager.defaultManager().attributesOfItemAtPath(url.path!)
-            print("Modified: \((fileAttributes[NSFileModificationDate] as! NSDate))")
-            print("Using \(syncFolder.path!) for \( url.path!) status")
+            try fileAttributes = FileManager.default.attributesOfItem(atPath: url.path)
+            print("Modified: \((fileAttributes[FileAttributeKey.modificationDate] as! Date))")
+            print("Using \(syncFolder.path!) for \( url.path) status")
         } catch {
             print("error: \(error)")
         }
@@ -203,7 +203,7 @@ class FinderSync: FIFinderSync {
         } else {
             badgeIdentifier = "idle"
         }
-        FIFinderSyncController.defaultController().setBadgeIdentifier(badgeIdentifier, forURL: url)
+        FIFinderSyncController.default().setBadgeIdentifier(badgeIdentifier, for: url)
         
     }
     
@@ -221,34 +221,34 @@ class FinderSync: FIFinderSync {
         return NSImage(named: NSImageNameLockLockedTemplate)!
     }
     
-    override func menuForMenuKind(menuKind: FIMenuKind) -> NSMenu {
+    override func menu(for menuKind: FIMenuKind) -> NSMenu {
         var m: NSMenu? = nil
         switch menuKind {
-        case .ContextualMenuForItems:
+        case .contextualMenuForItems:
             /* contextual menu for one or more files/directories */
             m = NSMenu()
-            m!.addItemWithTitle("SafeDrive: Restore Items", action: #selector(FinderSync.restoreItems(_:)), keyEquivalent: "")
-        case .ContextualMenuForContainer:
+            m!.addItem(withTitle: "SafeDrive: Restore Items", action: #selector(FinderSync.restoreItems(_:)), keyEquivalent: "")
+        case .contextualMenuForContainer:
             /* contextual menu for the directory being displayed */
             m = NSMenu()
-            m!.addItemWithTitle("SafeDrive: Restore Folder", action: #selector(FinderSync.restoreItems(_:)), keyEquivalent: "")
-        case .ContextualMenuForSidebar:
+            m!.addItem(withTitle: "SafeDrive: Restore Folder", action: #selector(FinderSync.restoreItems(_:)), keyEquivalent: "")
+        case .contextualMenuForSidebar:
             /* contextual menu for an item in the sidebar */
             break
-        case .ToolbarItemMenu:
+        case .toolbarItemMenu:
             m = NSMenu()
-            m!.addItemWithTitle("SafeDrive Support", action: #selector(FinderSync.support(_:)), keyEquivalent: "")
-            m!.addItemWithTitle("SafeDrive Preferences", action: #selector(FinderSync.openPreferencesWindow(_:)), keyEquivalent: "")
+            m!.addItem(withTitle: "SafeDrive Support", action: #selector(FinderSync.support(_:)), keyEquivalent: "")
+            m!.addItem(withTitle: "SafeDrive Preferences", action: #selector(FinderSync.openPreferencesWindow(_:)), keyEquivalent: "")
         }
         return m!
     }
     
-    @IBAction func support(sender: AnyObject) {
-        NSWorkspace.sharedWorkspace().openURL(NSURL(string: "https://safedrive.io/support")!)
+    @IBAction func support(_ sender: AnyObject) {
+        NSWorkspace.shared().open(URL(string: "https://safedrive.io/support")!)
     }
     
-    @IBAction func restoreItems(sender: AnyObject) {
-        guard let target: NSURL = FIFinderSyncController.defaultController().targetedURL() else {
+    @IBAction func restoreItems(_ sender: AnyObject) {
+        guard let target: URL = FIFinderSyncController.default().targetedURL() else {
             return
         }
         // not using individual item urls yet
@@ -263,11 +263,11 @@ class FinderSync: FIFinderSync {
             let app = a.remoteObjectProxyWithErrorHandler { error in
                 print("remote proxy error: \(error)")
             } as! SDAppXPCProtocol
-            app.displayRestoreWindowForURLs([folder.url!])
+            app.displayRestoreWindow(forURLs: [folder.url!])
         }
     }
     
-    @IBAction func openRestoreWindow(sender: AnyObject) {
+    @IBAction func openRestoreWindow(_ sender: AnyObject) {
         guard let a = self.appConnection else {
             print("App connection not found")
             return
@@ -276,10 +276,10 @@ class FinderSync: FIFinderSync {
             print("remote proxy error: \(error)")
         } as! SDAppXPCProtocol
 
-        app.displayRestoreWindowForURLs([])
+        app.displayRestoreWindow(forURLs: [])
     }
     
-    @IBAction func openPreferencesWindow(sender: AnyObject) {
+    @IBAction func openPreferencesWindow(_ sender: AnyObject) {
         guard let a = self.appConnection else {
             print("App connection not found")
             return
@@ -291,28 +291,28 @@ class FinderSync: FIFinderSync {
         app.displayPreferencesWindow()
     }
     
-    func showMessage(title: String, withBody body: String) {
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+    func showMessage(_ title: String, withBody body: String) {
+        DispatchQueue.main.async(execute: {() -> Void in
             let alert: NSAlert = NSAlert()
             alert.messageText = title
-            alert.addButtonWithTitle("OK")
+            alert.addButton(withTitle: "OK")
             alert.informativeText = body
             alert.runModal()
         })
     }
     
-    func syncFolderForURL(url: NSURL) -> SyncFolder? {
-        guard let syncFolders = try? Realm().objects(SyncFolder) else {
+    func syncFolderForURL(_ url: URL) -> SyncFolder? {
+        guard let syncFolders = try? Realm().allObjects(ofType: SyncFolder.self) else {
             return nil
         }
         for item: SyncFolder in syncFolders {
             
             let registeredPath: String = item.path!
-            let testPath: String = url.path!
-            let options: NSStringCompareOptions = [.AnchoredSearch, .CaseInsensitiveSearch]
+            let testPath: String = url.path
+            let options: NSString.CompareOptions = [.anchored, .caseInsensitive]
             
             // check if testPath is contained by this sync folder
-            if testPath.rangeOfString(registeredPath, options: options) != nil {
+            if testPath.range(of: registeredPath, options: options) != nil {
                 return item
             }
         }

@@ -6,23 +6,24 @@
 import Foundation
 
 class AppXPCDelegate: NSObject, SDAppXPCProtocol {
-    func sendMessage(message: String, reply replyBlock: (String) -> Void) -> Void {
+
+    func sendMessage(_ message: String, reply replyBlock: @escaping (String) -> Void) -> Void {
 
     }
 
-    func ping(replyBlock: (String) -> Void) {
+    func ping(_ replyBlock: @escaping (String) -> Void) {
         replyBlock("ack")
     }
 
-    func protocolVersion(replyBlock: (NSNumber) -> Void) -> Void {
-        replyBlock(kSDAppXPCProtocolVersion)
+    func protocolVersion(_ replyBlock: @escaping (NSNumber) -> Void) -> Void {
+        replyBlock(NSNumber(integerLiteral: kSDAppXPCProtocolVersion))
     }
 
     func displayPreferencesWindow() {
-        NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenPreferencesWindow, object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldOpenPreferencesWindow), object: nil)
     }
 
-    func displayRestoreWindowForURLs(urls: [AnyObject]) {
-        NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenSyncWindow, object: nil)
+    func displayRestoreWindow(forURLs urls: [Any]) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldOpenSyncWindow), object: nil)
     }
 }

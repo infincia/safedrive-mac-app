@@ -15,7 +15,7 @@ class Installer {
     
     var needsUpdate: Bool = false
     
-    private var promptedForInstall = false
+    fileprivate var promptedForInstall = false
     
     init(delegate: InstallerDelegate) {
         self.delegate = delegate
@@ -23,51 +23,51 @@ class Installer {
 
     func checkRequirements() {
 
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             while !self.isOSXFUSEInstalled() {
                 if !self.promptedForInstall {
                     self.promptedForInstall = true
-                    dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                    DispatchQueue.main.sync(execute: {() -> Void in
                         self.delegate.needsDependencies()
                     })
                 }
-                NSThread.sleepForTimeInterval(1)
+                Thread.sleep(forTimeInterval: 1)
             }
             self.deployService()
-            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+            DispatchQueue.main.sync(execute: {() -> Void in
                 self.delegate.didValidateDependencies()
             })
         })
     }
     
     func deployService() {
-        let fileManager: NSFileManager = NSFileManager.defaultManager()
+        let fileManager: FileManager = FileManager.default
 
-        let libraryURL = try! fileManager.URLForDirectory(.LibraryDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let libraryURL = try! fileManager.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let launchAgentsURL = libraryURL.URLByAppendingPathComponent("LaunchAgents", isDirectory: true)
+        let launchAgentsURL = libraryURL.appendingPathComponent("LaunchAgents", isDirectory: true)
 
-        let applicationSupportURL = try! fileManager.URLForDirectory(.ApplicationSupportDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let applicationSupportURL = try! fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let safeDriveApplicationSupportURL = applicationSupportURL.URLByAppendingPathComponent("SafeDrive", isDirectory: true)
+        let safeDriveApplicationSupportURL = applicationSupportURL.appendingPathComponent("SafeDrive", isDirectory: true)
 
-        let serviceDestinationURL = safeDriveApplicationSupportURL!.URLByAppendingPathComponent("SafeDriveService.app", isDirectory: true)
+        let serviceDestinationURL = safeDriveApplicationSupportURL.appendingPathComponent("SafeDriveService.app", isDirectory: true)
 
-        let serviceSourceURL = NSBundle.mainBundle().bundleURL.URLByAppendingPathComponent("Contents/PlugIns/SafeDriveService.app", isDirectory: true)!
+        let serviceSourceURL = Bundle.main.bundleURL.appendingPathComponent("Contents/PlugIns/SafeDriveService.app", isDirectory: true)
 
         // copy launch agent to ~/Library/LaunchAgents/
-        let launchAgentDestinationURL = launchAgentsURL!.URLByAppendingPathComponent("io.safedrive.SafeDrive.Service.plist", isDirectory: false)!
-        let launchAgentSourceURL: NSURL = NSBundle.mainBundle().URLForResource("io.safedrive.SafeDrive.Service", withExtension: "plist")!
-        if NSFileManager.defaultManager().fileExistsAtPath(launchAgentDestinationURL.path!) {
+        let launchAgentDestinationURL = launchAgentsURL.appendingPathComponent("io.safedrive.SafeDrive.Service.plist", isDirectory: false)
+        let launchAgentSourceURL: URL = Bundle.main.url(forResource: "io.safedrive.SafeDrive.Service", withExtension: "plist")!
+        if FileManager.default.fileExists(atPath: launchAgentDestinationURL.path) {
             do {
-                try NSFileManager.defaultManager().removeItemAtURL(launchAgentDestinationURL)
+                try FileManager.default.removeItem(at: launchAgentDestinationURL)
             } catch let error as NSError {
                 SDLog("Error removing old launch agent: \(error)")
                 SDErrorHandlerReport(error)
             }
         }
         do {
-            try fileManager.copyItemAtURL(launchAgentSourceURL, toURL: launchAgentDestinationURL)
+            try fileManager.copyItem(at: launchAgentSourceURL, to: launchAgentDestinationURL)
         } catch let error as NSError {
             SDLog("Error copying launch agent: \(error)")
             SDErrorHandlerReport(error)
@@ -75,22 +75,22 @@ class Installer {
 
         // copy background service to ~/Library/Application Support/SafeDrive/
         do {
-            try fileManager.createDirectoryAtURL(safeDriveApplicationSupportURL!, withIntermediateDirectories: true, attributes: nil)
+            try fileManager.createDirectory(at: safeDriveApplicationSupportURL, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
             SDLog("Error creating support directory: \(error)")
             SDErrorHandlerReport(error)
         }
 
-        if fileManager.fileExistsAtPath(serviceDestinationURL!.path!) {
+        if fileManager.fileExists(atPath: serviceDestinationURL.path) {
             do {
-                try fileManager.removeItemAtURL(serviceDestinationURL!)
+                try fileManager.removeItem(at: serviceDestinationURL)
             } catch let error as NSError {
                 SDLog("Error removing old service: \(error)")
                 SDErrorHandlerReport(error)
             }
         }
         do {
-            try fileManager.copyItemAtURL(serviceSourceURL, toURL: serviceDestinationURL!)
+            try fileManager.copyItem(at: serviceSourceURL, to: serviceDestinationURL)
         } catch let error as NSError {
             SDLog("Error copying service: \(error)")
             SDErrorHandlerReport(error)
@@ -99,7 +99,7 @@ class Installer {
     }
 
     func installOSXFUSE() {
-        let osxfuseURL = NSBundle.mainBundle().URLForResource("Install OSXFUSE 2.8", withExtension: "pkg", subdirectory: nil)
+        let osxfuseURL = Bundle.main.url(forResource: "Install OSXFUSE 2.8", withExtension: "pkg", subdirectory: nil)
         let privilegedTask = STPrivilegedTask()
         privilegedTask.setLaunchPath("/usr/sbin/installer")
         privilegedTask.setArguments(["-store", "-pkg", (osxfuseURL?.path)!, "-target", "/"])
@@ -117,8 +117,8 @@ class Installer {
     }
 
     func isOSXFUSEInstalled() -> Bool {
-        let pipe: NSPipe = NSPipe()
-        let task: NSTask = NSTask()
+        let pipe: Pipe = Pipe()
+        let task: Process = Process()
         task.launchPath = "/usr/sbin/pkgutil"
         task.arguments = ["--pkgs=com.github.osxfuse.pkg.Core"]
         task.standardOutput = pipe

@@ -12,13 +12,13 @@ class SyncTask: Object {
     dynamic var uuid: String?
     
     // start of sync
-    dynamic var syncDate: NSDate?
+    dynamic var syncDate: Date?
     
     // set to true only if sync finishes without error
     dynamic var success: Bool = false
     
     // will be NSDate() - syncDate, calculated at time of success or failure
-    dynamic var duration: NSTimeInterval = 0
+    dynamic var duration: TimeInterval = 0
     
     // use for error messages if sync fails
     dynamic var message: String?
@@ -29,7 +29,7 @@ class SyncTask: Object {
     // sync bandwidth
     dynamic var bandwidth: String = "0.00kB/s"
     
-    convenience required init(syncFolder: SyncFolder, syncDate: NSDate, uuid: String) {
+    convenience required init(syncFolder: SyncFolder, syncDate: Date, uuid: String) {
         self.init()
         self.syncFolder = syncFolder
         self.syncDate = syncDate

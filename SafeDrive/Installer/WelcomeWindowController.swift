@@ -14,11 +14,11 @@ class WelcomeWindowController: NSWindowController, NSOpenSavePanelDelegate, Inst
 
     @IBOutlet var next: NSButton!
 
-    private var installer: Installer!
+    fileprivate var installer: Installer!
 
-    private var osxfuseIsInstalled = false
+    fileprivate var osxfuseIsInstalled = false
 
-    private var osxfuseDispatchQueue = dispatch_queue_create("io.safedrive.Installer.OSXFUSEQueue", DISPATCH_QUEUE_SERIAL)
+    fileprivate var osxfuseDispatchQueue = DispatchQueue(label: "io.safedrive.Installer.OSXFUSEQueue", attributes: [])
 
 
     // MARK: Initializers
@@ -49,13 +49,13 @@ class WelcomeWindowController: NSWindowController, NSOpenSavePanelDelegate, Inst
 
     // MARK: UI Actions
 
-    @IBAction func next(sender: AnyObject) {
+    @IBAction func next(_ sender: AnyObject) {
         if self.installer.isOSXFUSEInstalled() {
-            NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldFinishConfiguration, object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldFinishConfiguration), object: nil)
         } else {
             self.installer.installOSXFUSE()
             self.spinner.startAnimation(self)
-            self.next.enabled = false
+            self.next.isEnabled = false
         }
     }
 
@@ -66,9 +66,9 @@ class WelcomeWindowController: NSWindowController, NSOpenSavePanelDelegate, Inst
     }
     
     func didValidateDependencies() {
-        NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldFinishConfiguration, object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldFinishConfiguration), object: nil)
         self.spinner.stopAnimation(self)
-        self.next.enabled = true
+        self.next.isEnabled = true
         self.close()
     }
 }

@@ -4,25 +4,36 @@
 
 import Cocoa
 
+extension Int {
+    func toBool() -> Bool? {
+        switch self {
+        case 1:
+            return true
+        default:
+            return false
+        }
+    }
+}
+
 class CrashAlert {
     class func show() {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
 
-            let suppressCrashAlerts = NSUserDefaults.standardUserDefaults().boolForKey("suppressCrashAlerts")
+            let suppressCrashAlerts = UserDefaults.standard.bool(forKey: "suppressCrashAlerts")
             if !suppressCrashAlerts {
-                dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                DispatchQueue.main.async(execute: {() -> Void in
                     let alert = NSAlert()
-                    alert.addButtonWithTitle("OK")
+                    alert.addButton(withTitle: "OK")
                     alert.messageText = "SafeDrive crashed :("
                     alert.informativeText = "A crash report has been submitted automatically"
-                    alert.alertStyle = .Warning
+                    alert.alertStyle = .warning
                     alert.showsSuppressionButton = true
 
                     alert.runModal()
 
-                    let shouldSuppressAlerts = Bool(alert.suppressionButton!.state)
+                    let shouldSuppressAlerts = alert.suppressionButton!.state.toBool()
 
-                    NSUserDefaults.standardUserDefaults().setBool(shouldSuppressAlerts, forKey: "suppressCrashAlerts")
+                    UserDefaults.standard.set(shouldSuppressAlerts, forKey: "suppressCrashAlerts")
                 })
             }
         })

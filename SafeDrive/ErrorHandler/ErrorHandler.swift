@@ -4,6 +4,6 @@
 
 import Foundation
 
-func SDLog(line: String, _ arguments: CVarArgType...) -> Void {
+func SDLog(_ line: String, _ arguments: CVarArg...) -> Void {
     return withVaList(arguments) { SDLogv(line, $0) }
 }

@@ -12,22 +12,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var listenerDelegate: ServiceListenerDelegate?
 
-    var CFBundleVersion = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as! String
+    var CFBundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
 
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
-        NSUserDefaults.standardUserDefaults().registerDefaults(["NSApplicationCrashOnExceptions": true])
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true])
         Fabric.with([Crashlytics.self])
 
         print("SafeDriveService build \(CFBundleVersion), protocol version \(kSDServiceXPCProtocolVersion) starting")
 
         self.listenerDelegate = ServiceListenerDelegate()
 
-        let listener: NSXPCListener = NSXPCListener(machServiceName: NSBundle.mainBundle().bundleIdentifier!)
+        let listener: NSXPCListener = NSXPCListener(machServiceName: Bundle.main.bundleIdentifier!)
         listener.delegate = self.listenerDelegate
         listener.resume()
     }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         print("SafeDriveService build \(CFBundleVersion), protocol version \(kSDServiceXPCProtocolVersion) exiting")
     }
 

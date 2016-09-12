@@ -22,27 +22,28 @@ class ServiceManager: NSObject {
         }
     }
 
-    private func serviceLoop() {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+    fileprivate func serviceLoop() {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             while true {
                 let serviceStatus: Bool = self.serviceStatus
-                dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                    NSNotificationCenter.defaultCenter().postNotificationName(SDServiceStatusNotification, object: serviceStatus)
+                DispatchQueue.main.async(execute: {() -> Void in
+                    NotificationCenter.default.post(name: NSNotification.Name.SDServiceStatus, object: serviceStatus)
                 })
-                NSThread.sleepForTimeInterval(1)
+                Thread.sleep(forTimeInterval: 1)
             }
         })
     }
 
     func loadService() {
-        let servicePlist: NSURL = NSBundle.mainBundle().URLForResource("io.safedrive.SafeDrive.Service", withExtension: "plist")!
-        let jobDict = NSDictionary(contentsOfFile: servicePlist.path!)
+        let servicePlist: URL = Bundle.main.url(forResource: "io.safedrive.SafeDrive.Service", withExtension: "plist")!
+        let jobDict = NSDictionary(contentsOfFile: servicePlist.path)
         var jobError: Unmanaged<CFError>? = nil
 
         if !SMJobSubmit(kSMDomainUserLaunchd, jobDict!, nil, &jobError) {
-            if let error = jobError?.takeRetainedValue() as NSError? {
+            if let error = jobError?.takeRetainedValue() {
                 SDLog("Load service error: \(error)")
                 SDErrorHandlerReport(error)
+                
             }
         }
     }
@@ -50,7 +51,7 @@ class ServiceManager: NSObject {
     func unloadService() {
         var jobError: Unmanaged<CFError>? = nil
         if !SMJobRemove(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString), nil, true, &jobError) {
-            if let error = jobError?.takeRetainedValue() as NSError? {
+            if let error = jobError?.takeRetainedValue() {
                 SDLog("Unload service error: \(error)")
                 SDErrorHandlerReport(error)
             }

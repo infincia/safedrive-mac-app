@@ -12,113 +12,114 @@ public enum HTTPMethod: String {
 enum Endpoint {
     static var SessionToken: String?
 
-    case ErrorLog([String:AnyObject])
-    case RegisterClient([String:AnyObject])
-    case AccountStatus
-    case AccountDetails
-    case CreateFolder([String:AnyObject])
-    case ReadFolders
-    case DeleteFolder(Int)
-    case HostFingerprints
-    case APIStatus
+    case errorLog([String:AnyObject])
+    case registerClient([String:AnyObject])
+    case accountStatus
+    case accountDetails
+    case createFolder([String:AnyObject])
+    case readFolders
+    case deleteFolder(Int)
+    case hostFingerprints
+    case apiStatus
 
     var method: HTTPMethod {
         switch self {
-        case .ErrorLog:
+        case .errorLog:
             return .POST
-        case .RegisterClient:
+        case .registerClient:
             return .POST
-        case .AccountStatus:
+        case .accountStatus:
             return .GET
-        case .AccountDetails:
+        case .accountDetails:
             return .GET
-        case .CreateFolder:
+        case .createFolder:
             return .POST
-        case .ReadFolders:
+        case .readFolders:
             return .GET
-        case .DeleteFolder:
+        case .deleteFolder:
             return .DELETE
-        case .HostFingerprints:
+        case .hostFingerprints:
             return .GET
-        case .APIStatus:
+        case .apiStatus:
             return .GET
         }
     }
 
     var path: String {
         switch self {
-        case .ErrorLog:
+        case .errorLog:
             return "/api/1/error/log"
-        case .RegisterClient:
+        case .registerClient:
             return "/api/1/client/register"
-        case .AccountStatus:
+        case .accountStatus:
             return "/api/1/account/status"
-        case .AccountDetails:
+        case .accountDetails:
             return "/api/1/account/details"
-        case .CreateFolder:
+        case .createFolder:
             return "/api/1/folder"
-        case .ReadFolders:
+        case .readFolders:
             return "/api/1/folder"
-        case .DeleteFolder:
+        case .deleteFolder:
             return "/api/1/folder"
-        case .HostFingerprints:
+        case .hostFingerprints:
             return "/api/1/fingerprints"
-        case .APIStatus:
+        case .apiStatus:
             return "/api/1/status"
         }
     }
 
     // MARK: URLRequestConvertible
 
-    var URLRequest: NSMutableURLRequest {
+    var URLRequest: URLRequest {
 
         
-        let mutableURLRequest = NSMutableURLRequest()
-        mutableURLRequest.HTTPMethod = method.rawValue
+        var request = NSMutableURLRequest()
+        
+        request.httpMethod = method.rawValue
 
         if let token = API.sharedAPI.sessionToken {
-            mutableURLRequest.setValue(token, forHTTPHeaderField: "SD-Auth-Token")
+            request.setValue(token, forHTTPHeaderField: "SD-Auth-Token")
         }
         
-        let u = NSURLComponents()
+        var u = URLComponents()
         u.scheme = "https"
         u.host = API.domain
         u.path = path
         
         switch self {
-        case .ErrorLog(let parameters):
-            mutableURLRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            let jsonData = try! NSJSONSerialization.dataWithJSONObject(parameters, options: .PrettyPrinted)
-            mutableURLRequest.HTTPBody = jsonData
-        case .RegisterClient(let parameters):
-            mutableURLRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            let jsonData = try! NSJSONSerialization.dataWithJSONObject(parameters, options: .PrettyPrinted)
-            mutableURLRequest.HTTPBody = jsonData
-        case .AccountStatus:
+        case .errorLog(let parameters):
+            request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            let jsonData = try! JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+            request.httpBody = jsonData
+        case .registerClient(let parameters):
+            request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            let jsonData = try! JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+            request.httpBody = jsonData
+        case .accountStatus:
             break
-        case .AccountDetails:
+        case .accountDetails:
             break
-        case .CreateFolder(let parameters):
-            mutableURLRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            let jsonData = try! NSJSONSerialization.dataWithJSONObject(parameters, options: .PrettyPrinted)
-            mutableURLRequest.HTTPBody = jsonData
-        case .ReadFolders:
+        case .createFolder(let parameters):
+            request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            let jsonData = try! JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+            request.httpBody = jsonData
+        case .readFolders:
             break
-        case .DeleteFolder(let parameters):
-            u.query = "folderIds=\(parameters)".stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        case .deleteFolder(let parameters):
+            u.query = "folderIds=\(parameters)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
             break
-        case .HostFingerprints:
+        case .hostFingerprints:
             break
-        case .APIStatus:
+        case .apiStatus:
             break
         }
-        SDLog("API request: <\(method.rawValue):\(u.URL!)>")
-        mutableURLRequest.URL = u.URL!
-        return mutableURLRequest
+        SDLog("API request: <\(method.rawValue):\(u.url!)>")
+        request.url = u.url!
+        return request as URLRequest
     }
 }
 
-class API: NSObject, NSURLSessionDelegate {
+class API: NSObject, URLSessionDelegate {
     #if DEBUG
     static let domain = SDAPIDomainStaging
     #else
@@ -127,15 +128,15 @@ class API: NSObject, NSURLSessionDelegate {
 
     static let sharedAPI = API()
 
-    private var URLSession: NSURLSession!
+    fileprivate var URLSession: Foundation.URLSession!
     
-    private var sharedSystemAPI = SDSystemAPI.sharedAPI()
+    fileprivate var sharedSystemAPI = SDSystemAPI.shared()
 
-    private var _session: String?
+    fileprivate var _session: String?
 
     var sessionToken: String? {
         get {
-            if let session = self.sharedSystemAPI.retrieveCredentialsFromKeychainForService(SDSessionServiceName) {
+            if let session = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDSessionServiceName) {
                 return session["password"]
             }
             return nil
@@ -147,67 +148,67 @@ class API: NSObject, NSURLSessionDelegate {
 
     override init() {
         super.init()
-        URLSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+        URLSession = Foundation.URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
     }
 
     // MARK: Telemetry API
 
-    func reportError(error: NSError, forUser user: String, withLog log: [String], completionQueue queue: dispatch_queue_t, success successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
+    func reportError(_ error: NSError, forUser user: String, withLog log: [String], completionQueue queue: DispatchQueue, success successBlock: @escaping SDSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
         var postParameters = [String : AnyObject]()
         let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
-        postParameters["operatingSystem"] = os
-        let clientVersion: String = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
-        postParameters["clientVersion"] = clientVersion
+        postParameters["operatingSystem"] = os as AnyObject?
+        let clientVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        postParameters["clientVersion"] = clientVersion as AnyObject?
         if !user.isEmpty {
             let macAddress: String = self.sharedSystemAPI.en0MAC()!
-            let machineIdConcatenation: String = macAddress.stringByAppendingString(user)
-            let identifier: String = HKTHashProvider.sha256(machineIdConcatenation.dataUsingEncoding(NSUTF8StringEncoding))
-            postParameters["uniqueClientId"] = identifier
+            let machineIdConcatenation: String = macAddress + user
+            let identifier: String = HKTHashProvider.sha256(machineIdConcatenation.data(using: String.Encoding.utf8))
+            postParameters["uniqueClientId"] = identifier as AnyObject?
         }
 
-        postParameters["description"] = error.localizedDescription
+        postParameters["description"] = error.localizedDescription as AnyObject?
 
-        postParameters["context"] = error.domain
+        postParameters["context"] = error.domain as AnyObject?
 
-        postParameters["log"] = log.description
+        postParameters["log"] = log.description as AnyObject?
 
-        let endpoint = Endpoint.ErrorLog(postParameters)
+        let endpoint = Endpoint.errorLog(postParameters)
         
-        let dataTask = self.URLSession.dataTaskWithRequest(endpoint.URLRequest) { (data, response, error) in
+        let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
             if let error = error {
-                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
+                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
                 failureBlock(responseError)
-            } else if let httpResponse = response as? NSHTTPURLResponse {
+            } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     successBlock()
                 }
                 else {
                     guard let data = data,
-                        raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                        JSON = raw as? [String: String],
-                        message: String = JSON["message"] else {
-                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<error/log>"])
+                        let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                        let JSON = raw as? [String: String],
+                        let message: String = JSON["message"] else {
+                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<error/log>"])
                             failureBlock(responseError)
                             return
                     }
-                    let statusCode = (response as? NSHTTPURLResponse)?.statusCode ?? -1
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
                     let errorCode = SDAPIError(rawValue: statusCode)!
                     let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     failureBlock(responseError)
                 }
             }
-        }
+        }) 
         dataTask.resume()
     }
 
     // MARK: Account API
 
-    func registerMachineWithUser(user: String, password: String, success successBlock: SDAPIClientRegistrationSuccessBlock, failure failureBlock: SDFailureBlock) {
-        let languageCode: String = NSLocale.preferredLanguages()[0]
+    func registerMachineWithUser(_ user: String, password: String, success successBlock: @escaping SDAPIClientRegistrationSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+        let languageCode: String = Locale.preferredLanguages[0]
         let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
         let macAddress: String = self.sharedSystemAPI.en0MAC()!
-        let machineIdConcatenation: String = macAddress.stringByAppendingString(user)
-        let identifier: String = HKTHashProvider.sha256(machineIdConcatenation.dataUsingEncoding(NSUTF8StringEncoding))
+        let machineIdConcatenation: String = macAddress + user
+        let identifier: String = HKTHashProvider.sha256(machineIdConcatenation.data(using: String.Encoding.utf8))
 
         let postParameters = ["email": user,
             "password": password,
@@ -215,63 +216,63 @@ class API: NSObject, NSURLSessionDelegate {
             "language": languageCode,
             "uniqueClientId": identifier]
         
-        let endpoint = Endpoint.RegisterClient(postParameters)
+        let endpoint = Endpoint.registerClient(postParameters as [String : AnyObject])
         
-        let dataTask = self.URLSession.dataTaskWithRequest(endpoint.URLRequest) { (data, response, error) in
+        let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
             if let error = error {
-                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
+                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
                 failureBlock(responseError)
-            } else if let httpResponse = response as? NSHTTPURLResponse {
+            } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     guard let data = data,
-                              raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                              JSON = raw as? [String: NSObject] else {
-                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<client/register>"])
+                              let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                              let JSON = raw as? [String: NSObject] else {
+                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<client/register>"])
                         failureBlock(responseError)
                         return
                     }
                     guard let token = JSON["token"] as? String else {
-                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Validation error"])
+                        let responseError: NSError = NSError(domain: SDErrorAccountDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Validation error"])
                         failureBlock(responseError)
                         return
                     }
                     self.sessionToken = token
-                    self.sharedSystemAPI.insertCredentialsInKeychainForService(SDSessionServiceName, account: user, password: token)
+                    self.sharedSystemAPI.insertCredentialsInKeychain(forService: SDSessionServiceName, account: user, password: token)
                     successBlock(token, identifier)
                 }
                 else {
                     guard let data = data,
-                        raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                        JSON = raw as? [String: String],
-                        message: String = JSON["message"] else {
-                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<client/register>"])
+                        let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                        let JSON = raw as? [String: String],
+                        let message: String = JSON["message"] else {
+                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<client/register>"])
                             failureBlock(responseError)
                             return
                     }
-                    let statusCode = (response as? NSHTTPURLResponse)?.statusCode ?? -1
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
                     let errorCode = SDAPIError(rawValue: statusCode)!
                     let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     failureBlock(responseError)
                 }
             }
-        }
+        }) 
         dataTask.resume()
     }
 
 
-    func accountStatusForUser(user: String, success successBlock: SDAPIAccountStatusBlock, failure failureBlock: SDFailureBlock) {
-        let endpoint = Endpoint.AccountStatus
+    func accountStatusForUser(_ user: String, success successBlock: @escaping SDAPIAccountStatusBlock, failure failureBlock: @escaping SDFailureBlock) {
+        let endpoint = Endpoint.accountStatus
         
-        let dataTask = self.URLSession.dataTaskWithRequest(endpoint.URLRequest) { (data, response, error) in
+        let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
             if let error = error {
-                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
+                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
                 failureBlock(responseError)
-            } else if let httpResponse = response as? NSHTTPURLResponse {
+            } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     guard let data = data,
-                              raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                              JSON = raw as? [String: NSObject] else {
-                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<account/status>"])
+                              let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                              let JSON = raw as? [String: NSObject] else {
+                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<account/status>"])
                         failureBlock(responseError)
                         return
                     }
@@ -279,36 +280,36 @@ class API: NSObject, NSURLSessionDelegate {
                 }
                 else {
                     guard let data = data,
-                        raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                        JSON = raw as? [String: String],
-                        message: String = JSON["message"] else {
-                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<account/status>"])
+                        let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                        let JSON = raw as? [String: String],
+                        let message: String = JSON["message"] else {
+                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<account/status>"])
                             failureBlock(responseError)
                             return
                     }
-                    let statusCode = (response as? NSHTTPURLResponse)?.statusCode ?? -1
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
                     let errorCode = SDAPIError(rawValue: statusCode)!
                     let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     failureBlock(responseError)
                 }
             }
-        }
+        }) 
         dataTask.resume()
     }
 
-    func accountDetailsForUser(user: String, success successBlock: SDAPIAccountDetailsBlock, failure failureBlock: SDFailureBlock) {
-        let endpoint = Endpoint.AccountDetails
+    func accountDetailsForUser(_ user: String, success successBlock: @escaping SDAPIAccountDetailsBlock, failure failureBlock: @escaping SDFailureBlock) {
+        let endpoint = Endpoint.accountDetails
         
-        let dataTask = self.URLSession.dataTaskWithRequest(endpoint.URLRequest) { (data, response, error) in
+        let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
             if let error = error {
-                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
+                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
                 failureBlock(responseError)
-            } else if let httpResponse = response as? NSHTTPURLResponse {
+            } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     guard let data = data,
-                              raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                              JSON = raw as? [String: NSObject] else {
-                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<account/details>"])
+                              let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                              let JSON = raw as? [String: NSObject] else {
+                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<account/details>"])
                         failureBlock(responseError)
                         return
                     }
@@ -316,40 +317,40 @@ class API: NSObject, NSURLSessionDelegate {
                 }
                 else {
                     guard let data = data,
-                        raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                        JSON = raw as? [String: String],
-                        message: String = JSON["message"] else {
-                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<account/details>"])
+                        let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                        let JSON = raw as? [String: String],
+                        let message: String = JSON["message"] else {
+                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<account/details>"])
                             failureBlock(responseError)
                             return
                     }
-                    let statusCode = (response as? NSHTTPURLResponse)?.statusCode ?? -1
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
                     let errorCode = SDAPIError(rawValue: statusCode)!
                     let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     failureBlock(responseError)
                 }
             }
-        }
+        }) 
         dataTask.resume()
     }
 
     // MARK: Sync folder handling
 
-    func createSyncFolder(localFolder: NSURL, success successBlock: SDAPICreateSyncFolderSuccessBlock, failure failureBlock: SDFailureBlock) {
-        let postParameters = ["folderName": localFolder.lastPathComponent!.lowercaseString, "folderPath": localFolder.path!]
-        let endpoint = Endpoint.CreateFolder(postParameters)
+    func createSyncFolder(_ localFolder: URL, success successBlock: @escaping SDAPICreateSyncFolderSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+        let postParameters = ["folderName": localFolder.lastPathComponent.lowercased(), "folderPath": localFolder.path]
+        let endpoint = Endpoint.createFolder(postParameters as [String : AnyObject])
         
-        let dataTask = self.URLSession.dataTaskWithRequest(endpoint.URLRequest) { (data, response, error) in
+        let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
             if let error = error {
-                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
+                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
                 failureBlock(responseError)
-            } else if let httpResponse = response as? NSHTTPURLResponse {
+            } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     guard let data = data,
-                              raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                              JSON = raw as? [String: AnyObject],
-                              folderID: Int = JSON["id"] as? Int else {
-                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/create>"])
+                              let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                              let JSON = raw as? [String: AnyObject],
+                              let folderID: Int = JSON["id"] as? Int else {
+                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/create>"])
                         failureBlock(responseError)
                         return
                     }
@@ -357,36 +358,36 @@ class API: NSObject, NSURLSessionDelegate {
                 }
                 else {
                     guard let data = data,
-                        raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                        JSON = raw as? [String: String],
-                        message: String = JSON["message"] else {
-                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/create>"])
+                        let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                        let JSON = raw as? [String: String],
+                        let message: String = JSON["message"] else {
+                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/create>"])
                             failureBlock(responseError)
                             return
                     }
-                    let statusCode = (response as? NSHTTPURLResponse)?.statusCode ?? -1
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
                     let errorCode = SDAPIError(rawValue: statusCode)!
                     let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     failureBlock(responseError)
                 }
             }
-        }
+        }) 
         dataTask.resume()
     }
 
-    func readSyncFoldersWithSuccess(successBlock: SDAPIReadSyncFoldersSuccessBlock, failure failureBlock: SDFailureBlock) {
-        let endpoint = Endpoint.ReadFolders
+    func readSyncFoldersWithSuccess(_ successBlock: @escaping SDAPIReadSyncFoldersSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+        let endpoint = Endpoint.readFolders
         
-        let dataTask = self.URLSession.dataTaskWithRequest(endpoint.URLRequest) { (data, response, error) in
+        let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
             if let error = error {
-                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
+                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
                 failureBlock(responseError)
-            } else if let httpResponse = response as? NSHTTPURLResponse {
+            } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     guard let data = data,
-                              raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                              JSON = raw as? [[String: NSObject]] else {
-                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/read>"])
+                              let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                              let JSON = raw as? [[String: NSObject]] else {
+                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/read>"])
                         failureBlock(responseError)
                         return
                     }
@@ -394,91 +395,91 @@ class API: NSObject, NSURLSessionDelegate {
                 }
                 else {
                     guard let data = data,
-                        raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                        JSON = raw as? [String: String],
-                        message: String = JSON["message"] else {
-                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/read>"])
+                        let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                        let JSON = raw as? [String: String],
+                        let message: String = JSON["message"] else {
+                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/read>"])
                             failureBlock(responseError)
                             return
                     }
-                    let statusCode = (response as? NSHTTPURLResponse)?.statusCode ?? -1
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
                     let errorCode = SDAPIError(rawValue: statusCode)!
                     let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     failureBlock(responseError)
                 }
             }
-        }
+        }) 
         dataTask.resume()
     }
 
-    func deleteSyncFolder(folderId: Int, success successBlock: SDAPIDeleteSyncFoldersSuccessBlock, failure failureBlock: SDFailureBlock) {
-        let endpoint = Endpoint.DeleteFolder(folderId)
+    func deleteSyncFolder(_ folderId: Int, success successBlock: @escaping SDAPIDeleteSyncFoldersSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+        let endpoint = Endpoint.deleteFolder(folderId)
         
-        let dataTask = self.URLSession.dataTaskWithRequest(endpoint.URLRequest) { (data, response, error) in
+        let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
             if let error = error {
-                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
+                let responseError = NSError(domain: SDErrorUIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
                 failureBlock(responseError)
-            } else if let httpResponse = response as? NSHTTPURLResponse {
+            } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     successBlock()
                 }
                 else {
                     guard let data = data,
-                        raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                        JSON = raw as? [String: String],
-                        message: String = JSON["message"] else {
-                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/delete>"])
+                        let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                        let JSON = raw as? [String: String],
+                        let message: String = JSON["message"] else {
+                            let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/delete>"])
                             failureBlock(responseError)
                             return
                     }
-                    let statusCode = (response as? NSHTTPURLResponse)?.statusCode ?? -1
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
                     let errorCode = SDAPIError(rawValue: statusCode)!
                     let responseError = NSError(domain: SDErrorUIDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     failureBlock(responseError)
                 }
             }
-        }
+        }) 
         dataTask.resume()
     }
 
     // MARK: Unused
 
-    func getHostFingerprintList(successBlock: SDAPIFingerprintListSuccessBlock, failure failureBlock: SDFailureBlock) {
-        let endpoint = Endpoint.HostFingerprints
+    func getHostFingerprintList(_ successBlock: @escaping SDAPIFingerprintListSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+        let endpoint = Endpoint.hostFingerprints
 
-        let dataTask = self.URLSession.dataTaskWithRequest(endpoint.URLRequest) { (data, response, error) in
+        let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
             if let error = error {
                 let responseError = NSError(domain: SDErrorUIDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
                 failureBlock(responseError)
-            } else if let httpResponse = response as? NSHTTPURLResponse {
+            } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     guard let data = data,
-                              raw = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                              JSON = raw as? [String: String] else {
-                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.Unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<fingerprintse>"])
+                              let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                              let JSON = raw as? [String: String] else {
+                        let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<fingerprintse>"])
                         failureBlock(responseError)
                         return
                     }
                     successBlock(JSON)
                 }
             }
-        }
+        }) 
         dataTask.resume()
     }
     
-    func apiStatus(successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
-        let endpoint = Endpoint.APIStatus
+    func apiStatus(_ successBlock: @escaping SDSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+        let endpoint = Endpoint.apiStatus
 
-        let dataTask = self.URLSession.dataTaskWithRequest(endpoint.URLRequest) { data, response, error in
+        let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { data, response, error in
             if let error = error {
                 let responseError = NSError(domain: SDErrorUIDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
                 failureBlock(responseError)
-            } else if let httpResponse = response as? NSHTTPURLResponse {
+            } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     successBlock()
                 }
             }
-        }
+        }) 
         dataTask.resume()
     }
 }

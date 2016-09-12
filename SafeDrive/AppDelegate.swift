@@ -13,66 +13,63 @@ import Sparkle
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol, SDAccountProtocol, CrashlyticsDelegate {
-    private var dropdownMenuController: DropdownController!
-    private var accountWindowController: AccountWindowController!
-    private var preferencesWindowController: PreferencesWindowController!
+    fileprivate var dropdownMenuController: DropdownController!
+    fileprivate var accountWindowController: AccountWindowController!
+    fileprivate var preferencesWindowController: PreferencesWindowController!
 
-    private var accountController: AccountController!
-
-
-    private var aboutWindowController: DCOAboutWindowController!
-    private var serviceRouter: SDServiceXPCRouter!
-    private var serviceManager: ServiceManager!
-
-    private var syncScheduler: SyncScheduler?
-    private var welcomeWindowController: WelcomeWindowController?
+    fileprivate var accountController: AccountController!
 
 
-    var CFBundleVersion = Int((NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]) as! String)!
+    fileprivate var aboutWindowController: DCOAboutWindowController!
+    fileprivate var serviceRouter: SDServiceXPCRouter!
+    fileprivate var serviceManager: ServiceManager!
 
-    var CFBundleShortVersionString = (NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"]) as! String!
+    fileprivate var syncScheduler: SyncScheduler?
+    fileprivate var welcomeWindowController: WelcomeWindowController?
 
-    let SDBuildVersionLast = NSUserDefaults.standardUserDefaults().integerForKey(SDBuildVersionLastKey)
+
+    var CFBundleVersion = Int((Bundle.main.infoDictionary!["CFBundleVersion"]) as! String)!
+
+    var CFBundleShortVersionString = (Bundle.main.infoDictionary!["CFBundleShortVersionString"]) as! String!
+
+    let SDBuildVersionLast = UserDefaults.standard.integer(forKey: SDBuildVersionLastKey)
 
     var environment: String = "STAGING"
 
-
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
-        NSUserDefaults.standardUserDefaults().registerDefaults(["NSApplicationCrashOnExceptions": true])
+    func applicationDidFinishLaunching(_ aNotification: Foundation.Notification) {
+        UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true])
         Crashlytics.sharedInstance().delegate = self
         Fabric.with([Crashlytics.self])
 
         // initialize error handler, from this point on SDLog() and SDErrorHandlerReport() should be safe to use
         SDErrorHandlerInitialize()
-        let updater = SUUpdater.sharedUpdater()
-
-        #if DEBUG
-        SDLog("SafeDrive staging build \(CFBundleVersion)")
-        environment = "STAGING"
-        updater.feedURL = NSURL(string: "https://cdn.infincia.com/safedrive/appcast.xml")
-
-        #else
-        SDLog("SafeDrive release build \(CFBundleVersion)")
-        environment = "RELEASE"
-        updater.feedURL = NSURL(string: "https://cdn.infincia.com/safedrive-release/appcast.xml")
-        #endif
-
-
+        if let updater = SUUpdater.shared() {
+            #if DEBUG
+                SDLog("SafeDrive staging build \(CFBundleVersion)")
+                environment = "STAGING"
+                updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive/appcast.xml")
+                
+            #else
+                SDLog("SafeDrive release build \(CFBundleVersion)")
+                environment = "RELEASE"
+                updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive-release/appcast.xml")
+            #endif
+        }
 
         if CFBundleVersion < SDBuildVersionLast {
             let alert: NSAlert = NSAlert()
             alert.messageText = "Unsupported downgrade"
-            alert.addButtonWithTitle("Quit")
+            alert.addButton(withTitle: "Quit")
             alert.informativeText = "Your currently installed version of SafeDrive is older than the previously installed version.\n\nThis is unsupported and can cause data loss or crashes.\n\nPlease reinstall the newest version available."
 
             alert.runModal()
             NSApp.terminate(nil)
         }
-        NSUserDefaults.standardUserDefaults().setInteger(CFBundleVersion, forKey: SDBuildVersionLastKey)
+        UserDefaults.standard.set(CFBundleVersion, forKey: SDBuildVersionLastKey)
 
         PFMoveToApplicationsFolderIfNecessary()
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration(_:)), name: SDApplicationShouldFinishConfiguration, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration(_:)), name: NSNotification.Name(rawValue: SDApplicationShouldFinishConfiguration), object: nil)
 
         self.welcomeWindowController = WelcomeWindowController()
         _ = self.welcomeWindowController!.window!
@@ -80,54 +77,54 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     }
 
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Foundation.Notification) {
         SDLog("SafeDrive build \(CFBundleVersion), protocol version \(kSDAppXPCProtocolVersion) exiting")
-        NSNotificationCenter.defaultCenter().postNotificationName(SDVolumeShouldUnmountNotification, object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name.SDVolumeShouldUnmount, object: nil)
 
     }
 
     // MARK: SDApplicationControlProtocol methods
 
 
-    func applicationShouldOpenAccountWindow(notification: NSNotification) {
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
-            NSApp.activateIgnoringOtherApps(true)
+    func applicationShouldOpenAccountWindow(_ notification: Foundation.Notification) {
+        DispatchQueue.main.async(execute: {() -> Void in
+            NSApp.activate(ignoringOtherApps: true)
             self.accountWindowController.showWindow(nil)
         })
     }
 
-    func applicationShouldOpenPreferencesWindow(notification: NSNotification) {
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
-            NSApp.activateIgnoringOtherApps(true)
+    func applicationShouldOpenPreferencesWindow(_ notification: Foundation.Notification) {
+        DispatchQueue.main.async(execute: {() -> Void in
+            NSApp.activate(ignoringOtherApps: true)
             self.preferencesWindowController.showWindow(nil)
         })
     }
 
-    func applicationShouldOpenAboutWindow(notification: NSNotification) {
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
-            NSApp.activateIgnoringOtherApps(true)
+    func applicationShouldOpenAboutWindow(_ notification: Foundation.Notification) {
+        DispatchQueue.main.async(execute: {() -> Void in
+            NSApp.activate(ignoringOtherApps: true)
             self.aboutWindowController.showWindow(nil)
         })
     }
 
-    func applicationShouldOpenSyncWindow(notification: NSNotification) {
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
-            NSApp.activateIgnoringOtherApps(true)
+    func applicationShouldOpenSyncWindow(_ notification: Foundation.Notification) {
+        DispatchQueue.main.async(execute: {() -> Void in
+            NSApp.activate(ignoringOtherApps: true)
             self.preferencesWindowController?.showWindow(nil)
         })
     }
 
-    func applicationShouldFinishConfiguration(notification: NSNotification) {
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+    func applicationShouldFinishConfiguration(_ notification: Foundation.Notification) {
+        DispatchQueue.main.async(execute: {() -> Void in
 
-            guard let groupURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db") else {
+            guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
                 SDLog("Failed to obtain group container, this is a fatal error")
                 Crashlytics.sharedInstance().crash()
                 return
             }
 
             do {
-                try NSFileManager.defaultManager().createDirectoryAtURL(groupURL, withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(at: groupURL, withIntermediateDirectories: true, attributes: nil)
             } catch {
                 SDLog("Failed to create group container, this is a fatal error")
                 Crashlytics.sharedInstance().crash()
@@ -136,8 +133,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.serviceManager = ServiceManager.sharedServiceManager
             self.serviceManager.unloadService()
 
-            let dbURL = groupURL.URLByAppendingPathComponent("sync.realm")
-            let newdbURL = dbURL!.URLByAppendingPathExtension("new")
+            let dbURL = groupURL.appendingPathComponent("sync.realm")
+            let newdbURL = dbURL.appendingPathExtension("new")
 
             let config = Realm.Configuration(
                 fileURL: dbURL,
@@ -146,17 +143,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 schemaVersion: 9,
                 migrationBlock: { migration, oldSchemaVersion in
                     SDLog("Migrating db version \(oldSchemaVersion) to 9")
-                    migration.enumerate(Machine.className()) { oldObject, newObject in
+                    migration.enumerateObjects(ofType: Machine.className()) { oldObject, newObject in
                         if oldSchemaVersion < 6 {
                             migration.delete(newObject!)
                         }
                     }
-                    migration.enumerate(SyncFolder.className()) { oldObject, newObject in
+                    migration.enumerateObjects(ofType: SyncFolder.className()) { oldObject, newObject in
                         if oldSchemaVersion < 6 {
                             migration.delete(newObject!)
                         }
                     }
-                    migration.enumerate(SyncTask.className()) { oldObject, newObject in
+                    migration.enumerateObjects(ofType: SyncTask.className()) { oldObject, newObject in
                         if oldSchemaVersion < 6 {
                             migration.delete(newObject!)
                         }
@@ -166,20 +163,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             Realm.Configuration.defaultConfiguration = config
 
             autoreleasepool {
-                let fileManager = NSFileManager.defaultManager()
+                let fileManager = FileManager.default
 
                 do {
-                    try fileManager.removeItemAtURL(newdbURL!)
+                    try fileManager.removeItem(at: newdbURL)
                 } catch {
                     // ignored, file may not exist at all, but if it does and we can't remove it we'll crash next and get a report
                 }
-                let realm = try! Realm(fileURL: dbURL!)
-                try! realm.writeCopyToURL(newdbURL!)
-                try! fileManager.removeItemAtURL(dbURL!)
-                try! fileManager.moveItemAtURL(newdbURL!, toURL: dbURL!)
+                let realm = try! Realm(fileURL: dbURL)
+                try! realm.writeCopy(toFileURL: newdbURL)
+                try! fileManager.removeItem(at: dbURL)
+                try! fileManager.moveItem(at: newdbURL, to: dbURL)
             }
 
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() -> Void in
+            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
                 self.serviceManager.loadService()
                 self.serviceRouter = SDServiceXPCRouter()
             })
@@ -192,33 +189,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.accountWindowController = AccountWindowController()
             _ = self.accountWindowController.window!
 
-            let markdownURL = NSBundle.mainBundle().URLForResource("Changelog.md", withExtension: nil)
+            let markdownURL = Bundle.main.url(forResource: "Changelog.md", withExtension: nil)
 
-            let data = NSFileManager.defaultManager().contentsAtPath(markdownURL!.path!)
+            let data = FileManager.default.contents(atPath: markdownURL!.path)
 
-            let markdown = String(data: data!, encoding: NSUTF8StringEncoding)!
+            let markdown = String(data: data!, encoding: String.Encoding.utf8)!
 
 
             self.aboutWindowController = DCOAboutWindowController()
             self.aboutWindowController.useTextViewForAcknowledgments = true
-            self.aboutWindowController.appCredits = TSMarkdownParser.standardParser().attributedStringFromMarkdown(markdown)
+            self.aboutWindowController.appCredits = TSMarkdownParser.standard().attributedString(fromMarkdown: markdown)
             let version = "Version \(self.CFBundleShortVersionString)-\(self.environment) (Build \(self.CFBundleVersion))"
             self.aboutWindowController.appVersion = version
             let websiteURLPath: String = "https://\(SDWebDomain)"
-            self.aboutWindowController.appWebsiteURL = NSURL(string: websiteURLPath)!
+            self.aboutWindowController.appWebsiteURL = URL(string: websiteURLPath)!
 
 
             // register SDApplicationControlProtocol notifications
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAccountWindow(_:)), name: SDApplicationShouldOpenAccountWindow, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenPreferencesWindow(_:)), name: SDApplicationShouldOpenPreferencesWindow, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAboutWindow(_:)), name: SDApplicationShouldOpenAboutWindow, object: nil)
-            NSNotificationCenter.defaultCenter().postNotificationName(SDApplicationShouldOpenAboutWindow, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.applicationShouldOpenSyncWindow(_:)), name: SDApplicationShouldOpenSyncWindow, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAccountWindow(_:)), name: NSNotification.Name(rawValue: SDApplicationShouldOpenAccountWindow), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenPreferencesWindow(_:)), name: NSNotification.Name(rawValue: SDApplicationShouldOpenPreferencesWindow), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAboutWindow(_:)), name: NSNotification.Name(rawValue: SDApplicationShouldOpenAboutWindow), object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldOpenAboutWindow), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.applicationShouldOpenSyncWindow(_:)), name: NSNotification.Name(rawValue: SDApplicationShouldOpenSyncWindow), object: nil)
 
             // register SDAccountProtocol notifications
 
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignIn(_:)), name: SDAccountSignInNotification, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: SDAccountSignOutNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate(_:)), name: NSNotification.Name.SDAccountSignIn, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: NSNotification.Name.SDAccountSignOut, object: nil)
             if self.accountController.hasCredentials {
                 // we need to sign in automatically if at all possible, even if we don't need to automount
                 // we need a session token and account details in order to support sync
@@ -230,13 +227,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
     // MARK: SDAccountProtocol
 
-    func didSignIn(notification: NSNotification) {
+    func didAuthenticate(_ notification: Foundation.Notification) {
         guard let uniqueClientID = notification.object as? String else {
             return
         }
-        assert(NSThread.isMainThread(), "Not main thread!!!")
+        assert(Thread.isMainThread, "Not main thread!!!")
         self.syncScheduler!.running = true
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async { () -> Void in
             do {
                 try self.syncScheduler?.syncSchedulerLoop(uniqueClientID)
             } catch {
@@ -248,22 +245,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         _ = self.preferencesWindowController!.window!
     }
 
-    func didSignOut(notification: NSNotification) {
-        assert(NSThread.isMainThread(), "Not main thread!!!")
+    func didSignOut(_ notification: Foundation.Notification) {
+        assert(Thread.isMainThread, "Not main thread!!!")
         self.syncScheduler?.stop()
         self.preferencesWindowController?.close()
         self.preferencesWindowController = nil
     }
 
-    func didReceiveAccountDetails(notification: NSNotification) {
+    func didReceiveAccountDetails(_ notification: Foundation.Notification) {
     }
 
-    func didReceiveAccountStatus(notification: NSNotification) {
+    func didReceiveAccountStatus(_ notification: Foundation.Notification) {
     }
 
     // MARK: CrashlyticsDelegate
-
-    func crashlyticsDidDetectReportForLastExecution(report: CLSReport, completionHandler: (Bool) -> Void) {
+    
+    func crashlyticsDidDetectReport(forLastExecution report: CLSReport, completionHandler: @escaping (Bool) -> Void) {
         //
         // always submit the report to Crashlytics
         completionHandler(true)

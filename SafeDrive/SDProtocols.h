@@ -21,7 +21,7 @@
 
 @protocol SDAccountProtocol <NSObject>
 @required
--(void)didSignIn:(NSNotification*)notification;
+-(void)didAuthenticate:(NSNotification*)notification;
 -(void)didSignOut:(NSNotification*)notification;
 -(void)didReceiveAccountStatus:(NSNotification*)notification;
 -(void)didReceiveAccountDetails:(NSNotification *)notification;
