@@ -11,8 +11,6 @@ import RealmSwift
 
 import SwiftDate
 
-import Alamofire
-
 enum SyncDirection {
     case Forward
     case Reverse
@@ -31,8 +29,6 @@ class SyncScheduler {
     private let accountController = AccountController.sharedAccountController
 
     private var syncControllers = [SDSyncController]()
-
-    private var reachabilityManager = NetworkReachabilityManager(host: API.domain)
 
     private var _running = false
 
@@ -58,15 +54,6 @@ class SyncScheduler {
     private var syncDispatchQueue = dispatch_queue_create("io.safedrive.SyncScheduler.SyncQueue", DISPATCH_QUEUE_SERIAL)
 
     let dbURL: NSURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.io.safedrive.db")!.URLByAppendingPathComponent("sync.realm")!
-
-    init() {
-        self.reachabilityManager?.listener = { status in
-
-        }
-
-        self.reachabilityManager?.startListening()
-    }
-
 
     func syncSchedulerLoop(uniqueClientID: String) throws {
 
@@ -193,14 +180,11 @@ class SyncScheduler {
 
 
 
-                if self.reachabilityManager!.isReachableOnEthernetOrWiFi {
-                    for folder in folders {
-                        let folderID = folder.uniqueID
-                        self.queueSyncJob(uniqueClientID, folderID: folderID, direction: .Forward)
-                    }
-                } else {
-                    //SDLog("No WiFi/Ethernet connectivity, deferring \(folders.count) folders")
+                for folder in folders {
+                    let folderID = folder.uniqueID
+                    self.queueSyncJob(uniqueClientID, folderID: folderID, direction: .Forward)
                 }
+
                 // keep loop in sync with clock time to the next minute
                 let sleepSeconds = 60 - currentDate.second
                 NSThread.sleepForTimeInterval(Double(sleepSeconds))
