@@ -20,7 +20,25 @@ class AccountController: NSObject {
     var remotePort: NSNumber?
 
     var hasCredentials: Bool = false
-    var signedIn: Bool = false
+    
+    fileprivate let accountQueue = DispatchQueue(label: "io.safedrive.accountQueue", attributes: DispatchQueue.Attributes.concurrent)
+
+    var signedIn: Bool {
+        get {
+            var s: Bool = false // sane default, signing in twice due to "false negative" doesn't hurt anything
+            accountQueue.sync {
+                s = self._signedIn
+            }
+            return s
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._signedIn = newValue
+            }) 
+        }
+    }
+
+    var _signedIn: Bool = false
 
     fileprivate var sharedSystemAPI = SDSystemAPI.shared()
     fileprivate var sharedSafedriveAPI = API.sharedAPI
