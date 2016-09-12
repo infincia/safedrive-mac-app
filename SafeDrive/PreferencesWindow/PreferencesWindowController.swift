@@ -459,52 +459,63 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             urlComponents.path = remoteFolder.path
             urlComponents.port = self.accountController.remotePort
             let remote: NSURL = urlComponents.URL!
-
-
-            let syncController = SDSyncController()
-            syncController.uniqueID = uniqueID
-            syncController.SFTPOperation(op, remoteDirectory: remote, password: self.accountController.password, success: {
-                self.sharedSafedriveAPI.deleteSyncFolder(uniqueID, success: {() -> Void in
-
-                    guard let realm = try? Realm() else {
-                        SDLog("failed to create realm!!!")
-                        Crashlytics.sharedInstance().crash()
-                        return
-                    }
-
-                    let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last!
-
-                    let syncTasks = realm.objects(SyncTask).filter("syncFolder.uniqueID == \(uniqueID)")
-
-                    try! realm.write {
-                        realm.delete(syncTasks)
-                    }
-
-                    let syncFolder = realm.objects(SyncFolder).filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
-
-                    try! realm.write {
-                        realm.delete(syncFolder)
-                    }
-                    self.reload()
-                    self.spinner.stopAnimation(self)
-                    }, failure: {(apiError: NSError) -> Void in
-                        SDErrorHandlerReport(apiError)
+            
+            self.syncScheduler.cancel(uniqueID) {
+                let syncController = SDSyncController()
+                syncController.uniqueID = uniqueID
+                syncController.SFTPOperation(op, remoteDirectory: remote, password: self.accountController.password, success: {
+                    self.sharedSafedriveAPI.deleteSyncFolder(uniqueID, success: {() -> Void in
+                        
+                        guard let realm = try? Realm() else {
+                            SDLog("failed to create realm!!!")
+                            Crashlytics.sharedInstance().crash()
+                            return
+                        }
+                        
+                        let currentMachine = realm.objects(Machine).filter("uniqueClientID == '\(self.uniqueClientID)'").last!
+                        
+                        let syncTasks = realm.objects(SyncTask).filter("syncFolder.uniqueID == \(uniqueID)")
+                        
+                        do {
+                            try realm.write {
+                                realm.delete(syncTasks)
+                            }
+                        }
+                        catch {
+                            print("failed to delete sync tasks associated with \(uniqueID)")
+                        }
+                        
+                        let syncFolder = realm.objects(SyncFolder).filter("machine == %@ AND uniqueID == \(uniqueID)", currentMachine).last!
+                        
+                        do {
+                            try realm.write {
+                                realm.delete(syncFolder)
+                            }
+                        }
+                        catch {
+                            print("failed to delete sync folder \(uniqueID)")
+                        }
+                        self.reload()
+                        self.spinner.stopAnimation(self)
+                        }, failure: {(apiError: NSError) -> Void in
+                            SDErrorHandlerReport(apiError)
+                            self.spinner.stopAnimation(self)
+                            let alert: NSAlert = NSAlert()
+                            alert.messageText = NSLocalizedString("Error removing folder from your account", comment: "")
+                            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                            alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
+                            alert.runModal()
+                    })
+                    }, failure: { (error) in
+                        SDErrorHandlerReport(error)
                         self.spinner.stopAnimation(self)
                         let alert: NSAlert = NSAlert()
-                        alert.messageText = NSLocalizedString("Error removing folder from your account", comment: "")
-                        alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                        alert.messageText = NSLocalizedString("Error moving folder to Storage", comment: "")
+                        alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help:\n\n \(error.localizedDescription)", comment: "")
                         alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
                         alert.runModal()
                 })
-            }, failure: { (error) in
-                SDErrorHandlerReport(error)
-                self.spinner.stopAnimation(self)
-                let alert: NSAlert = NSAlert()
-                alert.messageText = NSLocalizedString("Error moving folder to Storage", comment: "")
-                alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help:\n\n \(error.localizedDescription)", comment: "")
-                alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
-                alert.runModal()
-            })
+            }
         }
     }
 
