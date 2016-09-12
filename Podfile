@@ -6,7 +6,6 @@ def keychain_pods
 end
 
 def shared_pods
-    pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git', :tag => '3.5.0'
     pod 'Fabric', '1.6.8'
     pod 'Crashlytics', '3.8'
     pod 'SwiftDate', '1.2'
