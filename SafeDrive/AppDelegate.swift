@@ -17,6 +17,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     private var accountWindowController: AccountWindowController!
     private var preferencesWindowController: PreferencesWindowController!
 
+    private var accountController: AccountController!
+
+
     private var aboutWindowController: DCOAboutWindowController!
     private var serviceRouter: SDServiceXPCRouter!
     private var serviceManager: ServiceManager!
@@ -184,6 +187,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
             self.dropdownMenuController = DropdownController()
 
+            self.accountController = AccountController()
+
             self.accountWindowController = AccountWindowController()
             _ = self.accountWindowController.window!
 
@@ -214,6 +219,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignIn(_:)), name: SDAccountSignInNotification, object: nil)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: SDAccountSignOutNotification, object: nil)
+            if self.accountController.hasCredentials {
+                // we need to sign in automatically if at all possible, even if we don't need to automount
+                // we need a session token and account details in order to support sync
+                self.accountWindowController.signIn(self)
+            }
+        
         })
     }
 

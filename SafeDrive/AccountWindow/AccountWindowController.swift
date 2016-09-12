@@ -50,13 +50,6 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: SDVolumeDidMountNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: SDVolumeDidUnmountNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount(_:)), name: SDVolumeShouldUnmountNotification, object: nil)
-
-        if self.accountController.hasCredentials {
-            // we need to sign in automatically if at all possible, even if we don't need to automount we need a session token and
-            // account details in order to support sync
-            self.signIn(self)
-        }
-
     }
 
     @IBAction func signIn(sender: AnyObject) {
