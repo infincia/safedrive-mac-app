@@ -782,7 +782,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 tableCellView.restoreNowButton.target = self
                 tableCellView.restoreNowButton.action = #selector(self.stopSyncNow(_:))
 
-                tableCellView.syncNowButton.enabled = false
+                tableCellView.syncNowButton.enabled = true
                 tableCellView.syncNowButton.target = self
                 tableCellView.syncNowButton.action = #selector(self.stopSyncNow(_:))
             }
