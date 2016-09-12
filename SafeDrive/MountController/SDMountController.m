@@ -348,7 +348,8 @@
 
 
 -(NSURL *)getMountURLForVolumeName:(NSString *)volumeName {
-    NSURL *volumesDirectoryURL = [NSURL fileURLWithPath:@"/Volumes" isDirectory:YES];
+    NSString *home = NSHomeDirectory();
+    NSURL *volumesDirectoryURL = [NSURL fileURLWithPath:home isDirectory:YES];
     NSURL *mountURL = [volumesDirectoryURL URLByAppendingPathComponent:volumeName];
     return mountURL;
 }
