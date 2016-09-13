@@ -15,7 +15,7 @@ import Sparkle
 class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol, SDAccountProtocol, CrashlyticsDelegate {
     fileprivate var dropdownMenuController: DropdownController!
     fileprivate var accountWindowController: AccountWindowController!
-    fileprivate var preferencesWindowController: PreferencesWindowController!
+    fileprivate var preferencesWindowController: PreferencesWindowController?
 
     fileprivate var accountController: AccountController!
 
@@ -108,7 +108,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     func applicationShouldOpenPreferencesWindow(_ notification: Foundation.Notification) {
         DispatchQueue.main.async(execute: {() -> Void in
             NSApp.activate(ignoringOtherApps: true)
-            self.preferencesWindowController.showWindow(nil)
+            self.preferencesWindowController?.showWindow(nil)
         })
     }
 
