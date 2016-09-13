@@ -378,11 +378,11 @@
 		AA2E550E1A774DED00647637 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */,
+				AA650CF11D73A29A008DA5CB /* Changelog.md */,
+				AA2E550F1A774E0000647637 /* known_hosts */,
 				AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */,
 				AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */,
-				AA2E550F1A774E0000647637 /* known_hosts */,
-				AA650CF11D73A29A008DA5CB /* Changelog.md */,
-				AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -419,12 +419,12 @@
 		AA3168151A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXGroup;
 			children = (
-				AAB7D5CB1CAF858D001F9A8E /* FlatWindow */,
 				AAAF1A401BF59446008E7865 /* Account Controller */,
 				AA31683B1A192CD2006CC0EB /* AccountWindow */,
 				AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */,
 				AA3168581A1953CF006CC0EB /* Dropdown Menu */,
 				AA7B460D1C46F0F900EA8889 /* ErrorHandler */,
+				AAB7D5CB1CAF858D001F9A8E /* FlatWindow */,
 				AA76DC1F1C876285007B320E /* Installer */,
 				AA7319411A2F7EEB003E2391 /* Main.xib */,
 				AA31684D1A192D64006CC0EB /* MountController */,
@@ -447,10 +447,10 @@
 		AA3168161A191B72006CC0EB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AA73194E1A2F893D003E2391 /* SafeDrive.pch */,
 				AA31681D1A191B72006CC0EB /* Images.xcassets */,
-				AA31685C1A195B65006CC0EB /* Localization */,
 				AA3168171A191B72006CC0EB /* Info.plist */,
+				AA31685C1A195B65006CC0EB /* Localization */,
+				AA73194E1A2F893D003E2391 /* SafeDrive.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -458,12 +458,12 @@
 		AA3168291A191B72006CC0EB /* SafeDriveTests */ = {
 			isa = PBXGroup;
 			children = (
+				AA6DCB2F1CA57DB5001473B0 /* SafeDriveTests-Bridging-Header.h */,
+				AA31682C1A191B72006CC0EB /* SafeDriveTests.m */,
 				AA4E77311A3E6E640054BBCA /* SDTestConstants.h */,
 				AA4E77321A3E6E640054BBCA /* SDTestConstants.m */,
-				AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */,
-				AA31682C1A191B72006CC0EB /* SafeDriveTests.m */,
-				AA6DCB2F1CA57DB5001473B0 /* SafeDriveTests-Bridging-Header.h */,
 				AA31682A1A191B72006CC0EB /* Supporting Files */,
+				AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */,
 			);
 			path = SafeDriveTests;
 			sourceTree = "<group>";
@@ -489,13 +489,13 @@
 		AA3168471A192D26006CC0EB /* PreferencesWindow */ = {
 			isa = PBXGroup;
 			children = (
-				AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */,
-				AA543C711BFC57B50008FB8B /* Settings-Background.png */,
 				AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */,
 				AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */,
+				AA543C711BFC57B50008FB8B /* Settings-Background.png */,
+				AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */,
+				AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */,
 				AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */,
 				AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */,
-				AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */,
 			);
 			path = PreferencesWindow;
 			sourceTree = "<group>";
@@ -519,8 +519,8 @@
 		AA3168581A1953CF006CC0EB /* Dropdown Menu */ = {
 			isa = PBXGroup;
 			children = (
-				AAA88BDE1C85F5F7009BE1C7 /* DropdownMenu.xib */,
 				AAA88BD81C857FFB009BE1C7 /* DropdownController.swift */,
+				AAA88BDE1C85F5F7009BE1C7 /* DropdownMenu.xib */,
 			);
 			name = "Dropdown Menu";
 			sourceTree = "<group>";
@@ -539,13 +539,13 @@
 				AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */,
 				AAA88BC81C8385A9009BE1C7 /* Machine.swift */,
 				AA6E272A1D876DD800038019 /* Notifications.swift */,
+				AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */,
 				AAF945FA1C801F6100B972C3 /* SDAppXPCProtocol.h */,
 				AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */,
 				AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */,
 				AAF945F71C801EFE00B972C3 /* SDServiceXPCProtocol.h */,
 				AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */,
 				AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */,
-				AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -585,9 +585,9 @@
 		AA5C1A951BB234DD006A0C8C /* XPC */ = {
 			isa = PBXGroup;
 			children = (
+				AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */,
 				AA5C1A9D1BB26C40006A0C8C /* SDServiceXPCRouter.h */,
 				AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */,
-				AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */,
 			);
 			name = XPC;
 			path = ServiceRouter;
@@ -607,8 +607,8 @@
 			isa = PBXGroup;
 			children = (
 				AA76DC201C8762A9007B320E /* Installer.swift */,
-				AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */,
 				AA76DC281C879076007B320E /* WelcomeWindow.xib */,
+				AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */,
 			);
 			name = Installer;
 			sourceTree = "<group>";
@@ -626,10 +626,10 @@
 		AA7B460D1C46F0F900EA8889 /* ErrorHandler */ = {
 			isa = PBXGroup;
 			children = (
+				AAB7D5D41CB09943001F9A8E /* CrashAlert.swift */,
+				AAA88BC21C8267C0009BE1C7 /* ErrorHandler.swift */,
 				AA7B460E1C46F18600EA8889 /* SDErrorHandler.h */,
 				AA7B460F1C46F18600EA8889 /* SDErrorHandler.m */,
-				AAA88BC21C8267C0009BE1C7 /* ErrorHandler.swift */,
-				AAB7D5D41CB09943001F9A8E /* CrashAlert.swift */,
 			);
 			name = ErrorHandler;
 			sourceTree = "<group>";
