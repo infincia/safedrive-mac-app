@@ -17,8 +17,6 @@
 
 #import "SDSyncController.h"
 
-#import "SDMountController.h"
-
 @import DCOAboutWindow;
 
 @import LetsMove;
