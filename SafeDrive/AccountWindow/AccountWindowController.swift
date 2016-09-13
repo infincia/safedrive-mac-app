@@ -145,7 +145,6 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
 
     func displayError(_ error: Swift.Error, forDuration duration: TimeInterval) {
         assert(Thread.isMainThread, "Error display called on background thread")
-        print("e: \(error.localizedDescription)")
         self.currentlyDisplayedError = error as NSError
         NSApp.activate(ignoringOtherApps: true)
         self.errorField.stringValue = error.localizedDescription
