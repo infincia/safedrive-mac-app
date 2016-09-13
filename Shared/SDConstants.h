@@ -34,37 +34,6 @@ FOUNDATION_EXPORT NSString *const SDServiceNameTesting;
 FOUNDATION_EXPORT NSString *const SDSSHServiceName;
 FOUNDATION_EXPORT NSString *const SDSessionServiceName;
 
-
-#pragma mark - Custom NSNotifications
-
-FOUNDATION_EXPORT NSString *const SDMountStateMountedNotification;
-FOUNDATION_EXPORT NSString *const SDMountStateUnmountedNotification;
-FOUNDATION_EXPORT NSString *const SDMountStateDetailsNotification;
-
-
-FOUNDATION_EXPORT NSString *const SDVolumeDidMountNotification;
-FOUNDATION_EXPORT NSString *const SDVolumeDidUnmountNotification;
-FOUNDATION_EXPORT NSString *const SDVolumeShouldUnmountNotification;
-FOUNDATION_EXPORT NSString *const SDVolumeSubprocessDidTerminateNotification;
-
-FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenPreferencesWindow;
-FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenAccountWindow;
-FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenAboutWindow;
-FOUNDATION_EXPORT NSString *const SDApplicationShouldOpenSyncWindow;
-FOUNDATION_EXPORT NSString *const SDApplicationShouldFinishConfiguration;
-
-
-FOUNDATION_EXPORT NSString *const SDAPIDidEnterMaintenancePeriod;
-FOUNDATION_EXPORT NSString *const SDAPIDidBecomeReachable;
-FOUNDATION_EXPORT NSString *const SDAPIDidBecomeUnreachable;
-
-FOUNDATION_EXPORT NSString *const SDAccountSignInNotification;
-FOUNDATION_EXPORT NSString *const SDAccountSignOutNotification;
-FOUNDATION_EXPORT NSString *const SDAccountStatusNotification;
-FOUNDATION_EXPORT NSString *const SDAccountDetailsNotification;
-
-FOUNDATION_EXPORT NSString *const SDServiceStatusNotification;
-
 NS_ASSUME_NONNULL_END
 
 #pragma mark - Status Enums

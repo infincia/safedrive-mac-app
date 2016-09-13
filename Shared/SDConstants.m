@@ -32,34 +32,6 @@ NSString *const SDServiceNameTesting = @"testing.safedrive.io";
 NSString *const SDSSHServiceName = @"ssh.safedrive.io";
 NSString *const SDSessionServiceName = @"session.safedrive.io";
 
-#pragma mark - Custom NSNotifications
-
-NSString *const SDMountStateMountedNotification          = @"SDMountStateMountedNotification";
-NSString *const SDMountStateUnmountedNotification        = @"SDMountStateUnmountedNotification";
-NSString *const SDMountStateDetailsNotification          = @"SDMountDetailsNotification";
-
-NSString *const SDVolumeDidMountNotification              = @"SDVolumeDidMountNotification";
-NSString *const SDVolumeDidUnmountNotification            = @"SDVolumeDidUnmountNotification";
-NSString *const SDVolumeShouldUnmountNotification         = @"SDVolumeShouldUnmountNotification";
-NSString *const SDVolumeSubprocessDidTerminateNotification = @"SDVolumeSubprocessDidTerminateNotification";
-
-NSString *const SDApplicationShouldOpenPreferencesWindow  = @"SDApplicationShouldOpenPreferencesWindow";
-NSString *const SDApplicationShouldOpenAccountWindow      = @"SDApplicationShouldOpenAccountWindow";
-NSString *const SDApplicationShouldOpenAboutWindow        = @"SDApplicationShouldOpenAboutWindow";
-NSString *const SDApplicationShouldOpenSyncWindow         = @"SDApplicationShouldOpenSyncWindow";
-NSString *const SDApplicationShouldFinishConfiguration    = @"SDApplicationShouldFinishLaunch";
-
-NSString *const SDAPIDidEnterMaintenancePeriod            = @"SDAPIDidEnterMaintenancePeriod";
-NSString *const SDAPIDidBecomeReachable                   = @"SDAPIDidBecomeReachable";
-NSString *const SDAPIDidBecomeUnreachable                 = @"SDAPIDidBecomeUnreachable";
-
-NSString *const SDAccountSignInNotification               = @"SDAccountSignInNotification";
-NSString *const SDAccountSignOutNotification              = @"SDAccountSignOutNotification";
-NSString *const SDAccountStatusNotification               = @"SDAccountStatusNotification";
-NSString *const SDAccountDetailsNotification              = @"SDAccountDetailsNotification";
-
-NSString *const SDServiceStatusNotification               = @"SDServiceStatusNotification";
-
 #pragma mark - Errors
 
 NSString *const SDErrorDomain = @"io.safedrive";
