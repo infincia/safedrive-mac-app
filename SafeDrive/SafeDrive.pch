@@ -5,5 +5,4 @@
 #ifdef __OBJC__
     #import "SDConstants.h"
     #import "SDProtocols.h"
-    #import "SDErrorHandler.h"
 #endif

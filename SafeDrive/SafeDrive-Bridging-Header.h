@@ -11,8 +11,6 @@
 
 #import "HKTHashProvider.h"
 
-#import "SDErrorHandler.h"
-
 #import "SDSystemAPI.h"
 
 @import DCOAboutWindow;
@@ -32,3 +30,5 @@
 #import <NMSSH/NMSSH.h>
 
 @import RegexKitLite;
+
+@import Crashlytics;

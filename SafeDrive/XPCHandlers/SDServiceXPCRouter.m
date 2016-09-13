@@ -93,7 +93,7 @@
         }] protocolVersion:^(NSNumber *version) {
 
             if ([version integerValue] != kSDServiceXPCProtocolVersion) {
-                SDLog(@"Service needs to be updated!!!!!");
+                NSLog(@"Service needs to be updated!!!!!");
                 [self.serviceConnection invalidate];
             }
         }];
