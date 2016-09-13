@@ -46,7 +46,7 @@
                         <rect key="frame" x="18" y="236" width="315" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="SafeDrive requires OSXFUSE, click below to install it" id="cG0-fW-h7U">
-                            <font key="font" metaFont="system"/>
+                            <font key="font" size="13" name="Raleway-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
