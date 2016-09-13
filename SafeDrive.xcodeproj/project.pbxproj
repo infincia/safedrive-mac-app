@@ -21,7 +21,6 @@
 		AA2DAB291CB3664D00951762 /* sshfs-2.7 in Copy Files */ = {isa = PBXBuildFile; fileRef = AA2DAB271CB3664200951762 /* sshfs-2.7 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
-		AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3168501A192D87006CC0EB /* SDMountController.m */; };
 		AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
 		AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; };
@@ -49,6 +48,8 @@
 		AA6E272C1D876DD800038019 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272A1D876DD800038019 /* Notifications.swift */; };
 		AA6E272D1D876DD800038019 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272A1D876DD800038019 /* Notifications.swift */; };
 		AA6E272E1D876DD800038019 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272A1D876DD800038019 /* Notifications.swift */; };
+		AA6E27301D87855100038019 /* MountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272F1D87855100038019 /* MountController.swift */; };
+		AA6E27311D87855100038019 /* MountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272F1D87855100038019 /* MountController.swift */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
 		AA76DC211C8762A9007B320E /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC201C8762A9007B320E /* Installer.swift */; };
 		AA76DC231C8779D2007B320E /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */; };
@@ -220,8 +221,6 @@
 		AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeDriveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA31682B1A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA31682C1A191B72006CC0EB /* SafeDriveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SafeDriveTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AA31684F1A192D87006CC0EB /* SDMountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SDMountController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		AA3168501A192D87006CC0EB /* SDMountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SDMountController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDConstants.h; path = Shared/SDConstants.h; sourceTree = "<group>"; };
 		AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDConstants.m; path = Shared/SDConstants.m; sourceTree = "<group>"; };
 		AA4E77311A3E6E640054BBCA /* SDTestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestConstants.h; sourceTree = "<group>"; };
@@ -252,6 +251,7 @@
 		AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTests.swift; sourceTree = "<group>"; };
 		AA6DCB2F1CA57DB5001473B0 /* SafeDriveTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeDriveTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		AA6E272A1D876DD800038019 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Notifications.swift; path = Shared/Notifications.swift; sourceTree = "<group>"; };
+		AA6E272F1D87855100038019 /* MountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MountController.swift; sourceTree = "<group>"; };
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
@@ -503,8 +503,7 @@
 		AA31684D1A192D64006CC0EB /* MountController */ = {
 			isa = PBXGroup;
 			children = (
-				AA31684F1A192D87006CC0EB /* SDMountController.h */,
-				AA3168501A192D87006CC0EB /* SDMountController.m */,
+				AA6E272F1D87855100038019 /* MountController.swift */,
 			);
 			path = MountController;
 			sourceTree = "<group>";
@@ -1183,11 +1182,11 @@
 				AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */,
 				AA76DC2D1C88D4C6007B320E /* API.swift in Sources */,
 				AA76DC211C8762A9007B320E /* Installer.swift in Sources */,
-				AA3168561A192DE2006CC0EB /* SDMountController.m in Sources */,
 				AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */,
 				AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */,
 				AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
+				AA6E27301D87855100038019 /* MountController.swift in Sources */,
 				AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 				AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */,
@@ -1214,6 +1213,7 @@
 				AA6E272C1D876DD800038019 /* Notifications.swift in Sources */,
 				AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */,
 				AA6DCB2E1CA57D50001473B0 /* UnitTests.swift in Sources */,
+				AA6E27311D87855100038019 /* MountController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

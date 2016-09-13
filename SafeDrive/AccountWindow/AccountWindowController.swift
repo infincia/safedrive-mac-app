@@ -7,7 +7,7 @@ import Cocoa
 class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolumeEventProtocol {
 
     var safeDriveAPI = API.sharedAPI
-    var mountController = SDMountController.sharedAPI()
+    var mountController = MountController.shared
     var sharedSystemAPI = SDSystemAPI.shared()
 
     var accountController = AccountController.sharedAccountController
@@ -70,8 +70,8 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             // be the NSButton in the account window labeled "next"
 
             if self.sharedSystemAPI.mountAtLaunch || sender is NSButton {
-                let mountURL = self.mountController!.getMountURL(forVolumeName: self.sharedSystemAPI.currentVolumeName)
-                if !self.sharedSystemAPI.check(forMountedVolume: mountURL!) {
+                let mountURL = self.mountController.mountURL(forVolumeName: self.sharedSystemAPI.currentVolumeName)
+                if !self.sharedSystemAPI.check(forMountedVolume: mountURL) {
                     self.showWindow(nil)
                     self.connectVolume()
                 }
@@ -88,7 +88,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
 
     func connectVolume() {
         self.resetErrorDisplay()
-        self.mountController?.isMounting = true
+        self.mountController.mounting = true
         let displayMessage = NSError(domain: SDErrorDomain, code: SDErrorNone, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Mounting SafeDrive", comment: "String informing the user their safedrive is being mounted")])
         self.displayError(displayMessage, forDuration: 120)
         self.spinner.startAnimation(self)
@@ -100,8 +100,9 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         urlComponents.path = SDDefaultServerPath
         urlComponents.port = self.accountController.remotePort as Int?
         let sshURL: URL = urlComponents.url!
+        
+        self.mountController.startMountTaskWithVolumeName(volumeName: volumeName, sshURL: sshURL, success: { (mountURL, error) in
 
-        self.mountController?.startMountTask(withVolumeName: volumeName, sshURL: sshURL, success: { (mountURL, error) in
             /*
              now check for a successful mount. if after 30 seconds there is no volume
              mounted, it is a fair bet that an error occurred in the meantime
@@ -111,12 +112,12 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
                 NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                 self.resetErrorDisplay()
                 self.spinner.stopAnimation(self)
-                self.mountController?.isMounting = false
+                self.mountController.mounting = false
                 }, failure: {(error) -> Void in
                     SDLog("SafeDrive checkForMountedVolume  failure in account window")
                     self.displayError(error as NSError, forDuration: 10)
                     self.spinner.stopAnimation(self)
-                    self.mountController?.isMounting = false
+                    self.mountController.mounting = false
             })
 
 
@@ -125,9 +126,9 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             SDErrorHandlerReport(mountError)
             self.displayError(mountError as NSError, forDuration: 10)
             self.spinner.stopAnimation(self)
-            self.mountController?.isMounting = false
+            self.mountController.mounting = false
             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
-            self.mountController?.unmountVolume(withName: volumeName, success: { (mountURL, mountError) in
+            self.mountController.unmountVolumeWithName(volumeName: volumeName, success: { (mountURL, mountError) in
                 //
             }, failure: { (mountURL, mountError) in
                 //
@@ -168,7 +169,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
 
     func volumeDidMount(_ notification: Notification) {
         self.close()
-        NSWorkspace.shared().open((self.mountController?.mountURL)!)
+        NSWorkspace.shared().open((self.mountController.mountURL)!)
         //var mountSuccess: NSError = NSError(domain: SDErrorDomain, code: SDErrorNone, userInfo: [NSLocalizedDescriptionKey: "Volume mounted"])
         //self.displayError(mountSuccess, forDuration: 10)
 

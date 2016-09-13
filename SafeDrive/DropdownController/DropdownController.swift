@@ -11,7 +11,7 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     @IBOutlet var preferencesMenuItem: NSMenuItem!
 
     fileprivate var safeDriveAPI = API.sharedAPI
-    fileprivate var mountController = SDMountController.sharedAPI()
+    fileprivate var mountController = MountController.shared
     fileprivate var sharedSystemAPI = SDSystemAPI.shared()
 
 
@@ -60,7 +60,7 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     }
 
     @IBAction func toggleMount(_ sender: AnyObject) {
-        if (self.mountController?.isMounted)! {
+        if (self.mountController.mounted) {
             self.disconnectVolume()
         } else {
             NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAccountWindow, object: nil)
@@ -83,10 +83,10 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         let volumeName: String = self.sharedSystemAPI.currentVolumeName
         SDLog("Dismounting volume: %@", volumeName)
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async {
-            self.mountController?.unmountVolume(withName: volumeName, success: { (mountURL: URL?, mountError: Swift.Error?) -> Void in
+            self.mountController.unmountVolumeWithName(volumeName: volumeName, success: { (mountURL, mountError) -> Void in
                 //
-                }, failure: { (mountURL: URL, mountError: Swift.Error) -> Void in
-                    //
+            }, failure: { (mountURL, mountError) -> Void in
+                //
             })
         }
 
