@@ -22,7 +22,7 @@ class MountController: NSObject {
         mountStateLoop()
     }
 
-    func unmountVolumeWithName(volumeName:String!, success successBlock: @escaping SDMountSuccessBlock, failure failureBlock: @escaping SDMountFailureBlock) {
+    func unmountVolume(name volumeName:String!, success successBlock: @escaping SDMountSuccessBlock, failure failureBlock: @escaping SDMountFailureBlock) {
         let mountURL = self.mountURL(forVolumeName: volumeName)
         weak var weakSelf: MountController? = self
         self.sharedSystemAPI.ejectMount(mountURL, success:{ 
@@ -68,7 +68,7 @@ class MountController: NSObject {
         })
     }
 
-    func startMountTaskWithVolumeName(volumeName: String, sshURL: URL, success successBlock: @escaping SDMountSuccessBlock, failure failureBlock: @escaping SDMountFailureBlock) {
+    func startMountTask(volumeName: String, sshURL: URL, success successBlock: @escaping SDMountSuccessBlock, failure failureBlock: @escaping SDMountFailureBlock) {
         assert(Thread.current == Thread.main, "SSHFS task started from background thread")
 
         let mountURL = self.mountURL(forVolumeName: volumeName)

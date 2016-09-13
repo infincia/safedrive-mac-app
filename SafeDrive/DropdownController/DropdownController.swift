@@ -83,7 +83,7 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         let volumeName: String = self.sharedSystemAPI.currentVolumeName
         SDLog("Dismounting volume: %@", volumeName)
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async {
-            self.mountController.unmountVolumeWithName(volumeName: volumeName, success: { (mountURL, mountError) -> Void in
+            self.mountController.unmountVolume(name: volumeName, success: { (mountURL, mountError) -> Void in
                 //
             }, failure: { (mountURL, mountError) -> Void in
                 //
