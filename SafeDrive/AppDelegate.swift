@@ -211,7 +211,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.aboutWindowController = DCOAboutWindowController()
             self.aboutWindowController.useTextViewForAcknowledgments = true
             self.aboutWindowController.appCredits = TSMarkdownParser.standard().attributedString(fromMarkdown: markdown)
-            let version = "Version \(self.CFBundleShortVersionString)-\(self.environment) (Build \(self.CFBundleVersion))"
+            let version = "Version \(self.CFBundleShortVersionString!)-\(self.environment) (Build \(self.CFBundleVersion))"
             self.aboutWindowController.appVersion = version
             let websiteURLPath: String = "https://\(SDWebDomain)"
             self.aboutWindowController.appWebsiteURL = URL(string: websiteURLPath)!
