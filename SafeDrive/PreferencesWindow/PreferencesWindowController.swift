@@ -272,11 +272,11 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     // MARK: SDMountStateProtocol
 
     func mountStateMounted(_ notification: Foundation.Notification) {
-        self.mountStatusField.stringValue = NSLocalizedString("Mounted", comment: "String for volume mount status of mounted")
+        self.mountStatusField.stringValue = NSLocalizedString("Yes", comment: "String for volume mount status of mounted")
     }
 
     func mountStateUnmounted(_ notification: Foundation.Notification) {
-        self.mountStatusField.stringValue = NSLocalizedString("Unmounted", comment: "String for volume mount status of unmounted")
+        self.mountStatusField.stringValue = NSLocalizedString("No", comment: "String for volume mount status of unmounted")
     }
 
     func mountStateDetails(_ notification: Foundation.Notification) {
