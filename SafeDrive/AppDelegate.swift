@@ -85,10 +85,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         
         self.welcomeWindowController = WelcomeWindowController()
         _ = self.welcomeWindowController!.window!
-
+        
     }
-
-
+    
+    
     func applicationWillTerminate(_ aNotification: Foundation.Notification) {
         SDLog("SafeDrive build \(CFBundleVersion), protocol version \(kSDAppXPCProtocolVersion) exiting")
         NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: nil)
@@ -253,9 +253,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     }
 
     func didReceiveAccountDetails(_ notification: Foundation.Notification) {
+    
     }
 
     func didReceiveAccountStatus(_ notification: Foundation.Notification) {
+    
     }
 
     // MARK: CrashlyticsDelegate
