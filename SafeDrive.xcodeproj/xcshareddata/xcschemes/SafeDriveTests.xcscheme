@@ -83,6 +83,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "AA3168251A191B72006CC0EB"
+            BuildableName = "SafeDriveTests.xctest"
+            BlueprintName = "SafeDriveTests"
+            ReferencedContainer = "container:SafeDrive.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
