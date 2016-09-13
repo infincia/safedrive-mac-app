@@ -43,13 +43,13 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         self.resetErrorDisplay()
 
         // register SDMountStateProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted(_:)), name: NSNotification.Name.SDMountStateMounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted(_:)), name: NSNotification.Name.SDMountStateUnmounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails(_:)), name: NSNotification.Name.SDMountStateDetails, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted(_:)), name: Notification.Name.mounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted(_:)), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails(_:)), name: Notification.Name.mountDetails, object: nil)
         // register SDVolumeEventProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: NSNotification.Name.SDVolumeDidMount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: NSNotification.Name.SDVolumeDidUnmount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount(_:)), name: NSNotification.Name.SDVolumeShouldUnmount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: Notification.Name.volumeDidMount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: Notification.Name.volumeDidUnmount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount(_:)), name: Notification.Name.volumeShouldUnmount, object: nil)
     }
 
     @IBAction func signIn(_ sender: AnyObject) {
@@ -62,7 +62,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         self.spinner.startAnimation(self)
 
         self.accountController.signInWithSuccess({() -> Void in
-            NotificationCenter.default.post(name: NSNotification.Name.SDAccountSignIn, object: nil)
+            NotificationCenter.default.post(name: Notification.Name.accountAuthenticated, object: nil)
             self.resetErrorDisplay()
             self.spinner.stopAnimation(self)
 
@@ -108,7 +108,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
              */
 
             self.sharedSystemAPI.check(forMountedVolume: mountURL, withTimeout: 30, success: {() -> Void in
-                NotificationCenter.default.post(name: NSNotification.Name.SDVolumeDidMount, object: nil)
+                NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                 self.resetErrorDisplay()
                 self.spinner.stopAnimation(self)
                 self.mountController?.isMounting = false
@@ -175,7 +175,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
     }
 
     func volumeDidUnmount(_ notification: Notification) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldOpenAccountWindow), object: nil)
+        NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAccountWindow, object: nil)
     }
 
     func volumeSubprocessDidTerminate(_ notification: Notification) {

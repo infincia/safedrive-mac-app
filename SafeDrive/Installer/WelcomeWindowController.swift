@@ -51,7 +51,7 @@ class WelcomeWindowController: NSWindowController, NSOpenSavePanelDelegate, Inst
 
     @IBAction func next(_ sender: AnyObject) {
         if self.installer.isOSXFUSEInstalled() {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldFinishConfiguration), object: nil)
+            NotificationCenter.default.post(name: Notification.Name.applicationShouldFinishConfiguration, object: nil)
         } else {
             self.installer.installOSXFUSE()
             self.spinner.startAnimation(self)
@@ -66,7 +66,7 @@ class WelcomeWindowController: NSWindowController, NSOpenSavePanelDelegate, Inst
     }
     
     func didValidateDependencies() {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldFinishConfiguration), object: nil)
+        NotificationCenter.default.post(name: Notification.Name.applicationShouldFinishConfiguration, object: nil)
         self.spinner.stopAnimation(self)
         self.next.isEnabled = true
         self.close()

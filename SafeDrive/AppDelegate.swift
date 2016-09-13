@@ -68,9 +68,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         UserDefaults.standard.set(CFBundleVersion, forKey: SDBuildVersionLastKey)
 
         PFMoveToApplicationsFolderIfNecessary()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration(_:)), name: NSNotification.Name(rawValue: SDApplicationShouldFinishConfiguration), object: nil)
-
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration(_:)), name: Notification.Name.applicationShouldFinishConfiguration, object: nil)
+        
+        
+        // register SDApplicationControlProtocol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAccountWindow(_:)), name: Notification.Name.applicationShouldOpenAccountWindow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenPreferencesWindow(_:)), name: Notification.Name.applicationShouldOpenPreferencesWindow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAboutWindow(_:)), name: Notification.Name.applicationShouldOpenAboutWindow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.applicationShouldOpenSyncWindow(_:)), name: Notification.Name.applicationShouldOpenSyncWindow, object: nil)
+        
+        // register SDAccountProtocol notifications
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate(_:)), name: Notification.Name.accountAuthenticated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: Notification.Name.accountSignOut, object: nil)
+        
         self.welcomeWindowController = WelcomeWindowController()
         _ = self.welcomeWindowController!.window!
 
@@ -79,7 +91,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
     func applicationWillTerminate(_ aNotification: Foundation.Notification) {
         SDLog("SafeDrive build \(CFBundleVersion), protocol version \(kSDAppXPCProtocolVersion) exiting")
-        NotificationCenter.default.post(name: NSNotification.Name.SDVolumeShouldUnmount, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: nil)
 
     }
 
@@ -204,24 +216,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             let websiteURLPath: String = "https://\(SDWebDomain)"
             self.aboutWindowController.appWebsiteURL = URL(string: websiteURLPath)!
 
-
-            // register SDApplicationControlProtocol notifications
-            NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAccountWindow(_:)), name: NSNotification.Name(rawValue: SDApplicationShouldOpenAccountWindow), object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenPreferencesWindow(_:)), name: NSNotification.Name(rawValue: SDApplicationShouldOpenPreferencesWindow), object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAboutWindow(_:)), name: NSNotification.Name(rawValue: SDApplicationShouldOpenAboutWindow), object: nil)
-            NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldOpenAboutWindow), object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.applicationShouldOpenSyncWindow(_:)), name: NSNotification.Name(rawValue: SDApplicationShouldOpenSyncWindow), object: nil)
-
-            // register SDAccountProtocol notifications
-
-            NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate(_:)), name: NSNotification.Name.SDAccountSignIn, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: NSNotification.Name.SDAccountSignOut, object: nil)
             if self.accountController.hasCredentials {
                 // we need to sign in automatically if at all possible, even if we don't need to automount
                 // we need a session token and account details in order to support sync
                 self.accountWindowController.signIn(self)
             }
-        
+            NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAboutWindow, object: nil)
         })
     }
 

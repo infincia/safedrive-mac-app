@@ -122,7 +122,7 @@ class AccountController: NSObject {
 
                 if let accountStatus = accountStatus {
                     DispatchQueue.main.async(execute: {() -> Void in
-                        NotificationCenter.default.post(name: NSNotification.Name.SDAccountStatus, object: accountStatus)
+                        NotificationCenter.default.post(name: Notification.Name.accountStatus, object: accountStatus)
                     })
                     self.internalUserName = accountStatus["userName"] as? String
 
@@ -168,7 +168,7 @@ class AccountController: NSObject {
                         Crashlytics.sharedInstance().crash()
                         return
                     }
-                    NotificationCenter.default.post(name: NSNotification.Name.SDAccountSignIn, object: clientID)
+                    NotificationCenter.default.post(name: Notification.Name.accountAuthenticated, object: clientID)
                     successBlock()
                 }
             }, failure: { (error: Swift.Error) -> Void in
@@ -179,7 +179,7 @@ class AccountController: NSObject {
             self.sharedSafedriveAPI.accountDetailsForUser(email, success: {(accountDetails: [String : NSObject]?) -> Void in
                 if let accountDetails = accountDetails {
                     DispatchQueue.main.async(execute: {() -> Void in
-                        NotificationCenter.default.post(name: NSNotification.Name.SDAccountDetails, object: accountDetails)
+                        NotificationCenter.default.post(name: Notification.Name.accountDetails, object: accountDetails)
                     })
                 }
 
@@ -205,7 +205,7 @@ class AccountController: NSObject {
         // reset crashlytics email and telemetry API username
         Crashlytics.sharedInstance().setUserEmail(nil)
         SDErrorHandlerSetUser(nil)
-        NotificationCenter.default.post(name: NSNotification.Name.SDAccountSignOut, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.accountSignOut, object: nil)
         successBlock()
 
     }
@@ -250,7 +250,7 @@ class AccountController: NSObject {
 
                     if let accountStatus = accountStatus {
                         DispatchQueue.main.async(execute: {() -> Void in
-                            NotificationCenter.default.post(name: NSNotification.Name.SDAccountStatus, object: accountStatus)
+                            NotificationCenter.default.post(name: Notification.Name.accountStatus, object: accountStatus)
                         })
 
                         self.internalUserName = accountStatus["userName"] as? String
@@ -271,7 +271,7 @@ class AccountController: NSObject {
                 self.sharedSafedriveAPI.accountDetailsForUser(email, success: {(accountDetails: [String : NSObject]?) -> Void in
                     if let accountDetails = accountDetails {
                         DispatchQueue.main.async(execute: {() -> Void in
-                            NotificationCenter.default.post(name: NSNotification.Name.SDAccountDetails, object: accountDetails)
+                            NotificationCenter.default.post(name: Notification.Name.accountDetails, object: accountDetails)
                         })
                     }
 

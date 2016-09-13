@@ -27,7 +27,7 @@ class ServiceManager: NSObject {
             while true {
                 let serviceStatus: Bool = self.serviceStatus
                 DispatchQueue.main.async(execute: {() -> Void in
-                    NotificationCenter.default.post(name: NSNotification.Name.SDServiceStatus, object: serviceStatus)
+                    NotificationCenter.default.post(name: Notification.Name.serviceStatus, object: serviceStatus)
                 })
                 Thread.sleep(forTimeInterval: 1)
             }

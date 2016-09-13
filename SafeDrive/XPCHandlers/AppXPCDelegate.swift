@@ -20,10 +20,10 @@ class AppXPCDelegate: NSObject, SDAppXPCProtocol {
     }
 
     func displayPreferencesWindow() {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldOpenPreferencesWindow), object: nil)
+        NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenPreferencesWindow, object: nil)
     }
 
     func displayRestoreWindow(forURLs urls: [Any]) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldOpenSyncWindow), object: nil)
+        NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenSyncWindow, object: nil)
     }
 }

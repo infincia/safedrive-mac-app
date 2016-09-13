@@ -33,19 +33,19 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         super.init()
         Bundle.main.loadNibNamed("DropdownMenu", owner: self, topLevelObjects: nil)
         // register SDMountStateProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted(_:)), name: NSNotification.Name.SDMountStateMounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted(_:)), name: NSNotification.Name.SDMountStateUnmounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails(_:)), name: NSNotification.Name.SDMountStateDetails, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted(_:)), name: Notification.Name.mounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted(_:)), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails(_:)), name: Notification.Name.mountDetails, object: nil)
         // register SDVolumeEventProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: NSNotification.Name.SDVolumeDidMount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: NSNotification.Name.SDVolumeDidUnmount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount(_:)), name: NSNotification.Name.SDVolumeShouldUnmount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: Notification.Name.volumeDidMount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: Notification.Name.volumeDidUnmount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount(_:)), name: Notification.Name.volumeShouldUnmount, object: nil)
 
         // register SDAccountProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate(_:)), name: NSNotification.Name.SDAccountSignIn, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: NSNotification.Name.SDAccountSignOut, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus(_:)), name: NSNotification.Name.SDAccountStatus, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails(_:)), name: NSNotification.Name.SDAccountDetails, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate(_:)), name: Notification.Name.accountAuthenticated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: Notification.Name.accountSignOut, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus(_:)), name: Notification.Name.accountStatus, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails(_:)), name: Notification.Name.accountDetails, object: nil)
 
     }
 
@@ -63,16 +63,16 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         if (self.mountController?.isMounted)! {
             self.disconnectVolume()
         } else {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldOpenAccountWindow), object: nil)
+            NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAccountWindow, object: nil)
         }
     }
 
     @IBAction func openPreferencesWindow(_ sender: AnyObject) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldOpenPreferencesWindow), object: nil)
+        NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenPreferencesWindow, object: nil)
     }
 
     @IBAction func openAboutWindow(_ sender: AnyObject) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: SDApplicationShouldOpenAboutWindow), object: nil)
+        NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAboutWindow, object: nil)
     }
 
     fileprivate func enableMenuItems(_ enabled: Bool) {
