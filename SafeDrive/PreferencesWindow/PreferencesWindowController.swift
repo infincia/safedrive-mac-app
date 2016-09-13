@@ -461,9 +461,9 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             let remote: URL = urlComponents.url!
             
             self.syncScheduler.cancel(uniqueID) {
-                let syncController = SDSyncController()
+                let syncController = SyncController()
                 syncController.uniqueID = uniqueID
-                syncController.sftpOperation(op, remoteDirectory: remote, password: self.accountController.password, success: {
+                syncController.sftpOperation(op, remoteDirectory: remote, password: self.accountController.password!, success: {
                     self.sharedSafedriveAPI.deleteSyncFolder(uniqueID, success: {() -> Void in
                         
                         guard let realm = try? Realm() else {

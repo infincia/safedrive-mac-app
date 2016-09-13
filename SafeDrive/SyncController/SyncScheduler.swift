@@ -26,7 +26,7 @@ class SyncScheduler {
 
     fileprivate let accountController = AccountController.sharedAccountController
 
-    fileprivate var syncControllers = [SDSyncController]()
+    fileprivate var syncControllers = [SyncController]()
 
     fileprivate var _running = false
 
@@ -270,14 +270,14 @@ class SyncScheduler {
             urlComponents.port = self.accountController.remotePort as Int?
             let remote: URL = urlComponents.url!
 
-            let syncController = SDSyncController()
+            let syncController = SyncController()
             syncController.uniqueID = folder.uniqueID
 
             DispatchQueue.main.sync(execute: {() -> Void in
                 self.syncControllers.append(syncController)
             })
             SDLog("Syncing from \(localFolder.path)/ to \(remote.path)/")
-            syncController.startSyncTask(withLocalURL: localFolder, serverURL: remote, password: self.accountController.password, restore: isRestore, progress: { (percent, bandwidth) in
+            syncController.startSyncTask(withLocalURL: localFolder, serverURL: remote, password: self.accountController.password!, restore: isRestore, progress: { (percent, bandwidth) in
                 // use for updating sync progress
                 // WARNING: this block may be called more often than once per second on a background serial queue, DO NOT block it for long
                 guard let realm = try? Realm() else {

@@ -15,8 +15,6 @@
 
 #import "SDSystemAPI.h"
 
-#import "SDSyncController.h"
-
 @import DCOAboutWindow;
 
 @import LetsMove;
@@ -30,3 +28,7 @@
 @import TSMarkdownParser;
 
 @import Sparkle;
+
+#import <NMSSH/NMSSH.h>
+
+@import RegexKitLite;
