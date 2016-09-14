@@ -1615,12 +1615,6 @@
 				DEVELOPMENT_TEAM = G738Z89QKM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$CONFIGURATION_BUILD_DIR/AFNetworking\"",
-					"\"$CONFIGURATION_BUILD_DIR/MCSMKeychainItem-framework\"",
-					"\"$CONFIGURATION_BUILD_DIR/NMSSH\"",
-					"\"$CONFIGURATION_BUILD_DIR/UICKeyChainStore-framework\"",
-					"\"${PODS_ROOT}/Crashlytics/OSX\"",
-					"\"${PODS_ROOT}/Fabric/OSX\"",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
