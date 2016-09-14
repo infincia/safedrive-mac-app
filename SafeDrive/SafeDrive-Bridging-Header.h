@@ -6,9 +6,6 @@
 #import "SDConstants.h"
 #import "SDProtocols.h"
 
-#import "SDAppXPCProtocol.h"
-#import "SDServiceXPCProtocol.h"
-
 #import "HKTHashProvider.h"
 
 #import "SDSystemAPI.h"
@@ -20,8 +17,6 @@
 @import STPrivilegedTask;
 
 @import ServiceManagement;
-
-#import "SDServiceXPCRouter.h"
 
 @import TSMarkdownParser;
 

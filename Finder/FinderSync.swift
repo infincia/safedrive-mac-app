@@ -81,7 +81,7 @@ class FinderSync: FIFinderSync {
                 
                 let service = s.remoteObjectProxyWithErrorHandler { error in
                     print("remote proxy error: %@", error)
-                } as! SDServiceXPCProtocol
+                } as! ServiceXPCProtocol
                 
                 service.ping({ reply in
                     print("Ping reply from service: \(reply)")
@@ -96,7 +96,7 @@ class FinderSync: FIFinderSync {
                 }
                 let service = s.remoteObjectProxyWithErrorHandler { error in
                     print("remote proxy error: \(error)")
-                } as! SDServiceXPCProtocol
+                } as! ServiceXPCProtocol
                 
                 service.getAppEndpoint({ endpoint in
                     self.appConnection = self.createAppConnectionFromEndpoint(endpoint)
@@ -106,9 +106,9 @@ class FinderSync: FIFinderSync {
                     }
                     let app = a.remoteObjectProxyWithErrorHandler() { error in
                         print("remote proxy error: \(error)")
-                    } as! SDAppXPCProtocol
+                    } as! AppXPCProtocol
                     
-                    app.ping({ reply -> Void in
+                    app.ping( { reply -> Void in
                         //print("Ping reply from app: \(reply)");
                     })
                 })
@@ -121,7 +121,7 @@ class FinderSync: FIFinderSync {
     func createServiceConnection() -> NSXPCConnection {
         let newConnection: NSXPCConnection = NSXPCConnection(machServiceName: "io.safedrive.SafeDrive.Service", options: NSXPCConnection.Options(rawValue: 0))
         
-        let serviceInterface: NSXPCInterface = NSXPCInterface(with:SDServiceXPCProtocol.self)
+        let serviceInterface: NSXPCInterface = NSXPCInterface(with:ServiceXPCProtocol.self)
         
         newConnection.remoteObjectInterface = serviceInterface
         
@@ -145,7 +145,7 @@ class FinderSync: FIFinderSync {
     func createAppConnectionFromEndpoint(_ endpoint: NSXPCListenerEndpoint) -> NSXPCConnection {
         let newConnection: NSXPCConnection = NSXPCConnection(listenerEndpoint: endpoint)
         
-        let appInterface: NSXPCInterface = NSXPCInterface(with:SDAppXPCProtocol.self)
+        let appInterface: NSXPCInterface = NSXPCInterface(with:AppXPCProtocol.self)
         
         newConnection.remoteObjectInterface = appInterface
         
@@ -262,7 +262,7 @@ class FinderSync: FIFinderSync {
             }
             let app = a.remoteObjectProxyWithErrorHandler { error in
                 print("remote proxy error: \(error)")
-            } as! SDAppXPCProtocol
+            } as! AppXPCProtocol
             app.displayRestoreWindow(forURLs: [folder.url!])
         }
     }
@@ -274,7 +274,7 @@ class FinderSync: FIFinderSync {
         }
         let app = a.remoteObjectProxyWithErrorHandler { error in
             print("remote proxy error: \(error)")
-        } as! SDAppXPCProtocol
+        } as! AppXPCProtocol
 
         app.displayRestoreWindow(forURLs: [])
     }
@@ -286,7 +286,7 @@ class FinderSync: FIFinderSync {
         }
         let app = a.remoteObjectProxyWithErrorHandler { error in
             print("remote proxy error: \(error)")
-        } as! SDAppXPCProtocol
+        } as! AppXPCProtocol
         
         app.displayPreferencesWindow()
     }

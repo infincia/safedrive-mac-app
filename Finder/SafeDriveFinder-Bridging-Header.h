@@ -3,6 +3,3 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#import "SDServiceXPCProtocol.h"
-#import "SDAppXPCProtocol.h"

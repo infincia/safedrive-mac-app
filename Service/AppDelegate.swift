@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true])
         Fabric.with([Crashlytics.self])
 
-        print("SafeDriveService build \(CFBundleVersion), protocol version \(kSDServiceXPCProtocolVersion) starting")
+        print("SafeDriveService build \(CFBundleVersion), protocol version \(kServiceXPCProtocolVersion) starting")
 
         self.listenerDelegate = ServiceListenerDelegate()
 
@@ -28,7 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
-        print("SafeDriveService build \(CFBundleVersion), protocol version \(kSDServiceXPCProtocolVersion) exiting")
+        print("SafeDriveService build \(CFBundleVersion), protocol version \(kServiceXPCProtocolVersion) exiting")
     }
 
 }

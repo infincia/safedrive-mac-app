@@ -4,13 +4,13 @@
 
 import Foundation
 
-class ServiceListenerDelegate: NSObject, NSXPCListenerDelegate, SDServiceXPCProtocol {
+class ServiceListenerDelegate: NSObject, NSXPCListenerDelegate, ServiceXPCProtocol {
 
     var appEndpoint: NSXPCListenerEndpoint?
 
     func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
 
-        let serviceInterface = NSXPCInterface(with: SDServiceXPCProtocol.self)
+        let serviceInterface = NSXPCInterface(with: ServiceXPCProtocol.self)
         newConnection.exportedInterface = serviceInterface
         newConnection.exportedObject = self
         newConnection.resume()
@@ -28,7 +28,7 @@ class ServiceListenerDelegate: NSObject, NSXPCListenerDelegate, SDServiceXPCProt
     }
 
     func protocolVersion(_ replyBlock: @escaping (NSNumber) -> Void) {
-        replyBlock(NSNumber(integerLiteral: kSDServiceXPCProtocolVersion))
+        replyBlock(NSNumber(integerLiteral: kServiceXPCProtocolVersion))
 
     }
 

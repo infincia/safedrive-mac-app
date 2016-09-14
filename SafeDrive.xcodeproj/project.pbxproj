@@ -35,7 +35,6 @@
 		AA57540A1C7FFCC10040E8B0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA5754081C7FFCC10040E8B0 /* MainMenu.xib */; };
 		AA5754101C8004660040E8B0 /* ServiceListenerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57540F1C8004660040E8B0 /* ServiceListenerDelegate.swift */; };
 		AA5754121C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */; };
-		AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */; };
 		AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA650CF31D73A381008DA5CB /* Changelog.md in Resources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
@@ -78,6 +77,13 @@
 		AAB7D5D51CB09943001F9A8E /* CrashAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7D5D41CB09943001F9A8E /* CrashAlert.swift */; };
 		AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */ = {isa = PBXBuildFile; fileRef = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
+		AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */; };
+		AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
+		AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
+		AAD44A271D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
+		AAD44A281D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
+		AAD44A291D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
+		AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
 		AAF945F31C80125A00B972C3 /* SafeDriveService.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AAF945F41C80162700B972C3 /* io.safedrive.SafeDrive.Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */; };
@@ -241,8 +247,6 @@
 		AA57540F1C8004660040E8B0 /* ServiceListenerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceListenerDelegate.swift; sourceTree = "<group>"; };
 		AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = io.safedrive.SafeDrive.Service.plist; path = Service/io.safedrive.SafeDrive.Service.plist; sourceTree = "<group>"; };
 		AA5754131C80091F0040E8B0 /* SafeDriveService-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeDriveService-Bridging-Header.h"; sourceTree = "<group>"; };
-		AA5C1A9D1BB26C40006A0C8C /* SDServiceXPCRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDServiceXPCRouter.h; path = SafeDrive/XPCHandlers/SDServiceXPCRouter.h; sourceTree = SOURCE_ROOT; };
-		AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDServiceXPCRouter.m; path = SafeDrive/XPCHandlers/SDServiceXPCRouter.m; sourceTree = SOURCE_ROOT; };
 		AA650CF11D73A29A008DA5CB /* Changelog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
 		AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+next.swift"; path = "Shared/NSDate+next.swift"; sourceTree = "<group>"; };
 		AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = ServiceManager/ServiceManager.swift; sourceTree = "<group>"; };
@@ -273,13 +277,14 @@
 		AAB7D5D21CB06A62001F9A8E /* AccountWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountWindowController.swift; path = SafeDrive/AccountWindow/AccountWindowController.swift; sourceTree = SOURCE_ROOT; };
 		AAB7D5D41CB09943001F9A8E /* CrashAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CrashAlert.swift; path = ErrorHandler/CrashAlert.swift; sourceTree = "<group>"; };
 		AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
+		AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCRouter.swift; path = SafeDrive/XPCHandlers/ServiceXPCRouter.swift; sourceTree = SOURCE_ROOT; };
+		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
+		AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCProtocol.swift; path = Shared/AppXPCProtocol.swift; sourceTree = "<group>"; };
 		AAEA529F1A81A3EA00BF862C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = safedriveaskpass/Info.plist; sourceTree = SOURCE_ROOT; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SafeDrive.entitlements; sourceTree = "<group>"; };
-		AAF945F71C801EFE00B972C3 /* SDServiceXPCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDServiceXPCProtocol.h; path = Shared/SDServiceXPCProtocol.h; sourceTree = "<group>"; };
 		AAF945F81C801F1200B972C3 /* SafeDriveService.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SafeDriveService.entitlements; sourceTree = "<group>"; };
-		AAF945FA1C801F6100B972C3 /* SDAppXPCProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SDAppXPCProtocol.h; path = Shared/SDAppXPCProtocol.h; sourceTree = "<group>"; };
 		AAF945FF1C815D5A00B972C3 /* SafeDriveFinder.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SafeDriveFinder.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF946021C815D5A00B972C3 /* Finder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Finder.entitlements; sourceTree = "<group>"; };
 		AAF946031C815D5A00B972C3 /* FinderSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderSync.swift; sourceTree = "<group>"; };
@@ -537,10 +542,10 @@
 				AAA88BC81C8385A9009BE1C7 /* Machine.swift */,
 				AA6E272A1D876DD800038019 /* Notifications.swift */,
 				AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */,
-				AAF945FA1C801F6100B972C3 /* SDAppXPCProtocol.h */,
+				AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */,
 				AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */,
 				AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */,
-				AAF945F71C801EFE00B972C3 /* SDServiceXPCProtocol.h */,
+				AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */,
 				AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */,
 				AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */,
 			);
@@ -582,9 +587,8 @@
 		AA5C1A951BB234DD006A0C8C /* XPC */ = {
 			isa = PBXGroup;
 			children = (
+				AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */,
 				AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */,
-				AA5C1A9D1BB26C40006A0C8C /* SDServiceXPCRouter.h */,
-				AA5C1A9E1BB26C40006A0C8C /* SDServiceXPCRouter.m */,
 			);
 			name = XPC;
 			path = ServiceRouter;
@@ -1173,8 +1177,10 @@
 				AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */,
 				AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */,
 				AA6C5BBD1C9125D4001C2869 /* ServiceManager.swift in Sources */,
+				AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */,
 				AA6E27341D8839DC00038019 /* SyncController.swift in Sources */,
+				AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AA76DC2D1C88D4C6007B320E /* API.swift in Sources */,
 				AA76DC211C8762A9007B320E /* Installer.swift in Sources */,
 				AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */,
@@ -1190,8 +1196,8 @@
 				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,
 				AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */,
 				AAA88BC91C8385AA009BE1C7 /* Machine.swift in Sources */,
-				AA5C1A9F1BB26C40006A0C8C /* SDServiceXPCRouter.m in Sources */,
 				AAB7D5D31CB06A62001F9A8E /* AccountWindowController.swift in Sources */,
+				AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */,
 				AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */,
 				AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */,
 				AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */,
@@ -1226,8 +1232,10 @@
 				AAA88BCE1C83D243009BE1C7 /* SyncFolder.swift in Sources */,
 				AA6E272D1D876DD800038019 /* Notifications.swift in Sources */,
 				AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */,
+				AAD44A291D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AA5754101C8004660040E8B0 /* ServiceListenerDelegate.swift in Sources */,
 				AA5754051C7FFCC10040E8B0 /* AppDelegate.swift in Sources */,
+				AAD44A271D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAA88BCC1C83D240009BE1C7 /* Machine.swift in Sources */,
 				AAA88BD41C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 			);
@@ -1238,8 +1246,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA6E272E1D876DD800038019 /* Notifications.swift in Sources */,
+				AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AAA88BCF1C83D243009BE1C7 /* SyncFolder.swift in Sources */,
 				AAA88BD51C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
+				AAD44A281D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */,
 				AAA88BCD1C83D241009BE1C7 /* Machine.swift in Sources */,
 				AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */,

@@ -1,0 +1,14 @@
+//  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
+//
+
+let kAppXPCProtocolVersion: Int = 6
+
+@objc protocol AppXPCProtocol {
+    func sendMessage(_ message: String, reply replyBlock: @escaping (_ reply: String) -> Void)
+    func ping(_ replyBlock: @escaping (_ reply: String) -> Void)
+    func protocolVersion(_ replyBlock: @escaping (_ version: NSNumber) -> Void)
+
+    func displayPreferencesWindow()
+    func displayRestoreWindow(forURLs urls: [URL])
+
+}

@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
 
     fileprivate var aboutWindowController: DCOAboutWindowController!
-    fileprivate var serviceRouter: SDServiceXPCRouter!
+    fileprivate var serviceRouter: ServiceXPCRouter!
     fileprivate var serviceManager: ServiceManager!
 
     fileprivate var syncScheduler: SyncScheduler?
@@ -90,7 +90,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     
     
     func applicationWillTerminate(_ aNotification: Foundation.Notification) {
-        SDLog("SafeDrive build \(CFBundleVersion), protocol version \(kSDAppXPCProtocolVersion) exiting")
+        SDLog("SafeDrive build \(CFBundleVersion), protocol version \(kAppXPCProtocolVersion) exiting")
         NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: nil)
 
     }
@@ -190,7 +190,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
             DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
                 self.serviceManager.loadService()
-                self.serviceRouter = SDServiceXPCRouter()
+                self.serviceRouter = ServiceXPCRouter()
             })
             self.syncScheduler = SyncScheduler.sharedSyncScheduler
 
