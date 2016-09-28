@@ -59,8 +59,7 @@ class MountController: NSObject {
                     }
                     else {
                         NotificationCenter.default.post(name: Notification.Name.mountDetails, object:nil)
-                        NotificationCenter.default.post(name: Notification.Name.mounted, object:nil)
-
+                        NotificationCenter.default.post(name: Notification.Name.unmounted, object:nil)
                     }
                 })
                 Thread.sleep(forTimeInterval: 1)
