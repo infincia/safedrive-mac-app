@@ -447,7 +447,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             }
             let syncFolders = realm.objects(SyncFolder.self)
 
-            let syncFolder = syncFolders.filter(using: "machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
+            let syncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
 
             let defaultFolder: URL = URL(string: SDDefaultServerPath)!
             let machineFolder: URL = defaultFolder.appendingPathComponent(syncFolder.machine!.name!, isDirectory: true)
