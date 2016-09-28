@@ -219,7 +219,9 @@ class SyncController: Equatable {
         else {
             let message = NSLocalizedString("Rsync missing, contact SafeDrive support", comment: "")
             let rsyncError = NSError(domain: SDMountErrorDomain, code:SDSystemError.rsyncMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
-            failureBlock(localURL, rsyncError)
+            DispatchQueue.main.sync(execute: {
+                failureBlock(localURL, rsyncError)
+            })
             return
         }
 
