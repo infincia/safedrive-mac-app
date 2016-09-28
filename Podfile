@@ -35,7 +35,7 @@ target 'SafeDrive' do
     shared_pods
     pod 'IYLoginItem', '0.1'
     pod 'DCOAboutWindow', '0.2.0'
-    pod 'LetsMove', '1.20'
+    pod 'LetsMove', '1.22'
     pod 'Sparkle', '1.14.0'
     pod 'STPrivilegedTask', '1.0.1'
     pod 'TSMarkdownParser'
