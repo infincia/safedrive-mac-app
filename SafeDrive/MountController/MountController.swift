@@ -50,7 +50,7 @@ class MountController: NSObject {
                 let volumeName = self.sharedSystemAPI.currentVolumeName
                 let mountURL = self.mountURL(forVolumeName: volumeName)
                 let mountCheck = self.sharedSystemAPI.check(forMountedVolume: mountURL)
-                let mountDetails = self.sharedSystemAPI.details(forMount: mountURL)!
+                let mountDetails = self.sharedSystemAPI.details(forMount: mountURL)
 
                 DispatchQueue.main.async(execute: {() -> Void in
                     self.mounted = mountCheck
