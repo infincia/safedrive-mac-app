@@ -196,7 +196,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
             self.dropdownMenuController = DropdownController()
 
-            self.accountController = AccountController()
+            self.accountController = AccountController.sharedAccountController
 
             self.accountWindowController = AccountWindowController()
             _ = self.accountWindowController.window!
