@@ -154,7 +154,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             return
         }
 
-        guard let currentMachine = realm.allObjects(ofType: Machine.self).filter(using: "uniqueClientID == %@", self.uniqueClientID).last else {
+        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
             SDLog("failed to get current machine in realm!!!")
             Crashlytics.sharedInstance().crash()
             return
@@ -196,11 +196,11 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
 
 
-        self.syncFolderToken = realm.allObjects(ofType: SyncFolder.self).addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+        self.syncFolderToken = realm.objects(SyncFolder.self).addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             self?.reload()
         }
 
-        self.syncTaskToken = realm.allObjects(ofType: SyncTask.self).addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+        self.syncTaskToken = realm.objects(SyncTask.self).addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             self?.reload()
         }
 
@@ -442,10 +442,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 Crashlytics.sharedInstance().crash()
                 return
             }
-            guard let currentMachine = realm.allObjects(ofType: Machine.self).filter(using: "uniqueClientID == %@", self.uniqueClientID).last else {
+            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
                 return
             }
-            let syncFolders = realm.allObjects(ofType: SyncFolder.self)
+            let syncFolders = realm.objects(SyncFolder.self)
 
             let syncFolder = syncFolders.filter(using: "machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
 
@@ -472,9 +472,9 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                             return
                         }
                         
-                        let currentMachine = realm.allObjects(ofType: Machine.self).filter(using: "uniqueClientID == %@", self.uniqueClientID).last!
+                        let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last!
                         
-                        let syncTasks = realm.allObjects(ofType: SyncTask.self).filter(using: "syncFolder.uniqueID == %@", uniqueID)
+                        let syncTasks = realm.objects(SyncTask.self).filter("syncFolder.uniqueID == %@", uniqueID)
                         
                         do {
                             try realm.write {
@@ -485,7 +485,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                             print("failed to delete sync tasks associated with \(uniqueID)")
                         }
                         
-                        let syncFolder = realm.allObjects(ofType: SyncFolder.self).filter(using: "machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
+                        let syncFolder = realm.objects(SyncFolder.self).filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
                         
                         do {
                             try realm.write {
@@ -546,7 +546,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     Crashlytics.sharedInstance().crash()
                     return
                 }
-                guard let currentMachine = realm.allObjects(ofType: Machine.self).filter(using: "uniqueClientID == %@", self.uniqueClientID).last else {
+                guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
                     SDLog("failed to get machine from realm!!!")
                     Crashlytics.sharedInstance().crash()
                     return
@@ -554,7 +554,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
                 // try to retrieve and modify existing record if possible, avoids overwriting preferences only stored in entity
                 // while still ensuring entities will have a default set on them for things like sync time
-                var syncFolder = realm.allObjects(ofType: SyncFolder.self).filter(using: "uniqueID == %@", folderId).last
+                var syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", folderId).last
 
                 if syncFolder == nil {
                     syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: folderId)
@@ -689,7 +689,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
         }
 
-        let syncFolders = realm.allObjects(ofType: SyncFolder.self)
+        let syncFolders = realm.objects(SyncFolder.self)
         if SyncFolder.hasConflictingFolderRegistered(url.path, syncFolders: syncFolders) {
             let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")]
             throw NSError(domain: SDErrorSyncDomain, code: SDSyncError.folderConflict.rawValue, userInfo: errorInfo)
@@ -716,10 +716,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 Crashlytics.sharedInstance().crash()
                 return 0
             }
-            guard let currentMachine = realm.allObjects(ofType: Machine.self).filter(using: "uniqueClientID == %@", uniqueClientID).last else {
+            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", uniqueClientID).last else {
                 return 0
             }
-            let syncFolders = realm.allObjects(ofType: SyncFolder.self).filter(using: "machine == %@", currentMachine)
+            let syncFolders = realm.objects(SyncFolder.self).filter("machine == %@", currentMachine)
             return syncFolders.count
         } else if item is SyncFolder {
             return 0
@@ -735,8 +735,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             return "" as AnyObject
         }
         if item is Machine {
-            let syncFolders = realm.allObjects(ofType: SyncFolder.self).filter(using: "machine == %@", self.mac).sorted(onProperty: "name")
-            return syncFolders[index]
+            let syncFolders = realm.objects(SyncFolder.self).filter("machine == %@", self.mac).sorted(byProperty: "name")
+            let syncFolder = syncFolders[index]
+            let detached = SyncFolder(value: syncFolder)
+            return detached
         }
         return self.mac
     }
@@ -861,9 +863,9 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             }
             self.progress.maxValue = 100.0
             self.progress.minValue = 0.0
-            let syncTasks = realm.allObjects(ofType: SyncTask.self)
+            let syncTasks = realm.objects(SyncTask.self)
 
-            if let syncTask = syncTasks.filter(using: "syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@", self.mac.uniqueClientID!, syncItem).sorted(onProperty: "syncDate").last {
+            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@", self.mac.uniqueClientID!, syncItem).sorted(byProperty: "syncDate").last {
 
                 if syncItem.restoring {
                     self.syncStatus.stringValue = "Restoring"

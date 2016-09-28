@@ -183,7 +183,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                     // ignored, file may not exist at all, but if it does and we can't remove it we'll crash next and get a report
                 }
                 let realm = try! Realm(fileURL: dbURL)
-                try! realm.writeCopy(toFileURL: newdbURL)
+                try! realm.writeCopy(toFile: newdbURL)
                 try! fileManager.removeItem(at: dbURL)
                 try! fileManager.moveItem(at: newdbURL, to: dbURL)
             }

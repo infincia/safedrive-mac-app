@@ -32,7 +32,7 @@ class FinderSync: FIFinderSync {
         
         let realm = try! Realm()
         
-        self.syncFolders = realm.allObjects(ofType: SyncFolder.self)
+        self.syncFolders = realm.objects(SyncFolder.self)
         
         // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
         FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImageNameStatusAvailable)!, label: "Idle", forBadgeIdentifier: "idle")
@@ -45,11 +45,11 @@ class FinderSync: FIFinderSync {
             self.serviceReconnectionLoop()
         })
         
-        token = self.syncFolders!.addNotificationBlock(block: { (changes) in
+        token = self.syncFolders!.addNotificationBlock({ (changes) in
             switch changes {
-            case .Initial(_):
+            case .initial(_):
                 break
-            case .Update(_, _, _, let modifications):
+            case .update(_, _, _, let modifications):
                 var s = [URL]()
                 
                 for index in modifications {
@@ -61,7 +61,7 @@ class FinderSync: FIFinderSync {
                 }
                 FIFinderSyncController.default().directoryURLs = Set<URL>(s)
                 break
-            case .Error:
+            case .error:
                 break
             }
         })
@@ -302,7 +302,7 @@ class FinderSync: FIFinderSync {
     }
     
     func syncFolderForURL(_ url: URL) -> SyncFolder? {
-        guard let syncFolders = try? Realm().allObjects(ofType: SyncFolder.self) else {
+        guard let syncFolders = try? Realm().objects(SyncFolder.self) else {
             return nil
         }
         for item: SyncFolder in syncFolders {

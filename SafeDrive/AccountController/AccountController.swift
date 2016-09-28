@@ -92,8 +92,8 @@ class AccountController: NSObject {
 
                 do {
                     try realm.write {
-                        realm.delete(realm.allObjects(ofType: SyncFolder.self))
-                        realm.delete(realm.allObjects(ofType: SyncTask.self))
+                        realm.delete(realm.objects(SyncFolder.self))
+                        realm.delete(realm.objects(SyncTask.self))
                     }
                 } catch {
                     SDLog("failed to delete old data in realm!!!")
@@ -152,7 +152,7 @@ class AccountController: NSObject {
 
 
                          */
-                        var currentMachine = realm.allObjects(ofType: Machine.self).filter(using: "uniqueClientID == '\(clientID)'").last
+                        var currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(clientID)'").last
 
                         if currentMachine == nil {
                             let machineName = Host.current().localizedName!

@@ -60,7 +60,7 @@ class SyncScheduler {
             throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
         }
 
-        guard let currentMachine = realm.allObjects(ofType: Machine.self).filter(using: "uniqueClientID == '\(uniqueClientID)'").last else {
+        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(uniqueClientID)'").last else {
             return
         }
 
@@ -72,7 +72,7 @@ class SyncScheduler {
 
         */
 
-        for folder in realm.allObjects(ofType: SyncFolder.self).filter(using: "restoring == true AND machine == %@", currentMachine) {
+        for folder in realm.objects(SyncFolder.self).filter("restoring == true AND machine == %@", currentMachine) {
             let alert = NSAlert()
             alert.addButton(withTitle: "No")
             alert.addButton(withTitle: "Yes")
@@ -118,7 +118,7 @@ class SyncScheduler {
 
         */
         try! realm.write {
-            let syncFolders = realm.allObjects(ofType: SyncFolder.self).filter(using: "restoring == false AND machine == %@", currentMachine)
+            let syncFolders = realm.objects(SyncFolder.self).filter("restoring == false AND machine == %@", currentMachine)
             syncFolders.setValue(false, forKey: "syncing")
         }
         SDLog("Sync scheduler running")
@@ -129,7 +129,7 @@ class SyncScheduler {
                 realm.refresh()
                 realm.invalidate()
 
-                guard let currentMachine = realm.allObjects(ofType: Machine.self).filter(using: "uniqueClientID == '\(uniqueClientID)'").last else {
+                guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(uniqueClientID)'").last else {
                     Thread.sleep(forTimeInterval: 1)
                     // NOTE: this returns from the autoreleasepool closure and functions as a "continue" statement
                     //       it does NOT return from syncSchedulerLoop()
@@ -157,27 +157,27 @@ class SyncScheduler {
                 if currentDateComponents.minute == 0 {
                     // first minute of each hour for hourly syncs
                     // NOTE: this scheduler ignores syncTime on purpose, hourly syncs always run at xx:00
-                    let hourlyFolders = realm.allObjects(ofType: SyncFolder.self).filter(using: "syncFrequency == 'hourly' AND syncing == false AND machine == %@", currentMachine)
+                    let hourlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'hourly' AND syncing == false AND machine == %@", currentMachine)
                     folders.append(contentsOf: hourlyFolders)
                 }
 
 
                 if currentDateComponents.day == 1 {
                     // first of the month for monthly syncs
-                    let monthlyFolders = realm.allObjects(ofType: SyncFolder.self).filter(using: "syncFrequency == 'monthly' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
+                    let monthlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'monthly' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
                     folders.append(contentsOf: monthlyFolders)
                 }
 
 
                 if currentDateComponents.weekday == 1 {
                     // first day of the week for weekly syncs
-                    let weeklyFolders = realm.allObjects(ofType: SyncFolder.self).filter(using: "syncFrequency == 'weekly' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
+                    let weeklyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'weekly' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
                     folders.append(contentsOf: weeklyFolders)
                 }
 
 
                 // daily syncs at arbitrary times based on syncTime property
-                let dailyFolders = realm.allObjects(ofType: SyncFolder.self).filter(using: "syncFrequency == 'daily' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
+                let dailyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'daily' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
                 folders.append(contentsOf: dailyFolders)
 
 
@@ -234,12 +234,12 @@ class SyncScheduler {
                 isRestore = true
             }
 
-            guard let currentMachine = realm.allObjects(ofType: Machine.self).filter(using: "uniqueClientID == '\(uniqueClientID)'").last else {
+            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(uniqueClientID)'").last else {
                 SDLog("failed to get current machine from realm!!!")
                 return
             }
 
-            guard let folder = realm.allObjects(ofType: SyncFolder.self).filter(using: "uniqueID == \(folderID) AND machine == %@", currentMachine).first else {
+            guard let folder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID) AND machine == %@", currentMachine).first else {
                 SDLog("failed to get sync folder for machine from realm!!!")
                 return
             }
@@ -252,7 +252,7 @@ class SyncScheduler {
             let uuid = UUID()
             let syncDate = Date()
             try! realm.write {
-                realm.createObject(ofType: SyncFolder.self, populatedWith: ["uniqueID": folderID, "syncing": true, "restoring": isRestore], update: true)
+                realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": true, "restoring": isRestore], update: true)
                 let syncTask = SyncTask(syncFolder: folder, syncDate: syncDate, uuid: uuid.uuidString)
                 realm.add(syncTask)
             }
@@ -287,7 +287,7 @@ class SyncScheduler {
                 }
 
                 try! realm.write {
-                    realm.createObject(ofType: SyncTask.self, populatedWith: ["uuid": uuid.uuidString, "progress": percent, "bandwidth": bandwidth], update: true)
+                    realm.create(SyncTask.self, value: ["uuid": uuid.uuidString, "progress": percent, "bandwidth": bandwidth], update: true)
                 }
             }, success: { (syncURL: URL, error: Swift.Error?) -> Void in
                 SDLog("Sync finished for \(localFolder.path)")
@@ -298,9 +298,9 @@ class SyncScheduler {
                 }
 
                 try! realm.write {
-                    realm.createObject(ofType: SyncFolder.self, populatedWith: ["uniqueID": folderID, "syncing": false, "restoring": false], update: true)
+                    realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "restoring": false], update: true)
                     let duration = NSDate().timeIntervalSince(syncDate)
-                    realm.createObject(ofType: SyncTask.self, populatedWith: ["uuid": uuid.uuidString, "success": true, "duration": duration], update: true)
+                    realm.create(SyncTask.self, value: ["uuid": uuid.uuidString, "success": true, "duration": duration], update: true)
                 }
                 if let index = self.syncControllers.index(of: syncController) {
                     self.syncControllers.remove(at: index)
@@ -314,9 +314,9 @@ class SyncScheduler {
                     return
                 }
                 try! realm.write {
-                    realm.createObject(ofType: SyncFolder.self, populatedWith: ["uniqueID": folderID, "syncing": false, "restoring": false], update: true)
+                    realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "restoring": false], update: true)
                     let duration = NSDate().timeIntervalSince(syncDate)
-                    realm.createObject(ofType: SyncTask.self, populatedWith: ["uuid": uuid.uuidString, "success": false, "duration": duration, "message": error!.localizedDescription], update: true)
+                    realm.create(SyncTask.self, value: ["uuid": uuid.uuidString, "success": false, "duration": duration, "message": error!.localizedDescription], update: true)
                 }
                 if let index = self.syncControllers.index(of: syncController) {
                     self.syncControllers.remove(at: index)
