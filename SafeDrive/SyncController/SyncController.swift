@@ -431,6 +431,9 @@ class SyncController: Equatable {
         */
         weak var weakSelf: SyncController? = self
         self.syncTask.terminationHandler = { (task) in
+            outputPipeHandle.readabilityHandler = nil
+            errorPipeHandle.readabilityHandler = nil
+            
             if task.terminationStatus == 0 {
                 DispatchQueue.main.async(execute: {
                     guard let s = weakSelf else {
