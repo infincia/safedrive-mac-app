@@ -10,6 +10,8 @@ import Crashlytics
 import Realm
 import RealmSwift
 
+import SafeDriveSync
+
 enum ViewType: Int {
     case general
     case account
@@ -63,6 +65,9 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBOutlet var accountExpirationField: NSTextField!
 
     // MARK: Encryption Tab
+    @IBOutlet var generateKeypairButton: NSButton!
+
+    @IBOutlet var keyStatus: NSTextField!
 
     // MARK: Status Tab
     @IBOutlet var serviceStatusField: NSTextField!
@@ -209,6 +214,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         self.readSyncFolders(self)
 
         self.setTab(0)
+        self.checkKeys()
 
     }
 
@@ -349,6 +355,81 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     }
 
     // MARK: UI Actions
+    
+    func checkKeys() {
+        let applicationSupportURL = try! FileManager.default.url(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in:FileManager.SearchPathDomainMask.userDomainMask, appropriateFor:nil, create:true)
+    
+        let safeDriveApplicationSupportURL = applicationSupportURL.appendingPathComponent("SafeDrive", isDirectory:true)
+        
+        let storageDirectoryURL = safeDriveApplicationSupportURL.appendingPathComponent("\(self.uniqueClientID!)", isDirectory: true)
+        try! FileManager.default.createDirectory(at: storageDirectoryURL, withIntermediateDirectories: true, attributes: nil)
+        
+        
+        let mainKeyURL = storageDirectoryURL.appendingPathComponent("main.key", isDirectory: false)
+        let hmacKeyURL = storageDirectoryURL.appendingPathComponent("hmac.key", isDirectory: false)
+
+
+        let mainKeyFound = FileManager.default.fileExists(atPath: mainKeyURL.path)
+        let hmacKeyFound = FileManager.default.fileExists(atPath: hmacKeyURL.path)
+        
+        if mainKeyFound && hmacKeyFound {
+            keyStatus.stringValue = NSLocalizedString("Loaded", comment: "")
+            self.generateKeypairButton.isEnabled = false
+        }
+        else if hmacKeyFound {
+            keyStatus.stringValue = NSLocalizedString("HMAC only", comment: "")
+
+        }
+        else if mainKeyFound {
+            keyStatus.stringValue = NSLocalizedString("Main only", comment: "")
+
+        }
+        else {
+            self.generateKeypairButton.isEnabled = true
+
+            keyStatus.stringValue = NSLocalizedString("Missing", comment: "")
+
+        }
+
+    }
+    
+    @IBAction func generateKeypair(_ sender: AnyObject) {
+        let applicationSupportURL = try! FileManager.default.url(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in:FileManager.SearchPathDomainMask.userDomainMask, appropriateFor:nil, create:true)
+    
+        let safeDriveApplicationSupportURL = applicationSupportURL.appendingPathComponent("SafeDrive", isDirectory:true)
+        
+        let storageDirectoryURL = safeDriveApplicationSupportURL.appendingPathComponent("\(self.uniqueClientID!)", isDirectory: true)
+        try! FileManager.default.createDirectory(at: storageDirectoryURL, withIntermediateDirectories: true, attributes: nil)
+
+
+
+        let mainKeyURL = storageDirectoryURL.appendingPathComponent("main.key", isDirectory: false)
+        if !FileManager.default.fileExists(atPath: mainKeyURL.path) {
+            let main_key = SafeDriveSync.generate_key()
+
+            do {
+                try main_key.write(to: mainKeyURL)
+            } catch let error as NSError {
+                SDLog("Error storing main key: \(error)")
+                SDErrorHandlerReport(error)
+            }
+        }
+        
+        
+        let hmacKeyURL = storageDirectoryURL.appendingPathComponent("hmac.key", isDirectory: false)
+        if !FileManager.default.fileExists(atPath: hmacKeyURL.path) {
+            let hmac_key = SafeDriveSync.generate_key()
+
+            do {
+                try hmac_key.write(to: hmacKeyURL)
+            } catch let error as NSError {
+                SDLog("Error storing hmac key: \(error)")
+                SDErrorHandlerReport(error)
+            }
+        }
+        self.checkKeys()
+        
+    }
 
     @IBAction func loadAccountPage(_ sender: AnyObject) {
         // Open the safedrive account page in users default browser
