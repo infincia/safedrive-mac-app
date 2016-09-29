@@ -28,7 +28,7 @@ class SyncController: Equatable {
               let user = serverURL.user else {
                 let error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: "failed to unpack user information"])
                 
-                DispatchQueue.main.sync(execute: {
+                DispatchQueue.main.async(execute: {
                     failureBlock(error)
                 })
                 return
@@ -40,7 +40,7 @@ class SyncController: Equatable {
                       let channel = session.channel else {
                 let error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: "failed to create SSH session"])
                 
-                DispatchQueue.main.sync(execute: {
+                DispatchQueue.main.async(execute: {
                     failureBlock(error)
                 })
                 return
@@ -69,7 +69,7 @@ class SyncController: Equatable {
                             let command = "mv \"\(serverURL.path)\" \"\(destinationDir.path)\""
                             do {
                                 try channel.execute(command) //, timeout:30)
-                                DispatchQueue.main.sync(execute: {
+                                DispatchQueue.main.async(execute: {
                                     successBlock()
                                 })
                             }
@@ -78,7 +78,7 @@ class SyncController: Equatable {
                                 SDLog(msg)
                                 let error:NSError! = NSError(domain: SDErrorSyncDomain, code:SDSSHError.sftpOperationFailure.rawValue, userInfo:[NSLocalizedDescriptionKey: msg])
 
-                                DispatchQueue.main.sync(execute: { 
+                                DispatchQueue.main.async(execute: { 
                                     failureBlock(error)
                                 })
                             }
@@ -86,12 +86,12 @@ class SyncController: Equatable {
 
                         case SDSFTPOperation.createFolder:
                             if sftp.directoryExists(atPath: machineDirectory.path) {
-                                DispatchQueue.main.sync(execute: { 
+                                DispatchQueue.main.async(execute: { 
                                     successBlock()
                                 })
                             }
                             else if sftp.createDirectory(atPath: machineDirectory.path) {
-                                DispatchQueue.main.sync(execute: { 
+                                DispatchQueue.main.async(execute: { 
                                     successBlock()
                                 })
                             }
@@ -100,7 +100,7 @@ class SyncController: Equatable {
                                 SDLog(msg)
                                 let error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.sftpOperationFailure.rawValue, userInfo:[NSLocalizedDescriptionKey: msg])
 
-                                DispatchQueue.main.sync(execute: { 
+                                DispatchQueue.main.async(execute: { 
                                     self.syncFailure = true
                                     failureBlock(error)
                                 })
@@ -112,7 +112,7 @@ class SyncController: Equatable {
                             let command = "rm -rf \"\(serverURL.path)\""
                             do {
                                 try channel.execute(command) //, timeout:30)
-                                DispatchQueue.main.sync(execute: {
+                                DispatchQueue.main.async(execute: {
                                     successBlock()
                                 })
                             }
@@ -121,7 +121,7 @@ class SyncController: Equatable {
                                 SDLog(msg)
                                 let error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.sftpOperationFailure.rawValue, userInfo:[NSLocalizedDescriptionKey: msg])
 
-                                DispatchQueue.main.sync(execute: { 
+                                DispatchQueue.main.async(execute: { 
                                     failureBlock(error)
                                 })
                             }
@@ -131,7 +131,7 @@ class SyncController: Equatable {
                 }
                 else {
                     let error = NSError(domain: SDErrorUIDomain, code:SDSSHError.authorization.rawValue, userInfo:[NSLocalizedDescriptionKey: "SFTP: authorization failed"])
-                    DispatchQueue.main.sync(execute: { 
+                    DispatchQueue.main.async(execute: { 
                         self.syncFailure = true
                         failureBlock(error)
                     })
@@ -139,7 +139,7 @@ class SyncController: Equatable {
             }
             else {
                 let error = NSError(domain: SDErrorUIDomain, code:SDSSHError.timeout.rawValue, userInfo:[NSLocalizedDescriptionKey: "SFTP: failed to connect"])
-                DispatchQueue.main.sync(execute: { 
+                DispatchQueue.main.async(execute: { 
                     self.syncFailure = true
                     failureBlock(error)
                 })
@@ -201,7 +201,7 @@ class SyncController: Equatable {
               let user = serverURL.user else {
                 let error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: "failed to unpack user information"])
                 
-                DispatchQueue.main.sync(execute: {
+                DispatchQueue.main.async(execute: {
                     failureBlock(localURL, error)
                 })
                 return
@@ -219,7 +219,7 @@ class SyncController: Equatable {
         else {
             let message = NSLocalizedString("Rsync missing, contact SafeDrive support", comment: "")
             let rsyncError = NSError(domain: SDMountErrorDomain, code:SDSystemError.rsyncMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
-            DispatchQueue.main.sync(execute: {
+            DispatchQueue.main.async(execute: {
                 failureBlock(localURL, rsyncError)
             })
             return
