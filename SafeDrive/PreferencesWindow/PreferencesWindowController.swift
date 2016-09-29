@@ -993,7 +993,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBAction func setSyncFrequencyForFolder(_ sender: AnyObject) {
         if self.syncListView.selectedRow != -1 {
             let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
-
+            let uniqueID = syncItem.uniqueID
+            
             var syncFrequency: String
 
             switch self.scheduleSelection.indexOfSelectedItem {
@@ -1014,9 +1015,18 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 Crashlytics.sharedInstance().crash()
                 return
             }
+            
+            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
+                SDLog("failed to get current machine in realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            let syncFolders = realm.objects(SyncFolder.self)
 
+            let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
+            
             try! realm.write {
-                syncItem.syncFrequency = syncFrequency
+                realSyncFolder.syncFrequency = syncFrequency
             }
         }
     }
@@ -1041,15 +1051,25 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     func setSyncTime(_ sender: AnyObject) {
         if self.syncListView.selectedRow != -1 {
             let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
+            let uniqueID = syncItem.uniqueID
+
 
             guard let realm = try? Realm() else {
                 SDLog("failed to create realm!!!")
                 Crashlytics.sharedInstance().crash()
                 return
             }
+            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
+                SDLog("failed to get current machine in realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            let syncFolders = realm.objects(SyncFolder.self)
 
+            let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
+            
             try! realm.write {
-                syncItem.syncTime = self.syncTimePicker.dateValue
+                realSyncFolder.syncTime = self.syncTimePicker.dateValue
             }
         }
     }
