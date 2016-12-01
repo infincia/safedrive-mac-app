@@ -376,13 +376,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             keyStatus.stringValue = NSLocalizedString("Loaded", comment: "")
             self.generateKeypairButton.isEnabled = false
         }
-        else if hmacKeyFound {
-            keyStatus.stringValue = NSLocalizedString("HMAC only", comment: "")
+        else if hmacKeyFound || mainKeyFound {
+            self.generateKeypairButton.isEnabled = false
 
-        }
-        else if mainKeyFound {
-            keyStatus.stringValue = NSLocalizedString("Main only", comment: "")
-
+            keyStatus.stringValue = NSLocalizedString("WARNING: MISSING A KEY", comment: "")
         }
         else {
             self.generateKeypairButton.isEnabled = true
