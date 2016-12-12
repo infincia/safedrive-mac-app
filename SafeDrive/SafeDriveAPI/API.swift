@@ -337,7 +337,7 @@ class API: NSObject, URLSessionDelegate {
     // MARK: Sync folder handling
 
     func createSyncFolder(_ localFolder: URL, success successBlock: @escaping SDAPICreateSyncFolderSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
-        let postParameters = ["folderName": localFolder.lastPathComponent.lowercased(), "folderPath": localFolder.path]
+        let postParameters: [String : Any] = ["folderName": localFolder.lastPathComponent.lowercased(), "folderPath": localFolder.path, "encrypted": false]
         let endpoint = Endpoint.createFolder(postParameters as [String : AnyObject])
         
         let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in

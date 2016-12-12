@@ -21,6 +21,9 @@ class SyncFolder: Object {
     
     dynamic var machine: Machine? = nil
     
+    dynamic var encrypted: Bool = false
+
+    
     var url: URL? {
         if let path = self.path {
             return URL(fileURLWithPath: path, isDirectory: true)
@@ -28,7 +31,7 @@ class SyncFolder: Object {
         return nil
     }
 
-    convenience required init(name: String, url: URL, uniqueID: Int) {
+    convenience required init(name: String, url: URL, uniqueID: Int, encrypted: Bool) {
         self.init()
         self.name = name
         self.path = url.path
@@ -39,9 +42,11 @@ class SyncFolder: Object {
         components.minute = 0
         let calendar = Calendar.current
         self.syncTime = calendar.date(from: components)
+        
+        self.encrypted = encrypted
     }
     
-    convenience required init(name: String, path: String, uniqueID: Int) {
+    convenience required init(name: String, path: String, uniqueID: Int, encrypted: Bool) {
         self.init()
         self.name = name
         self.path = path
@@ -52,6 +57,8 @@ class SyncFolder: Object {
         components.minute = 0
         let calendar = Calendar.current
         self.syncTime = calendar.date(from: components)
+        
+        self.encrypted = encrypted
     }
     
     override static func primaryKey() -> String? {

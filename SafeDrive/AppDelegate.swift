@@ -152,9 +152,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 fileURL: dbURL,
                 // Set the new schema version. This must be greater than the previously used
                 // version (if you've never set a schema version before, the version is 0).
-                schemaVersion: 9,
+                schemaVersion: 10,
                 migrationBlock: { migration, oldSchemaVersion in
-                    SDLog("Migrating db version \(oldSchemaVersion) to 9")
+                    SDLog("Migrating db version \(oldSchemaVersion) to 10")
                     migration.enumerateObjects(ofType: Machine.className()) { oldObject, newObject in
                         if oldSchemaVersion < 6 {
                             migration.delete(newObject!)
@@ -168,6 +168,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                     migration.enumerateObjects(ofType: SyncTask.className()) { oldObject, newObject in
                         if oldSchemaVersion < 6 {
                             migration.delete(newObject!)
+                        }
+                    }
+                    
+                    // update for encrypted bool field
+                    migration.enumerateObjects(ofType: SyncFolder.className()) { oldObject, newObject in
+                        if oldSchemaVersion < 10 {
+                            newObject!["encrypted"] = false
                         }
                     }
             })

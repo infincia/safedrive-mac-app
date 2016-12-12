@@ -459,7 +459,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                         return
                     }
 
-                    let syncFolder = SyncFolder(name: panel.url!.lastPathComponent, url: panel.url!, uniqueID: folderID)
+                    let syncFolder = SyncFolder(name: panel.url!.lastPathComponent, url: panel.url!, uniqueID: folderID, encrypted: false)
 
                     // this is the only place where the `added` property should be set on SyncFolders
                     syncFolder.added = Date()
@@ -608,7 +608,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 "id" : 1,
                 "folderName" : "Music",
                 "folderPath" : /Volumes/MacOS/Music,
-                "addedDate" : 1435864769463
+                "addedDate"  : 1435864769463,
+                "encrypted"  : false
                 */
 
                 let folderName = folder["folderName"] as! String
@@ -618,6 +619,9 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 let addedUnixDate: Double = folder["addedDate"] as! Double
 
                 let addedDate: Date = Date(timeIntervalSince1970: addedUnixDate/1000)
+
+                let encrypted = folder["encrypted"] as! Bool
+
 
                 guard let realm = try? Realm() else {
                     SDLog("failed to create realm!!!")
@@ -635,7 +639,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 var syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", folderId).last
 
                 if syncFolder == nil {
-                    syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: folderId)
+                    syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: folderId, encrypted: encrypted)
                 }
 
                 try! realm.write {
