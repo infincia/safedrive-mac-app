@@ -845,7 +845,7 @@
 			attributes = {
 				CLASSPREFIX = SD;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Infincia LLC";
 				TargetAttributes = {
 					AA3168121A191B72006CC0EB = {
