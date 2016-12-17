@@ -57,8 +57,6 @@
 		AA76DC2B1C879B77007B320E /* Install OSXFUSE 2.8.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AA76DC2A1C879B77007B320E /* Install OSXFUSE 2.8.pkg */; };
 		AA76DC2D1C88D4C6007B320E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2C1C88D4C6007B320E /* API.swift */; };
 		AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */; };
-		AA8A803F1D9CE55700367693 /* SafeDriveSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA8A803A1D9CE53700367693 /* SafeDriveSync.framework */; };
-		AA8A80401D9CE56000367693 /* SafeDriveSync.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA8A803A1D9CE53700367693 /* SafeDriveSync.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
 		AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
@@ -106,26 +104,19 @@
 			remoteGlobalIDString = AA3168121A191B72006CC0EB;
 			remoteInfo = SafeDrive;
 		};
-		AA8A80391D9CE53700367693 /* PBXContainerItemProxy */ = {
+		AA5409921E0506C00052BCDB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AA8A80341D9CE53600367693 /* SafeDriveSync.xcodeproj */;
+			containerPortal = AA8A80341D9CE53600367693 /* SafeDriveSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = AA5DCFBE1D6CFFDA00FEDAFB;
-			remoteInfo = SafeDriveSync;
+			remoteInfo = SafeDriveSDK;
 		};
-		AA8A803B1D9CE53700367693 /* PBXContainerItemProxy */ = {
+		AA5409941E0506C00052BCDB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AA8A80341D9CE53600367693 /* SafeDriveSync.xcodeproj */;
+			containerPortal = AA8A80341D9CE53600367693 /* SafeDriveSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = AA9D8AE91D6E9A300011DE1F;
-			remoteInfo = SafeDriveSyncTests;
-		};
-		AA8A803D1D9CE54A00367693 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AA8A80341D9CE53600367693 /* SafeDriveSync.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AA5DCF651D6CFFDA00FEDAFB;
-			remoteInfo = SafeDriveSync;
+			remoteInfo = SafeDriveSDKTests;
 		};
 		AABB0FBD1A3F28E400FA3530 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -200,7 +191,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AA8A80401D9CE56000367693 /* SafeDriveSync.framework in CopyFiles */,
 				AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,7 +279,7 @@
 		AA76DC2A1C879B77007B320E /* Install OSXFUSE 2.8.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Install OSXFUSE 2.8.pkg"; path = "Bundled Dependencies/Install OSXFUSE 2.8.pkg"; sourceTree = "<group>"; };
 		AA76DC2C1C88D4C6007B320E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
-		AA8A80341D9CE53600367693 /* SafeDriveSync.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafeDriveSync.xcodeproj; path = "../safedrive-sync-sdk/SafeDriveSync.xcodeproj"; sourceTree = "<group>"; };
+		AA8A80341D9CE53600367693 /* SafeDriveSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafeDriveSDK.xcodeproj; path = "../safedrive-sync-sdk/SafeDriveSDK.xcodeproj"; sourceTree = "<group>"; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableRowView.swift; path = ../PreferencesWindow/SyncManagerTableRowView.swift; sourceTree = "<group>"; };
 		AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFolder.swift; path = Shared/SyncFolder.swift; sourceTree = "<group>"; };
 		AAA88BC81C8385A9009BE1C7 /* Machine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Machine.swift; path = Shared/Machine.swift; sourceTree = "<group>"; };
@@ -332,7 +322,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA8A803F1D9CE55700367693 /* SafeDriveSync.framework in Frameworks */,
 				AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */,
 				856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */,
 			);
@@ -376,7 +365,7 @@
 		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA8A80341D9CE53600367693 /* SafeDriveSync.xcodeproj */,
+				AA8A80341D9CE53600367693 /* SafeDriveSDK.xcodeproj */,
 				AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */,
 				AA4E77411A3E9B830054BBCA /* libPods-MCSMKeychainItem.a */,
 				6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */,
@@ -590,6 +579,15 @@
 			path = "safedrive-askpass";
 			sourceTree = "<group>";
 		};
+		AA54098E1E0506C00052BCDB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA5409931E0506C00052BCDB /* SafeDriveSDK.framework */,
+				AA5409951E0506C00052BCDB /* SafeDriveSDKTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AA54495E1BC3664F00826A0B /* ServiceManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -658,15 +656,6 @@
 				AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */,
 			);
 			name = ErrorHandler;
-			sourceTree = "<group>";
-		};
-		AA8A80351D9CE53600367693 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AA8A803A1D9CE53700367693 /* SafeDriveSync.framework */,
-				AA8A803C1D9CE53700367693 /* SafeDriveSyncTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		AA9E7DE31A79505600E3C3E8 /* Utilities */ = {
@@ -745,7 +734,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				AA8A803E1D9CE54A00367693 /* PBXTargetDependency */,
 				AABB0FBE1A3F28E400FA3530 /* PBXTargetDependency */,
 				AAF945F21C80121800B972C3 /* PBXTargetDependency */,
 				AAF946071C815D5A00B972C3 /* PBXTargetDependency */,
@@ -904,8 +892,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = AA8A80351D9CE53600367693 /* Products */;
-					ProjectRef = AA8A80341D9CE53600367693 /* SafeDriveSync.xcodeproj */;
+					ProductGroup = AA54098E1E0506C00052BCDB /* Products */;
+					ProjectRef = AA8A80341D9CE53600367693 /* SafeDriveSDK.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -920,18 +908,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		AA8A803A1D9CE53700367693 /* SafeDriveSync.framework */ = {
+		AA5409931E0506C00052BCDB /* SafeDriveSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SafeDriveSync.framework;
-			remoteRef = AA8A80391D9CE53700367693 /* PBXContainerItemProxy */;
+			path = SafeDriveSDK.framework;
+			remoteRef = AA5409921E0506C00052BCDB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AA8A803C1D9CE53700367693 /* SafeDriveSyncTests.xctest */ = {
+		AA5409951E0506C00052BCDB /* SafeDriveSDKTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = SafeDriveSyncTests.xctest;
-			remoteRef = AA8A803B1D9CE53700367693 /* PBXContainerItemProxy */;
+			path = SafeDriveSDKTests.xctest;
+			remoteRef = AA5409941E0506C00052BCDB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1325,11 +1313,6 @@
 			isa = PBXTargetDependency;
 			target = AA3168121A191B72006CC0EB /* SafeDrive */;
 			targetProxy = AA1A46071BED8521004A5310 /* PBXContainerItemProxy */;
-		};
-		AA8A803E1D9CE54A00367693 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SafeDriveSync;
-			targetProxy = AA8A803D1D9CE54A00367693 /* PBXContainerItemProxy */;
 		};
 		AABB0FBE1A3F28E400FA3530 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
