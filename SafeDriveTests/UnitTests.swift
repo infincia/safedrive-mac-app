@@ -41,4 +41,12 @@ class UnitTests: XCTestCase {
         NSLog("MAC en0: \(mac)")
     }
 
+    func test_uniqueClientId() {
+            let macAddress: String = SDSystemAPI.shared().en0MAC()!
+            let machineIdConcatenation: String = macAddress + "stephen@safedrive.io"
+            let identifier: String = HKTHashProvider.sha256(machineIdConcatenation.data(using: String.Encoding.utf8))
+            print("ID: \(identifier)")
+            XCTAssert(identifier == "c19689af4055450b732a1e96400c6aa48d319e55239d66c84b2bdfcc48364faa")
+
+    }
 }
