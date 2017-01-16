@@ -8,21 +8,30 @@ import Crashlytics
 
 import Realm
 import RealmSwift
+import SafeDriveSDK
 
 enum SyncDirection {
     case forward
     case reverse
 }
 
+enum SyncType {
+    case encrypted
+    case unencrypted
+}
+
 struct SyncEvent {
     let uniqueClientID: String
     let folderID: Int
     let direction: SyncDirection
+    let type: SyncType
 }
 
 class SyncScheduler {
 
     static let sharedSyncScheduler = SyncScheduler()
+    
+    fileprivate var sdk = SafeDriveSDK.sharedSDK
 
     fileprivate let accountController = AccountController.sharedAccountController
 
@@ -73,6 +82,8 @@ class SyncScheduler {
         */
 
         for folder in realm.objects(SyncFolder.self).filter("restoring == true AND machine == %@", currentMachine) {
+            let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
+
             let alert = NSAlert()
             alert.addButton(withTitle: "No")
             alert.addButton(withTitle: "Yes")
@@ -95,7 +106,7 @@ class SyncScheduler {
                         folder.syncing = false
                         folder.restoring = false
                     }
-                    self.queueSyncJob(uniqueClientID, folderID: folder.uniqueID, direction: .reverse)
+                    self.queueSyncJob(uniqueClientID, folderID: folder.uniqueID, direction: .reverse, type: type)
                     break
                 default:
                     return
@@ -184,7 +195,8 @@ class SyncScheduler {
 
                 for folder in folders {
                     let folderID = folder.uniqueID
-                    self.queueSyncJob(uniqueClientID, folderID: folderID, direction: .forward)
+                    let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
+                    self.queueSyncJob(uniqueClientID, folderID: folderID, direction: .forward, type: type)
                 }
 
                 // keep loop in sync with clock time to the next minute
@@ -195,9 +207,9 @@ class SyncScheduler {
         }
     }
 
-    func queueSyncJob(_ uniqueClientID: String, folderID: Int, direction: SyncDirection) {
+    func queueSyncJob(_ uniqueClientID: String, folderID: Int, direction: SyncDirection, type: SyncType) {
         syncDispatchQueue.sync(execute: {() -> Void in
-            let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID, direction: direction)
+            let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID, direction: direction, type: type)
             self.sync(syncEvent)
         })
     }
@@ -272,12 +284,18 @@ class SyncScheduler {
 
             let syncController = SyncController()
             syncController.uniqueID = folder.uniqueID
+            syncController.encrypted = folder.encrypted
+            
+            syncController.localURL = localFolder
+            syncController.serverURL = remote
+            syncController.password = self.accountController.password!
+            syncController.restore = isRestore
 
             DispatchQueue.main.sync(execute: {() -> Void in
                 self.syncControllers.append(syncController)
             })
             SDLog("Syncing from \(localFolder.path)/ to \(remote.path)/")
-            syncController.startSyncTask(withLocalURL: localFolder, serverURL: remote, password: self.accountController.password!, restore: isRestore, progress: { (percent, bandwidth) in
+            syncController.startSyncTask(progress: { (percent, bandwidth) in
                 // use for updating sync progress
                 // WARNING: this block may be called more often than once per second on a background serial queue, DO NOT block it for long
                 guard let realm = try? Realm() else {

@@ -28,6 +28,9 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     fileprivate var accountController = AccountController.sharedAccountController
 
     fileprivate var syncScheduler = SyncScheduler.sharedSyncScheduler
+    
+    fileprivate var sdk = SafeDriveSDK.sharedSDK
+
 
     var sharedSystemAPI = SDSystemAPI.shared()
     fileprivate var sharedServiceManager = ServiceManager.sharedServiceManager
@@ -630,17 +633,45 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             alert.runModal()
         })
     }
-
+    
     @IBAction func startSyncNow(_ sender: AnyObject) {
         let button: NSButton = sender as! NSButton
         let folderID: Int = button.tag
-        startSync(folderID)
+        
+        guard let realm = try? Realm() else {
+            SDLog("failed to create realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
+        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
+            SDLog("failed to get machine from realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
+        
+        let folder = realm.objects(SyncFolder.self).filter("machine == %@ AND uniqueID == %@", currentMachine, folderID).last!
+        
+        startSync(folderID, encrypted: folder.encrypted)
     }
-
+    
     @IBAction func startRestoreNow(_ sender: AnyObject) {
         let button: NSButton = sender as! NSButton
         let folderID: Int = button.tag
-        startRestore(folderID)
+        
+        guard let realm = try? Realm() else {
+            SDLog("failed to create realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
+        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
+            SDLog("failed to get machine from realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
+        
+        let folder = realm.objects(SyncFolder.self).filter("machine == %@ AND uniqueID == %@", currentMachine, folderID).last!
+        
+        startRestore(folderID, encrypted: folder.encrypted)
     }
 
     @IBAction func stopSyncNow(_ sender: AnyObject) {
@@ -652,11 +683,13 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     // MARK: Sync control
 
-    func startSync(_ folderID: Int) {
-        self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward)
+    func startSync(_ folderID: Int, encrypted: Bool) {
+        let type: SyncType = encrypted ? .encrypted : .unencrypted
+        self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward, type: type)
     }
 
-    func startRestore(_ folderID: Int) {
+    func startRestore(_ folderID: Int, encrypted: Bool) {
+        let type: SyncType = encrypted ? .encrypted : .unencrypted
 
         let alert = NSAlert()
         alert.addButton(withTitle: "No")
@@ -674,7 +707,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             case NSAlertSecondButtonReturn:
                 // cancel any sync in progress so we don't have two rsync processes overwriting each other
                 self.syncScheduler.cancel(folderID) {
-                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .reverse)
+                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .reverse, type: type)
                 }
                 break
             default:

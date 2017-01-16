@@ -2,7 +2,11 @@
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
+import SafeDriveSDK
+
 class SyncController: Equatable {
+
+    fileprivate var sdk = SafeDriveSDK.sharedSDK
 
     fileprivate var syncTask: Process!
     fileprivate var syncFailure = false
@@ -11,8 +15,19 @@ class SyncController: Equatable {
 
     var uniqueID: Int = -1
     
+    var encrypted: Bool = false
+    
+    var restore: Bool = false
+    
+    var localURL: URL!
+    
+    var serverURL: URL!
+    
+    var password: String!
+
+
     static func == (left: SyncController, right: SyncController) -> Bool {
-        return left.uniqueID == right.uniqueID
+        return (left.uniqueID == right.uniqueID)
     }
 
     func sftpOperation(_ op: SDSFTPOperation, remoteDirectory serverURL: URL, password: String, success successBlock: @escaping SDSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
@@ -155,19 +170,53 @@ class SyncController: Equatable {
 
     func stopSyncTask(_ completion:@escaping SDSuccessBlock) {
         self.syncTerminated = true
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async(execute: { 
-            while  self.syncTask.isRunning {
-                self.syncTask.terminate()
-                Thread.sleep(forTimeInterval: 0.1)
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async(execute: {
+            if self.encrypted {
+                while  self.syncTask.isRunning {
+                    self.syncTask.terminate()
+                    Thread.sleep(forTimeInterval: 0.1)
+                }
+                DispatchQueue.main.async(execute: {
+                    completion()
+                })
             }
-            DispatchQueue.main.async(execute: { 
-                completion()
-            })
         })
 
     }
+    
+    func startSyncTask(progress progressBlock:@escaping SDSyncProgressBlock, success successBlock:@escaping SDSyncResultBlock, failure failureBlock:@escaping SDSyncResultBlock) {
+        if self.encrypted {
+            startEncryptedSyncTask(progress: { (percent, bandwidth) in
+                progressBlock(percent, bandwidth)
+            }, success: { (url, error) in
+                successBlock(url, error)
+            }, failure: { (url, error) in
+                failureBlock(url, error)
+            })
+        }
+        else {
+            startUnencryptedSyncTask(progress: { (percent, bandwidth) in
+                progressBlock(percent, bandwidth)
+            }, success: { (url, error) in
+                successBlock(url, error)
+            }, failure: { (url, error) in
+                failureBlock(url, error)
+            })
+        }
+        
+    }
+    
+    fileprivate func startEncryptedSyncTask(progress progressBlock:@escaping SDSyncProgressBlock, success successBlock:@escaping SDSyncResultBlock, failure failureBlock:@escaping SDSyncResultBlock) {
+        self.sdk.syncFolder(folderID: UInt32(self.uniqueID), progress: { (total, current, percent) in
+            progressBlock(percent, "0KB/s")
+        }, success: { 
+            successBlock(self.localURL, nil)
+        }) { (error) in
+            failureBlock(self.localURL, error)
+        }
+    }
 
-    func startSyncTask(withLocalURL localURL: URL, serverURL: URL, password: String, restore: Bool, progress progressBlock:@escaping SDSyncProgressBlock, success successBlock:@escaping SDSyncResultBlock, failure failureBlock:@escaping SDSyncResultBlock) {
+    fileprivate func startUnencryptedSyncTask(progress progressBlock:@escaping SDSyncProgressBlock, success successBlock:@escaping SDSyncResultBlock, failure failureBlock:@escaping SDSyncResultBlock) {
         assert(Thread.current != Thread.main, "Sync task started from main thread")
 
         let fileManager = FileManager.default
@@ -179,7 +228,7 @@ class SyncController: Equatable {
                 let error = NSError(domain: SDErrorUIDomain, code:SDSyncError.directoryMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "Local directory not found"])
                 DispatchQueue.main.async(execute: {
                     self.syncFailure = true
-                    failureBlock(localURL, error)
+                    failureBlock(self.localURL, error)
                 })
             }
         }
@@ -202,7 +251,7 @@ class SyncController: Equatable {
                 let error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: "failed to unpack user information"])
                 
                 DispatchQueue.main.async(execute: {
-                    failureBlock(localURL, error)
+                    failureBlock(self.localURL, error)
                 })
                 return
         }
@@ -220,7 +269,7 @@ class SyncController: Equatable {
             let message = NSLocalizedString("Rsync missing, contact SafeDrive support", comment: "")
             let rsyncError = NSError(domain: SDMountErrorDomain, code:SDSystemError.rsyncMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
             DispatchQueue.main.async(execute: {
-                failureBlock(localURL, rsyncError)
+                failureBlock(self.localURL, rsyncError)
             })
             return
         }
@@ -234,7 +283,7 @@ class SyncController: Equatable {
             let askpassError = NSError(domain: SDErrorSyncDomain, code:SDSystemError.askpassMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "Askpass helper missing"])
             DispatchQueue.main.async(execute: { 
                 self.syncFailure = true
-                failureBlock(localURL, askpassError)
+                failureBlock(self.localURL, askpassError)
             })
             return
         }
@@ -414,7 +463,7 @@ class SyncController: Equatable {
             if (error != nil) {
                 DispatchQueue.main.async(execute: { 
                     self.syncFailure = true
-                    failureBlock(localURL, error)
+                    failureBlock(self.localURL, error)
                 })
                 SDLog("Rsync: \(SDErrorToString(error)), \(error.localizedDescription)")
             }
@@ -441,7 +490,7 @@ class SyncController: Equatable {
                     }
                     // need to explicitly check if a sync failure occurred as the return value of 0 doesn't indicate success
                     if !s.syncFailure {
-                        successBlock(localURL, nil)
+                        successBlock(self.localURL, nil)
                     }
                 })
             }
@@ -457,7 +506,7 @@ class SyncController: Equatable {
                         // rsync returned a non-zero exit code because cancel/terminate was called by the user
 
                         let error = NSError(domain: SDErrorUIDomain, code:SDSyncError.cancelled.rawValue, userInfo:[NSLocalizedDescriptionKey: "Sync cancelled"])
-                        failureBlock(localURL, error)
+                        failureBlock(self.localURL, error)
                     }
                     else {
                         // since rsync returned a non-zero exit code AND we have not yet called failureBlock,
@@ -466,7 +515,7 @@ class SyncController: Equatable {
                         // This codepath should rarely if ever be used, if it does we'll need to log the entire
                         // output of rsync and report it to the telemetry API to be examined
                         let error = NSError(domain: SDErrorSyncDomain, code:SDSyncError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: "An unknown error occurred, contact support"])
-                        failureBlock(localURL, error)
+                        failureBlock(self.localURL, error)
                     }
                 })
             }
@@ -481,7 +530,7 @@ class SyncController: Equatable {
         }, failure: { (apiError) in
             DispatchQueue.main.async(execute: { 
                 self.syncFailure = true
-                failureBlock(localURL, apiError)
+                failureBlock(self.localURL, apiError)
             })
         })
     }
