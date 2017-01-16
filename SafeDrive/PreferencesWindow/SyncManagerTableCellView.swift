@@ -14,6 +14,7 @@ class SyncManagerTableCellView: NSTableCellView {
         super.init(frame: frameRect)
     }
 
+    @IBOutlet var lockButton: NSButton!
     @IBOutlet var addButton: NSButton!
     @IBOutlet var removeButton: NSButton!
     @IBOutlet var syncNowButton: NSButton!

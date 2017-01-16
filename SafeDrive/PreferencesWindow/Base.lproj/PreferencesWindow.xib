@@ -485,7 +485,7 @@
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="dd9-aB-jfM"/>
                                                                 </imageView>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="VYj-QB-gRg" userLabel="Label">
-                                                                    <rect key="frame" x="17" y="2" width="160" height="17"/>
+                                                                    <rect key="frame" x="17" y="2" width="136" height="17"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Folder Row" id="eQd-3w-qUL">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -522,8 +522,18 @@
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                     </buttonCell>
                                                                 </button>
+                                                                <button toolTip="Encrypted/Unencrypted" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fiq-cF-wNX">
+                                                                    <rect key="frame" x="183" y="2" width="15" height="17"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="15" id="GFI-d7-r46"/>
+                                                                    </constraints>
+                                                                    <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSLockLockedTemplate" imagePosition="above" alignment="left" controlSize="small" imageScaling="proportionallyUpOrDown" inset="2" id="yL4-8Q-rCc">
+                                                                        <behavior key="behavior" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                    </buttonCell>
+                                                                </button>
                                                                 <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="IWm-Nm-7Vt">
-                                                                    <rect key="frame" x="183" y="2" width="16" height="16"/>
+                                                                    <rect key="frame" x="159" y="2" width="16" height="16"/>
                                                                 </progressIndicator>
                                                             </subviews>
                                                             <constraints>
@@ -531,20 +541,23 @@
                                                                 <constraint firstItem="9GP-Rb-dbG" firstAttribute="leading" secondItem="aCb-Lb-UrB" secondAttribute="leading" id="5uZ-ys-TR2"/>
                                                                 <constraint firstItem="qWh-QW-3qw" firstAttribute="leading" secondItem="jRl-l8-cwR" secondAttribute="trailing" constant="2" id="DgM-Qo-12s"/>
                                                                 <constraint firstItem="jRl-l8-cwR" firstAttribute="bottom" secondItem="qWh-QW-3qw" secondAttribute="bottom" id="E4c-28-fV0"/>
-                                                                <constraint firstItem="i4p-yV-C6K" firstAttribute="leading" secondItem="IWm-Nm-7Vt" secondAttribute="trailing" constant="8" symbolic="YES" id="J1E-pI-uLO"/>
-                                                                <constraint firstItem="jRl-l8-cwR" firstAttribute="leading" secondItem="VYj-QB-gRg" secondAttribute="trailing" constant="55" id="JLt-u0-EcL"/>
+                                                                <constraint firstItem="i4p-yV-C6K" firstAttribute="leading" secondItem="IWm-Nm-7Vt" secondAttribute="trailing" constant="32" id="J1E-pI-uLO"/>
+                                                                <constraint firstItem="jRl-l8-cwR" firstAttribute="leading" secondItem="VYj-QB-gRg" secondAttribute="trailing" constant="79" id="JLt-u0-EcL"/>
+                                                                <constraint firstItem="fiq-cF-wNX" firstAttribute="baseline" secondItem="VYj-QB-gRg" secondAttribute="baseline" id="KMk-bg-gMN"/>
                                                                 <constraint firstItem="VYj-QB-gRg" firstAttribute="top" secondItem="9GP-Rb-dbG" secondAttribute="top" constant="2" id="PHf-uw-nHE"/>
+                                                                <constraint firstItem="fiq-cF-wNX" firstAttribute="leading" secondItem="IWm-Nm-7Vt" secondAttribute="trailing" constant="8" symbolic="YES" id="QYW-xy-mnF"/>
                                                                 <constraint firstItem="VYj-QB-gRg" firstAttribute="bottom" secondItem="9GP-Rb-dbG" secondAttribute="bottom" constant="-2" id="Ufh-7c-3CF"/>
                                                                 <constraint firstItem="i4p-yV-C6K" firstAttribute="baseline" secondItem="jRl-l8-cwR" secondAttribute="baseline" id="ayG-CK-3TS"/>
-                                                                <constraint firstItem="jRl-l8-cwR" firstAttribute="leading" secondItem="IWm-Nm-7Vt" secondAttribute="leading" constant="47" id="bHy-HF-eH6"/>
+                                                                <constraint firstItem="jRl-l8-cwR" firstAttribute="leading" secondItem="IWm-Nm-7Vt" secondAttribute="leading" constant="71" id="bHy-HF-eH6"/>
                                                                 <constraint firstAttribute="trailing" secondItem="qWh-QW-3qw" secondAttribute="trailing" constant="9" id="cTQ-Q0-Zll"/>
-                                                                <constraint firstAttribute="trailing" secondItem="VYj-QB-gRg" secondAttribute="trailing" constant="138" id="f13-zK-XrK"/>
+                                                                <constraint firstAttribute="trailing" secondItem="VYj-QB-gRg" secondAttribute="trailing" constant="162" id="f13-zK-XrK"/>
                                                                 <constraint firstItem="9GP-Rb-dbG" firstAttribute="centerY" secondItem="aCb-Lb-UrB" secondAttribute="centerY" id="lNC-xB-xqP"/>
                                                                 <constraint firstItem="VYj-QB-gRg" firstAttribute="leading" secondItem="9GP-Rb-dbG" secondAttribute="trailing" constant="2" id="yWE-ag-KRf"/>
                                                                 <constraint firstItem="9GP-Rb-dbG" firstAttribute="bottom" secondItem="qWh-QW-3qw" secondAttribute="bottom" constant="1" id="ycD-9e-dt4"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="imageView" destination="9GP-Rb-dbG" id="Qvb-So-boT"/>
+                                                                <outlet property="lockButton" destination="fiq-cF-wNX" id="rFR-P0-e3K"/>
                                                                 <outlet property="removeButton" destination="qWh-QW-3qw" id="Lqt-Kk-xvk"/>
                                                                 <outlet property="restoreNowButton" destination="i4p-yV-C6K" id="YCs-PB-9jj"/>
                                                                 <outlet property="syncNowButton" destination="jRl-l8-cwR" id="tob-dr-SXH"/>
@@ -734,6 +747,7 @@
         <image name="Bandwidth Button" width="55" height="32"/>
         <image name="General Button" width="40" height="39"/>
         <image name="NSInvalidDataFreestandingTemplate" width="14" height="14"/>
+        <image name="NSLockLockedTemplate" width="10" height="14"/>
         <image name="NSRefreshFreestandingTemplate" width="14" height="14"/>
         <image name="NSRevealFreestandingTemplate" width="14" height="14"/>
         <image name="Settings-Background" width="351" height="501"/>

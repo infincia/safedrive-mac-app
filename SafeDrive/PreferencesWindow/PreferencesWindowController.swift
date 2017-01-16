@@ -881,6 +881,13 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 tableCellView.syncNowButton.target = self
                 tableCellView.syncNowButton.action = #selector(self.stopSyncNow(_:))
             }
+            
+            if syncFolder.encrypted {
+                tableCellView.lockButton.image = NSImage(named: NSImageNameLockLockedTemplate)
+            }
+            else {
+                tableCellView.lockButton.image = NSImage(named: NSImageNameLockUnlockedTemplate)
+            }
 
             if syncFolder.syncing {
                 tableCellView.syncStatus.startAnimation(self)
