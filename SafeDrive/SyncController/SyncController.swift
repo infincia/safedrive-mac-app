@@ -171,7 +171,7 @@ class SyncController: Equatable {
     func stopSyncTask(_ completion:@escaping SDSuccessBlock) {
         self.syncTerminated = true
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async(execute: {
-            if self.encrypted {
+            if !self.encrypted {
                 while  self.syncTask.isRunning {
                     self.syncTask.terminate()
                     Thread.sleep(forTimeInterval: 0.1)
