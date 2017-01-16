@@ -226,7 +226,7 @@ class API: NSObject, URLSessionDelegate {
                 if httpResponse.statusCode == 200 {
                     guard let data = data,
                               let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
-                              let JSON = raw as? [String: NSObject] else {
+                              let JSON = raw as? [String: AnyObject] else {
                         let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<client/register>"])
                         failureBlock(responseError)
                         return
