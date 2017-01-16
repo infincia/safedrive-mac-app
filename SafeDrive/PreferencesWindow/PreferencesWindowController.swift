@@ -347,8 +347,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     // MARK: SDServiceStatusProtocol
 
     func didReceiveServiceStatus(_ notification: Foundation.Notification) {
-        if let status = notification.object as? Int {
-            self.serviceStatusField.stringValue = status == 1 ? "Running" : "Stopped"
+        if let status = notification.object as? Bool {
+            self.serviceStatusField.stringValue = (status == true ? "Running" : "Stopped")
         } else {
             SDLog("Validation failed: didReceiveServiceStatus")
         }
