@@ -209,12 +209,23 @@ class SyncController: Equatable {
     }
     
     fileprivate func startEncryptedSyncTask(progress progressBlock:@escaping SDSyncProgressBlock, success successBlock:@escaping SDSyncResultBlock, failure failureBlock:@escaping SDSyncResultBlock) {
-        self.sdk.syncFolder(folderID: UInt32(self.uniqueID), progress: { (total, current, percent) in
-            progressBlock(percent, "0KB/s")
-        }, success: { 
-            successBlock(self.localURL, nil)
-        }) { (error) in
-            failureBlock(self.localURL, error)
+        if self.restore {
+            self.sdk.restoreFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, destination: self.localURL, progress: { (total, current, percent) in
+                progressBlock(percent, "0KB/s")
+            }, success: {
+                successBlock(self.localURL, nil)
+            }) { (error) in
+                failureBlock(self.localURL, error)
+            }
+        }
+        else {
+            self.sdk.syncFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, progress: { (total, current, percent) in
+                progressBlock(percent, "0KB/s")
+            }, success: {
+                successBlock(self.localURL, nil)
+            }) { (error) in
+                failureBlock(self.localURL, error)
+            }
         }
     }
 
