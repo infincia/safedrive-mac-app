@@ -135,7 +135,11 @@
     NSDictionary *mountpointInfo;
     NSError *error;
     mountpointInfo = [[NSFileManager defaultManager] attributesOfFileSystemForPath:mountURL.path error:&error];
-    if (error) NSLog(@"Mount details error: %@", error.localizedDescription);
+    if (error) {
+    #ifdef DEBUG
+        NSLog(@"Mount details error: %@", error.localizedDescription);
+    #endif
+    }
     return mountpointInfo;
 }
 
