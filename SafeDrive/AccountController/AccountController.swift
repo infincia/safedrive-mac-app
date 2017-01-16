@@ -7,8 +7,12 @@ import Crashlytics
 import Realm
 import RealmSwift
 
+import SafeDriveSDK
+
 class AccountController: NSObject {
     static let sharedAccountController = AccountController()
+    
+    fileprivate var sdk = SafeDriveSDK.sharedSDK
 
     var accountStatus: SDAccountStatus = .unknown
 
@@ -103,6 +107,10 @@ class AccountController: NSObject {
             }
 
         }
+        
+        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDRecoveryKeyServiceName)
+        
+        let recoveryPhrase = recoveryCredentials?["password"]
 
 
         let keychainError: NSError? = self.sharedSystemAPI.insertCredentialsInKeychain(forService: SDServiceNameProduction, account: email, password: password) as NSError?
@@ -168,6 +176,39 @@ class AccountController: NSObject {
                         Crashlytics.sharedInstance().crash()
                         return
                     }
+                    guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
+                        SDLog("Failed to obtain group container, this is a fatal error")
+                        Crashlytics.sharedInstance().crash()
+                        return
+                    }
+                    
+                    self.sdk.setUp(local_storage_path: groupURL.path, unique_client_id: clientID)
+                    
+                    do {
+                        try self.sdk.login(email, password: password)
+                    }
+                    catch {
+                        print("failed to login with sdk")
+                    }
+                    
+                    
+                    do {
+                        try self.sdk.loadKeys(recoveryPhrase, storePhrase: { (newPhrase) in
+                            print("New recovery phrase: \(newPhrase)")
+                            let keychainError = self.sharedSystemAPI.insertCredentialsInKeychain(forService: SDRecoveryKeyServiceName, account: email, password: newPhrase)
+                            if let keychainError = keychainError {
+                                SDErrorHandlerReport(keychainError)
+                                failureBlock(keychainError)
+                                return
+                            }
+                        })
+                    }
+                    catch {
+                        print("failed to load keys")
+                    }
+        
+                    NotificationCenter.default.post(name: Notification.Name.sdkReady, object: nil)
+
                     NotificationCenter.default.post(name: Notification.Name.accountAuthenticated, object: clientID)
                     successBlock()
                 }
