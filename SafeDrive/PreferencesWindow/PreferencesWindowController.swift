@@ -438,6 +438,12 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     @IBAction func addSyncFolder(_ sender: AnyObject) {
         let panel: NSOpenPanel = NSOpenPanel()
+        
+        let encryptedCheckbox = NSButton()
+        encryptedCheckbox.setButtonType(.switch)
+        encryptedCheckbox.state = 1 //true
+        panel.accessoryView = encryptedCheckbox
+        
         panel.delegate = self
         panel.canChooseFiles = false
         panel.allowsMultipleSelection = false
@@ -451,15 +457,15 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         panel.beginSheetModal(for: self.window!) { (result)  in
             if result == NSFileHandlingPanelOKButton {
                 self.spinner.startAnimation(self)
-
-                self.sharedSafedriveAPI.createSyncFolder(panel.url!, success: { (folderID: Int) -> Void in
+                let isEncrypted = (encryptedCheckbox.state == 1)
+                self.sharedSafedriveAPI.createSyncFolder(panel.url!, encrypted: isEncrypted, success: { (folderID: Int) -> Void in
                     guard let realm = try? Realm() else {
                         SDLog("failed to create realm!!!")
                         Crashlytics.sharedInstance().crash()
                         return
                     }
 
-                    let syncFolder = SyncFolder(name: panel.url!.lastPathComponent, url: panel.url!, uniqueID: folderID, encrypted: false)
+                    let syncFolder = SyncFolder(name: panel.url!.lastPathComponent, url: panel.url!, uniqueID: folderID, encrypted: isEncrypted)
 
                     // this is the only place where the `added` property should be set on SyncFolders
                     syncFolder.added = Date()
@@ -469,9 +475,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     try! realm.write {
                         realm.add(syncFolder, update: true)
                     }
+                    let type: SyncType = syncFolder.encrypted ? .encrypted : .unencrypted
 
                     self.readSyncFolders(self)
-                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward)
+                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward, type: type)
 
                 }, failure: { (apiError: Swift.Error) -> Void in
                     SDErrorHandlerReport(apiError)
