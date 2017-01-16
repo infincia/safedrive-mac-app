@@ -10,7 +10,7 @@ import Crashlytics
 import Realm
 import RealmSwift
 
-import SafeDriveSync
+import SafeDriveSDK
 
 enum ViewType: Int {
     case general
