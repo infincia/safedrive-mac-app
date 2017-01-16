@@ -24,6 +24,8 @@ class SyncController: Equatable {
     var serverURL: URL!
     
     var password: String!
+    
+    var uuid: String!
 
 
     static func == (left: SyncController, right: SyncController) -> Bool {

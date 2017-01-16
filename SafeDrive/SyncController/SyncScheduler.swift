@@ -285,7 +285,7 @@ class SyncScheduler {
             let syncController = SyncController()
             syncController.uniqueID = folder.uniqueID
             syncController.encrypted = folder.encrypted
-            
+            syncController.uuid = uuid.uuidString
             syncController.localURL = localFolder
             syncController.serverURL = remote
             syncController.password = self.accountController.password!
