@@ -36,7 +36,7 @@ class UnitTests: XCTestCase {
     }
     
     func test_SDSystemAPI_en0MAC() {
-        let mac = SDSystemAPI.sharedAPI().en0MAC()
+        let mac = SDSystemAPI.shared().en0MAC()
         XCTAssertNotNil(mac);
         NSLog("MAC en0: \(mac)")
     }
