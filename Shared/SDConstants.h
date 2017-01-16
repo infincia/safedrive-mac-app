@@ -33,6 +33,7 @@ FOUNDATION_EXPORT NSString *const SDServiceName;
 FOUNDATION_EXPORT NSString *const SDServiceNameTesting;
 FOUNDATION_EXPORT NSString *const SDSSHServiceName;
 FOUNDATION_EXPORT NSString *const SDSessionServiceName;
+FOUNDATION_EXPORT NSString *const SDRecoveryKeyServiceName;
 
 NS_ASSUME_NONNULL_END
 
