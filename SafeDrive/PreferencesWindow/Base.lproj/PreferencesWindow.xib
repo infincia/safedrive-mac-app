@@ -16,15 +16,15 @@
                 <outlet property="assignedStorageField" destination="fKc-az-M95" id="wa3-xU-5qv"/>
                 <outlet property="availableStorageField" destination="jEO-oE-b3P" id="0Wv-iy-oyB"/>
                 <outlet property="containerView" destination="KW5-2C-bQX" id="vRk-b2-fTS"/>
+                <outlet property="copyRecoveryPhraseButton" destination="wgv-yP-KWO" id="vF7-Ai-NYS"/>
                 <outlet property="encryptionButton" destination="Y3b-ju-7in" id="eWO-14-eTB"/>
                 <outlet property="encryptionView" destination="xqp-Tx-tcF" id="gyg-7x-iOL"/>
                 <outlet property="failurePopover" destination="1yy-mh-Jnb" id="7F0-aH-kDA"/>
                 <outlet property="generalButton" destination="50Q-kb-XJw" id="o0T-OI-nQx"/>
                 <outlet property="generalView" destination="KeH-nF-XhM" id="9lB-Lr-WAh"/>
-                <outlet property="generateKeypairButton" destination="wgv-yP-KWO" id="mC8-Pe-iyz"/>
-                <outlet property="keyStatus" destination="ulw-bP-WwJ" id="p1d-j9-4pA"/>
                 <outlet property="mountStatusField" destination="dAi-Wu-Tfy" id="gsZ-dK-ItM"/>
                 <outlet property="progress" destination="zj3-DB-yCx" id="Jav-ug-EkR"/>
+                <outlet property="recoveryPhraseField" destination="ulw-bP-WwJ" id="i8K-yc-8VL"/>
                 <outlet property="scheduleSelection" destination="OmI-TW-sx5" id="Yes-NV-iuM"/>
                 <outlet property="serviceStatusField" destination="CTS-LC-Kd9" id="Y1P-ei-PEh"/>
                 <outlet property="spinner" destination="Iyw-4D-YDA" id="UI2-DO-nxI"/>
@@ -264,19 +264,10 @@
             <rect key="frame" x="0.0" y="0.0" width="351" height="281"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ieM-7u-ab8">
-                    <rect key="frame" x="18" y="213" width="150" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Encryption Keypair:" id="Cap-cC-DLR">
-                        <font key="font" size="12" name="Raleway-Light"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ulw-bP-WwJ">
-                    <rect key="frame" x="172" y="213" width="147" height="18"/>
+                    <rect key="frame" x="18" y="82" width="315" height="141"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Missing" id="yx3-gU-hdd">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" placeholderString="Missing" id="yx3-gU-hdd">
                         <font key="font" size="12" name="Raleway-Light"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -285,22 +276,28 @@
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GDf-bv-HAn">
                     <rect key="frame" x="14" y="13" width="323" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Backup Keys" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BNM-SY-nlE">
+                    <buttonCell key="cell" type="push" title="Backup Keys" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BNM-SY-nlE">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wgv-yP-KWO">
-                    <rect key="frame" x="103" y="46" width="145" height="32"/>
+                    <rect key="frame" x="102" y="46" width="148" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Generate Keypair" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EqS-h5-IJG">
+                    <buttonCell key="cell" type="push" title="Copy to clipboard" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EqS-h5-IJG">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
-                    <connections>
-                        <action selector="generateKeypair:" target="-2" id="B3R-Yk-h7v"/>
-                    </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ieM-7u-ab8">
+                    <rect key="frame" x="18" y="231" width="315" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Recovery Phrase" id="Cap-cC-DLR">
+                        <font key="font" size="20" name="Raleway-Light"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <point key="canvasLocation" x="138.5" y="168.5"/>
         </view>

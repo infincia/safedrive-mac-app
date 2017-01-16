@@ -65,9 +65,9 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBOutlet var accountExpirationField: NSTextField!
 
     // MARK: Encryption Tab
-    @IBOutlet var generateKeypairButton: NSButton!
+    @IBOutlet var copyRecoveryPhraseButton: NSButton!
 
-    @IBOutlet var keyStatus: NSTextField!
+    @IBOutlet var recoveryPhraseField: NSTextField!
 
     // MARK: Status Tab
     @IBOutlet var serviceStatusField: NSTextField!
@@ -357,37 +357,24 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     // MARK: UI Actions
     
     func checkKeys() {
-        let applicationSupportURL = try! FileManager.default.url(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in:FileManager.SearchPathDomainMask.userDomainMask, appropriateFor:nil, create:true)
+        // get recovery phrase from keychain
     
-        let safeDriveApplicationSupportURL = applicationSupportURL.appendingPathComponent("SafeDrive", isDirectory:true)
+        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDRecoveryKeyServiceName)
         
-        let storageDirectoryURL = safeDriveApplicationSupportURL.appendingPathComponent("\(self.uniqueClientID!)", isDirectory: true)
-        try! FileManager.default.createDirectory(at: storageDirectoryURL, withIntermediateDirectories: true, attributes: nil)
-        
-        
-        let mainKeyURL = storageDirectoryURL.appendingPathComponent("main.key", isDirectory: false)
-        let hmacKeyURL = storageDirectoryURL.appendingPathComponent("hmac.key", isDirectory: false)
-
-
-        let mainKeyFound = FileManager.default.fileExists(atPath: mainKeyURL.path)
-        let hmacKeyFound = FileManager.default.fileExists(atPath: hmacKeyURL.path)
-        
-        if mainKeyFound && hmacKeyFound {
-            keyStatus.stringValue = NSLocalizedString("Loaded", comment: "")
-            self.generateKeypairButton.isEnabled = false
-        }
-        else if hmacKeyFound || mainKeyFound {
-            self.generateKeypairButton.isEnabled = false
-
-            keyStatus.stringValue = NSLocalizedString("WARNING: MISSING A KEY", comment: "")
+        if let recoveryPhrase = recoveryCredentials?["password"] {
+            recoveryPhraseField.stringValue = recoveryPhrase
+            self.copyRecoveryPhraseButton.isEnabled = true
         }
         else {
-            self.generateKeypairButton.isEnabled = true
-
-            keyStatus.stringValue = NSLocalizedString("Missing", comment: "")
-
+            recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
+            self.copyRecoveryPhraseButton.isEnabled = false
         }
-
+    }
+    
+    @IBAction func copyRecoveryPhrase(_ sender: AnyObject) {
+        let pasteBoard = NSPasteboard.general()
+        pasteBoard.clearContents()
+        pasteBoard.writeObjects([recoveryPhraseField.stringValue as NSString])
     }
     
     @IBAction func loadAccountPage(_ sender: AnyObject) {
