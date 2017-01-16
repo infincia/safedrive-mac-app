@@ -29,8 +29,8 @@ FOUNDATION_EXPORT NSString *const SDWebDomain;
 #pragma mark - Keychain constants
 
 
-FOUNDATION_EXPORT NSString *const SDServiceName;
-FOUNDATION_EXPORT NSString *const SDServiceNameTesting;
+FOUNDATION_EXPORT NSString *const SDServiceNameProduction;
+FOUNDATION_EXPORT NSString *const SDServiceNameStaging;
 FOUNDATION_EXPORT NSString *const SDSSHServiceName;
 FOUNDATION_EXPORT NSString *const SDSessionServiceName;
 FOUNDATION_EXPORT NSString *const SDRecoveryKeyServiceName;

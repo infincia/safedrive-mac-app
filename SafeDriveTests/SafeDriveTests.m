@@ -27,7 +27,7 @@
 @implementation SafeDriveTests
 
 + (void)setUp {
-    NSError *keychainInsertError = [[SDSystemAPI sharedAPI] insertCredentialsInKeychainForService:SDServiceName account:SDTestCredentialsUser password:SDTestCredentialsPassword];
+    NSError *keychainInsertError = [[SDSystemAPI sharedAPI] insertCredentialsInKeychainForService:SDServiceNameStaging account:SDTestCredentialsUser password:SDTestCredentialsPassword];
     if (keychainInsertError) {
         NSLog(@"+setUp failed: %@", keychainInsertError.localizedDescription);
     }
@@ -245,12 +245,12 @@
 
 - (void)test_SDSystemAPI_insertCredentialsInKeychainForService {
     XCTAssertNotNil([SDSystemAPI sharedAPI]);
-    NSError *keychainInsertError = [[SDSystemAPI sharedAPI] insertCredentialsInKeychainForService:SDServiceNameTesting account:SDTestCredentialsUser password:SDTestCredentialsPassword];
+    NSError *keychainInsertError = [[SDSystemAPI sharedAPI] insertCredentialsInKeychainForService:SDServiceNameStaging account:SDTestCredentialsUser password:SDTestCredentialsPassword];
     if (keychainInsertError) {
         XCTFail(@"%@", keychainInsertError.localizedDescription);
         NSLog(@"test_SDSystemAPI_insertCredentialsInKeychainForService: %@", keychainInsertError.localizedDescription);
     }
-    NSError *keychainRemoveError = [[SDSystemAPI sharedAPI] removeCredentialsInKeychainForService:SDServiceNameTesting account:SDTestCredentialsUser];
+    NSError *keychainRemoveError = [[SDSystemAPI sharedAPI] removeCredentialsInKeychainForService:SDServiceNameStaging account:SDTestCredentialsUser];
     if (keychainRemoveError) {
         XCTFail(@"%@", keychainRemoveError.localizedDescription);
         NSLog(@"test_SDSystemAPI_insertCredentialsInKeychainForService: %@", keychainRemoveError.localizedDescription);

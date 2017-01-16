@@ -46,7 +46,7 @@ class AccountController: NSObject {
 
     override init() {
         super.init()
-        if let credentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDServiceName) {
+        if let credentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDServiceNameProduction) {
             self.email = credentials["account"]
             self.password = credentials["password"]
 
@@ -80,7 +80,7 @@ class AccountController: NSObject {
             complicates things and will take some planning to do.
 
         */
-        if let storedCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDServiceName),
+        if let storedCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDServiceNameProduction),
                let storedEmail = storedCredentials["account"] {
             if storedEmail != email {
                 // reset SyncFolder and SyncTask in database, user has changed since last sign-in
@@ -105,7 +105,7 @@ class AccountController: NSObject {
         }
 
 
-        let keychainError: NSError? = self.sharedSystemAPI.insertCredentialsInKeychain(forService: SDServiceName, account: email, password: password) as NSError?
+        let keychainError: NSError? = self.sharedSystemAPI.insertCredentialsInKeychain(forService: SDServiceNameProduction, account: email, password: password) as NSError?
 
         if let keychainError = keychainError {
             SDErrorHandlerReport(keychainError)
@@ -198,7 +198,7 @@ class AccountController: NSObject {
     func signOutWithSuccess(_ successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
         self.sharedSystemAPI.removeCredentialsInKeychain(forService: SDSessionServiceName)
         self.sharedSystemAPI.removeCredentialsInKeychain(forService: SDSSHServiceName)
-        self.sharedSystemAPI.removeCredentialsInKeychain(forService: SDServiceName)
+        self.sharedSystemAPI.removeCredentialsInKeychain(forService: SDServiceNameProduction)
 
         self.signedIn = false
 
