@@ -51,8 +51,7 @@
 		AA6E27341D8839DC00038019 /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E27331D8839DC00038019 /* SyncController.swift */; };
 		AA6E27351D8839DC00038019 /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E27331D8839DC00038019 /* SyncController.swift */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
-		AA7442381E0517D5004D8518 /* SafeDriveSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; };
-		AA7442391E0517D8004D8518 /* SafeDriveSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; };
+		AA7442381E0517D5004D8518 /* SafeDriveSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		AA74423A1E0517D8004D8518 /* SafeDriveSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA76DC211C8762A9007B320E /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC201C8762A9007B320E /* Installer.swift */; };
 		AA76DC231C8779D2007B320E /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */; };
@@ -284,7 +283,7 @@
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
-		AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafeDriveSDK.xcodeproj; path = "../safedrive-sync-sdk/SafeDriveSDK.xcodeproj"; sourceTree = "<group>"; };
+		AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafeDriveSDK.xcodeproj; path = "../safedrive-sdk/SafeDriveSDK.xcodeproj"; sourceTree = "<group>"; };
 		AA76DC201C8762A9007B320E /* Installer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Installer.swift; path = Installer/Installer.swift; sourceTree = "<group>"; };
 		AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeWindowController.swift; path = Installer/WelcomeWindowController.swift; sourceTree = "<group>"; };
 		AA76DC281C879076007B320E /* WelcomeWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeWindow.xib; path = Installer/WelcomeWindow.xib; sourceTree = "<group>"; };
@@ -334,7 +333,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */,
-				AA7442391E0517D8004D8518 /* SafeDriveSDK.framework in Frameworks */,
 				856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */,
 				AA7442381E0517D5004D8518 /* SafeDriveSDK.framework in Frameworks */,
 			);
