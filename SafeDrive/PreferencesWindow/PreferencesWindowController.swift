@@ -390,44 +390,6 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     }
     
-    @IBAction func generateKeypair(_ sender: AnyObject) {
-        let applicationSupportURL = try! FileManager.default.url(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in:FileManager.SearchPathDomainMask.userDomainMask, appropriateFor:nil, create:true)
-    
-        let safeDriveApplicationSupportURL = applicationSupportURL.appendingPathComponent("SafeDrive", isDirectory:true)
-        
-        let storageDirectoryURL = safeDriveApplicationSupportURL.appendingPathComponent("\(self.uniqueClientID!)", isDirectory: true)
-        try! FileManager.default.createDirectory(at: storageDirectoryURL, withIntermediateDirectories: true, attributes: nil)
-
-
-
-        let mainKeyURL = storageDirectoryURL.appendingPathComponent("main.key", isDirectory: false)
-        if !FileManager.default.fileExists(atPath: mainKeyURL.path) {
-            let main_key = SafeDriveSync.generate_key()
-
-            do {
-                try main_key.write(to: mainKeyURL)
-            } catch let error as NSError {
-                SDLog("Error storing main key: \(error)")
-                SDErrorHandlerReport(error)
-            }
-        }
-        
-        
-        let hmacKeyURL = storageDirectoryURL.appendingPathComponent("hmac.key", isDirectory: false)
-        if !FileManager.default.fileExists(atPath: hmacKeyURL.path) {
-            let hmac_key = SafeDriveSync.generate_key()
-
-            do {
-                try hmac_key.write(to: hmacKeyURL)
-            } catch let error as NSError {
-                SDLog("Error storing hmac key: \(error)")
-                SDErrorHandlerReport(error)
-            }
-        }
-        self.checkKeys()
-        
-    }
-
     @IBAction func loadAccountPage(_ sender: AnyObject) {
         // Open the safedrive account page in users default browser
         if let _ = self.accountController.email,
