@@ -99,7 +99,7 @@ class Installer {
     }
 
     func installOSXFUSE() {
-        let osxfuseURL = Bundle.main.url(forResource: "Install OSXFUSE 2.8", withExtension: "pkg", subdirectory: nil)
+        let osxfuseURL = Bundle.main.url(forResource: "FUSE for macOS 3.5.4", withExtension: "pkg", subdirectory: nil)
         let privilegedTask = STPrivilegedTask()
         privilegedTask.setLaunchPath("/usr/sbin/installer")
         privilegedTask.setArguments(["-store", "-pkg", (osxfuseURL?.path)!, "-target", "/"])
