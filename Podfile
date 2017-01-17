@@ -6,12 +6,12 @@ def keychain_pods
 end
 
 def shared_pods
-    pod 'Fabric', '1.6.9'
-    pod 'Crashlytics', '3.8.2'
+    pod 'Fabric', '~>  1.6.11'
+    pod 'Crashlytics', '~>  3.8.3'
     #pod 'SwiftDate', git: 'https://github.com/malcommac/SwiftDate.git', branch: 'feature/swift-3.0'
-    pod 'RegexKitLite', '4.0'
-    pod 'Realm','2.0.0'
-    pod 'RealmSwift', '2.0.0'
+    pod 'RegexKitLite', '~> 4.0'
+    pod 'Realm','~> 2.2.0'
+    pod 'RealmSwift', '~> 2.2.0'
 end
 
 target 'safedriveaskpass' do
@@ -33,12 +33,12 @@ target 'SafeDrive' do
     use_frameworks!
     keychain_pods
     shared_pods
-    pod 'IYLoginItem', '0.1'
-    pod 'DCOAboutWindow', '0.2.0'
-    pod 'LetsMove', '1.22'
-    pod 'Sparkle', '1.14.0'
-    pod 'STPrivilegedTask', '1.0.1'
-    pod 'TSMarkdownParser'
+    pod 'IYLoginItem', '~> 0.1'
+    pod 'DCOAboutWindow', '~> 0.2.0'
+    pod 'LetsMove', '~> 1.22'
+    pod 'Sparkle', '~> 1.15.1'
+    pod 'STPrivilegedTask', '~> 1.0.1'
+    pod 'TSMarkdownParser', '~> 2.1.2'
     target 'SafeDriveTests' do
         inherit! :search_paths
     end
