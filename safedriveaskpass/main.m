@@ -5,7 +5,11 @@
 #import <Foundation/Foundation.h>
 #import "MCSMKeychainItem.h"
 
+#ifdef DEBUG
+static NSString *SDSSHServiceName = @"staging.ssh.safedrive.io";
+#else
 static NSString *SDSSHServiceName = @"ssh.safedrive.io";
+#endif
 
 static int SSHAskPassReturnValueSuccess = 0;
 static int SSHAskPassReturnValueFailure = 1;
