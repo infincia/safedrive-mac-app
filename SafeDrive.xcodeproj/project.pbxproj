@@ -25,6 +25,7 @@
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
 		AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; };
 		AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA5071571E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AA5071561E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg */; };
 		AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */; };
 		AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C711BFC57B50008FB8B /* Settings-Background.png */; };
 		AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */; };
@@ -56,7 +57,6 @@
 		AA76DC211C8762A9007B320E /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC201C8762A9007B320E /* Installer.swift */; };
 		AA76DC231C8779D2007B320E /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */; };
 		AA76DC291C879076007B320E /* WelcomeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA76DC281C879076007B320E /* WelcomeWindow.xib */; };
-		AA76DC2B1C879B77007B320E /* Install OSXFUSE 2.8.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AA76DC2A1C879B77007B320E /* Install OSXFUSE 2.8.pkg */; };
 		AA76DC2D1C88D4C6007B320E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2C1C88D4C6007B320E /* API.swift */; };
 		AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */; };
 		AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
@@ -259,6 +259,7 @@
 		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4E77411A3E9B830054BBCA /* libPods-MCSMKeychainItem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-MCSMKeychainItem.a"; path = "../../../Users/steve/Library/Developer/Xcode/DerivedData/SafeDrive-chuvxsgbhfnlbyfxzkgdnlscvvoy/Build/Products/Debug/libPods-MCSMKeychainItem.a"; sourceTree = "<group>"; };
 		AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NMSSH.framework; path = Carthage/Build/Mac/NMSSH.framework; sourceTree = "<group>"; };
+		AA5071561E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FUSE for macOS 3.5.4.pkg"; path = "Bundled Dependencies/FUSE for macOS 3.5.4.pkg"; sourceTree = "<group>"; };
 		AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Storage-Status-backing.png"; sourceTree = "<group>"; };
 		AA543C711BFC57B50008FB8B /* Settings-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-Background.png"; sourceTree = "<group>"; };
 		AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Light.ttf"; sourceTree = "<group>"; };
@@ -287,7 +288,6 @@
 		AA76DC201C8762A9007B320E /* Installer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Installer.swift; path = Installer/Installer.swift; sourceTree = "<group>"; };
 		AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeWindowController.swift; path = Installer/WelcomeWindowController.swift; sourceTree = "<group>"; };
 		AA76DC281C879076007B320E /* WelcomeWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeWindow.xib; path = Installer/WelcomeWindow.xib; sourceTree = "<group>"; };
-		AA76DC2A1C879B77007B320E /* Install OSXFUSE 2.8.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Install OSXFUSE 2.8.pkg"; path = "Bundled Dependencies/Install OSXFUSE 2.8.pkg"; sourceTree = "<group>"; };
 		AA76DC2C1C88D4C6007B320E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableRowView.swift; path = ../PreferencesWindow/SyncManagerTableRowView.swift; sourceTree = "<group>"; };
@@ -653,8 +653,8 @@
 		AA76DC241C8787AB007B320E /* Bundled Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				AA5071561E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg */,
 				AA2DAB241CB3293F00951762 /* rsync-3.1.2 */,
-				AA76DC2A1C879B77007B320E /* Install OSXFUSE 2.8.pkg */,
 				AA2DAB271CB3664200951762 /* sshfs-2.7 */,
 			);
 			name = "Bundled Dependencies";
@@ -951,10 +951,10 @@
 				AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */,
 				AA0A7D1E1A19682D00DCB77E /* AccountWindow.xib in Resources */,
 				AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */,
-				AA76DC2B1C879B77007B320E /* Install OSXFUSE 2.8.pkg in Resources */,
 				AA76DC291C879076007B320E /* WelcomeWindow.xib in Resources */,
 				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
+				AA5071571E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg in Resources */,
 				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
 				AA7319421A2F7EEB003E2391 /* Main.xib in Resources */,
 			);
