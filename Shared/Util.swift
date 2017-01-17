@@ -36,12 +36,19 @@ func storageURL() -> URL {
     guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
         exit(1)
     }
-    
+        
     #if DEBUG
-    return groupURL.appendingPathComponent("staging", isDirectory: true)
+    let u = groupURL.appendingPathComponent("staging", isDirectory: true)
     #else
-    return groupURL
+    let u = groupURL
     #endif
+    do {
+        try FileManager.default.createDirectory(at: u, withIntermediateDirectories:true, attributes:nil)
+    }
+    catch let directoryError as NSError {
+        print("Error creating support directory: \(directoryError.localizedDescription)")
+    }
+    return u
 }
 
 func isProduction() -> Bool {
