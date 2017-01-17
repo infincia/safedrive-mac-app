@@ -18,17 +18,17 @@ fileprivate let SDWebDomainProduction = "safedrive.io"
 // Keychain constants
 
 
-fileprivate let SDServiceNameProduction = "safedrive.io"
-fileprivate let SDServiceNameStaging = "staging.safedrive.io"
+fileprivate let SDAccountCredentialDomainProduction = "safedrive.io"
+fileprivate let SDAccountCredentialDomainStaging = "staging.safedrive.io"
 
-fileprivate let SDSSHServiceNameProduction = "ssh.safedrive.io"
-fileprivate let SDSSHServiceNameStaging = "staging.ssh.safedrive.io"
+fileprivate let SDSSHCredentialDomainProduction = "ssh.safedrive.io"
+fileprivate let SDSSHCredentialDomainStaging = "staging.ssh.safedrive.io"
 
-fileprivate let SDSessionServiceNameProduction = "session.safedrive.io"
-fileprivate let SDSessionServiceNameStaging = "staging.session.safedrive.io"
+fileprivate let SDAuthTokenDomainProduction = "session.safedrive.io"
+fileprivate let SDAuthTokenDomainStaging = "staging.session.safedrive.io"
 
-fileprivate let SDRecoveryKeyServiceNameProduction = "recovery.safedrive.io"
-fileprivate let SDRecoveryKeyServiceNameStaging = "staging.recovery.safedrive.io"
+fileprivate let SDRecoveryKeyDomainProduction = "recovery.safedrive.io"
+fileprivate let SDRecoveryKeyDomainStaging = "staging.recovery.safedrive.io"
 
 
 
@@ -70,32 +70,32 @@ func apiDomain() -> String {
 
 func tokenDomain() -> String {
     #if DEBUG
-    return SDSessionServiceNameStaging
+    return SDAuthTokenDomainStaging
     #else
-    return SDSessionServiceNameProduction
+    return SDAuthTokenDomainProduction
     #endif
 }
 
 func sshCredentialDomain() -> String {
     #if DEBUG
-    return SDSSHServiceNameStaging
+    return SDSSHCredentialDomainStaging
     #else
-    return SDSSHServiceNameProduction
+    return SDSSHCredentialDomainProduction
     #endif
 }
 
 func accountCredentialDomain() -> String {
     #if DEBUG
-    return SDServiceNameStaging
+    return SDAccountCredentialDomainStaging
     #else
-    return SDServiceNameProduction
+    return SDAccountCredentialDomainProduction
     #endif
 }
 
 func recoveryKeyDomain() -> String {
     #if DEBUG
-    return SDServiceNameStaging
+    return SDRecoveryKeyDomainStaging
     #else
-    return SDServiceNameProduction
+    return SDRecoveryKeyDomainProduction
     #endif
 }
