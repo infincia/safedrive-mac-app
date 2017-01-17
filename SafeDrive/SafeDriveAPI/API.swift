@@ -73,7 +73,7 @@ enum Endpoint {
     var URLRequest: URLRequest {
 
         
-        var request = NSMutableURLRequest()
+        let request = NSMutableURLRequest()
         
         request.httpMethod = method.rawValue
 
