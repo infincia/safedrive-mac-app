@@ -806,7 +806,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             return "" as AnyObject
         }
         if item is Machine {
-            let syncFolders = realm.objects(SyncFolder.self).filter("machine == %@", self.mac).sorted(byProperty: "name")
+            let syncFolders = realm.objects(SyncFolder.self).filter("machine == %@", self.mac).sorted(byKeyPath: "name")
             let syncFolder = syncFolders[index]
             let detached = SyncFolder(value: syncFolder)
             return detached
@@ -943,7 +943,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.progress.minValue = 0.0
             let syncTasks = realm.objects(SyncTask.self)
 
-            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@", self.mac.uniqueClientID!, syncItem).sorted(byProperty: "syncDate").last {
+            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@", self.mac.uniqueClientID!, syncItem).sorted(byKeyPath: "syncDate").last {
 
                 if syncItem.restoring {
                     self.syncStatus.stringValue = "Restoring"
