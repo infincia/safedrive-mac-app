@@ -21,35 +21,20 @@ let maxLogSize = 100
     // MARK: 
     // MARK: Public API
 
-func SDErrorHandlerInitialize() {
-    let fileManager = FileManager.default
-    
-
-    
-    var safeDriveApplicationSupportURL: URL!
-    
-    do {
-        let applicationSupportURL = try fileManager.url(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in:FileManager.SearchPathDomainMask.userDomainMask, appropriateFor:nil, create:true)
-    
-        safeDriveApplicationSupportURL = applicationSupportURL.appendingPathComponent("SafeDrive", isDirectory:true)
-        try fileManager.createDirectory(at: safeDriveApplicationSupportURL, withIntermediateDirectories:true, attributes:nil)
-    }
-    catch let directoryError as NSError {
-        NSLog("Error creating support directory: %@", directoryError.localizedDescription)
-
-    }
+func SDErrorHandlerInitialize() {    
+    let localURL = storageURL()
     
     /*
         Set serializedErrorLocation to an NSURL corresponding to:
         ~/Library/Application Support/SafeDrive/SafeDrive-Errors.plist
     */
-    serializedErrorLocation = safeDriveApplicationSupportURL.appendingPathComponent("SafeDrive-Errors.plist", isDirectory:false)
+    serializedErrorLocation = localURL.appendingPathComponent("SafeDrive-Errors.plist", isDirectory:false)
     
     /*
         Set serializedErrorLocation to an NSURL corresponding to:
         ~/Library/Application Support/SafeDrive/SafeDrive-Log.plist
     */
-    serializedLogLocation = safeDriveApplicationSupportURL.appendingPathComponent("SafeDrive-Log.plist", isDirectory:false)
+    serializedLogLocation = localURL.appendingPathComponent("SafeDrive-Log.plist", isDirectory:false)
 
 
     // restore any saved error reports from previous sessions
