@@ -5,18 +5,13 @@
 #import <Foundation/Foundation.h>
 #import "MCSMKeychainItem.h"
 
-#ifdef DEBUG
-static NSString *SDSSHServiceName = @"staging.ssh.safedrive.io";
-#else
-static NSString *SDSSHServiceName = @"ssh.safedrive.io";
-#endif
-
 static int SSHAskPassReturnValueSuccess = 0;
 static int SSHAskPassReturnValueFailure = 1;
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         NSString *keychainAccount = [[[NSProcessInfo processInfo] environment] objectForKey:@"SSH_ACCOUNT"];
+        NSString *SDSSHServiceName = [[[NSProcessInfo processInfo] environment] objectForKey:@"SDSSHServiceName"];
 
         NSError *keychainError;
         MCSMKeychainItem *genericKeychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDSSHServiceName
