@@ -27,6 +27,9 @@
 		AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA5071571E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AA5071561E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg */; };
 		AA50716A1E2ED5F7006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
+		AA50716B1E2ED86A006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
+		AA50716C1E2ED86A006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
+		AA50716D1E2ED86C006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
 		AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */; };
 		AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C711BFC57B50008FB8B /* Settings-Background.png */; };
 		AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */; };
@@ -1278,6 +1281,7 @@
 				AA6E27351D8839DC00038019 /* SyncController.swift in Sources */,
 				AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */,
 				AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */,
+				AA50716D1E2ED86C006F59C8 /* Util.swift in Sources */,
 				AA6DCB2E1CA57D50001473B0 /* UnitTests.swift in Sources */,
 				AA6E27311D87855100038019 /* MountController.swift in Sources */,
 			);
@@ -1302,6 +1306,7 @@
 				AA5754101C8004660040E8B0 /* ServiceListenerDelegate.swift in Sources */,
 				AA5754051C7FFCC10040E8B0 /* AppDelegate.swift in Sources */,
 				AAD44A271D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */,
+				AA50716C1E2ED86A006F59C8 /* Util.swift in Sources */,
 				AAA88BCC1C83D240009BE1C7 /* Machine.swift in Sources */,
 				AAA88BD41C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 			);
@@ -1312,6 +1317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA6E272E1D876DD800038019 /* Notifications.swift in Sources */,
+				AA50716B1E2ED86A006F59C8 /* Util.swift in Sources */,
 				AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AAA88BCF1C83D243009BE1C7 /* SyncFolder.swift in Sources */,
 				AAA88BD51C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
