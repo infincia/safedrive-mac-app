@@ -26,6 +26,7 @@
 		AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; };
 		AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA5071571E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AA5071561E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg */; };
+		AA50716A1E2ED5F7006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
 		AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */; };
 		AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C711BFC57B50008FB8B /* Settings-Background.png */; };
 		AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */; };
@@ -260,6 +261,7 @@
 		AA4E77411A3E9B830054BBCA /* libPods-MCSMKeychainItem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-MCSMKeychainItem.a"; path = "../../../Users/steve/Library/Developer/Xcode/DerivedData/SafeDrive-chuvxsgbhfnlbyfxzkgdnlscvvoy/Build/Products/Debug/libPods-MCSMKeychainItem.a"; sourceTree = "<group>"; };
 		AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NMSSH.framework; path = Carthage/Build/Mac/NMSSH.framework; sourceTree = "<group>"; };
 		AA5071561E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FUSE for macOS 3.5.4.pkg"; path = "Bundled Dependencies/FUSE for macOS 3.5.4.pkg"; sourceTree = "<group>"; };
+		AA5071691E2ED5F7006F59C8 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = Shared/Util.swift; sourceTree = "<group>"; };
 		AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Storage-Status-backing.png"; sourceTree = "<group>"; };
 		AA543C711BFC57B50008FB8B /* Settings-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-Background.png"; sourceTree = "<group>"; };
 		AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Light.ttf"; sourceTree = "<group>"; };
@@ -566,6 +568,7 @@
 		AA3D8EBA1C3D80A100CF0A3C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				AA5071691E2ED5F7006F59C8 /* Util.swift */,
 				AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */,
 				AAA88BC81C8385A9009BE1C7 /* Machine.swift */,
 				AA6E272A1D876DD800038019 /* Notifications.swift */,
@@ -1235,6 +1238,7 @@
 				AA6E272B1D876DD800038019 /* Notifications.swift in Sources */,
 				AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */,
 				AA76DC231C8779D2007B320E /* WelcomeWindowController.swift in Sources */,
+				AA50716A1E2ED5F7006F59C8 /* Util.swift in Sources */,
 				AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */,
 				AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */,
 				AA6C5BBD1C9125D4001C2869 /* ServiceManager.swift in Sources */,

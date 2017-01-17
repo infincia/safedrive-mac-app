@@ -50,7 +50,7 @@ class AccountController: NSObject {
 
     override init() {
         super.init()
-        if let credentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDServiceNameProduction) {
+        if let credentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: accountCredentialDomain()) {
             self.email = credentials["account"]
             self.password = credentials["password"]
 
@@ -84,7 +84,7 @@ class AccountController: NSObject {
             complicates things and will take some planning to do.
 
         */
-        if let storedCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDServiceNameProduction),
+        if let storedCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: accountCredentialDomain()),
                let storedEmail = storedCredentials["account"] {
             if storedEmail != email {
                 // reset SyncFolder and SyncTask in database, user has changed since last sign-in
@@ -108,12 +108,12 @@ class AccountController: NSObject {
 
         }
         
-        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDRecoveryKeyServiceName)
+        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
         
         let recoveryPhrase = recoveryCredentials?["password"]
 
 
-        let keychainError: NSError? = self.sharedSystemAPI.insertCredentialsInKeychain(forService: SDServiceNameProduction, account: email, password: password) as NSError?
+        let keychainError: NSError? = self.sharedSystemAPI.insertCredentialsInKeychain(forService: accountCredentialDomain(), account: email, password: password) as NSError?
 
         if let keychainError = keychainError {
             SDErrorHandlerReport(keychainError)
@@ -138,7 +138,7 @@ class AccountController: NSObject {
 
                     self.remoteHost = accountStatus["host"] as? String
 
-                    let keychainError = self.sharedSystemAPI.insertCredentialsInKeychain(forService: SDSSHServiceName, account: self.internalUserName!, password: self.password!)
+                    let keychainError = self.sharedSystemAPI.insertCredentialsInKeychain(forService: sshCredentialDomain(), account: self.internalUserName!, password: self.password!)
                     if let keychainError = keychainError {
                         SDErrorHandlerReport(keychainError)
                         failureBlock(keychainError)
@@ -176,11 +176,7 @@ class AccountController: NSObject {
                         Crashlytics.sharedInstance().crash()
                         return
                     }
-                    guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
-                        SDLog("Failed to obtain group container, this is a fatal error")
-                        Crashlytics.sharedInstance().crash()
-                        return
-                    }
+                    let groupURL = storageURL()
                     
                     self.sdk.setUp(local_storage_path: groupURL.path, unique_client_id: clientID)
                     
@@ -195,7 +191,7 @@ class AccountController: NSObject {
                     do {
                         try self.sdk.loadKeys(recoveryPhrase, storePhrase: { (newPhrase) in
                             print("New recovery phrase: \(newPhrase)")
-                            let keychainError = self.sharedSystemAPI.insertCredentialsInKeychain(forService: SDRecoveryKeyServiceName, account: email, password: newPhrase)
+                            let keychainError = self.sharedSystemAPI.insertCredentialsInKeychain(forService: recoveryKeyDomain(), account: email, password: newPhrase)
                             if let keychainError = keychainError {
                                 SDErrorHandlerReport(keychainError)
                                 failureBlock(keychainError)
@@ -237,9 +233,9 @@ class AccountController: NSObject {
     }
 
     func signOutWithSuccess(_ successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
-        self.sharedSystemAPI.removeCredentialsInKeychain(forService: SDSessionServiceName)
-        self.sharedSystemAPI.removeCredentialsInKeychain(forService: SDSSHServiceName)
-        self.sharedSystemAPI.removeCredentialsInKeychain(forService: SDServiceNameProduction)
+        self.sharedSystemAPI.removeCredentialsInKeychain(forService: tokenDomain())
+        self.sharedSystemAPI.removeCredentialsInKeychain(forService: sshCredentialDomain())
+        self.sharedSystemAPI.removeCredentialsInKeychain(forService: accountCredentialDomain())
 
         self.signedIn = false
 

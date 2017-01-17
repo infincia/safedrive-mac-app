@@ -19,22 +19,6 @@ FOUNDATION_EXPORT NSString *const SDBuildVersionLastKey;
 FOUNDATION_EXPORT NSString *const SDCurrentVolumeNameKey;
 FOUNDATION_EXPORT NSString *const SDMountAtLaunchKey;
 
-
-#pragma mark - SafeDrive API constants
-
-FOUNDATION_EXPORT NSString *const SDAPIDomainStaging;
-FOUNDATION_EXPORT NSString *const SDAPIDomainProduction;
-FOUNDATION_EXPORT NSString *const SDWebDomain;
-
-#pragma mark - Keychain constants
-
-
-FOUNDATION_EXPORT NSString *const SDServiceNameProduction;
-FOUNDATION_EXPORT NSString *const SDServiceNameStaging;
-FOUNDATION_EXPORT NSString *const SDSSHServiceName;
-FOUNDATION_EXPORT NSString *const SDSessionServiceName;
-FOUNDATION_EXPORT NSString *const SDRecoveryKeyServiceName;
-
 NS_ASSUME_NONNULL_END
 
 #pragma mark - Status Enums

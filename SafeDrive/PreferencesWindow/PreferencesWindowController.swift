@@ -362,7 +362,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     func checkKeys() {
         // get recovery phrase from keychain
     
-        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDRecoveryKeyServiceName)
+        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
         
         if let recoveryPhrase = recoveryCredentials?["password"] {
             recoveryPhraseField.stringValue = recoveryPhrase

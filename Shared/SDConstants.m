@@ -18,21 +18,6 @@ NSString *const SDBuildVersionLastKey = @"SDBuildVersionLastKey";
 NSString *const SDCurrentVolumeNameKey = @"currentVolumeName";
 NSString *const SDMountAtLaunchKey = @"mountAtLaunch";
 
-#pragma mark - SafeDrive API constants
-
-NSString *const SDAPIDomainStaging = @"staging.safedrive.io";
-NSString *const SDAPIDomainProduction = @"safedrive.io";
-NSString *const SDWebDomain = @"safedrive.io";
-
-#pragma mark - Keychain constants
-
-
-NSString *const SDServiceNameProduction = @"safedrive.io";
-NSString *const SDServiceNameStaging = @"staging.safedrive.io";
-NSString *const SDSSHServiceName = @"ssh.safedrive.io";
-NSString *const SDSessionServiceName = @"session.safedrive.io";
-NSString *const SDRecoveryKeyServiceName = @"recovery.safedrive.io";
-
 #pragma mark - Errors
 
 NSString *const SDErrorDomain = @"io.safedrive";

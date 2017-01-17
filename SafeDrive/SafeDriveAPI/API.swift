@@ -120,12 +120,8 @@ enum Endpoint {
 }
 
 class API: NSObject, URLSessionDelegate {
-    #if DEBUG
-    static let domain = SDAPIDomainStaging
-    #else
-    static let domain = SDAPIDomainProduction
-    #endif
-
+    static let domain = apiDomain()
+    
     static let sharedAPI = API()
 
     fileprivate var URLSession: Foundation.URLSession!
@@ -136,7 +132,7 @@ class API: NSObject, URLSessionDelegate {
 
     var sessionToken: String? {
         get {
-            if let session = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: SDSessionServiceName) {
+            if let session = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: tokenDomain()) {
                 return session["password"]
             }
             return nil
@@ -237,7 +233,7 @@ class API: NSObject, URLSessionDelegate {
                         return
                     }
                     self.sessionToken = token
-                    self.sharedSystemAPI.insertCredentialsInKeychain(forService: SDSessionServiceName, account: user, password: token)
+                    self.sharedSystemAPI.insertCredentialsInKeychain(forService: tokenDomain(), account: user, password: token)
                     successBlock(token, identifier)
                 }
                 else {

@@ -129,11 +129,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     func applicationShouldFinishConfiguration(_ notification: Foundation.Notification) {
         DispatchQueue.main.async(execute: {() -> Void in
 
-            guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
-                SDLog("Failed to obtain group container, this is a fatal error")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
+            let groupURL = storageURL()
 
             do {
                 try FileManager.default.createDirectory(at: groupURL, withIntermediateDirectories: true, attributes: nil)
@@ -220,7 +216,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.aboutWindowController.appCredits = TSMarkdownParser.standard().attributedString(fromMarkdown: markdown)
             let version = "Version \(self.CFBundleShortVersionString!)-\(self.environment) (Build \(self.CFBundleVersion))"
             self.aboutWindowController.appVersion = version
-            let websiteURLPath: String = "https://\(SDWebDomain)"
+            let websiteURLPath: String = "https://\(webDomain())"
             self.aboutWindowController.appWebsiteURL = URL(string: websiteURLPath)!
 
             if self.accountController.hasCredentials {
