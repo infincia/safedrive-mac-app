@@ -146,6 +146,9 @@ class MountController: NSObject {
 
         /* pass the account name to the safedriveaskpass environment */
         sshfsEnvironment["SSH_ACCOUNT"] = user
+        
+        /* pass the current keychain ssh credential domain to the askpass environment */
+        sshfsEnvironment["SDSSHServiceName"] = sshCredentialDomain()
 
         /*
             remove any existing SSH agent socket in the subprocess environment so we
