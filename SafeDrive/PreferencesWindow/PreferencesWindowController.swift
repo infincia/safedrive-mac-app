@@ -392,6 +392,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         let panel: NSOpenPanel = NSOpenPanel()
         
         let encryptedCheckbox = NSButton()
+        let encryptedCheckboxTitle: String = NSLocalizedString("Encrypted", comment: "Option in select folder panel")
+        encryptedCheckbox.title = encryptedCheckboxTitle
         encryptedCheckbox.setButtonType(.switch)
         encryptedCheckbox.state = 1 //true
         panel.accessoryView = encryptedCheckbox
