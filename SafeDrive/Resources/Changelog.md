@@ -4,6 +4,26 @@ If you find a bug, please report it to the person you obtained the build from.
 
 #### Changelog
 
+**Changes in 0.9.19**
+
+- Ensure initial window isn't transparent
+    - Resolves [SD-133](https://jira.safedrive.io/browse/SD-133)
+    
+- Includes updated OSXFUSE package for osx 10.12 support
+
+- Includes encrypted sync 
+    - Adding folders as encrypted should work and is the default
+    - When adding a folder there will be an options button at the bottom,
+      click that and check or uncheck the encrypted box
+    
+- Known issues:
+    - Progress display during a sync isn't wired up
+    - Restore of encrypted folders isn't wired up
+    - Entering a previously generated recovery phrase isn't implemented yet
+    - Finder extension may not load at the moment
+
+
+
 **Changes in 0.9.18**
 
 - Add ability to delete sync folders when removing them from the account
