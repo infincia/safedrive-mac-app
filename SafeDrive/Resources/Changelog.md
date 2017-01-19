@@ -4,7 +4,17 @@ If you find a bug, please report it to the person you obtained the build from.
 
 #### Changelog
 
+**Changes in 0.9.20**
+
+- Includes SafeDrive SDDK 0.3.2
+- Fix issue with code signing/updates
+- Fix crash due to embedded library not being found
+- Fix high CPU use on mount/unmount
+- Fix settings menu not being disabled before login
+
 **Changes in 0.9.19**
+
+- Includes SafeDrive SDDK 0.3.0
 
 - Ensure initial window isn't transparent
     - Resolves [SD-133](https://jira.safedrive.io/browse/SD-133)
