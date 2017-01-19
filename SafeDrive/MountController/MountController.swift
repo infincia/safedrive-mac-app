@@ -339,6 +339,8 @@ class MountController: NSObject {
         */
         weak var weakSelf: MountController? = self
         self.sshfsTask.terminationHandler = { (task: Process) in
+            outputPipeHandle.readabilityHandler = nil
+            
             if task.terminationStatus == 0 {
                 DispatchQueue.main.sync(execute: {() -> Void in
                     weakSelf?.mountURL = mountURL
