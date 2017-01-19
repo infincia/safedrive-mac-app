@@ -1515,7 +1515,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/dist-x86_64-apple-darwin/include",
+					"$(PROJECT_DIR)/../safedrive-sdk/dist-x86_64-apple-darwin/include",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
@@ -1552,7 +1552,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/dist-x86_64-apple-darwin/include",
+					"$(PROJECT_DIR)/../safedrive-sdk/dist-x86_64-apple-darwin/include",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
