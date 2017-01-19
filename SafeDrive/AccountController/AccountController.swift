@@ -27,7 +27,7 @@ class AccountController: NSObject {
     
     fileprivate let accountQueue = DispatchQueue(label: "io.safedrive.accountQueue", attributes: DispatchQueue.Attributes.concurrent)
 
-    fileprivate var signedIn: Bool {
+    var signedIn: Bool {
         get {
             var s: Bool = false // sane default, signing in twice due to "false negative" doesn't hurt anything
             accountQueue.sync {
