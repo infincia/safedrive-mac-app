@@ -178,7 +178,13 @@ class AccountController: NSObject {
                     }
                     let groupURL = storageURL()
                     
-                    self.sdk.setUp(local_storage_path: groupURL.path, unique_client_id: clientID)
+                    do {
+                        try self.sdk.setUp(local_storage_path: groupURL.path, unique_client_id: clientID)
+                    }
+                    catch {
+                        SDLog("failed to initialize the sdk")
+                        Crashlytics.sharedInstance().crash()
+                    }
                     
                     do {
                         try self.sdk.login(email, password: password)
