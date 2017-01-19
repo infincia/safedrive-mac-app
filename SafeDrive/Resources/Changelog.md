@@ -4,6 +4,11 @@ If you find a bug, please report it to the person you obtained the build from.
 
 #### Changelog
 
+**Changes in 0.9.21**
+
+- Includes SafeDrive SDDK 0.3.4
+- Fix for Apple bug on 10.9 causing crash
+
 **Changes in 0.9.20**
 
 - Includes SafeDrive SDDK 0.3.2
