@@ -184,7 +184,7 @@ class AccountController: NSObject {
                         try self.sdk.login(email, password: password)
                     }
                     catch {
-                        print("failed to login with sdk")
+                        SDLog("failed to login with sdk")
                     }
                     
                     
@@ -200,7 +200,7 @@ class AccountController: NSObject {
                         })
                     }
                     catch {
-                        print("failed to load keys")
+                        SDLog("failed to load keys")
                     }
         
                     NotificationCenter.default.post(name: Notification.Name.sdkReady, object: nil)
