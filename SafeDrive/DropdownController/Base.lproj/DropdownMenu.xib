@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A319" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DropdownController" customModule="SafeDrive" customModuleProvider="target">
@@ -16,34 +16,29 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu id="Utt-EH-yKf" userLabel="Status Item Menu">
             <items>
-                <menuItem title="Connect" id="UpL-Lb-jBl">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Connect" keyEquivalent="m" id="UpL-Lb-jBl">
                     <connections>
                         <action selector="toggleMount:" target="-2" id="AbD-p0-4gP"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Settings" id="BHr-Vz-MCm">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Settings" keyEquivalent="s" id="BHr-Vz-MCm">
                     <connections>
                         <action selector="openPreferencesWindow:" target="-2" id="GVB-Ca-zFA"/>
                         <binding destination="-2" name="enabled" keyPath="self.sharedAccountController.signedIn" id="FQ9-Ha-zDP"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Check For Updates..." id="9eo-yk-BqO">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Check For Updates..." keyEquivalent="u" id="9eo-yk-BqO">
                     <connections>
                         <action selector="checkForUpdates:" target="rSt-bK-Zej" id="CZP-YW-i6T"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="UFs-K9-Db6"/>
-                <menuItem title="About" id="ZYj-54-W6V">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="About" keyEquivalent="a" id="ZYj-54-W6V">
                     <connections>
                         <action selector="openAboutWindow:" target="-2" id="2RD-4J-puM"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Quit" id="CHy-oK-4Q4">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Quit" keyEquivalent="q" id="CHy-oK-4Q4">
                     <connections>
                         <action selector="terminate:" target="-1" id="U04-bI-4G0"/>
                     </connections>
