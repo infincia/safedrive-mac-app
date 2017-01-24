@@ -291,7 +291,7 @@
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
 		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
-		AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafeDriveSDK.xcodeproj; path = "../safedrive-sdk/SafeDriveSDK.xcodeproj"; sourceTree = "<group>"; };
+		AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafeDriveSDK.xcodeproj; path = "safedrive-sdk/SafeDriveSDK.xcodeproj"; sourceTree = "<group>"; };
 		AA76DC201C8762A9007B320E /* Installer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Installer.swift; path = Installer/Installer.swift; sourceTree = "<group>"; };
 		AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeWindowController.swift; path = Installer/WelcomeWindowController.swift; sourceTree = "<group>"; };
 		AA76DC281C879076007B320E /* WelcomeWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeWindow.xib; path = Installer/WelcomeWindow.xib; sourceTree = "<group>"; };
@@ -1521,7 +1521,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/../safedrive-sdk/dist-x86_64-apple-darwin/include",
+					"$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/include",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
@@ -1558,7 +1558,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/../safedrive-sdk/dist-x86_64-apple-darwin/include",
+					"$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/include",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
