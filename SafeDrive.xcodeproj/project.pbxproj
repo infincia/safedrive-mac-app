@@ -1509,7 +1509,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3A6E325ECFDFC6166274A27C /* Pods-SafeDrive.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1547,7 +1547,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 81810F9B8E9F2AB8468A4A0C /* Pods-SafeDrive.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1676,7 +1676,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 446CEAF581261A2CE8036039 /* Pods-SafeDriveService.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Service/SafeDriveService.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
@@ -1705,7 +1705,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F2E81629B3367D715FA39D12 /* Pods-SafeDriveService.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Service/SafeDriveService.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
@@ -1733,6 +1733,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 38D98E94ED68A38C2752F529 /* Pods-SafeDriveFinder.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Finder/Finder.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
@@ -1760,6 +1761,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7EB73E606E32D60409155C42 /* Pods-SafeDriveFinder.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Finder/Finder.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
