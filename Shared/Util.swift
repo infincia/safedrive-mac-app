@@ -51,6 +51,14 @@ func storageURL() -> URL {
     return u
 }
 
+func currentConfiguration() -> Bool {
+    #if DEBUG
+    return false
+    #else
+    return true
+    #endif
+}
+
 func isProduction() -> Bool {
     #if DEBUG
     return false
