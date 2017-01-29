@@ -173,6 +173,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                             newObject!["encrypted"] = false
                         }
                     }
+                    
+                    // update for current sync UUID field
+                    migration.enumerateObjects(ofType: SyncFolder.className()) { oldObject, newObject in
+                        if oldSchemaVersion < 11 {
+                            newObject!["currentSyncUUID"] = nil
+                        }
+                    }
             })
 
             Realm.Configuration.defaultConfiguration = config

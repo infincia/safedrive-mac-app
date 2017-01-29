@@ -13,6 +13,9 @@ class SyncFolder: Object {
     dynamic var uniqueID: Int32 = 0
     dynamic var syncing: Bool = false
     dynamic var restoring: Bool = false
+    
+    dynamic var currentSyncUUID: String?
+
     dynamic var syncFrequency: String = "daily"
     
     dynamic var added: Date? = nil

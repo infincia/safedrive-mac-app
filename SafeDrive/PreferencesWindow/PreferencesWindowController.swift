@@ -429,10 +429,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     try! realm.write {
                         realm.add(syncFolder, update: true)
                     }
-                    let type: SyncType = syncFolder.encrypted ? .encrypted : .unencrypted
 
                     self.readSyncFolders(self)
-                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward, type: type)
+
+                    self.startSync(folderID, encrypted: syncFolder.encrypted)
 
                 }, failure: { (apiError: Swift.Error) -> Void in
                     SDErrorHandlerReport(apiError)
@@ -673,7 +673,18 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         
         let folder = realm.objects(SyncFolder.self).filter("machine == %@ AND uniqueID == %@", currentMachine, folderID).last!
         
-        startRestore(folderID, encrypted: folder.encrypted)
+        var name: UUID
+        if folder.encrypted {
+            // show a window asking the user to pick from the list of available sessions and grab the name
+            name = UUID()
+            SDLog("restoring encrypted folders not implemented in mac app yet")
+            Crashlytics.sharedInstance().crash()
+        }
+        else {
+            // unencrypted folders have no versioning, so the name is arbitrary
+            name = UUID()
+        }
+        startRestore(folderID, encrypted: folder.encrypted, name: name)
     }
 
     @IBAction func stopSyncNow(_ sender: AnyObject) {
@@ -687,10 +698,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     func startSync(_ folderID: Int32, encrypted: Bool) {
         let type: SyncType = encrypted ? .encrypted : .unencrypted
-        self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward, type: type)
+        self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward, type: type, name: UUID())
     }
 
-    func startRestore(_ folderID: Int, encrypted: Bool) {
+    func startRestore(_ folderID: Int32, encrypted: Bool, name: UUID) {
         let type: SyncType = encrypted ? .encrypted : .unencrypted
 
         let alert = NSAlert()
@@ -709,7 +720,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             case NSAlertSecondButtonReturn:
                 // cancel any sync in progress so we don't have two rsync processes overwriting each other
                 self.syncScheduler.cancel(folderID) {
-                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .reverse, type: type)
+                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .reverse, type: type, name: name)
                 }
                 break
             default:
