@@ -12,6 +12,9 @@ NSInteger const SDDefaultServerPort = 22;
 
 NSString *const SDBuildVersionLastKey = @"SDBuildVersionLastKey";
 
+#pragma mark - Realm constants
+
+NSUInteger const SDCurrentRealmSchema = 10;
 
 #pragma mark - NSUserDefaults keys
 

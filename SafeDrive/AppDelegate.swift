@@ -148,9 +148,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 fileURL: dbURL,
                 // Set the new schema version. This must be greater than the previously used
                 // version (if you've never set a schema version before, the version is 0).
-                schemaVersion: 10,
+                schemaVersion: UInt64(SDCurrentRealmSchema),
                 migrationBlock: { migration, oldSchemaVersion in
-                    SDLog("Migrating db version \(oldSchemaVersion) to 10")
+                    SDLog("Migrating db version \(oldSchemaVersion) to \(SDCurrentRealmSchema)")
                     migration.enumerateObjects(ofType: Machine.className()) { oldObject, newObject in
                         if oldSchemaVersion < 6 {
                             migration.delete(newObject!)

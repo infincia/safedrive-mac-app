@@ -26,7 +26,7 @@ class FinderSync: FIFinderSync {
         var config = Realm.Configuration()
         
         config.fileURL = dbURL
-        config.schemaVersion = 9
+        config.schemaVersion = UInt64(SDCurrentRealmSchema)
         
         Realm.Configuration.defaultConfiguration = config
         

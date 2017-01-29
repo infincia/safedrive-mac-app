@@ -14,6 +14,10 @@ FOUNDATION_EXPORT NSInteger const SDDefaultServerPort;
 
 FOUNDATION_EXPORT NSString *const SDBuildVersionLastKey;
 
+#pragma mark - Realm constants
+
+FOUNDATION_EXPORT NSUInteger const SDCurrentRealmSchema;
+
 #pragma mark - NSUserDefaults keys
 
 FOUNDATION_EXPORT NSString *const SDCurrentVolumeNameKey;
