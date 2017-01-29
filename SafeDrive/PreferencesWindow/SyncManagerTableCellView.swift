@@ -5,15 +5,15 @@
 import Cocoa
 
 class SyncManagerTableCellView: NSTableCellView {
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
+    
     required override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
     }
-
+    
     @IBOutlet var lockButton: NSButton!
     @IBOutlet var addButton: NSButton!
     @IBOutlet var removeButton: NSButton!

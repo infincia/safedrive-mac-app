@@ -18,25 +18,25 @@ let reporterInterval: TimeInterval = 60
 let maxLogSize = 100
 
 
-    // MARK: 
-    // MARK: Public API
+// MARK:
+// MARK: Public API
 
-func SDErrorHandlerInitialize() {    
+func SDErrorHandlerInitialize() {
     let localURL = storageURL()
     
     /*
-        Set serializedErrorLocation to an NSURL corresponding to:
-        ~/Library/Application Support/SafeDrive/SafeDrive-Errors.plist
-    */
+     Set serializedErrorLocation to an NSURL corresponding to:
+     ~/Library/Application Support/SafeDrive/SafeDrive-Errors.plist
+     */
     serializedErrorLocation = localURL.appendingPathComponent("SafeDrive-Errors.plist", isDirectory:false)
     
     /*
-        Set serializedErrorLocation to an NSURL corresponding to:
-        ~/Library/Application Support/SafeDrive/SafeDrive-Log.plist
-    */
+     Set serializedErrorLocation to an NSURL corresponding to:
+     ~/Library/Application Support/SafeDrive/SafeDrive-Log.plist
+     */
     serializedLogLocation = localURL.appendingPathComponent("SafeDrive-Log.plist", isDirectory:false)
-
-
+    
+    
     // restore any saved error reports from previous sessions
     if let archivedLogBuffer = NSKeyedUnarchiver.unarchiveObject(withFile: serializedLogLocation.path) as? [String] {
         logBuffer = archivedLogBuffer
@@ -72,7 +72,7 @@ func SDLog(_ line: String, _ arguments: CVarArg...) -> Void {
             shiftLog()
             saveLog()
         }
-
+        
     }
 }
 
@@ -83,33 +83,33 @@ func SDErrorHandlerReport(_ error: Error?) {
     // always report errors to crashlytics
     Crashlytics.sharedInstance().recordError(error)
     #if DEBUG
-
+        
     #else
-    // don't even add error reports to the SD telemetry log unless we're in a RELEASE build
-
-    // using archived NSError so the array can be serialized as a plist
-    errorQueue.sync {
-        let whitelistErrorDomains = [SDErrorDomain, SDErrorSyncDomain, SDErrorSSHFSDomain, SDErrorAccountDomain, SDErrorAPIDomain, SDMountErrorDomain]
-        var isAllowedErrorDomain = false
-        for whitelistedDomain in whitelistErrorDomains {
-            if (error._domain == whitelistedDomain) {
-                isAllowedErrorDomain = true
+        // don't even add error reports to the SD telemetry log unless we're in a RELEASE build
+        
+        // using archived NSError so the array can be serialized as a plist
+        errorQueue.sync {
+            let whitelistErrorDomains = [SDErrorDomain, SDErrorSyncDomain, SDErrorSSHFSDomain, SDErrorAccountDomain, SDErrorAPIDomain, SDMountErrorDomain]
+            var isAllowedErrorDomain = false
+            for whitelistedDomain in whitelistErrorDomains {
+                if (error._domain == whitelistedDomain) {
+                    isAllowedErrorDomain = true
+                }
             }
-         }
-        if !isAllowedErrorDomain { return }
-        let report: [String : Any] = [ "error": NSKeyedArchiver.archivedData(withRootObject: error),
-                                       "log": NSKeyedArchiver.archivedData(withRootObject: logBuffer),
-                                       "user": currentUser ]
-        errors.insert(report, at:0)
-        saveErrors()
-    }
+            if !isAllowedErrorDomain { return }
+            let report: [String : Any] = [ "error": NSKeyedArchiver.archivedData(withRootObject: error),
+                                           "log": NSKeyedArchiver.archivedData(withRootObject: logBuffer),
+                                           "user": currentUser ]
+            errors.insert(report, at:0)
+            saveErrors()
+        }
     #endif
 }
 
 func SDUncaughtExceptionHandler(exception:NSException!) {
     let stack = exception.callStackReturnAddresses
     print("Stack trace: %@", stack)
-
+    
     errorQueue.sync {
         let report: [String : Any] = [ "stack": stack,
                                        "log": logBuffer,
@@ -119,8 +119,8 @@ func SDUncaughtExceptionHandler(exception:NSException!) {
     }
 }
 
-    // MARK: 
-    // MARK: Private APIs
+// MARK:
+// MARK: Private APIs
 
 func startReportQueue() {
     DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
@@ -137,7 +137,7 @@ func startReportQueue() {
                     let reportLogArchive = report["log"] as! Data
                     
                     let archivedError = report["error"] as! Data
-
+                    
                     // Logs are stored as NSData in the log buffer so they can be transparently serialized to disk,
                     // so we must unarchive them before use
                     let reportLog = NSKeyedUnarchiver.unarchiveObject(with: reportLogArchive) as! [String]
@@ -153,7 +153,7 @@ func startReportQueue() {
                     API.sharedAPI.reportError(error, forUser:reportUser, withLog:reportLog, completionQueue:errorQueue, success:{
                         
                         saveErrors()
-                   
+                        
                     }, failure:{ (apiError) in
                         
                         // put the report back in the queue and save it since this attempt failed
@@ -164,7 +164,7 @@ func startReportQueue() {
                 }
             }
             Thread.sleep(forTimeInterval: reporterInterval)
-         }
+        }
     }
 }
 

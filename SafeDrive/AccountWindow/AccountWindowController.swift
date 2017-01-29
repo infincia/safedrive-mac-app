@@ -5,43 +5,43 @@
 import Cocoa
 
 class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolumeEventProtocol {
-
+    
     var safeDriveAPI = API.sharedAPI
     var mountController = MountController.shared
     var sharedSystemAPI = SDSystemAPI.shared()
-
+    
     var accountController = AccountController.sharedAccountController
-
+    
     @IBOutlet var emailField: NSTextField!
     @IBOutlet var passwordField: NSTextField!
     @IBOutlet var volumeNameField: NSTextField!
-
+    
     @IBOutlet var errorField: NSTextField!
-
+    
     @IBOutlet var spinner: NSProgressIndicator!
-
+    
     var currentlyDisplayedError: NSError?
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     convenience init() {
         self.init(windowNibName: "AccountWindow")
     }
-
+    
     override func windowDidLoad() {
         super.windowDidLoad()
-
+        
         let window = self.window as! FlatWindow
-
+        
         window.keepOnTop = true
-
+        
         self.passwordField.focusRingType = .none
-
+        
         // reset error field to empty before display
         self.resetErrorDisplay()
-
+        
         // register SDMountStateProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted(_:)), name: Notification.Name.mounted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted(_:)), name: Notification.Name.unmounted, object: nil)
@@ -51,24 +51,24 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: Notification.Name.volumeDidUnmount, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount(_:)), name: Notification.Name.volumeShouldUnmount, object: nil)
     }
-
+    
     @IBAction func signIn(_ sender: AnyObject) {
         self.resetErrorDisplay()
-
+        
         let e: NSError = NSError(domain: SDErrorDomain, code: SDErrorNone, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Signing in to SafeDrive", comment: "String informing the user that they are being signed in to SafeDrive")])
-
-
+        
+        
         self.displayError(e, forDuration: 120)
         self.spinner.startAnimation(self)
-
+        
         self.accountController.signInWithSuccess({() -> Void in
             NotificationCenter.default.post(name: Notification.Name.accountAuthenticated, object: nil)
             self.resetErrorDisplay()
             self.spinner.stopAnimation(self)
-
+            
             // only mount SSHFS automatically if the user set it to automount or clicked the button, in which case sender will
             // be the NSButton in the account window labeled "next"
-
+            
             if self.sharedSystemAPI.mountAtLaunch || sender is NSButton {
                 let mountURL = self.mountController.mountURL(forVolumeName: self.sharedSystemAPI.currentVolumeName)
                 if !self.sharedSystemAPI.check(forMountedVolume: mountURL) {
@@ -83,9 +83,9 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             self.showWindow(nil)
         })
     }
-
+    
     // MARK: Internal API
-
+    
     func connectVolume() {
         self.resetErrorDisplay()
         self.mountController.mounting = true
@@ -93,7 +93,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         self.displayError(displayMessage, forDuration: 120)
         self.spinner.startAnimation(self)
         let volumeName: String = UserDefaults.standard.object(forKey: SDCurrentVolumeNameKey) as? String ?? SDDefaultVolumeName
-
+        
         var urlComponents = URLComponents()
         urlComponents.user = self.accountController.internalUserName
         urlComponents.host = self.accountController.remoteHost
@@ -102,25 +102,25 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         let sshURL: URL = urlComponents.url!
         
         self.mountController.startMountTask(volumeName: volumeName, sshURL: sshURL, success: { mountURL in
-
+            
             /*
              now check for a successful mount. if after 30 seconds there is no volume
              mounted, it is a fair bet that an error occurred in the meantime
              */
-
+            
             self.sharedSystemAPI.check(forMountedVolume: mountURL, withTimeout: 30, success: {() -> Void in
                 NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                 self.resetErrorDisplay()
                 self.spinner.stopAnimation(self)
                 self.mountController.mounting = false
-                }, failure: {(error) -> Void in
-                    SDLog("SafeDrive checkForMountedVolume  failure in account window")
-                    self.displayError(error as NSError, forDuration: 10)
-                    self.spinner.stopAnimation(self)
-                    self.mountController.mounting = false
+            }, failure: {(error) -> Void in
+                SDLog("SafeDrive checkForMountedVolume  failure in account window")
+                self.displayError(error as NSError, forDuration: 10)
+                self.spinner.stopAnimation(self)
+                self.mountController.mounting = false
             })
-
-
+            
+            
         }, failure: { (url, mountError) in
             SDLog("SafeDrive startMountTaskWithVolumeName failure in account window")
             SDErrorHandlerReport(mountError)
@@ -135,14 +135,14 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             })
         })
     }
-
+    
     // MARK: Error display
-
+    
     func resetErrorDisplay() {
         self.currentlyDisplayedError = nil
         self.errorField.stringValue = ""
     }
-
+    
     func displayError(_ error: Swift.Error, forDuration duration: TimeInterval) {
         assert(Thread.isMainThread, "Error display called on background thread")
         self.currentlyDisplayedError = error as NSError
@@ -162,37 +162,37 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             }
         })
     }
-
+    
     // MARK: SDVolumeEventProtocol methods
-
-
+    
+    
     func volumeDidMount(_ notification: Notification) {
         self.close()
         NSWorkspace.shared().open((self.mountController.mountURL)!)
         //var mountSuccess: NSError = NSError(domain: SDErrorDomain, code: SDErrorNone, userInfo: [NSLocalizedDescriptionKey: "Volume mounted"])
         //self.displayError(mountSuccess, forDuration: 10)
-
+        
     }
-
+    
     func volumeDidUnmount(_ notification: Notification) {
         NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAccountWindow, object: nil)
     }
-
+    
     func volumeSubprocessDidTerminate(_ notification: Notification) {
     }
-
+    
     func volumeShouldUnmount(_ notification: Notification) {
     }
-
+    
     // MARK: SDMountStateProtocol methods
-
-
+    
+    
     func mountStateMounted(_ notification: Notification) {
     }
-
+    
     func mountStateUnmounted(_ notification: Notification) {
     }
-
+    
     func mountStateDetails(_ notification: Notification) {
     }
 }

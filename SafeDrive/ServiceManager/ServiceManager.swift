@@ -6,13 +6,13 @@ import Cocoa
 
 class ServiceManager: NSObject {
     static let sharedServiceManager = ServiceManager()
-
+    
     override init() {
         super.init()
         self.serviceLoop()
     }
-
-
+    
+    
     var serviceStatus: Bool {
         get {
             guard let _ = SMJobCopyDictionary(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString)) else {
@@ -21,7 +21,7 @@ class ServiceManager: NSObject {
             return true
         }
     }
-
+    
     fileprivate func serviceLoop() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             while true {
@@ -33,12 +33,12 @@ class ServiceManager: NSObject {
             }
         })
     }
-
+    
     func loadService() {
         let servicePlist: URL = Bundle.main.url(forResource: "io.safedrive.SafeDrive.Service", withExtension: "plist")!
         let jobDict = NSDictionary(contentsOfFile: servicePlist.path)
         var jobError: Unmanaged<CFError>? = nil
-
+        
         if !SMJobSubmit(kSMDomainUserLaunchd, jobDict!, nil, &jobError) {
             if let error = jobError?.takeRetainedValue() {
                 SDLog("Load service error: \(error)")
@@ -47,7 +47,7 @@ class ServiceManager: NSObject {
             }
         }
     }
-
+    
     func unloadService() {
         var jobError: Unmanaged<CFError>? = nil
         if !SMJobRemove(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString), nil, true, &jobError) {

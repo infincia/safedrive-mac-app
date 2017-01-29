@@ -9,8 +9,8 @@ import Realm
 import RealmSwift
 
 class FinderSync: FIFinderSync {
-
-
+    
+    
     var appConnection: NSXPCConnection?
     var serviceConnection: NSXPCConnection?
     
@@ -22,7 +22,7 @@ class FinderSync: FIFinderSync {
     
     override init() {
         super.init()
-
+        
         var config = Realm.Configuration()
         
         config.fileURL = dbURL
@@ -274,7 +274,7 @@ class FinderSync: FIFinderSync {
         let app = a.remoteObjectProxyWithErrorHandler { error in
             print("remote proxy error: \(error)")
         } as! AppXPCProtocol
-
+        
         app.displayRestoreWindow(forURLs: [])
     }
     

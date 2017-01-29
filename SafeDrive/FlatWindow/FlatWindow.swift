@@ -19,9 +19,9 @@ class FlatWindowBackgroundView: NSImageView {
 
 class FlatWindow: NSWindow {
     var closeButton = NSButton(frame: NSZeroRect)
-
+    
     var _keepOnTop = false
-
+    
     var keepOnTop: Bool {
         get {
             return _keepOnTop
@@ -44,33 +44,33 @@ class FlatWindow: NSWindow {
         let size = 9
         self.closeButton.frame = NSRect(x: offset + 4, y: Int(self.frame.height) - size - offset, width: size, height: size)
         self.contentView?.addSubview(self.closeButton)
-
+        
     }
-
+    
     override var isMovableByWindowBackground: Bool {
         get {
             return true
         }
         set {
-
+            
         }
     }
-
+    
     override var canBecomeKey: Bool {
         get {
             return true
         }
         set {
-
+            
         }
     }
-
+    
     override var canBecomeMain: Bool {
         get {
             return true
         }
         set {
-
+            
         }
     }
 }

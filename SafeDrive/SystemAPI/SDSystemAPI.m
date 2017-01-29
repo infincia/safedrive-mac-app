@@ -65,44 +65,44 @@
         if (serialNumberAsCFString) {
             serial = CFBridgingRelease(serialNumberAsCFString);
         }
-
+        
         IOObjectRelease(platformExpert);
     }
     return serial;
 }
 
 -(NSString * _Nullable)en0MAC {
-	int	   mib[6];
+    int	   mib[6];
     size_t len;
-	char   *buf;
-	unsigned char		*ptr;
-	struct if_msghdr	*ifm;
-	struct sockaddr_dl	*sdl;
+    char   *buf;
+    unsigned char		*ptr;
+    struct if_msghdr	*ifm;
+    struct sockaddr_dl	*sdl;
     NSString *mac;
-
-	mib[0] = CTL_NET;
-	mib[1] = AF_ROUTE;
-	mib[2] = 0;
-	mib[3] = AF_LINK;
-	mib[4] = NET_RT_IFLIST;
-	mib[5] = if_nametoindex("en0");
-
-	if (sysctl(mib, 6, NULL, &len, NULL, 0) < 0) {
+    
+    mib[0] = CTL_NET;
+    mib[1] = AF_ROUTE;
+    mib[2] = 0;
+    mib[3] = AF_LINK;
+    mib[4] = NET_RT_IFLIST;
+    mib[5] = if_nametoindex("en0");
+    
+    if (sysctl(mib, 6, NULL, &len, NULL, 0) < 0) {
         return nil;
-	}
-
-	if ((buf = malloc(len)) == NULL) {
+    }
+    
+    if ((buf = malloc(len)) == NULL) {
         return nil;
-	}
-
-	if (sysctl(mib, 6, buf, &len, NULL, 0) < 0) {
-		free(buf);
+    }
+    
+    if (sysctl(mib, 6, buf, &len, NULL, 0) < 0) {
+        free(buf);
         return nil;
-	}
-
-	ifm = (struct if_msghdr *)buf;
-	sdl = (struct sockaddr_dl *)(ifm + 1);
-	ptr = (unsigned char *)LLADDR(sdl);
+    }
+    
+    ifm = (struct if_msghdr *)buf;
+    sdl = (struct sockaddr_dl *)(ifm + 1);
+    ptr = (unsigned char *)LLADDR(sdl);
     mac = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x", *ptr, *(ptr+1), *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5)];
     free(buf);
     return mac;
@@ -110,7 +110,7 @@
 
 -(NSString * _Nullable)currentOSVersion {
     NSDictionary *systemVersionDictionary = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-
+    
     NSString *systemVersion = [systemVersionDictionary objectForKey:@"ProductVersion"];
     return systemVersion;
 }
@@ -136,9 +136,9 @@
     NSError *error;
     mountpointInfo = [[NSFileManager defaultManager] attributesOfFileSystemForPath:mountURL.path error:&error];
     if (error) {
-    #ifdef DEBUG
+#ifdef DEBUG
         NSLog(@"Mount details error: %@", error.localizedDescription);
-    #endif
+#endif
     }
     return mountpointInfo;
 }
@@ -156,7 +156,7 @@
 
 -(void)checkForMountedVolume:(NSURL * _Nonnull)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
     NSAssert([NSThread currentThread] == [NSThread mainThread], @"Mount check called on background thread");
-
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (NSInteger remainingTime = timeout; remainingTime > 0; remainingTime--) {
             if ([self checkForMountedVolume:mountURL]) {
@@ -211,11 +211,11 @@
 -(NSDictionary<NSString *, NSString *>* _Nullable)retrieveCredentialsFromKeychainForService:(NSString * _Nonnull)service {
     NSDictionary *credentials = nil;
     NSError *error;
-
+    
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
-                                                                                        account:nil
-                                                                                    attributes:nil
-                                                                                         error:&error];
+                                                                                    account:nil
+                                                                                 attributes:nil
+                                                                                      error:&error];
     if (error) {
         //SDLog(@"Failure retrieving %@ credentials: %@", service, error.localizedDescription);
     }
@@ -226,7 +226,7 @@
 }
 
 -(NSError * _Nullable)insertCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password {
-
+    
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
                                                                                     account:nil
                                                                                  attributes:nil
@@ -243,7 +243,7 @@
             NSString *keychainErrorString = (id) CFBridgingRelease(err);
             NSLog(@"Keychain remove error: %@, query: %@", keychainErrorString, keychainRemoveError.userInfo[MCSMKeychainItemQueryKey]);
             return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
-;
+            ;
         }
     }
     NSError *keychainInsertError;
@@ -257,13 +257,13 @@
         NSString *keychainErrorString = (id) CFBridgingRelease(err);
         NSLog(@"Keychain insert credential error: %@, query: %@", keychainErrorString, keychainInsertError.userInfo[MCSMKeychainItemQueryKey]);
         return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
-;
+        ;
     }
     return nil;
 }
 
 -(NSError * _Nullable)removeCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account {
-
+    
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
                                                                                     account:account
                                                                                  attributes:nil

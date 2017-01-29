@@ -18,7 +18,7 @@ extension Int {
 class CrashAlert {
     class func show() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
-
+            
             let suppressCrashAlerts = UserDefaults.standard.bool(forKey: "suppressCrashAlerts")
             if !suppressCrashAlerts {
                 DispatchQueue.main.async(execute: {() -> Void in
@@ -28,11 +28,11 @@ class CrashAlert {
                     alert.informativeText = "A crash report has been submitted automatically"
                     alert.alertStyle = .warning
                     alert.showsSuppressionButton = true
-
+                    
                     alert.runModal()
-
+                    
                     let shouldSuppressAlerts = alert.suppressionButton!.state.toBool()
-
+                    
                     UserDefaults.standard.set(shouldSuppressAlerts, forKey: "suppressCrashAlerts")
                 })
             }
