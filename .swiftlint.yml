@@ -1,0 +1,25 @@
+disabled_rules: # rule identifiers to exclude from running
+  - force_cast
+  - function_body_length
+  - leading_whitespace
+  - trailing_whitespace
+  - vertical_whitespace
+  - line_length
+  - cyclomatic_complexity
+  - mark
+  - function_parameter_count
+  - type_body_length
+opt_in_rules: # some rules are only opt-in
+  # - empty_count
+  # - missing_docs
+  # Find all the available rules by running:
+  # swiftlint rules
+included: # paths to include during linting. `--path` is ignored if present.
+  - SafeDrive
+  - Service
+  - Shared
+  - Finder
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Carthage
+  - Pods
+  - SafeDriveTests

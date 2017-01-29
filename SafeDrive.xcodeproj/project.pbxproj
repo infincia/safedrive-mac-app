@@ -741,6 +741,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA3168301A191B72006CC0EB /* Build configuration list for PBXNativeTarget "SafeDrive" */;
 			buildPhases = (
+				AA7FE7AD1E3DA3FC007EDF70 /* SwiftLint */,
 				8DE689EEFEE78B3473A2BF65 /* [CP] Check Pods Manifest.lock */,
 				AAFEF7EE1C6FC361001C4358 /* Update versions */,
 				AA31680F1A191B72006CC0EB /* Sources */,
@@ -1136,6 +1137,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		AA7FE7AD1E3DA3FC007EDF70 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		AAE474851BFBC1E200B1A555 /* Fabric.io */ = {
 			isa = PBXShellScriptBuildPhase;
