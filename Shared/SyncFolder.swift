@@ -10,7 +10,7 @@ class SyncFolder: Object {
     
     dynamic var name: String?
     dynamic var path: String?
-    dynamic var uniqueID: Int = 0
+    dynamic var uniqueID: Int32 = 0
     dynamic var syncing: Bool = false
     dynamic var restoring: Bool = false
     dynamic var syncFrequency: String = "daily"
@@ -31,7 +31,7 @@ class SyncFolder: Object {
         return nil
     }
 
-    convenience required init(name: String, url: URL, uniqueID: Int, encrypted: Bool) {
+    convenience required init(name: String, url: URL, uniqueID: Int32, encrypted: Bool) {
         self.init()
         self.name = name
         self.path = url.path
@@ -46,7 +46,7 @@ class SyncFolder: Object {
         self.encrypted = encrypted
     }
     
-    convenience required init(name: String, path: String, uniqueID: Int, encrypted: Bool) {
+    convenience required init(name: String, path: String, uniqueID: Int32, encrypted: Bool) {
         self.init()
         self.name = name
         self.path = path

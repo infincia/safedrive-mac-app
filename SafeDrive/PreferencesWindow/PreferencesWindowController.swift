@@ -449,7 +449,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     @IBAction func removeSyncFolder(_ sender: AnyObject) {
         let button: NSButton = sender as! NSButton
-        let uniqueID: Int = button.tag
+        let uniqueID: Int32 = Int32(button.tag)
         SDLog("Deleting sync folder ID: %lu", uniqueID)
         let alert = NSAlert()
         alert.addButton(withTitle: "Cancel")
@@ -575,7 +575,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
                 let folderName = folder["folderName"] as! String
                 let folderPath = folder["folderPath"]  as! String
-                let folderId = folder["id"] as! Int
+                let folderId = folder["id"] as! Int32
 
                 let addedUnixDate: Double = folder["addedDate"] as! Double
 
@@ -638,7 +638,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     @IBAction func startSyncNow(_ sender: AnyObject) {
         let button: NSButton = sender as! NSButton
-        let folderID: Int = button.tag
+        let folderID: Int32 = Int32(button.tag)
         
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")
@@ -658,7 +658,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     @IBAction func startRestoreNow(_ sender: AnyObject) {
         let button: NSButton = sender as! NSButton
-        let folderID: Int = button.tag
+        let folderID: Int32 = Int32(button.tag)
         
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")
@@ -678,14 +678,14 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
 
     @IBAction func stopSyncNow(_ sender: AnyObject) {
         let button: NSButton = sender as! NSButton
-        let folderID: Int = button.tag
+        let folderID: Int32 = Int32(button.tag)
         stopSync(folderID)
     }
 
 
     // MARK: Sync control
 
-    func startSync(_ folderID: Int, encrypted: Bool) {
+    func startSync(_ folderID: Int32, encrypted: Bool) {
         let type: SyncType = encrypted ? .encrypted : .unencrypted
         self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward, type: type)
     }
@@ -718,7 +718,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         }) 
     }
 
-    func stopSync(_ folderID: Int) {
+    func stopSync(_ folderID: Int32) {
 
         let alert = NSAlert()
         alert.addButton(withTitle: "No")
@@ -859,9 +859,9 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             let cellImage: NSImage = NSWorkspace.shared().icon(forFileType: NSFileTypeForHFSTypeCode(OSType(kGenericFolderIcon)))
             cellImage.size = NSMakeSize(15.0, 15.0)
             tableCellView.imageView!.image = cellImage
-            tableCellView.removeButton.tag = syncFolder.uniqueID
-            tableCellView.syncNowButton.tag = syncFolder.uniqueID
-            tableCellView.restoreNowButton.tag = syncFolder.uniqueID
+            tableCellView.removeButton.tag = Int(syncFolder.uniqueID)
+            tableCellView.syncNowButton.tag = Int(syncFolder.uniqueID)
+            tableCellView.restoreNowButton.tag = Int(syncFolder.uniqueID)
 
             if syncFolder.syncing || syncFolder.restoring {
                 tableCellView.restoreNowButton.isEnabled = false

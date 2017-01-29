@@ -13,7 +13,7 @@ class SyncController: Equatable {
     fileprivate var syncTerminated = false
     fileprivate let syncProgressQueue = DispatchQueue(label: "io.safedrive.SafeDrive.syncprogress", attributes: [])
 
-    var uniqueID: Int = -1
+    var uniqueID: Int32 = -1
     
     var encrypted: Bool = false
     

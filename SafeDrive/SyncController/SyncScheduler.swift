@@ -22,7 +22,7 @@ enum SyncType {
 
 struct SyncEvent {
     let uniqueClientID: String
-    let folderID: Int
+    let folderID: Int32
     let direction: SyncDirection
     let type: SyncType
 }

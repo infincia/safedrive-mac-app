@@ -18,7 +18,7 @@ enum Endpoint {
     case accountDetails
     case createFolder([String:AnyObject])
     case readFolders
-    case deleteFolder(Int)
+    case deleteFolder(Int32)
     case hostFingerprints
     case apiStatus
 
@@ -346,7 +346,7 @@ class API: NSObject, URLSessionDelegate {
                     guard let data = data,
                               let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
                               let JSON = raw as? [String: AnyObject],
-                              let folderID: Int = JSON["id"] as? Int else {
+                              let folderID: Int32 = JSON["id"] as? Int32 else {
                         let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/create>"])
                         failureBlock(responseError)
                         return
