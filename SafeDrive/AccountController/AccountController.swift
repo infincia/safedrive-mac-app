@@ -178,8 +178,15 @@ class AccountController: NSObject {
                     }
                     let groupURL = storageURL()
                     
+                    var config: SDKConfiguration
+                    if isProduction() {
+                        config = SDKConfiguration.Production
+                    }
+                    else {
+                        config = SDKConfiguration.Staging
+                    }
                     do {
-                        try self.sdk.setUp(local_storage_path: groupURL.path, unique_client_id: clientID)
+                        try self.sdk.setUp(local_storage_path: groupURL.path, unique_client_id: clientID, config: config)
                     }
                     catch {
                         SDLog("failed to initialize the sdk")
