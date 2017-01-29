@@ -40,8 +40,7 @@ class FinderSync: FIFinderSync {
         FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImageNameStatusUnavailable)!, label: "Error", forBadgeIdentifier: "error")
         
         FIFinderSyncController.default().directoryURLs = Set<URL>()
-        
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
+        DispatchQueue.global(qos: DispatchQoS.default.qosClass).async(execute: {() -> Void in
             self.serviceReconnectionLoop()
         })
         
