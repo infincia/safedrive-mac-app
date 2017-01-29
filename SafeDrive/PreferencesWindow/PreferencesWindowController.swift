@@ -675,10 +675,19 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         
         var name: UUID
         if folder.encrypted {
-            // show a window asking the user to pick from the list of available sessions and grab the name
             name = UUID()
-            SDLog("restoring encrypted folders not implemented in mac app yet")
-            Crashlytics.sharedInstance().crash()
+            // TODO: show a window asking the user to pick from the list of available sessions and grab the name
+            let message = "Restoring encrypted folders is not implemented in mac app yet\n\nWe still need to add a session selection screen to allow a specific version to be restored"
+            
+            DispatchQueue.main.async(execute: {() -> Void in
+                let alert = NSAlert()
+                alert.addButton(withTitle: "OK")
+                alert.messageText = "Not implemented yet"
+                alert.informativeText = message
+                alert.alertStyle = NSAlertStyle.critical
+                alert.runModal()
+            })
+            return
         }
         else {
             // unencrypted folders have no versioning, so the name is arbitrary
