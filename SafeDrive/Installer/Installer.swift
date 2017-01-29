@@ -2,6 +2,9 @@
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
+// swiftlint:disable force_cast
+
+
 import Foundation
 
 protocol InstallerDelegate {
@@ -42,13 +45,15 @@ class Installer {
     
     func deployService() {
         let fileManager: FileManager = FileManager.default
-        
+        // swiftlint:disable force_try
+
         let libraryURL = try! fileManager.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         
         let launchAgentsURL = libraryURL.appendingPathComponent("LaunchAgents", isDirectory: true)
         
         let applicationSupportURL = try! fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        
+        // swiftlint:enable force_try
+
         let safeDriveApplicationSupportURL = applicationSupportURL.appendingPathComponent("SafeDrive", isDirectory: true)
         
         let serviceDestinationURL = safeDriveApplicationSupportURL.appendingPathComponent("SafeDriveService.app", isDirectory: true)

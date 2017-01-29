@@ -2,6 +2,8 @@
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
+// swiftlint:disable file_length
+
 import SafeDriveSDK
 
 class SyncController: Equatable {

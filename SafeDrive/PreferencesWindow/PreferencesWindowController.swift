@@ -2,6 +2,9 @@
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
+// swiftlint:disable force_cast
+// swiftlint:disable type_body_length
+// swiftlint:disable file_length
 
 import Cocoa
 
@@ -426,10 +429,12 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     
                     syncFolder.machine = self.mac
                     
+                    // swiftlint:disable force_try
                     try! realm.write {
                         realm.add(syncFolder, update: true)
                     }
-                    
+                    // swiftlint:enable force_try
+
                     self.readSyncFolders(self)
                     
                     self.startSync(folderID, encrypted: syncFolder.encrypted)
@@ -603,6 +608,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: folderId, encrypted: encrypted)
                 }
                 
+                // swiftlint:disable force_try
                 try! realm.write {
                     
                     syncFolder!.machine = currentMachine
@@ -612,6 +618,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     
                     realm.add(syncFolder!, update: true)
                 }
+                // swiftlint:enable force_try
+
             }
             self.reload()
             
@@ -1124,10 +1132,11 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             let syncFolders = realm.objects(SyncFolder.self)
             
             let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
-            
+            // swiftlint:disable force_try
             try! realm.write {
                 realSyncFolder.syncFrequency = syncFrequency
             }
+            // swiftlint:enable force_try
         }
     }
     
@@ -1167,10 +1176,11 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             let syncFolders = realm.objects(SyncFolder.self)
             
             let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
-            
+            // swiftlint:disable force_try
             try! realm.write {
                 realSyncFolder.syncTime = self.syncTimePicker.dateValue
             }
+            // swiftlint:enable force_try
         }
     }
     

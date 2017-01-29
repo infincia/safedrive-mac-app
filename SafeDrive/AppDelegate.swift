@@ -2,6 +2,9 @@
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
+// swiftlint:disable force_cast
+
+
 import Cocoa
 
 import Fabric
@@ -192,10 +195,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 } catch {
                     // ignored, file may not exist at all, but if it does and we can't remove it we'll crash next and get a report
                 }
+                // swiftlint:disable force_try
                 let realm = try! Realm(fileURL: dbURL)
                 try! realm.writeCopy(toFile: newdbURL)
                 try! fileManager.removeItem(at: dbURL)
                 try! fileManager.moveItem(at: newdbURL, to: dbURL)
+                // swiftlint:enable force_try
+
             }
             
             DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in

@@ -2,6 +2,8 @@
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
+// swiftlint:disable force_cast
+
 import Cocoa
 import FinderSync
 
@@ -29,9 +31,9 @@ class FinderSync: FIFinderSync {
         config.schemaVersion = UInt64(SDCurrentRealmSchema)
         
         Realm.Configuration.defaultConfiguration = config
-        
+        // swiftlint:disable force_try
         let realm = try! Realm()
-        
+        // swiftlint:enable force_try
         self.syncFolders = realm.objects(SyncFolder.self)
         
         // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.

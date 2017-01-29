@@ -2,6 +2,8 @@
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
+// swiftlint:disable force_cast
+// swiftlint:disable file_length
 
 import Foundation
 
@@ -85,7 +87,7 @@ enum Endpoint {
         u.scheme = "https"
         u.host = API.domain
         u.path = path
-        
+        // swiftlint:disable force_try
         switch self {
         case .errorLog(let parameters):
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -113,6 +115,7 @@ enum Endpoint {
         case .apiStatus:
             break
         }
+        // swiftlint:enable force_try
         SDLog("API request: <\(method.rawValue):\(u.url!)>")
         request.url = u.url!
         return request as URLRequest
