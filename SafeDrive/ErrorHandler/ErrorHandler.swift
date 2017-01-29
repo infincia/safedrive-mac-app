@@ -93,18 +93,14 @@ func SDErrorHandlerReport(_ error: Error?) {
         // using archived NSError so the array can be serialized as a plist
         errorQueue.sync {
             let whitelistErrorDomains = [SDErrorDomain, SDErrorSyncDomain, SDErrorSSHFSDomain, SDErrorAccountDomain, SDErrorAPIDomain, SDMountErrorDomain]
-            var isAllowedErrorDomain = false
-            for whitelistedDomain in whitelistErrorDomains {
-                if (error._domain == whitelistedDomain) {
-                    isAllowedErrorDomain = true
-                }
+            
+            if whitelistErrorDomains.contains(error._domain) {
+                let report: [String : Any] = [ "error": NSKeyedArchiver.archivedData(withRootObject: error),
+                                               "log": NSKeyedArchiver.archivedData(withRootObject: logBuffer),
+                                               "user": currentUser ]
+                errors.insert(report, at:0)
+                saveErrors()
             }
-            if !isAllowedErrorDomain { return }
-            let report: [String : Any] = [ "error": NSKeyedArchiver.archivedData(withRootObject: error),
-                                           "log": NSKeyedArchiver.archivedData(withRootObject: logBuffer),
-                                           "user": currentUser ]
-            errors.insert(report, at:0)
-            saveErrors()
         }
     #endif
 }
