@@ -188,18 +188,19 @@ class AccountController: NSObject {
                     do {
                         try self.sdk.setUp(local_storage_path: groupURL.path, unique_client_id: clientID, config: config)
                     }
-                    catch {
-                        SDLog("failed to initialize the sdk")
+                    catch let error as SDKError {
+                        SDLog("failed to initialize the sdk: \(error.message)")
                         Crashlytics.sharedInstance().crash()
                     }
+                    catch {}
                     
                     do {
                         try self.sdk.login(email, password: password)
                     }
-                    catch {
-                        SDLog("failed to login with sdk")
+                    catch let error as SDKError {
+                        SDLog("failed to login with sdk: \(error.message)")
                     }
-                    
+                    catch {}
                     
                     do {
                         try self.sdk.loadKeys(recoveryPhrase, storePhrase: { (newPhrase) in
@@ -212,10 +213,11 @@ class AccountController: NSObject {
                             }
                         })
                     }
-                    catch {
-                        SDLog("failed to load keys")
+                    catch let error as SDKError {
+                        SDLog("failed to load keys: \(error.message)")
                     }
-        
+                    catch {}
+                    
                     NotificationCenter.default.post(name: Notification.Name.sdkReady, object: nil)
 
                     NotificationCenter.default.post(name: Notification.Name.accountAuthenticated, object: clientID)
