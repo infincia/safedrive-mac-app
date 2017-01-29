@@ -32,7 +32,7 @@ class SyncController: Equatable {
         return (left.uniqueID == right.uniqueID)
     }
 
-    func sftpOperation(_ op: SDSFTPOperation, remoteDirectory serverURL: URL, password: String, success successBlock: @escaping SDSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+    func sftpOperation(_ op: SDSFTPOperation, remoteDirectory serverURL: URL, password: String, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         if let l = NMSSHLogger.shared() {
             l.logLevel = NMSSHLogLevel.error
             l.logBlock = { (level,format) in
@@ -170,7 +170,7 @@ class SyncController: Equatable {
     // MARK: 
     // MARK: Public API
 
-    func stopSyncTask(_ completion:@escaping SDSuccessBlock) {
+    func stopSyncTask(_ completion: @escaping () -> Void) {
         self.syncTerminated = true
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async(execute: {
             if !self.encrypted {
@@ -186,12 +186,12 @@ class SyncController: Equatable {
 
     }
     
-    func startSyncTask(progress progressBlock:@escaping SDSyncProgressBlock, success successBlock:@escaping SDSyncResultBlock, failure failureBlock:@escaping SDSyncResultBlock) {
+    func startSyncTask(progress progressBlock: @escaping (_ progress: Double, _ bandwidth: String) -> Void, success successBlock: @escaping (_ local: URL) -> Void, failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         if self.encrypted {
             startEncryptedSyncTask(progress: { (percent, bandwidth) in
                 progressBlock(percent, bandwidth)
-            }, success: { (url, error) in
-                successBlock(url, error)
+            }, success: { (url) in
+                successBlock(url)
             }, failure: { (url, error) in
                 failureBlock(url, error)
             })
@@ -199,8 +199,8 @@ class SyncController: Equatable {
         else {
             startUnencryptedSyncTask(progress: { (percent, bandwidth) in
                 progressBlock(percent, bandwidth)
-            }, success: { (url, error) in
-                successBlock(url, error)
+            }, success: { (url) in
+                successBlock(url)
             }, failure: { (url, error) in
                 failureBlock(url, error)
             })
@@ -208,12 +208,12 @@ class SyncController: Equatable {
         
     }
     
-    fileprivate func startEncryptedSyncTask(progress progressBlock:@escaping SDSyncProgressBlock, success successBlock:@escaping SDSyncResultBlock, failure failureBlock:@escaping SDSyncResultBlock) {
+    fileprivate func startEncryptedSyncTask(progress progressBlock: @escaping (_ progress: Double, _ bandwidth: String) -> Void, success successBlock: @escaping (_ local: URL) -> Void, failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         if self.restore {
             self.sdk.restoreFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, destination: self.localURL, progress: { (total, current, percent) in
                 progressBlock(percent, "0KB/s")
             }, success: {
-                successBlock(self.localURL, nil)
+                successBlock(self.localURL)
             }) { (error) in
                 failureBlock(self.localURL, error)
             }
@@ -222,14 +222,14 @@ class SyncController: Equatable {
             self.sdk.syncFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, progress: { (total, current, percent) in
                 progressBlock(percent, "0KB/s")
             }, success: {
-                successBlock(self.localURL, nil)
+                successBlock(self.localURL)
             }) { (error) in
                 failureBlock(self.localURL, error)
             }
         }
     }
 
-    fileprivate func startUnencryptedSyncTask(progress progressBlock:@escaping SDSyncProgressBlock, success successBlock:@escaping SDSyncResultBlock, failure failureBlock:@escaping SDSyncResultBlock) {
+    fileprivate func startUnencryptedSyncTask(progress progressBlock: @escaping (_ progress: Double, _ bandwidth: String) -> Void, success successBlock: @escaping (_ local: URL) -> Void, failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         assert(Thread.current != Thread.main, "Sync task started from main thread")
 
         let fileManager = FileManager.default
@@ -506,7 +506,7 @@ class SyncController: Equatable {
                     }
                     // need to explicitly check if a sync failure occurred as the return value of 0 doesn't indicate success
                     if !s.syncFailure {
-                        successBlock(self.localURL, nil)
+                        successBlock(self.localURL)
                     }
                 })
             }

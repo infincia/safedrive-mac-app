@@ -149,7 +149,7 @@ class API: NSObject, URLSessionDelegate {
 
     // MARK: Telemetry API
 
-    func reportError(_ error: NSError, forUser user: String, withLog log: [String], completionQueue queue: DispatchQueue, success successBlock: @escaping SDSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+    func reportError(_ error: NSError, forUser user: String, withLog log: [String], completionQueue queue: DispatchQueue, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         var postParameters = [String : AnyObject]()
         let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
         postParameters["operatingSystem"] = os as AnyObject?
@@ -199,7 +199,7 @@ class API: NSObject, URLSessionDelegate {
 
     // MARK: Account API
 
-    func registerMachineWithUser(_ user: String, password: String, success successBlock: @escaping SDAPIClientRegistrationSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+    func registerMachineWithUser(_ user: String, password: String, success successBlock: @escaping (_ token: String, _ uniqueClientId: String) -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         let languageCode: String = Locale.preferredLanguages[0]
         let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
         let macAddress: String = self.sharedSystemAPI.en0MAC()!
@@ -256,7 +256,7 @@ class API: NSObject, URLSessionDelegate {
     }
 
 
-    func accountStatusForUser(_ user: String, success successBlock: @escaping SDAPIAccountStatusBlock, failure failureBlock: @escaping SDFailureBlock) {
+    func accountStatusForUser(_ user: String, success successBlock: @escaping ([String: NSObject]) -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         let endpoint = Endpoint.accountStatus
         
         let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
@@ -293,7 +293,8 @@ class API: NSObject, URLSessionDelegate {
         dataTask.resume()
     }
 
-    func accountDetailsForUser(_ user: String, success successBlock: @escaping SDAPIAccountDetailsBlock, failure failureBlock: @escaping SDFailureBlock) {
+    func accountDetailsForUser(_ user: String, success successBlock: @escaping ([String: NSObject]) -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
+
         let endpoint = Endpoint.accountDetails
         
         let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
@@ -332,7 +333,7 @@ class API: NSObject, URLSessionDelegate {
 
     // MARK: Sync folder handling
 
-    func createSyncFolder(_ localFolder: URL, encrypted: Bool, success successBlock: @escaping SDAPICreateSyncFolderSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+    func createSyncFolder(_ localFolder: URL, encrypted: Bool, success successBlock: @escaping (_ folderID: Int32) -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         let postParameters: [String : Any] = ["folderName": localFolder.lastPathComponent.lowercased(), "folderPath": localFolder.path, "encrypted": encrypted]
         let endpoint = Endpoint.createFolder(postParameters as [String : AnyObject])
         
@@ -371,7 +372,7 @@ class API: NSObject, URLSessionDelegate {
         dataTask.resume()
     }
 
-    func readSyncFoldersWithSuccess(_ successBlock: @escaping SDAPIReadSyncFoldersSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+    func readSyncFoldersWithSuccess(_ successBlock: @escaping (_ folders: [[String: NSObject]]) -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         let endpoint = Endpoint.readFolders
         
         let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
@@ -408,7 +409,7 @@ class API: NSObject, URLSessionDelegate {
         dataTask.resume()
     }
 
-    func deleteSyncFolder(_ folderId: Int, success successBlock: @escaping SDAPIDeleteSyncFoldersSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+    func deleteSyncFolder(_ folderId: Int32, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         let endpoint = Endpoint.deleteFolder(folderId)
         
         let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
@@ -440,7 +441,7 @@ class API: NSObject, URLSessionDelegate {
 
     // MARK: Unused
 
-    func getHostFingerprintList(_ successBlock: @escaping SDAPIFingerprintListSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+    func getHostFingerprintList(_ successBlock: @escaping (_ fingerprints: [String: String]) -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         let endpoint = Endpoint.hostFingerprints
 
         let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in
@@ -463,7 +464,7 @@ class API: NSObject, URLSessionDelegate {
         dataTask.resume()
     }
     
-    func apiStatus(_ successBlock: @escaping SDSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+    func apiStatus(_ successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         let endpoint = Endpoint.apiStatus
 
         let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { data, response, error in

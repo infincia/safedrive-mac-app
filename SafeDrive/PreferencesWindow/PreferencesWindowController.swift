@@ -412,7 +412,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             if result == NSFileHandlingPanelOKButton {
                 self.spinner.startAnimation(self)
                 let isEncrypted = (encryptedCheckbox.state == 1)
-                self.sharedSafedriveAPI.createSyncFolder(panel.url!, encrypted: isEncrypted, success: { (folderID: Int) -> Void in
+                self.sharedSafedriveAPI.createSyncFolder(panel.url!, encrypted: isEncrypted, success: { (folderID: Int32) -> Void in
                     guard let realm = try? Realm() else {
                         SDLog("failed to create realm!!!")
                         Crashlytics.sharedInstance().crash()

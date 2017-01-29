@@ -218,7 +218,7 @@ class SyncScheduler {
         self.running = false
     }
 
-    func cancel(_ uniqueID: Int, completion: @escaping SDSuccessBlock) {
+    func cancel(_ uniqueID: Int32, completion: @escaping () -> Void) {
         for syncController in self.syncControllers {
             if syncController.uniqueID == uniqueID {
                 syncController.stopSyncTask() {
@@ -307,7 +307,7 @@ class SyncScheduler {
                 try! realm.write {
                     realm.create(SyncTask.self, value: ["uuid": uuid.uuidString, "progress": percent, "bandwidth": bandwidth], update: true)
                 }
-            }, success: { (syncURL: URL, error: Swift.Error?) -> Void in
+            }, success: { (local: URL) -> Void in
                 SDLog("Sync finished for \(localFolder.path)")
                 guard let realm = try? Realm() else {
                     SDLog("failed to create realm!!!")

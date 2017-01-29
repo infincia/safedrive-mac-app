@@ -63,7 +63,7 @@ class AccountController: NSObject {
 
     }
 
-    func signInWithSuccess(_ successBlock: @escaping SDSuccessBlock, failure failureBlock: @escaping SDFailureBlock) {
+    func signInWithSuccess(_ successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         guard let email = self.email, let password = self.password else {
             return
         }
@@ -124,11 +124,11 @@ class AccountController: NSObject {
         SDErrorHandlerSetUser(email)
 
         self.sharedSafedriveAPI.registerMachineWithUser(email, password: password, success: { (sessionToken: String, clientID: String) -> Void in
-            self.sharedSafedriveAPI.accountStatusForUser(email, success: { (accountStatus: [String : NSObject]?) -> Void in
+            self.sharedSafedriveAPI.accountStatusForUser(email, success: { (accountStatus: [String : NSObject]) -> Void in
                 self.signedIn = true
                 Crashlytics.sharedInstance().setUserIdentifier(clientID)
 
-                if let accountStatus = accountStatus {
+
                     DispatchQueue.main.async(execute: {() -> Void in
                         NotificationCenter.default.post(name: Notification.Name.accountStatus, object: accountStatus)
                     })
@@ -213,7 +213,7 @@ class AccountController: NSObject {
 
                     NotificationCenter.default.post(name: Notification.Name.accountAuthenticated, object: clientID)
                     successBlock()
-                }
+                
             }, failure: { (error: Swift.Error) -> Void in
                 failureBlock(error)
 
@@ -238,7 +238,7 @@ class AccountController: NSObject {
         })
     }
 
-    func signOutWithSuccess(_ successBlock: SDSuccessBlock, failure failureBlock: SDFailureBlock) {
+    func signOutWithSuccess(_ successBlock: () -> Void, failure failureBlock: (_ error: Error) -> Void) {
         self.sharedSystemAPI.removeCredentialsInKeychain(forService: tokenDomain())
         self.sharedSystemAPI.removeCredentialsInKeychain(forService: sshCredentialDomain())
         self.sharedSystemAPI.removeCredentialsInKeychain(forService: accountCredentialDomain())

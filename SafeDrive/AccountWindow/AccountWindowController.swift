@@ -101,7 +101,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         urlComponents.port = self.accountController.remotePort as Int?
         let sshURL: URL = urlComponents.url!
         
-        self.mountController.startMountTask(volumeName: volumeName, sshURL: sshURL, success: { (mountURL, error) in
+        self.mountController.startMountTask(volumeName: volumeName, sshURL: sshURL, success: { mountURL in
 
             /*
              now check for a successful mount. if after 30 seconds there is no volume
@@ -128,7 +128,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             self.spinner.stopAnimation(self)
             self.mountController.mounting = false
             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
-            self.mountController.unmountVolume(name: volumeName, success: { (mountURL, mountError) in
+            self.mountController.unmountVolume(name: volumeName, success: { mountURL in
                 //
             }, failure: { (mountURL, mountError) in
                 //

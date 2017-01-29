@@ -184,23 +184,6 @@ typedef NS_ENUM(NSInteger, SDSyncState) {
 typedef void(^SDSuccessBlock)();
 typedef void(^SDFailureBlock)(NSError * _Nonnull apiError);
 
-typedef void(^SDMountSuccessBlock)(NSURL * _Nonnull mountURL, NSError * _Nullable mountError);
-typedef void(^SDMountFailureBlock)(NSURL * _Nonnull mountURL, NSError * _Nonnull mountError);
-
-typedef void(^SDAPIClientRegistrationSuccessBlock)(NSString * _Nonnull sessionToken, NSString * _Nonnull clientID);
-
-typedef void(^SDAPIAccountStatusBlock)(NSDictionary <NSString *, NSObject *>* _Nullable accountStatus);
-typedef void(^SDAPIAccountDetailsBlock)(NSDictionary <NSString *, NSObject *>* _Nullable accountDetails);
-
-typedef void(^SDAPIFingerprintListSuccessBlock)(NSDictionary * _Nonnull fingerprintPairs);
-
-typedef void(^SDAPICreateSyncFolderSuccessBlock)(NSInteger folderID);
-typedef void(^SDAPIReadSyncFoldersSuccessBlock)(NSArray<NSDictionary<NSString *, NSObject *>*> * _Nonnull folders);
-typedef void(^SDAPIDeleteSyncFoldersSuccessBlock)();
-
-typedef void(^SDSyncProgressBlock)(double progress, NSString * _Nonnull bandwidth);
-typedef void(^SDSyncResultBlock)(NSURL * _Nonnull syncURL, NSError * _Nullable syncError);
-
 #pragma mark - Global functions
 
 NSString * _Nonnull SDErrorToString(NSError * _Nonnull error);
