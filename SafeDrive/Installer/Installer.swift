@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol InstallerDelegate {
+protocol InstallerDelegate: class {
     func needsDependencies()
     func didValidateDependencies()
 }
 
 class Installer {
     
-    var delegate: InstallerDelegate
+    weak var delegate: InstallerDelegate?
     
     var needsUpdate: Bool = false
     
@@ -31,14 +31,14 @@ class Installer {
                 if !self.promptedForInstall {
                     self.promptedForInstall = true
                     DispatchQueue.main.sync(execute: {() -> Void in
-                        self.delegate.needsDependencies()
+                        self.delegate?.needsDependencies()
                     })
                 }
                 Thread.sleep(forTimeInterval: 1)
             }
             self.deployService()
             DispatchQueue.main.sync(execute: {() -> Void in
-                self.delegate.didValidateDependencies()
+                self.delegate?.didValidateDependencies()
             })
         })
     }
@@ -110,8 +110,8 @@ class Installer {
         privilegedTask.setArguments(["-pkg", (osxfuseURL?.path)!, "-target", "/"])
         let err = privilegedTask.launch()
         
-        if (err != errAuthorizationSuccess) {
-            if (err == errAuthorizationCanceled) {
+        if err != errAuthorizationSuccess {
+            if err == errAuthorizationCanceled {
                 SDLog("User cancelled installer")
             } else {
                 SDLog("Installer could not be launched")

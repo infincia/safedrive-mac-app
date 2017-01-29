@@ -24,7 +24,7 @@ extension Date {
         return (Calendar.current as NSCalendar).nextDate(after: self, matching: components, options: [.matchNextTime, .matchStrictly])
     }
     func nextMonthAt(_ hour: Int, minute: Int) -> Date? {
-        let componentMask : NSCalendar.Unit = [.year, .month, .day, .hour, .minute]
+        let componentMask: NSCalendar.Unit = [.year, .month, .day, .hour, .minute]
         var components = (Calendar.current as NSCalendar).components(componentMask, from: self)
         if var month = components.month {
             month  += 1

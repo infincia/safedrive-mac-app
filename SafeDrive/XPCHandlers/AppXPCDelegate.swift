@@ -7,7 +7,7 @@ import Foundation
 
 class AppXPCDelegate: NSObject, AppXPCProtocol {
     
-    func sendMessage(_ message: String, reply replyBlock: @escaping (String) -> Void) -> Void {
+    func sendMessage(_ message: String, reply replyBlock: @escaping (String) -> Void) {
         
     }
     
@@ -15,8 +15,8 @@ class AppXPCDelegate: NSObject, AppXPCProtocol {
         replyBlock("ack")
     }
     
-    func protocolVersion(_ replyBlock: @escaping (NSNumber) -> Void) -> Void {
-        replyBlock(NSNumber(integerLiteral: kAppXPCProtocolVersion))
+    func protocolVersion(_ replyBlock: @escaping (Int) -> Void) {
+        replyBlock(kAppXPCProtocolVersion)
     }
     
     func displayPreferencesWindow() {

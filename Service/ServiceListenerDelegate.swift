@@ -27,8 +27,8 @@ class ServiceListenerDelegate: NSObject, NSXPCListenerDelegate, ServiceXPCProtoc
         
     }
     
-    func protocolVersion(_ replyBlock: @escaping (NSNumber) -> Void) {
-        replyBlock(NSNumber(integerLiteral: kServiceXPCProtocolVersion))
+    func protocolVersion(_ replyBlock: @escaping (Int) -> Void) {
+        replyBlock(kServiceXPCProtocolVersion)
         
     }
     

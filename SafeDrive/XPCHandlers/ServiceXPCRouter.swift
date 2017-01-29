@@ -3,12 +3,12 @@
 
 import ServiceManagement
 
-class ServiceXPCRouter : NSObject, NSXPCListenerDelegate {
+class ServiceXPCRouter: NSObject, NSXPCListenerDelegate {
     
     private var serviceConnection: NSXPCConnection?
     private var appListener: NSXPCListener
     private var currentServiceVersion = NSDecimalNumber(string: "0")
-    private var appXPCDelegate: AppXPCDelegate
+    private weak var appXPCDelegate: AppXPCDelegate?
     
     override init() {
         
@@ -64,18 +64,18 @@ class ServiceXPCRouter : NSObject, NSXPCListenerDelegate {
     }
     
     func serviceReconnectionLoop() {
-        while true  {
+        while true {
             //[self ensureServiceIsRunning];
-            if (self.serviceConnection == nil) {
+            if self.serviceConnection == nil {
                 
                 self.serviceConnection = self.createServiceConnection()
                 
                 if let s = self.serviceConnection {
-                    let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                    let proxy = s.remoteObjectProxyWithErrorHandler({ (_) in
                         //
                     }) as! ServiceXPCProtocol
                     
-                    proxy.sendAppEndpoint(self.appListener.endpoint, reply:{ (success) in
+                    proxy.sendAppEndpoint(self.appListener.endpoint, reply: { (_) in
                         
                     })
                     
@@ -83,13 +83,13 @@ class ServiceXPCRouter : NSObject, NSXPCListenerDelegate {
                 Thread.sleep(forTimeInterval: 1)
             }
             if let s = self.serviceConnection {
-                let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                let proxy = s.remoteObjectProxyWithErrorHandler({ (_) in
                     //
                 }) as! ServiceXPCProtocol
                 
-                proxy.protocolVersion({ (version:NSNumber!) in
+                proxy.protocolVersion({ (version: Int!) in
                     
-                    if version.intValue != kServiceXPCProtocolVersion {
+                    if version != kServiceXPCProtocolVersion {
                         SDLog("Service needs to be updated!!!!!")
                         if let s = self.serviceConnection {
                             s.invalidate()

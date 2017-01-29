@@ -14,12 +14,11 @@ class ServiceManager: NSObject {
     
     
     var serviceStatus: Bool {
-        get {
-            guard let _ = SMJobCopyDictionary(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString)) else {
-                return false
-            }
-            return true
+        guard let _ = SMJobCopyDictionary(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString)) else {
+            return false
         }
+        return true
+        
     }
     
     fileprivate func serviceLoop() {

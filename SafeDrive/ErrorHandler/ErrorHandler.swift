@@ -7,7 +7,7 @@
 import Crashlytics
 
 var logBuffer = [String]()
-var errors = [[AnyHashable:Any]]()
+var errors = [[AnyHashable: Any]]()
 let errorQueue = DispatchQueue(label: "io.safedrive.errorQueue", attributes: [])
 
 var serializedErrorLocation: URL!
@@ -60,7 +60,7 @@ func SDErrorHandlerSetUser(_ user: String?) {
     currentUser = user
 }
 
-func SDLog(_ line: String, _ arguments: CVarArg...) -> Void {
+func SDLog(_ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) {
         let st = String(format: line, arguments: arguments)
         // pass through to Crashlytics
@@ -109,7 +109,7 @@ func SDErrorHandlerReport(_ error: Error?) {
     #endif
 }
 
-func SDUncaughtExceptionHandler(exception:NSException!) {
+func SDUncaughtExceptionHandler(exception: NSException!) {
     let stack = exception.callStackReturnAddresses
     print("Stack trace: %@", stack)
     
@@ -153,11 +153,11 @@ func startReportQueue() {
                     //note: passing the same queue we're in here is only OK because the called method uses it
                     //      with dispatch_async, if that were not the case this would deadlock forever
                     
-                    API.sharedAPI.reportError(error, forUser:reportUser, withLog:reportLog, completionQueue:errorQueue, success:{
+                    API.sharedAPI.reportError(error, forUser:reportUser, withLog:reportLog, completionQueue:errorQueue, success: {
                         
                         saveErrors()
                         
-                    }, failure:{ (apiError) in
+                    }, failure: { (_) in
                         
                         // put the report back in the queue and save it since this attempt failed
                         errors.insert(report, at:0)

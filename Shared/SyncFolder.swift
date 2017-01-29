@@ -18,11 +18,11 @@ class SyncFolder: Object {
 
     dynamic var syncFrequency: String = "daily"
     
-    dynamic var added: Date? = nil
+    dynamic var added: Date?
     
-    dynamic var syncTime: Date? = nil
+    dynamic var syncTime: Date?
     
-    dynamic var machine: Machine? = nil
+    dynamic var machine: Machine?
     
     dynamic var encrypted: Bool = false
 
@@ -68,9 +68,9 @@ class SyncFolder: Object {
         return "uniqueID"
     }
     
-    class func hasConflictingFolderRegistered<S : Sequence>(_ testFolder: String, syncFolders: S) -> Bool where S.Iterator.Element == SyncFolder {
+    class func hasConflictingFolderRegistered<S: Sequence>(_ testFolder: String, syncFolders: S) -> Bool where S.Iterator.Element == SyncFolder {
         let testURL = URL(fileURLWithPath: testFolder, isDirectory: true)
-        for folder in syncFolders  {
+        for folder in syncFolders {
             let registeredPath: String = folder.url!.absoluteString
             let options: NSString.CompareOptions = [.anchored, .caseInsensitive]
             // check if testFolder is a parent or subdirectory of an existing folder

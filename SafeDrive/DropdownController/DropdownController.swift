@@ -9,26 +9,26 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     @IBOutlet var statusItemMenu: NSMenu!
     @IBOutlet var connectMenuItem: NSMenuItem!
     @IBOutlet var preferencesMenuItem: NSMenuItem!
-    
+
     fileprivate var safeDriveAPI = API.sharedAPI
     fileprivate var mountController = MountController.shared
     fileprivate var sharedSystemAPI = SDSystemAPI.shared()
-    
-    
+
+
     var sharedAccountController = AccountController.sharedAccountController
-    
+
     fileprivate var menuBarImage: NSImage? {
         get {
             return self.statusItem?.image
         }
-        
+
         set(image) {
             // needed for OS X 10.10's dark mode
             image?.isTemplate = true
             self.statusItem?.image = image
         }
     }
-    
+
     override init() {
         super.init()
         Bundle.main.loadNibNamed("DropdownMenu", owner: self, topLevelObjects: nil)
@@ -60,7 +60,7 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     }
     
     @IBAction func toggleMount(_ sender: AnyObject) {
-        if (self.mountController.mounted) {
+        if self.mountController.mounted {
             self.disconnectVolume()
         } else {
             NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAccountWindow, object: nil)
@@ -83,9 +83,9 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         let volumeName: String = self.sharedSystemAPI.currentVolumeName
         SDLog("Dismounting volume: %@", volumeName)
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async {
-            self.mountController.unmountVolume(name: volumeName, success: { mountURL -> Void in
+            self.mountController.unmountVolume(name: volumeName, success: { _ -> Void in
                 //
-            }, failure: { (mountURL, mountError) -> Void in
+            }, failure: { (_, _) -> Void in
                 //
             })
         }

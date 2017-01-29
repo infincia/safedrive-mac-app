@@ -73,7 +73,7 @@ class FinderSync: FIFinderSync {
     
     func serviceReconnectionLoop() {
         outer: while true {
-            if (self.serviceConnection == nil) {
+            if self.serviceConnection == nil {
                 self.serviceConnection = self.createServiceConnection()
                 guard let s = self.serviceConnection else {
                     Thread.sleep(forTimeInterval: 1)
@@ -89,7 +89,7 @@ class FinderSync: FIFinderSync {
                     
                 })
             }
-            if (self.appConnection == nil) {
+            if self.appConnection == nil {
                 FIFinderSyncController.default().directoryURLs = Set<URL>()
                 guard let s = self.serviceConnection else {
                     Thread.sleep(forTimeInterval: 1)
@@ -105,11 +105,11 @@ class FinderSync: FIFinderSync {
                         Thread.sleep(forTimeInterval: 1)
                         return
                     }
-                    let app = a.remoteObjectProxyWithErrorHandler() { error in
+                    let app = a.remoteObjectProxyWithErrorHandler { error in
                         print("remote proxy error: \(error)")
                     } as! AppXPCProtocol
                     
-                    app.ping( { reply -> Void in
+                    app.ping({ _ -> Void in
                         //print("Ping reply from app: \(reply)");
                     })
                 })

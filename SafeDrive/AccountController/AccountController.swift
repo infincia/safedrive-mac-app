@@ -70,7 +70,7 @@ class AccountController: NSObject {
         
         self.signOutWithSuccess({ () -> Void in
             //
-        }, failure: { (error) -> Void in
+        }, failure: { (_) -> Void in
             //
         })
         
@@ -123,7 +123,7 @@ class AccountController: NSObject {
         Crashlytics.sharedInstance().setUserEmail(email)
         SDErrorHandlerSetUser(email)
         
-        self.sharedSafedriveAPI.registerMachineWithUser(email, password: password, success: { (sessionToken: String, clientID: String) -> Void in
+        self.sharedSafedriveAPI.registerMachineWithUser(email, password: password, success: { (_: String, clientID: String) -> Void in
             self.sharedSafedriveAPI.accountStatusForUser(email, success: { (accountStatus: [String : NSObject]) -> Void in
                 self.signedIn = true
                 Crashlytics.sharedInstance().setUserIdentifier(clientID)
@@ -181,26 +181,21 @@ class AccountController: NSObject {
                 var config: SDKConfiguration
                 if isProduction() {
                     config = SDKConfiguration.Production
-                }
-                else {
+                } else {
                     config = SDKConfiguration.Staging
                 }
                 do {
                     try self.sdk.setUp(local_storage_path: groupURL.path, unique_client_id: clientID, config: config)
-                }
-                catch let error as SDKError {
+                } catch let error as SDKError {
                     SDLog("failed to initialize the sdk: \(error.message)")
                     Crashlytics.sharedInstance().crash()
-                }
-                catch {}
+                } catch {}
                 
                 do {
                     try self.sdk.login(email, password: password)
-                }
-                catch let error as SDKError {
+                } catch let error as SDKError {
                     SDLog("failed to login with sdk: \(error.message)")
-                }
-                catch {}
+                } catch {}
                 
                 do {
                     try self.sdk.loadKeys(recoveryPhrase, storePhrase: { (newPhrase) in
@@ -212,11 +207,9 @@ class AccountController: NSObject {
                             return
                         }
                     })
-                }
-                catch let error as SDKError {
+                } catch let error as SDKError {
                     SDLog("failed to load keys: \(error.message)")
-                }
-                catch {}
+                } catch {}
                 
                 NotificationCenter.default.post(name: Notification.Name.sdkReady, object: nil)
                 

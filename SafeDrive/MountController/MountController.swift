@@ -22,14 +22,14 @@ class MountController: NSObject {
         mountStateLoop()
     }
     
-    func unmountVolume(name volumeName:String!, success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
+    func unmountVolume(name volumeName: String!, success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
         let mountURL = self.mountURL(forVolumeName: volumeName)
         weak var weakSelf: MountController? = self
-        self.sharedSystemAPI.ejectMount(mountURL, success:{
+        self.sharedSystemAPI.ejectMount(mountURL, success: {
             successBlock(mountURL)
             weakSelf?.mountURL = nil
             NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object:nil)
-        }, failure:{ (error: Error) in
+        }, failure: { (error: Error) in
             failureBlock(mountURL, error)
         })
     }
@@ -61,8 +61,7 @@ class MountController: NSObject {
                         NotificationCenter.default.post(name: Notification.Name.mountDetails, object:mountDetails)
                         NotificationCenter.default.post(name: Notification.Name.mounted, object:nil)
                     })
-                }
-                else {
+                } else {
                     DispatchQueue.main.sync(execute: {() -> Void in
                         NotificationCenter.default.post(name: Notification.Name.mountDetails, object:nil)
                         NotificationCenter.default.post(name: Notification.Name.unmounted, object:nil)
@@ -85,7 +84,7 @@ class MountController: NSObject {
          prevent the code from ever running.
          */
         if self.mounted {
-            let mountError:NSError! = NSError(domain: SDErrorUIDomain, code:SDMountError.alreadyMounted.rawValue, userInfo:[NSLocalizedDescriptionKey: "Volume already mounted"])
+            let mountError: NSError! = NSError(domain: SDErrorUIDomain, code: SDMountError.alreadyMounted.rawValue, userInfo: [NSLocalizedDescriptionKey: "Volume already mounted"])
             failureBlock(mountURL, mountError)
             return
         }
@@ -256,19 +255,16 @@ class MountController: NSObject {
         let outputPipeHandle = outputPipe.fileHandleForReading
         
         outputPipeHandle.readabilityHandler = { (handle) in
-            let outputString:String! = String(data:handle.availableData, encoding:String.Encoding.utf8)
-            var mountError:NSError!
+            let outputString: String! = String(data: handle.availableData, encoding: String.Encoding.utf8)
+            var mountError: NSError!
             
             if outputString.contains("No such file or directory") {
                 mountError = NSError(domain: SDMountErrorDomain, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Server could not find that volume name"])
-            }
-            else if outputString.contains("Not a directory") {
+            } else if outputString.contains("Not a directory") {
                 mountError = NSError(domain: SDMountErrorDomain, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Server could not find that volume name"])
-            }
-            else if outputString.contains("Permission denied") {
+            } else if outputString.contains("Permission denied") {
                 mountError = NSError(domain: SDMountErrorDomain, code:SDSSHError.authorization.rawValue, userInfo:[NSLocalizedDescriptionKey: "Permission denied"])
-            }
-            else if outputString.contains("is itself on a OSXFUSE volume") {
+            } else if outputString.contains("is itself on a OSXFUSE volume") {
                 mountError = NSError(domain: SDErrorUIDomain, code:SDMountError.alreadyMounted.rawValue, userInfo:[NSLocalizedDescriptionKey: "Volume already mounted"])
                 /*
                  no need to run the successblock again since the volume is already mounted
@@ -281,29 +277,22 @@ class MountController: NSObject {
                  since we'll be constantly watching for mount/unmount anyway
                  */
                 //successBlock();
-            }
-            else if outputString.contains("Error resolving hostname") {
+            } else if outputString.contains("Error resolving hostname") {
                 mountError = NSError(domain: SDMountErrorDomain, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Error resolving hostname, contact support"])
-            }
-            else if outputString.contains("remote host has disconnected") {
+            } else if outputString.contains("remote host has disconnected") {
                 mountError = NSError(domain: SDErrorUIDomain, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Mount failed, check username and password"])
-            }
-            else if outputString.contains("REMOTE HOST IDENTIFICATION HAS CHANGED") {
+            } else if outputString.contains("REMOTE HOST IDENTIFICATION HAS CHANGED") {
                 mountError = NSError(domain: SDMountErrorDomain, code:SDSSHError.hostFingerprintChanged.rawValue, userInfo:[NSLocalizedDescriptionKey: "Warning: server fingerprint changed!"])
-            }
-            else if outputString.contains("Host key verification failed") {
+            } else if outputString.contains("Host key verification failed") {
                 mountError = NSError(domain: SDMountErrorDomain, code:SDSSHError.hostKeyVerificationFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Warning: server key verification failed!"])
-            }
-            else if outputString.contains("failed to mount") {
+            } else if outputString.contains("failed to mount") {
                 mountError = NSError(domain: SDMountErrorDomain, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "An unknown error occurred, contact support"])
-            }
-            else if outputString.contains("g_slice_set_config: assertion") {
+            } else if outputString.contains("g_slice_set_config: assertion") {
                 /*
                  Ignore this, minor bug in sshfs use of glib
                  
                  */
-            }
-            else {
+            } else {
                 mountError = NSError(domain: SDMountErrorDomain, code:SDMountError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: "An unknown error occurred, contact support"])
                 /*
                  for the moment we don't want to call the failure block here, as
@@ -318,7 +307,7 @@ class MountController: NSObject {
                 // failureBlock(mountURL, mountError);
                 return
             }
-            if (mountError != nil) {
+            if mountError != nil {
                 DispatchQueue.main.async(execute: {() -> Void in
                     failureBlock(mountURL, mountError)
                 })

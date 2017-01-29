@@ -34,10 +34,10 @@ class SyncController: Equatable {
         return (left.uniqueID == right.uniqueID)
     }
     
-    func sftpOperation(_ op: SDSFTPOperation, remoteDirectory serverURL: URL, password: String, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
+    func sftpOperation(_ operation: SDSFTPOperation, remoteDirectory serverURL: URL, password: String, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         if let l = NMSSHLogger.shared() {
             l.logLevel = NMSSHLogLevel.error
-            l.logBlock = { (level,format) in
+            l.logBlock = { (level, format) in
                 //SDLog("\(format)")
             }
         }
@@ -71,8 +71,8 @@ class SyncController: Equatable {
                 session.authenticate(byPassword: password)
                 
                 if session.isAuthorized {
-                    let sftp:NMSFTP! = NMSFTP.connect(with: session)
-                    switch (op) {
+                    let sftp: NMSFTP! = NMSFTP.connect(with: session)
+                    switch operation {
                     case SDSFTPOperation.moveFolder:
                         let storageDir = URL(string: "/storage/Storage/")!
                         let now = Date()
@@ -91,11 +91,10 @@ class SyncController: Equatable {
                             DispatchQueue.main.async(execute: {
                                 successBlock()
                             })
-                        }
-                        catch let moveError as NSError {
+                        } catch let moveError as NSError {
                             let msg = "SSH: failed to move path: \(serverURL.path). \(moveError.localizedDescription)"
                             SDLog(msg)
-                            let error:NSError! = NSError(domain: SDErrorSyncDomain, code:SDSSHError.sftpOperationFailure.rawValue, userInfo:[NSLocalizedDescriptionKey: msg])
+                            let error: NSError! = NSError(domain: SDErrorSyncDomain, code: SDSSHError.sftpOperationFailure.rawValue, userInfo: [NSLocalizedDescriptionKey: msg])
                             
                             DispatchQueue.main.async(execute: {
                                 failureBlock(error)
@@ -108,13 +107,11 @@ class SyncController: Equatable {
                             DispatchQueue.main.async(execute: {
                                 successBlock()
                             })
-                        }
-                        else if sftp.createDirectory(atPath: machineDirectory.path) {
+                        } else if sftp.createDirectory(atPath: machineDirectory.path) {
                             DispatchQueue.main.async(execute: {
                                 successBlock()
                             })
-                        }
-                        else {
+                        } else {
                             let msg = "SFTP: failed to create path: \(machineDirectory.path)"
                             SDLog(msg)
                             let error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.sftpOperationFailure.rawValue, userInfo:[NSLocalizedDescriptionKey: msg])
@@ -134,8 +131,7 @@ class SyncController: Equatable {
                             DispatchQueue.main.async(execute: {
                                 successBlock()
                             })
-                        }
-                        catch let removeError as NSError {
+                        } catch let removeError as NSError {
                             let msg = "SSH: failed to remove path: \(serverURL.path). \(removeError.localizedDescription)"
                             SDLog(msg)
                             let error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.sftpOperationFailure.rawValue, userInfo:[NSLocalizedDescriptionKey: msg])
@@ -147,16 +143,14 @@ class SyncController: Equatable {
                         break
                     }
                     sftp.disconnect()
-                }
-                else {
+                } else {
                     let error = NSError(domain: SDErrorUIDomain, code:SDSSHError.authorization.rawValue, userInfo:[NSLocalizedDescriptionKey: "SFTP: authorization failed"])
                     DispatchQueue.main.async(execute: {
                         self.syncFailure = true
                         failureBlock(error)
                     })
                 }
-            }
-            else {
+            } else {
                 let error = NSError(domain: SDErrorUIDomain, code:SDSSHError.timeout.rawValue, userInfo:[NSLocalizedDescriptionKey: "SFTP: failed to connect"])
                 DispatchQueue.main.async(execute: {
                     self.syncFailure = true
@@ -197,8 +191,7 @@ class SyncController: Equatable {
             }, failure: { (url, error) in
                 failureBlock(url, error)
             })
-        }
-        else {
+        } else {
             startUnencryptedSyncTask(progress: { (percent, bandwidth) in
                 progressBlock(percent, bandwidth)
             }, success: { (url) in
@@ -212,16 +205,15 @@ class SyncController: Equatable {
     
     fileprivate func startEncryptedSyncTask(progress progressBlock: @escaping (_ progress: Double, _ bandwidth: String) -> Void, success successBlock: @escaping (_ local: URL) -> Void, failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         if self.restore {
-            self.sdk.restoreFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, destination: self.localURL, progress: { (total, current, percent) in
+            self.sdk.restoreFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, destination: self.localURL, progress: { (_, _, percent) in
                 progressBlock(percent, "0KB/s")
             }, success: {
                 successBlock(self.localURL)
             }) { (error) in
                 failureBlock(self.localURL, error)
             }
-        }
-        else {
-            self.sdk.syncFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, progress: { (total, current, percent) in
+        } else {
+            self.sdk.syncFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, progress: { (_, _, percent) in
                 progressBlock(percent, "0KB/s")
             }, success: {
                 successBlock(self.localURL)
@@ -279,8 +271,7 @@ class SyncController: Equatable {
         
         if rsyncPath != nil {
             self.syncTask.launchPath = rsyncPath
-        }
-        else {
+        } else {
             let message = NSLocalizedString("Rsync missing, contact SafeDrive support", comment: "")
             let rsyncError = NSError(domain: SDMountErrorDomain, code:SDSystemError.rsyncMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
             DispatchQueue.main.async(execute: {
@@ -366,8 +357,7 @@ class SyncController: Equatable {
         if restore {
             taskArguments.append(remote)
             taskArguments.append(local)
-        }
-        else {
+        } else {
             taskArguments.append(local)
             taskArguments.append(remote)
         }
@@ -381,7 +371,7 @@ class SyncController: Equatable {
         
         outputPipeHandle.readabilityHandler = { (handle) in
             
-            let outputString:String! = String(data:handle.availableData, encoding:String.Encoding.utf8)
+            let outputString: String! = String(data:handle.availableData, encoding:String.Encoding.utf8)
             let whitespaceRegex = "^\\s+$"
             let fullRegex = "^\\s*([0-9,]+)\\s+([0-9]+)%\\s+([0-9\\.A-Za-z/]+)"
             // example: "              0   0%    0.00kB/s    0:00:00 (xfr#0, to-chk=0/11)"
@@ -399,11 +389,9 @@ class SyncController: Equatable {
                         }
                     }
                 }
-            }
-            else if outputString.isMatched(byRegex: whitespaceRegex) {
+            } else if outputString.isMatched(byRegex: whitespaceRegex) {
                 // skip all whitespace lines
-            }
-            else {
+            } else {
                 SDLog("Rsync Task stdout output: %@", outputString)
             }
             
@@ -414,56 +402,45 @@ class SyncController: Equatable {
         
         let errorPipe = Pipe()
         let errorPipeHandle = errorPipe.fileHandleForReading
-        errorPipeHandle.readabilityHandler = { (handle:FileHandle!) in
-            let errorString:String! = String(data:handle.availableData, encoding:String.Encoding.utf8)
-            var error:NSError!
+        errorPipeHandle.readabilityHandler = { (handle: FileHandle!) in
+            let errorString: String! = String(data: handle.availableData, encoding: String.Encoding.utf8)
+            var error: NSError!
             if errorString.contains("Could not chdir to home directory") {
                 /*
                  NSString *msg = [NSString stringWithFormat:@"Could not chdir to home directory"];
                  
                  error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorRemoteEnvironment userInfo:@{NSLocalizedDescriptionKey: msg}];
                  */
-            }
-            else if errorString.contains("connection unexpectedly closed") {
+            } else if errorString.contains("connection unexpectedly closed") {
                 error = NSError(domain: SDErrorSyncDomain, code:SDSyncError.syncFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Warning: server closed connection unexpectedly"])
-            }
-            else if errorString.contains("No such file or directory") {
-                let msg:String! = String(format:"That path does not exist on the server: %@", serverPath)
+            } else if errorString.contains("No such file or directory") {
+                let msg: String! = String(format: "That path does not exist on the server: %@", serverPath)
                 
                 error = NSError(domain: SDErrorSyncDomain, code:SDSyncError.directoryMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: msg])
-            }
-            else if errorString.contains("Not a directory") {
-                let msg:String! = String(format:"That path does not exist on the server: %@", serverPath)
+            } else if errorString.contains("Not a directory") {
+                let msg: String! = String(format: "That path does not exist on the server: %@", serverPath)
                 
                 error = NSError(domain: SDErrorSyncDomain, code:SDSyncError.directoryMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: msg])
-            }
-            else if errorString.contains("Permission denied") {
+            } else if errorString.contains("Permission denied") {
                 error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.authorization.rawValue, userInfo:[NSLocalizedDescriptionKey: "Permission denied"])
-            }
-            else if errorString.contains("Error resolving hostname") {
+            } else if errorString.contains("Error resolving hostname") {
                 error = NSError(domain: SDErrorSyncDomain, code:SDSyncError.syncFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Error resolving hostname, contact support"])
-            }
-            else if errorString.contains("remote host has disconnected") {
+            } else if errorString.contains("remote host has disconnected") {
                 error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.authorization.rawValue, userInfo:[NSLocalizedDescriptionKey: "Sync failed, check username and password"])
-            }
-            else if errorString.contains("REMOTE HOST IDENTIFICATION HAS CHANGED") {
+            } else if errorString.contains("REMOTE HOST IDENTIFICATION HAS CHANGED") {
                 error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.hostFingerprintChanged.rawValue, userInfo:[NSLocalizedDescriptionKey: "Warning: server fingerprint changed!"])
-            }
-            else if errorString.contains("Host key verification failed") {
+            } else if errorString.contains("Host key verification failed") {
                 error = NSError(domain: SDErrorSyncDomain, code:SDSSHError.hostKeyVerificationFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Warning: server key verification failed!"])
-            }
-            else if errorString.contains("differs from the key for the IP address") {
+            } else if errorString.contains("differs from the key for the IP address") {
                 
                 // silence host key mismatch for now
                 // example: Warning: the ECDSA host key for 'sftp-client.safedrive.io' differs from the key for the IP address '185.104.180.61'
                 //NSString *msg = [NSString stringWithFormat:@"Host key mismatch"];
                 
                 //error = [NSError errorWithDomain:SDErrorSyncDomain code:SDSSHErrorHostFingerprintChanged userInfo:@{NSLocalizedDescriptionKey: msg}];
-            }
-            else if errorString.contains("received SIGINT, SIGTERM, or SIGHUP") {
+            } else if errorString.contains("received SIGINT, SIGTERM, or SIGHUP") {
                 // silence signals
-            }
-            else {
+            } else {
                 error = NSError(domain: SDErrorSyncDomain, code:SDSyncError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: "An unknown error occurred, contact support"])
                 /*
                  for the moment we don't want to call the failure block here, as
@@ -478,7 +455,7 @@ class SyncController: Equatable {
                 SDLog("Rsync: \(errorString)")
                 return
             }
-            if (error != nil) {
+            if error != nil {
                 DispatchQueue.main.async(execute: {
                     self.syncFailure = true
                     failureBlock(self.localURL, error)
@@ -511,22 +488,19 @@ class SyncController: Equatable {
                         successBlock(self.localURL)
                     }
                 })
-            }
-            else {
+            } else {
                 DispatchQueue.main.async(execute: {
                     guard let s = weakSelf else {
                         return
                     }
                     if s.syncFailure {
                         // do nothing, failureBlock already called elsewhere
-                    }
-                    else if s.syncTerminated {
+                    } else if s.syncTerminated {
                         // rsync returned a non-zero exit code because cancel/terminate was called by the user
                         
                         let error = NSError(domain: SDErrorUIDomain, code:SDSyncError.cancelled.rawValue, userInfo:[NSLocalizedDescriptionKey: "Sync cancelled"])
                         failureBlock(self.localURL, error)
-                    }
-                    else {
+                    } else {
                         // since rsync returned a non-zero exit code AND we have not yet called failureBlock,
                         // we must call it as a catch-all.
                         

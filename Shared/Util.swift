@@ -44,8 +44,7 @@ func storageURL() -> URL {
     #endif
     do {
         try FileManager.default.createDirectory(at: u, withIntermediateDirectories:true, attributes:nil)
-    }
-    catch let directoryError as NSError {
+    } catch let directoryError as NSError {
         print("Error creating support directory: \(directoryError.localizedDescription)")
     }
     return u

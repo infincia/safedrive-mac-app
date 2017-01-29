@@ -1,4 +1,3 @@
-
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
@@ -13,7 +12,7 @@ public enum HTTPMethod: String {
 
 enum Endpoint {
     static var SessionToken: String?
-    
+
     case errorLog([String:AnyObject])
     case registerClient([String:AnyObject])
     case accountStatus
@@ -23,7 +22,7 @@ enum Endpoint {
     case deleteFolder(Int32)
     case hostFingerprints
     case apiStatus
-    
+
     var method: HTTPMethod {
         switch self {
         case .errorLog:
@@ -153,7 +152,7 @@ class API: NSObject, URLSessionDelegate {
     // MARK: Telemetry API
     
     func reportError(_ error: NSError, forUser user: String, withLog log: [String], completionQueue queue: DispatchQueue, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
-        var postParameters = [String : AnyObject]()
+        var postParameters = [String: AnyObject]()
         let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
         postParameters["operatingSystem"] = os as AnyObject?
         let clientVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
@@ -180,8 +179,7 @@ class API: NSObject, URLSessionDelegate {
             } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     successBlock()
-                }
-                else {
+                } else {
                     guard let data = data,
                         let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
                         let JSON = raw as? [String: String],
@@ -238,8 +236,7 @@ class API: NSObject, URLSessionDelegate {
                     self.sessionToken = token
                     self.sharedSystemAPI.insertCredentialsInKeychain(forService: tokenDomain(), account: user, password: token)
                     successBlock(token, identifier)
-                }
-                else {
+                } else {
                     guard let data = data,
                         let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
                         let JSON = raw as? [String: String],
@@ -276,8 +273,7 @@ class API: NSObject, URLSessionDelegate {
                             return
                     }
                     successBlock(JSON)
-                }
-                else {
+                } else {
                     guard let data = data,
                         let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
                         let JSON = raw as? [String: String],
@@ -314,8 +310,7 @@ class API: NSObject, URLSessionDelegate {
                             return
                     }
                     successBlock(JSON)
-                }
-                else {
+                } else {
                     guard let data = data,
                         let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
                         let JSON = raw as? [String: String],
@@ -355,8 +350,7 @@ class API: NSObject, URLSessionDelegate {
                             return
                     }
                     successBlock(folderID)
-                }
-                else {
+                } else {
                     guard let data = data,
                         let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
                         let JSON = raw as? [String: String],
@@ -392,8 +386,7 @@ class API: NSObject, URLSessionDelegate {
                             return
                     }
                     successBlock(JSON)
-                }
-                else {
+                } else {
                     guard let data = data,
                         let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
                         let JSON = raw as? [String: String],
@@ -422,8 +415,7 @@ class API: NSObject, URLSessionDelegate {
             } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     successBlock()
-                }
-                else {
+                } else {
                     guard let data = data,
                         let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
                         let JSON = raw as? [String: String],
@@ -470,7 +462,7 @@ class API: NSObject, URLSessionDelegate {
     func apiStatus(_ successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         let endpoint = Endpoint.apiStatus
         
-        let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { data, response, error in
+        let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { _, response, error in
             if let error = error {
                 let responseError = NSError(domain: SDErrorUIDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
                 failureBlock(responseError)

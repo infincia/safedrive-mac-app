@@ -10,7 +10,7 @@ import Crashlytics
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    var listenerDelegate: ServiceListenerDelegate?
+    weak var listenerDelegate: ServiceListenerDelegate?
     
     var CFBundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
     

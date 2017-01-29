@@ -124,16 +124,16 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             })
             
             
-        }, failure: { (url, mountError) in
+        }, failure: { (_, mountError) in
             SDLog("SafeDrive startMountTaskWithVolumeName failure in account window")
             SDErrorHandlerReport(mountError)
             self.displayError(mountError as NSError, forDuration: 10)
             self.spinner.stopAnimation(self)
             self.mountController.mounting = false
             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
-            self.mountController.unmountVolume(name: volumeName, success: { mountURL in
+            self.mountController.unmountVolume(name: volumeName, success: { _ in
                 //
-            }, failure: { (mountURL, mountError) in
+            }, failure: { (_, _) in
                 //
             })
         })

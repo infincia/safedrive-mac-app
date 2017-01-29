@@ -99,7 +99,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             } else {
                 autostartError = self.sharedSystemAPI.disableAutostart() as NSError?
             }
-            if (autostartError != nil) {
+            if autostartError != nil {
                 SDErrorHandlerReport(autostartError)
             }
         }
@@ -207,11 +207,11 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         
         
         
-        self.syncFolderToken = realm.objects(SyncFolder.self).addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+        self.syncFolderToken = realm.objects(SyncFolder.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
             self?.reload()
         }
         
-        self.syncTaskToken = realm.objects(SyncTask.self).addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+        self.syncTaskToken = realm.objects(SyncTask.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
             self?.reload()
         }
         
@@ -370,8 +370,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         if let recoveryPhrase = recoveryCredentials?["password"] {
             recoveryPhraseField.stringValue = recoveryPhrase
             self.copyRecoveryPhraseButton.isEnabled = true
-        }
-        else {
+        } else {
             recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
             self.copyRecoveryPhraseButton.isEnabled = false
         }
@@ -524,8 +523,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                             try realm.write {
                                 realm.delete(syncTasks)
                             }
-                        }
-                        catch {
+                        } catch {
                             print("failed to delete sync tasks associated with \(uniqueID)")
                         }
                         
@@ -535,8 +533,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                             try realm.write {
                                 realm.delete(syncFolder)
                             }
-                        }
-                        catch {
+                        } catch {
                             print("failed to delete sync folder \(uniqueID)")
                         }
                         self.reload()
@@ -696,8 +693,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 alert.runModal()
             })
             return
-        }
-        else {
+        } else {
             // unencrypted folders have no versioning, so the name is arbitrary
             name = UUID()
         }
@@ -878,14 +874,14 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             tableCellView = outlineView.make(withIdentifier: "MachineView", owner: self) as! SyncManagerTableCellView
             tableCellView.textField!.stringValue = self.mac.name!
             let cellImage: NSImage = NSImage(named: NSImageNameComputer)!
-            cellImage.size = NSMakeSize(15.0, 15.0)
+            cellImage.size = CGSize(width: 15.0, height: 15.0)
             tableCellView.imageView!.image = cellImage
         } else if item is SyncFolder {
             let syncFolder = item as! SyncFolder
             tableCellView = outlineView.make(withIdentifier: "FolderView", owner: self) as! SyncManagerTableCellView
             tableCellView.textField!.stringValue = syncFolder.name!.capitalized
             let cellImage: NSImage = NSWorkspace.shared().icon(forFileType: NSFileTypeForHFSTypeCode(OSType(kGenericFolderIcon)))
-            cellImage.size = NSMakeSize(15.0, 15.0)
+            cellImage.size = CGSize(width: 15.0, height: 15.0)
             tableCellView.imageView!.image = cellImage
             tableCellView.removeButton.tag = Int(syncFolder.uniqueID)
             tableCellView.syncNowButton.tag = Int(syncFolder.uniqueID)
@@ -903,8 +899,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             
             if syncFolder.encrypted {
                 tableCellView.lockButton.image = NSImage(named: NSImageNameLockLockedTemplate)
-            }
-            else {
+            } else {
                 tableCellView.lockButton.image = NSImage(named: NSImageNameLockUnlockedTemplate)
             }
             

@@ -154,31 +154,31 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 schemaVersion: UInt64(SDCurrentRealmSchema),
                 migrationBlock: { migration, oldSchemaVersion in
                     SDLog("Migrating db version \(oldSchemaVersion) to \(SDCurrentRealmSchema)")
-                    migration.enumerateObjects(ofType: Machine.className()) { oldObject, newObject in
+                    migration.enumerateObjects(ofType: Machine.className()) { _, newObject in
                         if oldSchemaVersion < 6 {
                             migration.delete(newObject!)
                         }
                     }
-                    migration.enumerateObjects(ofType: SyncFolder.className()) { oldObject, newObject in
+                    migration.enumerateObjects(ofType: SyncFolder.className()) { _, newObject in
                         if oldSchemaVersion < 6 {
                             migration.delete(newObject!)
                         }
                     }
-                    migration.enumerateObjects(ofType: SyncTask.className()) { oldObject, newObject in
+                    migration.enumerateObjects(ofType: SyncTask.className()) { _, newObject in
                         if oldSchemaVersion < 6 {
                             migration.delete(newObject!)
                         }
                     }
                     
                     // update for encrypted bool field
-                    migration.enumerateObjects(ofType: SyncFolder.className()) { oldObject, newObject in
+                    migration.enumerateObjects(ofType: SyncFolder.className()) { _, newObject in
                         if oldSchemaVersion < 10 {
                             newObject!["encrypted"] = false
                         }
                     }
                     
                     // update for current sync UUID field
-                    migration.enumerateObjects(ofType: SyncFolder.className()) { oldObject, newObject in
+                    migration.enumerateObjects(ofType: SyncFolder.className()) { _, newObject in
                         if oldSchemaVersion < 11 {
                             newObject!["currentSyncUUID"] = nil
                         }
