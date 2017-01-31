@@ -209,17 +209,17 @@ class SyncController: Equatable {
                 progressBlock(percent, "0KB/s")
             }, success: {
                 successBlock(self.localURL)
-            }) { (error) in
+            }, failure: { (error) in
                 failureBlock(self.localURL, error)
-            }
+            })
         } else {
             self.sdk.syncFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, progress: { (_, _, percent) in
                 progressBlock(percent, "0KB/s")
             }, success: {
                 successBlock(self.localURL)
-            }) { (error) in
+            }, failure: { (error) in
                 failureBlock(self.localURL, error)
-            }
+            })
         }
     }
     
