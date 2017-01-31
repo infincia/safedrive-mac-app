@@ -47,16 +47,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         // initialize error handler, from this point on SDLog() and SDErrorHandlerReport() should be safe to use
         SDErrorHandlerInitialize()
         if let updater = SUUpdater.shared() {
-            #if DEBUG
+            if isProduction() {
                 SDLog("SafeDrive staging build \(CFBundleVersion)")
                 environment = "STAGING"
                 updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive/appcast.xml")
-                
-            #else
+            } else {
                 SDLog("SafeDrive release build \(CFBundleVersion)")
                 environment = "RELEASE"
                 updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive-release/appcast.xml")
-            #endif
+            }
         }
         
         if CFBundleVersion < SDBuildVersionLast {

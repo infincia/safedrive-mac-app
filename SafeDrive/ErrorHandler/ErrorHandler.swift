@@ -64,11 +64,11 @@ func SDLog(_ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) {
         let st = String(format: line, arguments: arguments)
         // pass through to Crashlytics
-        #if DEBUG
+        if !isProduction() {
             CLSNSLogv(line, $0)
-        #else
+        } else {
             CLSLogv(line, $0)
-        #endif
+        }
         // for RELEASE builds, redirect logs to the buffer in case there is an error
         errorQueue.sync {
             logBuffer.append(st)
@@ -85,9 +85,8 @@ func SDErrorHandlerReport(_ error: Error?) {
     }
     // always report errors to crashlytics
     Crashlytics.sharedInstance().recordError(error)
-    #if DEBUG
-        
-    #else
+    
+    if isProduction() {
         // don't even add error reports to the SD telemetry log unless we're in a RELEASE build
         
         // using archived NSError so the array can be serialized as a plist
@@ -108,7 +107,7 @@ func SDErrorHandlerReport(_ error: Error?) {
                 saveErrors()
             }
         }
-    #endif
+    }
 }
 
 func SDUncaughtExceptionHandler(exception: NSException!) {

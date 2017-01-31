@@ -237,11 +237,11 @@ class AccountController: NSObject {
                 }
                 
             }, failure: {(apiError: Swift.Error) -> Void in
-                #if DEBUG
+                if !isProduction() {
                     SDLog("Account details retrieval failed: %@", apiError.localizedDescription)
                     // don't report these for now, they're almost always going to be network failures
                     // SDErrorHandlerReport(apiError);
-                #endif
+                }
             })
         }, failure: { (error: Swift.Error) -> Void in
             failureBlock(error)
@@ -314,11 +314,11 @@ class AccountController: NSObject {
                     }
                     
                 }, failure: {(apiError: Swift.Error) -> Void in
-                    #if DEBUG
+                    if !isProduction() {
                         SDLog("Account status retrieval failed: %@", apiError.localizedDescription)
                         // don't report these for now, they're almost always going to be network failures
                         // SDErrorHandlerReport(apiError);
-                    #endif
+                    }
                 })
                 
                 self.sharedSafedriveAPI.accountDetailsForUser(email, success: {(accountDetails: [String : NSObject]?) -> Void in
@@ -329,11 +329,11 @@ class AccountController: NSObject {
                     }
                     
                 }, failure: {(apiError: Swift.Error) -> Void in
-                    #if DEBUG
+                    if !isProduction() {
                         SDLog("Account details retrieval failed: %@", apiError.localizedDescription)
                         // don't report these for now, they're almost always going to be network failures
                         // SDErrorHandlerReport(apiError);
-                    #endif
+                    }
                 })
             }
         })

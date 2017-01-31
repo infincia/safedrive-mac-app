@@ -36,26 +36,19 @@ func storageURL() -> URL {
     guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
         exit(1)
     }
-        
-    #if DEBUG
-    let u = groupURL.appendingPathComponent("staging", isDirectory: true)
-    #else
-    let u = groupURL
-    #endif
+    let u: URL
+    if isProduction() {
+        u = groupURL
+    } else {
+        u = groupURL.appendingPathComponent("staging", isDirectory: true)
+    }
+
     do {
         try FileManager.default.createDirectory(at: u, withIntermediateDirectories:true, attributes:nil)
     } catch let directoryError as NSError {
         print("Error creating support directory: \(directoryError.localizedDescription)")
     }
     return u
-}
-
-func currentConfiguration() -> Bool {
-    #if DEBUG
-    return false
-    #else
-    return true
-    #endif
 }
 
 func isProduction() -> Bool {
@@ -67,49 +60,49 @@ func isProduction() -> Bool {
 }
 
 func webDomain() -> String {
-    #if DEBUG
-    return SDWebDomainStaging
-    #else
-    return SDWebDomainProduction
-    #endif
+    if isProduction() {
+        return SDWebDomainProduction
+    } else {
+        return SDWebDomainStaging
+    }
 }
 
 func apiDomain() -> String {
-    #if DEBUG
-    return SDAPIDomainStaging
-    #else
-    return SDAPIDomainProduction
-    #endif
+    if isProduction() {
+        return SDAPIDomainProduction
+    } else {
+        return SDAPIDomainStaging
+    }
 }
 
 func tokenDomain() -> String {
-    #if DEBUG
-    return SDAuthTokenDomainStaging
-    #else
-    return SDAuthTokenDomainProduction
-    #endif
+    if isProduction() {
+        return SDAuthTokenDomainProduction
+    } else {
+        return SDAuthTokenDomainStaging
+    }
 }
 
 func sshCredentialDomain() -> String {
-    #if DEBUG
-    return SDSSHCredentialDomainStaging
-    #else
-    return SDSSHCredentialDomainProduction
-    #endif
+    if isProduction() {
+        return SDSSHCredentialDomainProduction
+    } else {
+        return SDSSHCredentialDomainStaging
+    }
 }
 
 func accountCredentialDomain() -> String {
-    #if DEBUG
-    return SDAccountCredentialDomainStaging
-    #else
-    return SDAccountCredentialDomainProduction
-    #endif
+    if isProduction() {
+        return SDAccountCredentialDomainProduction
+    } else {
+        return SDAccountCredentialDomainStaging
+    }
 }
 
 func recoveryKeyDomain() -> String {
-    #if DEBUG
-    return SDRecoveryKeyDomainStaging
-    #else
-    return SDRecoveryKeyDomainProduction
-    #endif
+    if isProduction() {
+        return SDRecoveryKeyDomainProduction
+    } else {
+        return SDRecoveryKeyDomainStaging
+    }
 }

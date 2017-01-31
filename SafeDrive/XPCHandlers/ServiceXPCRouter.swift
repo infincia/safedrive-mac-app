@@ -50,12 +50,12 @@ class ServiceXPCRouter: NSObject, NSXPCListenerDelegate {
     }
     
     func ensureServiceIsRunning() -> Bool {
-        #if DEBUG
+        if !isProduction() {
             // temporary kill/restart for background service until proper calls are implemented
             // NOTE: This should not happen in production! Background service should NOT be killed arbitrarily.
             //
             //[NSThread sleepForTimeInterval:5];
-        #endif
+        }
         //CFDictionaryRef diref = SMJobCopyDictionary( kSMDomainUserLaunchd, (CFStringRef)@"io.safedrive.SafeDrive.Service");
         //NSLog(@"Job status: %@", (NSDictionary *)CFBridgingRelease(diref));
         //CFRelease(diref);
