@@ -14,7 +14,8 @@ class SyncController: Equatable {
     fileprivate var syncFailure = false
     fileprivate var syncTerminated = false
     fileprivate let syncProgressQueue = DispatchQueue(label: "io.safedrive.SafeDrive.syncprogress", attributes: [])
-    
+    fileprivate let syncResultQueue = DispatchQueue.main
+
     var uniqueID: Int32 = -1
     
     var encrypted: Bool = false
@@ -205,7 +206,7 @@ class SyncController: Equatable {
     
     fileprivate func startEncryptedSyncTask(progress progressBlock: @escaping (_ progress: Double, _ bandwidth: String) -> Void, success successBlock: @escaping (_ local: URL) -> Void, failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         if self.restore {
-            self.sdk.restoreFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, destination: self.localURL, progress: { (_, _, percent) in
+            self.sdk.restoreFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, destination: self.localURL, completionQueue: syncResultQueue, progress: { (_, _, percent) in
                 progressBlock(percent, "0KB/s")
             }, success: {
                 successBlock(self.localURL)
@@ -213,7 +214,7 @@ class SyncController: Equatable {
                 failureBlock(self.localURL, error)
             })
         } else {
-            self.sdk.syncFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, progress: { (_, _, percent) in
+            self.sdk.syncFolder(folderID: UInt32(self.uniqueID), sessionName: self.uuid, completionQueue: syncResultQueue, progress: { (_, _, percent) in
                 progressBlock(percent, "0KB/s")
             }, success: {
                 successBlock(self.localURL)
