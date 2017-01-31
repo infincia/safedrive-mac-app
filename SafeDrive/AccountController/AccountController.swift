@@ -187,7 +187,7 @@ class AccountController: NSObject {
                 let groupURL = storageURL()
                 
                 do {
-                    try self.sdk.login(email, password: password)
+                     let _ = try self.sdk.login(email, password: password, local_storage_path: groupURL.path, unique_client_id: clientID, completionQueue: self.accountQueue)
                 } catch let error as SDKError {
                     SDLog("failed to login with sdk: \(error.message)")
                 } catch {}
