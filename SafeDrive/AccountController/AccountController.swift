@@ -123,7 +123,16 @@ class AccountController: NSObject {
         Crashlytics.sharedInstance().setUserEmail(email)
         SDErrorHandlerSetUser(email)
         
-        self.sharedSafedriveAPI.registerMachineWithUser(email, password: password, success: { (_: String, clientID: String) -> Void in
+        let macAddress: String = SDSystemAPI.shared().en0MAC()!
+        let machineIdConcatenation: String = macAddress + email
+        let ucid: String = HKTHashProvider.sha256(machineIdConcatenation.data(using: String.Encoding.utf8))
+        
+        
+        let operatingSystem: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
+        let languageCode: String = Locale.preferredLanguages[0]
+
+        
+        self.sharedSafedriveAPI.registerMachineWithUser(email, password: password, uniqueClientId: ucid, operatingSystem: operatingSystem, languageCode: languageCode, success: { (_: String, clientID: String) -> Void in
             self.sharedSafedriveAPI.accountStatusForUser(email, success: { (accountStatus: [String : NSObject]) -> Void in
                 self.signedIn = true
                 Crashlytics.sharedInstance().setUserIdentifier(clientID)

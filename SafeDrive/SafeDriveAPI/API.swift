@@ -200,18 +200,13 @@ class API: NSObject, URLSessionDelegate {
     
     // MARK: Account API
     
-    func registerMachineWithUser(_ user: String, password: String, success successBlock: @escaping (_ token: String, _ uniqueClientId: String) -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
-        let languageCode: String = Locale.preferredLanguages[0]
-        let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
-        let macAddress: String = self.sharedSystemAPI.en0MAC()!
-        let machineIdConcatenation: String = macAddress + user
-        let identifier: String = HKTHashProvider.sha256(machineIdConcatenation.data(using: String.Encoding.utf8))
+    func registerMachineWithUser(_ user: String, password: String, uniqueClientId ucid: String, operatingSystem: String, languageCode: String, success successBlock: @escaping (_ token: String, _ uniqueClientId: String) -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         
         let postParameters = ["email": user,
                               "password": password,
-                              "operatingSystem": os,
+                              "operatingSystem": operatingSystem,
                               "language": languageCode,
-                              "uniqueClientId": identifier]
+                              "uniqueClientId": ucid]
         
         let endpoint = Endpoint.registerClient(postParameters as [String : AnyObject])
         
@@ -235,7 +230,7 @@ class API: NSObject, URLSessionDelegate {
                     }
                     self.sessionToken = token
                     self.sharedSystemAPI.insertCredentialsInKeychain(forService: tokenDomain(), account: user, password: token)
-                    successBlock(token, identifier)
+                    successBlock(token, ucid)
                 } else {
                     guard let data = data,
                         let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
