@@ -193,7 +193,7 @@ class AccountController: NSObject {
                 } catch {}
                 
                 do {
-                    try self.sdk.loadKeys(recoveryPhrase, storePhrase: { (newPhrase) in
+                    try self.sdk.loadKeys(recoveryPhrase, completionQueue: self.accountQueue, storePhrase: { (newPhrase) in
                         print("New recovery phrase: \(newPhrase)")
                         let keychainError = self.sharedSystemAPI.insertCredentialsInKeychain(forService: recoveryKeyDomain(), account: email, password: newPhrase)
                         if let keychainError = keychainError {
