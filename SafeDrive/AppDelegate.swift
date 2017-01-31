@@ -31,9 +31,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     fileprivate var welcomeWindowController: WelcomeWindowController?
     
     
-    var CFBundleVersion = Int((Bundle.main.infoDictionary!["CFBundleVersion"]) as! String)!
+    var CFBundleVersion = Int((Bundle.main.infoDictionary!["CFBundleVersion"])! as! String)!
     
-    var CFBundleShortVersionString = (Bundle.main.infoDictionary!["CFBundleShortVersionString"]) as! String!
+    var CFBundleShortVersionString = (Bundle.main.infoDictionary!["CFBundleShortVersionString"])! as! String
     
     let SDBuildVersionLast = UserDefaults.standard.integer(forKey: SDBuildVersionLastKey)
     
@@ -227,7 +227,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.aboutWindowController = DCOAboutWindowController()
             self.aboutWindowController.useTextViewForAcknowledgments = true
             self.aboutWindowController.appCredits = TSMarkdownParser.standard().attributedString(fromMarkdown: markdown)
-            let version = "Version \(self.CFBundleShortVersionString!)-\(self.environment) (Build \(self.CFBundleVersion))"
+            let version = "Version \(self.CFBundleShortVersionString)-\(self.environment) (Build \(self.CFBundleVersion))"
             self.aboutWindowController.appVersion = version
             let websiteURLPath: String = "https://\(webDomain())"
             self.aboutWindowController.appWebsiteURL = URL(string: websiteURLPath)!
