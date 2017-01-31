@@ -14,6 +14,8 @@ import RealmSwift
 import Realm
 import Sparkle
 
+import SafeDriveSDK
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol, SDAccountProtocol, CrashlyticsDelegate {
     fileprivate var dropdownMenuController: DropdownController!
@@ -30,6 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     fileprivate var syncScheduler: SyncScheduler?
     fileprivate var welcomeWindowController: WelcomeWindowController?
     
+    fileprivate var sdk = SafeDriveSDK.sharedSDK
     
     var CFBundleVersion = Int((Bundle.main.infoDictionary!["CFBundleVersion"])! as! String)!
     
@@ -43,6 +46,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true])
         Crashlytics.sharedInstance().delegate = self
         Fabric.with([Crashlytics.self])
+        
+        // initialize safedrive SDK
+                        
+        var config: SDKConfiguration
+        if isProduction() {
+            config = SDKConfiguration.Production
+        } else {
+            config = SDKConfiguration.Staging
+        }
+        do {
+            try self.sdk.setUp(client_version: CFBundleShortVersionString, operating_system: "Mac OS X", config: config)
+        } catch let error as SDKError {
+            Crashlytics.sharedInstance().crash()
+        } catch {}
         
         // initialize error handler, from this point on SDLog() and SDErrorHandlerReport() should be safe to use
         SDErrorHandlerInitialize()

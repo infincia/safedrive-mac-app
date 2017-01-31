@@ -186,19 +186,6 @@ class AccountController: NSObject {
                 }
                 let groupURL = storageURL()
                 
-                var config: SDKConfiguration
-                if isProduction() {
-                    config = SDKConfiguration.Production
-                } else {
-                    config = SDKConfiguration.Staging
-                }
-                do {
-                    try self.sdk.setUp(local_storage_path: groupURL.path, unique_client_id: clientID, config: config)
-                } catch let error as SDKError {
-                    SDLog("failed to initialize the sdk: \(error.message)")
-                    Crashlytics.sharedInstance().crash()
-                } catch {}
-                
                 do {
                     try self.sdk.login(email, password: password)
                 } catch let error as SDKError {
