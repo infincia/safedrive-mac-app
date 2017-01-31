@@ -151,17 +151,17 @@ class API: NSObject, URLSessionDelegate {
     
     // MARK: Telemetry API
     
-    func reportError(_ error: NSError, forUser user: String, withLog log: [String], completionQueue queue: DispatchQueue, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
+    func reportError(_ error: NSError, forUniqueClientId ucid: String?, operatingSystem: String?, clientVersion: String?, withLog log: [String], completionQueue queue: DispatchQueue, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         var postParameters = [String: AnyObject]()
-        let os: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
-        postParameters["operatingSystem"] = os as AnyObject?
-        let clientVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        postParameters["clientVersion"] = clientVersion as AnyObject?
-        if !user.isEmpty {
-            let macAddress: String = self.sharedSystemAPI.en0MAC()!
-            let machineIdConcatenation: String = macAddress + user
-            let identifier: String = HKTHashProvider.sha256(machineIdConcatenation.data(using: String.Encoding.utf8))
-            postParameters["uniqueClientId"] = identifier as AnyObject?
+        
+        if let operatingSystem = operatingSystem {
+            postParameters["operatingSystem"] = operatingSystem as AnyObject?
+        }
+        if let clientVersion = clientVersion {
+            postParameters["clientVersion"] = clientVersion as AnyObject?
+        }
+        if let ucid = ucid {
+            postParameters["uniqueClientId"] = ucid as AnyObject?
         }
         
         postParameters["description"] = error.localizedDescription as AnyObject?

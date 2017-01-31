@@ -14,7 +14,7 @@ var serializedErrorLocation: URL!
 
 var serializedLogLocation: URL!
 
-var currentUser = ""
+var currentUniqueClientId = ""
 
 let reporterInterval: TimeInterval = 60
 
@@ -52,12 +52,12 @@ func SDErrorHandlerInitialize() {
     startReportQueue()
 }
 
-func SDErrorHandlerSetUser(_ user: String?) {
-    guard let user = user else {
-        currentUser = ""
+func SDErrorHandlerSetUniqueClientId(_ uniqueClientId: String?) {
+    guard let ucid = uniqueClientId else {
+        currentUniqueClientId = ""
         return
     }
-    currentUser = user
+    currentUniqueClientId = ucid
 }
 
 func SDLog(_ line: String, _ arguments: CVarArg...) {
@@ -95,9 +95,15 @@ func SDErrorHandlerReport(_ error: Error?) {
             let whitelistErrorDomains = [SDErrorDomain, SDErrorSyncDomain, SDErrorSSHFSDomain, SDErrorAccountDomain, SDErrorAPIDomain, SDMountErrorDomain]
             
             if whitelistErrorDomains.contains(error._domain) {
-                let report: [String : Any] = [ "error": NSKeyedArchiver.archivedData(withRootObject: error),
-                                               "log": NSKeyedArchiver.archivedData(withRootObject: logBuffer),
-                                               "user": currentUser ]
+                let os: String = "OS X \(SDSystemAPI.shared().currentOSVersion()!)"
+
+                let clientVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        
+                let report: [String : Any] = [  "error": NSKeyedArchiver.archivedData(withRootObject: error),
+                                                "log": NSKeyedArchiver.archivedData(withRootObject: logBuffer),
+                                                "uniqueClientId": currentUniqueClientId,
+                                                "os": os,
+                                                "clientVersion": clientVersion ]
                 errors.insert(report, at:0)
                 saveErrors()
             }
@@ -112,7 +118,7 @@ func SDUncaughtExceptionHandler(exception: NSException!) {
     errorQueue.sync {
         let report: [String : Any] = [ "stack": stack,
                                        "log": logBuffer,
-                                       "user": currentUser ]
+                                       "uniqueClientId": currentUniqueClientId ]
         errors.insert(report, at:0)
         saveErrors()
     }
@@ -131,8 +137,13 @@ func startReportQueue() {
                 //errors.removeObject(report)
                 
                 if let report = report {
-                    let reportUser = report["user"] as! String
                     
+                    let reportUniqueClientId = report["uniqueClientId"] as! String
+
+                    let reportOS = report["os"] as? String
+
+                    let reportClientVersion = report["clientVersion"] as? String
+
                     let reportLogArchive = report["log"] as! Data
                     
                     let archivedError = report["error"] as! Data
@@ -149,7 +160,7 @@ func startReportQueue() {
                     //note: passing the same queue we're in here is only OK because the called method uses it
                     //      with dispatch_async, if that were not the case this would deadlock forever
                     
-                    API.sharedAPI.reportError(error, forUser:reportUser, withLog:reportLog, completionQueue:errorQueue, success: {
+                    API.sharedAPI.reportError(error, forUniqueClientId: reportUniqueClientId, operatingSystem: reportOS, clientVersion: reportClientVersion, withLog:reportLog, completionQueue:errorQueue, success: {
                         
                         saveErrors()
                         

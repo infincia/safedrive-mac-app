@@ -56,7 +56,6 @@ class AccountController: NSObject {
             
             Crashlytics.sharedInstance().setUserEmail(self.email)
             
-            SDErrorHandlerSetUser(self.email)
             self.hasCredentials = true
         }
         self.accountLoop()
@@ -121,12 +120,12 @@ class AccountController: NSObject {
             return
         }
         Crashlytics.sharedInstance().setUserEmail(email)
-        SDErrorHandlerSetUser(email)
         
         let macAddress: String = SDSystemAPI.shared().en0MAC()!
         let machineIdConcatenation: String = macAddress + email
         let ucid: String = HKTHashProvider.sha256(machineIdConcatenation.data(using: String.Encoding.utf8))
         
+        SDErrorHandlerSetUniqueClientId(ucid)
         
         let operatingSystem: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
         let languageCode: String = Locale.preferredLanguages[0]
@@ -258,7 +257,7 @@ class AccountController: NSObject {
         
         // reset crashlytics email and telemetry API username
         Crashlytics.sharedInstance().setUserEmail(nil)
-        SDErrorHandlerSetUser(nil)
+        SDErrorHandlerSetUniqueClientId(nil)
         NotificationCenter.default.post(name: Notification.Name.accountSignOut, object: nil)
         successBlock()
         
