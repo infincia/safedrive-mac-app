@@ -368,6 +368,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             case .SessionMissing:
                 break
             case .RecoveryPhraseIncorrect:
+                self.setTab(3)
                 self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
                 self.copyRecoveryPhraseButton.isEnabled = false
                 
