@@ -217,9 +217,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         
         self.readSyncFolders(self)
         
-        self.setTab(0)
-        self.checkKeys()
-        
+        self.setTab(0)        
     }
     
     @IBAction func selectTab(_ sender: AnyObject) {
@@ -312,7 +310,101 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     // MARK: SDAccountProtocol
     
     func didAuthenticate(_ notification: Foundation.Notification) {
+        guard let email = self.accountController.email else {
+            return
+        }
+        // get recovery phrase from keychain
         
+        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
+        let recoveryPhrase = recoveryCredentials?["password"]
+
+        
+        self.sdk.loadKeys(recoveryPhrase, completionQueue: DispatchQueue.main, storePhrase: { (newPhrase) in
+            
+            print("New recovery phrase: \(newPhrase)")
+            let alert = NSAlert()
+            alert.addButton(withTitle: "OK")
+            
+            alert.messageText = "New recovery phrase"
+            alert.informativeText = "A recovery phrase has been generated for your account, please write it down and keep it in a safe place:\n\n\(newPhrase)"
+            alert.alertStyle = .informational
+            
+            alert.beginSheetModal(for: self.window!, completionHandler: { (_) in
+                
+            })
+            
+            let keychainError = SDSystemAPI.shared().insertCredentialsInKeychain(forService: recoveryKeyDomain(), account: email, password: newPhrase)
+            
+            if let keychainError = keychainError {
+                SDErrorHandlerReport(keychainError)
+                return
+            }
+            
+        }, success: {
+            let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
+
+            if let recoveryPhrase = recoveryCredentials?["password"] {
+                self.recoveryPhraseField.stringValue = recoveryPhrase
+                self.copyRecoveryPhraseButton.isEnabled = true
+            } else {
+                self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
+                self.copyRecoveryPhraseButton.isEnabled = false
+            }
+        }, failure: { (error) in
+            SDLog("failed to load keys with sdk: \(error.message)")
+            switch error.kind {
+            case .StateMissing:
+                break
+            case .Internal:
+                break
+            case .RequestFailure:
+                break
+            case .NetworkFailure:
+                break
+            case .Conflict:
+                break
+            case .BlockMissing:
+                break
+            case .SessionMissing:
+                break
+            case .RecoveryPhraseIncorrect:
+                self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
+                self.copyRecoveryPhraseButton.isEnabled = false
+                
+                self.window?.makeKeyAndOrderFront(self)
+                let alert = NSAlert()
+                alert.addButton(withTitle: "OK")
+                
+                alert.messageText = "Recovery phrase incorrect"
+                alert.informativeText = "A recovery phrase is set for your account, but this computer does not have it"
+                alert.alertStyle = .critical
+                
+                alert.beginSheetModal(for: self.window!, completionHandler: { (_) in
+                    
+                })
+            
+            case .InsufficientFreeSpace:
+                break
+            case .Authentication:
+                self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
+                self.copyRecoveryPhraseButton.isEnabled = false
+                break
+            case .UnicodeError:
+                break
+            case .TokenExpired:
+                break
+            case .CryptoError:
+                break
+            case .IO:
+                break
+            case .SyncAlreadyInProgress:
+                break
+            case .RestoreAlreadyInProgress:
+                break
+            case .ExceededRetries:
+                break
+            }
+        })
     }
     
     func didSignOut(_ notification: Foundation.Notification) {
@@ -362,20 +454,6 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     }
     
     // MARK: UI Actions
-    
-    func checkKeys() {
-        // get recovery phrase from keychain
-        
-        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
-        
-        if let recoveryPhrase = recoveryCredentials?["password"] {
-            recoveryPhraseField.stringValue = recoveryPhrase
-            self.copyRecoveryPhraseButton.isEnabled = true
-        } else {
-            recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
-            self.copyRecoveryPhraseButton.isEnabled = false
-        }
-    }
     
     @IBAction func copyRecoveryPhrase(_ sender: AnyObject) {
         let pasteBoard = NSPasteboard.general()
