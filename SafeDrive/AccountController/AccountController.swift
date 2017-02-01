@@ -27,6 +27,9 @@ class AccountController: NSObject {
     
     fileprivate let accountQueue = DispatchQueue(label: "io.safedrive.accountQueue", attributes: DispatchQueue.Attributes.concurrent)
     
+    fileprivate let sdkCompletionQueue = DispatchQueue.main
+
+    
     var signedIn: Bool {
         get {
             var s: Bool = false // sane default, signing in twice due to "false negative" doesn't hurt anything
@@ -186,25 +189,27 @@ class AccountController: NSObject {
                 }
                 let groupURL = storageURL()
                 
-                do {
-                     let _ = try self.sdk.login(email, password: password, local_storage_path: groupURL.path, unique_client_id: clientID, completionQueue: self.accountQueue)
-                } catch let error as SDKError {
-                    SDLog("failed to login with sdk: \(error.message)")
-                } catch {}
-                
-                do {
-                    try self.sdk.loadKeys(recoveryPhrase, completionQueue: self.accountQueue, storePhrase: { (newPhrase) in
+                self.sdk.login(email, password: password, local_storage_path: groupURL.path, unique_client_id: clientID, completionQueue: self.sdkCompletionQueue, success: { (status) -> Void in
+                    self.sdk.loadKeys(recoveryPhrase, completionQueue: self.sdkCompletionQueue, storePhrase: { (newPhrase) in
+                        
                         print("New recovery phrase: \(newPhrase)")
+                        
                         let keychainError = self.sharedSystemAPI.insertCredentialsInKeychain(forService: recoveryKeyDomain(), account: email, password: newPhrase)
+                        
                         if let keychainError = keychainError {
                             SDErrorHandlerReport(keychainError)
                             failureBlock(keychainError)
                             return
                         }
+                        
+                    }, success: {
+                        
+                    }, failure: { (error) in
+                        SDLog("failed to load keys with sdk: \(error.message)")
                     })
-                } catch let error as SDKError {
-                    SDLog("failed to load keys: \(error.message)")
-                } catch {}
+                }, failure: { (error) in
+                    SDLog("failed to login with sdk: \(error.message)")
+                })
                 
                 NotificationCenter.default.post(name: Notification.Name.sdkReady, object: nil)
                 
