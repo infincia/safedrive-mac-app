@@ -56,7 +56,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             config = SDKConfiguration.Staging
         }
         
-        self.sdk.setUp(client_version: CFBundleShortVersionString, operating_system: "Mac OS X", config: config)
+        let languageCode: String = Locale.preferredLanguages[0]
+
+        
+        self.sdk.setUp(client_version: CFBundleShortVersionString, operating_system: "Mac OS X", language_code: languageCode, config: config)
         
         // initialize error handler, from this point on SDLog() and SDErrorHandlerReport() should be safe to use
         SDErrorHandlerInitialize()
