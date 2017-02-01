@@ -10,6 +10,8 @@
 		576E2A7947C0F5E84C15FABD /* Pods_SafeDriveService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9B3056709C1BE77D9B18858 /* Pods_SafeDriveService.framework */; };
 		69AB0CB9201703699449D0B7 /* Pods_SafeDriveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACCC0E28E50D1255EF3C3795 /* Pods_SafeDriveTests.framework */; };
 		856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */; };
+		AA037B6F1E428EA600818B53 /* RecoveryPhraseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */; };
+		AA037B701E428EA600818B53 /* RecoveryPhraseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */; };
 		AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */; };
 		AA0A7D1E1A19682D00DCB77E /* AccountWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D201A19682D00DCB77E /* AccountWindow.xib */; };
 		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
@@ -243,6 +245,8 @@
 		7EB73E606E32D60409155C42 /* Pods-SafeDriveFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.release.xcconfig"; sourceTree = "<group>"; };
 		81810F9B8E9F2AB8468A4A0C /* Pods-SafeDrive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDrive.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDrive/Pods-SafeDrive.release.xcconfig"; sourceTree = "<group>"; };
 		919F110D04C41D55CB26D7F1 /* Pods-SafeDriveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryPhraseWindowController.swift; sourceTree = "<group>"; };
+		AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecoveryPhraseWindow.xib; sourceTree = "<group>"; };
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreferencesWindow.xib; sourceTree = "<group>"; };
 		AA0A7D1F1A19682D00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AccountWindow.xib; sourceTree = "<group>"; };
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -535,6 +539,8 @@
 				AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */,
 				AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */,
 				AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */,
+				AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */,
+				AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */,
 			);
 			path = PreferencesWindow;
 			sourceTree = "<group>";
@@ -965,6 +971,7 @@
 				AAA50BB11E313AF200892E9D /* CUIThemeRenditionFix.xcassets in Resources */,
 				AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */,
 				AA76DC291C879076007B320E /* WelcomeWindow.xib in Resources */,
+				AA037B701E428EA600818B53 /* RecoveryPhraseWindow.xib in Resources */,
 				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
 				AA5071571E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg in Resources */,
@@ -1290,6 +1297,7 @@
 				AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */,
 				AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */,
 				AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */,
+				AA037B6F1E428EA600818B53 /* RecoveryPhraseWindowController.swift in Sources */,
 				AAB7D5D51CB09943001F9A8E /* CrashAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
