@@ -414,14 +414,14 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             if result == NSFileHandlingPanelOKButton {
                 self.spinner.startAnimation(self)
                 let isEncrypted = (encryptedCheckbox.state == 1)
-                self.sharedSafedriveAPI.createSyncFolder(panel.url!, encrypted: isEncrypted, success: { (folderID: Int32) -> Void in
+                self.sharedSafedriveAPI.createSyncFolder(panel.url!, encrypted: isEncrypted, success: { (folderID: UInt64) -> Void in
                     guard let realm = try? Realm() else {
                         SDLog("failed to create realm!!!")
                         Crashlytics.sharedInstance().crash()
                         return
                     }
                     
-                    let syncFolder = SyncFolder(name: panel.url!.lastPathComponent, url: panel.url!, uniqueID: folderID, encrypted: isEncrypted)
+                    let syncFolder = SyncFolder(name: panel.url!.lastPathComponent, url: panel.url!, uniqueID: Int32(folderID), encrypted: isEncrypted)
                     
                     // this is the only place where the `added` property should be set on SyncFolders
                     syncFolder.added = Date()
@@ -453,7 +453,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     @IBAction func removeSyncFolder(_ sender: AnyObject) {
         let button: NSButton = sender as! NSButton
-        let uniqueID: Int32 = Int32(button.tag)
+        let uniqueID: UInt64 = UInt64(button.tag)
         SDLog("Deleting sync folder ID: %lu", uniqueID)
         let alert = NSAlert()
         alert.addButton(withTitle: "Cancel")
@@ -643,7 +643,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     @IBAction func startSyncNow(_ sender: AnyObject) {
         let button: NSButton = sender as! NSButton
-        let folderID: Int32 = Int32(button.tag)
+        let folderID: UInt64 = UInt64(button.tag)
         
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")
@@ -663,7 +663,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     @IBAction func startRestoreNow(_ sender: AnyObject) {
         let button: NSButton = sender as! NSButton
-        let folderID: Int32 = Int32(button.tag)
+        let folderID: UInt64 = UInt64(button.tag)
         
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")
@@ -702,19 +702,19 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     @IBAction func stopSyncNow(_ sender: AnyObject) {
         let button: NSButton = sender as! NSButton
-        let folderID: Int32 = Int32(button.tag)
+        let folderID: UInt64 = UInt64(button.tag)
         stopSync(folderID)
     }
     
     
     // MARK: Sync control
     
-    func startSync(_ folderID: Int32, encrypted: Bool) {
+    func startSync(_ folderID: UInt64, encrypted: Bool) {
         let type: SyncType = encrypted ? .encrypted : .unencrypted
         self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward, type: type, name: UUID())
     }
     
-    func startRestore(_ folderID: Int32, encrypted: Bool, name: UUID) {
+    func startRestore(_ folderID: UInt64, encrypted: Bool, name: UUID) {
         let type: SyncType = encrypted ? .encrypted : .unencrypted
         
         let alert = NSAlert()
@@ -742,7 +742,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         })
     }
     
-    func stopSync(_ folderID: Int32) {
+    func stopSync(_ folderID: UInt64) {
         
         let alert = NSAlert()
         alert.addButton(withTitle: "No")

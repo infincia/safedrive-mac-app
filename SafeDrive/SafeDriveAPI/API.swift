@@ -19,7 +19,7 @@ enum Endpoint {
     case accountDetails
     case createFolder([String:AnyObject])
     case readFolders
-    case deleteFolder(Int32)
+    case deleteFolder(UInt64)
     case hostFingerprints
     case apiStatus
 
@@ -326,7 +326,7 @@ class API: NSObject, URLSessionDelegate {
     
     // MARK: Sync folder handling
     
-    func createSyncFolder(_ localFolder: URL, encrypted: Bool, success successBlock: @escaping (_ folderID: Int32) -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
+    func createSyncFolder(_ localFolder: URL, encrypted: Bool, success successBlock: @escaping (_ folderID: UInt64) -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         let postParameters: [String : Any] = ["folderName": localFolder.lastPathComponent.lowercased(), "folderPath": localFolder.path, "encrypted": encrypted]
         let endpoint = Endpoint.createFolder(postParameters as [String : AnyObject])
         
@@ -339,7 +339,7 @@ class API: NSObject, URLSessionDelegate {
                     guard let data = data,
                         let raw = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
                         let JSON = raw as? [String: AnyObject],
-                        let folderID: Int32 = JSON["id"] as? Int32 else {
+                        let folderID: UInt64 = JSON["id"] as? UInt64 else {
                             let responseError: NSError = NSError(domain: SDErrorAPIDomain, code: SDAPIError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Internal error<folder/create>"])
                             failureBlock(responseError)
                             return
@@ -400,7 +400,7 @@ class API: NSObject, URLSessionDelegate {
         dataTask.resume()
     }
     
-    func deleteSyncFolder(_ folderId: Int32, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
+    func deleteSyncFolder(_ folderId: UInt64, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         let endpoint = Endpoint.deleteFolder(folderId)
         
         let dataTask = self.URLSession.dataTask(with: endpoint.URLRequest, completionHandler: { (data, response, error) in

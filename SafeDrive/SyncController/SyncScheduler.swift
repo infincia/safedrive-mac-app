@@ -24,7 +24,7 @@ enum SyncType {
 
 struct SyncEvent {
     let uniqueClientID: String
-    let folderID: Int32
+    let folderID: UInt64
     let direction: SyncDirection
     let type: SyncType
     let name: UUID
@@ -120,7 +120,7 @@ class SyncScheduler {
                         folder.syncing = false
                         folder.restoring = false
                     }
-                    self.queueSyncJob(uniqueClientID, folderID: folder.uniqueID, direction: .reverse, type: type, name: currentSyncUUID)
+                    self.queueSyncJob(uniqueClientID, folderID: UInt64(folder.uniqueID), direction: .reverse, type: type, name: currentSyncUUID)
                     break
                 default:
                     return
@@ -210,7 +210,7 @@ class SyncScheduler {
                 for folder in folders {
                     let folderID = folder.uniqueID
                     let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
-                    self.queueSyncJob(uniqueClientID, folderID: folderID, direction: .forward, type: type, name: UUID())
+                    self.queueSyncJob(uniqueClientID, folderID: UInt64(folderID), direction: .forward, type: type, name: UUID())
                 }
                 
                 // keep loop in sync with clock time to the next minute
@@ -221,7 +221,7 @@ class SyncScheduler {
         }
     }
     
-    func queueSyncJob(_ uniqueClientID: String, folderID: Int32, direction: SyncDirection, type: SyncType, name: UUID) {
+    func queueSyncJob(_ uniqueClientID: String, folderID: UInt64, direction: SyncDirection, type: SyncType, name: UUID) {
         syncDispatchQueue.sync(execute: {() -> Void in
             let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID, direction: direction, type: type, name: name)
             self.sync(syncEvent)
@@ -232,7 +232,7 @@ class SyncScheduler {
         self.running = false
     }
     
-    func cancel(_ uniqueID: Int32, completion: @escaping () -> Void) {
+    func cancel(_ uniqueID: UInt64, completion: @escaping () -> Void) {
         for syncController in self.syncControllers {
             if syncController.uniqueID == uniqueID {
                 syncController.stopSyncTask {
@@ -298,7 +298,7 @@ class SyncScheduler {
             let remote: URL = urlComponents.url!
             
             let syncController = SyncController()
-            syncController.uniqueID = folder.uniqueID
+            syncController.uniqueID = UInt64(folder.uniqueID)
             syncController.encrypted = folder.encrypted
             syncController.uuid = name.uuidString
             syncController.localURL = localFolder
