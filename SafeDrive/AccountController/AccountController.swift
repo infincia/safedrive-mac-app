@@ -21,7 +21,7 @@ class AccountController: NSObject {
     var password: String?
     
     var remoteHost: String?
-    var remotePort: NSNumber?
+    var remotePort: UInt16?
     
     var hasCredentials: Bool = false
     
@@ -47,9 +47,7 @@ class AccountController: NSObject {
     
     fileprivate var _signedIn: Bool = false
     
-    fileprivate var sharedSystemAPI = SDSystemAPI.shared()
-    fileprivate var sharedSafedriveAPI = API.sharedAPI
-    
+    fileprivate var sharedSystemAPI = SDSystemAPI.shared()    
     
     override init() {
         super.init()
@@ -110,11 +108,6 @@ class AccountController: NSObject {
             
         }
         
-        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
-        
-        let recoveryPhrase = recoveryCredentials?["password"]
-        
-        
         let keychainError: NSError? = self.sharedSystemAPI.insertCredentialsInKeychain(forService: accountCredentialDomain(), account: email, password: password) as NSError?
         
         if let keychainError = keychainError {
@@ -129,113 +122,83 @@ class AccountController: NSObject {
         let ucid: String = HKTHashProvider.sha256(machineIdConcatenation.data(using: String.Encoding.utf8))
         
         SDErrorHandlerSetUniqueClientId(ucid)
-        
-        let operatingSystem: String = "OS X \(self.sharedSystemAPI.currentOSVersion()!)"
-        let languageCode: String = Locale.preferredLanguages[0]
+        Crashlytics.sharedInstance().setUserIdentifier(ucid)
 
+        let groupURL = storageURL()
         
-        self.sharedSafedriveAPI.registerMachineWithUser(email, password: password, uniqueClientId: ucid, operatingSystem: operatingSystem, languageCode: languageCode, success: { (_: String, clientID: String) -> Void in
-            self.sharedSafedriveAPI.accountStatusForUser(email, success: { (accountStatus: [String : NSObject]) -> Void in
-                self.signedIn = true
-                Crashlytics.sharedInstance().setUserIdentifier(clientID)
+        
+        self.sdk.login(email, password: password, local_storage_path: groupURL.path, unique_client_id: ucid, completionQueue: self.sdkCompletionQueue, success: { (status) -> Void in
+            self.signedIn = true
+            
+            DispatchQueue.main.async(execute: {() -> Void in
+                NotificationCenter.default.post(name: Notification.Name.accountStatus, object: status)
+            })
+            self.internalUserName = status.userName
+            
+            self.remotePort = status.port
+            
+            self.remoteHost = status.host
+            
+            let keychainError = self.sharedSystemAPI.insertCredentialsInKeychain(forService: sshCredentialDomain(), account: self.internalUserName!, password: self.password!)
+            if let keychainError = keychainError {
+                SDErrorHandlerReport(keychainError)
+                failureBlock(keychainError)
+                return
+            }
+            guard let realm = try? Realm() else {
+                SDLog("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            
+            do {
+                /*
+                 Once a Machine entity is created for this uniqueClientID, we never modify it without special handling.
+                 
+                 The Machine.name property is used to decide which path on the server to sync to, so we cannot allow
+                 it to be overwritten every time the local hostname changes.
+                 
+                 
+                 
+                 */
+                var currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(ucid)'").last
                 
+                if currentMachine == nil {
+                    let machineName = Host.current().localizedName!
+                    
+                    currentMachine = Machine(name: machineName, uniqueClientID: ucid)
+                    
+                    try realm.write {
+                        realm.add(currentMachine!, update: true)
+                    }
+                }
+            } catch {
+                SDLog("failed to update machine in realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            
+            self.sdk.getAccountDetails(completionQueue: DispatchQueue.main, success: { (details) in
                 
                 DispatchQueue.main.async(execute: {() -> Void in
-                    NotificationCenter.default.post(name: Notification.Name.accountStatus, object: accountStatus)
-                })
-                self.internalUserName = accountStatus["userName"] as? String
-                
-                self.remotePort = accountStatus["port"] as? NSNumber
-                
-                self.remoteHost = accountStatus["host"] as? String
-                
-                let keychainError = self.sharedSystemAPI.insertCredentialsInKeychain(forService: sshCredentialDomain(), account: self.internalUserName!, password: self.password!)
-                if let keychainError = keychainError {
-                    SDErrorHandlerReport(keychainError)
-                    failureBlock(keychainError)
-                    return
-                }
-                guard let realm = try? Realm() else {
-                    SDLog("failed to create realm!!!")
-                    Crashlytics.sharedInstance().crash()
-                    return
-                }
-                
-                do {
-                    /*
-                     Once a Machine entity is created for this uniqueClientID, we never modify it without special handling.
-                     
-                     The Machine.name property is used to decide which path on the server to sync to, so we cannot allow
-                     it to be overwritten every time the local hostname changes.
-                     
-                     
-                     
-                     */
-                    var currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(clientID)'").last
-                    
-                    if currentMachine == nil {
-                        let machineName = Host.current().localizedName!
-                        
-                        currentMachine = Machine(name: machineName, uniqueClientID: clientID)
-                        
-                        try realm.write {
-                            realm.add(currentMachine!, update: true)
-                        }
-                    }
-                } catch {
-                    SDLog("failed to update machine in realm!!!")
-                    Crashlytics.sharedInstance().crash()
-                    return
-                }
-                let groupURL = storageURL()
-                
-                self.sdk.login(email, password: password, local_storage_path: groupURL.path, unique_client_id: clientID, completionQueue: self.sdkCompletionQueue, success: { (status) -> Void in
-                    self.sdk.loadKeys(recoveryPhrase, completionQueue: self.sdkCompletionQueue, storePhrase: { (newPhrase) in
-                        
-                        print("New recovery phrase: \(newPhrase)")
-                        
-                        let keychainError = self.sharedSystemAPI.insertCredentialsInKeychain(forService: recoveryKeyDomain(), account: email, password: newPhrase)
-                        
-                        if let keychainError = keychainError {
-                            SDErrorHandlerReport(keychainError)
-                            failureBlock(keychainError)
-                            return
-                        }
-                        
-                    }, success: {
-                        
-                    }, failure: { (error) in
-                        SDLog("failed to load keys with sdk: \(error.message)")
-                    })
-                }, failure: { (error) in
-                    SDLog("failed to login with sdk: \(error.message)")
+                    NotificationCenter.default.post(name: Notification.Name.accountDetails, object: details)
                 })
                 
-                NotificationCenter.default.post(name: Notification.Name.sdkReady, object: nil)
-                
-                NotificationCenter.default.post(name: Notification.Name.accountAuthenticated, object: clientID)
-                successBlock()
-                
-            }, failure: { (error: Swift.Error) -> Void in
-                failureBlock(error)
-                
-            })
-            
-            self.sharedSafedriveAPI.accountDetailsForUser(email, success: {(accountDetails: [String : NSObject]?) -> Void in
-                if let accountDetails = accountDetails {
-                    DispatchQueue.main.async(execute: {() -> Void in
-                        NotificationCenter.default.post(name: Notification.Name.accountDetails, object: accountDetails)
-                    })
-                }
-                
-            }, failure: {(apiError: Swift.Error) -> Void in
+            }, failure: { (error) in
                 if !isProduction() {
-                    SDLog("Account details retrieval failed: %@", apiError.localizedDescription)
+                    SDLog("Account details retrieval failed: \(error.message)")
                     // don't report these for now, they're almost always going to be network failures
                     // SDErrorHandlerReport(apiError);
                 }
             })
-        }, failure: { (error: Swift.Error) -> Void in
+            
+            NotificationCenter.default.post(name: Notification.Name.sdkReady, object: nil)
+            
+            NotificationCenter.default.post(name: Notification.Name.accountAuthenticated, object: ucid)
+            successBlock()
+            
+        }, failure: { (error) in
+            SDLog("failed to login with sdk: \(error.message)")
             failureBlock(error)
         })
     }
@@ -281,7 +244,7 @@ class AccountController: NSObject {
     fileprivate func accountLoop() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             while true {
-                guard let email = self.email else {
+                guard let _ = self.email else {
                     Thread.sleep(forTimeInterval: 1)
                     continue
                 }
@@ -291,38 +254,34 @@ class AccountController: NSObject {
                 }
                 Thread.sleep(forTimeInterval: 60 * 5) // 5 minutes
                 
-                self.sharedSafedriveAPI.accountStatusForUser(email, success: {(accountStatus: [String : NSObject]?) -> Void in
-                    
-                    if let accountStatus = accountStatus {
+                self.sdk.getAccountStatus(completionQueue: DispatchQueue.main, success: { (status) in
                         DispatchQueue.main.async(execute: {() -> Void in
-                            NotificationCenter.default.post(name: Notification.Name.accountStatus, object: accountStatus)
+                            NotificationCenter.default.post(name: Notification.Name.accountStatus, object: status)
                         })
                         
-                        self.internalUserName = accountStatus["userName"] as? String
+                        self.internalUserName = status.userName
                         
-                        self.remotePort = accountStatus["port"] as? NSNumber
+                        self.remotePort = status.port
                         
-                        self.remoteHost = accountStatus["host"] as? String
-                    }
+                        self.remoteHost = status.host
                     
-                }, failure: {(apiError: Swift.Error) -> Void in
+                }, failure: { (error) in
                     if !isProduction() {
-                        SDLog("Account status retrieval failed: %@", apiError.localizedDescription)
+                        SDLog("Account status retrieval failed: \(error.message)")
                         // don't report these for now, they're almost always going to be network failures
                         // SDErrorHandlerReport(apiError);
                     }
                 })
                 
-                self.sharedSafedriveAPI.accountDetailsForUser(email, success: {(accountDetails: [String : NSObject]?) -> Void in
-                    if let accountDetails = accountDetails {
-                        DispatchQueue.main.async(execute: {() -> Void in
-                            NotificationCenter.default.post(name: Notification.Name.accountDetails, object: accountDetails)
-                        })
-                    }
+                self.sdk.getAccountDetails(completionQueue: DispatchQueue.main, success: { (details) in
                     
-                }, failure: {(apiError: Swift.Error) -> Void in
+                    DispatchQueue.main.async(execute: {() -> Void in
+                        NotificationCenter.default.post(name: Notification.Name.accountDetails, object: details)
+                    })
+                    
+                }, failure: { (error) in
                     if !isProduction() {
-                        SDLog("Account details retrieval failed: %@", apiError.localizedDescription)
+                        SDLog("Account details retrieval failed: \(error.message)")
                         // don't report these for now, they're almost always going to be network failures
                         // SDErrorHandlerReport(apiError);
                     }

@@ -25,9 +25,7 @@ enum ViewType: Int {
 
 
 class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, NSPopoverDelegate, SDMountStateProtocol, SDAccountProtocol, SDServiceStatusProtocol {
-    
-    fileprivate var sharedSafedriveAPI = API.sharedAPI
-    
+        
     fileprivate var accountController = AccountController.sharedAccountController
     
     fileprivate var syncScheduler = SyncScheduler.sharedSyncScheduler
@@ -322,24 +320,27 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     }
     
     func didReceiveAccountStatus(_ notification: Foundation.Notification) {
-        if let accountStatus = notification.object as? [String: AnyObject],
-            let status = accountStatus["status"] as? String {
+        if let accountStatus = notification.object as? AccountStatus,
+            let status = accountStatus.status {
             self.accountStatusField.stringValue = status.capitalized
         } else {
             self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
-            
+            SDLog("Validation failed: didReceiveAccountStatus")
+   
         }
     }
     
     func didReceiveAccountDetails(_ notification: Foundation.Notification) {
-        if let accountDetails = notification.object as? [String: AnyObject],
-            let assignedStorage = accountDetails["assignedStorage"] as? Int,
-            let usedStorage = accountDetails["usedStorage"] as? Int,
-            let expirationDate = accountDetails["expirationDate"] as? Double {
+        if let accountDetails = notification.object as? AccountDetails {
+        
+            let assignedStorage = accountDetails.assignedStorage
+            let usedStorage = accountDetails.usedStorage
+            let expirationDate = accountDetails.expirationDate
+            
             self.assignedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(assignedStorage), countStyle: .file)
             self.usedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(usedStorage), countStyle: .file)
             
-            let date: Date = Date(timeIntervalSince1970: expirationDate / 1000)
+            let date: Date = Date(timeIntervalSince1970: Double(expirationDate) / 1000)
             let dateFormatter: DateFormatter = DateFormatter()
             dateFormatter.locale = Locale.current
             dateFormatter.timeStyle = .none
@@ -385,7 +386,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBAction func loadAccountPage(_ sender: AnyObject) {
         // Open the safedrive account page in users default browser
         if let _ = self.accountController.email,
-            let url = URL(string: "https://\(API.domain)/#/en/dashboard/account/details") {
+            let url = URL(string: "https://\(webDomain())/#/en/dashboard/account/details") {
             NSWorkspace.shared().open(url)
         }
     }
@@ -414,7 +415,11 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             if result == NSFileHandlingPanelOKButton {
                 self.spinner.startAnimation(self)
                 let isEncrypted = (encryptedCheckbox.state == 1)
-                self.sharedSafedriveAPI.createSyncFolder(panel.url!, encrypted: isEncrypted, success: { (folderID: UInt64) -> Void in
+                
+                let folderName = panel.url!.lastPathComponent.lowercased()
+                let folderPath = panel.url!.path
+                
+                self.sdk.addFolder(folderName, path: folderPath, completionQueue: DispatchQueue.main, success: { (folderID) in
                     guard let realm = try? Realm() else {
                         SDLog("failed to create realm!!!")
                         Crashlytics.sharedInstance().crash()
@@ -437,9 +442,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.readSyncFolders(self)
                     
                     self.startSync(folderID, encrypted: syncFolder.encrypted)
-                    
-                }, failure: { (apiError: Swift.Error) -> Void in
-                    SDErrorHandlerReport(apiError)
+                }, failure: { (error) in
+                    SDErrorHandlerReport(error)
                     self.spinner.stopAnimation(self)
                     let alert: NSAlert = NSAlert()
                     alert.messageText = NSLocalizedString("Error adding folder to your account", comment: "")
@@ -500,15 +504,15 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             urlComponents.password = self.accountController.password
             urlComponents.host = self.accountController.remoteHost
             urlComponents.path = remoteFolder.path
-            urlComponents.port = self.accountController.remotePort as Int?
+            urlComponents.port = Int(self.accountController.remotePort!)
             let remote: URL = urlComponents.url!
             
             self.syncScheduler.cancel(uniqueID) {
                 let syncController = SyncController()
                 syncController.uniqueID = uniqueID
                 syncController.sftpOperation(op, remoteDirectory: remote, password: self.accountController.password!, success: {
-                    self.sharedSafedriveAPI.deleteSyncFolder(uniqueID, success: {() -> Void in
-                        
+                    
+                    self.sdk.removeFolder(uniqueID, completionQueue: DispatchQueue.main, success: { 
                         guard let realm = try? Realm() else {
                             SDLog("failed to create realm!!!")
                             Crashlytics.sharedInstance().crash()
@@ -538,8 +542,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                         }
                         self.reload()
                         self.spinner.stopAnimation(self)
-                    }, failure: {(apiError: Swift.Error) -> Void in
-                        SDErrorHandlerReport(apiError)
+                    }, failure: { (error) in
+                        SDErrorHandlerReport(error)
                         self.spinner.stopAnimation(self)
                         let alert: NSAlert = NSAlert()
                         alert.messageText = NSLocalizedString("Error removing folder from your account", comment: "")
@@ -563,7 +567,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     @IBAction func readSyncFolders(_ sender: AnyObject) {
         self.spinner.startAnimation(self)
         
-        self.sharedSafedriveAPI.readSyncFoldersWithSuccess({ (folders: [[String : NSObject]]) -> Void in
+        self.sdk.getFolders(completionQueue: DispatchQueue.main, success: { (folders: [Folder]) in
             for folder in folders {
                 /*
                  Current sync folder model:
@@ -575,15 +579,15 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                  "encrypted"  : false
                  */
                 
-                let folderName = folder["folderName"] as! String
-                let folderPath = folder["folderPath"]  as! String
-                let folderId = folder["id"] as! Int32
+                let folderName = folder.name
+                let folderPath = folder.path
+                let folderId = folder.id
                 
-                let addedUnixDate: Double = folder["addedDate"] as! Double
+                let addedUnixDate = Double(folder.date)
                 
                 let addedDate: Date = Date(timeIntervalSince1970: addedUnixDate/1000)
                 
-                let encrypted = folder["encrypted"] as! Bool
+                let encrypted = folder.encrypted
                 
                 
                 guard let realm = try? Realm() else {
@@ -602,7 +606,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 var syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", folderId).last
                 
                 if syncFolder == nil {
-                    syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: folderId, encrypted: encrypted)
+                    syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: Int32(folderId), encrypted: encrypted)
                 }
                 
                 // swiftlint:disable force_try
@@ -630,7 +634,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.syncListView!.becomeFirstResponder()
             }
             
-        }, failure: { (error: Swift.Error) -> Void in
+        }, failure: { (error) in
             SDErrorHandlerReport(error)
             self.spinner.stopAnimation(self)
             let alert: NSAlert = NSAlert()

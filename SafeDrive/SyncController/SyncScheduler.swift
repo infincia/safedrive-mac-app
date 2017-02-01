@@ -294,7 +294,7 @@ class SyncScheduler {
             urlComponents.user = self.accountController.internalUserName
             urlComponents.host = self.accountController.remoteHost
             urlComponents.path = remoteFolder.path
-            urlComponents.port = self.accountController.remotePort as Int?
+            urlComponents.port = Int(self.accountController.remotePort!)
             let remote: URL = urlComponents.url!
             
             let syncController = SyncController()

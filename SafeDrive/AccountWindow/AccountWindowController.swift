@@ -7,9 +7,11 @@
 
 import Cocoa
 
+import SafeDriveSDK
+
 class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolumeEventProtocol {
     
-    var safeDriveAPI = API.sharedAPI
+    var sdk = SafeDriveSDK.sharedSDK
     var mountController = MountController.shared
     var sharedSystemAPI = SDSystemAPI.shared()
     
@@ -101,7 +103,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         urlComponents.user = self.accountController.internalUserName
         urlComponents.host = self.accountController.remoteHost
         urlComponents.path = SDDefaultServerPath
-        urlComponents.port = self.accountController.remotePort as Int?
+        urlComponents.port = Int(self.accountController.remotePort!)
         let sshURL: URL = urlComponents.url!
         
         self.mountController.startMountTask(volumeName: volumeName, sshURL: sshURL, success: { mountURL in

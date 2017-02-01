@@ -4,13 +4,16 @@
 
 import Cocoa
 
+import SafeDriveSDK
+
 class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol, SDAccountProtocol {
     var statusItem: NSStatusItem?
     @IBOutlet var statusItemMenu: NSMenu!
     @IBOutlet var connectMenuItem: NSMenuItem!
     @IBOutlet var preferencesMenuItem: NSMenuItem!
 
-    fileprivate var safeDriveAPI = API.sharedAPI
+    fileprivate var sdk = SafeDriveSDK.sharedSDK
+    
     fileprivate var mountController = MountController.shared
     fileprivate var sharedSystemAPI = SDSystemAPI.shared()
 

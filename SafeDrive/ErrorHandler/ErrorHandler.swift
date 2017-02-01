@@ -6,6 +6,8 @@
 
 import Crashlytics
 
+import SafeDriveSDK
+
 var logBuffer = [String]()
 var errors = [[AnyHashable: Any]]()
 let errorQueue = DispatchQueue(label: "io.safedrive.errorQueue", attributes: [])
@@ -159,7 +161,7 @@ func startReportQueue() {
                     //note: passing the same queue we're in here is only OK because the called method uses it
                     //      with dispatch_async, if that were not the case this would deadlock forever
                     
-                    API.sharedAPI.reportError(error, forUniqueClientId: reportUniqueClientId, operatingSystem: reportOS, clientVersion: reportClientVersion, withLog:reportLog, completionQueue:errorQueue, success: {
+                    SafeDriveSDK.sharedSDK.reportError(error, forUniqueClientId: reportUniqueClientId, os: reportOS, clientVersion: reportClientVersion, withLog:reportLog, completionQueue:errorQueue, success: {
                         
                         saveErrors()
                         

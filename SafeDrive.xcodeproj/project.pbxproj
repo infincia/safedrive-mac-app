@@ -61,7 +61,6 @@
 		AA76DC211C8762A9007B320E /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC201C8762A9007B320E /* Installer.swift */; };
 		AA76DC231C8779D2007B320E /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */; };
 		AA76DC291C879076007B320E /* WelcomeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA76DC281C879076007B320E /* WelcomeWindow.xib */; };
-		AA76DC2D1C88D4C6007B320E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2C1C88D4C6007B320E /* API.swift */; };
 		AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */; };
 		AA7FE7A31E3D4AD4007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA7FE7A51E3D4AD5007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
@@ -1272,7 +1271,6 @@
 				AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */,
 				AA6E27341D8839DC00038019 /* SyncController.swift in Sources */,
 				AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */,
-				AA76DC2D1C88D4C6007B320E /* API.swift in Sources */,
 				AA76DC211C8762A9007B320E /* Installer.swift in Sources */,
 				AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */,
 				AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */,
