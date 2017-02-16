@@ -287,6 +287,15 @@ class SyncScheduler {
             
 
             if folder.encrypted {
+                if isRestore {
+                    guard let session = realm.objects(PersistedSyncSession.self).filter("name == \(name.uuidString)").first else {
+                        SDLog("failed to get sync session from realm!!!")
+                        return
+                    }
+                
+                    syncController.spaceNeeded = UInt64(session.size)
+                }
+                
             } else {
                 
                 let defaultFolder: URL = URL(string: SDDefaultServerPath)!
