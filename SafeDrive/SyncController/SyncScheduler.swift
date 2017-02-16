@@ -245,7 +245,8 @@ class SyncScheduler {
     
     fileprivate func sync(_ syncEvent: SyncEvent) {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
-            
+            SDLog("Queued sync job \(syncEvent)")
+
             guard let realm = try? Realm() else {
                 SDLog("failed to create realm!!!")
                 Crashlytics.sharedInstance().crash()
@@ -335,7 +336,6 @@ class SyncScheduler {
             DispatchQueue.main.sync(execute: {() -> Void in
                 self.syncControllers.append(syncController)
             })
-            SDLog("Syncing \(folderName)")
             
             syncController.startSyncTask(progress: { (total, current, new, percent, message, bandwidth) in
                 // use for updating sync progress
