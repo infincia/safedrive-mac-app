@@ -19,11 +19,21 @@ class AppXPCDelegate: NSObject, AppXPCProtocol {
         replyBlock(kAppXPCProtocolVersion)
     }
     
+    func getMountState(_ replyBlock: @escaping (_ mounted: Bool) -> Void) {
+        replyBlock(MountController.shared.mounted)
+    }
+
+    
     func displayPreferencesWindow() {
         NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenPreferencesWindow, object: nil)
     }
     
     func displayRestoreWindow(forURLs urls: [URL]) {
         NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenSyncWindow, object: nil)
+    }
+    
+    func toggleMountState() {
+        print("finder extension requesting mount state change")
+        NotificationCenter.default.post(name: Notification.Name.applicationShouldToggleMountState, object: nil)
     }
 }

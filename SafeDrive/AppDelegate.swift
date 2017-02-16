@@ -96,6 +96,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenPreferencesWindow(_:)), name: Notification.Name.applicationShouldOpenPreferencesWindow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAboutWindow(_:)), name: Notification.Name.applicationShouldOpenAboutWindow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.applicationShouldOpenSyncWindow(_:)), name: Notification.Name.applicationShouldOpenSyncWindow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldToggleMountState(_:)), name: Notification.Name.applicationShouldToggleMountState, object: nil)
         
         // register SDAccountProtocol notifications
         
@@ -142,6 +143,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         DispatchQueue.main.async(execute: {() -> Void in
             NSApp.activate(ignoringOtherApps: true)
             self.preferencesWindowController?.showWindow(nil)
+        })
+    }
+    
+    func applicationShouldToggleMountState(_ notification: Foundation.Notification) {
+        DispatchQueue.main.async(execute: {() -> Void in
+            if MountController.shared.mounted {
+                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: nil)
+            } else {
+                NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: nil)
+            }
         })
     }
     

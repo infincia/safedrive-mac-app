@@ -131,6 +131,11 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     }
     
     func volumeSubprocessDidTerminate(_ notification: Notification) {
+    
+    }
+    
+    func volumeShouldMount(_ notification: Notification!) {
+        
     }
     
     func volumeShouldUnmount(_ notification: Notification) {

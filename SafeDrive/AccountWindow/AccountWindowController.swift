@@ -186,6 +186,10 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
     func volumeSubprocessDidTerminate(_ notification: Notification) {
     }
     
+    func volumeShouldMount(_ notification: Notification!) {
+        self.connectVolume()
+    }
+    
     func volumeShouldUnmount(_ notification: Notification) {
     }
     

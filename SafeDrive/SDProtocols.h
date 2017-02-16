@@ -9,6 +9,7 @@
 -(void)volumeDidMount:(NSNotification*)notification;
 -(void)volumeDidUnmount:(NSNotification*)notification;
 -(void)volumeShouldUnmount:(NSNotification*)notification;
+-(void)volumeShouldMount:(NSNotification*)notification;
 -(void)volumeSubprocessDidTerminate:(NSNotification*)notification;
 @end
 
@@ -38,6 +39,7 @@
 -(void)applicationShouldOpenAccountWindow:(NSNotification*)notification;
 -(void)applicationShouldOpenAboutWindow:(NSNotification*)notification;
 -(void)applicationShouldFinishConfiguration:(NSNotification*)notification;
+-(void)applicationShouldToggleMountState:(NSNotification*)notification;
 @end
 
 @protocol SDAPIAvailabilityProtocol <NSObject>
