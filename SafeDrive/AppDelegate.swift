@@ -65,13 +65,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         SDErrorHandlerInitialize()
         if let updater = SUUpdater.shared() {
             if isProduction() {
-                SDLog("SafeDrive staging build \(CFBundleVersion)")
-                environment = "STAGING"
-                updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive/appcast.xml")
-            } else {
                 SDLog("SafeDrive release build \(CFBundleVersion)")
                 environment = "RELEASE"
                 updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive-release/appcast.xml")
+            } else {
+                SDLog("SafeDrive staging build \(CFBundleVersion)")
+                environment = "STAGING"
+                updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive/appcast.xml")
             }
         }
         
