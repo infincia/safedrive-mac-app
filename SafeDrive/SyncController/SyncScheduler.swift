@@ -325,7 +325,8 @@ class SyncScheduler {
             DispatchQueue.main.sync(execute: {() -> Void in
                 self.syncControllers.append(syncController)
             })
-            SDLog("Syncing from \(localFolder.path)/ to \(remote.path)/")
+            SDLog("Syncing \(folderName)")
+            
             syncController.startSyncTask(progress: { (percent, bandwidth) in
                 // use for updating sync progress
                 // WARNING: this block may be called more often than once per second on a background serial queue, DO NOT block it for long
@@ -339,7 +340,7 @@ class SyncScheduler {
                     realm.create(SyncTask.self, value: ["uuid": name.uuidString, "progress": percent, "bandwidth": bandwidth], update: true)
                 }
             }, success: { (_: URL) -> Void in
-                SDLog("Sync finished for \(localFolder.path)")
+                SDLog("Sync finished for \(folderName)")
                 guard let realm = try? Realm() else {
                     SDLog("failed to create realm!!!")
                     Crashlytics.sharedInstance().crash()
@@ -356,7 +357,7 @@ class SyncScheduler {
                 }
             }, failure: { (_: URL, error: Swift.Error?) -> Void in
                 SDErrorHandlerReport(error)
-                SDLog("Sync failed for \(localFolder.path): \(error!.localizedDescription)")
+                SDLog("Sync failed for \(folderName): \(error!.localizedDescription)")
                 guard let realm = try? Realm() else {
                     SDLog("failed to create realm!!!")
                     Crashlytics.sharedInstance().crash()
