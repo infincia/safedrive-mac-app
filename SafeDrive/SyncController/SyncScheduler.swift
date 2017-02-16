@@ -259,6 +259,10 @@ class SyncScheduler {
             if syncEvent.direction == .reverse {
                 isRestore = true
             }
+            
+            let syncController = SyncController()
+
+
             let name = syncEvent.name
             
             guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(uniqueClientID)'").last else {
@@ -271,39 +275,51 @@ class SyncScheduler {
                 return
             }
             
+            let folderName: String = folder.name!
+            
+            let localFolder: URL = folder.url! as URL
+            
             if folder.syncing {
                 SDLog("Sync for \(folder.name!) already in progress, cancelling")
                 //NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
                 return
             }
             
+
+            if folder.encrypted {
+            } else {
+                
+                let defaultFolder: URL = URL(string: SDDefaultServerPath)!
+                let machineFolder: URL = defaultFolder.appendingPathComponent(folder.machine!.name!, isDirectory: true)
+                let remoteFolder: URL = machineFolder.appendingPathComponent(folderName, isDirectory: true)
+                var urlComponents: URLComponents = URLComponents()
+                urlComponents.user = self.accountController.internalUserName
+                urlComponents.host = self.accountController.remoteHost
+                urlComponents.path = remoteFolder.path
+                urlComponents.port = Int(self.accountController.remotePort!)
+                let remote: URL = urlComponents.url!
+                
+                syncController.serverURL = remote
+                syncController.password = self.accountController.password!
+
+                syncController.spaceNeeded = 0
+
+            }
+            
+            
             let syncDate = Date()
+            
             try! realm.write {
                 realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": true, "restoring": isRestore, "currentSyncUUID": name.uuidString], update: true)
                 let syncTask = SyncTask(syncFolder: folder, syncDate: syncDate, uuid: name.uuidString)
                 realm.add(syncTask)
             }
-            let folderName: String = folder.name!
-            
-            let localFolder: URL = folder.url! as URL
-            
-            let defaultFolder: URL = URL(string: SDDefaultServerPath)!
-            let machineFolder: URL = defaultFolder.appendingPathComponent(folder.machine!.name!, isDirectory: true)
-            let remoteFolder: URL = machineFolder.appendingPathComponent(folderName, isDirectory: true)
-            var urlComponents: URLComponents = URLComponents()
-            urlComponents.user = self.accountController.internalUserName
-            urlComponents.host = self.accountController.remoteHost
-            urlComponents.path = remoteFolder.path
-            urlComponents.port = Int(self.accountController.remotePort!)
-            let remote: URL = urlComponents.url!
-            
-            let syncController = SyncController()
+
             syncController.uniqueID = UInt64(folder.uniqueID)
             syncController.encrypted = folder.encrypted
             syncController.uuid = name.uuidString
             syncController.localURL = localFolder
-            syncController.serverURL = remote
-            syncController.password = self.accountController.password!
+            
             syncController.restore = isRestore
             
             DispatchQueue.main.sync(execute: {() -> Void in
