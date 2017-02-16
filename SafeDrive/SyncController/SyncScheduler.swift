@@ -337,7 +337,7 @@ class SyncScheduler {
             })
             SDLog("Syncing \(folderName)")
             
-            syncController.startSyncTask(progress: { (percent, bandwidth) in
+            syncController.startSyncTask(progress: { (total, current, new, percent, message, bandwidth) in
                 // use for updating sync progress
                 // WARNING: this block may be called more often than once per second on a background serial queue, DO NOT block it for long
                 guard let realm = try? Realm() else {
