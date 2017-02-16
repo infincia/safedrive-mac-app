@@ -7,6 +7,8 @@ import RealmSwift
 import Realm
 
 class PersistedSyncSession: Object {
+    dynamic var machine: Machine?
+
     dynamic var name: String?
     
 	dynamic var size: Int64 = 0

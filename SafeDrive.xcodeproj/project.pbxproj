@@ -25,6 +25,9 @@
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA3EB8361E55686E003A2E79 /* SyncSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8351E55686E003A2E79 /* SyncSession.swift */; };
+		AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */; };
+		AA3EB83B1E556EE3003A2E79 /* RestoreSelectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */; };
+		AA3EB83D1E557C20003A2E79 /* RestoreSelectionTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */; };
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
 		AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; };
 		AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -267,6 +270,9 @@
 		AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDConstants.h; path = Shared/SDConstants.h; sourceTree = "<group>"; };
 		AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDConstants.m; path = Shared/SDConstants.m; sourceTree = "<group>"; };
 		AA3EB8351E55686E003A2E79 /* SyncSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncSession.swift; path = Shared/SyncSession.swift; sourceTree = "<group>"; };
+		AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestoreSelectionWindow.xib; sourceTree = "<group>"; };
+		AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionWindowController.swift; sourceTree = "<group>"; };
+		AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionTableCellView.swift; sourceTree = "<group>"; };
 		AA4E77311A3E6E640054BBCA /* SDTestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestConstants.h; sourceTree = "<group>"; };
 		AA4E77321A3E6E640054BBCA /* SDTestConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTestConstants.m; sourceTree = "<group>"; };
 		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -541,6 +547,9 @@
 				AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */,
 				AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */,
 				AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */,
+				AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */,
+				AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */,
+				AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */,
 				AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */,
 				AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */,
 			);
@@ -965,6 +974,7 @@
 				AA650CF31D73A381008DA5CB /* Changelog.md in Resources */,
 				AAF945F41C80162700B972C3 /* io.safedrive.SafeDrive.Service.plist in Resources */,
 				AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */,
+				AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */,
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */,
 				AA2E55101A774E0000647637 /* known_hosts in Resources */,
@@ -1282,6 +1292,7 @@
 				AA6E27341D8839DC00038019 /* SyncController.swift in Sources */,
 				AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AA76DC211C8762A9007B320E /* Installer.swift in Sources */,
+				AA3EB83D1E557C20003A2E79 /* RestoreSelectionTableCellView.swift in Sources */,
 				AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */,
 				AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */,
 				AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */,
@@ -1299,6 +1310,7 @@
 				AAB7D5D31CB06A62001F9A8E /* AccountWindowController.swift in Sources */,
 				AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */,
 				AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */,
+				AA3EB83B1E556EE3003A2E79 /* RestoreSelectionWindowController.swift in Sources */,
 				AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */,
 				AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */,
 				AA037B6F1E428EA600818B53 /* RecoveryPhraseWindowController.swift in Sources */,

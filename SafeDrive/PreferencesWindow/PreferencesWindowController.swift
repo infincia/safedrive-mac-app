@@ -134,6 +134,16 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
     }
 }
 
+extension PreferencesWindowController: RestoreSelectionDelegate {
+    func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL) {
+        let type: SyncType = .encrypted
+        
+        self.syncScheduler.cancel(folderID) {
+            self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .reverse, type: type, name: sessionName, destination: destination)
+        }
+    }
+}
+
 
 class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, NSPopoverDelegate, SDMountStateProtocol, SDAccountProtocol, SDServiceStatusProtocol {
         
@@ -144,6 +154,8 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     fileprivate var sdk = SafeDriveSDK.sharedSDK
     
     fileprivate var recoveryPhraseEntry: RecoveryPhraseWindowController!
+    
+    fileprivate var restoreSelection: RestoreSelectionWindowController!
 
     
     var sharedSystemAPI = SDSystemAPI.shared()
@@ -792,18 +804,14 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         let folder = realm.objects(SyncFolder.self).filter("machine == %@ AND uniqueID == %@", currentMachine, folderID).last!
         
         if folder.encrypted {
-            // TODO: show a window asking the user to pick from the list of available sessions and grab the name
-            let message = "Restoring encrypted folders is not implemented in mac app yet\n\nWe still need to add a session selection screen to allow a specific version to be restored"
+
+            self.restoreSelection = RestoreSelectionWindowController(delegate: self, uniqueClientID: self.uniqueClientID, folderID: folderID)
             
-            DispatchQueue.main.async(execute: {() -> Void in
-                let alert = NSAlert()
-                alert.addButton(withTitle: "OK")
-                alert.messageText = "Not implemented yet"
-                alert.informativeText = message
-                alert.alertStyle = NSAlertStyle.critical
-                alert.runModal()
-            })
-            return
+            guard let w = self.restoreSelection?.window else {
+                    SDLog("no recovery phrase window available")
+                    return
+                }
+            self.window?.beginSheet(w, completionHandler: nil)
         } else {
             // unencrypted folders have no versioning, so the name is arbitrary
             let name = UUID().uuidString.lowercased()
