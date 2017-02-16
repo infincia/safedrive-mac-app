@@ -210,6 +210,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                             newObject!["currentSyncUUID"] = nil
                         }
                     }
+                    
+                    // update for sync sessions
+                    migration.enumerateObjects(ofType: SyncFolder.className()) { _, newObject in
+                        if oldSchemaVersion < 12 {
+                            migration.delete(newObject!)
+                        }
+                    }
             })
             
             Realm.Configuration.defaultConfiguration = config
