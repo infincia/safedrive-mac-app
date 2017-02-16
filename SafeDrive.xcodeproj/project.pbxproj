@@ -24,6 +24,7 @@
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
+		AA3EB8361E55686E003A2E79 /* SyncSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8351E55686E003A2E79 /* SyncSession.swift */; };
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
 		AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; };
 		AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -265,6 +266,7 @@
 		AA31682C1A191B72006CC0EB /* SafeDriveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SafeDriveTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDConstants.h; path = Shared/SDConstants.h; sourceTree = "<group>"; };
 		AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDConstants.m; path = Shared/SDConstants.m; sourceTree = "<group>"; };
+		AA3EB8351E55686E003A2E79 /* SyncSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncSession.swift; path = Shared/SyncSession.swift; sourceTree = "<group>"; };
 		AA4E77311A3E6E640054BBCA /* SDTestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestConstants.h; sourceTree = "<group>"; };
 		AA4E77321A3E6E640054BBCA /* SDTestConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTestConstants.m; sourceTree = "<group>"; };
 		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -591,6 +593,7 @@
 				AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */,
 				AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */,
 				AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */,
+				AA3EB8351E55686E003A2E79 /* SyncSession.swift */,
 				AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */,
 				AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */,
 			);
@@ -1291,6 +1294,7 @@
 				AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */,
 				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,
 				AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */,
+				AA3EB8361E55686E003A2E79 /* SyncSession.swift in Sources */,
 				AAA88BC91C8385AA009BE1C7 /* Machine.swift in Sources */,
 				AAB7D5D31CB06A62001F9A8E /* AccountWindowController.swift in Sources */,
 				AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */,
