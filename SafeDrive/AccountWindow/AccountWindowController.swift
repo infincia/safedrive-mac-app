@@ -77,7 +77,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             if self.sharedSystemAPI.mountAtLaunch || sender is NSButton {
                 let mountURL = self.mountController.mountURL(forVolumeName: self.sharedSystemAPI.currentVolumeName)
                 if !self.sharedSystemAPI.check(forMountedVolume: mountURL) {
-                    self.showWindow(nil)
+                    //self.showWindow(nil)
                     self.connectVolume()
                 }
             }
