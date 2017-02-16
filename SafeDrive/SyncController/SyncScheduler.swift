@@ -27,8 +27,7 @@ struct SyncEvent {
     let folderID: UInt64
     let direction: SyncDirection
     let type: SyncType
-    let name: UUID
-    
+    let name: String
 }
 
 class SyncScheduler {
@@ -87,8 +86,7 @@ class SyncScheduler {
         
         for folder in realm.objects(SyncFolder.self).filter("restoring == true AND machine == %@", currentMachine) {
             let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
-            guard let currentSyncUUIDS = folder.currentSyncUUID,
-                let currentSyncUUID = UUID(uuidString: currentSyncUUIDS) else {
+            guard let currentSyncUUID = folder.currentSyncUUID else {
                     let message = "warning: found restoring folder but no uuid: \(folder.name!)"
                     SDLog(message)
                     let e = NSError(domain: SDErrorSyncDomain, code: SDSyncError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
@@ -210,7 +208,7 @@ class SyncScheduler {
                 for folder in folders {
                     let folderID = folder.uniqueID
                     let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
-                    self.queueSyncJob(uniqueClientID, folderID: UInt64(folderID), direction: .forward, type: type, name: UUID())
+                    self.queueSyncJob(uniqueClientID, folderID: UInt64(folderID), direction: .forward, type: type, name: UUID().uuidString.lowercased())
                 }
                 
                 // keep loop in sync with clock time to the next minute
@@ -221,7 +219,7 @@ class SyncScheduler {
         }
     }
     
-    func queueSyncJob(_ uniqueClientID: String, folderID: UInt64, direction: SyncDirection, type: SyncType, name: UUID) {
+    func queueSyncJob(_ uniqueClientID: String, folderID: UInt64, direction: SyncDirection, type: SyncType, name: String) {
         syncDispatchQueue.sync(execute: {() -> Void in
             let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID, direction: direction, type: type, name: name)
             self.sync(syncEvent)
@@ -263,7 +261,7 @@ class SyncScheduler {
             let syncController = SyncController()
 
 
-            let name = syncEvent.name
+            let name = syncEvent.name.lowercased()
             
             guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(uniqueClientID)'").last else {
                 SDLog("failed to get current machine from realm!!!")
@@ -288,7 +286,7 @@ class SyncScheduler {
 
             if folder.encrypted {
                 if isRestore {
-                    guard let session = realm.objects(PersistedSyncSession.self).filter("name == \(name.uuidString)").first else {
+                    guard let session = realm.objects(PersistedSyncSession.self).filter("name == \"\(name)\"").first else {
                         SDLog("failed to get sync session from realm!!!")
                         return
                     }
@@ -319,14 +317,13 @@ class SyncScheduler {
             let syncDate = Date()
             
             try! realm.write {
-                realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": true, "restoring": isRestore, "currentSyncUUID": name.uuidString], update: true)
-                let syncTask = SyncTask(syncFolder: folder, syncDate: syncDate, uuid: name.uuidString)
-                realm.add(syncTask)
+                realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": true, "restoring": isRestore, "currentSyncUUID": name], update: true)
+                realm.create(SyncTask.self, value: ["syncFolder": folder, "syncDate": syncDate, "uuid": name], update: true)
             }
 
             syncController.uniqueID = UInt64(folder.uniqueID)
             syncController.encrypted = folder.encrypted
-            syncController.uuid = name.uuidString
+            syncController.uuid = name
             syncController.localURL = localFolder
             
             syncController.restore = isRestore
@@ -346,7 +343,7 @@ class SyncScheduler {
                 }
                 
                 try! realm.write {
-                    realm.create(SyncTask.self, value: ["uuid": name.uuidString, "progress": percent, "bandwidth": bandwidth], update: true)
+                    realm.create(SyncTask.self, value: ["uuid": name, "progress": percent, "bandwidth": bandwidth], update: true)
                 }
             }, success: { (_: URL) -> Void in
                 SDLog("Sync finished for \(folderName)")
@@ -359,7 +356,7 @@ class SyncScheduler {
                 try! realm.write {
                     realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "restoring": false, "currentSyncUUID": NSNull()], update: true)
                     let duration = NSDate().timeIntervalSince(syncDate)
-                    realm.create(SyncTask.self, value: ["uuid": name.uuidString, "success": true, "duration": duration], update: true)
+                    realm.create(SyncTask.self, value: ["uuid": name, "success": true, "duration": duration], update: true)
                 }
                 if let index = self.syncControllers.index(of: syncController) {
                     self.syncControllers.remove(at: index)
@@ -375,7 +372,7 @@ class SyncScheduler {
                 try! realm.write {
                     realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "restoring": false, "currentSyncUUID": NSNull()], update: true)
                     let duration = NSDate().timeIntervalSince(syncDate)
-                    realm.create(SyncTask.self, value: ["uuid": name.uuidString, "success": false, "duration": duration, "message": error!.localizedDescription], update: true)
+                    realm.create(SyncTask.self, value: ["uuid": name, "success": false, "duration": duration, "message": error!.localizedDescription], update: true)
                 }
                 if let index = self.syncControllers.index(of: syncController) {
                     self.syncControllers.remove(at: index)

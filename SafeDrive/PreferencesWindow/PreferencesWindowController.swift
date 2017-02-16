@@ -791,9 +791,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         
         let folder = realm.objects(SyncFolder.self).filter("machine == %@ AND uniqueID == %@", currentMachine, folderID).last!
         
-        var name: UUID
         if folder.encrypted {
-            name = UUID()
             // TODO: show a window asking the user to pick from the list of available sessions and grab the name
             let message = "Restoring encrypted folders is not implemented in mac app yet\n\nWe still need to add a session selection screen to allow a specific version to be restored"
             
@@ -808,9 +806,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             return
         } else {
             // unencrypted folders have no versioning, so the name is arbitrary
-            name = UUID()
+            let name = UUID().uuidString.lowercased()
+            startRestore(folderID, encrypted: folder.encrypted, name: name)
+
         }
-        startRestore(folderID, encrypted: folder.encrypted, name: name)
     }
     
     @IBAction func stopSyncNow(_ sender: AnyObject) {
@@ -824,10 +823,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     
     func startSync(_ folderID: UInt64, encrypted: Bool) {
         let type: SyncType = encrypted ? .encrypted : .unencrypted
-        self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward, type: type, name: UUID())
+        self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward, type: type, name: UUID().uuidString.lowercased())
     }
     
-    func startRestore(_ folderID: UInt64, encrypted: Bool, name: UUID) {
+    func startRestore(_ folderID: UInt64, encrypted: Bool, name: String) {
         let type: SyncType = encrypted ? .encrypted : .unencrypted
         
         let alert = NSAlert()
