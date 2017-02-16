@@ -25,6 +25,8 @@ class FinderSync: FIFinderSync {
     var toolbarMenu: NSMenu!
     var supportMenuItem: NSMenuItem!
     var preferenceMenuItem: NSMenuItem!
+    var mountMenuItem: NSMenuItem!
+
     override init() {
         super.init()
         
@@ -49,6 +51,10 @@ class FinderSync: FIFinderSync {
             self.serviceReconnectionLoop()
         })
         
+        DispatchQueue.global(qos: DispatchQoS.default.qosClass).async(execute: {() -> Void in
+            self.mountStateLoop()
+        })
+        
         token = self.syncFolders!.addNotificationBlock({ (changes) in
             switch changes {
             case .initial(_):
@@ -70,6 +76,10 @@ class FinderSync: FIFinderSync {
             }
         })
         
+        self.mountMenuItem      = NSMenuItem(title: "Mount SafeDrive",
+                                             action: #selector(FinderSync.toggleMountState(_:)),
+                                             keyEquivalent: "")
+        
         self.supportMenuItem    = NSMenuItem(title: "SafeDrive Support",
                                              action: #selector(FinderSync.support(_:)),
                                              keyEquivalent: "")
@@ -80,6 +90,8 @@ class FinderSync: FIFinderSync {
         self.toolbarMenu = NSMenu()
         self.toolbarMenu.addItem(self.supportMenuItem)
         self.toolbarMenu.addItem(self.preferenceMenuItem)
+        self.toolbarMenu.addItem(self.mountMenuItem)
+        
     }
     
     // MARK: - Service handling
@@ -180,6 +192,35 @@ class FinderSync: FIFinderSync {
         newConnection.resume()
         return newConnection
         
+    }
+    
+    // MARK: - Mount handling
+    
+    func mountStateLoop() {
+        DispatchQueue.global(qos: DispatchQoS.default.qosClass).async(execute: {() -> Void in
+            while true {
+                guard let a = self.appConnection else {
+                    Thread.sleep(forTimeInterval: 1)
+                    continue
+                }
+                let app = a.remoteObjectProxyWithErrorHandler { error in
+                    print("remote proxy error: \(error)")
+                } as! AppXPCProtocol
+            
+                app.getMountState({ (mounted) in
+                    DispatchQueue.main.sync(execute: {() -> Void in
+                        if mounted {
+                            self.mountMenuItem.title = "Unmount SafeDrive"
+                        } else {
+                            self.mountMenuItem.title = "Mount SafeDrive"
+                        }
+                        
+                    })
+                })
+                
+                Thread.sleep(forTimeInterval: 1)
+            }
+        })
     }
     
     // MARK: - Primary Finder Sync protocol methods
@@ -301,6 +342,18 @@ class FinderSync: FIFinderSync {
         } as! AppXPCProtocol
         
         app.displayPreferencesWindow()
+    }
+    
+    @IBAction func toggleMountState(_ sender: AnyObject) {
+        guard let a = self.appConnection else {
+            print("App connection not found")
+            return
+        }
+        let app = a.remoteObjectProxyWithErrorHandler { error in
+            print("remote proxy error: \(error)")
+        } as! AppXPCProtocol
+        
+        app.toggleMountState()
     }
     
     func showMessage(_ title: String, withBody body: String) {
