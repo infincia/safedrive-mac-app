@@ -5,8 +5,44 @@
 import Foundation
 
 class MountController: NSObject {
-    var mounted = false
-    var mounting = false
+    fileprivate var _mounted = false
+    
+    fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue", attributes: DispatchQueue.Attributes.concurrent)
+    
+    var mounted: Bool {
+        get {
+            var r: Bool?
+            mountStateQueue.sync {
+                r = self._mounted
+            }
+            return r!
+        }
+        set (newValue) {
+            mountStateQueue.sync(flags: .barrier, execute: {
+                self._mounted = newValue
+            })
+        }
+    }
+    
+    fileprivate var _mounting = false
+    
+    fileprivate let mountingQueue = DispatchQueue(label: "io.safedrive.mountingQueue", attributes: DispatchQueue.Attributes.concurrent)
+    
+    var mounting: Bool {
+        get {
+            var r: Bool?
+            mountingQueue.sync {
+                r = self._mounting
+            }
+            return r!
+        }
+        set (newValue) {
+            mountingQueue.sync(flags: .barrier, execute: {
+                self._mounting = newValue
+            })
+        }
+    }
+    
     var mountURL: URL!
     
     var sshfsTask: Process!
