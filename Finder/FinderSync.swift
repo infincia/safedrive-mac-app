@@ -22,6 +22,9 @@ class FinderSync: FIFinderSync {
     
     var syncFolders: Results<SyncFolder>?
     
+    var toolbarMenu: NSMenu!
+    var supportMenuItem: NSMenuItem!
+    var preferenceMenuItem: NSMenuItem!
     override init() {
         super.init()
         
@@ -67,6 +70,16 @@ class FinderSync: FIFinderSync {
             }
         })
         
+        self.supportMenuItem    = NSMenuItem(title: "SafeDrive Support",
+                                             action: #selector(FinderSync.support(_:)),
+                                             keyEquivalent: "")
+        
+        self.preferenceMenuItem = NSMenuItem(title: "SafeDrive Preferences",
+                                             action: #selector(FinderSync.openPreferencesWindow(_:)),
+                                             keyEquivalent: "")
+        self.toolbarMenu = NSMenu()
+        self.toolbarMenu.addItem(self.supportMenuItem)
+        self.toolbarMenu.addItem(self.preferenceMenuItem)
     }
     
     // MARK: - Service handling
@@ -237,9 +250,7 @@ class FinderSync: FIFinderSync {
             /* contextual menu for an item in the sidebar */
             break
         case .toolbarItemMenu:
-            m = NSMenu()
-            m!.addItem(withTitle: "SafeDrive Support", action: #selector(FinderSync.support(_:)), keyEquivalent: "")
-            m!.addItem(withTitle: "SafeDrive Preferences", action: #selector(FinderSync.openPreferencesWindow(_:)), keyEquivalent: "")
+            m = self.toolbarMenu
         }
         return m!
     }
