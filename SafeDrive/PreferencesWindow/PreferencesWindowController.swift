@@ -25,7 +25,7 @@ enum ViewType: Int {
 
 extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
     func checkRecoveryPhrase(_ phrase: String?, success: @escaping () -> Void, failure: @escaping (_ error: SDKError) -> Void) {
-        guard let email = self.accountController.email else {
+        guard let _ = self.accountController.email else {
             return
         }
         
@@ -45,7 +45,7 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
             
             self.storeRecoveryPhrase(newPhrase, success: { 
                 success()
-            }, failure: { (error) in
+            }, failure: { (_) in
                 //let se = SDKError(message: error.localizedDescription, kind: SDKErrorType.Internal)
                 //failure(se)
             })
@@ -433,7 +433,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         self.checkRecoveryPhrase(recoveryPhrase, success: {
         
             
-        }, failure: { (error) in
+        }, failure: { (_) in
             
         })
     }
