@@ -28,6 +28,7 @@ struct SyncEvent {
     let direction: SyncDirection
     let type: SyncType
     let name: String
+    let destination: URL?
 }
 
 class SyncScheduler {
@@ -118,7 +119,7 @@ class SyncScheduler {
                         folder.syncing = false
                         folder.restoring = false
                     }
-                    self.queueSyncJob(uniqueClientID, folderID: UInt64(folder.uniqueID), direction: .reverse, type: type, name: currentSyncUUID)
+                    self.queueSyncJob(uniqueClientID, folderID: UInt64(folder.uniqueID), direction: .reverse, type: type, name: currentSyncUUID, destination: nil)
                     break
                 default:
                     return
@@ -208,7 +209,7 @@ class SyncScheduler {
                 for folder in folders {
                     let folderID = folder.uniqueID
                     let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
-                    self.queueSyncJob(uniqueClientID, folderID: UInt64(folderID), direction: .forward, type: type, name: UUID().uuidString.lowercased())
+                    self.queueSyncJob(uniqueClientID, folderID: UInt64(folderID), direction: .forward, type: type, name: UUID().uuidString.lowercased(), destination: nil)
                 }
                 
                 // keep loop in sync with clock time to the next minute
@@ -219,9 +220,9 @@ class SyncScheduler {
         }
     }
     
-    func queueSyncJob(_ uniqueClientID: String, folderID: UInt64, direction: SyncDirection, type: SyncType, name: String) {
+    func queueSyncJob(_ uniqueClientID: String, folderID: UInt64, direction: SyncDirection, type: SyncType, name: String, destination: URL?) {
         syncDispatchQueue.sync(execute: {() -> Void in
-            let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID, direction: direction, type: type, name: name)
+            let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID, direction: direction, type: type, name: name, destination: destination)
             self.sync(syncEvent)
         })
     }
@@ -325,6 +326,9 @@ class SyncScheduler {
             syncController.encrypted = folder.encrypted
             syncController.uuid = name
             syncController.localURL = localFolder
+            if let destination = syncEvent.destination {
+                syncController.destination = destination
+            }
             
             syncController.restore = isRestore
             
