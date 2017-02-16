@@ -30,6 +30,8 @@ class SyncController: Equatable {
     
     var uuid: String!
     
+    var spaceNeeded: UInt64? = nil
+    
     
     static func == (left: SyncController, right: SyncController) -> Bool {
         return (left.uniqueID == right.uniqueID)
@@ -206,7 +208,9 @@ class SyncController: Equatable {
     
     fileprivate func startEncryptedSyncTask(progress progressBlock: @escaping (_ progress: Double, _ bandwidth: String) -> Void, success successBlock: @escaping (_ local: URL) -> Void, failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         if self.restore {
-            self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: self.localURL, completionQueue: syncResultQueue, progress: { (_, _, percent, message) in
+            let sessionSize = self.spaceNeeded != nil ? self.spaceNeeded! : 0
+            
+            self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: self.localURL, sessionSize: sessionSize, completionQueue: syncResultQueue, progress: { (_, _, percent, _) in
                 progressBlock(percent, "0KB/s")
             }, success: {
                 successBlock(self.localURL)
