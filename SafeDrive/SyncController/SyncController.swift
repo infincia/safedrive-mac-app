@@ -218,7 +218,7 @@ class SyncController: Equatable {
                 failureBlock(self.localURL, error)
             })
         } else {
-            self.sdk.syncFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, completionQueue: syncResultQueue, progress: { (_, _, percent, message) in
+            self.sdk.syncFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, completionQueue: syncResultQueue, progress: { (_, _, percent, _) in
                 progressBlock(percent, "0KB/s")
             }, success: {
                 successBlock(self.localURL)
