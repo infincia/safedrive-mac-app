@@ -30,6 +30,8 @@ extension RestoreSelectionWindowController: NSTableViewDataSource {
         
         view.sessionID = session.session_id
         
+        view.sessionSize = session.size
+        
         SDLog("setting session list view for \(session.name)")
 
         return view
@@ -81,6 +83,25 @@ extension RestoreSelectionWindowController: NSOpenSavePanelDelegate {
         if SyncFolder.hasConflictingFolderRegistered(url.path, syncFolders: syncFolders) {
             let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")]
             throw NSError(domain: SDErrorSyncDomain, code: SDSyncError.folderConflict.rawValue, userInfo: errorInfo)
+        }
+        
+        // check that enough space is available in the selected location
+        let sessionIndex = self.restoreSelectionList.selectedRow
+        
+        guard let sessionView = restoreSelectionList.view(atColumn: 0, row: sessionIndex, makeIfNecessary: false) as? RestoreSelectionTableCellView else {
+            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Please select a session to restore so that SafeDrive can ensure there is enough free space available", comment: "String informing the user that a session must be selected so that we can check for available space")]
+            throw NSError(domain: SDErrorSyncDomain, code: SDSyncError.folderConflict.rawValue, userInfo: errorInfo)
+        }
+        
+    
+        if let attr = try? fileManager.attributesOfFileSystem(forPath: url.path),
+           let freeSpace = attr[FileAttributeKey.systemFreeSize] as? UInt64 {
+            
+            if sessionView.sessionSize > freeSpace {
+                let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("The selected location does not have enough free space to restore the session", comment: "String informing the user that the restore folder location doesn't have enough free space")]
+                throw NSError(domain: SDErrorSyncDomain, code: SDSyncError.folderConflict.rawValue, userInfo: errorInfo)
+            }
+        
         }
     }
 }

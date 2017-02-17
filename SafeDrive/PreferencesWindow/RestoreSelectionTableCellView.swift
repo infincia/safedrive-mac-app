@@ -18,4 +18,5 @@ class RestoreSelectionTableCellView: NSTableCellView {
     @IBOutlet var size: NSTextField!
     var sessionName: String!
     var sessionID: UInt64!
+    var sessionSize: UInt64!
 }
