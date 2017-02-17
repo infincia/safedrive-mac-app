@@ -15,6 +15,7 @@ class SyncFolder: Object {
     dynamic var restoring: Bool = false
     
     dynamic var currentSyncUUID: String?
+    dynamic var lastSyncUUID: String?
 
     dynamic var syncFrequency: String = "daily"
     

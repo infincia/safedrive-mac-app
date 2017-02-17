@@ -358,7 +358,7 @@ class SyncScheduler {
                 }
                 
                 try! realm.write {
-                    realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "restoring": false, "currentSyncUUID": NSNull()], update: true)
+                    realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "restoring": false, "currentSyncUUID": NSNull(), "lastSyncUUID": name], update: true)
                     let duration = NSDate().timeIntervalSince(syncDate)
                     realm.create(SyncTask.self, value: ["uuid": name, "success": true, "duration": duration], update: true)
                 }
@@ -374,7 +374,7 @@ class SyncScheduler {
                     return
                 }
                 try! realm.write {
-                    realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "restoring": false, "currentSyncUUID": NSNull()], update: true)
+                    realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "restoring": false, "currentSyncUUID": NSNull(), "lastSyncUUID": name], update: true)
                     let duration = NSDate().timeIntervalSince(syncDate)
                     realm.create(SyncTask.self, value: ["uuid": name, "success": false, "duration": duration, "message": error!.localizedDescription], update: true)
                 }

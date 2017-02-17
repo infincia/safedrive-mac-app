@@ -220,6 +220,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                             migration.delete(newObject!)
                         }
                     }
+                    
+                    // update for last sync task storage in folders
+                    migration.enumerateObjects(ofType: SyncFolder.className()) { _, newObject in
+                        if oldSchemaVersion < 12 {
+                            newObject!["lastSyncUUID"] = nil
+                        }
+                    }
             })
             
             Realm.Configuration.defaultConfiguration = config
