@@ -1092,6 +1092,11 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
              SDLog("Failed to load path in sync manager")
              }*/
             
+            let numberFormatter = NumberFormatter()
+            numberFormatter.minimumSignificantDigits = 2
+            numberFormatter.maximumSignificantDigits = 2
+            numberFormatter.locale = Locale.current
+            
             self.progress.maxValue = 100.0
             self.progress.minValue = 0.0
             let syncTasks = realm.objects(SyncTask.self)
@@ -1107,7 +1112,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.progress.startAnimation(nil)
                     
                     self.progress.doubleValue = syncTask.progress
-                    self.syncProgressField.stringValue = "\(syncTask.progress)% @ \(syncTask.bandwidth)"
+
+                    let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
+                    
+                    self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
                 } else if realSyncFolder.syncing {
                     self.syncStatus.stringValue = "Syncing"
                     self.syncFailureInfoButton.action = nil
@@ -1117,7 +1125,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.progress.startAnimation(nil)
                     
                     self.progress.doubleValue = syncTask.progress
-                    self.syncProgressField.stringValue = "\(syncTask.progress)% @ \(syncTask.bandwidth)"
+                    
+                    let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
+
+                    self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
                 } else if syncTask.success {
                     self.syncStatus.stringValue = "Success"
                     self.syncFailureInfoButton.action = nil
