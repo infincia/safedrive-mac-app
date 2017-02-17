@@ -36,7 +36,7 @@ extension RestoreSelectionWindowController: NSTableViewDataSource {
     }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        SDLog("found \(self.sdk.sessions.count) sessions")
+        SDLog("found \(self.sessions.count) sessions")
 
         return self.sessions.count
     }
