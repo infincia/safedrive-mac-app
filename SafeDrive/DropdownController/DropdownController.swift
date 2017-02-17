@@ -36,19 +36,19 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         super.init()
         Bundle.main.loadNibNamed("DropdownMenu", owner: self, topLevelObjects: nil)
         // register SDMountStateProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted(_:)), name: Notification.Name.mounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted(_:)), name: Notification.Name.unmounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails(_:)), name: Notification.Name.mountDetails, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
         // register SDVolumeEventProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: Notification.Name.volumeDidMount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: Notification.Name.volumeDidUnmount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount(_:)), name: Notification.Name.volumeShouldUnmount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount), name: Notification.Name.volumeDidMount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount), name: Notification.Name.volumeDidUnmount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount), name: Notification.Name.volumeShouldUnmount, object: nil)
         
         // register SDAccountProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate(_:)), name: Notification.Name.accountAuthenticated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: Notification.Name.accountSignOut, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus(_:)), name: Notification.Name.accountStatus, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails(_:)), name: Notification.Name.accountDetails, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate), name: Notification.Name.accountAuthenticated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus), name: Notification.Name.accountStatus, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails), name: Notification.Name.accountDetails, object: nil)
         
     }
     
@@ -108,53 +108,53 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     
     // MARK: SDAccountProtocol
     
-    func didAuthenticate(_ notification: Notification) {
+    func didAuthenticate(notification: Notification) {
         self.enableMenuItems(true)
     }
     
-    func didSignOut(_ notification: Notification) {
+    func didSignOut(notification: Notification) {
         self.enableMenuItems(false)
     }
     
-    func didReceiveAccountDetails(_ notification: Notification) {
+    func didReceiveAccountDetails(notification: Notification) {
     }
     
-    func didReceiveAccountStatus(_ notification: Notification) {
+    func didReceiveAccountStatus(notification: Notification) {
     }
     
     // MARK: SDVolumeEventProtocol methods
     
-    func volumeDidMount(_ notification: Notification) {
+    func volumeDidMount(notification: Notification) {
     }
     
-    func volumeDidUnmount(_ notification: Notification) {
+    func volumeDidUnmount(notification: Notification) {
     }
     
-    func volumeSubprocessDidTerminate(_ notification: Notification) {
+    func volumeSubprocessDidTerminate(notification: Notification) {
     
     }
     
-    func volumeShouldMount(_ notification: Notification!) {
+    func volumeShouldMount(notification: Notification) {
         
     }
     
-    func volumeShouldUnmount(_ notification: Notification) {
+    func volumeShouldUnmount(notification: Notification) {
         self.disconnectVolume()
     }
     
     // MARK: SDMountStateProtocol methods
     
-    func mountStateMounted(_ notification: Notification) {
+    func mountStateMounted(notification: Notification) {
         self.connectMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
         self.menuBarImage = NSImage(named: NSImageNameLockUnlockedTemplate)
     }
     
-    func mountStateUnmounted(_ notification: Notification) {
+    func mountStateUnmounted(notification: Notification) {
         self.connectMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
         self.menuBarImage = NSImage(named: NSImageNameLockLockedTemplate)
     }
     
-    func mountStateDetails(_ notification: Notification) {
+    func mountStateDetails(notification: Notification) {
         
     }
 }

@@ -28,6 +28,9 @@
 		AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */; };
 		AA3EB83B1E556EE3003A2E79 /* RestoreSelectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */; };
 		AA3EB83D1E557C20003A2E79 /* RestoreSelectionTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */; };
+		AA3EB8411E569D28003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
+		AA3EB8421E569E9D003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
+		AA3EB8431E569E9D003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
 		AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; };
 		AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -273,6 +276,7 @@
 		AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestoreSelectionWindow.xib; sourceTree = "<group>"; };
 		AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionWindowController.swift; sourceTree = "<group>"; };
 		AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionTableCellView.swift; sourceTree = "<group>"; };
+		AA3EB8401E569D28003A2E79 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		AA4E77311A3E6E640054BBCA /* SDTestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestConstants.h; sourceTree = "<group>"; };
 		AA4E77321A3E6E640054BBCA /* SDTestConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTestConstants.m; sourceTree = "<group>"; };
 		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -303,7 +307,6 @@
 		AA6E27331D8839DC00038019 /* SyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncController.swift; sourceTree = "<group>"; };
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
-		AA73194F1A2F89F2003E2391 /* SDProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDProtocols.h; sourceTree = "<group>"; };
 		AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafeDriveSDK.xcodeproj; path = "safedrive-sdk/SafeDriveSDK.xcodeproj"; sourceTree = "<group>"; };
 		AA76DC201C8762A9007B320E /* Installer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Installer.swift; path = Installer/Installer.swift; sourceTree = "<group>"; };
 		AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeWindowController.swift; path = Installer/WelcomeWindowController.swift; sourceTree = "<group>"; };
@@ -483,8 +486,8 @@
 				AA2E550E1A774DED00647637 /* Resources */,
 				AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */,
 				AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */,
+				AA3EB8401E569D28003A2E79 /* Protocols.swift */,
 				AA31684E1A192D64006CC0EB /* SafeDriveAPI */,
-				AA73194F1A2F89F2003E2391 /* SDProtocols.h */,
 				AA54495E1BC3664F00826A0B /* ServiceManager */,
 				AA3168161A191B72006CC0EB /* Supporting Files */,
 				AA61F8481C05356D00D992FE /* SyncController */,
@@ -1283,6 +1286,7 @@
 				AA6E272B1D876DD800038019 /* Notifications.swift in Sources */,
 				AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */,
 				AA76DC231C8779D2007B320E /* WelcomeWindowController.swift in Sources */,
+				AA3EB8411E569D28003A2E79 /* Protocols.swift in Sources */,
 				AA50716A1E2ED5F7006F59C8 /* Util.swift in Sources */,
 				AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */,
 				AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */,
@@ -1347,6 +1351,7 @@
 				AA7FE7A51E3D4AD5007EDF70 /* SDConstants.m in Sources */,
 				AAA88BCE1C83D243009BE1C7 /* SyncFolder.swift in Sources */,
 				AA6E272D1D876DD800038019 /* Notifications.swift in Sources */,
+				AA3EB8421E569E9D003A2E79 /* Protocols.swift in Sources */,
 				AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */,
 				AAD44A291D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AA5754101C8004660040E8B0 /* ServiceListenerDelegate.swift in Sources */,
@@ -1365,6 +1370,7 @@
 				AA6E272E1D876DD800038019 /* Notifications.swift in Sources */,
 				AA50716B1E2ED86A006F59C8 /* Util.swift in Sources */,
 				AA7FE7A31E3D4AD4007EDF70 /* SDConstants.m in Sources */,
+				AA3EB8431E569E9D003A2E79 /* Protocols.swift in Sources */,
 				AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AAA88BCF1C83D243009BE1C7 /* SyncFolder.swift in Sources */,
 				AAA88BD51C84B4CA009BE1C7 /* SyncTask.swift in Sources */,

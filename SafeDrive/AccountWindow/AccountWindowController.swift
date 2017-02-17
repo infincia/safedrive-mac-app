@@ -48,13 +48,13 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         self.resetErrorDisplay()
         
         // register SDMountStateProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted(_:)), name: Notification.Name.mounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted(_:)), name: Notification.Name.unmounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails(_:)), name: Notification.Name.mountDetails, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
         // register SDVolumeEventProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: Notification.Name.volumeDidMount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: Notification.Name.volumeDidUnmount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount(_:)), name: Notification.Name.volumeShouldUnmount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount), name: Notification.Name.volumeDidMount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount), name: Notification.Name.volumeDidUnmount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount), name: Notification.Name.volumeShouldUnmount, object: nil)
     }
     
     @IBAction func signIn(_ sender: AnyObject) {
@@ -171,7 +171,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
     // MARK: SDVolumeEventProtocol methods
     
     
-    func volumeDidMount(_ notification: Notification) {
+    func volumeDidMount(notification: Notification) {
         self.close()
         NSWorkspace.shared().open((self.mountController.mountURL)!)
         //var mountSuccess: NSError = NSError(domain: SDErrorDomain, code: SDErrorNone, userInfo: [NSLocalizedDescriptionKey: "Volume mounted"])
@@ -179,34 +179,34 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         
     }
     
-    func volumeDidUnmount(_ notification: Notification) {
+    func volumeDidUnmount(notification: Notification) {
         NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAccountWindow, object: nil)
     }
     
-    func volumeSubprocessDidTerminate(_ notification: Notification) {
+    func volumeSubprocessDidTerminate(notification: Notification) {
     
     }
     
-    func volumeShouldMount(_ notification: Notification!) {
+    func volumeShouldMount(notification: Notification) {
         self.connectVolume()
     }
     
-    func volumeShouldUnmount(_ notification: Notification) {
+    func volumeShouldUnmount(notification: Notification) {
     
     }
     
     // MARK: SDMountStateProtocol methods
     
     
-    func mountStateMounted(_ notification: Notification) {
+    func mountStateMounted(notification: Notification) {
     
     }
     
-    func mountStateUnmounted(_ notification: Notification) {
+    func mountStateUnmounted(notification: Notification) {
     
     }
     
-    func mountStateDetails(_ notification: Notification) {
+    func mountStateDetails(notification: Notification) {
     
     }
 }

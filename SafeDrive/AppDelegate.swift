@@ -91,20 +91,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         
         PFMoveToApplicationsFolderIfNecessary()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration(_:)), name: Notification.Name.applicationShouldFinishConfiguration, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration), name: Notification.Name.applicationShouldFinishConfiguration, object: nil)
         
         
         // register SDApplicationControlProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAccountWindow(_:)), name: Notification.Name.applicationShouldOpenAccountWindow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenPreferencesWindow(_:)), name: Notification.Name.applicationShouldOpenPreferencesWindow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAboutWindow(_:)), name: Notification.Name.applicationShouldOpenAboutWindow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAccountWindow), name: Notification.Name.applicationShouldOpenAccountWindow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenPreferencesWindow), name: Notification.Name.applicationShouldOpenPreferencesWindow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAboutWindow), name: Notification.Name.applicationShouldOpenAboutWindow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.applicationShouldOpenSyncWindow(_:)), name: Notification.Name.applicationShouldOpenSyncWindow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldToggleMountState(_:)), name: Notification.Name.applicationShouldToggleMountState, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldToggleMountState), name: Notification.Name.applicationShouldToggleMountState, object: nil)
         
         // register SDAccountProtocol notifications
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate(_:)), name: Notification.Name.accountAuthenticated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: Notification.Name.accountSignOut, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate), name: Notification.Name.accountAuthenticated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
         
         self.welcomeWindowController = WelcomeWindowController()
         _ = self.welcomeWindowController!.window!
@@ -121,21 +121,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     // MARK: SDApplicationControlProtocol methods
     
     
-    func applicationShouldOpenAccountWindow(_ notification: Foundation.Notification) {
+    func applicationShouldOpenAccountWindow(notification: Foundation.Notification) {
         DispatchQueue.main.async(execute: {() -> Void in
             NSApp.activate(ignoringOtherApps: true)
             self.accountWindowController.showWindow(nil)
         })
     }
     
-    func applicationShouldOpenPreferencesWindow(_ notification: Foundation.Notification) {
+    func applicationShouldOpenPreferencesWindow(notification: Foundation.Notification) {
         DispatchQueue.main.async(execute: {() -> Void in
             NSApp.activate(ignoringOtherApps: true)
             self.preferencesWindowController?.showWindow(nil)
         })
     }
     
-    func applicationShouldOpenAboutWindow(_ notification: Foundation.Notification) {
+    func applicationShouldOpenAboutWindow(notification: Foundation.Notification) {
         DispatchQueue.main.async(execute: {() -> Void in
             NSApp.activate(ignoringOtherApps: true)
             self.aboutWindowController.showWindow(nil)
@@ -149,7 +149,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         })
     }
     
-    func applicationShouldToggleMountState(_ notification: Foundation.Notification) {
+    func applicationShouldToggleMountState(notification: Foundation.Notification) {
         DispatchQueue.main.async(execute: {() -> Void in
             if MountController.shared.mounted {
                 NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: nil)
@@ -159,7 +159,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         })
     }
     
-    func applicationShouldFinishConfiguration(_ notification: Foundation.Notification) {
+    func applicationShouldFinishConfiguration(notification: Foundation.Notification) {
         DispatchQueue.main.async(execute: {() -> Void in
             
             let groupURL = storageURL()
@@ -287,7 +287,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     
     // MARK: SDAccountProtocol
     
-    func didAuthenticate(_ notification: Foundation.Notification) {
+    func didAuthenticate(notification: Foundation.Notification) {
         guard let uniqueClientID = notification.object as? String else {
             return
         }
@@ -305,18 +305,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         _ = self.preferencesWindowController!.window!
     }
     
-    func didSignOut(_ notification: Foundation.Notification) {
+    func didSignOut(notification: Foundation.Notification) {
         assert(Thread.isMainThread, "Not main thread!!!")
         self.syncScheduler?.stop()
         self.preferencesWindowController?.close()
         self.preferencesWindowController = nil
     }
     
-    func didReceiveAccountDetails(_ notification: Foundation.Notification) {
+    func didReceiveAccountDetails(notification: Foundation.Notification) {
         
     }
     
-    func didReceiveAccountStatus(_ notification: Foundation.Notification) {
+    func didReceiveAccountStatus(notification: Foundation.Notification) {
         
     }
     

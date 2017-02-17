@@ -145,7 +145,7 @@ extension PreferencesWindowController: RestoreSelectionDelegate {
 }
 
 
-class PreferencesWindowController: NSWindowController, NSPopoverDelegate, SDMountStateProtocol, SDAccountProtocol, SDServiceStatusProtocol {
+class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         
     fileprivate var accountController = AccountController.sharedAccountController
     
@@ -311,22 +311,23 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate, SDMoun
         }
         
         // register SDVolumeEventProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount(_:)), name: Notification.Name.volumeDidMount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount(_:)), name: Notification.Name.volumeDidUnmount, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount), name: Notification.Name.volumeDidMount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount), name: Notification.Name.volumeDidUnmount, object: nil)
         // register SDMountStateProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted(_:)), name: Notification.Name.mounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted(_:)), name: Notification.Name.unmounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails(_:)), name: Notification.Name.mountDetails, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
         
         
         // register SDAccountProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate(_:)), name: Notification.Name.accountAuthenticated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut(_:)), name: Notification.Name.accountSignOut, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus(_:)), name: Notification.Name.accountStatus, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails(_:)), name: Notification.Name.accountDetails, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate), name: Notification.Name.accountAuthenticated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus), name: Notification.Name.accountStatus, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails), name: Notification.Name.accountDetails, object: nil)
         
         // register SDServiceStatusProtcol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDServiceStatusProtocol.didReceiveServiceStatus(_:)), name: Notification.Name.serviceStatus, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDServiceStatusProtocol.didReceiveServiceStatus), name: Notification.Name.serviceStatus, object: nil)
         
         
         
@@ -390,111 +391,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate, SDMoun
             return syncView
         }
     }
-    
-    
-    // MARK: SDMountStatusProtocol
-    
-    func volumeDidMount(_ notification: Foundation.Notification) {
-    }
-    
-    func volumeDidUnmount(_ notification: Foundation.Notification) {
-    }
-    
-    func mountSubprocessDidTerminate(_ notification: Foundation.Notification) {
-    }
-    
-    // MARK: SDMountStateProtocol
-    
-    func mountStateMounted(_ notification: Foundation.Notification) {
-        self.mountStatusField.stringValue = NSLocalizedString("Yes", comment: "String for volume mount status of mounted")
-    }
-    
-    func mountStateUnmounted(_ notification: Foundation.Notification) {
-        self.mountStatusField.stringValue = NSLocalizedString("No", comment: "String for volume mount status of unmounted")
-    }
-    
-    func mountStateDetails(_ notification: Foundation.Notification) {
-        if let mountDetails = notification.object as? [FileAttributeKey: AnyObject],
-            let volumeTotalSpace = mountDetails[FileAttributeKey.systemSize] as? Int,
-            let volumeFreeSpace = mountDetails[FileAttributeKey.systemFreeSize] as? Int {
-            self.volumeSizeField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(volumeTotalSpace), countStyle: .file)
-            self.volumeFreespaceField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(volumeFreeSpace), countStyle: .file)
-            let volumeUsedSpace = volumeTotalSpace - volumeFreeSpace
-            self.volumeUsageBar.maxValue = Double(volumeTotalSpace)
-            self.volumeUsageBar.minValue = 0
-            self.volumeUsageBar.doubleValue = Double(volumeUsedSpace)
-            
-        } else {
-            self.volumeSizeField.stringValue = NSLocalizedString("Unmounted", comment: "String for volume mount status of mounted")
-            self.volumeFreespaceField.stringValue = NSLocalizedString("Unmounted", comment: "String for volume mount status of unmounted")
-            self.volumeUsageBar.maxValue = 1
-            self.volumeUsageBar.minValue = 0
-            self.volumeUsageBar.doubleValue = 0
-        }
-    }
-    
-    // MARK: SDAccountProtocol
-    
-    func didAuthenticate(_ notification: Foundation.Notification) {
-        // get recovery phrase from keychain
-        
-        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
-        let recoveryPhrase = recoveryCredentials?["password"]
 
-        
-        self.checkRecoveryPhrase(recoveryPhrase, success: {
-        
-            
-        }, failure: { (_) in
-            
-        })
-    }
-    
-    func didSignOut(_ notification: Foundation.Notification) {
-        
-    }
-    
-    func didReceiveAccountStatus(_ notification: Foundation.Notification) {
-        if let accountStatus = notification.object as? AccountStatus,
-            let status = accountStatus.status {
-            self.accountStatusField.stringValue = status.capitalized
-        } else {
-            self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
-            SDLog("Validation failed: didReceiveAccountStatus")
-   
-        }
-    }
-    
-    func didReceiveAccountDetails(_ notification: Foundation.Notification) {
-        if let accountDetails = notification.object as? AccountDetails {
-        
-            let assignedStorage = accountDetails.assignedStorage
-            let usedStorage = accountDetails.usedStorage
-            let expirationDate = accountDetails.expirationDate
-            
-            self.assignedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(assignedStorage), countStyle: .file)
-            self.usedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(usedStorage), countStyle: .file)
-            
-            let date: Date = Date(timeIntervalSince1970: Double(expirationDate) / 1000)
-            let dateFormatter: DateFormatter = DateFormatter()
-            dateFormatter.locale = Locale.current
-            dateFormatter.timeStyle = .none
-            dateFormatter.dateStyle = .short
-            self.accountExpirationField.stringValue = dateFormatter.string(from: date)
-        } else {
-            SDLog("Validation failed: didReceiveAccountDetails")
-        }
-    }
-    
-    // MARK: SDServiceStatusProtocol
-    
-    func didReceiveServiceStatus(_ notification: Foundation.Notification) {
-        if let status = notification.object as? Bool {
-            self.serviceStatusField.stringValue = (status == true ? "Running" : "Stopped")
-        } else {
-            SDLog("Validation failed: didReceiveServiceStatus")
-        }
-    }
     
     // MARK: UI Actions
     
@@ -971,6 +868,128 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate, SDMoun
                 realSyncFolder.syncTime = self.syncTimePicker.dateValue
             }
             // swiftlint:enable force_try
+        }
+    }
+}
+
+extension PreferencesWindowController: SDVolumeEventProtocol {
+    
+    func volumeDidMount(notification: Notification) {
+    
+    }
+    
+    func volumeDidUnmount(notification: Notification) {
+    
+    }
+    
+    func volumeShouldUnmount(notification: Notification) {
+    
+    }
+    
+    func volumeShouldMount(notification: Notification) {
+    
+    }
+    
+    func volumeSubprocessDidTerminate(notification: Notification) {
+    
+    }
+}
+
+extension PreferencesWindowController: SDMountStateProtocol {
+
+    func mountStateMounted(notification: Foundation.Notification) {
+        self.mountStatusField.stringValue = NSLocalizedString("Yes", comment: "String for volume mount status of mounted")
+    }
+    
+    func mountStateUnmounted(notification: Foundation.Notification) {
+        self.mountStatusField.stringValue = NSLocalizedString("No", comment: "String for volume mount status of unmounted")
+    }
+    
+    func mountStateDetails(notification: Foundation.Notification) {
+        if let mountDetails = notification.object as? [FileAttributeKey: AnyObject],
+            let volumeTotalSpace = mountDetails[FileAttributeKey.systemSize] as? Int,
+            let volumeFreeSpace = mountDetails[FileAttributeKey.systemFreeSize] as? Int {
+            self.volumeSizeField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(volumeTotalSpace), countStyle: .file)
+            self.volumeFreespaceField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(volumeFreeSpace), countStyle: .file)
+            let volumeUsedSpace = volumeTotalSpace - volumeFreeSpace
+            self.volumeUsageBar.maxValue = Double(volumeTotalSpace)
+            self.volumeUsageBar.minValue = 0
+            self.volumeUsageBar.doubleValue = Double(volumeUsedSpace)
+            
+        } else {
+            self.volumeSizeField.stringValue = NSLocalizedString("Unmounted", comment: "String for volume mount status of mounted")
+            self.volumeFreespaceField.stringValue = NSLocalizedString("Unmounted", comment: "String for volume mount status of unmounted")
+            self.volumeUsageBar.maxValue = 1
+            self.volumeUsageBar.minValue = 0
+            self.volumeUsageBar.doubleValue = 0
+        }
+    }
+}
+
+extension PreferencesWindowController: SDAccountProtocol {
+    
+    // MARK: SDAccountProtocol
+    
+    func didAuthenticate(notification: Foundation.Notification) {
+        // get recovery phrase from keychain
+        
+        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
+        let recoveryPhrase = recoveryCredentials?["password"]
+
+        
+        self.checkRecoveryPhrase(recoveryPhrase, success: {
+        
+            
+        }, failure: { (_) in
+            
+        })
+    }
+    
+    func didSignOut(notification: Foundation.Notification) {
+        
+    }
+    
+    func didReceiveAccountStatus(notification: Foundation.Notification) {
+        if let accountStatus = notification.object as? AccountStatus,
+            let status = accountStatus.status {
+            self.accountStatusField.stringValue = status.capitalized
+        } else {
+            self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
+            SDLog("Validation failed: didReceiveAccountStatus")
+   
+        }
+    }
+    
+    func didReceiveAccountDetails(notification: Foundation.Notification) {
+        if let accountDetails = notification.object as? AccountDetails {
+        
+            let assignedStorage = accountDetails.assignedStorage
+            let usedStorage = accountDetails.usedStorage
+            let expirationDate = accountDetails.expirationDate
+            
+            self.assignedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(assignedStorage), countStyle: .file)
+            self.usedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(usedStorage), countStyle: .file)
+            
+            let date: Date = Date(timeIntervalSince1970: Double(expirationDate) / 1000)
+            let dateFormatter: DateFormatter = DateFormatter()
+            dateFormatter.locale = Locale.current
+            dateFormatter.timeStyle = .none
+            dateFormatter.dateStyle = .short
+            self.accountExpirationField.stringValue = dateFormatter.string(from: date)
+        } else {
+            SDLog("Validation failed: didReceiveAccountDetails")
+        }
+    }
+    
+}
+
+extension PreferencesWindowController: SDServiceStatusProtocol {
+    
+    func didReceiveServiceStatus(notification: Foundation.Notification) {
+        if let status = notification.object as? Bool {
+            self.serviceStatusField.stringValue = (status == true ? "Running" : "Stopped")
+        } else {
+            SDLog("Validation failed: didReceiveServiceStatus")
         }
     }
 }

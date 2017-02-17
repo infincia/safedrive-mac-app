@@ -4,7 +4,6 @@
 
 
 #import "SDConstants.h"
-#import "SDProtocols.h"
 
 #import "HKTHashProvider.h"
 
