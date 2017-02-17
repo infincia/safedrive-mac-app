@@ -1019,8 +1019,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             
             if syncFolder.encrypted {
                 tableCellView.lockButton.image = NSImage(named: NSImageNameLockLockedTemplate)
+                tableCellView.lockButton.toolTip = NSLocalizedString("Encrypted", comment: "")
             } else {
                 tableCellView.lockButton.image = NSImage(named: NSImageNameLockUnlockedTemplate)
+                tableCellView.lockButton.toolTip = NSLocalizedString("Unencrypted", comment: "")
             }
             
             if syncFolder.syncing {
