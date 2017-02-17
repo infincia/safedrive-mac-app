@@ -23,127 +23,6 @@ enum ViewType: Int {
     case status
 }
 
-extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
-    func checkRecoveryPhrase(_ phrase: String?, success: @escaping () -> Void, failure: @escaping (_ error: SDKError) -> Void) {
-        guard let _ = self.accountController.email else {
-            return
-        }
-        
-        self.sdk.loadKeys(phrase, completionQueue: DispatchQueue.main, storePhrase: { (newPhrase) in
-            
-            print("New recovery phrase: \(newPhrase)")
-            let alert = NSAlert()
-            alert.addButton(withTitle: "OK")
-            
-            alert.messageText = "New recovery phrase"
-            alert.informativeText = "A recovery phrase has been generated for your account, please write it down and keep it in a safe place:\n\n\(newPhrase)"
-            alert.alertStyle = .informational
-            
-            alert.beginSheetModal(for: self.window!, completionHandler: { (_) in
-                
-            })
-            
-            self.storeRecoveryPhrase(newPhrase, success: { 
-                success()
-            }, failure: { (_) in
-                //let se = SDKError(message: error.localizedDescription, kind: SDKErrorType.Internal)
-                //failure(se)
-            })
-            
-        }, success: {
-            let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
-            
-            if let recoveryPhrase = recoveryCredentials?["password"] {
-                self.recoveryPhraseField.stringValue = recoveryPhrase
-                self.copyRecoveryPhraseButton.isEnabled = true
-            } else {
-                self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
-                self.copyRecoveryPhraseButton.isEnabled = false
-            }
-            
-            success()
-            
-        }, failure: { (error) in
-            SDLog("failed to load keys with sdk: \(error.message)")
-            switch error.kind {
-            case .StateMissing:
-                break
-            case .Internal:
-                break
-            case .RequestFailure:
-                break
-            case .NetworkFailure:
-                break
-            case .Conflict:
-                break
-            case .BlockMissing:
-                break
-            case .SessionMissing:
-                break
-            case .RecoveryPhraseIncorrect:
-                self.setTab(3)
-                self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
-                self.copyRecoveryPhraseButton.isEnabled = false
-                
-                self.window?.makeKeyAndOrderFront(self)
-                NSApp.activate(ignoringOtherApps: true)
-
-                guard let w = self.recoveryPhraseEntry?.window else {
-                    SDLog("no recovery phrase window available")
-                    return
-                }
-                self.window?.beginSheet(w, completionHandler: nil)
-                
-            case .InsufficientFreeSpace:
-                break
-            case .Authentication:
-                break
-            case .UnicodeError:
-                break
-            case .TokenExpired:
-                break
-            case .CryptoError:
-                break
-            case .IO:
-                break
-            case .SyncAlreadyInProgress:
-                break
-            case .RestoreAlreadyInProgress:
-                break
-            case .ExceededRetries:
-                break
-            }
-            
-            failure(error)
-
-        })
-    }
-    
-    func storeRecoveryPhrase(_ phrase: String, success: @escaping () -> Void, failure: @escaping (_ error: Error) -> Void) {
-        guard let email = self.accountController.email else {
-            return
-        }
-        let keychainError = SDSystemAPI.shared().insertCredentialsInKeychain(forService: recoveryKeyDomain(), account: email, password: phrase)
-            
-        if let keychainError = keychainError {
-            SDErrorHandlerReport(keychainError)
-            failure(keychainError)
-            return
-        }
-        success()
-    }
-}
-
-extension PreferencesWindowController: RestoreSelectionDelegate {
-    func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL) {
-        let type: SyncType = .encrypted
-        
-        self.syncScheduler.cancel(folderID) {
-            self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .reverse, type: type, name: sessionName, destination: destination)
-        }
-    }
-}
-
 
 class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         
@@ -1343,5 +1222,126 @@ extension PreferencesWindowController: NSOutlineViewDataSource {
             return detached
         }
         return self.mac
+    }
+}
+
+extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
+    func checkRecoveryPhrase(_ phrase: String?, success: @escaping () -> Void, failure: @escaping (_ error: SDKError) -> Void) {
+        guard let _ = self.accountController.email else {
+            return
+        }
+        
+        self.sdk.loadKeys(phrase, completionQueue: DispatchQueue.main, storePhrase: { (newPhrase) in
+            
+            print("New recovery phrase: \(newPhrase)")
+            let alert = NSAlert()
+            alert.addButton(withTitle: "OK")
+            
+            alert.messageText = "New recovery phrase"
+            alert.informativeText = "A recovery phrase has been generated for your account, please write it down and keep it in a safe place:\n\n\(newPhrase)"
+            alert.alertStyle = .informational
+            
+            alert.beginSheetModal(for: self.window!, completionHandler: { (_) in
+                
+            })
+            
+            self.storeRecoveryPhrase(newPhrase, success: { 
+                success()
+            }, failure: { (_) in
+                //let se = SDKError(message: error.localizedDescription, kind: SDKErrorType.Internal)
+                //failure(se)
+            })
+            
+        }, success: {
+            let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
+            
+            if let recoveryPhrase = recoveryCredentials?["password"] {
+                self.recoveryPhraseField.stringValue = recoveryPhrase
+                self.copyRecoveryPhraseButton.isEnabled = true
+            } else {
+                self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
+                self.copyRecoveryPhraseButton.isEnabled = false
+            }
+            
+            success()
+            
+        }, failure: { (error) in
+            SDLog("failed to load keys with sdk: \(error.message)")
+            switch error.kind {
+            case .StateMissing:
+                break
+            case .Internal:
+                break
+            case .RequestFailure:
+                break
+            case .NetworkFailure:
+                break
+            case .Conflict:
+                break
+            case .BlockMissing:
+                break
+            case .SessionMissing:
+                break
+            case .RecoveryPhraseIncorrect:
+                self.setTab(3)
+                self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
+                self.copyRecoveryPhraseButton.isEnabled = false
+                
+                self.window?.makeKeyAndOrderFront(self)
+                NSApp.activate(ignoringOtherApps: true)
+
+                guard let w = self.recoveryPhraseEntry?.window else {
+                    SDLog("no recovery phrase window available")
+                    return
+                }
+                self.window?.beginSheet(w, completionHandler: nil)
+                
+            case .InsufficientFreeSpace:
+                break
+            case .Authentication:
+                break
+            case .UnicodeError:
+                break
+            case .TokenExpired:
+                break
+            case .CryptoError:
+                break
+            case .IO:
+                break
+            case .SyncAlreadyInProgress:
+                break
+            case .RestoreAlreadyInProgress:
+                break
+            case .ExceededRetries:
+                break
+            }
+            
+            failure(error)
+
+        })
+    }
+    
+    func storeRecoveryPhrase(_ phrase: String, success: @escaping () -> Void, failure: @escaping (_ error: Error) -> Void) {
+        guard let email = self.accountController.email else {
+            return
+        }
+        let keychainError = SDSystemAPI.shared().insertCredentialsInKeychain(forService: recoveryKeyDomain(), account: email, password: phrase)
+            
+        if let keychainError = keychainError {
+            SDErrorHandlerReport(keychainError)
+            failure(keychainError)
+            return
+        }
+        success()
+    }
+}
+
+extension PreferencesWindowController: RestoreSelectionDelegate {
+    func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL) {
+        let type: SyncType = .encrypted
+        
+        self.syncScheduler.cancel(folderID) {
+            self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .reverse, type: type, name: sessionName, destination: destination)
+        }
     }
 }
