@@ -214,7 +214,9 @@ class SyncController: Equatable {
             let selectedDestination = self.destination != nil ? self.destination! : self.localURL
             
             self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: selectedDestination!, sessionSize: sessionSize, completionQueue: syncResultQueue, progress: { (total, current, new, percent, message) in
-                SDLog("restore message: \(message)")
+                if message.characters.count > 0 {
+                    SDLog("restore message: \(message)")
+                }
 
                 progressBlock(total, current, new, percent, message, "0KB/s")
             }, success: {
@@ -224,8 +226,9 @@ class SyncController: Equatable {
             })
         } else {
             self.sdk.syncFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, completionQueue: syncResultQueue, progress: { (total, current, new, percent, message) in
-                SDLog("sync message: \(message)")
-
+                if message.characters.count > 0 {
+                    SDLog("sync message: \(message)")
+                }
                 progressBlock(total, current, new, percent, message, "0KB/s")
             }, success: {
                 successBlock(self.localURL)
