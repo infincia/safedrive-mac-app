@@ -1021,84 +1021,14 @@ extension PreferencesWindowController: NSOpenSavePanelDelegate {
     
 }
 
-extension PreferencesWindowController: NSOutlineViewDataSource {
+extension PreferencesWindowController: NSOutlineViewDelegate {
 
-    // MARK: NSOutlineViewDelegate/Datasource
-    
-    func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
-        self.reload()
+    func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
+        rowView.isGroupRowStyle = false
     }
-    
-    func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
-        if item is Machine {
-            return true
-        }
-        return false
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
-        if item is Machine {
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return 0
-            }
-            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", uniqueClientID).last else {
-                return 0
-            }
-            let syncFolders = realm.objects(SyncFolder.self).filter("machine == %@", currentMachine)
-            return syncFolders.count
-        } else if item is SyncFolder {
-            return 0
-        }
-        // Root
-        return 1
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
-        guard let realm = try? Realm() else {
-            SDLog("failed to create realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return "" as AnyObject
-        }
-        if item is Machine {
-            let syncFolders = realm.objects(SyncFolder.self).filter("machine == %@", self.mac).sorted(byKeyPath: "name")
-            let syncFolder = syncFolders[index]
-            let detached = SyncFolder(value: syncFolder)
-            return detached
-        }
-        return self.mac
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, isGroupItem item: AnyObject) -> Bool {
-        if item is Machine {
-            return true
-        }
-        return false
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: AnyObject) -> Bool {
-        return !self.outlineView(outlineView, isGroupItem: item)
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, shouldShowCellExpansionForTableColumn tableColumn: NSTableColumn, item: AnyObject) -> Bool {
-        return true
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, shouldShowOutlineCellForItem item: AnyObject) -> Bool {
-        return false
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, shouldCollapseItem item: AnyObject) -> Bool {
-        return false
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: AnyObject) -> NSTableRowView {
-        let v: SyncManagerTableRowView = SyncManagerTableRowView()
-        return v
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, viewForTableColumn tableColumn: NSTableColumn, item: AnyObject) -> NSView {
+
+
+    func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         var tableCellView: SyncManagerTableCellView
         if item is Machine {
             tableCellView = outlineView.make(withIdentifier: "MachineView", owner: self) as! SyncManagerTableCellView
@@ -1160,12 +1090,34 @@ extension PreferencesWindowController: NSOutlineViewDataSource {
         } else {
             tableCellView = outlineView.make(withIdentifier: "FolderView", owner: self) as! SyncManagerTableCellView
         }
-        tableCellView.representedSyncItem = item
+        tableCellView.representedSyncItem = item as AnyObject?
         
         return tableCellView
         
     }
     
+        func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
+        if item is Machine {
+            return true
+        }
+        return false
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
+        return !self.outlineView(outlineView, isGroupItem: item)
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, shouldShowCellExpansionFor tableColumn: NSTableColumn?, item: Any) -> Bool {
+        return true
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, shouldShowOutlineCellForItem item: Any) -> Bool {
+        return false
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, shouldCollapseItem item: Any) -> Bool {
+        return false
+    }
     
     //--------------------------
     // Selection tracking
@@ -1343,5 +1295,53 @@ extension PreferencesWindowController: NSOutlineViewDataSource {
             
         }
     }
+
+}
+
+extension PreferencesWindowController: NSOutlineViewDataSource {
     
+    func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
+        self.reload()
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+        if item is Machine {
+            return true
+        }
+        return false
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+        if item is Machine {
+            guard let realm = try? Realm() else {
+                SDLog("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return 0
+            }
+            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", uniqueClientID).last else {
+                return 0
+            }
+            let syncFolders = realm.objects(SyncFolder.self).filter("machine == %@", currentMachine)
+            return syncFolders.count
+        } else if item is SyncFolder {
+            return 0
+        }
+        // Root
+        return 1
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+        guard let realm = try? Realm() else {
+            SDLog("failed to create realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return "" as AnyObject
+        }
+        if item is Machine {
+            let syncFolders = realm.objects(SyncFolder.self).filter("machine == %@", self.mac).sorted(byKeyPath: "name")
+            let syncFolder = syncFolders[index]
+            let detached = SyncFolder(value: syncFolder)
+            return detached
+        }
+        return self.mac
+    }
 }
