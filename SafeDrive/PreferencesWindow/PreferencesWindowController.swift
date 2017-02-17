@@ -1062,9 +1062,12 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     func outlineViewSelectionDidChange(_ notification: Foundation.Notification) {
         if self.syncListView.selectedRow != -1 {
             let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
+            guard let realm = try? Realm() else {
+                SDLog("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
                 return
             }
-            
+
             if let syncTime = syncItem.syncTime {
                 self.syncTimePicker.dateValue = syncTime as Date
             } else {
@@ -1078,11 +1081,6 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
              SDLog("Failed to load path in sync manager")
              }*/
             
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
             self.progress.maxValue = 100.0
             self.progress.minValue = 0.0
             let syncTasks = realm.objects(SyncTask.self)
