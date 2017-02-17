@@ -141,6 +141,10 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     fileprivate var mac: Machine!
     
+    fileprivate var folders: Results<SyncFolder>!
+    
+    fileprivate var realm: Realm!
+    
     fileprivate var uniqueClientID: String!
     
     fileprivate let dbURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db")!.appendingPathComponent("sync.realm")
@@ -168,6 +172,8 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
             return
         }
         
+        self.realm = realm
+        
         guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
             SDLog("failed to get current machine in realm!!!")
             Crashlytics.sharedInstance().crash()
@@ -176,18 +182,16 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         
         self.mac = currentMachine
         
+        let folders = realm.objects(SyncFolder.self).filter("machine == %@", self.mac)
+        
+        self.folders = folders
+        
     }
     
     // Window handling
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        
-        guard let realm = try? Realm() else {
-            SDLog("failed to create realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
         
         // register SDVolumeEventProtocol notifications
 
@@ -211,11 +215,11 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         
         
         
-        self.syncFolderToken = realm.objects(SyncFolder.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
+        self.syncFolderToken = self.realm.objects(SyncFolder.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
             self?.reload()
         }
         
-        self.syncTaskToken = realm.objects(SyncTask.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
+        self.syncTaskToken = self.realm.objects(SyncTask.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
             self?.reload()
         }
         
@@ -519,6 +523,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                 // swiftlint:enable force_try
 
             }
+            self.realm.refresh()
             self.reload()
             
             self.spinner.stopAnimation(self)
@@ -546,38 +551,18 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         let button: NSButton = sender as! NSButton
         let folderID: UInt64 = UInt64(button.tag)
         
-        guard let realm = try? Realm() else {
-            SDLog("failed to create realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
+        if let folder = self.folders.filter("machine == %@ AND uniqueID == %@", self.mac, folderID).last {
+            startSync(folderID, encrypted: folder.encrypted)
         }
-        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-            SDLog("failed to get machine from realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
-        
-        let folder = realm.objects(SyncFolder.self).filter("machine == %@ AND uniqueID == %@", currentMachine, folderID).last!
-        
-        startSync(folderID, encrypted: folder.encrypted)
     }
     
     @IBAction func startRestoreNow(_ sender: AnyObject) {
         let button: NSButton = sender as! NSButton
         let folderID: UInt64 = UInt64(button.tag)
         
-        guard let realm = try? Realm() else {
-            SDLog("failed to create realm!!!")
-            Crashlytics.sharedInstance().crash()
+        guard let folder = self.folders.filter("machine == %@ AND uniqueID == %@", self.mac, folderID).last else {
             return
         }
-        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-            SDLog("failed to get machine from realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
-        
-        let folder = realm.objects(SyncFolder.self).filter("machine == %@ AND uniqueID == %@", currentMachine, folderID).last!
         
         if folder.encrypted {
 
@@ -1004,22 +989,7 @@ extension PreferencesWindowController: NSOutlineViewDelegate {
     // NOTE: This really needs to be refactored into a view to limite how massive this VC is becoming
     func outlineViewSelectionDidChange(_ notification: Foundation.Notification) {
         if self.syncListView.selectedRow != -1 {
-            let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
-            
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            
-            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-                SDLog("failed to get current machine in realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            let syncFolders = realm.objects(SyncFolder.self)
-            
-            let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, syncItem.uniqueID).last!
+            let realSyncFolder = self.folders[self.syncListView.selectedRow - 1]
             
 
             if let syncTime = realSyncFolder.syncTime {
@@ -1192,16 +1162,7 @@ extension PreferencesWindowController: NSOutlineViewDataSource {
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         if item is Machine {
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return 0
-            }
-            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", uniqueClientID).last else {
-                return 0
-            }
-            let syncFolders = realm.objects(SyncFolder.self).filter("machine == %@", currentMachine)
-            return syncFolders.count
+            return self.folders.count
         } else if item is SyncFolder {
             return 0
         }
@@ -1210,16 +1171,9 @@ extension PreferencesWindowController: NSOutlineViewDataSource {
     }
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        guard let realm = try? Realm() else {
-            SDLog("failed to create realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return "" as AnyObject
-        }
         if item is Machine {
-            let syncFolders = realm.objects(SyncFolder.self).filter("machine == %@", self.mac).sorted(byKeyPath: "name")
-            let syncFolder = syncFolders[index]
-            let detached = SyncFolder(value: syncFolder)
-            return detached
+            let syncFolder = self.folders[index]
+            return syncFolder
         }
         return self.mac
     }
