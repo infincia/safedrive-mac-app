@@ -1062,19 +1062,30 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     func outlineViewSelectionDidChange(_ notification: Foundation.Notification) {
         if self.syncListView.selectedRow != -1 {
             let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
+            
             guard let realm = try? Realm() else {
                 SDLog("failed to create realm!!!")
                 Crashlytics.sharedInstance().crash()
                 return
             }
+            
+            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
+                SDLog("failed to get current machine in realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            let syncFolders = realm.objects(SyncFolder.self)
+            
+            let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, syncItem.uniqueID).last!
+            
 
-            if let syncTime = syncItem.syncTime {
+            if let syncTime = realSyncFolder.syncTime {
                 self.syncTimePicker.dateValue = syncTime as Date
             } else {
                 SDLog("Failed to load date in sync manager")
             }
             
-            /*if let syncURL = syncItem.url {
+            /*if let syncURL = realSyncFolder.url {
              self.pathIndicator.URL = syncURL
              }
              else {
@@ -1085,9 +1096,9 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.progress.minValue = 0.0
             let syncTasks = realm.objects(SyncTask.self)
             
-            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@", self.mac.uniqueClientID!, syncItem).sorted(byKeyPath: "syncDate").last {
+            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@", self.mac.uniqueClientID!, realSyncFolder).sorted(byKeyPath: "syncDate").last {
                 
-                if syncItem.restoring {
+                if realSyncFolder.restoring {
                     self.syncStatus.stringValue = "Restoring"
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.isHidden = true
@@ -1097,7 +1108,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     
                     self.progress.doubleValue = syncTask.progress
                     self.syncProgressField.stringValue = "\(syncTask.progress)% @ \(syncTask.bandwidth)"
-                } else if syncItem.syncing {
+                } else if realSyncFolder.syncing {
                     self.syncStatus.stringValue = "Syncing"
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.isHidden = true
@@ -1153,7 +1164,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
              self.lastSyncField.stringValue = ""
              }*/
             
-            switch syncItem.syncFrequency {
+            switch realSyncFolder.syncFrequency {
             case "hourly":
                 self.scheduleSelection.selectItem(at: 0)
                 //self.nextSyncField.stringValue = NSDate().nextHour()?.toMediumString() ?? ""
@@ -1166,17 +1177,17 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 self.syncTimePicker.dateValue = calendar.date(from: components)!
             case "daily":
                 self.scheduleSelection.selectItem(at: 1)
-                //self.nextSyncField.stringValue = NSDate().nextDayAt((syncItem.syncTime?.hour)!, minute: (syncItem.syncTime?.minute)!)?.toMediumString() ?? ""
+                //self.nextSyncField.stringValue = NSDate().nextDayAt((realSyncFolder.syncTime?.hour)!, minute: (realSyncFolder.syncTime?.minute)!)?.toMediumString() ?? ""
                 self.syncTimePicker.isEnabled = true
                 self.syncTimePicker.isHidden = false
             case "weekly":
                 self.scheduleSelection.selectItem(at: 2)
-                //self.nextSyncField.stringValue = NSDate().nextWeekAt((syncItem.syncTime?.hour)!, minute: (syncItem.syncTime?.minute)!)?.toMediumString() ?? ""
+                //self.nextSyncField.stringValue = NSDate().nextWeekAt((realSyncFolder.syncTime?.hour)!, minute: (syncItem.syncTime?.minute)!)?.toMediumString() ?? ""
                 self.syncTimePicker.isEnabled = true
                 self.syncTimePicker.isHidden = false
             case "monthly":
                 self.scheduleSelection.selectItem(at: 3)
-                //self.nextSyncField.stringValue = NSDate().nextMonthAt((syncItem.syncTime?.hour)!, minute: (syncItem.syncTime?.minute)!)?.toMediumString() ?? ""
+                //self.nextSyncField.stringValue = NSDate().nextMonthAt((realSyncFolder.syncTime?.hour)!, minute: (realSyncFolder.syncTime?.minute)!)?.toMediumString() ?? ""
                 self.syncTimePicker.isEnabled = true
                 self.syncTimePicker.isHidden = false
             default:
