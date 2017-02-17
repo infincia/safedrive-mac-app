@@ -1061,8 +1061,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
     // NOTE: This really needs to be refactored into a view to limite how massive this VC is becoming
     func outlineViewSelectionDidChange(_ notification: Foundation.Notification) {
         if self.syncListView.selectedRow != -1 {
-            guard let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as? SyncFolder else {
-                SDLog("no item at \(self.syncListView.selectedRow)")
+            let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
                 return
             }
             
