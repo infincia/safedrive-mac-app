@@ -145,7 +145,7 @@ extension PreferencesWindowController: RestoreSelectionDelegate {
 }
 
 
-class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, NSPopoverDelegate, SDMountStateProtocol, SDAccountProtocol, SDServiceStatusProtocol {
+class PreferencesWindowController: NSWindowController, NSPopoverDelegate, SDMountStateProtocol, SDAccountProtocol, SDServiceStatusProtocol {
         
     fileprivate var accountController = AccountController.sharedAccountController
     
@@ -888,8 +888,95 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         })
     }
     
-    // MARK: NSOpenSavePanelDelegate
+    @IBAction func setSyncFrequencyForFolder(_ sender: AnyObject) {
+        if self.syncListView.selectedRow != -1 {
+            let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
+            let uniqueID = syncItem.uniqueID
+            
+            var syncFrequency: String
+            
+            switch self.scheduleSelection.indexOfSelectedItem {
+            case 0:
+                syncFrequency = "hourly"
+            case 1:
+                syncFrequency = "daily"
+            case 2:
+                syncFrequency = "weekly"
+            case 3:
+                syncFrequency = "monthly"
+            default:
+                syncFrequency = "daily"
+            }
+            
+            guard let realm = try? Realm() else {
+                SDLog("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            
+            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
+                SDLog("failed to get current machine in realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            let syncFolders = realm.objects(SyncFolder.self)
+            
+            let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
+            // swiftlint:disable force_try
+            try! realm.write {
+                realSyncFolder.syncFrequency = syncFrequency
+            }
+            // swiftlint:enable force_try
+        }
+    }
     
+    
+    fileprivate func reload() {
+        assert(Thread.isMainThread, "Not main thread!!!")
+        let oldFirstResponder = self.window?.firstResponder
+        let selectedIndexes = self.syncListView.selectedRowIndexes
+        self.syncListView.reloadItem(self.mac, reloadChildren: true)
+        self.syncListView.expandItem(self.mac, expandChildren: true)
+        self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: true)
+        self.window?.makeFirstResponder(oldFirstResponder)
+    }
+    
+    @objc
+    fileprivate func showFailurePopover() {
+        self.failurePopover.show(relativeTo: self.syncFailureInfoButton.bounds, of: self.syncFailureInfoButton, preferredEdge: .minY)
+    }
+    
+    @IBAction
+    func setSyncTime(_ sender: AnyObject) {
+        if self.syncListView.selectedRow != -1 {
+            let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
+            let uniqueID = syncItem.uniqueID
+            
+            
+            guard let realm = try? Realm() else {
+                SDLog("failed to create realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
+                SDLog("failed to get current machine in realm!!!")
+                Crashlytics.sharedInstance().crash()
+                return
+            }
+            let syncFolders = realm.objects(SyncFolder.self)
+            
+            let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
+            // swiftlint:disable force_try
+            try! realm.write {
+                realSyncFolder.syncTime = self.syncTimePicker.dateValue
+            }
+            // swiftlint:enable force_try
+        }
+    }
+}
+    
+extension PreferencesWindowController: NSOpenSavePanelDelegate {
+        
     func panel(_ sender: Any, validate url: URL) throws {
         let fileManager: FileManager = FileManager.default
         
@@ -913,6 +1000,10 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
         }
     }
     
+}
+
+extension PreferencesWindowController: NSOutlineViewDataSource {
+
     // MARK: NSOutlineViewDelegate/Datasource
     
     func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
@@ -1233,92 +1324,5 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             
         }
     }
-    
-    @IBAction func setSyncFrequencyForFolder(_ sender: AnyObject) {
-        if self.syncListView.selectedRow != -1 {
-            let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
-            let uniqueID = syncItem.uniqueID
-            
-            var syncFrequency: String
-            
-            switch self.scheduleSelection.indexOfSelectedItem {
-            case 0:
-                syncFrequency = "hourly"
-            case 1:
-                syncFrequency = "daily"
-            case 2:
-                syncFrequency = "weekly"
-            case 3:
-                syncFrequency = "monthly"
-            default:
-                syncFrequency = "daily"
-            }
-            
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            
-            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-                SDLog("failed to get current machine in realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            let syncFolders = realm.objects(SyncFolder.self)
-            
-            let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
-            // swiftlint:disable force_try
-            try! realm.write {
-                realSyncFolder.syncFrequency = syncFrequency
-            }
-            // swiftlint:enable force_try
-        }
-    }
-    
-    
-    fileprivate func reload() {
-        assert(Thread.isMainThread, "Not main thread!!!")
-        let oldFirstResponder = self.window?.firstResponder
-        let selectedIndexes = self.syncListView.selectedRowIndexes
-        self.syncListView.reloadItem(self.mac, reloadChildren: true)
-        self.syncListView.expandItem(self.mac, expandChildren: true)
-        self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: true)
-        self.window?.makeFirstResponder(oldFirstResponder)
-    }
-    
-    @objc
-    fileprivate func showFailurePopover() {
-        self.failurePopover.show(relativeTo: self.syncFailureInfoButton.bounds, of: self.syncFailureInfoButton, preferredEdge: .minY)
-    }
-    
-    @IBAction
-    func setSyncTime(_ sender: AnyObject) {
-        if self.syncListView.selectedRow != -1 {
-            let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
-            let uniqueID = syncItem.uniqueID
-            
-            
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-                SDLog("failed to get current machine in realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            let syncFolders = realm.objects(SyncFolder.self)
-            
-            let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
-            // swiftlint:disable force_try
-            try! realm.write {
-                realSyncFolder.syncTime = self.syncTimePicker.dateValue
-            }
-            // swiftlint:enable force_try
-        }
-    }
-    
     
 }
