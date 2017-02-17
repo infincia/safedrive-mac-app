@@ -1088,7 +1088,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
             self.progress.minValue = 0.0
             let syncTasks = realm.objects(SyncTask.self)
             
-            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@", self.mac.uniqueClientID!, syncItem).sorted(byKeyPath: "syncDate").last {
+            if let uuid = syncItem.currentSyncUUID, let syncTask = syncTasks.filter("uuid == %@", uuid).sorted(byKeyPath: "syncDate").last {
                 
                 if syncItem.restoring {
                     self.syncStatus.stringValue = "Restoring"
@@ -1111,7 +1111,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                     self.progress.doubleValue = syncTask.progress
                     self.syncProgressField.stringValue = "\(syncTask.progress)% @ \(syncTask.bandwidth)"
                 } else if syncTask.success {
-                    self.syncStatus.stringValue = "Waiting"
+                    self.syncStatus.stringValue = "Success"
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.isHidden = true
                     self.syncFailureInfoButton.isEnabled = false
@@ -1136,7 +1136,7 @@ class PreferencesWindowController: NSWindowController, NSOpenSavePanelDelegate, 
                 let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
                 failureView.message.stringValue = syncTask.message ?? ""
             } else {
-                self.syncStatus.stringValue = "Unknown"
+                self.syncStatus.stringValue = "Waiting"
                 self.syncFailureInfoButton.action = nil
                 self.syncFailureInfoButton.isHidden = true
                 self.syncFailureInfoButton.isEnabled = false
