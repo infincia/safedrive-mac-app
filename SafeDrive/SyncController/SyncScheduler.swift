@@ -94,6 +94,8 @@ class SyncScheduler {
         try! realm.write {
             let syncFolders = realm.objects(SyncFolder.self).filter("restoring == false AND machine == %@", currentMachine)
             syncFolders.setValue(false, forKey: "syncing")
+            syncFolders.setValue(false, forKey: "restoring")
+            syncFolders.setValue(nil, forKey: "currentSyncUUID")
         }
         SDLog("Sync scheduler running")
         
