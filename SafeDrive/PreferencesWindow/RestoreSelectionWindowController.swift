@@ -314,7 +314,7 @@ class RestoreSelectionWindowController: NSWindowController {
             // select the first row automatically
             let count = self.restoreSelectionList!.numberOfRows
             if count >= 1 {
-                let indexSet = IndexSet(integer: 1)
+                let indexSet = IndexSet(integer: 0)
                 self.restoreSelectionList!.selectRowIndexes(indexSet, byExtendingSelection: false)
                 self.restoreSelectionList!.becomeFirstResponder()
             }
