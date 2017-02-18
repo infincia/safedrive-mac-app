@@ -1050,7 +1050,7 @@ extension PreferencesWindowController: NSOutlineViewDelegate {
                     self.syncFailureInfoButton.toolTip = ""
                     self.progress.stopAnimation(nil)
                     
-                    self.progress.doubleValue = 100.0
+                    self.progress.doubleValue = 0.0
                     self.syncProgressField.stringValue = ""
                     
                 } else {
