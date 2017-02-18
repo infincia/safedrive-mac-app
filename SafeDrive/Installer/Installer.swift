@@ -37,6 +37,7 @@ class Installer {
                 Thread.sleep(forTimeInterval: 1)
             }
             self.deployService()
+            //self.installCLI()
             DispatchQueue.main.sync(execute: {() -> Void in
                 self.delegate?.didValidateDependencies()
             })
@@ -118,6 +119,27 @@ class Installer {
             }
         } else {
             SDLog("Installer launched")
+        }
+    }
+    
+    func installCLI() {
+        let cli = Bundle.main.bundleURL.appendingPathComponent("Contents/Resources/safedrive", isDirectory: false)
+        let destination = URL(string: "file://usr/local/bin/safedrive")
+        
+        let fileManager: FileManager = FileManager.default
+        if FileManager.default.fileExists(atPath: cli.path) {
+            do {
+                try FileManager.default.removeItem(at: cli)
+            } catch let error as NSError {
+                SDLog("Error removing old CLI app: \(error)")
+                SDErrorHandlerReport(error)
+            }
+        }
+        do {
+            try fileManager.copyItem(at: cli, to: destination!)
+        } catch let error as NSError {
+            SDLog("Error copying CLI app: \(error)")
+            SDErrorHandlerReport(error)
         }
     }
     
