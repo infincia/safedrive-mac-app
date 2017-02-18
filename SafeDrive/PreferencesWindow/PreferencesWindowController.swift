@@ -1014,7 +1014,7 @@ extension PreferencesWindowController: NSOutlineViewDelegate {
             self.progress.minValue = 0.0
             let syncTasks = realm.objects(SyncTask.self)
             
-            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@", self.mac.uniqueClientID!, realSyncFolder).sorted(byKeyPath: "syncDate").last {
+            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@ AND (syncFolder.syncing == true OR syncFolder.restoring == true)", self.mac.uniqueClientID!, realSyncFolder).sorted(byKeyPath: "syncDate").last {
                 
                 if realSyncFolder.restoring {
                     self.syncStatus.stringValue = "Restoring"
