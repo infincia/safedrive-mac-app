@@ -78,56 +78,6 @@ class SyncScheduler {
         }
         
         /*
-         Check for folders that are supposedly restoring, which means SafeDrive was killed or crashed while a restore
-         was in progress.
-         
-         We have no other option but to display a warning when this happens, rsync will have exited in a half-synced state.
-         
-         */
-        
-        for folder in realm.objects(SyncFolder.self).filter("restoring == true AND machine == %@", currentMachine) {
-            let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
-            guard let currentSyncUUID = folder.currentSyncUUID else {
-                    let message = "warning: found restoring folder but no uuid: \(folder.name!)"
-                    SDLog(message)
-                    let e = NSError(domain: SDErrorSyncDomain, code: SDSyncError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
-                    SDErrorHandlerReport(e)
-                    continue
-            }
-            
-            
-            
-            let alert = NSAlert()
-            alert.addButton(withTitle: "No")
-            alert.addButton(withTitle: "Yes")
-            
-            alert.messageText = "Continue restore?"
-            alert.informativeText = "SafeDrive could not finish restoring the \(folder.name!) folder, would you like to continue now? \n\nWarning: If you decline, the folder will resume syncing to the server, which may result in data loss"
-            alert.alertStyle = .informational
-            
-            alert.beginSheetModal(for: NSApp.mainWindow!) { (response) in
-                
-                switch response {
-                case NSAlertFirstButtonReturn:
-                    try! realm.write {
-                        folder.syncing = false
-                        folder.restoring = false
-                    }
-                    return
-                case NSAlertSecondButtonReturn:
-                    try! realm.write {
-                        folder.syncing = false
-                        folder.restoring = false
-                    }
-                    self.queueSyncJob(uniqueClientID, folderID: UInt64(folder.uniqueID), direction: .reverse, type: type, name: currentSyncUUID, destination: nil)
-                    break
-                default:
-                    return
-                }
-            }
-        }
-        
-        /*
          Reset all sync folders at startup.
          
          Prevents the following issue:
@@ -216,6 +166,67 @@ class SyncScheduler {
                 let sleepSeconds = 60 - currentDateComponents.second!
                 Thread.sleep(forTimeInterval: Double(sleepSeconds))
                 
+            }
+        }
+    }
+    
+    func restartRestore(_ uniqueClientID: String) throws {
+            guard let realm = try? Realm() else {
+            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open Realm database, this is a fatal error", comment: "")]
+            throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
+        }
+        
+        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(uniqueClientID)'").last else {
+            return
+        }
+        
+        /*
+         Check for folders that are supposedly restoring, which means SafeDrive was killed or crashed while a restore
+         was in progress.
+         
+         We have no other option but to display a warning when this happens, rsync will have exited in a half-synced state.
+         
+         */
+        
+        for folder in realm.objects(SyncFolder.self).filter("restoring == true AND machine == %@", currentMachine) {
+            let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
+            guard let currentSyncUUID = folder.currentSyncUUID else {
+                    let message = "warning: found restoring folder but no uuid: \(folder.name!)"
+                    SDLog(message)
+                    let e = NSError(domain: SDErrorSyncDomain, code: SDSyncError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    SDErrorHandlerReport(e)
+                    continue
+            }
+            
+            
+            
+            let alert = NSAlert()
+            alert.addButton(withTitle: "No")
+            alert.addButton(withTitle: "Yes")
+            
+            alert.messageText = "Continue restore?"
+            alert.informativeText = "SafeDrive could not finish restoring the \(folder.name!) folder, would you like to continue now? \n\nWarning: If you decline, the folder will resume syncing to the server, which may result in data loss"
+            alert.alertStyle = .informational
+            
+            alert.beginSheetModal(for: NSApp.mainWindow!) { (response) in
+                
+                switch response {
+                case NSAlertFirstButtonReturn:
+                    try! realm.write {
+                        folder.syncing = false
+                        folder.restoring = false
+                    }
+                    return
+                case NSAlertSecondButtonReturn:
+                    try! realm.write {
+                        folder.syncing = false
+                        folder.restoring = false
+                    }
+                    self.queueSyncJob(uniqueClientID, folderID: UInt64(folder.uniqueID), direction: .reverse, type: type, name: currentSyncUUID, destination: nil)
+                    break
+                default:
+                    return
+                }
             }
         }
     }
