@@ -14,6 +14,10 @@ protocol RestoreSelectionDelegate: class {
 
 extension RestoreSelectionWindowController: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard row >= 0 else {
+            return nil
+        }
+        
         let view = tableView.make(withIdentifier: "RestoreSelectionCellView", owner: self) as! RestoreSelectionTableCellView
         
         let session = self.sessions[row]
@@ -81,7 +85,7 @@ extension RestoreSelectionWindowController: NSOpenSavePanelDelegate {
         // check that enough space is available in the selected location
         let sessionIndex = self.restoreSelectionList.selectedRow
         
-        guard let sessionView = restoreSelectionList.view(atColumn: 0, row: sessionIndex, makeIfNecessary: false) as? RestoreSelectionTableCellView else {
+        guard sessionIndex != -1, let sessionView = restoreSelectionList.view(atColumn: 0, row: sessionIndex, makeIfNecessary: false) as? RestoreSelectionTableCellView else {
             let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Please select a session to restore so that SafeDrive can ensure there is enough free space available", comment: "String informing the user that a session must be selected so that we can check for available space")]
             throw NSError(domain: SDErrorSyncDomain, code: SDSyncError.folderConflict.rawValue, userInfo: errorInfo)
         }
