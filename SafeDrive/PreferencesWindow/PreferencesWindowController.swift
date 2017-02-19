@@ -992,23 +992,29 @@ extension PreferencesWindowController: NSTableViewDelegate {
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", self.mac.uniqueClientID!, syncFolder).sorted(byKeyPath: "syncDate").last {
                 
                 if syncFolder.restoring {
+                    let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
                     self.syncStatus.stringValue = "Restoring"
-                    self.progress.startAnimation(nil)
-                    
-                    self.progress.doubleValue = syncTask.progress
-
-                    let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
-                    
-                    self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
+                    if syncFolder.currentSyncUUID == syncTask.uuid {
+                        self.progress.startAnimation(nil)
+                        self.progress.doubleValue = syncTask.progress
+                        self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
+                    } else {
+                        self.progress.stopAnimation(nil)
+                        self.progress.doubleValue = 0.0
+                        self.syncProgressField.stringValue = ""
+                    }
                 } else if syncFolder.syncing {
-                    self.syncStatus.stringValue = "Syncing"
-                    self.progress.startAnimation(nil)
-                    
-                    self.progress.doubleValue = syncTask.progress
-                    
                     let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
-
-                    self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
+                    self.syncStatus.stringValue = "Syncing"
+                    if syncFolder.currentSyncUUID == syncTask.uuid {
+                        self.progress.startAnimation(nil)
+                        self.progress.doubleValue = syncTask.progress
+                        self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
+                    } else {
+                        self.progress.stopAnimation(nil)
+                        self.progress.doubleValue = 0.0
+                        self.syncProgressField.stringValue = ""
+                    }
                 } else if syncTask.success {
                     self.syncStatus.stringValue = "Success"
                     self.progress.stopAnimation(nil)
