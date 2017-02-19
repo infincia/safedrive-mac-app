@@ -4,6 +4,12 @@ If you find a bug, please report it to the person you obtained the build from.
 
 #### Changelog
 
+**Changes in 0.9.24**
+
+- Use warning symbol for sync issues, to make it clearer what that means
+- Fix for current sync progress not being displayed
+- 
+
 **Changes in 0.9.23**
 
 - Includes SafeDrive SDDK 0.4.4
