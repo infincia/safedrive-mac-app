@@ -332,7 +332,7 @@ class SyncScheduler {
             let syncDate = Date()
             
             try! realm.write {
-                realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": true, "restoring": isRestore, "currentSyncUUID": name], update: true)
+                realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": true, "restoring": isRestore, "currentSyncUUID": name, "lastSyncUUID": name], update: true)
                 realm.create(SyncTask.self, value: ["syncFolder": folder, "syncDate": syncDate, "uuid": name], update: true)
             }
 
