@@ -187,18 +187,25 @@ class SyncController: Equatable {
         
     }
     
-    func startSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double, _ message: String, _ bandwidth: String) -> Void, success successBlock: @escaping (_ local: URL) -> Void, failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
+    func startSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double, _ bandwidth: String) -> Void,
+                       issue issueBlock: @escaping (_ message: String) -> Void,
+                       success successBlock: @escaping (_ local: URL) -> Void,
+                       failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         if self.encrypted {
-            startEncryptedSyncTask(progress: { (total, current, new, percent, message, bandwidth) in
-                progressBlock(total, current, new, percent, message, bandwidth)
+            startEncryptedSyncTask(progress: { (total, current, new, percent, bandwidth) in
+                progressBlock(total, current, new, percent, bandwidth)
+            }, issue: { (message) in
+                issueBlock(message)
             }, success: { (url) in
                 successBlock(url)
             }, failure: { (url, error) in
                 failureBlock(url, error)
             })
         } else {
-            startUnencryptedSyncTask(progress: { (total, current, new, percent, message, bandwidth) in
-                progressBlock(total, current, new, percent, message, bandwidth)
+            startUnencryptedSyncTask(progress: { (total, current, new, percent, bandwidth) in
+                progressBlock(total, current, new, percent, bandwidth)
+            }, issue: { (message) in
+                issueBlock(message)
             }, success: { (url) in
                 successBlock(url)
             }, failure: { (url, error) in
@@ -208,28 +215,28 @@ class SyncController: Equatable {
         
     }
     
-    fileprivate func startEncryptedSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double, _ message: String, _ bandwidth: String) -> Void, success successBlock: @escaping (_ local: URL) -> Void, failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
+    fileprivate func startEncryptedSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double, _ bandwidth: String) -> Void,
+                                            issue issueBlock: @escaping (_ message: String) -> Void,
+                                            success successBlock: @escaping (_ local: URL) -> Void,
+                                            failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         if self.restore {
             let sessionSize = self.spaceNeeded != nil ? self.spaceNeeded! : 0
             let selectedDestination = self.destination != nil ? self.destination! : self.localURL
             
-            self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: selectedDestination!, sessionSize: sessionSize, completionQueue: syncResultQueue, progress: { (total, current, new, percent, message) in
-                if message.characters.count > 0 {
-                    SDLog("restore message: \(message)")
-                }
-
-                progressBlock(total, current, new, percent, message, "0KB/s")
+            self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: selectedDestination!, sessionSize: sessionSize, completionQueue: syncResultQueue, progress: { (total, current, new, percent) in
+                progressBlock(total, current, new, percent, "0KB/s")
+            }, issue: { (message) in
+                issueBlock(message)
             }, success: {
                 successBlock(self.localURL)
             }, failure: { (error) in
                 failureBlock(self.localURL, error)
             })
         } else {
-            self.sdk.syncFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, completionQueue: syncResultQueue, progress: { (total, current, new, percent, message) in
-                if message.characters.count > 0 {
-                    SDLog("sync message: \(message)")
-                }
-                progressBlock(total, current, new, percent, message, "0KB/s")
+            self.sdk.syncFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, completionQueue: syncResultQueue, progress: { (total, current, new, percent) in
+                progressBlock(total, current, new, percent, "0KB/s")
+            }, issue: { (message) in
+                issueBlock(message)
             }, success: {
                 successBlock(self.localURL)
             }, failure: { (error) in
@@ -238,7 +245,10 @@ class SyncController: Equatable {
         }
     }
     
-    fileprivate func startUnencryptedSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double, _ message: String, _ bandwidth: String) -> Void, success successBlock: @escaping (_ local: URL) -> Void, failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
+    fileprivate func startUnencryptedSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double, _ bandwidth: String) -> Void,
+                                              issue issueBlock: @escaping (_ message: String) -> Void,
+                                              success successBlock: @escaping (_ local: URL) -> Void,
+                                              failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         assert(Thread.current != Thread.main, "Sync task started from main thread")
         
         let fileManager = FileManager.default
@@ -399,7 +409,7 @@ class SyncController: Equatable {
                             let bandwidth = capturedValues[3]
                             
                             (self.syncProgressQueue).async(execute: {
-                                progressBlock(0, 0, 0, Double(percent)!, "", bandwidth)
+                                progressBlock(0, 0, 0, Double(percent)!, bandwidth)
                             })
                         }
                     }

@@ -350,7 +350,7 @@ class SyncScheduler {
                 self.syncControllers.append(syncController)
             })
             
-            syncController.startSyncTask(progress: { (total, current, new, percent, message, bandwidth) in
+            syncController.startSyncTask(progress: { (total, current, new, percent, bandwidth) in
                 // use for updating sync progress
                 // WARNING: this block may be called more often than once per second on a background serial queue, DO NOT block it for long
                 guard let realm = try? Realm() else {
@@ -362,6 +362,8 @@ class SyncScheduler {
                 try! realm.write {
                     realm.create(SyncTask.self, value: ["uuid": name, "progress": percent, "bandwidth": bandwidth], update: true)
                 }
+            }, issue: { (message) in
+                SDLog("Sync issue: \(message)")
             }, success: { (_: URL) -> Void in
                 SDLog("Sync finished for \(folderName)")
                 guard let realm = try? Realm() else {
