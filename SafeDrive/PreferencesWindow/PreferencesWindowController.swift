@@ -110,7 +110,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     // Sync handling
     // TODO: move these and associated logic inside an NSView subclass
     
-    @IBOutlet var syncListView: NSOutlineView!
+    @IBOutlet var syncListView: NSTableView!
     @IBOutlet var spinner: NSProgressIndicator!
     
     @IBOutlet var progress: NSProgressIndicator!
@@ -651,8 +651,9 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     @IBAction func setSyncFrequencyForFolder(_ sender: AnyObject) {
         if self.syncListView.selectedRow != -1 {
-            let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
-            let uniqueID = syncItem.uniqueID
+            let syncFolder = self.folders[self.syncListView.selectedRow]
+
+            let uniqueID = syncFolder.uniqueID
             
             var syncFrequency: String
             
@@ -696,8 +697,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         assert(Thread.isMainThread, "Not main thread!!!")
         let oldFirstResponder = self.window?.firstResponder
         let selectedIndexes = self.syncListView.selectedRowIndexes
-        self.syncListView.reloadItem(self.mac, reloadChildren: true)
-        self.syncListView.expandItem(self.mac, expandChildren: true)
+        self.syncListView.reloadData()
         self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: true)
         self.window?.makeFirstResponder(oldFirstResponder)
     }
@@ -710,8 +710,9 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     @IBAction
     func setSyncTime(_ sender: AnyObject) {
         if self.syncListView.selectedRow != -1 {
-            let syncItem: SyncFolder = self.syncListView.item(atRow: self.syncListView.selectedRow) as! SyncFolder
-            let uniqueID = syncItem.uniqueID
+            let syncFolder = self.folders[self.syncListView.selectedRow]
+            
+            let uniqueID = syncFolder.uniqueID
             
             
             guard let realm = try? Realm() else {
@@ -884,25 +885,22 @@ extension PreferencesWindowController: NSOpenSavePanelDelegate {
     }
     
 }
+extension PreferencesWindowController: NSTableViewDelegate {
 
-extension PreferencesWindowController: NSOutlineViewDelegate {
-
-    func outlineView(_ outlineView: NSOutlineView, didAdd rowView: NSTableRowView, forRow row: Int) {
-        rowView.isGroupRowStyle = false
-    }
-
-
-    func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         var tableCellView: SyncManagerTableCellView
-        if item is Machine {
-            tableCellView = outlineView.make(withIdentifier: "MachineView", owner: self) as! SyncManagerTableCellView
+        if row == 0 {
+            tableCellView = tableView.make(withIdentifier: "MachineView", owner: self) as! SyncManagerTableCellView
             tableCellView.textField!.stringValue = self.mac.name!
             let cellImage: NSImage = NSImage(named: NSImageNameComputer)!
             cellImage.size = CGSize(width: 15.0, height: 15.0)
             tableCellView.imageView!.image = cellImage
-        } else if item is SyncFolder {
-            let syncFolder = item as! SyncFolder
-            tableCellView = outlineView.make(withIdentifier: "FolderView", owner: self) as! SyncManagerTableCellView
+        } else {
+            // this would normally require zero-indexing, but we're bumping the folder list down one row to make
+            // room for the machine row
+            let syncFolder = self.folders[row - 1]
+
+            tableCellView = tableView.make(withIdentifier: "FolderView", owner: self) as! SyncManagerTableCellView
             tableCellView.textField!.stringValue = syncFolder.name!.capitalized
             let cellImage: NSImage = NSWorkspace.shared().icon(forFileType: NSFileTypeForHFSTypeCode(OSType(kGenericFolderIcon)))
             cellImage.size = CGSize(width: 15.0, height: 15.0)
@@ -951,48 +949,23 @@ extension PreferencesWindowController: NSOutlineViewDelegate {
                 tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
                 
             }
-        } else {
-            tableCellView = outlineView.make(withIdentifier: "FolderView", owner: self) as! SyncManagerTableCellView
         }
-        tableCellView.representedSyncItem = item as AnyObject?
         
         return tableCellView
-        
     }
     
-        func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
-        if item is Machine {
-            return true
-        }
-        return false
+    func tableView(_ tableView: NSTableView, didAdd rowView: NSTableRowView, forRow row: Int) {
+        rowView.isGroupRowStyle = false
     }
-    
-    func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
-        return !self.outlineView(outlineView, isGroupItem: item)
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, shouldShowCellExpansionFor tableColumn: NSTableColumn?, item: Any) -> Bool {
-        return true
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, shouldShowOutlineCellForItem item: Any) -> Bool {
-        return false
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, shouldCollapseItem item: Any) -> Bool {
-        return false
-    }
-    
-    //--------------------------
-    // Selection tracking
-    //--------------------------
-    // NOTE: This really needs to be refactored into a view to limite how massive this VC is becoming
-    func outlineViewSelectionDidChange(_ notification: Foundation.Notification) {
+
+    func tableViewSelectionDidChange(_ notification: Notification) {
         if self.syncListView.selectedRow != -1 {
-            let realSyncFolder = self.folders[self.syncListView.selectedRow - 1]
+            // normally this would be one-indexed, but we're bumping the folder rows down to make room for
+            // the machine row
+            let syncFolder = self.folders[self.syncListView.selectedRow - 1]
             
 
-            if let syncTime = realSyncFolder.syncTime {
+            if let syncTime = syncFolder.syncTime {
                 self.syncTimePicker.dateValue = syncTime as Date
             } else {
                 SDLog("Failed to load date in sync manager")
@@ -1014,9 +987,9 @@ extension PreferencesWindowController: NSOutlineViewDelegate {
             self.progress.minValue = 0.0
             let syncTasks = realm.objects(SyncTask.self)
             
-            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@ AND (syncFolder.syncing == true OR syncFolder.restoring == true)", self.mac.uniqueClientID!, realSyncFolder).sorted(byKeyPath: "syncDate").last {
+            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@ AND (syncFolder.syncing == true OR syncFolder.restoring == true)", self.mac.uniqueClientID!, syncFolder).sorted(byKeyPath: "syncDate").last {
                 
-                if realSyncFolder.restoring {
+                if syncFolder.restoring {
                     self.syncStatus.stringValue = "Restoring"
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.isHidden = true
@@ -1029,7 +1002,7 @@ extension PreferencesWindowController: NSOutlineViewDelegate {
                     let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
                     
                     self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
-                } else if realSyncFolder.syncing {
+                } else if syncFolder.syncing {
                     self.syncStatus.stringValue = "Syncing"
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.isHidden = true
@@ -1088,7 +1061,7 @@ extension PreferencesWindowController: NSOutlineViewDelegate {
              self.lastSyncField.stringValue = ""
              }*/
             
-            switch realSyncFolder.syncFrequency {
+            switch syncFolder.syncFrequency {
             case "hourly":
                 self.scheduleSelection.selectItem(at: 0)
                 //self.nextSyncField.stringValue = NSDate().nextHour()?.toMediumString() ?? ""
@@ -1144,39 +1117,19 @@ extension PreferencesWindowController: NSOutlineViewDelegate {
             
         }
     }
+    
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        return (row >= 1)
+    }
 
 }
 
-extension PreferencesWindowController: NSOutlineViewDataSource {
-    
-    func outlineView(_ outlineView: NSOutlineView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
-        self.reload()
+extension PreferencesWindowController: NSTableViewDataSource {
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        // make room for the machine row at the top
+        return 1 + self.folders.count
     }
-    
-    func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        if item is Machine {
-            return true
-        }
-        return false
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        if item is Machine {
-            return self.folders.count
-        } else if item is SyncFolder {
-            return 0
-        }
-        // Root
-        return 1
-    }
-    
-    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        if item is Machine {
-            let syncFolder = self.folders[index]
-            return syncFolder
-        }
-        return self.mac
-    }
+
 }
 
 extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
@@ -1187,7 +1140,6 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
         
         self.sdk.loadKeys(phrase, completionQueue: DispatchQueue.main, storePhrase: { (newPhrase) in
             
-            print("New recovery phrase: \(newPhrase)")
             let alert = NSAlert()
             alert.addButton(withTitle: "OK")
             
