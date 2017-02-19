@@ -987,14 +987,12 @@ extension PreferencesWindowController: NSTableViewDelegate {
             self.progress.minValue = 0.0
             let syncTasks = realm.objects(SyncTask.self)
             
+            let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
+
             if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", self.mac.uniqueClientID!, syncFolder).sorted(byKeyPath: "syncDate").last {
                 
                 if syncFolder.restoring {
                     self.syncStatus.stringValue = "Restoring"
-                    self.syncFailureInfoButton.action = nil
-                    self.syncFailureInfoButton.isHidden = true
-                    self.syncFailureInfoButton.isEnabled = false
-                    self.syncFailureInfoButton.toolTip = ""
                     self.progress.startAnimation(nil)
                     
                     self.progress.doubleValue = syncTask.progress
@@ -1004,10 +1002,6 @@ extension PreferencesWindowController: NSTableViewDelegate {
                     self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
                 } else if syncFolder.syncing {
                     self.syncStatus.stringValue = "Syncing"
-                    self.syncFailureInfoButton.action = nil
-                    self.syncFailureInfoButton.isHidden = true
-                    self.syncFailureInfoButton.isEnabled = false
-                    self.syncFailureInfoButton.toolTip = ""
                     self.progress.startAnimation(nil)
                     
                     self.progress.doubleValue = syncTask.progress
@@ -1017,10 +1011,6 @@ extension PreferencesWindowController: NSTableViewDelegate {
                     self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
                 } else if syncTask.success {
                     self.syncStatus.stringValue = "Success"
-                    self.syncFailureInfoButton.action = nil
-                    self.syncFailureInfoButton.isHidden = true
-                    self.syncFailureInfoButton.isEnabled = false
-                    self.syncFailureInfoButton.toolTip = ""
                     self.progress.stopAnimation(nil)
                     
                     self.progress.doubleValue = 0.0
@@ -1028,20 +1018,29 @@ extension PreferencesWindowController: NSTableViewDelegate {
                     
                 } else {
                     self.syncStatus.stringValue = "Failed"
-                    self.syncFailureInfoButton.action = #selector(self.showFailurePopover)
-                    self.syncFailureInfoButton.isHidden = false
-                    self.syncFailureInfoButton.isEnabled = true
-                    self.syncFailureInfoButton.toolTip = NSLocalizedString("Last sync failed, click here for details", comment: "")
                     self.progress.stopAnimation(nil)
                     
                     self.progress.doubleValue = 0.0
                     self.syncProgressField.stringValue = ""
                     
                 }
-                let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
-                failureView.message.stringValue = syncTask.message ?? ""
+
+                if let messages = syncTask.message {
+                    failureView.message.stringValue = messages
+                    self.syncFailureInfoButton.action = #selector(self.showFailurePopover)
+                    self.syncFailureInfoButton.isHidden = false
+                    self.syncFailureInfoButton.isEnabled = true
+                    self.syncFailureInfoButton.toolTip = NSLocalizedString("Some issues detected, click here for details", comment: "")
+                } else {
+                    failureView.message.stringValue = ""
+                    self.syncFailureInfoButton.action = nil
+                    self.syncFailureInfoButton.isHidden = true
+                    self.syncFailureInfoButton.isEnabled = false
+                    self.syncFailureInfoButton.toolTip = ""
+                }
             } else {
                 self.syncStatus.stringValue = "Waiting"
+                failureView.message.stringValue = ""
                 self.syncFailureInfoButton.action = nil
                 self.syncFailureInfoButton.isHidden = true
                 self.syncFailureInfoButton.isEnabled = false
