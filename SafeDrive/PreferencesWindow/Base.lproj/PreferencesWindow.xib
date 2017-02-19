@@ -134,7 +134,7 @@
                 <outlet property="view" destination="Pnk-Eo-Zdr" id="BIZ-HI-j91"/>
             </connections>
         </viewController>
-        <popover id="1yy-mh-Jnb">
+        <popover behavior="t" id="1yy-mh-Jnb">
             <connections>
                 <outlet property="contentViewController" destination="X3G-VU-Oc4" id="EyX-a6-Ai3"/>
             </connections>
