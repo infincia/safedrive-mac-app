@@ -363,7 +363,22 @@ class SyncScheduler {
                     realm.create(SyncTask.self, value: ["uuid": name, "progress": percent, "bandwidth": bandwidth], update: true)
                 }
             }, issue: { (message) in
-                SDLog("Sync issue: \(message)")
+                guard let realm = try? Realm() else {
+                    SDLog("failed to create realm!!!")
+                    Crashlytics.sharedInstance().crash()
+                    return
+                }
+                guard let task = realm.objects(SyncTask.self).filter("uuid == '\(name)'").last else {
+                    SDLog("failed to get sync folder for machine from realm!!!")
+                    return
+                }
+                var oldMessages = task.message != nil ? task.message! : ""
+                
+                oldMessages.append(message)
+                oldMessages.append("\n")
+                try! realm.write {
+                    realm.create(SyncTask.self, value: ["uuid": name, "message": oldMessages], update: true)
+                }
             }, success: { (_: URL) -> Void in
                 SDLog("Sync finished for \(folderName)")
                 guard let realm = try? Realm() else {
