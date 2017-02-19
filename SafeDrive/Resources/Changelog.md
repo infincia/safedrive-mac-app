@@ -4,6 +4,18 @@ If you find a bug, please report it to the person you obtained the build from.
 
 #### Changelog
 
+**Changes in 0.9.23**
+
+- Includes SafeDrive SDDK 0.4.4
+- Fix for crashes in sync folder list
+- Dismiss sync warning popover when clicking outside window
+
+**Changes in 0.9.22**
+
+- Support entering recovery phrase when needed
+- Support encrypted restores
+- Includes SafeDrive SDDK 0.4.1
+
 **Changes in 0.9.21**
 
 - Includes SafeDrive SDDK 0.3.4
