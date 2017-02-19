@@ -32,19 +32,14 @@ extension RestoreSelectionWindowController: NSTableViewDataSource {
         
         view.sessionSize = session.size
         
-        SDLog("setting session list view for \(session.name)")
-
         return view
     }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        SDLog("found \(self.sessions.count) sessions")
-
         return self.sessions.count
     }
     
     func numberOfSections(in tableView: NSTableView) -> Int {
-        SDLog("setting 1 session list section")
         return 1
     }
 }
@@ -54,8 +49,6 @@ extension RestoreSelectionWindowController:  NSTableViewDelegate {
         let sessionIndex = restoreSelectionList.selectedRow
         
         guard let _ = restoreSelectionList.view(atColumn: 0, row: sessionIndex, makeIfNecessary: false) as? RestoreSelectionTableCellView else {
-            SDLog("failed to get session view")
-
             return
         }
         
@@ -214,7 +207,6 @@ class RestoreSelectionWindowController: NSWindowController {
         self.spinner.startAnimation(self)
         
         let sessionIndex = restoreSelectionList.selectedRow
-        SDLog("selecting row at \(sessionIndex)")
         guard let v = restoreSelectionList.view(atColumn: 0, row: sessionIndex, makeIfNecessary: false) as? RestoreSelectionTableCellView else {
             SDLog("failed to get session view")
 
@@ -245,10 +237,8 @@ class RestoreSelectionWindowController: NSWindowController {
     @IBAction func readSyncSessions(_ sender: AnyObject) {
         self.spinner.startAnimation(self)
         self.errorField.stringValue = ""
-        SDLog("getting sessions")
         self.sdk.getSessions(completionQueue: DispatchQueue.main, success: { (sessions: [SDSyncSession]) in
             self.errorField.stringValue = ""
-            SDLog("got sessions")
             guard let realm = try? Realm() else {
                 SDLog("failed to create realm!!!")
                 Crashlytics.sharedInstance().crash()
@@ -320,7 +310,6 @@ class RestoreSelectionWindowController: NSWindowController {
             }
             
         }, failure: { (error) in
-            SDLog("failed to get sessions")
             let fadedRed: NSColor = NSColor(calibratedRed: 1.0, green: 0.25098, blue: 0.25098, alpha: 0.73)
                 
             self.errorField.textColor = fadedRed
@@ -336,7 +325,6 @@ class RestoreSelectionWindowController: NSWindowController {
     @IBAction func removeSyncSession(_ sender: AnyObject) {
         
         let sessionIndex = restoreSelectionList.selectedRow
-        SDLog("selecting row at \(sessionIndex)")
         guard let v = restoreSelectionList.view(atColumn: 0, row: sessionIndex, makeIfNecessary: false) as? RestoreSelectionTableCellView else {
             SDLog("failed to get session view")
 
@@ -345,13 +333,11 @@ class RestoreSelectionWindowController: NSWindowController {
         
         self.spinner.startAnimation(self)
         self.errorField.stringValue = ""
-        SDLog("deleting session \(v.sessionID) (\(v.sessionName))")
         
         self.sdk.removeSession(v.sessionID, completionQueue: DispatchQueue.main, success: {
             self.errorField.stringValue = ""
             self.readSyncSessions(self)
         }, failure: { (error) in
-            SDLog("failed to delete session")
             let fadedRed: NSColor = NSColor(calibratedRed: 1.0, green: 0.25098, blue: 0.25098, alpha: 0.73)
                 
             self.errorField.textColor = fadedRed
