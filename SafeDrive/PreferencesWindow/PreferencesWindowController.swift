@@ -987,7 +987,7 @@ extension PreferencesWindowController: NSTableViewDelegate {
             self.progress.minValue = 0.0
             let syncTasks = realm.objects(SyncTask.self)
             
-            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@", self.mac.uniqueClientID!, syncFolder).sorted(byKeyPath: "syncDate").last {
+            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", self.mac.uniqueClientID!, syncFolder).sorted(byKeyPath: "syncDate").last {
                 
                 if syncFolder.restoring {
                     self.syncStatus.stringValue = "Restoring"
