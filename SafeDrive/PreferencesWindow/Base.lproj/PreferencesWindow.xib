@@ -405,7 +405,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="309" height="122"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="21" rowSizeStyle="automatic" viewBased="YES" id="8EH-Eb-Fv4">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="21" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="8EH-Eb-Fv4">
                                             <rect key="frame" x="0.0" y="0.0" width="309" height="122"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -597,7 +597,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZwZ-c1-Kwt">
-                                <rect key="frame" x="84" y="59" width="50" height="17"/>
+                                <rect key="frame" x="84" y="59" width="53" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="Waiting" id="uC4-KY-jdK">
                                     <font key="font" metaFont="system"/>
@@ -665,7 +665,7 @@
                                 </textFieldCell>
                             </textField>
                             <button hidden="YES" verticalHuggingPriority="752" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nuB-bR-vrs">
-                                <rect key="frame" x="138" y="57" width="29" height="19"/>
+                                <rect key="frame" x="143" y="58" width="29" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSCaution" imagePosition="only" alignment="center" enabled="NO" state="on" imageScaling="proportionallyDown" inset="2" id="mom-R3-Wn8">
                                     <behavior key="behavior" lightByContents="YES"/>
