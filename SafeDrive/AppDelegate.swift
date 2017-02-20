@@ -70,11 +70,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             if isProduction() {
                 SDLog("SafeDrive release build \(CFBundleVersion)")
                 environment = "RELEASE"
-                updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive-release/appcast.xml")
+                updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive/release.xml")
             } else {
                 SDLog("SafeDrive staging build \(CFBundleVersion)")
                 environment = "STAGING"
-                updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive/appcast.xml")
+                updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive/staging.xml")
             }
         }
         
