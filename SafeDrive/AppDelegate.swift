@@ -78,6 +78,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             }
         }
         
+        SDLog("SDDK \(SafeDriveSDK.sddk_version)-\(SafeDriveSDK.sddk_channel)")
+
+        
         if CFBundleVersion < SDBuildVersionLast {
             let alert: NSAlert = NSAlert()
             alert.messageText = "Unsupported downgrade"
