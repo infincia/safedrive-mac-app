@@ -1032,13 +1032,13 @@ extension PreferencesWindowController: NSTableViewDelegate {
                 }
 
                 if let messages = syncTask.message {
-                    failureView.message.stringValue = messages
+                    failureView.message.textStorage?.setAttributedString(NSAttributedString(string: messages))
                     self.syncFailureInfoButton.action = #selector(self.showFailurePopover)
                     self.syncFailureInfoButton.isHidden = false
                     self.syncFailureInfoButton.isEnabled = true
                     self.syncFailureInfoButton.toolTip = NSLocalizedString("Some issues detected, click here for details", comment: "")
                 } else {
-                    failureView.message.stringValue = ""
+                    failureView.message.textStorage?.setAttributedString(NSAttributedString(string: ""))
                     self.syncFailureInfoButton.action = nil
                     self.syncFailureInfoButton.isHidden = true
                     self.syncFailureInfoButton.isEnabled = false
@@ -1046,7 +1046,7 @@ extension PreferencesWindowController: NSTableViewDelegate {
                 }
             } else {
                 self.syncStatus.stringValue = "Waiting"
-                failureView.message.stringValue = ""
+                failureView.message.textStorage?.setAttributedString(NSAttributedString(string: ""))
                 self.syncFailureInfoButton.action = nil
                 self.syncFailureInfoButton.isHidden = true
                 self.syncFailureInfoButton.isEnabled = false

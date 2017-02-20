@@ -10,7 +10,7 @@ import Cocoa
 
 class SyncFailurePopoverView: NSView {
     
-    @IBOutlet var message: NSTextField!
+    @IBOutlet var message: NSTextView!
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
