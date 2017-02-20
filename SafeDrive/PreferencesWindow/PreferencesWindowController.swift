@@ -698,7 +698,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         let oldFirstResponder = self.window?.firstResponder
         let selectedIndexes = self.syncListView.selectedRowIndexes
         self.syncListView.reloadData()
-        self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: true)
+        self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: false)
         self.window?.makeFirstResponder(oldFirstResponder)
     }
     
