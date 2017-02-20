@@ -274,7 +274,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.aboutWindowController = DCOAboutWindowController()
             self.aboutWindowController.useTextViewForAcknowledgments = true
             self.aboutWindowController.appCredits = TSMarkdownParser.standard().attributedString(fromMarkdown: markdown)
-            let version = "Version \(self.CFBundleShortVersionString)-\(self.environment) (Build \(self.CFBundleVersion))"
+            let sddk = "\(SafeDriveSDK.sddk_version)-\(SafeDriveSDK.sddk_channel)"
+
+            let version = "\(self.CFBundleShortVersionString)-\(self.environment) (SDDK \(sddk))"
+
             self.aboutWindowController.appVersion = version
             let websiteURLPath: String = "https://\(webDomain())"
             self.aboutWindowController.appWebsiteURL = URL(string: websiteURLPath)!
