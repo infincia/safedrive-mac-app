@@ -192,11 +192,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        
-        // register SDVolumeEventProtocol notifications
 
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount), name: Notification.Name.volumeDidMount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount), name: Notification.Name.volumeDidUnmount, object: nil)
         // register SDMountStateProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
@@ -734,29 +730,6 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
             }
             // swiftlint:enable force_try
         }
-    }
-}
-
-extension PreferencesWindowController: SDVolumeEventProtocol {
-    
-    func volumeDidMount(notification: Notification) {
-    
-    }
-    
-    func volumeDidUnmount(notification: Notification) {
-    
-    }
-    
-    func volumeShouldUnmount(notification: Notification) {
-    
-    }
-    
-    func volumeShouldMount(notification: Notification) {
-    
-    }
-    
-    func volumeSubprocessDidTerminate(notification: Notification) {
-    
     }
 }
 
