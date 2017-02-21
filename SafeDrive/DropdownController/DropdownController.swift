@@ -84,10 +84,15 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async {
             self.mountController.unmountVolume(name: volumeName, success: { _ -> Void in
                 //
-            }, failure: { (_, error) -> Void in
+            }, failure: { (_, error, processes) -> Void in
                 DispatchQueue.main.async(execute: {() -> Void in
                     let message = "SafeDrive could not be unmounted\n\n \(error.localizedDescription)"
                     SDLog(message)
+                    if let processes = processes {
+                        for process in processes {
+                            SDLog("process still has open files: \(process.command) (\(process.pid))")
+                        }
+                    }
                     let notification = NSUserNotification()
 
                     notification.title = "SafeDrive unmount failed"

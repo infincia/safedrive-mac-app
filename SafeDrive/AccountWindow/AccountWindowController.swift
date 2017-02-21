@@ -135,7 +135,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
             self.mountController.unmountVolume(name: volumeName, success: { _ in
                 //
-            }, failure: { (_, _) in
+            }, failure: { (_, _, _) in
                 //
             })
         })

@@ -63,7 +63,8 @@ class MountController: NSObject {
         mountStateLoop()
     }
     
-    func unmountVolume(name volumeName: String!, success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
+    func unmountVolume(name volumeName: String!, success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error, _ processes: [RunningProcess]?) -> Void) {
+        
         let mountURL = self.mountURL(forVolumeName: volumeName)
         weak var weakSelf: MountController? = self
         self.sharedSystemAPI.ejectMount(mountURL, success: {
@@ -71,7 +72,11 @@ class MountController: NSObject {
             weakSelf?.mountURL = nil
             NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object:nil)
         }, failure: { (error: Error) in
-            failureBlock(mountURL, error)
+            weakSelf?.openFileCheck(name: volumeName, success: { (url, processes) in
+                failureBlock(url, error, processes)
+            }, failure: { (url, error) in
+                failureBlock(url, error, nil)
+            })
         })
     }
     
