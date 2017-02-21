@@ -6,7 +6,7 @@ import Cocoa
 
 import SafeDriveSDK
 
-class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol, SDAccountProtocol {
+class DropdownController: NSObject, SDMountStateProtocol, SDAccountProtocol {
     var statusItem: NSStatusItem?
     @IBOutlet var statusItemMenu: NSMenu!
     @IBOutlet var connectMenuItem: NSMenuItem!
@@ -39,10 +39,6 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
-        // register SDVolumeEventProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount), name: Notification.Name.volumeDidMount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount), name: Notification.Name.volumeDidUnmount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount), name: Notification.Name.volumeShouldUnmount, object: nil)
         
         // register SDAccountProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate), name: Notification.Name.accountAuthenticated, object: nil)
@@ -121,26 +117,6 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     }
     
     func didReceiveAccountStatus(notification: Notification) {
-    }
-    
-    // MARK: SDVolumeEventProtocol methods
-    
-    func volumeDidMount(notification: Notification) {
-    }
-    
-    func volumeDidUnmount(notification: Notification) {
-    }
-    
-    func volumeSubprocessDidTerminate(notification: Notification) {
-    
-    }
-    
-    func volumeShouldMount(notification: Notification) {
-        
-    }
-    
-    func volumeShouldUnmount(notification: Notification) {
-        self.disconnectVolume()
     }
     
     // MARK: SDMountStateProtocol methods
