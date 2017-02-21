@@ -63,11 +63,7 @@ class DropdownController: NSObject, SDMountStateProtocol, SDVolumeEventProtocol,
     }
     
     @IBAction func toggleMount(_ sender: AnyObject) {
-        if self.mountController.mounted {
-            self.disconnectVolume()
-        } else {
-            NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAccountWindow, object: nil)
-        }
+        NotificationCenter.default.post(name: Notification.Name.applicationShouldToggleMountState, object: nil)
     }
     
     @IBAction func openPreferencesWindow(_ sender: AnyObject) {
