@@ -180,7 +180,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
     }
     
     func volumeDidUnmount(notification: Notification) {
-        NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAccountWindow, object: nil)
+
     }
     
     func volumeSubprocessDidTerminate(notification: Notification) {
