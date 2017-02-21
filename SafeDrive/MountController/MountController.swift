@@ -4,6 +4,11 @@
 
 import Foundation
 
+public struct RunningProcess {
+    public let pid: String
+    public let command: String
+}
+
 class MountController: NSObject {
     fileprivate var _mounted = false
     
@@ -70,6 +75,107 @@ class MountController: NSObject {
         })
     }
     
+    func openFileCheck(name volumeName: String, success successBlock: @escaping (_ mount: URL, _ processes: [RunningProcess]) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
+        
+        let mountURL = self.mountURL(forVolumeName: volumeName)
+
+        SDLog("Checking open files on mount URL: \(mountURL)")
+        
+        
+        let task = Process()
+        
+        task.launchPath = "/usr/sbin/lsof"
+        
+        // MARK: - Set subprocess arguments
+        
+        var taskArguments = [String]()
+        
+        /* basic lsof options */
+        taskArguments.append("-F cfp")
+        
+        /* mount location */
+        taskArguments.append(mountURL.path)
+        
+        task.arguments = taskArguments
+        
+        // MARK: - Set asynchronous block to handle subprocess stderr and stdout
+        
+        let outputPipe = Pipe()
+        
+        let outputPipeHandle = outputPipe.fileHandleForReading
+
+        
+        var processes = [RunningProcess]()
+        
+
+        
+        outputPipeHandle.readabilityHandler = { (handle) in
+            let outputString: String! = String(data: handle.availableData, encoding: String.Encoding.utf8)
+            var err: NSError!
+            
+            if outputString.contains("error") {
+                err = NSError(domain: SDMountErrorDomain, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Could not determine open files"])
+                return
+            }
+            
+
+            let whitespaceRegex = "^\\s+$"
+            let fullRegex = "^p([0-9]+)\\nc([0-9A-Za-z]+)\\nf([0-9A-Za-z]+)"
+            // example: "              0   0%    0.00kB/s    0:00:00 (xfr#0, to-chk=0/11)"
+            if outputString.isMatched(byRegex: fullRegex) {
+                if let matches = outputString.arrayOfCaptureComponentsMatched(byRegex: fullRegex) as [AnyObject]! {
+                    SDLog("processes: \(matches.count)")
+                    for capturedValues in matches {
+                        let process = capturedValues as! [String]
+                        if process.count >= 3 {
+                            let pid = process[1]
+                            let command = process[2]
+                            let p = RunningProcess(pid: pid, command: command)
+                            processes.append(p)
+                            SDLog("found process: <pid:\(pid), command:\(command)>")
+                        }
+                    }
+                }
+            } else if outputString.isMatched(byRegex: whitespaceRegex) {
+                // skip all whitespace lines
+            } else {
+                SDLog("lsof Task stdout output: %@", outputString)
+            }
+            if err != nil {
+                DispatchQueue.main.async(execute: {() -> Void in
+                    failureBlock(mountURL, err)
+                })
+                SDLog("lsof task error: %lu, %@", err.code, err.localizedDescription)
+            }
+        }
+        
+        task.standardError = outputPipe
+        task.standardOutput = outputPipe
+        
+        
+        // MARK: - Set asynchronous block to handle subprocess termination
+        
+        
+        /*
+         clear the read and write blocks once the subprocess terminates, and then
+         call the success block if no error occurred.
+         
+         */
+        task.terminationHandler = { (task: Process) in
+            outputPipeHandle.readabilityHandler = nil
+            
+            if task.terminationStatus == 0 {
+                DispatchQueue.main.sync(execute: {() -> Void in
+                    successBlock(mountURL, processes)
+                })
+            }
+        }
+        
+        
+        // MARK: - Launch subprocess and return
+        
+        task.launch()
+    }
     
     func mountURL(forVolumeName name: String) -> URL {
         let home = NSHomeDirectory()
