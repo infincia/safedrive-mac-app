@@ -74,35 +74,6 @@ class DropdownController: NSObject, SDMountStateProtocol, SDAccountProtocol {
         self.preferencesMenuItem.isEnabled = enabled
     }
     
-    fileprivate func disconnectVolume() {
-        let volumeName: String = self.sharedSystemAPI.currentVolumeName
-        SDLog("Dismounting volume: %@", volumeName)
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async {
-            self.mountController.unmountVolume(name: volumeName, success: { _ -> Void in
-                //
-            }, failure: { (_, error, processes) -> Void in
-                DispatchQueue.main.async(execute: {() -> Void in
-                    let message = "SafeDrive could not be unmounted\n\n \(error.localizedDescription)"
-                    SDLog(message)
-                    if let processes = processes {
-                        for process in processes {
-                            SDLog("process still has open files: \(process.command) (\(process.pid))")
-                        }
-                    }
-                    let notification = NSUserNotification()
-
-                    notification.title = "SafeDrive unmount failed"
-                    notification.informativeText = NSLocalizedString("Please close any open files on your SafeDrive", comment: "")
-                  
-                    notification.soundName = NSUserNotificationDefaultSoundName
-                    
-                    NSUserNotificationCenter.default.deliver(notification)
-                })
-            })
-        }
-        
-    }
-    
     // MARK: SDAccountProtocol
     
     func didAuthenticate(notification: Notification) {
