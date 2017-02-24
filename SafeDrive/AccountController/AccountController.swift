@@ -25,7 +25,7 @@ class AccountController: NSObject {
     
     var hasCredentials: Bool = false
     
-    fileprivate let accountQueue = DispatchQueue(label: "io.safedrive.accountQueue", attributes: DispatchQueue.Attributes.concurrent)
+    fileprivate let accountQueue = DispatchQueue(label: "io.safedrive.accountQueue")
     
     fileprivate let sdkCompletionQueue = DispatchQueue.main
 

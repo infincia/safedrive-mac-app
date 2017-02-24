@@ -10,7 +10,7 @@ import SafeDriveSDK
 
 var logBuffer = [String]()
 var errors = [[AnyHashable: Any]]()
-let errorQueue = DispatchQueue(label: "io.safedrive.errorQueue", attributes: [])
+let errorQueue = DispatchQueue(label: "io.safedrive.errorQueue")
 
 var serializedErrorLocation: URL!
 

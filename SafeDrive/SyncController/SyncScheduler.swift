@@ -43,7 +43,7 @@ class SyncScheduler {
     
     fileprivate var _running = false
     
-    fileprivate let runQueue = DispatchQueue(label: "io.safedrive.runQueue", attributes: DispatchQueue.Attributes.concurrent)
+    fileprivate let runQueue = DispatchQueue(label: "io.safedrive.runQueue")
     
     var running: Bool {
         get {

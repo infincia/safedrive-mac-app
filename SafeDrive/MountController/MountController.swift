@@ -12,7 +12,7 @@ public struct RunningProcess {
 class MountController: NSObject {
     fileprivate var _mounted = false
     
-    fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue", attributes: DispatchQueue.Attributes.concurrent)
+    fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue")
     
     var mounted: Bool {
         get {
@@ -31,7 +31,7 @@ class MountController: NSObject {
     
     fileprivate var _mounting = false
     
-    fileprivate let mountingQueue = DispatchQueue(label: "io.safedrive.mountingQueue", attributes: DispatchQueue.Attributes.concurrent)
+    fileprivate let mountingQueue = DispatchQueue(label: "io.safedrive.mountingQueue")
     
     var mounting: Bool {
         get {
