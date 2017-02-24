@@ -139,13 +139,13 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     fileprivate var syncTaskToken: RealmSwift.NotificationToken?
     
-    fileprivate var mac: Machine!
+    fileprivate var mac: Machine?
     
-    fileprivate var folders: Results<SyncFolder>!
+    fileprivate var folders: Results<SyncFolder>?
     
     fileprivate var realm: Realm!
     
-    fileprivate var uniqueClientID: String!
+    fileprivate var uniqueClientID: String?
     
     fileprivate let dbURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db")!.appendingPathComponent("sync.realm")
     
@@ -153,18 +153,13 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     // Initialization
     
-    convenience init() {
-        self.init(windowNibName: "PreferencesWindow")
-    }
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-    convenience init(uniqueClientID: String) {
+    convenience init() {
         self.init(windowNibName: "PreferencesWindow")
         self.recoveryPhraseEntry = RecoveryPhraseWindowController(delegate: self)
-        self.uniqueClientID = uniqueClientID
         
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")
@@ -173,19 +168,6 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         }
         
         self.realm = realm
-        
-        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-            SDLog("failed to get current machine in realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
-        
-        self.mac = currentMachine
-        
-        let folders = realm.objects(SyncFolder.self).filter("machine == %@", self.mac)
-        
-        self.folders = folders
-        
     }
     
     // Window handling
@@ -353,6 +335,9 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     @IBAction func removeSyncFolder(_ sender: AnyObject) {
+        guard let uniqueClientID = self.uniqueClientID else {
+            return
+        }
         let button: NSButton = sender as! NSButton
         let uniqueID: UInt64 = UInt64(button.tag)
         SDLog("Deleting sync folder ID: %lu", uniqueID)
@@ -386,7 +371,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                 Crashlytics.sharedInstance().crash()
                 return
             }
-            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
+            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", uniqueClientID).last else {
                 return
             }
             let syncFolders = realm.objects(SyncFolder.self)
@@ -416,7 +401,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                             return
                         }
                         
-                        let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last!
+                        let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", uniqueClientID).last!
                         
                         let syncTasks = realm.objects(SyncTask.self).filter("syncFolder.uniqueID == %@", uniqueID)
                         
@@ -462,6 +447,9 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     @IBAction func readSyncFolders(_ sender: AnyObject) {
+        guard let currentMachine = self.mac else {
+            return
+        }
         self.spinner.startAnimation(self)
         
         self.sdk.getFolders(completionQueue: DispatchQueue.main, success: { (folders: [Folder]) in
@@ -486,35 +474,23 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                 
                 let encrypted = folder.encrypted
                 
-                
-                guard let realm = try? Realm() else {
-                    SDLog("failed to create realm!!!")
-                    Crashlytics.sharedInstance().crash()
-                    return
-                }
-                guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-                    SDLog("failed to get machine from realm!!!")
-                    Crashlytics.sharedInstance().crash()
-                    return
-                }
-                
                 // try to retrieve and modify existing record if possible, avoids overwriting preferences only stored in entity
                 // while still ensuring entities will have a default set on them for things like sync time
-                var syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", folderId).last
+                var syncFolder = self.realm.objects(SyncFolder.self).filter("uniqueID == %@", folderId).last
                 
                 if syncFolder == nil {
                     syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: Int32(folderId), encrypted: encrypted)
                 }
                 
                 // swiftlint:disable force_try
-                try! realm.write {
+                try! self.realm.write {
                     
                     syncFolder!.machine = currentMachine
                     
                     // this is the only place where the `added` property should be set on SyncFolders
                     syncFolder!.added = addedDate
                     
-                    realm.add(syncFolder!, update: true)
+                    self.realm.add(syncFolder!, update: true)
                 }
                 // swiftlint:enable force_try
 
@@ -547,22 +523,29 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         let button: NSButton = sender as! NSButton
         let folderID: UInt64 = UInt64(button.tag)
         
-        if let folder = self.folders.filter("machine == %@ AND uniqueID == %@", self.mac, folderID).last {
+        if let folders = self.folders,
+           let currentMachine = self.mac,
+           let folder = folders.filter("machine == %@ AND uniqueID == %@", currentMachine, folderID).last {
             startSync(folderID, encrypted: folder.encrypted)
         }
     }
     
     @IBAction func startRestoreNow(_ sender: AnyObject) {
+        guard let uniqueClientID = self.uniqueClientID else {
+            return
+        }
         let button: NSButton = sender as! NSButton
         let folderID: UInt64 = UInt64(button.tag)
         
-        guard let folder = self.folders.filter("machine == %@ AND uniqueID == %@", self.mac, folderID).last else {
+        guard let folders = self.folders,
+              let currentMachine = self.mac,
+              let folder = folders.filter("machine == %@ AND uniqueID == %@", currentMachine, folderID).last else {
             return
         }
         
         if folder.encrypted {
 
-            self.restoreSelection = RestoreSelectionWindowController(delegate: self, uniqueClientID: self.uniqueClientID, folderID: folderID)
+            self.restoreSelection = RestoreSelectionWindowController(delegate: self, uniqueClientID: uniqueClientID, folderID: folderID)
             
             guard let w = self.restoreSelection?.window else {
                     SDLog("no recovery phrase window available")
@@ -587,11 +570,17 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     // MARK: Sync control
     
     func startSync(_ folderID: UInt64, encrypted: Bool) {
+        guard let uniqueClientID = self.uniqueClientID else {
+            return
+        }
         let type: SyncType = encrypted ? .encrypted : .unencrypted
-        self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .forward, type: type, name: UUID().uuidString.lowercased(), destination: nil)
+        self.syncScheduler.queueSyncJob(uniqueClientID, folderID: folderID, direction: .forward, type: type, name: UUID().uuidString.lowercased(), destination: nil)
     }
     
     func startRestore(_ folderID: UInt64, encrypted: Bool, name: String, destination: URL?) {
+        guard let uniqueClientID = self.uniqueClientID else {
+            return
+        }
         let type: SyncType = encrypted ? .encrypted : .unencrypted
         
         let alert = NSAlert()
@@ -610,7 +599,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
             case NSAlertSecondButtonReturn:
                 // cancel any sync in progress so we don't have two rsync processes overwriting each other
                 self.syncScheduler.cancel(folderID) {
-                    self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .reverse, type: type, name: name, destination: destination)
+                    self.syncScheduler.queueSyncJob(uniqueClientID, folderID: folderID, direction: .reverse, type: type, name: name, destination: destination)
                 }
                 break
             default:
@@ -646,8 +635,13 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     @IBAction func setSyncFrequencyForFolder(_ sender: AnyObject) {
+        guard let currentMachine = self.mac,
+              let folders = self.folders else {
+            return
+        }
         if self.syncListView.selectedRow != -1 {
-            let syncFolder = self.folders[self.syncListView.selectedRow]
+        
+            let syncFolder = folders[self.syncListView.selectedRow]
 
             let uniqueID = syncFolder.uniqueID
             
@@ -666,20 +660,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                 syncFrequency = "daily"
             }
             
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            
-            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-                SDLog("failed to get current machine in realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            let syncFolders = realm.objects(SyncFolder.self)
-            
-            let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
+            let realSyncFolder = folders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
             // swiftlint:disable force_try
             try! realm.write {
                 realSyncFolder.syncFrequency = syncFrequency
@@ -703,27 +684,18 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         self.failurePopover.show(relativeTo: self.syncFailureInfoButton.bounds, of: self.syncFailureInfoButton, preferredEdge: .minY)
     }
     
-    @IBAction
-    func setSyncTime(_ sender: AnyObject) {
+    @IBAction func setSyncTime(_ sender: AnyObject) {
+        guard let currentMachine = self.mac,
+              let folders = self.folders else {
+            return
+        }
+        
         if self.syncListView.selectedRow != -1 {
-            let syncFolder = self.folders[self.syncListView.selectedRow]
+            let syncFolder = folders[self.syncListView.selectedRow]
             
             let uniqueID = syncFolder.uniqueID
             
-            
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-                SDLog("failed to get current machine in realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            let syncFolders = realm.objects(SyncFolder.self)
-            
-            let realSyncFolder = syncFolders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
+            let realSyncFolder = folders.filter("machine == %@ AND uniqueID == %@", currentMachine, uniqueID).last!
             // swiftlint:disable force_try
             try! realm.write {
                 realSyncFolder.syncTime = self.syncTimePicker.dateValue
@@ -769,6 +741,24 @@ extension PreferencesWindowController: SDAccountProtocol {
     // MARK: SDAccountProtocol
     
     func didSignIn(notification: Foundation.Notification) {
+        guard let uniqueClientID = notification.object as? String else {
+            return
+        }
+        self.uniqueClientID = uniqueClientID
+        
+                
+        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", uniqueClientID).last else {
+            SDLog("failed to get current machine in realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
+        
+        self.mac = currentMachine
+        
+        let folders = realm.objects(SyncFolder.self).filter("machine == %@", currentMachine)
+        
+        self.folders = folders
+        
         
         let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
         let recoveryPhrase = recoveryCredentials?["password"]
@@ -860,17 +850,22 @@ extension PreferencesWindowController: NSOpenSavePanelDelegate {
 extension PreferencesWindowController: NSTableViewDelegate {
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let currentMachine = self.mac,
+              let folders = self.folders else {
+            return nil
+        }
+        
         var tableCellView: SyncManagerTableCellView
         if row == 0 {
             tableCellView = tableView.make(withIdentifier: "MachineView", owner: self) as! SyncManagerTableCellView
-            tableCellView.textField!.stringValue = self.mac.name!
+            tableCellView.textField!.stringValue = currentMachine.name!
             let cellImage: NSImage = NSImage(named: NSImageNameComputer)!
             cellImage.size = CGSize(width: 15.0, height: 15.0)
             tableCellView.imageView!.image = cellImage
         } else {
             // this would normally require zero-indexing, but we're bumping the folder list down one row to make
             // room for the machine row
-            let syncFolder = self.folders[row - 1]
+            let syncFolder = folders[row - 1]
 
             tableCellView = tableView.make(withIdentifier: "FolderView", owner: self) as! SyncManagerTableCellView
             tableCellView.textField!.stringValue = syncFolder.name!.capitalized
@@ -931,10 +926,14 @@ extension PreferencesWindowController: NSTableViewDelegate {
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
+        guard let currentMachine = self.mac,
+              let folders = self.folders else {
+            return
+        }
         if self.syncListView.selectedRow != -1 {
             // normally this would be one-indexed, but we're bumping the folder rows down to make room for
             // the machine row
-            let syncFolder = self.folders[self.syncListView.selectedRow - 1]
+            let syncFolder = folders[self.syncListView.selectedRow - 1]
             
 
             if let syncTime = syncFolder.syncTime {
@@ -961,7 +960,7 @@ extension PreferencesWindowController: NSTableViewDelegate {
             
             let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
 
-            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", self.mac.uniqueClientID!, syncFolder).sorted(byKeyPath: "syncDate").last {
+            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", uniqueClientID, syncFolder).sorted(byKeyPath: "syncDate").last {
                 
                 if syncFolder.restoring {
                     let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
@@ -1103,8 +1102,11 @@ extension PreferencesWindowController: NSTableViewDelegate {
 
 extension PreferencesWindowController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
+        guard let folders = self.folders else {
+            return 0
+        }
         // make room for the machine row at the top
-        return 1 + self.folders.count
+        return 1 + folders.count
     }
 
 }
@@ -1221,10 +1223,13 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
 
 extension PreferencesWindowController: RestoreSelectionDelegate {
     func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL) {
+        guard let uniqueClientID = self.uniqueClientID else {
+            return
+        }
         let type: SyncType = .encrypted
         
         self.syncScheduler.cancel(folderID) {
-            self.syncScheduler.queueSyncJob(self.uniqueClientID, folderID: folderID, direction: .reverse, type: type, name: sessionName, destination: destination)
+            self.syncScheduler.queueSyncJob(uniqueClientID, folderID: folderID, direction: .reverse, type: type, name: sessionName, destination: destination)
         }
     }
 }

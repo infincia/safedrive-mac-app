@@ -264,6 +264,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.accountWindowController = AccountWindowController()
             _ = self.accountWindowController.window!
             
+            self.preferencesWindowController = PreferencesWindowController()
+            _ = self.preferencesWindowController!.window!
+            
             let markdownURL = Bundle.main.url(forResource: "Changelog.md", withExtension: nil)
             
             let data = FileManager.default.contents(atPath: markdownURL!.path)
@@ -307,15 +310,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 Crashlytics.sharedInstance().crash()
             }
         }
-        self.preferencesWindowController = PreferencesWindowController(uniqueClientID: uniqueClientID)
-        _ = self.preferencesWindowController!.window!
     }
     
     func didSignOut(notification: Foundation.Notification) {
         assert(Thread.isMainThread, "Not main thread!!!")
         self.syncScheduler?.stop()
         self.preferencesWindowController?.close()
-        self.preferencesWindowController = nil
     }
     
     func didReceiveAccountDetails(notification: Foundation.Notification) {
