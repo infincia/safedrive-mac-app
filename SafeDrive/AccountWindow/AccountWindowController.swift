@@ -9,6 +9,13 @@ import Cocoa
 
 import SafeDriveSDK
 
+extension AccountWindowController: SleepReactor {
+    func willSleep(_ notification: Notification) {
+        SDLog("machine going to sleep, unmounting SSHFS")
+        self.disconnectVolume()
+    }
+}
+
 class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolumeEventProtocol {
     
     var sdk = SafeDriveSDK.sharedSDK
@@ -56,6 +63,11 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount), name: Notification.Name.volumeDidUnmount, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount), name: Notification.Name.volumeShouldUnmount, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldMount), name: Notification.Name.volumeShouldMount, object: nil)
+        
+        
+        let nc = NSWorkspace.shared().notificationCenter
+        nc.addObserver(self, selector: #selector(willSleep(_:)), name: Notification.Name.NSWorkspaceWillSleep, object: nil)
+        
     }
     
     @IBAction func signIn(_ sender: AnyObject) {

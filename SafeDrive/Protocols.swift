@@ -48,3 +48,7 @@ protocol SDAPIAvailabilityProtocol: class {
     func apiDidBecomeReachable(notification: Notification)
     func apiDidBecomeUnreachable(notification: Notification)
 }
+
+protocol SleepReactor: class {
+    func willSleep(_ notification: Notification)
+}
