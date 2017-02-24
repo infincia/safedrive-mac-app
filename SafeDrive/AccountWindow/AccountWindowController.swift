@@ -12,7 +12,7 @@ import SafeDriveSDK
 extension AccountWindowController: SleepReactor {
     func willSleep(_ notification: Notification) {
         SDLog("machine going to sleep, unmounting SSHFS")
-        self.disconnectVolume()
+        self.disconnectVolume(askForOpenApps: true)
     }
 }
 
@@ -154,7 +154,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
     }
     
         
-    fileprivate func disconnectVolume() {
+    fileprivate func disconnectVolume(askForOpenApps: Bool) {
         let volumeName: String = self.sharedSystemAPI.currentVolumeName
         SDLog("Dismounting volume: %@", volumeName)
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async {
@@ -173,6 +173,11 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
                     notification.soundName = NSUserNotificationDefaultSoundName
                     
                     NSUserNotificationCenter.default.deliver(notification)
+                    
+                    if askForOpenApps {
+                    
+                        let processes = OpenFileCheck.shared.check(volume: url)
+                    }
                 })
             })
         }
@@ -230,7 +235,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
     }
     
     func volumeShouldUnmount(notification: Notification) {
-        self.disconnectVolume()
+        self.disconnectVolume(askForOpenApps: true)
     }
     
     // MARK: SDMountStateProtocol methods
