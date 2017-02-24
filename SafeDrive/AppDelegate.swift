@@ -106,7 +106,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         
         // register SDAccountProtocol notifications
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate), name: Notification.Name.accountAuthenticated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
         
         self.welcomeWindowController = WelcomeWindowController()
@@ -293,7 +293,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     
     // MARK: SDAccountProtocol
     
-    func didAuthenticate(notification: Foundation.Notification) {
+    func didSignIn(notification: Foundation.Notification) {
         guard let uniqueClientID = notification.object as? String else {
             return
         }

@@ -22,7 +22,7 @@ protocol SDMountStateProtocol: class {
 
 @objc
 protocol SDAccountProtocol: class {
-    func didAuthenticate(notification: Notification)
+    func didSignIn(notification: Notification)
     func didSignOut(notification: Notification)
     func didReceiveAccountStatus(notification: Notification)
     func didReceiveAccountDetails(notification: Notification)

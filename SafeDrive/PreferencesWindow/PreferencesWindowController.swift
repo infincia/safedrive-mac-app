@@ -200,7 +200,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         
         
         // register SDAccountProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate), name: Notification.Name.accountAuthenticated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus), name: Notification.Name.accountStatus, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails), name: Notification.Name.accountDetails, object: nil)
@@ -768,8 +768,7 @@ extension PreferencesWindowController: SDAccountProtocol {
     
     // MARK: SDAccountProtocol
     
-    func didAuthenticate(notification: Foundation.Notification) {
-        // get recovery phrase from keychain
+    func didSignIn(notification: Foundation.Notification) {
         
         let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
         let recoveryPhrase = recoveryCredentials?["password"]

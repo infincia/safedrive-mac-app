@@ -41,7 +41,7 @@ class DropdownController: NSObject, SDMountStateProtocol, SDAccountProtocol {
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
         
         // register SDAccountProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didAuthenticate), name: Notification.Name.accountAuthenticated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus), name: Notification.Name.accountStatus, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails), name: Notification.Name.accountDetails, object: nil)
@@ -76,7 +76,7 @@ class DropdownController: NSObject, SDMountStateProtocol, SDAccountProtocol {
     
     // MARK: SDAccountProtocol
     
-    func didAuthenticate(notification: Notification) {
+    func didSignIn(notification: Notification) {
         self.enableMenuItems(true)
     }
     

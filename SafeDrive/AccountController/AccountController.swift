@@ -194,7 +194,7 @@ class AccountController: NSObject {
             
             NotificationCenter.default.post(name: Notification.Name.sdkReady, object: nil)
             
-            NotificationCenter.default.post(name: Notification.Name.accountAuthenticated, object: ucid)
+            NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: ucid)
             successBlock()
             
         }, failure: { (error) in

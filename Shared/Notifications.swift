@@ -28,7 +28,7 @@ extension Notification.Name {
     static let apiDidBecomeReachable = Notification.Name("apiDidBecomeReachableNotification")
     static let apiDidBecomeUnreachable = Notification.Name("apiDidBecomeUnreachableNotification")
 
-    static let accountAuthenticated = Notification.Name("accountAuthenticatedNotification")
+    static let accountSignIn = Notification.Name("accountSignInNotification")
     static let accountSignOut = Notification.Name("accountSignOutNotification")
     static let accountStatus = Notification.Name("accountStatusNotification")
     static let accountDetails = Notification.Name("accountDetailsNotification")

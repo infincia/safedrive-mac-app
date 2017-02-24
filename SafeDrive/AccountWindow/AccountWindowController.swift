@@ -68,7 +68,6 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         self.spinner.startAnimation(self)
         
         self.accountController.signInWithSuccess({() -> Void in
-            NotificationCenter.default.post(name: Notification.Name.accountAuthenticated, object: nil)
             self.resetErrorDisplay()
             self.spinner.stopAnimation(self)
             
