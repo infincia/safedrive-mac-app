@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 
 // SafeDrive API constants
 
@@ -34,6 +35,7 @@ fileprivate let SDRecoveryKeyDomainStaging = "staging.recovery.safedrive.io"
 
 func storageURL() -> URL {
     guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
+        Crashlytics.sharedInstance().crash()
         exit(1)
     }
     let u: URL
