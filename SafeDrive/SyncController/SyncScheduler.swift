@@ -100,6 +100,11 @@ class SyncScheduler {
         SDLog("Sync scheduler running")
         
         while self.running {
+        
+            if !SafeDriveSDK.sharedSDK.ready {
+                Thread.sleep(forTimeInterval: 1)
+                continue
+            }
             
             autoreleasepool {
                 realm.refresh()

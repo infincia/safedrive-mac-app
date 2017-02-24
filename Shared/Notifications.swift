@@ -34,7 +34,5 @@ extension Notification.Name {
     static let accountDetails = Notification.Name("accountDetailsNotification")
 
     static let serviceStatus = Notification.Name("serviceStatusNotification")
-    
-    static let sdkReady = Notification.Name("sdkReadyNotification")
 
 }

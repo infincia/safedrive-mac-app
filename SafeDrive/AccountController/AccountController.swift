@@ -191,9 +191,6 @@ class AccountController: NSObject {
                     // SDErrorHandlerReport(apiError);
                 }
             })
-            
-            NotificationCenter.default.post(name: Notification.Name.sdkReady, object: nil)
-            
             NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: ucid)
             successBlock()
             

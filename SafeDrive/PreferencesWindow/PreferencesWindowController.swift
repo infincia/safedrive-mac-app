@@ -881,7 +881,7 @@ extension PreferencesWindowController: NSTableViewDelegate {
                 tableCellView.restoreNowButton.target = self
                 tableCellView.restoreNowButton.action = #selector(self.stopSyncNow(_:))
                 
-                tableCellView.syncNowButton.isEnabled = true
+                tableCellView.syncNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
                 tableCellView.syncNowButton.target = self
                 tableCellView.syncNowButton.action = #selector(self.stopSyncNow(_:))
             }
@@ -905,12 +905,12 @@ extension PreferencesWindowController: NSTableViewDelegate {
             } else {
                 tableCellView.syncStatus.stopAnimation(self)
                 
-                tableCellView.restoreNowButton.isEnabled = true
+                tableCellView.restoreNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
                 tableCellView.restoreNowButton.target = self
                 tableCellView.restoreNowButton.action = #selector(self.startRestoreNow(_:))
                 tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
                 
-                tableCellView.syncNowButton.isEnabled = true
+                tableCellView.syncNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
                 tableCellView.syncNowButton.target = self
                 tableCellView.syncNowButton.action = #selector(self.startSyncNow(_:))
                 tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
