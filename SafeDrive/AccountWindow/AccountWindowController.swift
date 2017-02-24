@@ -135,7 +135,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
             self.mountController.unmountVolume(name: volumeName, success: { _ in
                 //
-            }, failure: { (_, _, _) in
+            }, failure: { (_, _) in
                 //
             })
         })
@@ -148,15 +148,11 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async {
             self.mountController.unmountVolume(name: volumeName, success: { _ -> Void in
                 //
-            }, failure: { (_, error, processes) -> Void in
+            }, failure: { (url, error) -> Void in
                 DispatchQueue.main.async(execute: {() -> Void in
                     let message = "SafeDrive could not be unmounted\n\n \(error.localizedDescription)"
                     SDLog(message)
-                    if let processes = processes {
-                        for process in processes {
-                            SDLog("process still has open files: \(process.command) (\(process.pid))")
-                        }
-                    }
+
                     let notification = NSUserNotification()
 
                     notification.title = "SafeDrive unmount failed"

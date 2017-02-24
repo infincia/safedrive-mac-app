@@ -16,6 +16,7 @@
 		AA0A7D1E1A19682D00DCB77E /* AccountWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D201A19682D00DCB77E /* AccountWindow.xib */; };
 		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
+		AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
 		AA13CB9F1A7212F000A91C7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13CB9D1A7212F000A91C7A /* main.m */; };
 		AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1A460F1BEDE685004A5310 /* HKTHashProvider.m */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
@@ -257,6 +258,7 @@
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreferencesWindow.xib; sourceTree = "<group>"; };
 		AA0A7D1F1A19682D00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AccountWindow.xib; sourceTree = "<group>"; };
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileCheck.swift; path = "Open File Warning Window/OpenFileCheck.swift"; sourceTree = "<group>"; };
 		AA13CB9D1A7212F000A91C7A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = safedriveaskpass/main.m; sourceTree = SOURCE_ROOT; };
 		AA1A460E1BEDE685004A5310 /* HKTHashProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKTHashProvider.h; sourceTree = "<group>"; };
 		AA1A460F1BEDE685004A5310 /* HKTHashProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKTHashProvider.m; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 		AA3168151A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXGroup;
 			children = (
+				AAD89BCE1E5C194B007D8E82 /* Open File Check */,
 				AAAF1A401BF59446008E7865 /* Account Controller */,
 				AA31683B1A192CD2006CC0EB /* AccountWindow */,
 				AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */,
@@ -724,6 +727,14 @@
 				AAB7D5CC1CAF85C0001F9A8E /* FlatWindow.swift */,
 			);
 			name = FlatWindow;
+			sourceTree = "<group>";
+		};
+		AAD89BCE1E5C194B007D8E82 /* Open File Check */ = {
+			isa = PBXGroup;
+			children = (
+				AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */,
+			);
+			name = "Open File Check";
 			sourceTree = "<group>";
 		};
 		AAF85BFB1A23A4BC0063B54F /* SystemAPI */ = {
@@ -1314,6 +1325,7 @@
 				AAB7D5D31CB06A62001F9A8E /* AccountWindowController.swift in Sources */,
 				AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */,
 				AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */,
+				AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */,
 				AA3EB83B1E556EE3003A2E79 /* RestoreSelectionWindowController.swift in Sources */,
 				AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */,
 				AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */,
