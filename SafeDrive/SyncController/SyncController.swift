@@ -227,12 +227,20 @@ class SyncController: Equatable {
                                             issue issueBlock: @escaping (_ message: String) -> Void,
                                             success successBlock: @escaping (_ local: URL) -> Void,
                                             failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
+        let start_time = Date()
+
         if self.restore {
             let sessionSize = self.spaceNeeded != nil ? self.spaceNeeded! : 0
             let selectedDestination = self.destination != nil ? self.destination! : self.localURL
             
             self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: selectedDestination!, sessionSize: sessionSize, completionQueue: syncResultQueue, progress: { (total, current, new, percent) in
-                progressBlock(total, current, new, percent, "0KB/s")
+                let now = Date()
+                let d = now.timeIntervalSince(start_time)
+                if d > 1 {
+                    let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(Double(current) / d), countStyle: ByteCountFormatter.CountStyle.decimal)
+                    let bandwidth = "\(average_bandwidth)/s"
+                    progressBlock(total, current, new, percent, bandwidth)
+                }
             }, issue: { (message) in
                 issueBlock(message)
             }, success: {
@@ -242,7 +250,13 @@ class SyncController: Equatable {
             })
         } else {
             self.sdk.syncFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, completionQueue: syncResultQueue, progress: { (total, current, new, percent) in
-                progressBlock(total, current, new, percent, "0KB/s")
+                let now = Date()
+                let d = now.timeIntervalSince(start_time)
+                if d > 1 {
+                    let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(Double(current) / d), countStyle: ByteCountFormatter.CountStyle.decimal)
+                    let bandwidth = "\(average_bandwidth)/s"
+                    progressBlock(total, current, new, percent, bandwidth)
+                }
             }, issue: { (message) in
                 issueBlock(message)
             }, success: {
