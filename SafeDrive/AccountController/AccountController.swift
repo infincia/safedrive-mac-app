@@ -63,7 +63,7 @@ class AccountController: NSObject {
         
     }
     
-    func signInWithSuccess(_ successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
+    func signInWithSuccess(_ successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: SDKError) -> Void) {
         guard let email = self.email, let password = self.password else {
             return
         }
@@ -107,8 +107,10 @@ class AccountController: NSObject {
         do {
             try self.sharedSystemAPI.insertCredentialsInKeychain(forService: accountCredentialDomain(), account: email, password: password)
         } catch let keychainError as NSError {
+            let e = SDKError(message: keychainError.localizedDescription, kind: .KeychainError)
+            
             SDErrorHandlerReport(keychainError)
-            failureBlock(keychainError)
+            failureBlock(e)
             return
         }
         Crashlytics.sharedInstance().setUserEmail(email)
@@ -138,8 +140,10 @@ class AccountController: NSObject {
             do {
                 try self.sharedSystemAPI.insertCredentialsInKeychain(forService: sshCredentialDomain(), account: self.internalUserName!, password: self.password!)
             } catch let keychainError as NSError {
+                let e = SDKError(message: keychainError.localizedDescription, kind: .KeychainError)
+
                 SDErrorHandlerReport(keychainError)
-                failureBlock(keychainError)
+                failureBlock(e)
                 return
             }
             guard let realm = try? Realm() else {

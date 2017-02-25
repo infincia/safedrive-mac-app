@@ -93,9 +93,59 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
                     self.connectVolume()
                 }
             }
-        }, failure: {(apiError: Swift.Error) -> Void in
-            SDErrorHandlerReport(apiError)
-            self.displayError(apiError, forDuration: 10)
+        }, failure: {(apiError: SDKError) -> Void in
+            switch apiError.kind {
+            case .StateMissing:
+                break
+            case .Internal:
+                break
+            case .RequestFailure:
+                break
+            case .NetworkFailure:
+                break
+            case .Conflict:
+                break
+            case .BlockMissing:
+                break
+            case .SessionMissing:
+                break
+            case .RecoveryPhraseIncorrect:
+                break
+            case .InsufficientFreeSpace:
+                break
+            case .Authentication:
+                break
+            case .UnicodeError:
+                break
+            case .TokenExpired:
+                break
+            case .CryptoError:
+                break
+            case .IO:
+                break
+            case .SyncAlreadyInProgress:
+                break
+            case .RestoreAlreadyInProgress:
+                break
+            case .ExceededRetries:
+                break
+            case .KeychainError:
+                break
+            case .BlockUnreadable:
+                break
+            case .SessionUnreadable:
+                break
+            case .ServiceUnavailable:
+                break
+            case .Cancelled:
+                break
+            }
+
+            let ns = NSError(domain: SDErrorUIDomain, code: apiError.kind.rawValue, userInfo: [NSLocalizedDescriptionKey: apiError.message])
+            
+            SDErrorHandlerReport(ns)
+            
+            self.displayError(ns, forDuration: 10)
             self.spinner.stopAnimation(self)
             self.showWindow(nil)
         })
