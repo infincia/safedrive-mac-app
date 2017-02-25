@@ -68,11 +68,7 @@ class AccountController: NSObject {
             return
         }
         
-        self.signOutWithSuccess({ () -> Void in
-            //
-        }, failure: { (_) -> Void in
-            //
-        })
+        self.signOut()
         
         /*
          
@@ -201,7 +197,7 @@ class AccountController: NSObject {
         })
     }
     
-    func signOutWithSuccess(_ successBlock: () -> Void, failure failureBlock: (_ error: Error) -> Void) {
+    func signOut() {
         do {
             try self.sharedSystemAPI.removeCredentialsInKeychain(forService: tokenDomain())
             try self.sharedSystemAPI.removeCredentialsInKeychain(forService: sshCredentialDomain())
@@ -215,7 +211,6 @@ class AccountController: NSObject {
         Crashlytics.sharedInstance().setUserEmail(nil)
         SDErrorHandlerSetUniqueClientId(nil)
         NotificationCenter.default.post(name: Notification.Name.accountSignOut, object: nil)
-        successBlock()
         
     }
     
