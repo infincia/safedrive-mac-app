@@ -174,7 +174,15 @@ class SyncController: Equatable {
     func stopSyncTask(_ completion: @escaping () -> Void) {
         self.syncTerminated = true
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async(execute: {
-            if !self.encrypted {
+            if self.encrypted {
+                // just ask the SDK to cancel it
+                SafeDriveSDK.sharedSDK.cancelSyncTask(sessionName: self.uuid, completionQueue: DispatchQueue.main, success: { 
+                    completion()
+                }, failure: { (error) in
+                    SDLog("unable to stop sync task for \(self.uuid)")
+                })
+            } else {
+                // unencrypted sync has to stop the subprocess
                 while  self.syncTask.isRunning {
                     self.syncTask.terminate()
                     Thread.sleep(forTimeInterval: 0.1)
