@@ -992,6 +992,7 @@ extension PreferencesWindowController: NSTableViewDelegate {
               let uniqueClientID = self.uniqueClientID else {
             return
         }
+        
         if self.syncListView.selectedRow != -1 {
             // normally this would be one-indexed, but we're bumping the folder rows down to make room for
             // the machine row
