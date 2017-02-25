@@ -1135,7 +1135,6 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
             })
             
             self.storeRecoveryPhrase(newPhrase, success: { 
-                success()
             }, failure: { (_) in
                 //let se = SDKError(message: error.localizedDescription, kind: SDKErrorType.Internal)
                 //failure(se)
