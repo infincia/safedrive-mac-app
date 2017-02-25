@@ -190,22 +190,26 @@
     return [[NSBundle mainBundle] isLoginItem];
 }
 
--(NSError * _Nullable)enableAutostart {
+-(BOOL)enableAutostartWithError:(NSError * _Nullable * _Nullable)error {
     NSError *loginItemError = nil;
     [[NSBundle mainBundle] addToLoginItems];
     if (!self.autostart) {
         loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Adding login item failed"}];
+        *error = loginItemError;
+        return false;
     }
-    return loginItemError;
+    return true;
 }
 
--(NSError * _Nullable)disableAutostart {
+-(BOOL)disableAutostartWithError:(NSError * _Nullable * _Nullable)error  {
     NSError *loginItemError = nil;
     [[NSBundle mainBundle] removeFromLoginItems];
     if (self.autostart) {
         loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Removing login item failed"}];
+        *error = loginItemError;
+        return false;
     }
-    return loginItemError;
+    return true;
 }
 
 -(NSDictionary<NSString *, NSString *>* _Nullable)retrieveCredentialsFromKeychainForService:(NSString * _Nonnull)service {
@@ -225,7 +229,7 @@
     return credentials;
 }
 
--(NSError * _Nullable)insertCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password {
+-(BOOL)insertCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password error:(NSError * _Nullable * _Nullable)error {
     
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
                                                                                     account:nil
@@ -235,15 +239,15 @@
         BOOL sameUser = [account isEqualToString:keychainItem.account];
         BOOL samePass = [password isEqualToString:keychainItem.password];
         /* don't do anything if credentials haven't changed */
-        if (sameUser && samePass) return nil;
+        if (sameUser && samePass) return true;
         NSError *keychainRemoveError;
         [keychainItem removeFromKeychainWithError:&keychainRemoveError];
         if (keychainRemoveError) {
             CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainRemoveError.code, NULL);
             NSString *keychainErrorString = (id) CFBridgingRelease(err);
             NSLog(@"Keychain remove error: %@, query: %@", keychainErrorString, keychainRemoveError.userInfo[MCSMKeychainItemQueryKey]);
-            return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
-            ;
+            *error = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
+            return false;
         }
     }
     NSError *keychainInsertError;
@@ -256,13 +260,14 @@
         CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainInsertError.code, NULL);
         NSString *keychainErrorString = (id) CFBridgingRelease(err);
         NSLog(@"Keychain insert credential error: %@, query: %@", keychainErrorString, keychainInsertError.userInfo[MCSMKeychainItemQueryKey]);
-        return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
-        ;
+        *error = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
+        return false;
     }
-    return nil;
+    
+    return true;
 }
 
--(NSError * _Nullable)removeCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account {
+-(BOOL)removeCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account error:(NSError * _Nullable * _Nullable)error {
     
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
                                                                                     account:account
@@ -274,12 +279,14 @@
         CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainRemoveError.code, NULL);
         NSString *keychainErrorString = (id) CFBridgingRelease(err);
         NSLog(@"Keychain remove error: %@, query: %@", keychainErrorString, keychainRemoveError.userInfo[MCSMKeychainItemQueryKey]);
-        return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
+        *error = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
+        return false;
     }
-    return keychainRemoveError;
+    
+    return true;
 }
 
--(NSError * _Nullable)removeCredentialsInKeychainForService:(NSString * _Nonnull)service {
+-(BOOL)removeCredentialsInKeychainForService:(NSString * _Nonnull)service error:(NSError * _Nullable * _Nullable)error {
     
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
                                                                                     account:nil
@@ -291,9 +298,11 @@
         CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainRemoveError.code, NULL);
         NSString *keychainErrorString = (id) CFBridgingRelease(err);
         NSLog(@"Keychain remove error: %@, query: %@", keychainErrorString, keychainRemoveError.userInfo[MCSMKeychainItemQueryKey]);
-        return [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
+        *error = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
+        return false;
     }
-    return keychainRemoveError;
+    
+    return true;
 }
 
 @end
