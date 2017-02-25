@@ -179,7 +179,7 @@ class SyncController: Equatable {
                 SafeDriveSDK.sharedSDK.cancelSyncTask(sessionName: self.uuid, completionQueue: DispatchQueue.main, success: { 
                     completion()
                 }, failure: { (error) in
-                    SDLog("unable to stop sync task for \(self.uuid)")
+                    SDLog("unable to stop sync task for \(self.uuid): \(error)")
                 })
             } else {
                 // unencrypted sync has to stop the subprocess
