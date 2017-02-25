@@ -85,6 +85,7 @@ func SDErrorHandlerReport(_ error: Error?) {
     guard let error = error as? NSError else {
         fatalError()
     }
+
     // always report errors to crashlytics
     Crashlytics.sharedInstance().recordError(error)
     
