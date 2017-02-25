@@ -83,7 +83,7 @@ func SDLog(_ line: String, _ arguments: CVarArg...) {
 
 func SDErrorHandlerReport(_ error: Error?) {
     guard let error = error as? NSError else {
-        return
+        fatalError()
     }
     // always report errors to crashlytics
     Crashlytics.sharedInstance().recordError(error)
