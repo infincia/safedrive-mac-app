@@ -769,10 +769,65 @@ extension PreferencesWindowController: SDAccountProtocol {
 
         
         self.checkRecoveryPhrase(recoveryPhrase, success: {
-        
-            
-        }, failure: { (_) in
-            
+        }, failure: { (error) in
+            switch error.kind {
+            case .StateMissing:
+                break
+            case .Internal:
+                break
+            case .RequestFailure:
+                break
+            case .NetworkFailure:
+                break
+            case .Conflict:
+                break
+            case .BlockMissing:
+                break
+            case .SessionMissing:
+                break
+            case .RecoveryPhraseIncorrect:
+                self.setTab(3)
+                self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
+                self.copyRecoveryPhraseButton.isEnabled = false
+                
+                self.window?.makeKeyAndOrderFront(self)
+                NSApp.activate(ignoringOtherApps: true)
+
+                guard let w = self.recoveryPhraseEntry?.window else {
+                    SDLog("no recovery phrase window available")
+                    return
+                }
+                self.window?.beginSheet(w, completionHandler: nil)
+                
+            case .InsufficientFreeSpace:
+                break
+            case .Authentication:
+                break
+            case .UnicodeError:
+                break
+            case .TokenExpired:
+                break
+            case .CryptoError:
+                break
+            case .IO:
+                break
+            case .SyncAlreadyInProgress:
+                break
+            case .RestoreAlreadyInProgress:
+                break
+            case .ExceededRetries:
+                break
+            case .KeychainError:
+                break
+            case .BlockUnreadable:
+                break
+            case .SessionUnreadable:
+                break
+            case .ServiceUnavailable:
+                break
+            case .Cancelled:
+                break
+            }
         })
     }
     
@@ -1155,55 +1210,6 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
             
         }, failure: { (error) in
             SDLog("failed to load keys with sdk: \(error.message)")
-            switch error.kind {
-            case .StateMissing:
-                break
-            case .Internal:
-                break
-            case .RequestFailure:
-                break
-            case .NetworkFailure:
-                break
-            case .Conflict:
-                break
-            case .BlockMissing:
-                break
-            case .SessionMissing:
-                break
-            case .RecoveryPhraseIncorrect:
-                self.setTab(3)
-                self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
-                self.copyRecoveryPhraseButton.isEnabled = false
-                
-                self.window?.makeKeyAndOrderFront(self)
-                NSApp.activate(ignoringOtherApps: true)
-
-                guard let w = self.recoveryPhraseEntry?.window else {
-                    SDLog("no recovery phrase window available")
-                    return
-                }
-                self.window?.beginSheet(w, completionHandler: nil)
-                
-            case .InsufficientFreeSpace:
-                break
-            case .Authentication:
-                break
-            case .UnicodeError:
-                break
-            case .TokenExpired:
-                break
-            case .CryptoError:
-                break
-            case .IO:
-                break
-            case .SyncAlreadyInProgress:
-                break
-            case .RestoreAlreadyInProgress:
-                break
-            case .ExceededRetries:
-                break
-            }
-            
             failure(error)
 
         })
