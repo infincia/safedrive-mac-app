@@ -769,6 +769,7 @@ extension PreferencesWindowController: SDAccountProtocol {
 
         
         self.checkRecoveryPhrase(recoveryPhrase, success: {
+            self.syncListView.reloadData()
         }, failure: { (error) in
             switch error.kind {
             case .StateMissing:
@@ -1175,6 +1176,7 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
         guard let _ = self.accountController.email else {
             return
         }
+        self.syncListView.reloadData()
         
         self.sdk.loadKeys(phrase, completionQueue: DispatchQueue.main, storePhrase: { (newPhrase) in
             
@@ -1205,10 +1207,11 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
                 self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
                 self.copyRecoveryPhraseButton.isEnabled = false
             }
-            
+            self.syncListView.reloadData()
             success()
             
         }, failure: { (error) in
+            self.syncListView.reloadData()
             SDLog("failed to load keys with sdk: \(error.message)")
             failure(error)
 
