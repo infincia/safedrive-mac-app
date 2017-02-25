@@ -1192,9 +1192,10 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
             })
             
             self.storeRecoveryPhrase(newPhrase, success: { 
-            }, failure: { (_) in
-                //let se = SDKError(message: error.localizedDescription, kind: SDKErrorType.Internal)
-                //failure(se)
+
+            }, failure: { (error) in
+                let se = SDKError(message: error.localizedDescription, kind: SDKErrorType.KeychainError)
+                failure(se)
             })
             
         }, success: {
