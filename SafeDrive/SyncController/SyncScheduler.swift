@@ -355,7 +355,7 @@ class SyncScheduler {
                 self.syncControllers.append(syncController)
             })
             
-            syncController.startSyncTask(progress: { (total, current, new, percent, bandwidth) in
+            syncController.startSyncTask(progress: { (_, _, _, percent, bandwidth) in
                 // use for updating sync progress
                 // WARNING: this block may be called more often than once per second on a background serial queue, DO NOT block it for long
                 guard let realm = try? Realm() else {
