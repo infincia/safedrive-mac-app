@@ -89,7 +89,7 @@ func SDErrorHandlerReport(_ error: Error?) {
     // always report errors to crashlytics
     Crashlytics.sharedInstance().recordError(error)
     
-    if isProduction() {
+    //if isProduction() {
         // don't even add error reports to the SD telemetry log unless we're in a RELEASE build
         
         // using archived NSError so the array can be serialized as a plist
@@ -110,7 +110,7 @@ func SDErrorHandlerReport(_ error: Error?) {
                 saveErrors()
             }
         }
-    }
+    //}
 }
 
 func SDUncaughtExceptionHandler(exception: NSException!) {
