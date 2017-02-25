@@ -95,14 +95,18 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
             return self.sharedSystemAPI.autostart()
         }
         set(newValue) {
-            var autostartError: NSError?
             if newValue == true {
-                autostartError = self.sharedSystemAPI.enableAutostart() as NSError?
+                do {
+                    try self.sharedSystemAPI.enableAutostart()
+                } catch let error as NSError {
+                    SDErrorHandlerReport(error)
+                }
             } else {
-                autostartError = self.sharedSystemAPI.disableAutostart() as NSError?
-            }
-            if autostartError != nil {
-                SDErrorHandlerReport(autostartError)
+                do {
+                    try self.sharedSystemAPI.disableAutostart()
+                } catch let error as NSError {
+                    SDErrorHandlerReport(error)
+                }
             }
         }
     }
@@ -1210,9 +1214,9 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
         guard let email = self.accountController.email else {
             return
         }
-        let keychainError = SDSystemAPI.shared().insertCredentialsInKeychain(forService: recoveryKeyDomain(), account: email, password: phrase)
-            
-        if let keychainError = keychainError {
+        do {
+            try SDSystemAPI.shared().insertCredentialsInKeychain(forService: recoveryKeyDomain(), account: email, password: phrase)
+        } catch let keychainError as NSError {
             SDErrorHandlerReport(keychainError)
             failure(keychainError)
             return

@@ -108,9 +108,9 @@ class AccountController: NSObject {
             
         }
         
-        let keychainError: NSError? = self.sharedSystemAPI.insertCredentialsInKeychain(forService: accountCredentialDomain(), account: email, password: password) as NSError?
-        
-        if let keychainError = keychainError {
+        do {
+            try self.sharedSystemAPI.insertCredentialsInKeychain(forService: accountCredentialDomain(), account: email, password: password)
+        } catch let keychainError as NSError {
             SDErrorHandlerReport(keychainError)
             failureBlock(keychainError)
             return
@@ -139,8 +139,9 @@ class AccountController: NSObject {
             
             self.remoteHost = status.host
             
-            let keychainError = self.sharedSystemAPI.insertCredentialsInKeychain(forService: sshCredentialDomain(), account: self.internalUserName!, password: self.password!)
-            if let keychainError = keychainError {
+            do {
+                try self.sharedSystemAPI.insertCredentialsInKeychain(forService: sshCredentialDomain(), account: self.internalUserName!, password: self.password!)
+            } catch let keychainError as NSError {
                 SDErrorHandlerReport(keychainError)
                 failureBlock(keychainError)
                 return
@@ -201,10 +202,13 @@ class AccountController: NSObject {
     }
     
     func signOutWithSuccess(_ successBlock: () -> Void, failure failureBlock: (_ error: Error) -> Void) {
-        self.sharedSystemAPI.removeCredentialsInKeychain(forService: tokenDomain())
-        self.sharedSystemAPI.removeCredentialsInKeychain(forService: sshCredentialDomain())
-        self.sharedSystemAPI.removeCredentialsInKeychain(forService: accountCredentialDomain())
-        
+        do {
+            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: tokenDomain())
+            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: sshCredentialDomain())
+            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: accountCredentialDomain())
+        } catch let error as NSError {
+            SDLog("warning: failed to remove keychain credentials: \(error.localizedDescription)")
+        }
         self.signedIn = false
         
         // reset crashlytics email and telemetry API username
