@@ -988,8 +988,8 @@ extension PreferencesWindowController: NSTableViewDelegate {
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        guard let currentMachine = self.mac,
-              let folders = self.folders else {
+        guard let folders = self.folders,
+              let uniqueClientID = self.uniqueClientID else {
             return
         }
         if self.syncListView.selectedRow != -1 {
