@@ -9,6 +9,44 @@ import Cocoa
 
 import SafeDriveSDK
 
+extension AccountWindowController: OpenFileWarningDelegate {
+    func closeApplication(_ process: RunningProcess) {
+        SDLog("attempting to close \(process.command) (\(process.pid))")
+        
+        if process.isUserApplication {
+            for app in NSWorkspace.shared().runningApplications {
+                if process.pid == Int(app.processIdentifier) {
+                    SDLog("found \(process.pid), terminating")
+                    app.terminate()
+                }
+            }
+        } else {
+            OpenFileCheck.shared.close(pid: process.pid)
+        }
+    }
+    
+    func runningProcesses() -> [RunningProcess]? {
+        SDLog("checking running processes")
+        
+        return OpenFileCheck.shared.runningProcesses()
+    }
+    
+    func blockingProcesses(_ url: URL) -> [RunningProcess]? {
+        SDLog("checking blocking processes")
+        
+        return OpenFileCheck.shared.check(volume: url)
+    }
+    
+    func tryAgain() {
+        self.disconnectVolume(askForOpenApps: false)
+    }
+    
+    func finished() {
+        self.openFileWarning?.window?.close()
+        self.openFileWarning = nil
+    }
+}
+
 extension AccountWindowController: SleepReactor {
     func willSleep(_ notification: Notification) {
         SDLog("machine going to sleep, unmounting SSHFS")
@@ -33,6 +71,9 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
     @IBOutlet var spinner: NSProgressIndicator!
     
     var currentlyDisplayedError: NSError?
+    
+    fileprivate var openFileWarning: OpenFileWarningWindowController?
+
     
     deinit {
         NotificationCenter.default.removeObserver(self)
