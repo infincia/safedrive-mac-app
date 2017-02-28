@@ -4,6 +4,13 @@ If you find a bug, please report it to the person you obtained the build from.
 
 #### Changelog
 
+**Changes in 0.9.25**
+
+- Add support for multi-block uploads
+- Add support for cancelling encrypted sync
+- Try to dismount SSHFS when the machine sleeps
+- Includes SDDK 0.4.10
+
 **Changes in 0.9.24**
 
 - Use warning symbol for sync issues, to make it clearer what that means
