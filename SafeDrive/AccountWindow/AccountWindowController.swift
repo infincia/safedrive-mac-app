@@ -42,8 +42,8 @@ extension AccountWindowController: OpenFileWarningDelegate {
     }
     
     func finished() {
-        self.openFileWarning?.window?.close()
-        self.openFileWarning = nil
+        //self.openFileWarning?.window?.close()
+        //self.openFileWarning = nil
     }
 }
 
@@ -267,7 +267,13 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
                     
                     if askForOpenApps {
                     
-                        let processes = OpenFileCheck.shared.check(volume: url)
+                        //let processes = OpenFileCheck.shared.check(volume: url)
+                        
+                        //self.openFileWarning = OpenFileWarningWindowController(delegate: self, url: url, processes: processes!)
+            
+                        //NSApp.activate(ignoringOtherApps: true)
+                        
+                        //self.openFileWarning!.showWindow(self)
                     }
                 })
             })
@@ -314,7 +320,8 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
     }
     
     func volumeDidUnmount(notification: Notification) {
-
+        //self.openFileWarning?.window?.close()
+        //self.openFileWarning = nil
     }
     
     func volumeSubprocessDidTerminate(notification: Notification) {
