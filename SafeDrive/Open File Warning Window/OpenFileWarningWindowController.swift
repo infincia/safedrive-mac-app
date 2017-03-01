@@ -10,8 +10,8 @@ import Cocoa
 
 protocol OpenFileWarningDelegate: class {
     func closeApplication(_ process: RunningProcess)
-    func runningProcesses(success: @escaping ([RunningProcess]) -> Void)
-    func blockingProcesses(_ url: URL,success: @escaping ([RunningProcess]) -> Void)
+    func runningProcesses() -> [RunningProcess]
+    func blockingProcesses(_ url: URL) -> [RunningProcess]
     func tryAgain()
     func finished()
 }
@@ -134,12 +134,14 @@ class OpenFileWarningWindowController: NSWindowController {
 
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             while self.shouldCheckRunning {
-                weakSelf?.openFileWarningDelegate?.runningProcesses { (runningProcesses) in
+                
+                if let runningProcesses = weakSelf?.openFileWarningDelegate?.runningProcesses() {
                 
                     let runningSet = Set<RunningProcess>(runningProcesses)
+                    
                     SDLog("there are \(runningProcesses.count) running processes")
                     
-                    weakSelf?.openFileWarningDelegate?.blockingProcesses(self.url) { (blockingProcesses) in
+                    if let blockingProcesses = weakSelf?.openFileWarningDelegate?.blockingProcesses(self.url) {
                         let blockingSet = Set<RunningProcess>(blockingProcesses)
                         SDLog("volume \(self.url!.lastPathComponent) has \(blockingProcesses.count) blocking processes")
 
@@ -150,14 +152,13 @@ class OpenFileWarningWindowController: NSWindowController {
                                 SDLog("volume \(self.url!.path) is safe do disconnect now")
                                 weakSelf?.openFileWarningDelegate?.tryAgain()
                                 weakSelf?.shouldCheckRunning = false
-                            } else {
-                                
                             }
                             weakSelf?.processes = processes
                             weakSelf?.processList.reloadData()
                         }
                     }
                 }
+                
                 Thread.sleep(forTimeInterval: 1)
             }
         }

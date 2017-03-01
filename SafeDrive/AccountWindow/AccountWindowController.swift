@@ -26,22 +26,18 @@ extension AccountWindowController: OpenFileWarningDelegate {
         }
     }
     
-    func runningProcesses(success: @escaping ([RunningProcess]) -> Void) {
+    func runningProcesses() -> [RunningProcess]{
         SDLog("checking running processes")
         let r = RunningProcessCheck()
 
-        r.runningProcesses(success: { (runningProcesses) in
-            success(runningProcesses)
-        })
+        return r.runningProcesses()
     }
     
-    func blockingProcesses(_ url: URL, success: @escaping ([RunningProcess]) -> Void) {
+    func blockingProcesses(_ url: URL) -> [RunningProcess] {
         SDLog("checking blocking processes")
         let c = OpenFileCheck()
 
-        c.check(volume: url, success: { (runningProcesses) in
-            success(runningProcesses)
-        })
+        return c.check(volume: url)
     }
     
     func tryAgain() {
@@ -275,18 +271,18 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
                     if askForOpenApps {
                         let c = OpenFileCheck()
                         
-                        c.check(volume: url) { (runningProcesses) in
+                        let processes = c.check(volume: url)
                         
-                            if runningProcesses.count <= 0 {
-                                return
-                            }
-                            
-                            self.openFileWarning = OpenFileWarningWindowController(delegate: self, url: url, processes: runningProcesses)
-            
-                            NSApp.activate(ignoringOtherApps: true)
-                        
-                            self.openFileWarning!.showWindow(self)
+                        if processes.count <= 0 {
+                            return
                         }
+                            
+                        self.openFileWarning = OpenFileWarningWindowController(delegate: self, url: url, processes: processes)
+            
+                        NSApp.activate(ignoringOtherApps: true)
+                        
+                        self.openFileWarning!.showWindow(self)
+                        
                     }
                 })
             })
