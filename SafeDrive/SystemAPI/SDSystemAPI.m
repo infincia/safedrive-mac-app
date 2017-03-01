@@ -195,7 +195,9 @@
     [[NSBundle mainBundle] addToLoginItems];
     if (!self.autostart) {
         loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Adding login item failed"}];
-        *error = loginItemError;
+        if (error != nil) {
+            *error = loginItemError;
+        }
         return false;
     }
     return true;
@@ -206,7 +208,9 @@
     [[NSBundle mainBundle] removeFromLoginItems];
     if (self.autostart) {
         loginItemError = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Removing login item failed"}];
-        *error = loginItemError;
+        if (error != nil) {
+            *error = loginItemError;
+        }
         return false;
     }
     return true;
