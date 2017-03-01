@@ -152,6 +152,8 @@ class OpenFileWarningWindowController: NSWindowController {
                                 SDLog("volume \(self.url!.path) is safe do disconnect now")
                                 weakSelf?.openFileWarningDelegate?.tryAgain()
                                 weakSelf?.shouldCheckRunning = false
+                                weakSelf?.close(nil)
+                                return
                             }
                             weakSelf?.processes = processes
                             weakSelf?.processList.reloadData()
@@ -164,7 +166,7 @@ class OpenFileWarningWindowController: NSWindowController {
         }
     }
     
-    @IBAction func close(_ sender: AnyObject) {
+    @IBAction func close(_ sender: AnyObject?) {
         self.shouldCheckRunning = false
         let nc = NSWorkspace.shared().notificationCenter
         nc.removeObserver(self)
