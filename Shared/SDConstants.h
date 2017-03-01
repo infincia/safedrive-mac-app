@@ -13,6 +13,7 @@ FOUNDATION_EXPORT NSString *const SDDefaultServerPath;
 FOUNDATION_EXPORT NSInteger const SDDefaultServerPort;
 
 FOUNDATION_EXPORT NSString *const SDBuildVersionLastKey;
+FOUNDATION_EXPORT NSString *const SDRealmSchemaVersionLastKey;
 
 #pragma mark - Realm constants
 

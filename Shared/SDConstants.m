@@ -11,6 +11,7 @@ NSString *const SDDefaultServerPath = @"/storage";
 NSInteger const SDDefaultServerPort = 22;
 
 NSString *const SDBuildVersionLastKey = @"SDBuildVersionLastKey";
+NSString *const SDRealmSchemaVersionLastKey = @"SDRealmSchemaVersionLastKey";
 
 #pragma mark - Realm constants
 
