@@ -40,6 +40,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     
     let SDBuildVersionLast = UserDefaults.standard.integer(forKey: SDBuildVersionLastKey)
     
+    let SDRealmSchemaVersionLast = UserDefaults.standard.integer(forKey: SDRealmSchemaVersionLastKey)
+    
     var environment: String = "STAGING"
     
     func applicationDidFinishLaunching(_ aNotification: Foundation.Notification) {
@@ -81,7 +83,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         SDLog("SDDK \(SafeDriveSDK.sddk_version)-\(SafeDriveSDK.sddk_channel)")
 
         
-        if CFBundleVersion < SDBuildVersionLast {
+        if SDRealmSchemaVersionLast > Int(SDCurrentRealmSchema) {
             let alert: NSAlert = NSAlert()
             alert.messageText = "Unsupported downgrade"
             alert.addButton(withTitle: "Quit")
@@ -90,6 +92,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             alert.runModal()
             NSApp.terminate(nil)
         }
+        
+        UserDefaults.standard.set(SDCurrentRealmSchema, forKey: SDRealmSchemaVersionLastKey)
+        
         UserDefaults.standard.set(CFBundleVersion, forKey: SDBuildVersionLastKey)
         
         PFMoveToApplicationsFolderIfNecessary()
