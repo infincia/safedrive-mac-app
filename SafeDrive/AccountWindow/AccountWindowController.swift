@@ -255,36 +255,38 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             self.mountController.unmountVolume(name: volumeName, success: { _ -> Void in
                 //
             }, failure: { (url, error) -> Void in
-                DispatchQueue.main.async(execute: {() -> Void in
-                    let message = "SafeDrive could not be unmounted\n\n \(error.localizedDescription)"
-                    SDLog(message)
-
-                    let notification = NSUserNotification()
-
-                    notification.title = "SafeDrive unmount failed"
-                    notification.informativeText = NSLocalizedString("Please close any open files on your SafeDrive", comment: "")
-                  
-                    notification.soundName = NSUserNotificationDefaultSoundName
+                
+                let message = "SafeDrive could not be unmounted\n\n \(error.localizedDescription)"
+                
+                SDLog(message)
+                
+                let notification = NSUserNotification()
+                
+                notification.title = "SafeDrive unmount failed"
+                notification.informativeText = NSLocalizedString("Please close any open files on your SafeDrive", comment: "")
+                
+                notification.soundName = NSUserNotificationDefaultSoundName
+                
+                NSUserNotificationCenter.default.deliver(notification)
+                
+                if askForOpenApps {
+                    let c = OpenFileCheck()
                     
-                    NSUserNotificationCenter.default.deliver(notification)
+                    let processes = c.check(volume: url)
                     
-                    if askForOpenApps {
-                        let c = OpenFileCheck()
-                        
-                        let processes = c.check(volume: url)
-                        
-                        if processes.count <= 0 {
-                            return
-                        }
-                            
+                    if processes.count <= 0 {
+                        return
+                    }
+                    DispatchQueue.main.async(execute: {() -> Void in
                         self.openFileWarning = OpenFileWarningWindowController(delegate: self, url: url, processes: processes)
-            
+                        
                         NSApp.activate(ignoringOtherApps: true)
                         
                         self.openFileWarning!.showWindow(self)
-                        
-                    }
-                })
+                    })
+                    
+                }
+                
             })
         }
         
