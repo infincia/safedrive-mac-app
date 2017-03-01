@@ -10,8 +10,8 @@ import Cocoa
 
 protocol OpenFileWarningDelegate: class {
     func closeApplication(_ process: RunningProcess)
-    func runningProcesses() -> [RunningProcess]?
-    func blockingProcesses(_ url: URL) -> [RunningProcess]?
+    func runningProcesses(success: @escaping ([RunningProcess]) -> Void)
+    func blockingProcesses(_ url: URL,success: @escaping ([RunningProcess]) -> Void)
     func tryAgain()
     func finished()
 }
@@ -134,12 +134,12 @@ class OpenFileWarningWindowController: NSWindowController {
 
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             while self.shouldCheckRunning {
-                if let runningProcesses = weakSelf?.openFileWarningDelegate?.runningProcesses() {
+                weakSelf?.openFileWarningDelegate?.runningProcesses { (runningProcesses) in
                 
                     let runningSet = Set<RunningProcess>(runningProcesses)
                     SDLog("there are \(runningProcesses.count) running processes")
                     
-                    if let blockingProcesses = weakSelf?.openFileWarningDelegate?.blockingProcesses(self.url) {
+                    weakSelf?.openFileWarningDelegate?.blockingProcesses(self.url) { (blockingProcesses) in
                         let blockingSet = Set<RunningProcess>(blockingProcesses)
                         SDLog("volume \(self.url!.lastPathComponent) has \(blockingProcesses.count) blocking processes")
 

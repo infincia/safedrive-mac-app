@@ -21,20 +21,27 @@ extension AccountWindowController: OpenFileWarningDelegate {
                 }
             }
         } else {
-            OpenFileCheck.shared.close(pid: process.pid)
+            let r = RunningProcessCheck()
+            r.close(pid: process.pid)
         }
     }
     
-    func runningProcesses() -> [RunningProcess]? {
+    func runningProcesses(success: @escaping ([RunningProcess]) -> Void) {
         SDLog("checking running processes")
-        
-        return OpenFileCheck.shared.runningProcesses()
+        let r = RunningProcessCheck()
+
+        r.runningProcesses(success: { (runningProcesses) in
+            success(runningProcesses)
+        })
     }
     
-    func blockingProcesses(_ url: URL) -> [RunningProcess]? {
+    func blockingProcesses(_ url: URL, success: @escaping ([RunningProcess]) -> Void) {
         SDLog("checking blocking processes")
-        
-        return OpenFileCheck.shared.check(volume: url)
+        let c = OpenFileCheck()
+
+        c.check(volume: url, success: { (runningProcesses) in
+            success(runningProcesses)
+        })
     }
     
     func tryAgain() {
@@ -266,14 +273,20 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
                     NSUserNotificationCenter.default.deliver(notification)
                     
                     if askForOpenApps {
-                    
-                        //let processes = OpenFileCheck.shared.check(volume: url)
+                        let c = OpenFileCheck()
                         
-                        //self.openFileWarning = OpenFileWarningWindowController(delegate: self, url: url, processes: processes!)
+                        c.check(volume: url) { (runningProcesses) in
+                        
+                            if runningProcesses.count <= 0 {
+                                return
+                            }
+                            
+                            self.openFileWarning = OpenFileWarningWindowController(delegate: self, url: url, processes: runningProcesses)
             
-                        //NSApp.activate(ignoringOtherApps: true)
+                            NSApp.activate(ignoringOtherApps: true)
                         
-                        //self.openFileWarning!.showWindow(self)
+                            self.openFileWarning!.showWindow(self)
+                        }
                     }
                 })
             })

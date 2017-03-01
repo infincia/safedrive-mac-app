@@ -104,6 +104,7 @@
 		AAD44A281D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
 		AAD44A291D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
 		AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
+		AAD69F181E665B4400FAB196 /* RunningProcessCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */; };
 		AAD89BD21E5C197E007D8E82 /* OpenFileWarningWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */; };
 		AAD89BD31E5C197E007D8E82 /* OpenFileWarningWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */; };
 		AAD89BD51E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */; };
@@ -335,6 +336,7 @@
 		AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCRouter.swift; path = SafeDrive/XPCHandlers/ServiceXPCRouter.swift; sourceTree = SOURCE_ROOT; };
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
 		AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCProtocol.swift; path = Shared/AppXPCProtocol.swift; sourceTree = "<group>"; };
+		AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RunningProcessCheck.swift; path = "Open File Warning Window/RunningProcessCheck.swift"; sourceTree = "<group>"; };
 		AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningWindowController.swift; path = "Open File Warning Window/OpenFileWarningWindowController.swift"; sourceTree = "<group>"; };
 		AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OpenFileWarningWindow.xib; path = "Open File Warning Window/OpenFileWarningWindow.xib"; sourceTree = "<group>"; };
 		AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningTableCellView.swift; path = "Open File Warning Window/OpenFileWarningTableCellView.swift"; sourceTree = "<group>"; };
@@ -742,6 +744,7 @@
 				AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */,
 				AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */,
 				AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */,
+				AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */,
 			);
 			name = "Open File Check";
 			sourceTree = "<group>";
@@ -1314,6 +1317,7 @@
 				AA6C5BBD1C9125D4001C2869 /* ServiceManager.swift in Sources */,
 				AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */,
+				AAD69F181E665B4400FAB196 /* RunningProcessCheck.swift in Sources */,
 				AA6E27341D8839DC00038019 /* SyncController.swift in Sources */,
 				AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AA76DC211C8762A9007B320E /* Installer.swift in Sources */,

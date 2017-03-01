@@ -8,7 +8,31 @@
 
 import Foundation
 
-class OpenFileCheck: NSObject {
+public struct RunningProcess {
+    public let pid: Int
+    public let command: String
+    public var icon: NSImage?
+    public var isUserApplication = false
+
+    
+    init(pid: Int, command: String) {
+        self.pid = pid
+        self.command = command
+        self.icon = nil
+    }
+}
+
+extension RunningProcess: Hashable {
+    public var hashValue: Int {
+        return pid.hashValue
+    }
+
+    public static func == (lhs: RunningProcess, rhs: RunningProcess) -> Bool {
+        return lhs.pid == rhs.pid
+    }
+}
+
+class RunningProcessCheck: NSObject {
 
     fileprivate var _processes = [RunningProcess]()
     
@@ -35,27 +59,46 @@ class OpenFileCheck: NSObject {
         super.init()
     }
     
-    public func check(volume: URL, success: @escaping ([RunningProcess]) -> Void) {
-        self.processes = [RunningProcess]()
+    public func close(pid: Int) {
         
-        SDLog("check(): looking for open files on volume: \(volume)")
-        
+        SDLog("Closing non-user application: \(pid)")
         
         let task = Process()
         
-        task.launchPath = "/usr/sbin/lsof"
+        task.launchPath = "/bin/kill"
         
         // MARK: - Set subprocess arguments
         
         var taskArguments = [String]()
         
-        /* basic lsof options */
-        taskArguments.append("-F")
-        taskArguments.append("cfp")
+        /* basic kill options */
+        taskArguments.append("-KILL")
+        taskArguments.append("\(pid)")
         
+        task.arguments = taskArguments
         
-        /* mount location */
-        taskArguments.append(volume.path)
+        // MARK: - Launch subprocess and return
+        
+        task.launch()
+        task.waitUntilExit()
+    }
+    
+    public func runningProcesses(success: @escaping ([RunningProcess]) -> Void) {
+
+        self.processes = [RunningProcess]()
+        
+        SDLog("runningProcesses(): looking for running processes")
+        
+        let task = Process()
+        
+        task.launchPath = "/bin/ps"
+        
+        // MARK: - Set subprocess arguments
+        
+        var taskArguments = [String]()
+        
+        /* basic ps options */
+        taskArguments.append("-c")
         
         task.arguments = taskArguments
         
@@ -65,44 +108,30 @@ class OpenFileCheck: NSObject {
         
         let outputPipeHandle = outputPipe.fileHandleForReading
         
-        var err: NSError?
-        
         outputPipeHandle.readabilityHandler = { (handle) in
             let outputString: String! = String(data: handle.availableData, encoding: String.Encoding.utf8)
+            //    28103        ttys000           0:02.46           -zsh
+            SDLog("runningProcesses(): ps: \(outputString)")
             
-            SDLog("check(): lsof: \(outputString)")
-            
-            if outputString.contains("error") {
-                err = NSError(domain: SDMountErrorDomain, code:SDMountError.unmountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Could not determine open files"])
-                return
-            }
-            
-            let fullRegex = "p([0-9]+)\\nc([0-9A-Za-z]+)\\nf([0-9A-Za-z]+)\\n*"
+            let fullRegex = "([0-9]+)\\s([0-9A-Za-z]+)\\s\\s\\s\\s([0-9\\:\\.]+)\\s([\\w\\-]+)\\n*"
             
             if outputString.isMatched(byRegex: fullRegex) {
                 
                 if let matches = outputString.arrayOfCaptureComponentsMatched(byRegex: fullRegex) as [AnyObject]! {
-                    SDLog("check(): \(matches.count) matches found")
+                    SDLog("runningProcesses(): \(matches.count) matches found")
+                    
                     for capturedValues in matches {
                         let process = capturedValues as! [String]
                         let pid = process[1]
-                        let command = process[2]
+                        let command = process[4]
                         var p = RunningProcess(pid: Int(pid)!, command: command)
                         for app in NSWorkspace.shared().runningApplications {
                             if p.pid == Int(app.processIdentifier) {
                                 p.icon = app.icon
-                                p.isUserApplication = true
                             }
                         }
-                        if p.icon == nil {
-                            let terminalIcon = NSWorkspace.shared().icon(forFile: "/Applications/Utilities/Terminal.app")
-                            p.icon = terminalIcon
-                            p.isUserApplication = false
-                        }
-                        
                         self.processes.append(p)
-                        SDLog("check(): found process: <pid:\(pid), command:\(command)>")
-                        
+                        SDLog("runningProcesses(): found running process: <pid:\(pid), command:\(command)>")
                     }
                 }
             }
@@ -122,7 +151,7 @@ class OpenFileCheck: NSObject {
          */
         task.terminationHandler = { (task: Process) in
             outputPipeHandle.readabilityHandler = nil
-            SDLog("check(): returning \(self.processes.count) processes still open")
+            SDLog("runningProcesses(): task exited, \(self.processes.count) processes running")
             success(self.processes)
         }
         
