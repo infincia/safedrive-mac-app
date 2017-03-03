@@ -52,8 +52,10 @@ extension AccountWindowController: OpenFileWarningDelegate {
 
 extension AccountWindowController: SleepReactor {
     func willSleep(_ notification: Notification) {
-        SDLog("machine going to sleep, unmounting SSHFS")
-        self.disconnectVolume(askForOpenApps: true)
+        if self.mountController.mounted {
+            SDLog("machine going to sleep, unmounting SSHFS")
+            self.disconnectVolume(askForOpenApps: true)
+        }
     }
 }
 
