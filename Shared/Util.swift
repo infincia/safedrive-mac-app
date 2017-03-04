@@ -31,7 +31,9 @@ fileprivate let SDAuthTokenDomainStaging = "staging.session.safedrive.io"
 fileprivate let SDRecoveryKeyDomainProduction = "recovery.safedrive.io"
 fileprivate let SDRecoveryKeyDomainStaging = "staging.recovery.safedrive.io"
 
-
+// use the same UCID on production and staging until we have a reason not to
+fileprivate let SDUniqueClientIDDomainProduction = "ucid.safedrive.io"
+fileprivate let SDUniqueClientIDDomainStaging = "staging.ucid.safedrive.io"
 
 func storageURL() -> URL {
     guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
@@ -108,3 +110,12 @@ func recoveryKeyDomain() -> String {
         return SDRecoveryKeyDomainStaging
     }
 }
+
+func UCIDDomain() -> String {
+    if isProduction() {
+        return SDUniqueClientIDDomainProduction
+    } else {
+        return SDUniqueClientIDDomainStaging
+    }
+}
+
