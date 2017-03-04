@@ -26,7 +26,7 @@ extension AccountWindowController: OpenFileWarningDelegate {
         }
     }
     
-    func runningProcesses() -> [RunningProcess]{
+    func runningProcesses() -> [RunningProcess] {
         SDLog("checking running processes")
         let r = RunningProcessCheck()
 
