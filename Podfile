@@ -12,6 +12,7 @@ def shared_pods
     pod 'RegexKitLite', '~> 4.0'
     pod 'Realm','~> 2.4.1'
     pod 'RealmSwift', '~> 2.4.1'
+    pod 'FontAwesome.swift', :git => 'https://github.com/infincia/FontAwesome.swift', :branch => 'osx'
 end
 
 target 'safedriveaskpass' do
