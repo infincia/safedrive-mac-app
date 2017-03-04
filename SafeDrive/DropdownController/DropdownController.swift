@@ -13,10 +13,6 @@ class DropdownController: NSObject, SDMountStateProtocol, SDAccountProtocol {
     @IBOutlet var preferencesMenuItem: NSMenuItem!
 
     fileprivate var sdk = SafeDriveSDK.sharedSDK
-    
-    fileprivate var mountController = MountController.shared
-    fileprivate var sharedSystemAPI = SDSystemAPI.shared()
-
 
     var sharedAccountController = AccountController.sharedAccountController
 
