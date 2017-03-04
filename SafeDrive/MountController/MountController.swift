@@ -7,6 +7,21 @@ import Foundation
 class MountController: NSObject {
     fileprivate var _mounted = false
     
+    fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue")
+    
+    fileprivate var _mounting = false
+    
+    fileprivate let mountingQueue = DispatchQueue(label: "io.safedrive.mountingQueue")
+    
+    var mountURL: URL?
+    
+    var sshfsTask: Process!
+    
+    var sharedSystemAPI = SDSystemAPI.shared()
+    
+    static let shared = MountController()
+    
+    
     
     var currentVolumeName: String {
         if let volumeName = UserDefaults.standard.string(forKey: SDCurrentVolumeNameKey) {
@@ -39,8 +54,6 @@ class MountController: NSObject {
         }
     }
     
-    fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue")
-    
     var mounted: Bool {
         get {
             var r: Bool?
@@ -56,10 +69,6 @@ class MountController: NSObject {
         }
     }
     
-    fileprivate var _mounting = false
-    
-    fileprivate let mountingQueue = DispatchQueue(label: "io.safedrive.mountingQueue")
-    
     var mounting: Bool {
         get {
             var r: Bool?
@@ -74,14 +83,6 @@ class MountController: NSObject {
             })
         }
     }
-    
-    var mountURL: URL?
-    
-    var sshfsTask: Process!
-    
-    var sharedSystemAPI = SDSystemAPI.shared()
-    
-    static let shared = MountController()
     
     override init() {
         super.init()
