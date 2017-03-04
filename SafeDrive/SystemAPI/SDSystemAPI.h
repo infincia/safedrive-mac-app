@@ -6,9 +6,6 @@
 
 @interface SDSystemAPI : NSObject
 
-@property (nonatomic, readonly) NSString * _Nonnull currentVolumeName;
-@property (nonatomic) BOOL mountAtLaunch;
-
 +(SDSystemAPI * _Nonnull)sharedAPI;
 
 -(NSString * _Nullable)machineSerialNumber;
@@ -16,14 +13,6 @@
 -(NSString * _Nullable)en0MAC;
 
 -(NSString * _Nullable)currentOSVersion;
-
--(NSDictionary * _Nullable)detailsForMount:(NSURL * _Nonnull)mountURL;
-
--(BOOL)checkForMountedVolume:(NSURL * _Nonnull)mountURL;
-
--(void)checkForMountedVolume:(NSURL * _Nonnull)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock;
-
--(void)ejectMount:(NSURL * _Nonnull)mountURL success:(SDSuccessBlock _Nonnull)success failure:(SDFailureBlock _Nonnull)failure;
 
 -(BOOL)autostart;
 

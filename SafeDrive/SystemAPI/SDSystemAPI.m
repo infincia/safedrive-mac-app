@@ -27,8 +27,6 @@
 @end
 
 @implementation SDSystemAPI
-@dynamic currentVolumeName;
-@dynamic mountAtLaunch;
 
 - (instancetype)init {
     self = [super init];
@@ -113,77 +111,6 @@
     
     NSString *systemVersion = [systemVersionDictionary objectForKey:@"ProductVersion"];
     return systemVersion;
-}
-
--(NSString * _Nonnull)currentVolumeName {
-    NSString *volumeName = [[NSUserDefaults standardUserDefaults] objectForKey:SDCurrentVolumeNameKey];
-    if (!volumeName) {
-        volumeName = SDDefaultVolumeName;
-    }
-    return volumeName;
-}
-
--(BOOL)mountAtLaunch {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:SDMountAtLaunchKey];
-}
-
--(void)setMountAtLaunch:(BOOL)mountAtLaunch {
-    [[NSUserDefaults standardUserDefaults] setBool:mountAtLaunch forKey:SDMountAtLaunchKey];
-}
-
--(NSDictionary * _Nullable)detailsForMount:(NSURL * _Nonnull)mountURL {
-    NSDictionary *mountpointInfo;
-    NSError *error;
-    mountpointInfo = [[NSFileManager defaultManager] attributesOfFileSystemForPath:mountURL.path error:&error];
-    if (error) {
-#ifdef DEBUG
-        NSLog(@"Mount details error: %@", error.localizedDescription);
-#endif
-    }
-    return mountpointInfo;
-}
-
-
--(BOOL)checkForMountedVolume:(NSURL * _Nonnull)mountURL {
-    NSArray *mountedVolumes = [[NSFileManager defaultManager] mountedVolumeURLsIncludingResourceValuesForKeys:@[NSURLVolumeNameKey] options:NSVolumeEnumerationSkipHiddenVolumes];
-    for (NSURL *mountedVolumeURL in mountedVolumes) {
-        if ([mountedVolumeURL.path isEqualToString:mountURL.path]) {
-            return YES;
-        }
-    }
-    return NO;
-}
-
--(void)checkForMountedVolume:(NSURL * _Nonnull)mountURL withTimeout:(NSTimeInterval)timeout success:(SDSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
-    NSAssert([NSThread currentThread] == [NSThread mainThread], @"Mount check called on background thread");
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (NSInteger remainingTime = timeout; remainingTime > 0; remainingTime--) {
-            if ([self checkForMountedVolume:mountURL]) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    successBlock();
-                });
-                return;
-            }
-            [NSThread sleepForTimeInterval:1];
-        }
-        NSError *volumeError = [NSError errorWithDomain:SDErrorDomain code:SDSSHErrorTimeout userInfo:@{NSLocalizedDescriptionKey: @"Volume mount timeout"}];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            failureBlock(volumeError);
-        });
-    });
-}
-
-
-
-
--(void)ejectMount:(NSURL * _Nonnull)mountURL success:(SDSuccessBlock _Nonnull)successBlock failure:(SDFailureBlock _Nonnull)failureBlock {
-    NSError *error;
-    BOOL ejectSuccess = [[NSWorkspace sharedWorkspace] unmountAndEjectDeviceAtURL:mountURL error:&error];
-    if (ejectSuccess && successBlock) successBlock();
-    else {
-        failureBlock(error);
-    }
 }
 
 -(BOOL)autostart {

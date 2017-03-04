@@ -132,12 +132,12 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             // only mount SSHFS automatically if the user set it to automount or clicked the button, in which case sender will
             // be the NSButton in the account window labeled "next"
             
-            if self.sharedSystemAPI.mountAtLaunch || sender is NSButton {
-                let mountURL = self.mountController.mountURL(forVolumeName: self.sharedSystemAPI.currentVolumeName)
-                if !self.sharedSystemAPI.check(forMountedVolume: mountURL) {
-                    //self.showWindow(nil)
+            if self.mountController.automount || sender is NSButton {
+                self.mountController.checkMount(at: self.mountController.currentMountURL, timeout: 30, mounted: {
+
+                }, notMounted: {
                     self.connectVolume()
-                }
+                })
             }
         }, failure: {(apiError: SDKError) -> Void in
             switch apiError.kind {
@@ -205,7 +205,6 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         let displayMessage = NSError(domain: SDErrorDomain, code: SDErrorNone, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Mounting SafeDrive", comment: "String informing the user their safedrive is being mounted")])
         self.displayError(displayMessage, forDuration: 120)
         self.spinner.startAnimation(self)
-        let volumeName: String = UserDefaults.standard.object(forKey: SDCurrentVolumeNameKey) as? String ?? SDDefaultVolumeName
         
         var urlComponents = URLComponents()
         urlComponents.user = self.accountController.internalUserName
@@ -214,20 +213,21 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
         urlComponents.port = Int(self.accountController.remotePort!)
         let sshURL: URL = urlComponents.url!
         
-        self.mountController.startMountTask(volumeName: volumeName, sshURL: sshURL, success: { mountURL in
+        self.mountController.startMountTask(sshURL: sshURL, success: { mountURL in
             
             /*
              now check for a successful mount. if after 30 seconds there is no volume
              mounted, it is a fair bet that an error occurred in the meantime
              */
             
-            self.sharedSystemAPI.check(forMountedVolume: mountURL, withTimeout: 30, success: {() -> Void in
+            self.mountController.checkMount(at: mountURL, timeout: 30, mounted: {
                 NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                 self.resetErrorDisplay()
                 self.spinner.stopAnimation(self)
                 self.mountController.mounting = false
-            }, failure: {(error) -> Void in
-                SDLog("SafeDrive checkForMountedVolume  failure in account window")
+            }, notMounted: {
+                SDLog("SafeDrive checkForMountedVolume failure in account window")
+                let error = NSError(domain:SDErrorDomain, code:SDSSHError.timeout.rawValue, userInfo:[NSLocalizedDescriptionKey: "Volume mount timeout"])
                 self.displayError(error as NSError, forDuration: 10)
                 self.spinner.stopAnimation(self)
                 self.mountController.mounting = false
@@ -241,7 +241,7 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
             self.spinner.stopAnimation(self)
             self.mountController.mounting = false
             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
-            self.mountController.unmountVolume(name: volumeName, success: { _ in
+            self.mountController.unmount(success: { _ in
                 //
             }, failure: { (_, _) in
                 //
@@ -251,10 +251,10 @@ class AccountWindowController: NSWindowController, SDMountStateProtocol, SDVolum
     
         
     fileprivate func disconnectVolume(askForOpenApps: Bool) {
-        let volumeName: String = self.sharedSystemAPI.currentVolumeName
+        let volumeName: String = self.mountController.currentVolumeName
         SDLog("Dismounting volume: %@", volumeName)
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async {
-            self.mountController.unmountVolume(name: volumeName, success: { _ -> Void in
+            self.mountController.unmount(success: { _ -> Void in
                 //
             }, failure: { (url, error) -> Void in
                 

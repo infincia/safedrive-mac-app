@@ -7,6 +7,38 @@ import Foundation
 class MountController: NSObject {
     fileprivate var _mounted = false
     
+    
+    var currentVolumeName: String {
+        if let volumeName = UserDefaults.standard.string(forKey: SDCurrentVolumeNameKey) {
+            return volumeName
+        }
+        return SDDefaultVolumeName
+    }
+    
+    var currentMountURL: URL {
+        let home = NSHomeDirectory()
+        let volumesDirectoryURL = URL(fileURLWithPath: home, isDirectory:true)
+        let mountURL = volumesDirectoryURL.appendingPathComponent(self.currentVolumeName)
+        return mountURL
+    }
+    
+    var mountDetails: [FileAttributeKey: Any]? {
+        do {
+            return try FileManager.default.attributesOfFileSystem(forPath: self.currentMountURL.path)
+        } catch {
+            return nil
+        }
+    }
+    
+    var automount: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: SDMountAtLaunchKey)
+        }
+        set(newValue) {
+            UserDefaults.standard.set(newValue, forKey: SDMountAtLaunchKey)
+        }
+    }
+    
     fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue")
     
     var mounted: Bool {
@@ -43,7 +75,7 @@ class MountController: NSObject {
         }
     }
     
-    var mountURL: URL!
+    var mountURL: URL?
     
     var sshfsTask: Process!
     
@@ -58,45 +90,69 @@ class MountController: NSObject {
         mountStateLoop()
     }
     
-    func unmountVolume(name volumeName: String!, success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
+    func checkMount(at url: URL) -> Bool {
+        if let mountedVolumes = FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: [.volumeNameKey], options: .skipHiddenVolumes) {
+            for mountedVolumeURL in mountedVolumes {
+                if mountedVolumeURL.path == url.path {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    func checkMount(at url: URL, timeout: TimeInterval, mounted mountedBlock: @escaping () -> Void, notMounted notMountedBlock: @escaping () -> Void) {
+        assert(Thread.current == Thread.main, "Mount check called on background thread")
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+            let start_time = Date()
+            
+            while Date().timeIntervalSince(start_time) < timeout {
+                if self.checkMount(at: url) {
+                    DispatchQueue.main.async {
+                        mountedBlock()
+                        return
+                    }
+                }
+                Thread.sleep(forTimeInterval: 1)
+            }
+            DispatchQueue.main.async {
+                notMountedBlock()
+            }
+        }
+    }
+    
+    func unmount(success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
         
-        let mountURL = self.mountURL(forVolumeName: volumeName)
-        weak var weakSelf: MountController? = self
-        self.sharedSystemAPI.ejectMount(mountURL, success: {
-            successBlock(mountURL)
-            weakSelf?.mountURL = nil
-            NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object:nil)
-        }, failure: { (error: Error) in
-            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
-                failureBlock(mountURL, error)
-            })
-        })
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+            do {
+                try NSWorkspace.shared().unmountAndEjectDevice(at: self.currentMountURL)
+                DispatchQueue.main.async {
+                    self.mountURL = nil
+                    NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object:nil)
+                    successBlock(self.currentMountURL)
+                }
+            } catch let error as NSError {
+                DispatchQueue.main.async {
+                    failureBlock(self.currentMountURL, error)
+                }
+            }
+        }
+
     }
-    
-    func mountURL(forVolumeName name: String) -> URL {
-        let home = NSHomeDirectory()
-        let volumesDirectoryURL = URL(fileURLWithPath: home, isDirectory:true)
-        let mountURL = volumesDirectoryURL.appendingPathComponent(name)
-        return mountURL
-    }
-    
     
     // MARK: warning Needs slight refactoring
     func mountStateLoop() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             while true {
-                let volumeName = self.sharedSystemAPI.currentVolumeName
-                let mountURL = self.mountURL(forVolumeName: volumeName)
-                let mountCheck = self.sharedSystemAPI.check(forMountedVolume: mountURL)
+                let mountCheck = self.checkMount(at: self.currentMountURL)
                 
                 DispatchQueue.main.sync(execute: {() -> Void in
                     self.mounted = mountCheck
                 })
                 
                 if self.mounted {
-                    let mountDetails = self.sharedSystemAPI.details(forMount: mountURL)
                     DispatchQueue.main.sync(execute: {() -> Void in
-                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object:mountDetails)
+                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object:self.mountDetails)
                         NotificationCenter.default.post(name: Notification.Name.mounted, object:nil)
                     })
                 } else {
@@ -111,11 +167,12 @@ class MountController: NSObject {
         })
     }
     
-    func startMountTask(volumeName: String, sshURL: URL, success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
+    func startMountTask(sshURL: URL, success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
         assert(Thread.current == Thread.main, "SSHFS task started from background thread")
         
-        let mountURL = self.mountURL(forVolumeName: volumeName)
-        
+        let mountURL = self.currentMountURL
+        let volumeName = self.currentVolumeName
+
         /*
          This is mostly insurance against running 2 sshfs processes at once, or
          double-mounting. Disabling the login button when a mount succeeds should
