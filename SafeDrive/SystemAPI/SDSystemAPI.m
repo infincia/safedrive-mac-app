@@ -143,12 +143,12 @@
     return true;
 }
 
--(NSDictionary<NSString *, NSString *>* _Nullable)retrieveCredentialsFromKeychainForService:(NSString * _Nonnull)service {
+-(NSDictionary<NSString *, NSString *>* _Nullable)retrieveCredentialsFromKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nullable)account {
     NSDictionary *credentials = nil;
     NSError *error;
     
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
-                                                                                    account:nil
+                                                                                    account:account
                                                                                  attributes:nil
                                                                                       error:&error];
     if (error) {
@@ -163,7 +163,7 @@
 -(BOOL)insertCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password error:(NSError * _Nullable * _Nullable)error {
     
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
-                                                                                    account:nil
+                                                                                    account:account
                                                                                  attributes:nil
                                                                                       error:NULL];
     if (keychainItem) {
@@ -198,29 +198,10 @@
     return true;
 }
 
--(BOOL)removeCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account error:(NSError * _Nullable * _Nullable)error {
+-(BOOL)removeCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nullable)account error:(NSError * _Nullable * _Nullable)error {
     
     MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
                                                                                     account:account
-                                                                                 attributes:nil
-                                                                                      error:NULL];
-    NSError *keychainRemoveError;
-    [keychainItem removeFromKeychainWithError:&keychainRemoveError];
-    if (keychainRemoveError) {
-        CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainRemoveError.code, NULL);
-        NSString *keychainErrorString = (id) CFBridgingRelease(err);
-        NSLog(@"Keychain remove error: %@, query: %@", keychainErrorString, keychainRemoveError.userInfo[MCSMKeychainItemQueryKey]);
-        *error = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
-        return false;
-    }
-    
-    return true;
-}
-
--(BOOL)removeCredentialsInKeychainForService:(NSString * _Nonnull)service error:(NSError * _Nullable * _Nullable)error {
-    
-    MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
-                                                                                    account:nil
                                                                                  attributes:nil
                                                                                       error:NULL];
     NSError *keychainRemoveError;

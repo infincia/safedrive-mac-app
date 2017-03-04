@@ -20,12 +20,10 @@
 
 -(BOOL)disableAutostartWithError:(NSError * _Nullable * _Nullable)error;
 
--(NSDictionary<NSString *, NSString *>* _Nullable)retrieveCredentialsFromKeychainForService:(NSString * _Nonnull)service;
+-(NSDictionary<NSString *, NSString *>* _Nullable)retrieveCredentialsFromKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nullable)account;
 
 -(BOOL)insertCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password error:(NSError * _Nullable * _Nullable)error;
 
--(BOOL)removeCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account error:(NSError * _Nullable * _Nullable)error;
-
--(BOOL)removeCredentialsInKeychainForService:(NSString * _Nonnull)service error:(NSError * _Nullable * _Nullable)error;
+-(BOOL)removeCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nullable)account error:(NSError * _Nullable * _Nullable)error;
 
 @end

@@ -764,7 +764,7 @@ extension PreferencesWindowController: SDAccountProtocol {
         self.folders = folders
         
         
-        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
+        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain(), account: nil)
         let recoveryPhrase = recoveryCredentials?["password"]
 
         
@@ -1202,7 +1202,7 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
             })
             
         }, success: {
-            let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain())
+            let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain(), account: nil)
             
             if let recoveryPhrase = recoveryCredentials?["password"] {
                 self.recoveryPhraseField.stringValue = recoveryPhrase

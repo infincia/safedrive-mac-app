@@ -51,7 +51,7 @@ class AccountController: NSObject {
     
     override init() {
         super.init()
-        if let credentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: accountCredentialDomain()) {
+        if let credentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: accountCredentialDomain(), account: nil) {
             self.email = credentials["account"]
             self.password = credentials["password"]
             
@@ -80,7 +80,7 @@ class AccountController: NSObject {
          complicates things and will take some planning to do.
          
          */
-        if let storedCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: accountCredentialDomain()),
+        if let storedCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: accountCredentialDomain(), account: nil),
             let storedEmail = storedCredentials["account"] {
             if storedEmail != email {
                 // reset SyncFolder and SyncTask in database, user has changed since last sign-in
@@ -203,9 +203,9 @@ class AccountController: NSObject {
     
     func signOut() {
         do {
-            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: tokenDomain())
-            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: sshCredentialDomain())
-            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: accountCredentialDomain())
+            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: tokenDomain(), account: nil)
+            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: sshCredentialDomain(), account: nil)
+            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: accountCredentialDomain(), account: nil)
         } catch let error as NSError {
             SDLog("warning: failed to remove keychain credentials: \(error.localizedDescription)")
         }
