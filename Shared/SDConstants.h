@@ -23,6 +23,7 @@ FOUNDATION_EXPORT NSUInteger const SDCurrentRealmSchema;
 
 FOUNDATION_EXPORT NSString *const SDCurrentVolumeNameKey;
 FOUNDATION_EXPORT NSString *const SDMountAtLaunchKey;
+FOUNDATION_EXPORT NSString *const SDWelcomeShownKey;
 
 NS_ASSUME_NONNULL_END
 

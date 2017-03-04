@@ -21,6 +21,7 @@ NSUInteger const SDCurrentRealmSchema = 13;
 
 NSString *const SDCurrentVolumeNameKey = @"currentVolumeName";
 NSString *const SDMountAtLaunchKey = @"mountAtLaunch";
+NSString *const SDWelcomeShownKey = @"welcomeShown";
 
 #pragma mark - Errors
 
