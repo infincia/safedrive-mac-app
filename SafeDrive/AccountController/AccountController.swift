@@ -27,6 +27,7 @@ class AccountController: NSObject {
     
     var remoteHost: String?
     var remotePort: UInt16?
+    var currentUser: User?
     
     var hasCredentials: Bool = false
     
