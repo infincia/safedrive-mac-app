@@ -767,11 +767,8 @@ extension PreferencesWindowController: SDAccountProtocol {
         
         self.folders = folders
         
-        
-        let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain(), account: nil)
-        let recoveryPhrase = recoveryCredentials?["password"]
-
-        
+        let recoveryPhrase = try? self.sdk.getKeychainItem(withUser: currentUser.email, service: recoveryKeyDomain())
+                
         self.checkRecoveryPhrase(recoveryPhrase, success: {
             self.syncListView.reloadData()
         }, failure: { (error) in
@@ -1213,9 +1210,7 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
             })
             
         }, success: {
-            let recoveryCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: recoveryKeyDomain(), account: nil)
-            
-            if let recoveryPhrase = recoveryCredentials?["password"] {
+            if let recoveryPhrase = try? self.sdk.getKeychainItem(withUser: email, service: recoveryKeyDomain()) {
                 self.recoveryPhraseField.stringValue = recoveryPhrase
                 self.copyRecoveryPhraseButton.isEnabled = true
             } else {
@@ -1238,7 +1233,7 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
             return
         }
         do {
-            try SDSystemAPI.shared().insertCredentialsInKeychain(forService: recoveryKeyDomain(), account: email, password: phrase)
+            try self.sdk.setKeychainItem(withUser: email, service: recoveryKeyDomain(), secret: phrase)
         } catch let keychainError as NSError {
             SDErrorHandlerReport(keychainError)
             failure(keychainError)
