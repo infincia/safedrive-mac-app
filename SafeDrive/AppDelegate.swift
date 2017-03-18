@@ -138,6 +138,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.serviceRouter = ServiceXPCRouter()
         })
         
+        self.accountController = AccountController.sharedAccountController
+        
         self.preferencesWindowController = PreferencesWindowController()
         _ = self.preferencesWindowController!.window!
         
@@ -271,8 +273,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
             }
             
-            
-            self.accountController = AccountController.sharedAccountController
             
             self.accountWindowController = AccountWindowController()
             _ = self.accountWindowController.window!
