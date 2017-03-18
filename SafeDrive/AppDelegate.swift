@@ -211,7 +211,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     }
     
     func applicationShouldFinishConfiguration(notification: Foundation.Notification) {
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.global(priority: .default).async {
             
             let groupURL = storageURL()
 
@@ -290,7 +290,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
             }
             
-        })
+        }
     }
     
     // MARK: SDAccountProtocol
