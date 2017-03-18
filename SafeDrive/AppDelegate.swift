@@ -291,6 +291,9 @@ extension AppDelegate: SDApplicationControlProtocol {
 
             }
             
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name.applicationDidConfigureRealm, object: nil)
+            }
         }
     }
     
