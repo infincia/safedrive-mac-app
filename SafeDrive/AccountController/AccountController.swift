@@ -11,7 +11,10 @@ import SafeDriveSDK
 
 struct User {
     let email: String
+    let password: String
     let uniqueClientId: String
+    let sshUsername: String
+
 }
 
 class AccountController: NSObject {
