@@ -126,6 +126,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         self.welcomeWindowController = WelcomeWindowController()
         _ = self.welcomeWindowController!.window!
         
+        self.syncScheduler = SyncScheduler.sharedSyncScheduler
+
     }
     
     
@@ -262,7 +264,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 self.serviceManager.loadService()
                 self.serviceRouter = ServiceXPCRouter()
             })
-            self.syncScheduler = SyncScheduler.sharedSyncScheduler
             
             self.dropdownMenuController = DropdownController()
             
