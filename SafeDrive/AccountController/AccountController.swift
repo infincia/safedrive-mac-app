@@ -32,13 +32,6 @@ class AccountController: NSObject {
     var remotePort: UInt16?
     var currentUser: User?
     
-    var hasCredentials: Bool {
-        if let currentUser = try? self.sdk.getKeychainItem(withUser: "currentuser", service: currentUserDomain()),
-            let _ = try? self.sdk.getKeychainItem(withUser: currentUser, service: accountCredentialDomain()) {
-                return true
-            }
-        return false
-    }
     
     fileprivate let accountQueue = DispatchQueue(label: "io.safedrive.accountQueue")
     
