@@ -748,6 +748,7 @@ extension PreferencesWindowController: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
         guard let currentUser = notification.object as? User else {
+            SDLog("API contract invalid: didSignIn in PreferencesWindowController")
             return
         }
         let uniqueClientID = currentUser.uniqueClientId
