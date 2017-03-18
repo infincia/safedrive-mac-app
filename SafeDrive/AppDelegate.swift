@@ -302,9 +302,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     // MARK: SDAccountProtocol
     
     func didSignIn(notification: Foundation.Notification) {
-        guard let uniqueClientID = notification.object as? String else {
+        guard let currentUser = notification.object as? User else {
             return
         }
+        
+        let uniqueClientID = currentUser.uniqueClientId
+        
         assert(Thread.isMainThread, "Not main thread!!!")
         self.syncScheduler!.running = true
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async { () -> Void in

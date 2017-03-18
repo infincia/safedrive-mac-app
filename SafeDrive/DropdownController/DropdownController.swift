@@ -73,6 +73,9 @@ class DropdownController: NSObject, SDMountStateProtocol, SDAccountProtocol {
     // MARK: SDAccountProtocol
     
     func didSignIn(notification: Notification) {
+        guard let currentUser = notification.object as? User else {
+            return
+        }
         self.enableMenuItems(true)
     }
     

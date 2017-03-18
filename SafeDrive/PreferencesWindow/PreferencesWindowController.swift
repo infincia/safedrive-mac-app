@@ -745,9 +745,10 @@ extension PreferencesWindowController: SDAccountProtocol {
     // MARK: SDAccountProtocol
     
     func didSignIn(notification: Foundation.Notification) {
-        guard let uniqueClientID = notification.object as? String else {
+        guard let currentUser = notification.object as? User else {
             return
         }
+        let uniqueClientID = currentUser.uniqueClientId
         self.uniqueClientID = uniqueClientID
         
                 

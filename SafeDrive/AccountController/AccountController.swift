@@ -147,6 +147,7 @@ class AccountController: NSObject {
             self.remotePort = status.port
             
             self.remoteHost = status.host
+            let internalUserName = status.userName
             
             do {
                 try self.sdk.setKeychainItem(withUser: email, service: sshCredentialDomain(), secret: internalUserName)
@@ -203,7 +204,10 @@ class AccountController: NSObject {
                     // SDErrorHandlerReport(apiError);
                 }
             })
-            NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: ucid)
+            
+            let currentUser = User(email: email, password: password, uniqueClientId: ucid, sshUsername: internalUserName)
+            
+            NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: currentUser)
             successBlock()
             
         }, failure: { (error) in
