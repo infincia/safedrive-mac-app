@@ -62,6 +62,23 @@ class AccountController: NSObject {
     
     fileprivate var _signedIn: Bool = false
     
+    var signingIn: Bool {
+        get {
+            var s: Bool = false // sane default, signing in twice due to "false negative" doesn't hurt anything
+            accountQueue.sync {
+                s = self._signingIn
+            }
+            return s
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._signingIn = newValue
+            })
+        }
+    }
+    
+    fileprivate var _signingIn: Bool = false
+    
     fileprivate var sharedSystemAPI = SDSystemAPI.shared()    
     
     override init() {
