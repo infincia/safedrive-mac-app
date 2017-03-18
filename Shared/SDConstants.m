@@ -27,6 +27,7 @@ NSString *const SDWelcomeShownKey = @"welcomeShown";
 
 NSString *const SDErrorDomain = @"io.safedrive";
 NSString *const SDErrorUIDomain = @"io.safedrive.ui";
+NSString *const SDErrorInstallationDomain = @"io.safedrive.installation";
 NSString *const SDErrorSyncDomain = @"io.safedrive.sync";
 NSString *const SDErrorSSHFSDomain = @"io.safedrive.sshfs";
 NSString *const SDErrorAccountDomain = @"io.safedrive.account";
@@ -62,6 +63,19 @@ NSString * _Nonnull SDErrorToString(NSError *error) {
 
      }
     
+    switch ((enum SDInstallationError)error.code) {
+        case SDInstallationErrorUnknown:
+            return @"SDInstallationErrorUnknown";
+        case SDInstallationErrorServiceDeployment:
+            return @"SDInstallationErrorServiceDeployment";
+        case SDInstallationErrorCLIDeployment:
+            return @"SDInstallationErrorCLIDeployment";
+        case SDInstallationErrorFuseDeployment:
+            return @"SDInstallationErrorFuseDeployment";
+        case SDInstallationErrorDirectoryMissing:
+            return @"SDInstallationErrorDirectoryMissing";
+            
+    }
      
      switch ((enum SDSystemError)error.code) {
          case SDSystemErrorUnknown:

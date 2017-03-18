@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT NSString *const SDErrorDomain;
 FOUNDATION_EXPORT NSString *const SDErrorUIDomain;
+FOUNDATION_EXPORT NSString *const SDErrorInstallationDomain;
 FOUNDATION_EXPORT NSString *const SDErrorSyncDomain;
 FOUNDATION_EXPORT NSString *const SDErrorSSHFSDomain;
 FOUNDATION_EXPORT NSString *const SDErrorAccountDomain;
@@ -171,6 +172,16 @@ typedef NS_ENUM(NSInteger, SDDatabaseError) {
     SDDatabaseErrorOpenFailed               = 6001,
     SDDatabaseErrorMigrationFailed          = 6002,
     SDDatabaseErrorWriteFailed              = 6003
+};
+
+#pragma mark - Installation related errors
+
+typedef NS_ENUM(NSInteger, SDInstallationError) {
+    SDInstallationErrorUnknown                   = -7000,
+    SDInstallationErrorServiceDeployment         = 7001,
+    SDInstallationErrorCLIDeployment             = 7002,
+    SDInstallationErrorFuseDeployment            = 7003,
+
 };
 
 #pragma mark - Sync state
