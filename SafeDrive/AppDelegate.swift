@@ -143,6 +143,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         self.preferencesWindowController = PreferencesWindowController()
         _ = self.preferencesWindowController!.window!
         
+        let markdownURL = Bundle.main.url(forResource: "Changelog.md", withExtension: nil)
+        
+        let data = FileManager.default.contents(atPath: markdownURL!.path)
+        
+        let markdown = String(data: data!, encoding: String.Encoding.utf8)!
+        
+        self.aboutWindowController = DCOAboutWindowController()
+        self.aboutWindowController.useTextViewForAcknowledgments = true
+        self.aboutWindowController.appCredits = TSMarkdownParser.standard().attributedString(fromMarkdown: markdown)
+        let sddk = "\(SafeDriveSDK.sddk_version)-\(SafeDriveSDK.sddk_channel)"
+        
+        let version = "\(self.CFBundleShortVersionString)-\(self.environment) (SDDK \(sddk))"
+        
+        self.aboutWindowController.appVersion = version
+        let websiteURLPath: String = "https://\(webDomain())"
+        self.aboutWindowController.appWebsiteURL = URL(string: websiteURLPath)!
+        
+        NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAboutWindow, object: nil)
     }
     
     
@@ -278,30 +296,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             _ = self.accountWindowController.window!
             
             
-            let markdownURL = Bundle.main.url(forResource: "Changelog.md", withExtension: nil)
-            
-            let data = FileManager.default.contents(atPath: markdownURL!.path)
-            
-            let markdown = String(data: data!, encoding: String.Encoding.utf8)!
-            
-            
-            self.aboutWindowController = DCOAboutWindowController()
-            self.aboutWindowController.useTextViewForAcknowledgments = true
-            self.aboutWindowController.appCredits = TSMarkdownParser.standard().attributedString(fromMarkdown: markdown)
-            let sddk = "\(SafeDriveSDK.sddk_version)-\(SafeDriveSDK.sddk_channel)"
-
-            let version = "\(self.CFBundleShortVersionString)-\(self.environment) (SDDK \(sddk))"
-
-            self.aboutWindowController.appVersion = version
-            let websiteURLPath: String = "https://\(webDomain())"
-            self.aboutWindowController.appWebsiteURL = URL(string: websiteURLPath)!
             
             if self.accountController.hasCredentials {
                 // we need to sign in automatically if at all possible, even if we don't need to automount
                 // we need a session token and account details in order to support sync
                 self.accountWindowController.signIn(self)
             }
-            NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAboutWindow, object: nil)
         })
     }
     
