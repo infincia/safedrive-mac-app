@@ -268,10 +268,8 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     @IBAction func loadAccountPage(_ sender: AnyObject) {
         // Open the safedrive account page in users default browser
-        if let _ = self.accountController.email,
-            let url = URL(string: "https://\(webDomain())/#/en/dashboard/account/details") {
-            NSWorkspace.shared().open(url)
-        }
+        let url = URL(string: "https://\(webDomain())/#/en/dashboard/account/details")
+        NSWorkspace.shared().open(url!)
     }
     
     @IBAction func addSyncFolder(_ sender: AnyObject) {
