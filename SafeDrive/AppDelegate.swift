@@ -128,6 +128,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         
         self.syncScheduler = SyncScheduler.sharedSyncScheduler
 
+        self.dropdownMenuController = DropdownController()
+        
     }
     
     
@@ -265,7 +267,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 self.serviceRouter = ServiceXPCRouter()
             })
             
-            self.dropdownMenuController = DropdownController()
             
             self.accountController = AccountController.sharedAccountController
             
