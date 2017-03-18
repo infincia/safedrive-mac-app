@@ -17,7 +17,7 @@ import Sparkle
 import SafeDriveSDK
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol, SDAccountProtocol, CrashlyticsDelegate {
+class AppDelegate: NSObject {
     fileprivate var dropdownMenuController: DropdownController!
     fileprivate var preferencesWindowController: PreferencesWindowController?
     
@@ -42,7 +42,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     let SDRealmSchemaVersionLast = UserDefaults.standard.integer(forKey: SDRealmSchemaVersionLastKey)
     
     var environment: String = "STAGING"
-    
+}
+
+extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Foundation.Notification) {
         UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true])
         Crashlytics.sharedInstance().delegate = self
@@ -168,10 +170,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: nil)
         
     }
-    
-    // MARK: SDApplicationControlProtocol methods
-    
-    
+}
+
+extension AppDelegate: SDApplicationControlProtocol {
     func applicationShouldOpenAccountWindow(notification: Foundation.Notification) {
         DispatchQueue.main.async(execute: {() -> Void in
             NSApp.activate(ignoringOtherApps: true)
@@ -293,7 +294,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         }
     }
     
-    // MARK: SDAccountProtocol
+}
+
+extension AppDelegate: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
         guard let currentUser = notification.object as? User else {
@@ -327,9 +330,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
     func didReceiveAccountStatus(notification: Foundation.Notification) {
         
     }
-    
-    // MARK: CrashlyticsDelegate
-    
+}
+
+extension AppDelegate: CrashlyticsDelegate {
     func crashlyticsDidDetectReport(forLastExecution report: CLSReport, completionHandler: @escaping (Bool) -> Void) {
         //
         // always submit the report to Crashlytics
