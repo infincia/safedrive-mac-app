@@ -130,6 +130,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
         self.dropdownMenuController = DropdownController()
         
+        self.preferencesWindowController = PreferencesWindowController()
+        _ = self.preferencesWindowController!.window!
+        
     }
     
     
@@ -273,8 +276,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             self.accountWindowController = AccountWindowController()
             _ = self.accountWindowController.window!
             
-            self.preferencesWindowController = PreferencesWindowController()
-            _ = self.preferencesWindowController!.window!
             
             let markdownURL = Bundle.main.url(forResource: "Changelog.md", withExtension: nil)
             
