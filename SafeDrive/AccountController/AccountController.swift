@@ -57,9 +57,11 @@ class AccountController: NSObject {
     
     override init() {
         super.init()
-        if let credentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: accountCredentialDomain(), account: nil) {
-            self.email = credentials["account"]
-            self.password = credentials["password"]
+        
+        if let currentUser = try? self.sdk.getKeychainItem(withUser: "currentuser", service: currentUserDomain()),
+            let password = try? self.sdk.getKeychainItem(withUser: currentUser, service: accountCredentialDomain()) {
+            self.email = currentUser
+            self.password = password
             
             Crashlytics.sharedInstance().setUserEmail(self.email)
             
@@ -86,9 +88,9 @@ class AccountController: NSObject {
          complicates things and will take some planning to do.
          
          */
-        if let storedCredentials = self.sharedSystemAPI.retrieveCredentialsFromKeychain(forService: accountCredentialDomain(), account: nil),
-            let storedEmail = storedCredentials["account"] {
-            if storedEmail != email {
+        if let currentUser = try? self.sdk.getKeychainItem(withUser: "currentuser", service: currentUserDomain()),
+            let _ = try? self.sdk.getKeychainItem(withUser: currentUser, service: accountCredentialDomain()) {
+            if currentUser != email {
                 // reset SyncFolder and SyncTask in database, user has changed since last sign-in
                 guard let realm = try? Realm() else {
                     SDLog("failed to create realm!!!")
@@ -111,7 +113,7 @@ class AccountController: NSObject {
         }
         
         do {
-            try self.sharedSystemAPI.insertCredentialsInKeychain(forService: accountCredentialDomain(), account: email, password: password)
+            try self.sdk.setKeychainItem(withUser: email, service: accountCredentialDomain(), secret: password)
         } catch let keychainError as NSError {
             let e = SDKError(message: keychainError.localizedDescription, kind: .KeychainError)
             
@@ -144,7 +146,7 @@ class AccountController: NSObject {
             self.remoteHost = status.host
             
             do {
-                try self.sharedSystemAPI.insertCredentialsInKeychain(forService: sshCredentialDomain(), account: self.internalUserName!, password: self.password!)
+                try self.sdk.setKeychainItem(withUser: email, service: sshCredentialDomain(), secret: internalUserName)
             } catch let keychainError as NSError {
                 let e = SDKError(message: keychainError.localizedDescription, kind: .KeychainError)
 
@@ -208,13 +210,35 @@ class AccountController: NSObject {
     }
     
     func signOut() {
-        do {
-            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: tokenDomain(), account: nil)
-            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: sshCredentialDomain(), account: nil)
-            try self.sharedSystemAPI.removeCredentialsInKeychain(forService: accountCredentialDomain(), account: nil)
-        } catch let error as NSError {
-            SDLog("warning: failed to remove keychain credentials: \(error.localizedDescription)")
+        guard let user = self.currentUser else {
+            return
         }
+        
+        do {
+            try self.sdk.deleteKeychainItem(withUser: user.email, service: tokenDomain())
+        } catch let error as SDKError {
+            SDLog("warning: failed to remove auth token from keychain: \(error.message)")
+        } catch {
+            fatalError("cannot reach this point")
+        }
+        
+        do {
+            try self.sdk.deleteKeychainItem(withUser: user.email, service: sshCredentialDomain())
+        } catch let error as SDKError {
+            SDLog("warning: failed to remove ssh username from keychain: \(error.message)")
+        } catch {
+            fatalError("cannot reach this point")
+        }
+        
+        do {
+            try self.sdk.deleteKeychainItem(withUser: user.email, service: accountCredentialDomain())
+        } catch let error as SDKError {
+            SDLog("warning: failed to remove password from keychain: \(error.message)")
+        } catch {
+            fatalError("cannot reach this point")
+        }
+        
+        
         self.signedIn = false
         
         // reset crashlytics email and telemetry API username
