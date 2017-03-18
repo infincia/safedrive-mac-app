@@ -99,6 +99,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         
         PFMoveToApplicationsFolderIfNecessary()
         
+        
+        do {
+            try FileManager.default.createDirectory(at: groupURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            SDLog("Failed to create group container, this is a fatal error")
+            Crashlytics.sharedInstance().crash()
+        }
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration), name: Notification.Name.applicationShouldFinishConfiguration, object: nil)
         
         
@@ -171,13 +180,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         DispatchQueue.main.async(execute: {() -> Void in
             
             let groupURL = storageURL()
-            
-            do {
-                try FileManager.default.createDirectory(at: groupURL, withIntermediateDirectories: true, attributes: nil)
-            } catch {
-                SDLog("Failed to create group container, this is a fatal error")
-                Crashlytics.sharedInstance().crash()
-            }
             
             self.serviceManager = ServiceManager.sharedServiceManager
             self.serviceManager.unloadService()
