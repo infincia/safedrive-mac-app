@@ -294,6 +294,9 @@ extension AppDelegate: SDApplicationControlProtocol {
         }
     }
     
+    func applicationDidConfigureRealm(notification: Notification) {
+            
+    }
 }
 
 extension AppDelegate: SDAccountProtocol {

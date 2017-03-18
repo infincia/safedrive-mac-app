@@ -40,6 +40,8 @@ protocol SDApplicationControlProtocol: class {
     func applicationShouldOpenAboutWindow(notification: Notification)
     func applicationShouldFinishConfiguration(notification: Notification)
     func applicationShouldToggleMountState(notification: Notification)
+    func applicationDidConfigureRealm(notification: Notification)
+
 }
 
 @objc
