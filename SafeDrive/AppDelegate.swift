@@ -130,6 +130,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
 
         self.dropdownMenuController = DropdownController()
         
+        self.serviceManager = ServiceManager.sharedServiceManager
+        self.serviceManager.unloadService()
+        
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
+            self.serviceManager.loadService()
+            self.serviceRouter = ServiceXPCRouter()
+        })
+        
         self.preferencesWindowController = PreferencesWindowController()
         _ = self.preferencesWindowController!.window!
         
@@ -187,9 +195,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
         DispatchQueue.main.async(execute: {() -> Void in
             
             let groupURL = storageURL()
-            
-            self.serviceManager = ServiceManager.sharedServiceManager
-            self.serviceManager.unloadService()
+
             
             let dbURL = groupURL.appendingPathComponent("sync.realm")
             let newdbURL = dbURL.appendingPathExtension("new")
@@ -264,11 +270,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
                 // swiftlint:enable force_try
 
             }
-            
-            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
-                self.serviceManager.loadService()
-                self.serviceRouter = ServiceXPCRouter()
-            })
             
             
             self.accountController = AccountController.sharedAccountController
