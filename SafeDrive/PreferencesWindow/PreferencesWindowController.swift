@@ -842,53 +842,52 @@ extension PreferencesWindowController: SDAccountProtocol {
     }
     
     func didReceiveAccountStatus(notification: Foundation.Notification) {
-        if let accountStatus = notification.object as? AccountStatus,
-            let status = accountStatus.status {
-            self.accountStatusField.stringValue = status.capitalized
-            self.internalUserName = accountStatus.userName
-            self.remoteHost = accountStatus.host
-            self.remotePort = accountStatus.port
-        } else {
+        guard let accountStatus = notification.object as? AccountStatus,
+              let status = accountStatus.status else {
             self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
-            SDLog("Validation failed: didReceiveAccountStatus")
-   
+            SDLog("API contract invalid: didReceiveAccountStatus in PreferencesWindowController")
+            return
         }
+        self.accountStatusField.stringValue = status.capitalized
+        self.internalUserName = accountStatus.userName
+        self.remoteHost = accountStatus.host
+        self.remotePort = accountStatus.port
     }
     
     func didReceiveAccountDetails(notification: Foundation.Notification) {
-        if let accountDetails = notification.object as? AccountDetails {
-        
-            let assignedStorage = accountDetails.assignedStorage
-            let usedStorage = accountDetails.usedStorage
-            let expirationDate = accountDetails.expirationDate
-            
-            self.assignedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(assignedStorage), countStyle: .file)
-            self.usedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(usedStorage), countStyle: .file)
-            
-            let date: Date = Date(timeIntervalSince1970: Double(expirationDate) / 1000)
-            let dateFormatter: DateFormatter = DateFormatter()
-            dateFormatter.locale = Locale.current
-            dateFormatter.timeStyle = .none
-            dateFormatter.dateStyle = .short
-            self.accountExpirationField.stringValue = dateFormatter.string(from: date)
-        } else {
-            SDLog("Validation failed: didReceiveAccountDetails")
+        guard let accountDetails = notification.object as? AccountDetails else {
+            SDLog("API contract invalid: didReceiveAccountDetails in PreferencesWindowController")
+            return
         }
+        
+        let assignedStorage = accountDetails.assignedStorage
+        let usedStorage = accountDetails.usedStorage
+        let expirationDate = accountDetails.expirationDate
+        
+        self.assignedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(assignedStorage), countStyle: .file)
+        self.usedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(usedStorage), countStyle: .file)
+            
+        let date: Date = Date(timeIntervalSince1970: Double(expirationDate) / 1000)
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.timeStyle = .none
+        dateFormatter.dateStyle = .short
+        self.accountExpirationField.stringValue = dateFormatter.string(from: date)
     }
-    
 }
 
 extension PreferencesWindowController: SDServiceStatusProtocol {
     
     func didReceiveServiceStatus(notification: Foundation.Notification) {
-        if let status = notification.object as? Bool {
-            self.serviceStatusField.stringValue = (status == true ? "Running" : "Stopped")
-        } else {
+        guard let status = notification.object as? Bool else {
             SDLog("Validation failed: didReceiveServiceStatus")
+            return
         }
+        
+        self.serviceStatusField.stringValue = (status == true ? "Running" : "Stopped")
     }
 }
-    
+
 extension PreferencesWindowController: NSOpenSavePanelDelegate {
         
     func panel(_ sender: Any, validate url: URL) throws {
