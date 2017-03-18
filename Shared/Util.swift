@@ -35,6 +35,10 @@ fileprivate let SDRecoveryKeyDomainStaging = "staging.recovery.safedrive.io"
 fileprivate let SDUniqueClientIDDomainProduction = "ucid.safedrive.io"
 fileprivate let SDUniqueClientIDDomainStaging = "staging.ucid.safedrive.io"
 
+fileprivate let SDCurrentUserDomainProduction = "currentuser.safedrive.io"
+fileprivate let SDCurrentUserDomainStaging = "staging.currentuser.safedrive.io"
+
+
 func storageURL() -> URL {
     guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
         Crashlytics.sharedInstance().crash()
@@ -116,6 +120,14 @@ func UCIDDomain() -> String {
         return SDUniqueClientIDDomainProduction
     } else {
         return SDUniqueClientIDDomainStaging
+    }
+}
+
+func currentUserDomain() -> String {
+    if isProduction() {
+        return SDCurrentUserDomainProduction
+    } else {
+        return SDCurrentUserDomainStaging
     }
 }
 
