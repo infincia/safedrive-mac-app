@@ -37,13 +37,19 @@ class SyncScheduler {
     
     fileprivate var sdk = SafeDriveSDK.sharedSDK
     
-    fileprivate let accountController = AccountController.sharedAccountController
-    
     fileprivate var syncControllers = [SyncController]()
     
     fileprivate var _running = false
     
     fileprivate let runQueue = DispatchQueue(label: "io.safedrive.runQueue")
+    
+    var email: String?
+    var internalUserName: String?
+    var password: String?
+    var uniqueClientID: String?
+    
+    var remoteHost: String?
+    var remotePort: UInt16?
     
     var running: Bool {
         get {
@@ -271,6 +277,15 @@ class SyncScheduler {
                 return
             }
             
+            guard let _ = self.email,
+                  let localPassword = self.password,
+                  let localInternalUserName = self.internalUserName,
+                  let localPort = self.remotePort,
+                  let localHost = self.remoteHost else {
+                SDLog("credentials unavailable, cancelling sync")
+                return
+            }
+            
             let uniqueClientID = syncEvent.uniqueClientID
             let folderID = syncEvent.folderID
             var isRestore: Bool = false
@@ -320,14 +335,14 @@ class SyncScheduler {
                 let machineFolder: URL = defaultFolder.appendingPathComponent(folder.machine!.name!, isDirectory: true)
                 let remoteFolder: URL = machineFolder.appendingPathComponent(folderName, isDirectory: true)
                 var urlComponents: URLComponents = URLComponents()
-                urlComponents.user = self.accountController.internalUserName
-                urlComponents.host = self.accountController.remoteHost
+                urlComponents.user = localInternalUserName
+                urlComponents.host = localHost
                 urlComponents.path = remoteFolder.path
-                urlComponents.port = Int(self.accountController.remotePort!)
+                urlComponents.port = Int(localPort)
                 let remote: URL = urlComponents.url!
                 
                 syncController.serverURL = remote
-                syncController.password = self.accountController.password!
+                syncController.password = localPassword
 
                 syncController.spaceNeeded = 0
 
@@ -419,5 +434,46 @@ class SyncScheduler {
                 
             })
         })
+    }
+}
+
+extension SyncScheduler: SDAccountProtocol {
+    
+    func didSignIn(notification: Foundation.Notification) {
+        guard let currentUser = notification.object as? User else {
+            SDLog("API contract invalid: didSignIn in SyncScheduler")
+            return
+        }
+        let uniqueClientID = currentUser.uniqueClientId
+        self.uniqueClientID = uniqueClientID
+        self.email = currentUser.email
+        self.password = currentUser.password
+        
+    }
+    
+    func didSignOut(notification: Foundation.Notification) {
+        self.email = nil
+        self.password = nil
+        self.uniqueClientID = nil
+        self.internalUserName = nil
+        self.remoteHost = nil
+        self.remotePort = nil
+    }
+    
+    func didReceiveAccountStatus(notification: Foundation.Notification) {
+        guard let accountStatus = notification.object as? AccountStatus else {
+            SDLog("API contract invalid: didReceiveAccountStatus in SyncScheduler")
+            return
+        }
+        self.internalUserName = accountStatus.userName
+        self.remoteHost = accountStatus.host
+        self.remotePort = accountStatus.port
+    }
+    
+    func didReceiveAccountDetails(notification: Foundation.Notification) {
+        guard let _ = notification.object as? AccountDetails else {
+            SDLog("API contract invalid: didReceiveAccountDetails in SyncScheduler")
+            return
+        }
     }
 }
