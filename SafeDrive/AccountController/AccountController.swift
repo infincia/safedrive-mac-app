@@ -30,8 +30,24 @@ class AccountController: NSObject {
     
     var remoteHost: String?
     var remotePort: UInt16?
-    var currentUser: User?
+    fileprivate let userQueue = DispatchQueue(label: "io.safedrive.accountQueue")
+
+    var _currentUser: User?
     
+    var currentUser: User? {
+        get {
+            var user: User?
+            userQueue.sync {
+                user = self._currentUser
+            }
+            return user
+        }
+        set (newValue) {
+            userQueue.sync(flags: .barrier, execute: {
+                self._currentUser = newValue
+            })
+        }
+    }
     
     fileprivate let accountQueue = DispatchQueue(label: "io.safedrive.accountQueue")
     
