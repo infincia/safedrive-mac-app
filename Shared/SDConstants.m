@@ -72,9 +72,6 @@ NSString * _Nonnull SDErrorToString(NSError *error) {
             return @"SDInstallationErrorCLIDeployment";
         case SDInstallationErrorFuseDeployment:
             return @"SDInstallationErrorFuseDeployment";
-        case SDInstallationErrorDirectoryMissing:
-            return @"SDInstallationErrorDirectoryMissing";
-            
     }
      
      switch ((enum SDSystemError)error.code) {
