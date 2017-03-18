@@ -25,9 +25,7 @@ enum ViewType: Int {
 
 
 class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
-        
-    fileprivate var accountController = AccountController.sharedAccountController
-    
+
     fileprivate var syncScheduler = SyncScheduler.sharedSyncScheduler
     
     fileprivate var sdk = SafeDriveSDK.sharedSDK
@@ -154,6 +152,12 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     fileprivate let dbURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db")!.appendingPathComponent("sync.realm")
     
     
+    var email: String?
+    var internalUserName: String?
+    var password: String?
+    
+    var remoteHost: String?
+    var remotePort: UInt16?
     
     // Initialization
     
@@ -384,17 +388,17 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
             let machineFolder: URL = defaultFolder.appendingPathComponent(syncFolder.machine!.name!, isDirectory: true)
             let remoteFolder: URL = machineFolder.appendingPathComponent(syncFolder.name!, isDirectory: true)
             var urlComponents: URLComponents = URLComponents()
-            urlComponents.user = self.accountController.internalUserName
-            urlComponents.password = self.accountController.password
-            urlComponents.host = self.accountController.remoteHost
+            urlComponents.user = localInternalUserName
+            urlComponents.password = localPassword
+            urlComponents.host = localHost
             urlComponents.path = remoteFolder.path
-            urlComponents.port = Int(self.accountController.remotePort!)
+            urlComponents.port = Int(localPort)
             let remote: URL = urlComponents.url!
             
             self.syncScheduler.cancel(uniqueID) {
                 let syncController = SyncController()
                 syncController.uniqueID = uniqueID
-                syncController.sftpOperation(op, remoteDirectory: remote, password: self.accountController.password!, success: {
+                syncController.sftpOperation(op, remoteDirectory: remote, password: localPassword, success: {
                     
                     self.sdk.removeFolder(uniqueID, completionQueue: DispatchQueue.main, success: { 
                         guard let realm = try? Realm() else {
@@ -748,7 +752,8 @@ extension PreferencesWindowController: SDAccountProtocol {
         }
         let uniqueClientID = currentUser.uniqueClientId
         self.uniqueClientID = uniqueClientID
-        
+        self.email = currentUser.email
+        self.password = currentUser.password
                 
         guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", uniqueClientID).last else {
             SDLog("failed to get current machine in realm!!!")
@@ -832,13 +837,20 @@ extension PreferencesWindowController: SDAccountProtocol {
     }
     
     func didSignOut(notification: Foundation.Notification) {
-        
+        self.email = nil
+        self.password = nil
+        self.internalUserName = nil
+        self.remoteHost = nil
+        self.remotePort = nil
     }
     
     func didReceiveAccountStatus(notification: Foundation.Notification) {
         if let accountStatus = notification.object as? AccountStatus,
             let status = accountStatus.status {
             self.accountStatusField.stringValue = status.capitalized
+            self.internalUserName = accountStatus.userName
+            self.remoteHost = accountStatus.host
+            self.remotePort = accountStatus.port
         } else {
             self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
             SDLog("Validation failed: didReceiveAccountStatus")
@@ -1175,7 +1187,7 @@ extension PreferencesWindowController: NSTableViewDataSource {
 
 extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
     func checkRecoveryPhrase(_ phrase: String?, success: @escaping () -> Void, failure: @escaping (_ error: SDKError) -> Void) {
-        guard let _ = self.accountController.email else {
+        guard let email = self.email else {
             return
         }
         self.syncListView.reloadData()
@@ -1222,7 +1234,7 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
     }
     
     func storeRecoveryPhrase(_ phrase: String, success: @escaping () -> Void, failure: @escaping (_ error: Error) -> Void) {
-        guard let email = self.accountController.email else {
+        guard let email = self.email else {
             return
         }
         do {
