@@ -297,11 +297,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SDApplicationControlProtocol
             
             
             
-            if self.accountController.hasCredentials {
-                // we need to sign in automatically if at all possible, even if we don't need to automount
-                // we need a session token and account details in order to support sync
-                self.accountWindowController.signIn(self)
-            }
         })
     }
     
