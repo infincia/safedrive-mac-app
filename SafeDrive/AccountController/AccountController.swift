@@ -137,10 +137,9 @@ class AccountController: NSObject {
         SDErrorHandlerSetUniqueClientId(ucid)
         Crashlytics.sharedInstance().setUserIdentifier(ucid)
 
-        let groupURL = storageURL()
         
         
-        self.sdk.login(email, password: password, local_storage_path: groupURL.path, unique_client_id: ucid, completionQueue: self.sdkCompletionQueue, success: { (status) -> Void in
+        self.sdk.login(email, password: password, unique_client_id: ucid, completionQueue: self.sdkCompletionQueue, success: { (status) -> Void in
             self.signedIn = true
             
             DispatchQueue.main.async(execute: {() -> Void in
