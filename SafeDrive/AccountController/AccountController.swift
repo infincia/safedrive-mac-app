@@ -9,6 +9,11 @@ import RealmSwift
 
 import SafeDriveSDK
 
+struct User {
+    let email: String
+    let uniqueClientId: String
+}
+
 class AccountController: NSObject {
     static let sharedAccountController = AccountController()
     
