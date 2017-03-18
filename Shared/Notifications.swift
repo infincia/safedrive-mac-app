@@ -22,6 +22,7 @@ extension Notification.Name {
     static let applicationShouldOpenSyncWindow = Notification.Name("applicationShouldOpenSyncWindowNotification")
     static let applicationShouldFinishConfiguration = Notification.Name("applicationShouldFinishConfigurationNotification")
     static let applicationShouldToggleMountState = Notification.Name("applicationShouldToggleMountState")
+    static let applicationDidConfigureRealm = Notification.Name("applicationDidConfigureRealm")
 
 
     static let apiDidEnterMaintenancePeriod = Notification.Name("apiDidEnterMaintenancePeriodNotification")
