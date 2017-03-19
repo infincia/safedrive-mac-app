@@ -1278,19 +1278,25 @@ extension PreferencesWindowController: SDApplicationEventProtocol {
 }
     
     func applicationDidConfigureClient(notification: Notification) {
-        guard let _ = notification.object as? String else {
+        guard let uniqueClientID = notification.object as? String else {
             SDLog("API contract invalid: applicationDidConfigureClient in PreferencesWindowController")
             
             return
         }
         
+        self.uniqueClientID = uniqueClientID
+        
     }
     
     func applicationDidConfigureUser(notification: Notification) {
-        guard let _ = notification.object as? User else {
+        guard let currentUser = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in PreferencesWindowController")
             
             return
         }
+        
+        self.email = currentUser.email
+        self.password = currentUser.password
+        
     }
 }
