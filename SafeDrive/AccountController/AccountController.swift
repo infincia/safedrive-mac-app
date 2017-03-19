@@ -108,39 +108,6 @@ class AccountController: NSObject {
         
         self.signOut()
         
-        /*
-         
-         This is a workaround for SyncFolders not having a truly unique primary key on the server side,
-         we have to clear the table before allowing a different account to sign in and store SyncFolders,
-         or things will get into an inconsistent state.
-         
-         A better solution would likely be to use separate realm files for each username, but that greatly
-         complicates things and will take some planning to do.
-         
-         */
-        if let currentUser = try? self.sdk.getKeychainItem(withUser: "currentuser", service: currentUserDomain()),
-            let _ = try? self.sdk.getKeychainItem(withUser: currentUser, service: accountCredentialDomain()) {
-            if currentUser != email {
-                // reset SyncFolder and SyncTask in database, user has changed since last sign-in
-                guard let realm = try? Realm() else {
-                    SDLog("failed to create realm!!!")
-                    Crashlytics.sharedInstance().crash()
-                    return
-                }
-                
-                do {
-                    try realm.write {
-                        realm.delete(realm.objects(SyncFolder.self))
-                        realm.delete(realm.objects(SyncTask.self))
-                    }
-                } catch {
-                    SDLog("failed to delete old data in realm!!!")
-                    Crashlytics.sharedInstance().crash()
-                    return
-                }
-            }
-            
-        }
         
         Crashlytics.sharedInstance().setUserEmail(email)
 
