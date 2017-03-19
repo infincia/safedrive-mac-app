@@ -54,13 +54,13 @@ class Installer: NSObject {
             while !self.dependenciesValidated {
                 if !self.prompted {
                     self.prompted = true
-                    DispatchQueue.main.sync {
+                    DispatchQueue.main.async {
                         self.delegate?.needsDependencies()
                     }
                 }
                 Thread.sleep(forTimeInterval: 1)
             }
-            DispatchQueue.main.sync {
+            DispatchQueue.main.async {
                 self.delegate?.didValidateDependencies()
             }
         }

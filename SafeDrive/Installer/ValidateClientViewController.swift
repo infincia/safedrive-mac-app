@@ -84,7 +84,7 @@ class ValidateClientViewController: NSViewController {
             if let uniqueClientID = try? SafeDriveSDK.sharedSDK.getKeychainItem(withUser: email, service: UCIDDomain()) {
                 SDLog("valid client found, continuing")
 
-                DispatchQueue.main.sync {
+                DispatchQueue.main.async {
                     self.delegate?.didValidateClient(withEmail: email, password: password, name: machineName, uniqueClientID: uniqueClientID)
                 }
                 return
@@ -93,7 +93,7 @@ class ValidateClientViewController: NSViewController {
             while !self.isClientRegistered {
                 if !self.prompted {
                     self.prompted = true
-                    DispatchQueue.main.sync {
+                    DispatchQueue.main.async {
                         self.delegate?.needsClient()
                     }
                 }
@@ -114,7 +114,7 @@ class ValidateClientViewController: NSViewController {
         let uniqueClientID = self.sdk.generateUniqueClientID()
         let host = Host()
         let machineName = host.localizedName!
-        DispatchQueue.main.sync {
+        DispatchQueue.main.async {
             self.delegate?.didValidateClient(withEmail: email, password: password, name: machineName, uniqueClientID: uniqueClientID)
         }
     }

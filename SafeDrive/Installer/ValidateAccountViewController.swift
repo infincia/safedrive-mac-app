@@ -64,7 +64,7 @@ class ValidateAccountViewController: NSViewController {
             while true {
                 if let currentUser = try? self.sdk.getKeychainItem(withUser: "currentuser", service: currentUserDomain()),
                     let password = try? self.sdk.getKeychainItem(withUser: currentUser, service: accountCredentialDomain()) {
-                    DispatchQueue.main.sync {
+                    DispatchQueue.main.async {
                         self.email = currentUser
                         self.password = password
                     }
@@ -72,14 +72,14 @@ class ValidateAccountViewController: NSViewController {
                 }
                 if !self.prompted {
                     self.prompted = true
-                    DispatchQueue.main.sync {
+                    DispatchQueue.main.async {
                         self.delegate?.needsAccount()
                     }
                 }
                 Thread.sleep(forTimeInterval: 1)
             }
 
-            DispatchQueue.main.sync {
+            DispatchQueue.main.async {
                 self.signIn(nil)
             }
         }
