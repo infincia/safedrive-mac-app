@@ -27,6 +27,26 @@ class ValidateAccountViewController: NSViewController {
     fileprivate var isInteractiveLogin = false
     
     fileprivate var prompted = false
+    
+    fileprivate let signingInQueue = DispatchQueue(label: "signingInQueue")
+
+    
+    var signingIn: NSNumber? {
+        get {
+            var s: NSNumber? // sane default
+            signingInQueue.sync {
+                s = self._signingIn
+            }
+            return s
+        }
+        set (newValue) {
+            signingInQueue.sync(flags: .barrier, execute: {
+                self._signingIn = newValue
+            })
+        }
+    }
+    
+    fileprivate var _signingIn: NSNumber? = NSNumber(value: 0)
 
     override func viewDidLoad() {
         if #available(OSX 10.10, *) {
@@ -55,6 +75,7 @@ class ValidateAccountViewController: NSViewController {
         self.password = nil
         self.prompted = false
         self.spinner.stopAnimation(self)
+        self.signingIn = false
     }
     
     func check() {
@@ -93,6 +114,8 @@ class ValidateAccountViewController: NSViewController {
               let password = self.password else {
             return
         }
+
+        self.signingIn = true
         
         SDLog("starting login for account \(email)")
 
@@ -102,6 +125,7 @@ class ValidateAccountViewController: NSViewController {
 
         } catch let error as NSError {
             SDLog("failed to set current user: \(email)")
+            self.signingIn = false
             self.delegate?.didFail(error: error, uniqueClientID: nil)
         }
 
@@ -109,6 +133,8 @@ class ValidateAccountViewController: NSViewController {
         
         self.sdk.getClients(withUser: email, password: password, completionQueue: DispatchQueue.main, success: { (clients) in
             do {
+                self.signingIn = false
+
                 try SafeDriveSDK.sharedSDK.setKeychainItem(withUser: email, service: accountCredentialDomain(), secret: password)
                 self.spinner.stopAnimation(self)
                 self.delegate?.didValidateAccount(withEmail: email, password: password, clients: clients)
@@ -118,6 +144,8 @@ class ValidateAccountViewController: NSViewController {
                 return
             }
         }) { (error) in
+            self.signingIn = false
+
             self.spinner.stopAnimation(self)
             self.delegate?.didFail(error: error, uniqueClientID: nil)
             if !self.isInteractiveLogin {
