@@ -218,6 +218,21 @@ extension AppDelegate: SDApplicationControlProtocol {
     }
     
     func applicationShouldFinishConfiguration(notification: Foundation.Notification) {
+
+    }
+}
+
+extension AppDelegate: SDApplicationEventProtocol {
+    func applicationDidConfigureRealm(notification: Notification) {
+        
+    }
+    
+    func applicationDidConfigureClient(notification: Notification) {
+        guard let uniqueClientID = notification.object as? String else {
+            SDLog("API contract invalid: applicationDidConfigureClient in AppDelegate")
+
+            return
+        }
         DispatchQueue.global(priority: .default).async {
             
             let groupURL = storageURL()
@@ -268,21 +283,6 @@ extension AppDelegate: SDApplicationControlProtocol {
                 NotificationCenter.default.post(name: Notification.Name.applicationDidConfigureRealm, object: nil)
             }
         }
-    }
-}
-
-extension AppDelegate: SDApplicationEventProtocol {
-    func applicationDidConfigureRealm(notification: Notification) {
-        
-    }
-    
-    func applicationDidConfigureClient(notification: Notification) {
-        guard let uniqueClientID = notification.object as? String else {
-            SDLog("API contract invalid: applicationDidConfigureClient in AppDelegate")
-
-            return
-        }
-        
     }
     
     func applicationDidConfigureUser(notification: Notification) {
