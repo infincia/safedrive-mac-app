@@ -88,6 +88,12 @@ class MountController: NSObject {
         super.init()
         self.mounted = false
         self.mounting = false
+        // register SDApplicationEventProtocol notifications
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
+        
         mountStateLoop()
     }
     
@@ -442,4 +448,27 @@ class MountController: NSObject {
         self.sshfsTask.launch()
     }
     
+}
+
+extension MountController: SDApplicationEventProtocol {
+    func applicationDidConfigureRealm(notification: Notification) {
+        
+    }
+    
+    func applicationDidConfigureClient(notification: Notification) {
+        guard let uniqueClientID = notification.object as? String else {
+            SDLog("API contract invalid: applicationDidConfigureClient in MountController")
+            
+            return
+        }
+        
+    }
+    
+    func applicationDidConfigureUser(notification: Notification) {
+        guard let user = notification.object as? User else {
+            SDLog("API contract invalid: applicationDidConfigureUser in MountController")
+            
+            return
+        }
+    }
 }

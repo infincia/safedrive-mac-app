@@ -9,7 +9,18 @@ class ServiceManager: NSObject {
     
     override init() {
         super.init()
+        
+        // register SDApplicationEventProtocol notifications
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
+        
         self.serviceLoop()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     
@@ -54,6 +65,29 @@ class ServiceManager: NSObject {
                 SDLog("Unload service error: \(error)")
                 SDErrorHandlerReport(error)
             }
+        }
+    }
+}
+
+extension ServiceManager: SDApplicationEventProtocol {
+    func applicationDidConfigureRealm(notification: Notification) {
+        
+    }
+    
+    func applicationDidConfigureClient(notification: Notification) {
+        guard let uniqueClientID = notification.object as? String else {
+            SDLog("API contract invalid: applicationDidConfigureClient in ServiceManager")
+            
+            return
+        }
+        
+    }
+    
+    func applicationDidConfigureUser(notification: Notification) {
+        guard let user = notification.object as? User else {
+            SDLog("API contract invalid: applicationDidConfigureUser in ServiceManager")
+            
+            return
         }
     }
 }

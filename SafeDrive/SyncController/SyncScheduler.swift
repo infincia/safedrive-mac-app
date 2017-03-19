@@ -72,6 +72,20 @@ class SyncScheduler {
     
     let dbURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db")!.appendingPathComponent("sync.realm")
     
+    
+    init() {
+        
+        // register SDApplicationEventProtocol notifications
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     func syncSchedulerLoop(_ uniqueClientID: String) throws {
         
         guard let realm = try? Realm() else {
@@ -473,6 +487,29 @@ extension SyncScheduler: SDAccountProtocol {
     func didReceiveAccountDetails(notification: Foundation.Notification) {
         guard let _ = notification.object as? AccountDetails else {
             SDLog("API contract invalid: didReceiveAccountDetails in SyncScheduler")
+            return
+        }
+    }
+}
+
+extension SyncScheduler: SDApplicationEventProtocol {
+    func applicationDidConfigureRealm(notification: Notification) {
+        
+    }
+    
+    func applicationDidConfigureClient(notification: Notification) {
+        guard let uniqueClientID = notification.object as? String else {
+            SDLog("API contract invalid: applicationDidConfigureClient in SyncScheduler")
+            
+            return
+        }
+        
+    }
+    
+    func applicationDidConfigureUser(notification: Notification) {
+        guard let user = notification.object as? User else {
+            SDLog("API contract invalid: applicationDidConfigureUser in SyncScheduler")
+            
             return
         }
     }
