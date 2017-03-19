@@ -25,7 +25,7 @@
                 <secureTextField verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFz-vv-7TO">
                     <rect key="frame" x="0.0" y="283" width="311" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <secureTextFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="password" usesSingleLineMode="YES" bezelStyle="round" id="Ohc-MX-epU">
+                    <secureTextFieldCell key="cell" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="password" usesSingleLineMode="YES" bezelStyle="round" id="Ohc-MX-epU">
                         <font key="font" size="13" name="Raleway-Regular"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -80,7 +80,7 @@
                 <textField verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ybq-Ux-TKE">
                     <rect key="frame" x="0.0" y="313" width="311" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="email address" bezelStyle="round" id="aej-hN-xGP">
+                    <textFieldCell key="cell" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="email address" bezelStyle="round" id="aej-hN-xGP">
                         <font key="font" size="13" name="Raleway-Regular"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
