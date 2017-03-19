@@ -166,8 +166,6 @@ extension AppDelegate: NSApplicationDelegate {
         self.aboutWindowController.appVersion = version
         let websiteURLPath: String = "https://\(webDomain())"
         self.aboutWindowController.appWebsiteURL = URL(string: websiteURLPath)!
-        
-        NotificationCenter.default.post(name: Notification.Name.applicationShouldOpenAboutWindow, object: nil)
     }
     
     
