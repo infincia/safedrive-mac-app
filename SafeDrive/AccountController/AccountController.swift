@@ -110,7 +110,7 @@ class AccountController: NSObject {
         
     }
     
-    func signInWithSuccess(_ successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: SDKError) -> Void) {
+    func signIn(_ successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: SDKError) -> Void) {
         guard let email = self.email, let password = self.password else {
             return
         }
