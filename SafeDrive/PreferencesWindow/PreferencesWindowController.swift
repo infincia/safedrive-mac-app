@@ -1033,7 +1033,7 @@ extension PreferencesWindowController: NSTableViewDelegate {
             
             let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
 
-            if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == %@ AND syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", uniqueClientID, syncFolder).sorted(byKeyPath: "syncDate").last {
+            if let syncTask = syncTasks.filter("syncFolder.uniqueClientID == %@ AND syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", uniqueClientID, syncFolder).sorted(byKeyPath: "syncDate").last {
                 
                 if syncFolder.restoring {
                     let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
@@ -1102,7 +1102,7 @@ extension PreferencesWindowController: NSTableViewDelegate {
                 self.syncProgressField.stringValue = ""
             }
             
-            /*if let syncTask = syncTasks.filter("syncFolder.machine.uniqueClientID == '\(self.mac.uniqueClientID!)' AND syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
+            /*if let syncTask = syncTasks.filter("syncFolder.uniqueClientID == '\(uniqueClientID)' AND syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
              lastSync = syncTask.syncDate {
              self.lastSyncField.stringValue = lastSync.toMediumString()
              }
