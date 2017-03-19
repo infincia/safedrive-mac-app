@@ -23,8 +23,6 @@ class ValidateClientViewController: NSViewController {
     
     fileprivate var prompted = false
     
-    fileprivate var name: String?
-
     fileprivate var email: String?
     
     fileprivate var password: String?
@@ -56,7 +54,6 @@ class ValidateClientViewController: NSViewController {
     }
     
     func reset() {
-        self.name = nil
         self.email = nil
         self.password = nil
         self.prompted = false
@@ -109,8 +106,7 @@ class ValidateClientViewController: NSViewController {
     @IBAction func newClient(_ sender: AnyObject?) {
         SDLog("setting up client as new")
         guard let email = self.email,
-              let password = self.password,
-              let name = self.name else {
+              let password = self.password else {
             self.delegate?.didFail(error: NSError(domain: SDErrorDomain, code: SDSystemError.unknown.rawValue, userInfo: nil), uniqueClientID: nil)
             return
         }
@@ -141,8 +137,7 @@ class ValidateClientViewController: NSViewController {
         SDLog("client \(client.uniqueClientID) being replaced")
         
         guard let email = self.email,
-              let password = self.password,
-              let name = self.name else {
+              let password = self.password else {
             self.delegate?.didFail(error: NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.unknown.rawValue, userInfo: nil), uniqueClientID: client.uniqueClientID)
             return
         }
