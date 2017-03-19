@@ -23,7 +23,7 @@ class SyncFolder: Object {
     
     dynamic var syncTime: Date?
     
-    dynamic var machine: Machine?
+    dynamic var uniqueClientID: String?
     
     dynamic var encrypted: Bool = false
 

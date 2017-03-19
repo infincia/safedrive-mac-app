@@ -93,10 +93,6 @@ class SyncScheduler {
             throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
         }
         
-        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(uniqueClientID)'").last else {
-            return
-        }
-        
         /*
          Reset all sync folders at startup.
          
@@ -130,13 +126,6 @@ class SyncScheduler {
                 realm.refresh()
                 realm.invalidate()
                 
-                guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(uniqueClientID)'").last else {
-                    Thread.sleep(forTimeInterval: 1)
-                    // NOTE: this returns from the autoreleasepool closure and functions as a "continue" statement
-                    //       it does NOT return from syncSchedulerLoop()
-                    return
-                }
-                
                 let currentDate = Date()
                 
                 let unitFlags: NSCalendar.Unit = [.second, .minute, .hour, .day, .month, .year]
@@ -158,27 +147,27 @@ class SyncScheduler {
                 if currentDateComponents.minute == 0 {
                     // first minute of each hour for hourly syncs
                     // NOTE: this scheduler ignores syncTime on purpose, hourly syncs always run at xx:00
-                    let hourlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'hourly' AND syncing == false AND machine == %@", currentMachine)
+                    let hourlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'hourly' AND syncing == false AND uniqueClientID == '\(uniqueClientID)'")
                     folders.append(contentsOf: hourlyFolders)
                 }
                 
                 
                 if currentDateComponents.day == 1 {
                     // first of the month for monthly syncs
-                    let monthlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'monthly' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
+                    let monthlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'monthly' AND syncing == false AND uniqueClientID == '\(uniqueClientID)' AND syncTime == %@", syncDate)
                     folders.append(contentsOf: monthlyFolders)
                 }
                 
                 
                 if currentDateComponents.weekday == 1 {
                     // first day of the week for weekly syncs
-                    let weeklyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'weekly' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
+                    let weeklyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'weekly' AND syncing == false AND uniqueClientID == '\(uniqueClientID)' AND syncTime == %@", syncDate)
                     folders.append(contentsOf: weeklyFolders)
                 }
                 
                 
                 // daily syncs at arbitrary times based on syncTime property
-                let dailyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'daily' AND syncing == false AND machine == %@ AND syncTime == %@", currentMachine, syncDate)
+                let dailyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'daily' AND syncing == false AND uniqueClientID == '\(uniqueClientID)' AND syncTime == %@", syncDate)
                 folders.append(contentsOf: dailyFolders)
                 
                 
@@ -201,9 +190,6 @@ class SyncScheduler {
             guard let realm = try? Realm() else {
             let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open Realm database, this is a fatal error", comment: "")]
             throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
-        }
-        
-        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(uniqueClientID)'").last else {
             return
         }
         
@@ -215,7 +201,7 @@ class SyncScheduler {
          
          */
         
-        for folder in realm.objects(SyncFolder.self).filter("restoring == true AND machine == %@", currentMachine) {
+        for folder in realm.objects(SyncFolder.self).filter("restoring == true AND uniqueClientID == '\(uniqueClientID)'") {
             let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
             guard let currentSyncUUID = folder.currentSyncUUID else {
                     let message = "warning: found restoring folder but no uuid: \(folder.name!)"
@@ -312,12 +298,7 @@ class SyncScheduler {
 
             let name = syncEvent.name.lowercased()
             
-            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(uniqueClientID)'").last else {
-                SDLog("failed to get current machine from realm!!!")
-                return
-            }
-            
-            guard let folder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID) AND machine == %@", currentMachine).first else {
+            guard let folder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID) AND uniqueClientID == '\(uniqueClientID)'").first else {
                 SDLog("failed to get sync folder for machine from realm!!!")
                 return
             }
@@ -344,9 +325,11 @@ class SyncScheduler {
                 }
                 
             } else {
+                let host = Host()
+                let machineName = host.localizedName!
                 
                 let defaultFolder: URL = URL(string: SDDefaultServerPath)!
-                let machineFolder: URL = defaultFolder.appendingPathComponent(folder.machine!.name!, isDirectory: true)
+                let machineFolder: URL = defaultFolder.appendingPathComponent(machineName, isDirectory: true)
                 let remoteFolder: URL = machineFolder.appendingPathComponent(folderName, isDirectory: true)
                 var urlComponents: URLComponents = URLComponents()
                 urlComponents.user = localInternalUserName

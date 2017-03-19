@@ -78,10 +78,7 @@
 		AAA50BE51E313BE900892E9D /* CUIThemeRenditionFix.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
 		AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
-		AAA88BC91C8385AA009BE1C7 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC81C8385A9009BE1C7 /* Machine.swift */; };
 		AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */; };
-		AAA88BCC1C83D240009BE1C7 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC81C8385A9009BE1C7 /* Machine.swift */; };
-		AAA88BCD1C83D241009BE1C7 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC81C8385A9009BE1C7 /* Machine.swift */; };
 		AAA88BCE1C83D243009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
 		AAA88BCF1C83D243009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
 		AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
@@ -319,7 +316,6 @@
 		AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CUIThemeRenditionFix.xcassets; path = Shared/CUIThemeRenditionFix.xcassets; sourceTree = "<group>"; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableRowView.swift; path = ../PreferencesWindow/SyncManagerTableRowView.swift; sourceTree = "<group>"; };
 		AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFolder.swift; path = Shared/SyncFolder.swift; sourceTree = "<group>"; };
-		AAA88BC81C8385A9009BE1C7 /* Machine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Machine.swift; path = Shared/Machine.swift; sourceTree = "<group>"; };
 		AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncTask.swift; path = Shared/SyncTask.swift; sourceTree = "<group>"; };
 		AAA88BD61C851F17009BE1C7 /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountController.swift; path = AccountController/AccountController.swift; sourceTree = "<group>"; };
@@ -593,7 +589,6 @@
 			children = (
 				AA5071691E2ED5F7006F59C8 /* Util.swift */,
 				AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */,
-				AAA88BC81C8385A9009BE1C7 /* Machine.swift */,
 				AA6E272A1D876DD800038019 /* Notifications.swift */,
 				AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */,
 				AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */,
@@ -1320,7 +1315,6 @@
 				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,
 				AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */,
 				AA3EB8361E55686E003A2E79 /* SyncSession.swift in Sources */,
-				AAA88BC91C8385AA009BE1C7 /* Machine.swift in Sources */,
 				AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */,
 				AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */,
 				AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */,
@@ -1369,7 +1363,6 @@
 				AA5754051C7FFCC10040E8B0 /* AppDelegate.swift in Sources */,
 				AAD44A271D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AA50716C1E2ED86A006F59C8 /* Util.swift in Sources */,
-				AAA88BCC1C83D240009BE1C7 /* Machine.swift in Sources */,
 				AAA88BD41C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1387,7 +1380,6 @@
 				AAA88BD51C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 				AAD44A281D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */,
-				AAA88BCD1C83D241009BE1C7 /* Machine.swift in Sources */,
 				AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

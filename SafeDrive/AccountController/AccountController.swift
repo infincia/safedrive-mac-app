@@ -182,38 +182,6 @@ class AccountController: NSObject {
                 failureBlock(e)
                 return
             }
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            
-            do {
-                /*
-                 Once a Machine entity is created for this uniqueClientID, we never modify it without special handling.
-                 
-                 The Machine.name property is used to decide which path on the server to sync to, so we cannot allow
-                 it to be overwritten every time the local hostname changes.
-                 
-                 
-                 
-                 */
-                var currentMachine = realm.objects(Machine.self).filter("uniqueClientID == '\(ucid)'").last
-                
-                if currentMachine == nil {
-                    let machineName = Host.current().localizedName!
-                    
-                    currentMachine = Machine(name: machineName, uniqueClientID: ucid)
-                    
-                    try realm.write {
-                        realm.add(currentMachine!, update: true)
-                    }
-                }
-            } catch {
-                SDLog("failed to update machine in realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
             
             self.sdk.getAccountDetails(completionQueue: DispatchQueue.main, success: { (details) in
                 

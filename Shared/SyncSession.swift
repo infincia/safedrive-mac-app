@@ -7,7 +7,7 @@ import RealmSwift
 import Realm
 
 class PersistedSyncSession: Object {
-    dynamic var machine: Machine?
+    dynamic var uniqueClientID: String?
 
     dynamic var name: String?
     

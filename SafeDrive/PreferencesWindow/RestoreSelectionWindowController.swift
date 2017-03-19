@@ -147,13 +147,8 @@ class RestoreSelectionWindowController: NSWindowController {
             Crashlytics.sharedInstance().crash()
             return
         }
-        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-            SDLog("failed to get machine from realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
-        
-        guard let syncFolder = realm.objects(SyncFolder.self).filter("machine == %@ AND uniqueID == %@", currentMachine, self.folderID).last else {
+
+        guard let syncFolder = realm.objects(SyncFolder.self).filter("uniqueClientID == '\(self.uniqueClientID)' AND uniqueID == %@", self.folderID).last else {
             SDLog("failed to get machine from realm!!!")
             Crashlytics.sharedInstance().crash()
             return
@@ -208,6 +203,10 @@ class RestoreSelectionWindowController: NSWindowController {
     }
     
     @IBAction func startRestore(sender: AnyObject?) {
+        guard let uniqueClientID = self.uniqueClientID else {
+            return
+        }
+
         self.spinner.startAnimation(self)
         
         let sessionIndex = restoreSelectionList.selectedRow
@@ -218,16 +217,11 @@ class RestoreSelectionWindowController: NSWindowController {
         }
         guard let realm = try? Realm() else {
                 SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-        guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-            SDLog("failed to get machine from realm!!!")
             Crashlytics.sharedInstance().crash()
             return
         }
         
-        if let syncSession = realm.objects(PersistedSyncSession.self).filter("machine == %@ AND name == %@", currentMachine, v.sessionName).last {
+        if let syncSession = realm.objects(PersistedSyncSession.self).filter("uniqueClientID == '\(uniqueClientID)' AND name == %@", v.sessionName).last {
             self.restoreSelectionDelegate?.selectedSession(syncSession.name!, folderID: self.folderID, destination: self.destination.url!)
             self.close()
         } else {
@@ -239,6 +233,10 @@ class RestoreSelectionWindowController: NSWindowController {
     }
     
     @IBAction func readSyncSessions(_ sender: AnyObject) {
+        guard let uniqueClientID = self.uniqueClientID else {
+            return
+        }
+        
         self.spinner.startAnimation(self)
         self.errorField.stringValue = ""
         self.sdk.getSessions(completionQueue: DispatchQueue.main, success: { (sessions: [SDSyncSession]) in
@@ -248,14 +246,9 @@ class RestoreSelectionWindowController: NSWindowController {
                 Crashlytics.sharedInstance().crash()
                 return
             }
-            guard let currentMachine = realm.objects(Machine.self).filter("uniqueClientID == %@", self.uniqueClientID).last else {
-                SDLog("failed to get machine from realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
             
             // try to delete all existing local records for this folder for consistency
-            let syncSessions = realm.objects(PersistedSyncSession.self).filter("machine == %@ AND folderId == %@", currentMachine, Int64(self.folderID))
+            let syncSessions = realm.objects(PersistedSyncSession.self).filter("uniqueClientID == '\(uniqueClientID)' AND folderId == %@", Int64(self.folderID))
             
             // swiftlint:disable force_try
             try! realm.write {
@@ -290,7 +283,7 @@ class RestoreSelectionWindowController: NSWindowController {
                 // swiftlint:disable force_try
                 try! realm.write {
                     
-                    syncSession.machine = currentMachine
+                    syncSession.uniqueClientID = uniqueClientID
                     
                     realm.add(syncSession, update: true)
                 }
