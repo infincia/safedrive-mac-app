@@ -23,6 +23,7 @@ class AppDelegate: NSObject {
     
     fileprivate var accountController: AccountController!
     
+    fileprivate var mountController: MountController!
     
     fileprivate var aboutWindowController: DCOAboutWindowController!
     fileprivate var serviceRouter: ServiceXPCRouter!
@@ -134,6 +135,8 @@ extension AppDelegate: NSApplicationDelegate {
         _ = self.welcomeWindowController!.window!
         
         self.syncScheduler = SyncScheduler.sharedSyncScheduler
+        
+        self.mountController = MountController.shared
 
         self.dropdownMenuController = DropdownController()
         
