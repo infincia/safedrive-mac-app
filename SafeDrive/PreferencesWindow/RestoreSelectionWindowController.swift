@@ -158,7 +158,7 @@ class RestoreSelectionWindowController: NSWindowController {
         }
 
         guard let syncFolder = realm.objects(SyncFolder.self).filter("uniqueClientID == '\(self.uniqueClientID)' AND uniqueID == %@", self.folderID).last else {
-            SDLog("failed to get machine from realm!!!")
+            SDLog("failed to get folder from realm!!!")
             Crashlytics.sharedInstance().crash()
             return
         }
