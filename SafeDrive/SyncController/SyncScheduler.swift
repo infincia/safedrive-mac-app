@@ -72,6 +72,7 @@ class SyncScheduler {
     
     let dbURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db")!.appendingPathComponent("sync.realm")
     
+    var realm: Realm?
     
     init() {
         
@@ -86,16 +87,15 @@ class SyncScheduler {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func syncSchedulerLoop(_ uniqueClientID: String) throws {
-        
-        guard let realm = try? Realm() else {
-            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open Realm database, this is a fatal error", comment: "")]
-            throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
-        }
-        
+    func syncSchedulerLoop() throws {
+
         SDLog("Sync scheduler running")
         
         while self.running {
+            guard let uniqueClientID = self.uniqueClientID, let realm = self.realm else {
+                Thread.sleep(forTimeInterval: 1)
+                continue
+            }
         
             if !SafeDriveSDK.sharedSDK.ready {
                 Thread.sleep(forTimeInterval: 1)
@@ -167,9 +167,9 @@ class SyncScheduler {
     }
     
     func restartRestore(_ uniqueClientID: String) throws {
-            guard let realm = try? Realm() else {
-            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open Realm database, this is a fatal error", comment: "")]
-            throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
+        guard let realm = self.realm else {
+            SDLog("failed to get realm!!!")
+            Crashlytics.sharedInstance().crash()
             return
         }
         
@@ -458,6 +458,13 @@ extension SyncScheduler: SDAccountProtocol {
 extension SyncScheduler: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
         
+        guard let realm = try? Realm() else {
+            //let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open Realm database, this is a fatal error", comment: "")]
+            //throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
+            return
+        }
+        
+        self.realm = realm
     }
     
     func applicationDidConfigureClient(notification: Notification) {
@@ -467,6 +474,7 @@ extension SyncScheduler: SDApplicationEventProtocol {
             return
         }
         
+        self.uniqueClientID = uniqueClientID
     }
     
     func applicationDidConfigureUser(notification: Notification) {
