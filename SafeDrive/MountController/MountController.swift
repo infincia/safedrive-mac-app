@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import SafeDriveSDK
 
 class MountController: NSObject {
     fileprivate var _mounted = false
@@ -16,10 +17,10 @@ class MountController: NSObject {
     var mountURL: URL?
     
     var sshfsTask: Process!
-    
-    var sharedSystemAPI = SDSystemAPI.shared()
-    
+        
     static let shared = MountController()
+    
+    fileprivate var openFileWarning: OpenFileWarningWindowController?
     
     var email: String?
     var internalUserName: String?
@@ -111,6 +112,11 @@ class MountController: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
+        
+        
+        let nc = NSWorkspace.shared().notificationCenter
+        nc.addObserver(self, selector: #selector(willSleep(_:)), name: Notification.Name.NSWorkspaceWillSleep, object: nil)
+        
         
         mountStateLoop()
     }
@@ -470,6 +476,105 @@ class MountController: NSObject {
         self.sshfsTask.launch()
     }
     
+    // MARK: - High level API
+    
+    func connectVolume() {
+    
+        self.mounting = true
+    
+        var urlComponents = URLComponents()
+        urlComponents.user = self.internalUserName
+        urlComponents.host = self.remoteHost
+        urlComponents.path = SDDefaultServerPath
+        urlComponents.port = Int(self.remotePort!)
+        let sshURL: URL = urlComponents.url!
+        
+        self.startMountTask(sshURL: sshURL, success: { mountURL in
+            
+            /*
+             now check for a successful mount. if after 30 seconds there is no volume
+             mounted, it is a fair bet that an error occurred in the meantime
+             */
+            
+            self.checkMount(at: mountURL, timeout: 30, mounted: {
+                NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
+                self.mounting = false
+            }, notMounted: {
+                let error = NSError(domain:SDErrorDomain, code:SDSSHError.timeout.rawValue, userInfo:[NSLocalizedDescriptionKey: "Volume mount timeout"])
+                SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
+                self.mounting = false
+            })
+            
+            
+        }, failure: { (_, mountError) in
+            SDLog("SafeDrive startMountTaskWithVolumeName failure in mount controller")
+            SDErrorHandlerReport(mountError)
+            self.mounting = false
+            // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
+            self.unmount(success: { _ in
+                //
+            }, failure: { (_, _) in
+                //
+            })
+        })
+    }
+    
+    func disconnectVolume(askForOpenApps: Bool) {
+    
+        let volumeName: String = self.currentVolumeName
+        
+        SDLog("Dismounting volume: %@", volumeName)
+        
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async {
+            self.unmount(success: { _ -> Void in
+                //
+            }, failure: { (url, error) -> Void in
+                
+                let message = "SafeDrive could not be unmounted\n\n \(error.localizedDescription)"
+                
+                SDLog(message)
+                
+                let notification = NSUserNotification()
+                
+                notification.title = "SafeDrive unmount failed"
+                notification.informativeText = NSLocalizedString("Please close any open files on your SafeDrive", comment: "")
+                
+                notification.soundName = NSUserNotificationDefaultSoundName
+                
+                NSUserNotificationCenter.default.deliver(notification)
+                
+                if askForOpenApps {
+                    let c = OpenFileCheck()
+                    
+                    let processes = c.check(volume: url)
+                    
+                    if processes.count <= 0 {
+                        return
+                    }
+                    DispatchQueue.main.async(execute: {() -> Void in
+                        self.openFileWarning = OpenFileWarningWindowController(delegate: self, url: url, processes: processes)
+                        
+                        NSApp.activate(ignoringOtherApps: true)
+                        
+                        self.openFileWarning!.showWindow(self)
+                    })
+                    
+                }
+                
+            })
+        }
+    }
+    
+}
+
+extension MountController: SleepReactor {
+    func willSleep(_ notification: Notification) {
+        if self.mounted {
+            SDLog("machine going to sleep, unmounting SSHFS")
+            self.disconnectVolume(askForOpenApps: true)
+        }
+    }
+}
 
 extension MountController: SDAccountProtocol {
     
@@ -546,6 +651,46 @@ extension MountController: SDVolumeEventProtocol {
     }
 }
 
+
+extension MountController: OpenFileWarningDelegate {
+    func closeApplication(_ process: RunningProcess) {
+        SDLog("attempting to close \(process.command) (\(process.pid))")
+        
+        if process.isUserApplication {
+            for app in NSWorkspace.shared().runningApplications {
+                if process.pid == Int(app.processIdentifier) {
+                    SDLog("found \(process.pid), terminating")
+                    app.terminate()
+                }
+            }
+        } else {
+            let r = RunningProcessCheck()
+            r.close(pid: process.pid)
+        }
+    }
+    
+    func runningProcesses() -> [RunningProcess] {
+        SDLog("checking running processes")
+        let r = RunningProcessCheck()
+
+        return r.runningProcesses()
+    }
+    
+    func blockingProcesses(_ url: URL) -> [RunningProcess] {
+        SDLog("checking blocking processes")
+        let c = OpenFileCheck()
+
+        return c.check(volume: url)
+    }
+    
+    func tryAgain() {
+        self.disconnectVolume(askForOpenApps: false)
+    }
+    
+    func finished() {
+        //self.openFileWarning?.window?.close()
+        //self.openFileWarning = nil
+    }
 }
 
 extension MountController: SDApplicationEventProtocol {
