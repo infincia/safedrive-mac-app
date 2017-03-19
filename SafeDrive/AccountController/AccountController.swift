@@ -26,6 +26,7 @@ class AccountController: NSObject {
     
     var email: String?
     var password: String?
+    
     fileprivate let userQueue = DispatchQueue(label: "io.safedrive.accountQueue")
 
     var _currentUser: User?
