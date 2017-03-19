@@ -167,6 +167,7 @@ class Installer: NSObject {
                 throw cliError
         }
         
+        let destination = URL(string: "file://usr/local/bin/safedrive")!
         
         let fileManager: FileManager = FileManager.default
         if FileManager.default.fileExists(atPath: destination.path) {
