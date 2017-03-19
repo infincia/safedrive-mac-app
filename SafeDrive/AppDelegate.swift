@@ -310,11 +310,20 @@ extension AppDelegate: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureClient(notification: Notification) {
-        //
+        guard let uniqueClientID = notification.object as? String else {
+            SDLog("API contract invalid: applicationDidConfigureClient in AppDelegate")
+
+            return
+        }
+        
     }
     
     func applicationDidConfigureUser(notification: Notification) {
-        //
+        guard let user = notification.object as? User else {
+            SDLog("API contract invalid: applicationDidConfigureUser in AppDelegate")
+
+            return
+        }
     }
 }
 
