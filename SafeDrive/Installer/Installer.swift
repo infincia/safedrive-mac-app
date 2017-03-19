@@ -165,11 +165,14 @@ class Installer: NSObject {
             let cliError = NSError(domain: SDMountErrorDomain, code:SDInstallationError.cliMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "SDK bundle app missing"])
             throw cliError
         }
+        SDLog("SDK location: \(sdkBundle.bundleURL.path)")
         guard let cli = sdkBundle.url(forResource: "safedrive", withExtension: nil) else {
                 let cliError = NSError(domain: SDMountErrorDomain, code:SDInstallationError.cliMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "CLI app missing"])
                 throw cliError
         }
         
+        SDLog("CLI location: \(cli.path)")
+
         let destination = URL(string: "file:///usr/local/bin/safedrive")!
         
         let fileManager: FileManager = FileManager.default
