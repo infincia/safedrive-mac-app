@@ -135,8 +135,9 @@ class AccountController: NSObject {
             })
             
             let currentUser = User(email: email, password: password)
-            
-            NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: currentUser)
+            DispatchQueue.main.async(execute: {() -> Void in
+                NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: currentUser)
+            })
             successBlock()
             
         }, failure: { (error) in
