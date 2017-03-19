@@ -106,7 +106,6 @@ class AccountController: NSObject {
     
     func signIn(_ successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: SDKError) -> Void) {
         
-        self.signOut()
         
         
 
@@ -121,18 +120,19 @@ class AccountController: NSObject {
             return
         }
         
-        let macAddress: String = SDSystemAPI.shared().en0MAC()!
-        let machineIdConcatenation: String = macAddress + email
-        let ucid: String = HKTHashProvider.sha256(machineIdConcatenation.data(using: String.Encoding.utf8))
+        guard let email = self.email, let password = self.password, let uniqueClientID = self.uniqueClientID else {
+            return
+        }
         
+        
+        self.signOut()
 
         SDErrorHandlerSetUniqueClientId(uniqueClientID)
 
         Crashlytics.sharedInstance().setUserEmail(email)
         Crashlytics.sharedInstance().setUserIdentifier(uniqueClientID)
         
-        
-        self.sdk.login(email, password: password, unique_client_id: ucid, completionQueue: self.sdkCompletionQueue, success: { (status) -> Void in
+        self.sdk.login(email, password: password, unique_client_id: uniqueClientID, completionQueue: self.sdkCompletionQueue, success: { (status) -> Void in
             self.signedIn = true
             
             DispatchQueue.main.async(execute: {() -> Void in
@@ -164,7 +164,7 @@ class AccountController: NSObject {
                 }
             })
             
-            let currentUser = User(email: email, password: password, uniqueClientId: ucid)
+            let currentUser = User(email: email, password: password, uniqueClientId: uniqueClientID)
             
             NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: currentUser)
             successBlock()
