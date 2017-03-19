@@ -25,11 +25,7 @@ class AccountController: NSObject {
     var accountStatus: SDAccountStatus = .unknown
     
     var email: String?
-    var internalUserName: String?
     var password: String?
-    
-    var remoteHost: String?
-    var remotePort: UInt16?
     fileprivate let userQueue = DispatchQueue(label: "io.safedrive.accountQueue")
 
     var _currentUser: User?
@@ -181,11 +177,6 @@ class AccountController: NSObject {
             DispatchQueue.main.async(execute: {() -> Void in
                 NotificationCenter.default.post(name: Notification.Name.accountStatus, object: status)
             })
-            self.internalUserName = status.userName
-            
-            self.remotePort = status.port
-            
-            self.remoteHost = status.host
             let internalUserName = status.userName
             
             do {
@@ -334,12 +325,6 @@ class AccountController: NSObject {
                         DispatchQueue.main.async(execute: {() -> Void in
                             NotificationCenter.default.post(name: Notification.Name.accountStatus, object: status)
                         })
-                        
-                        self.internalUserName = status.userName
-                        
-                        self.remotePort = status.port
-                        
-                        self.remoteHost = status.host
                     
                 }, failure: { (error) in
                     if !isProduction() {
