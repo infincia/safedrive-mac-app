@@ -169,7 +169,14 @@
                         <font key="font" size="12" name="Raleway-Light"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.sharedSystemAPI.mountAtLaunch" id="zB5-ow-KsX"/>
+                        <binding destination="5W4-7o-gwy" name="value" keyPath="values.mountAtLaunch" id="Grv-g7-5hr">
+                            <dictionary key="options">
+                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                <bool key="NSValidatesImmediately" value="YES"/>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73L-gw-UJM">
