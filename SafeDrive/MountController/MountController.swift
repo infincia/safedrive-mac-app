@@ -93,6 +93,19 @@ class MountController: NSObject {
         super.init()
         self.mounted = false
         self.mounting = false
+        
+        // register SDAccountProtocol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus), name: Notification.Name.accountStatus, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails), name: Notification.Name.accountDetails, object: nil)
+        
+        // register SDVolumeEventProtocol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidMount), name: Notification.Name.volumeDidMount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount), name: Notification.Name.volumeDidUnmount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount), name: Notification.Name.volumeShouldUnmount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldMount), name: Notification.Name.volumeShouldMount, object: nil)
+        
         // register SDApplicationEventProtocol notifications
         
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
@@ -100,6 +113,10 @@ class MountController: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
         
         mountStateLoop()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func checkMount(at url: URL) -> Bool {
@@ -453,6 +470,82 @@ class MountController: NSObject {
         self.sshfsTask.launch()
     }
     
+
+extension MountController: SDAccountProtocol {
+    
+    // MARK: SDAccountProtocol
+    
+    func didSignIn(notification: Foundation.Notification) {
+        guard let currentUser = notification.object as? User else {
+            return
+        }
+        
+        self.email = currentUser.email
+        self.password = currentUser.password
+        
+        // only mount SSHFS automatically if the user set it to automount
+        if self.automount {
+            self.checkMount(at: self.currentMountURL, timeout: 30, mounted: {
+
+            }, notMounted: {
+                self.connectVolume()
+            })
+        }
+    }
+    
+    func didSignOut(notification: Foundation.Notification) {
+        self.email = nil
+        self.internalUserName = nil
+        self.password = nil
+        
+        self.remoteHost = nil
+        self.remotePort = nil
+    }
+    
+    func didReceiveAccountStatus(notification: Foundation.Notification) {
+        guard let accountStatus = notification.object as? AccountStatus else {
+            SDLog("API contract invalid: didReceiveAccountStatus in MountController")
+            return
+        }
+        
+        self.internalUserName = accountStatus.userName
+        self.remoteHost = accountStatus.host
+        self.remotePort = accountStatus.port
+    }
+    
+    func didReceiveAccountDetails(notification: Foundation.Notification) {
+
+    }
+}
+
+extension MountController: SDVolumeEventProtocol {
+
+    func volumeDidMount(notification: Notification) {
+        NSWorkspace.shared().open((self.mountURL)!)
+    }
+    
+    func volumeDidUnmount(notification: Notification) {
+        //self.openFileWarning?.window?.close()
+        //self.openFileWarning = nil
+    }
+    
+    func volumeSubprocessDidTerminate(notification: Notification) {
+    
+    }
+    
+    func volumeShouldMount(notification: Notification) {
+        self.connectVolume()
+    }
+    
+    func volumeShouldUnmount(notification: Notification) {
+        guard let askForOpenApps = notification.object as? Bool else {
+            SDLog("API contract invalid in Mount Controller.volumeShouldUnmount()")
+            return
+        }
+        self.disconnectVolume(askForOpenApps: askForOpenApps)
+    }
+}
+
 }
 
 extension MountController: SDApplicationEventProtocol {
