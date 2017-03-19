@@ -228,7 +228,7 @@ class AccountController: NSObject {
                 guard let _ = self.email, let password = self.password, let uniqueClientID = self.uniqueClientID else {
                     Thread.sleep(forTimeInterval: 1)
 
-                    return
+                    continue
                 }
 
                 if !self.signedIn && !self.signingIn {
