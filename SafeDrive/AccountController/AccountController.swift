@@ -13,8 +13,6 @@ struct User {
     let email: String
     let password: String
     let uniqueClientId: String
-    let sshUsername: String
-
 }
 
 class AccountController: NSObject {
@@ -235,7 +233,7 @@ class AccountController: NSObject {
                 }
             })
             
-            let currentUser = User(email: email, password: password, uniqueClientId: ucid, sshUsername: internalUserName)
+            let currentUser = User(email: email, password: password, uniqueClientId: ucid)
             
             NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: currentUser)
             successBlock()
