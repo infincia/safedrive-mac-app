@@ -305,15 +305,80 @@ class AccountController: NSObject {
     fileprivate func accountLoop() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             while true {
-                guard let _ = self.email else {
+                guard let email = self.email, let password = self.password, let uniqueClientID = self.uniqueClientID else {
                     Thread.sleep(forTimeInterval: 1)
+
+                    return
+                }
+
+                if !self.signedIn && !self.signingIn {
+                    self.signingIn = true
+                    self.signIn({ 
+                        self.signingIn = false
+                        self.signedIn = true
+                    }, failure: { (error) in
+                        self.signingIn = false
+                        self.signedIn = false
+                        switch error.kind {
+                        case .StateMissing:
+                            break
+                        case .Internal:
+                            break
+                        case .RequestFailure:
+                            break
+                        case .NetworkFailure:
+                            break
+                        case .Conflict:
+                            break
+                        case .BlockMissing:
+                            break
+                        case .SessionMissing:
+                            break
+                        case .RecoveryPhraseIncorrect:
+                            break
+                        case .InsufficientFreeSpace:
+                            break
+                        case .Authentication:
+                            break
+                        case .UnicodeError:
+                            break
+                        case .TokenExpired:
+                            break
+                        case .CryptoError:
+                            break
+                        case .IO:
+                            break
+                        case .SyncAlreadyInProgress:
+                            break
+                        case .RestoreAlreadyInProgress:
+                            break
+                        case .ExceededRetries:
+                            break
+                        case .KeychainError:
+                            break
+                        case .BlockUnreadable:
+                            break
+                        case .SessionUnreadable:
+                            break
+                        case .ServiceUnavailable:
+                            break
+                        case .Cancelled:
+                            break
+                        }
+                    })
                     continue
                 }
+                
                 if !self.signedIn {
                     Thread.sleep(forTimeInterval: 1)
                     continue
                 }
                 Thread.sleep(forTimeInterval: 60 * 5) // 5 minutes
+                
+                // reset the loop again if we aren't signed in for some reason
+                if !self.signedIn {
+                    continue
+                }
                 
                 self.sdk.getAccountStatus(completionQueue: DispatchQueue.main, success: { (status) in
                         DispatchQueue.main.async(execute: {() -> Void in
