@@ -181,7 +181,7 @@ typedef NS_ENUM(NSInteger, SDInstallationError) {
     SDInstallationErrorServiceDeployment         = 7001,
     SDInstallationErrorCLIDeployment             = 7002,
     SDInstallationErrorFuseDeployment            = 7003,
-
+    SDInstallationErrorCLIMissing                = 7004,
 };
 
 #pragma mark - Sync state
