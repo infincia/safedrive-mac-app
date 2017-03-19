@@ -175,7 +175,7 @@ class Installer: NSObject {
             try fileManager.copyItem(at: cli, to: destination)
         } catch let error as NSError {
             SDLog("Error copying CLI app: \(error)")
-            throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.fuseDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying CLI app: \(error)"])
+            throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying CLI app: \(error)"])
         }
     }
 }
