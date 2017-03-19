@@ -34,6 +34,12 @@
                         </allowedInputSourceLocales>
                     </secureTextFieldCell>
                     <connections>
+                        <action selector="signIn:" target="-2" id="Axx-yG-Frg"/>
+                        <binding destination="-2" name="editable" keyPath="self.signingIn" id="Scr-cH-AID">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="-2" name="value" keyPath="self.password" id="yAl-is-Ryl">
                             <dictionary key="options">
                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
@@ -55,6 +61,29 @@
                     </buttonCell>
                     <connections>
                         <action selector="signIn:" target="-2" id="u1Z-TQ-y4u"/>
+                        <binding destination="-2" name="enabled2" keyPath="self.email" previousBinding="tvq-D3-zm7" id="amP-dY-E5x">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="enabled3" keyPath="self.password" previousBinding="amP-dY-E5x" id="VUu-Wj-MoF">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="enabled" keyPath="self.signingIn" id="tvq-D3-zm7">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fgV-yU-dIi">
@@ -86,6 +115,12 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <action selector="signIn:" target="-2" id="gYn-eM-O1Q"/>
+                        <binding destination="-2" name="editable" keyPath="self.signingIn" id="fgW-5j-o9u">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="-2" name="value" keyPath="self.email" id="VfP-i8-I2x">
                             <dictionary key="options">
                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
