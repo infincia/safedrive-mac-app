@@ -15,7 +15,7 @@ NSString *const SDRealmSchemaVersionLastKey = @"SDRealmSchemaVersionLastKey";
 
 #pragma mark - Realm constants
 
-NSUInteger const SDCurrentRealmSchema = 13;
+NSUInteger const SDCurrentRealmSchema = 14;
 
 #pragma mark - NSUserDefaults keys
 
