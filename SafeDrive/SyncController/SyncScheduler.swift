@@ -429,6 +429,12 @@ extension SyncScheduler: SDAccountProtocol {
     }
     
     func didSignOut(notification: Foundation.Notification) {
+        for syncController in self.syncControllers {
+            syncController.stopSyncTask {
+                return
+            }
+        }
+        
         self.email = nil
         self.password = nil
         self.uniqueClientID = nil
