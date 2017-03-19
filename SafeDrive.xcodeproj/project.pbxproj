@@ -64,8 +64,8 @@
 		AA6E27341D8839DC00038019 /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E27331D8839DC00038019 /* SyncController.swift */; };
 		AA6E27351D8839DC00038019 /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E27331D8839DC00038019 /* SyncController.swift */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
-		AA7442381E0517D5004D8518 /* SafeDriveSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		AA74423A1E0517D8004D8518 /* SafeDriveSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA7442381E0517D5004D8518 /* ReferenceProxy in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		AA74423A1E0517D8004D8518 /* ReferenceProxy in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA76DC211C8762A9007B320E /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC201C8762A9007B320E /* Installer.swift */; };
 		AA76DC231C8779D2007B320E /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */; };
 		AA76DC291C879076007B320E /* WelcomeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA76DC281C879076007B320E /* WelcomeWindow.xib */; };
@@ -216,7 +216,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */,
-				AA74423A1E0517D8004D8518 /* SafeDriveSDK.framework in CopyFiles */,
+				AA74423A1E0517D8004D8518 /* ReferenceProxy in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,7 +356,7 @@
 			files = (
 				AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */,
 				856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */,
-				AA7442381E0517D5004D8518 /* SafeDriveSDK.framework in Frameworks */,
+				AA7442381E0517D5004D8518 /* ReferenceProxy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,8 +749,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA3168301A191B72006CC0EB /* Build configuration list for PBXNativeTarget "SafeDrive" */;
 			buildPhases = (
-				AA7FE7AD1E3DA3FC007EDF70 /* SwiftLint */,
 				8DE689EEFEE78B3473A2BF65 /* [CP] Check Pods Manifest.lock */,
+				AA7FE7AD1E3DA3FC007EDF70 /* SwiftLint */,
 				AAFEF7EE1C6FC361001C4358 /* Update versions */,
 				AA31680F1A191B72006CC0EB /* Sources */,
 				AA3168101A191B72006CC0EB /* Frameworks */,
