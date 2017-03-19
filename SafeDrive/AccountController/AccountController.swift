@@ -368,5 +368,9 @@ extension AccountController: SDApplicationEventProtocol {
             
             return
         }
+        
+        self.currentUser = user
+        self.email = user.email
+        self.password = user.password
     }
 }
