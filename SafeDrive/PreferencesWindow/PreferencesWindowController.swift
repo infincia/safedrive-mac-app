@@ -843,6 +843,7 @@ extension PreferencesWindowController: SDAccountProtocol {
     func didSignOut(notification: Foundation.Notification) {
         self.syncFolderToken = nil
         self.syncTaskToken = nil
+        self.folders = nil
         self.realm = nil
         self.email = nil
         self.password = nil
