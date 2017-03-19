@@ -143,7 +143,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     fileprivate var folders: Results<SyncFolder>?
     
-    fileprivate var realm: Realm!
+    fileprivate var realm: Realm?
     
     fileprivate var uniqueClientID: String?
     
@@ -450,7 +450,8 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     @IBAction func readSyncFolders(_ sender: AnyObject) {
-        guard let uniqueClientID = self.uniqueClientID else {
+        guard let uniqueClientID = self.uniqueClientID,
+        let realm = self.realm else {
             return
         }
         self.spinner.startAnimation(self)
@@ -479,26 +480,26 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                 
                 // try to retrieve and modify existing record if possible, avoids overwriting preferences only stored in entity
                 // while still ensuring entities will have a default set on them for things like sync time
-                var syncFolder = self.realm.objects(SyncFolder.self).filter("uniqueID == %@", folderId).last
+                var syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", folderId).last
                 
                 if syncFolder == nil {
                     syncFolder = SyncFolder(name: folderName, path: folderPath, uniqueID: Int32(folderId), encrypted: encrypted)
                 }
                 
                 // swiftlint:disable force_try
-                try! self.realm.write {
+                try! realm.write {
                     
                     syncFolder!.uniqueClientID = uniqueClientID
                     
                     // this is the only place where the `added` property should be set on SyncFolders
                     syncFolder!.added = addedDate
                     
-                    self.realm.add(syncFolder!, update: true)
+                    realm.add(syncFolder!, update: true)
                 }
                 // swiftlint:enable force_try
 
             }
-            self.realm.refresh()
+            realm.refresh()
             self.reload()
             
             self.spinner.stopAnimation(self)
@@ -641,7 +642,8 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     @IBAction func setSyncFrequencyForFolder(_ sender: AnyObject) {
         guard let uniqueClientID = self.uniqueClientID,
-              let folders = self.folders else {
+              let folders = self.folders,
+               let realm = self.realm else {
             return
         }
         
@@ -692,7 +694,8 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     @IBAction func setSyncTime(_ sender: AnyObject) {
         guard let uniqueClientID = self.uniqueClientID,
-              let folders = self.folders else {
+              let folders = self.folders,
+              let realm = self.realm else {
             return
         }
         
@@ -838,6 +841,9 @@ extension PreferencesWindowController: SDAccountProtocol {
     }
     
     func didSignOut(notification: Foundation.Notification) {
+        self.syncFolderToken = nil
+        self.syncTaskToken = nil
+        self.realm = nil
         self.email = nil
         self.password = nil
         self.internalUserName = nil
@@ -1004,7 +1010,8 @@ extension PreferencesWindowController: NSTableViewDelegate {
 
     func tableViewSelectionDidChange(_ notification: Notification) {
         guard let folders = self.folders,
-              let uniqueClientID = self.uniqueClientID else {
+              let uniqueClientID = self.uniqueClientID,
+              let realm = self.realm else {
             return
         }
         
@@ -1273,11 +1280,11 @@ extension PreferencesWindowController: SDApplicationEventProtocol {
         
         self.realm = realm
 
-        self.syncFolderToken = self.realm.objects(SyncFolder.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
+        self.syncFolderToken = realm.objects(SyncFolder.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
             self?.reload()
         }
         
-        self.syncTaskToken = self.realm.objects(SyncTask.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
+        self.syncTaskToken = realm.objects(SyncTask.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
             self?.reload()
         }
 }
