@@ -122,6 +122,8 @@ extension AppDelegate: NSApplicationDelegate {
         // register SDApplicationEventProtocol notifications
         
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
         
         // register SDAccountProtocol notifications
         
@@ -305,6 +307,14 @@ extension AppDelegate: SDApplicationControlProtocol {
 extension AppDelegate: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
         
+    }
+    
+    func applicationDidConfigureClient(notification: Notification) {
+        //
+    }
+    
+    func applicationDidConfigureUser(notification: Notification) {
+        //
     }
 }
 

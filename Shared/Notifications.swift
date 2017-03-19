@@ -25,6 +25,8 @@ extension Notification.Name {
     
     
     static let applicationDidConfigureRealm = Notification.Name("applicationDidConfigureRealm")
+    static let applicationDidConfigureClient = Notification.Name("applicationDidConfigureClient")
+    static let applicationDidConfigureUser = Notification.Name("applicationDidConfigureUser")
 
     static let apiDidEnterMaintenancePeriod = Notification.Name("apiDidEnterMaintenancePeriodNotification")
     static let apiDidBecomeReachable = Notification.Name("apiDidBecomeReachableNotification")
