@@ -142,6 +142,9 @@ class AccountController: NSObject {
             
         }
         
+        Crashlytics.sharedInstance().setUserEmail(email)
+
+        
         do {
             try self.sdk.setKeychainItem(withUser: email, service: accountCredentialDomain(), secret: password)
         } catch let keychainError as NSError {
