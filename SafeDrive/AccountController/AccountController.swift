@@ -109,7 +109,6 @@ class AccountController: NSObject {
         self.signOut()
         
         
-        Crashlytics.sharedInstance().setUserEmail(email)
 
         
         do {
@@ -121,15 +120,16 @@ class AccountController: NSObject {
             failureBlock(e)
             return
         }
-        Crashlytics.sharedInstance().setUserEmail(email)
         
         let macAddress: String = SDSystemAPI.shared().en0MAC()!
         let machineIdConcatenation: String = macAddress + email
         let ucid: String = HKTHashProvider.sha256(machineIdConcatenation.data(using: String.Encoding.utf8))
         
-        SDErrorHandlerSetUniqueClientId(ucid)
-        Crashlytics.sharedInstance().setUserIdentifier(ucid)
 
+        SDErrorHandlerSetUniqueClientId(uniqueClientID)
+
+        Crashlytics.sharedInstance().setUserEmail(email)
+        Crashlytics.sharedInstance().setUserIdentifier(uniqueClientID)
         
         
         self.sdk.login(email, password: password, unique_client_id: ucid, completionQueue: self.sdkCompletionQueue, success: { (status) -> Void in
