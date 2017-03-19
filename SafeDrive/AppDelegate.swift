@@ -238,6 +238,13 @@ extension AppDelegate: SDApplicationEventProtocol {
             
             let uniqueClientURL = groupURL.appendingPathComponent(uniqueClientID)
             
+            do {
+                try FileManager.default.createDirectory(at: uniqueClientURL, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                SDLog("Failed to create group container, this is a fatal error")
+                Crashlytics.sharedInstance().crash()
+            }
+            
             let dbURL = uniqueClientURL.appendingPathComponent("sync.realm")
             
             let newdbURL = dbURL.appendingPathExtension("new")
