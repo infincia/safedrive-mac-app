@@ -484,7 +484,7 @@ extension SyncScheduler: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureUser(notification: Notification) {
-        guard let user = notification.object as? User else {
+        guard let _ = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in SyncScheduler")
             
             return

@@ -699,7 +699,7 @@ extension MountController: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureClient(notification: Notification) {
-        guard let uniqueClientID = notification.object as? String else {
+        guard let _ = notification.object as? String else {
             SDLog("API contract invalid: applicationDidConfigureClient in MountController")
             
             return
@@ -708,7 +708,7 @@ extension MountController: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureUser(notification: Notification) {
-        guard let user = notification.object as? User else {
+        guard let _ = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in MountController")
             
             return

@@ -915,7 +915,7 @@ extension PreferencesWindowController: NSOpenSavePanelDelegate {
 extension PreferencesWindowController: NSTableViewDelegate {
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let uniqueClientID = self.uniqueClientID,
+        guard let _ = self.uniqueClientID,
               let folders = self.folders else {
             return nil
         }
@@ -1274,7 +1274,7 @@ extension PreferencesWindowController: SDApplicationEventProtocol {
 }
     
     func applicationDidConfigureClient(notification: Notification) {
-        guard let uniqueClientID = notification.object as? String else {
+        guard let _ = notification.object as? String else {
             SDLog("API contract invalid: applicationDidConfigureClient in PreferencesWindowController")
             
             return
@@ -1283,7 +1283,7 @@ extension PreferencesWindowController: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureUser(notification: Notification) {
-        guard let user = notification.object as? User else {
+        guard let _ = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in PreferencesWindowController")
             
             return
