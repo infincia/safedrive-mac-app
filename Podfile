@@ -5,8 +5,8 @@ def shared_pods
     pod 'Crashlytics', '~>  3.8.3'
     #pod 'SwiftDate', git: 'https://github.com/malcommac/SwiftDate.git', branch: 'feature/swift-3.0'
     pod 'RegexKitLite', '~> 4.0'
-    pod 'Realm','~> 2.4.1'
-    pod 'RealmSwift', '~> 2.4.1'
+    pod 'Realm','~> 2.4.4'
+    pod 'RealmSwift', '~> 2.4.4'
     pod 'FontAwesome.swift', :git => 'https://github.com/infincia/FontAwesome.swift', :branch => 'osx'
 end
 
@@ -30,7 +30,7 @@ target 'SafeDrive' do
     pod 'IYLoginItem', '~> 0.1'
     pod 'DCOAboutWindow', '~> 0.2.0'
     pod 'LetsMove', '~> 1.22'
-    pod 'Sparkle', '~> 1.16.0'
+    pod 'Sparkle', '~> 1.17.0'
     pod 'STPrivilegedTask', '~> 1.0.1'
     pod 'TSMarkdownParser', '~> 2.1.2'
     target 'SafeDriveTests' do
