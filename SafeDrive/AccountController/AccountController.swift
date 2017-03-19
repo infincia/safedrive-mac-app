@@ -105,21 +105,6 @@ class AccountController: NSObject {
     }
     
     func signIn(_ successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: SDKError) -> Void) {
-        
-        
-        
-
-        
-        do {
-            try self.sdk.setKeychainItem(withUser: email, service: accountCredentialDomain(), secret: password)
-        } catch let keychainError as NSError {
-            let e = SDKError(message: keychainError.localizedDescription, kind: .KeychainError)
-            
-            SDErrorHandlerReport(keychainError)
-            failureBlock(e)
-            return
-        }
-        
         guard let email = self.email, let password = self.password, let uniqueClientID = self.uniqueClientID else {
             return
         }
