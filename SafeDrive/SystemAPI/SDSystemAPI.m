@@ -16,8 +16,6 @@
 #import "SDSystemAPI.h"
 #import "NSBundle+LoginItem.h"
 
-#import "MCSMKeychainItem.h"
-
 @import AppKit;
 @import DiskArbitration; // May be necessary if higher level APIs don't work out
 
@@ -140,80 +138,6 @@
         }
         return false;
     }
-    return true;
-}
-
--(NSDictionary<NSString *, NSString *>* _Nullable)retrieveCredentialsFromKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nullable)account {
-    NSDictionary *credentials = nil;
-    NSError *error;
-    
-    MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
-                                                                                    account:account
-                                                                                 attributes:nil
-                                                                                      error:&error];
-    if (error) {
-        //SDLog(@"Failure retrieving %@ credentials: %@", service, error.localizedDescription);
-    }
-    else {
-        credentials = @{@"account": keychainItem.account, @"password": keychainItem.password };
-    }
-    return credentials;
-}
-
--(BOOL)insertCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password error:(NSError * _Nullable * _Nullable)error {
-    
-    MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
-                                                                                    account:account
-                                                                                 attributes:nil
-                                                                                      error:NULL];
-    if (keychainItem) {
-        BOOL sameUser = [account isEqualToString:keychainItem.account];
-        BOOL samePass = [password isEqualToString:keychainItem.password];
-        /* don't do anything if credentials haven't changed */
-        if (sameUser && samePass) return true;
-        NSError *keychainRemoveError;
-        [keychainItem removeFromKeychainWithError:&keychainRemoveError];
-        if (keychainRemoveError) {
-            CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainRemoveError.code, NULL);
-            NSString *keychainErrorString = (id) CFBridgingRelease(err);
-            NSLog(@"Keychain remove error: %@, query: %@", keychainErrorString, keychainRemoveError.userInfo[MCSMKeychainItemQueryKey]);
-            *error = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
-            return false;
-        }
-    }
-    NSError *keychainInsertError;
-    [MCSMGenericKeychainItem genericKeychainItemWithService:service
-                                                    account:account
-                                                 attributes:nil
-                                                   password:password
-                                                      error:&keychainInsertError];
-    if (keychainInsertError) {
-        CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainInsertError.code, NULL);
-        NSString *keychainErrorString = (id) CFBridgingRelease(err);
-        NSLog(@"Keychain insert credential error: %@, query: %@", keychainErrorString, keychainInsertError.userInfo[MCSMKeychainItemQueryKey]);
-        *error = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorAddKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
-        return false;
-    }
-    
-    return true;
-}
-
--(BOOL)removeCredentialsInKeychainForService:(NSString * _Nonnull)service account:(NSString * _Nullable)account error:(NSError * _Nullable * _Nullable)error {
-    
-    MCSMKeychainItem *keychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:service
-                                                                                    account:account
-                                                                                 attributes:nil
-                                                                                      error:NULL];
-    NSError *keychainRemoveError;
-    [keychainItem removeFromKeychainWithError:&keychainRemoveError];
-    if (keychainRemoveError) {
-        CFStringRef err = SecCopyErrorMessageString((OSStatus)keychainRemoveError.code, NULL);
-        NSString *keychainErrorString = (id) CFBridgingRelease(err);
-        NSLog(@"Keychain remove error: %@, query: %@", keychainErrorString, keychainRemoveError.userInfo[MCSMKeychainItemQueryKey]);
-        *error = [NSError errorWithDomain:SDErrorDomain code:SDSystemErrorRemoveKeychainItemFailed userInfo:@{NSLocalizedDescriptionKey: keychainErrorString}];
-        return false;
-    }
-    
     return true;
 }
 
