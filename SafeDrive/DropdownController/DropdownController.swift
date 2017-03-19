@@ -6,7 +6,7 @@ import Cocoa
 
 import SafeDriveSDK
 
-class DropdownController: NSObject, SDMountStateProtocol, SDAccountProtocol {
+class DropdownController: NSObject {
     var statusItem: NSStatusItem?
     @IBOutlet var statusItemMenu: NSMenu!
     @IBOutlet var connectMenuItem: NSMenuItem!
@@ -69,8 +69,9 @@ class DropdownController: NSObject, SDMountStateProtocol, SDAccountProtocol {
     fileprivate func enableMenuItems(_ enabled: Bool) {
         self.preferencesMenuItem.isEnabled = enabled
     }
-    
-    // MARK: SDAccountProtocol
+}
+
+extension DropdownController: SDAccountProtocol {
     
     func didSignIn(notification: Notification) {
         guard let currentUser = notification.object as? User else {
@@ -89,7 +90,9 @@ class DropdownController: NSObject, SDMountStateProtocol, SDAccountProtocol {
     func didReceiveAccountStatus(notification: Notification) {
     }
     
-    // MARK: SDMountStateProtocol methods
+}
+
+extension DropdownController: SDMountStateProtocol {
     
     func mountStateMounted(notification: Notification) {
         self.connectMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
