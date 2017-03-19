@@ -294,6 +294,17 @@
                         <action selector="loadAccountPage:" target="-2" id="wm6-58-Jql"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OES-vR-a0o">
+                    <rect key="frame" x="14" y="39" width="323" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Sign Out" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" inset="2" id="sf3-7Q-HLW">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="signOut:" target="-2" id="Jjb-mI-dU4"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="692.5" y="338.5"/>
         </view>

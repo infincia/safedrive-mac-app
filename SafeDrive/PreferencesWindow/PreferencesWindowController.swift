@@ -253,6 +253,10 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         pasteBoard.writeObjects([recoveryPhraseField.stringValue as NSString])
     }
     
+    @IBAction func signOut(_ sender: AnyObject) {
+        AccountController.sharedAccountController.signOut()
+    }
+    
     @IBAction func loadAccountPage(_ sender: AnyObject) {
         // Open the safedrive account page in users default browser
         let url = URL(string: "https://\(webDomain())/#/en/dashboard/account/details")
