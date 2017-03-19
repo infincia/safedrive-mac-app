@@ -280,6 +280,28 @@ extension AppDelegate: SDApplicationEventProtocol {
                 try! fileManager.moveItem(at: newdbURL, to: dbURL)
                 // swiftlint:enable force_try
 
+                
+                /*
+                 Reset all sync folders at startup.
+                 
+                 Prevents the following issue:
+                 
+                 1) App starts syncing FolderA, sets its "syncing" field to true in the database
+                 2) App exits/crashes during sync
+                 3) App starts again
+                 4) App refuses to sync folderA again because the "syncing" field is still set to true
+                 
+                 We can do this because sync tasks ALWAYS exit when the app does, so it is not possible for a sync to have been
+                 running if the app wasn't.
+                 
+                 */
+                try! realm.write {
+                    let syncFolders = realm.objects(SyncFolder.self).filter("uniqueClientID == '\(uniqueClientID)'")
+                    syncFolders.setValue(false, forKey: "syncing")
+                    syncFolders.setValue(false, forKey: "restoring")
+                    syncFolders.setValue(nil, forKey: "currentSyncUUID")
+                }
+                
             }
             
             DispatchQueue.main.async {
