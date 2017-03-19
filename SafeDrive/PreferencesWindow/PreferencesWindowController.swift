@@ -1260,7 +1260,7 @@ extension PreferencesWindowController: RestoreSelectionDelegate {
 
 extension PreferencesWindowController: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
-        guard let realm = self.realm else {
+        guard let realm = try? Realm() else {
             SDLog("failed to get realm!!!")
             Crashlytics.sharedInstance().crash()
             return
