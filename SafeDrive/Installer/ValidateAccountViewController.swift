@@ -24,6 +24,8 @@ class ValidateAccountViewController: NSViewController {
     @IBOutlet var email: String?
     @IBOutlet var password: String?
     
+    fileprivate var isInteractiveLogin = false
+    
     fileprivate var prompted = false
 
     override func viewDidLoad() {
@@ -75,6 +77,7 @@ class ValidateAccountViewController: NSViewController {
                 if !self.prompted {
                     self.prompted = true
                     DispatchQueue.main.async {
+                       self.isInteractiveLogin = true
                         self.delegate?.needsAccount()
                     }
                 }
@@ -117,7 +120,9 @@ class ValidateAccountViewController: NSViewController {
         }) { (error) in
             self.spinner.stopAnimation(self)
             self.delegate?.didFail(error: error, uniqueClientID: nil)
-            self.delegate?.needsAccount()
+            if !self.isInteractiveLogin {
+                self.delegate?.needsAccount()
+            }
         }
     }
     
