@@ -238,7 +238,10 @@ extension AppDelegate: SDApplicationEventProtocol {
             let groupURL = storageURL()
 
             
-            let dbURL = groupURL.appendingPathComponent("sync.realm")
+            let uniqueClientURL = groupURL.appendingPathComponent(uniqueClientID)
+            
+            let dbURL = uniqueClientURL.appendingPathComponent("sync.realm")
+            
             let newdbURL = dbURL.appendingPathExtension("new")
             
             let config = Realm.Configuration(
