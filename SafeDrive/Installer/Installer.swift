@@ -36,6 +36,11 @@ class Installer: NSObject {
         return false
     }
     
+    fileprivate var isCLIAppInstalled: Bool {
+        let destination = URL(string: "file://usr/local/bin/safedrive")!
+        return FileManager.default.fileExists(atPath: destination.path)
+    }
+    
     var dependenciesValidated: Bool {
         return self.isOSXFUSEInstalled
     }
