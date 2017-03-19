@@ -21,7 +21,12 @@ class MountController: NSObject {
     
     static let shared = MountController()
     
+    var email: String?
+    var internalUserName: String?
+    var password: String?
     
+    var remoteHost: String?
+    var remotePort: UInt16?
     
     var currentVolumeName: String {
         if let volumeName = UserDefaults.standard.string(forKey: SDCurrentVolumeNameKey) {
