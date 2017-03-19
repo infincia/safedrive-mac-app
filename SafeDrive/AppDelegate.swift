@@ -119,6 +119,10 @@ extension AppDelegate: NSApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.applicationShouldOpenSyncWindow(_:)), name: Notification.Name.applicationShouldOpenSyncWindow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldToggleMountState), name: Notification.Name.applicationShouldToggleMountState, object: nil)
         
+        // register SDApplicationEventProtocol notifications
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
+        
         // register SDAccountProtocol notifications
         
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
@@ -296,9 +300,11 @@ extension AppDelegate: SDApplicationControlProtocol {
             }
         }
     }
-    
+}
+
+extension AppDelegate: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
-            
+        
     }
 }
 
