@@ -53,57 +53,6 @@
 
 #pragma mark - System information
 
-- (NSString * _Nullable)machineSerialNumber {
-    NSString *serial = nil;
-    io_service_t platformExpert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("IOPlatformExpertDevice"));
-    if (platformExpert) {
-        CFTypeRef serialNumberAsCFString = IORegistryEntryCreateCFProperty(platformExpert, CFSTR(kIOPlatformSerialNumberKey), kCFAllocatorDefault, 0);
-        if (serialNumberAsCFString) {
-            serial = CFBridgingRelease(serialNumberAsCFString);
-        }
-        
-        IOObjectRelease(platformExpert);
-    }
-    return serial;
-}
-
--(NSString * _Nullable)en0MAC {
-    int	   mib[6];
-    size_t len;
-    char   *buf;
-    unsigned char		*ptr;
-    struct if_msghdr	*ifm;
-    struct sockaddr_dl	*sdl;
-    NSString *mac;
-    
-    mib[0] = CTL_NET;
-    mib[1] = AF_ROUTE;
-    mib[2] = 0;
-    mib[3] = AF_LINK;
-    mib[4] = NET_RT_IFLIST;
-    mib[5] = if_nametoindex("en0");
-    
-    if (sysctl(mib, 6, NULL, &len, NULL, 0) < 0) {
-        return nil;
-    }
-    
-    if ((buf = malloc(len)) == NULL) {
-        return nil;
-    }
-    
-    if (sysctl(mib, 6, buf, &len, NULL, 0) < 0) {
-        free(buf);
-        return nil;
-    }
-    
-    ifm = (struct if_msghdr *)buf;
-    sdl = (struct sockaddr_dl *)(ifm + 1);
-    ptr = (unsigned char *)LLADDR(sdl);
-    mac = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x", *ptr, *(ptr+1), *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5)];
-    free(buf);
-    return mac;
-}
-
 -(NSString * _Nullable)currentOSVersion {
     NSDictionary *systemVersionDictionary = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
     

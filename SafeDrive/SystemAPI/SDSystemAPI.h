@@ -8,10 +8,6 @@
 
 +(SDSystemAPI * _Nonnull)sharedAPI;
 
--(NSString * _Nullable)machineSerialNumber;
-
--(NSString * _Nullable)en0MAC;
-
 -(NSString * _Nullable)currentOSVersion;
 
 -(BOOL)autostart;
