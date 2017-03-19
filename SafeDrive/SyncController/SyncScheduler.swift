@@ -437,6 +437,7 @@ extension SyncScheduler: SDAccountProtocol {
             }
         }
         
+        self.realm = nil
         self.email = nil
         self.password = nil
         self.uniqueClientID = nil
