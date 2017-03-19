@@ -37,6 +37,10 @@ class RecoveryPhraseWindowController: NSWindowController {
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
     
+    @IBAction func closeWindow(sender: AnyObject?) {
+        self.close()
+    }
+    
     @IBAction func checkRecoveryPhrase(sender: AnyObject?) {
         self.spinner.startAnimation(self)
         self.errorField.stringValue = ""
