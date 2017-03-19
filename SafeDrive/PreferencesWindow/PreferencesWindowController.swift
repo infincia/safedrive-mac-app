@@ -748,12 +748,16 @@ extension PreferencesWindowController: SDAccountProtocol {
             Crashlytics.sharedInstance().crash()
             return
         }
+        guard let uniqueClientID = self.uniqueClientID else {
+            SDLog("API contract invalid: didSignIn in PreferencesWindowController")
+            return
+        }
+        
         guard let currentUser = notification.object as? User else {
             SDLog("API contract invalid: didSignIn in PreferencesWindowController")
             return
         }
-        let uniqueClientID = currentUser.uniqueClientId
-        self.uniqueClientID = uniqueClientID
+        
         self.email = currentUser.email
         self.password = currentUser.password
         

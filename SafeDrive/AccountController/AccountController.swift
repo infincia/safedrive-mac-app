@@ -12,7 +12,6 @@ import SafeDriveSDK
 struct User {
     let email: String
     let password: String
-    let uniqueClientId: String
 }
 
 class AccountController: NSObject {
@@ -140,7 +139,7 @@ class AccountController: NSObject {
                 }
             })
             
-            let currentUser = User(email: email, password: password, uniqueClientId: uniqueClientID)
+            let currentUser = User(email: email, password: password)
             
             NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: currentUser)
             successBlock()

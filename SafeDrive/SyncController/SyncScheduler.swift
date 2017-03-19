@@ -421,11 +421,8 @@ extension SyncScheduler: SDAccountProtocol {
             SDLog("API contract invalid: didSignIn in SyncScheduler")
             return
         }
-        let uniqueClientID = currentUser.uniqueClientId
-        self.uniqueClientID = uniqueClientID
         self.email = currentUser.email
         self.password = currentUser.password
-        
     }
     
     func didSignOut(notification: Foundation.Notification) {
