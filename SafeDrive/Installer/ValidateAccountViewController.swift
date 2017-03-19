@@ -61,15 +61,17 @@ class ValidateAccountViewController: NSViewController {
         
         
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
-            while true {
-                if let currentUser = try? self.sdk.getKeychainItem(withUser: "currentuser", service: currentUserDomain()),
-                    let password = try? self.sdk.getKeychainItem(withUser: currentUser, service: accountCredentialDomain()) {
-                    DispatchQueue.main.async {
-                        self.email = currentUser
-                        self.password = password
-                    }
-                    break
+            if let currentUser = try? self.sdk.getKeychainItem(withUser: "currentuser", service: currentUserDomain()),
+                let password = try? self.sdk.getKeychainItem(withUser: currentUser, service: accountCredentialDomain()) {
+                DispatchQueue.main.async {
+                    self.email = currentUser
+                    self.password = password
+                    self.signIn(nil)
                 }
+                return
+            }
+            
+            while true {
                 if !self.prompted {
                     self.prompted = true
                     DispatchQueue.main.async {
@@ -77,10 +79,6 @@ class ValidateAccountViewController: NSViewController {
                     }
                 }
                 Thread.sleep(forTimeInterval: 1)
-            }
-
-            DispatchQueue.main.async {
-                self.signIn(nil)
             }
         }
     }
