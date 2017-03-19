@@ -166,14 +166,6 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     convenience init() {
         self.init(windowNibName: "PreferencesWindow")
         self.recoveryPhraseEntry = RecoveryPhraseWindowController(delegate: self)
-        
-        guard let realm = try? Realm() else {
-            SDLog("failed to create realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
-        
-        self.realm = realm
     }
     
     // Window handling
@@ -201,15 +193,6 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
-        
-        
-        self.syncFolderToken = self.realm.objects(SyncFolder.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
-            self?.reload()
-        }
-        
-        self.syncTaskToken = self.realm.objects(SyncTask.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
-            self?.reload()
-        }
         
         self.scheduleSelection.selectItem(at: -1)
         
@@ -310,8 +293,8 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                 let folderPath = panel.url!.path
                 
                 self.sdk.addFolder(folderName, path: folderPath, completionQueue: DispatchQueue.main, success: { (folderID) in
-                    guard let realm = try? Realm() else {
-                        SDLog("failed to create realm!!!")
+                    guard let realm = self.realm else {
+                        SDLog("failed to get realm!!!")
                         Crashlytics.sharedInstance().crash()
                         return
                     }
@@ -377,8 +360,8 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                 return
             }
             self.spinner.startAnimation(self)
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
+            guard let realm = self.realm else {
+                SDLog("failed to get realm!!!")
                 Crashlytics.sharedInstance().crash()
                 return
             }
@@ -407,8 +390,8 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                 syncController.sftpOperation(op, remoteDirectory: remote, password: localPassword, success: {
                     
                     self.sdk.removeFolder(uniqueID, completionQueue: DispatchQueue.main, success: { 
-                        guard let realm = try? Realm() else {
-                            SDLog("failed to create realm!!!")
+                        guard let realm = self.realm else {
+                            SDLog("failed to get realm!!!")
                             Crashlytics.sharedInstance().crash()
                             return
                         }
@@ -754,6 +737,11 @@ extension PreferencesWindowController: SDAccountProtocol {
     // MARK: SDAccountProtocol
     
     func didSignIn(notification: Foundation.Notification) {
+        guard let realm = self.realm else {
+            SDLog("failed to get realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
         guard let currentUser = notification.object as? User else {
             SDLog("API contract invalid: didSignIn in PreferencesWindowController")
             return
@@ -900,8 +888,8 @@ extension PreferencesWindowController: NSOpenSavePanelDelegate {
         }
         
         // check if the candidate sync path is a parent or subdirectory of an existing registered sync folder
-        guard let realm = try? Realm() else {
-            SDLog("failed to create realm!!!")
+        guard let realm = self.realm else {
+            SDLog("failed to get realm!!!")
             let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open local database, this is a fatal error", comment: "")]
             throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
         }
@@ -1260,8 +1248,22 @@ extension PreferencesWindowController: RestoreSelectionDelegate {
 
 extension PreferencesWindowController: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
+        guard let realm = self.realm else {
+            SDLog("failed to get realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
         
-    }
+        self.realm = realm
+
+        self.syncFolderToken = self.realm.objects(SyncFolder.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
+            self?.reload()
+        }
+        
+        self.syncTaskToken = self.realm.objects(SyncTask.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
+            self?.reload()
+        }
+}
     
     func applicationDidConfigureClient(notification: Notification) {
         guard let uniqueClientID = notification.object as? String else {
