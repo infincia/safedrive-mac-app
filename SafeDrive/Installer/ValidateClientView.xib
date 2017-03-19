@@ -126,13 +126,12 @@
                         </subviews>
                     </view>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.hasRegisteredClients" id="vXE-FQ-1wy">
+                        <binding destination="-2" name="hidden" keyPath="self.hasRegisteredClients" id="ywN-LL-eqj">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="1"/>
                                 <integer key="NSNullPlaceholder" value="1"/>
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
                     </connections>
@@ -157,13 +156,12 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.hasRegisteredClients" previousBinding="GWU-RO-4T0" id="aef-eX-Zyq">
+                        <binding destination="-2" name="hidden" keyPath="self.hasRegisteredClients" previousBinding="GWU-RO-4T0" id="GW6-3C-xhG">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="0"/>
                                 <integer key="NSNoSelectionPlaceholder" value="0"/>
                                 <integer key="NSNotApplicablePlaceholder" value="0"/>
                                 <integer key="NSNullPlaceholder" value="0"/>
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="enabled" keyPath="self.hasRegisteredClients" id="GWU-RO-4T0">
@@ -189,7 +187,11 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.hasRegisteredClients" id="gHv-x5-hFD"/>
+                        <binding destination="-2" name="hidden" keyPath="self.hasRegisteredClients" id="mj2-Ko-A88">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </textField>
                 <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XQ-az-dtV">
@@ -201,11 +203,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.hasRegisteredClients" id="nSN-RU-QYv">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
+                        <binding destination="-2" name="hidden" keyPath="self.hasRegisteredClients" id="vcE-oo-N6O"/>
                     </connections>
                 </textField>
             </subviews>
