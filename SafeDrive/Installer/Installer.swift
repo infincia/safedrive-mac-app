@@ -161,19 +161,18 @@ class Installer: NSObject {
     
     func installCLI() throws {
         let cli = Bundle.main.bundleURL.appendingPathComponent("Contents/Resources/safedrive", isDirectory: false)
-        let destination = URL(string: "file://usr/local/bin/safedrive")
         
         let fileManager: FileManager = FileManager.default
-        if FileManager.default.fileExists(atPath: cli.path) {
+        if FileManager.default.fileExists(atPath: destination.path) {
             do {
-                try FileManager.default.removeItem(at: cli)
+                try FileManager.default.removeItem(at: destination)
             } catch let error as NSError {
                 SDLog("Error removing old CLI app: \(error)")
                 throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error removing old CLI app: \(error)"])
             }
         }
         do {
-            try fileManager.copyItem(at: cli, to: destination!)
+            try fileManager.copyItem(at: cli, to: destination)
         } catch let error as NSError {
             SDLog("Error copying CLI app: \(error)")
             throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.fuseDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying CLI app: \(error)"])
