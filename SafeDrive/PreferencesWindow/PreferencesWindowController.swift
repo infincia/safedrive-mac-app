@@ -330,6 +330,14 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         guard let uniqueClientID = self.uniqueClientID else {
             return
         }
+        guard let _ = self.email,
+            let localPassword = self.password,
+            let localInternalUserName = self.internalUserName,
+            let localPort = self.remotePort,
+            let localHost = self.remoteHost else {
+            SDLog("credentials unavailable, cancelling remove sync folder")
+            return
+        }
         let button: NSButton = sender as! NSButton
         let uniqueID: UInt64 = UInt64(button.tag)
         SDLog("Deleting sync folder ID: %lu", uniqueID)
