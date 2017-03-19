@@ -22,6 +22,8 @@ class AccountController: NSObject {
     
     var accountStatus: SDAccountStatus = .unknown
     
+    var uniqueClientID: String?
+    
     var email: String?
     var password: String?
     fileprivate let userQueue = DispatchQueue(label: "io.safedrive.accountQueue")
@@ -359,6 +361,7 @@ extension AccountController: SDApplicationEventProtocol {
             return
         }
         
+        self.uniqueClientID = uniqueClientID
     }
     
     func applicationDidConfigureUser(notification: Notification) {
