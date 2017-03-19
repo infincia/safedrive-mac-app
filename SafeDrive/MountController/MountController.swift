@@ -145,8 +145,8 @@ class MountController: NSObject {
                 if self.checkMount(at: url) {
                     DispatchQueue.main.async {
                         mountedBlock()
-                        return
                     }
+                    return
                 }
                 Thread.sleep(forTimeInterval: 1)
             }
