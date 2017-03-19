@@ -504,7 +504,7 @@ class MountController: NSObject {
             
             
         }, failure: { (_, mountError) in
-            SDLog("SafeDrive startMountTaskWithVolumeName failure in mount controller")
+            SDLog("SafeDrive startMountTaskWithVolumeName failure in mount controller: \(mountError)")
             SDErrorHandlerReport(mountError)
             self.mounting = false
             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
