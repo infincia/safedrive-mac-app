@@ -87,13 +87,6 @@ class AccountController: NSObject {
     override init() {
         super.init()
         
-        if let currentUser = try? self.sdk.getKeychainItem(withUser: "currentuser", service: currentUserDomain()),
-            let password = try? self.sdk.getKeychainItem(withUser: currentUser, service: accountCredentialDomain()) {
-            self.email = currentUser
-            self.password = password
-            
-            Crashlytics.sharedInstance().setUserEmail(self.email)
-        }
         // register SDApplicationEventProtocol notifications
         
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
