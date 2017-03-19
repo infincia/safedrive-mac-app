@@ -843,6 +843,7 @@ extension PreferencesWindowController: SDAccountProtocol {
         self.internalUserName = nil
         self.remoteHost = nil
         self.remotePort = nil
+        self.close()
     }
     
     func didReceiveAccountStatus(notification: Foundation.Notification) {
