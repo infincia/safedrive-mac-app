@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A319" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="WelcomeWindowController">
             <connections>
-                <outlet property="next" destination="YXJ-Dg-cuS" id="TrK-eg-UuG"/>
-                <outlet property="spinner" destination="ZPo-A6-nXS" id="Vby-gi-Ob9"/>
+                <outlet property="pageController" destination="2gz-NU-tHK" id="mGk-Sn-F5N"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="TvP-Ay-rU5"/>
             </connections>
         </customObject>
@@ -27,36 +27,22 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Blank Window" id="I9S-a8-sDh"/>
                     </imageView>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YXJ-Dg-cuS">
-                        <rect key="frame" x="124" y="20" width="102" height="31"/>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y5q-9v-JMy">
+                        <rect key="frame" x="20" y="20" width="311" height="418"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Login Button" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="lzP-eC-wde">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="next:" target="-2" id="ar3-m5-CSJ"/>
-                        </connections>
-                    </button>
-                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="ZPo-A6-nXS">
-                        <rect key="frame" x="167" y="59" width="16" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    </progressIndicator>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b8Y-W2-90r">
-                        <rect key="frame" x="18" y="236" width="315" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="SafeDrive requires OSXFUSE, click below to install it" id="cG0-fW-h7U">
-                            <font key="font" size="13" name="Raleway-Regular"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
+                    </customView>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="139.5" y="168.5"/>
         </window>
+        <pagecontroller transitionStyle="horizontalStrip" id="2gz-NU-tHK">
+            <connections>
+                <outlet property="delegate" destination="-2" id="17Y-rd-CIQ"/>
+                <outlet property="view" destination="y5q-9v-JMy" id="cyn-nf-uMr"/>
+            </connections>
+        </pagecontroller>
     </objects>
     <resources>
         <image name="Blank Window" width="351" height="501"/>
-        <image name="Login Button" width="102" height="31"/>
     </resources>
 </document>

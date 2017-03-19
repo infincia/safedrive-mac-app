@@ -31,6 +31,9 @@
 		AA3EB8421E569E9D003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA3EB8431E569E9D003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
+		AA4F8FC71E6A2D5700BB068A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */; };
+		AA4F8FC81E6A2D5700BB068A /* WelcomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */; };
+		AA4F8FCA1E6A429100BB068A /* SoftwareClientTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC91E6A429100BB068A /* SoftwareClientTableCellView.swift */; };
 		AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; };
 		AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA5071571E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AA5071561E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg */; };
@@ -70,6 +73,12 @@
 		AA76DC231C8779D2007B320E /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */; };
 		AA76DC291C879076007B320E /* WelcomeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA76DC281C879076007B320E /* WelcomeWindow.xib */; };
 		AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */; };
+		AA7CD6191E68A21100EE7FAD /* ValidateDependenciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6171E68A21100EE7FAD /* ValidateDependenciesViewController.swift */; };
+		AA7CD61A1E68A21100EE7FAD /* ValidateDependenciesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD6181E68A21100EE7FAD /* ValidateDependenciesView.xib */; };
+		AA7CD61E1E68A23300EE7FAD /* ValidateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD61C1E68A23300EE7FAD /* ValidateAccountViewController.swift */; };
+		AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */; };
+		AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */; };
+		AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */; };
 		AA7FE7A31E3D4AD4007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA7FE7A51E3D4AD5007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
@@ -90,6 +99,10 @@
 		AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7D5CC1CAF85C0001F9A8E /* FlatWindow.swift */; };
 		AAB7D5D51CB09943001F9A8E /* CrashAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7D5D41CB09943001F9A8E /* CrashAlert.swift */; };
 		AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */ = {isa = PBXBuildFile; fileRef = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AABF04A91E6CC46E0084DF81 /* FailedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AABF04A51E6CC46E0084DF81 /* FailedView.xib */; };
+		AABF04AA1E6CC46E0084DF81 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A61E6CC46E0084DF81 /* FailedViewController.swift */; };
+		AABF04AB1E6CC46E0084DF81 /* ReadyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AABF04A71E6CC46E0084DF81 /* ReadyView.xib */; };
+		AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */; };
 		AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */; };
 		AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
@@ -277,6 +290,9 @@
 		AA4E77311A3E6E640054BBCA /* SDTestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestConstants.h; sourceTree = "<group>"; };
 		AA4E77321A3E6E640054BBCA /* SDTestConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTestConstants.m; sourceTree = "<group>"; };
 		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewController.swift; path = Installer/WelcomeViewController.swift; sourceTree = "<group>"; };
+		AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeView.xib; path = Installer/WelcomeView.xib; sourceTree = "<group>"; };
+		AA4F8FC91E6A429100BB068A /* SoftwareClientTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoftwareClientTableCellView.swift; path = Installer/SoftwareClientTableCellView.swift; sourceTree = "<group>"; };
 		AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NMSSH.framework; path = Carthage/Build/Mac/NMSSH.framework; sourceTree = "<group>"; };
 		AA5071561E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FUSE for macOS 3.5.4.pkg"; path = "Bundled Dependencies/FUSE for macOS 3.5.4.pkg"; sourceTree = "<group>"; };
 		AA5071691E2ED5F7006F59C8 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = Shared/Util.swift; sourceTree = "<group>"; };
@@ -309,6 +325,12 @@
 		AA76DC281C879076007B320E /* WelcomeWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeWindow.xib; path = Installer/WelcomeWindow.xib; sourceTree = "<group>"; };
 		AA76DC2C1C88D4C6007B320E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		AA7CD6171E68A21100EE7FAD /* ValidateDependenciesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateDependenciesViewController.swift; path = Installer/ValidateDependenciesViewController.swift; sourceTree = "<group>"; };
+		AA7CD6181E68A21100EE7FAD /* ValidateDependenciesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateDependenciesView.xib; path = Installer/ValidateDependenciesView.xib; sourceTree = "<group>"; };
+		AA7CD61C1E68A23300EE7FAD /* ValidateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateAccountViewController.swift; path = Installer/ValidateAccountViewController.swift; sourceTree = "<group>"; };
+		AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateAccountView.xib; path = Installer/ValidateAccountView.xib; sourceTree = "<group>"; };
+		AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateClientViewController.swift; path = Installer/ValidateClientViewController.swift; sourceTree = "<group>"; };
+		AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateClientView.xib; path = Installer/ValidateClientView.xib; sourceTree = "<group>"; };
 		AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CUIThemeRenditionFix.xcassets; path = Shared/CUIThemeRenditionFix.xcassets; sourceTree = "<group>"; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncManagerTableRowView.swift; path = ../PreferencesWindow/SyncManagerTableRowView.swift; sourceTree = "<group>"; };
 		AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFolder.swift; path = Shared/SyncFolder.swift; sourceTree = "<group>"; };
@@ -320,6 +342,10 @@
 		AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
 		AAB7D5CC1CAF85C0001F9A8E /* FlatWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlatWindow.swift; path = FlatWindow/FlatWindow.swift; sourceTree = "<group>"; };
 		AAB7D5D41CB09943001F9A8E /* CrashAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CrashAlert.swift; path = ErrorHandler/CrashAlert.swift; sourceTree = "<group>"; };
+		AABF04A51E6CC46E0084DF81 /* FailedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FailedView.xib; path = Installer/FailedView.xib; sourceTree = "<group>"; };
+		AABF04A61E6CC46E0084DF81 /* FailedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FailedViewController.swift; path = Installer/FailedViewController.swift; sourceTree = "<group>"; };
+		AABF04A71E6CC46E0084DF81 /* ReadyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReadyView.xib; path = Installer/ReadyView.xib; sourceTree = "<group>"; };
+		AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadyViewController.swift; path = Installer/ReadyViewController.swift; sourceTree = "<group>"; };
 		AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
 		AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCRouter.swift; path = SafeDrive/XPCHandlers/ServiceXPCRouter.swift; sourceTree = SOURCE_ROOT; };
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
@@ -660,7 +686,20 @@
 		AA76DC1F1C876285007B320E /* Installer */ = {
 			isa = PBXGroup;
 			children = (
+				AABF04A51E6CC46E0084DF81 /* FailedView.xib */,
+				AABF04A61E6CC46E0084DF81 /* FailedViewController.swift */,
 				AA76DC201C8762A9007B320E /* Installer.swift */,
+				AABF04A71E6CC46E0084DF81 /* ReadyView.xib */,
+				AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */,
+				AA4F8FC91E6A429100BB068A /* SoftwareClientTableCellView.swift */,
+				AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */,
+				AA7CD61C1E68A23300EE7FAD /* ValidateAccountViewController.swift */,
+				AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */,
+				AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */,
+				AA7CD6181E68A21100EE7FAD /* ValidateDependenciesView.xib */,
+				AA7CD6171E68A21100EE7FAD /* ValidateDependenciesViewController.swift */,
+				AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */,
+				AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */,
 				AA76DC281C879076007B320E /* WelcomeWindow.xib */,
 				AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */,
 			);
@@ -967,9 +1006,13 @@
 				AAF945F41C80162700B972C3 /* io.safedrive.SafeDrive.Service.plist in Resources */,
 				AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */,
 				AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */,
+				AA4F8FC81E6A2D5700BB068A /* WelcomeView.xib in Resources */,
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */,
 				AA2E55101A774E0000647637 /* known_hosts in Resources */,
+				AABF04A91E6CC46E0084DF81 /* FailedView.xib in Resources */,
+				AABF04AB1E6CC46E0084DF81 /* ReadyView.xib in Resources */,
+				AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */,
 				AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */,
 				AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */,
 				AAA50BB11E313AF200892E9D /* CUIThemeRenditionFix.xcassets in Resources */,
@@ -977,6 +1020,8 @@
 				AA76DC291C879076007B320E /* WelcomeWindow.xib in Resources */,
 				AA037B701E428EA600818B53 /* RecoveryPhraseWindow.xib in Resources */,
 				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
+				AA7CD61A1E68A21100EE7FAD /* ValidateDependenciesView.xib in Resources */,
+				AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */,
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
 				AA5071571E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg in Resources */,
 				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
@@ -1275,16 +1320,19 @@
 				AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */,
 				AA76DC231C8779D2007B320E /* WelcomeWindowController.swift in Sources */,
 				AA3EB8411E569D28003A2E79 /* Protocols.swift in Sources */,
+				AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */,
 				AA50716A1E2ED5F7006F59C8 /* Util.swift in Sources */,
 				AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */,
 				AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */,
 				AA6C5BBD1C9125D4001C2869 /* ServiceManager.swift in Sources */,
+				AABF04AA1E6CC46E0084DF81 /* FailedViewController.swift in Sources */,
 				AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */,
 				AAD69F181E665B4400FAB196 /* RunningProcessCheck.swift in Sources */,
 				AA6E27341D8839DC00038019 /* SyncController.swift in Sources */,
 				AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AA76DC211C8762A9007B320E /* Installer.swift in Sources */,
+				AA7CD6191E68A21100EE7FAD /* ValidateDependenciesViewController.swift in Sources */,
 				AA3EB83D1E557C20003A2E79 /* RestoreSelectionTableCellView.swift in Sources */,
 				AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */,
 				AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */,
@@ -1293,12 +1341,16 @@
 				AA6E27301D87855100038019 /* MountController.swift in Sources */,
 				AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 				AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */,
+				AA4F8FCA1E6A429100BB068A /* SoftwareClientTableCellView.swift in Sources */,
+				AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */,
 				AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */,
+				AA4F8FC71E6A2D5700BB068A /* WelcomeViewController.swift in Sources */,
 				AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */,
 				AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */,
 				AAD89BD51E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift in Sources */,
 				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,
 				AA3EB8361E55686E003A2E79 /* SyncSession.swift in Sources */,
+				AA7CD61E1E68A23300EE7FAD /* ValidateAccountViewController.swift in Sources */,
 				AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */,
 				AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */,
 				AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */,
