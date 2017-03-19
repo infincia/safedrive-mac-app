@@ -277,7 +277,6 @@
 		AA4E77311A3E6E640054BBCA /* SDTestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestConstants.h; sourceTree = "<group>"; };
 		AA4E77321A3E6E640054BBCA /* SDTestConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTestConstants.m; sourceTree = "<group>"; };
 		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA4E77411A3E9B830054BBCA /* libPods-MCSMKeychainItem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-MCSMKeychainItem.a"; path = "../../../Users/steve/Library/Developer/Xcode/DerivedData/SafeDrive-chuvxsgbhfnlbyfxzkgdnlscvvoy/Build/Products/Debug/libPods-MCSMKeychainItem.a"; sourceTree = "<group>"; };
 		AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NMSSH.framework; path = Carthage/Build/Mac/NMSSH.framework; sourceTree = "<group>"; };
 		AA5071561E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FUSE for macOS 3.5.4.pkg"; path = "Bundled Dependencies/FUSE for macOS 3.5.4.pkg"; sourceTree = "<group>"; };
 		AA5071691E2ED5F7006F59C8 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = Shared/Util.swift; sourceTree = "<group>"; };
@@ -401,7 +400,6 @@
 			children = (
 				AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */,
 				AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */,
-				AA4E77411A3E9B830054BBCA /* libPods-MCSMKeychainItem.a */,
 				6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */,
 				6FD6EC24044905614D475A32 /* Pods_SafeDriveFinder.framework */,
 				F9B3056709C1BE77D9B18858 /* Pods_SafeDriveService.framework */,

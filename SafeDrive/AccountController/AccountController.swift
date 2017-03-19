@@ -125,15 +125,6 @@ class AccountController: NSObject {
             })
             let internalUserName = status.userName
             
-            do {
-                try self.sdk.setKeychainItem(withUser: email, service: sshCredentialDomain(), secret: internalUserName)
-            } catch let keychainError as NSError {
-                let e = SDKError(message: keychainError.localizedDescription, kind: .KeychainError)
-
-                SDErrorHandlerReport(keychainError)
-                failureBlock(e)
-                return
-            }
             
             self.sdk.getAccountDetails(completionQueue: DispatchQueue.main, success: { (details) in
                 
@@ -169,14 +160,6 @@ class AccountController: NSObject {
             try self.sdk.deleteKeychainItem(withUser: user.email, service: tokenDomain())
         } catch let error as SDKError {
             SDLog("warning: failed to remove auth token from keychain: \(error.message)")
-        } catch {
-            fatalError("cannot reach this point")
-        }
-        
-        do {
-            try self.sdk.deleteKeychainItem(withUser: user.email, service: sshCredentialDomain())
-        } catch let error as SDKError {
-            SDLog("warning: failed to remove ssh username from keychain: \(error.message)")
         } catch {
             fatalError("cannot reach this point")
         }

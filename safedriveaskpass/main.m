@@ -3,30 +3,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MCSMKeychainItem.h"
 
 static int SSHAskPassReturnValueSuccess = 0;
-static int SSHAskPassReturnValueFailure = 1;
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        NSString *keychainAccount = [[[NSProcessInfo processInfo] environment] objectForKey:@"SSH_ACCOUNT"];
-        NSString *SDSSHServiceName = [[[NSProcessInfo processInfo] environment] objectForKey:@"SDSSHServiceName"];
-
-        NSError *keychainError;
-        MCSMKeychainItem *genericKeychainItem = [MCSMGenericKeychainItem genericKeychainItemForService:SDSSHServiceName
-                                                                                                account:keychainAccount
-                                                                                             attributes:nil
-                                                                                                  error:&keychainError];
-
-        if (keychainError) {
-            return SSHAskPassReturnValueFailure;
-        }
-        if(!genericKeychainItem) {
-            return SSHAskPassReturnValueFailure;
-        }
-        NSString *password = genericKeychainItem.password;
-        printf("%s", [password UTF8String]);
+        NSString *sshPassword = [[[NSProcessInfo processInfo] environment] objectForKey:@"SSH_PASSWORD"];
+        printf("%s", [sshPassword UTF8String]);
     }
     return SSHAskPassReturnValueSuccess;
 }

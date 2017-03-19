@@ -22,9 +22,6 @@ fileprivate let SDWebDomainProduction = "safedrive.io"
 fileprivate let SDAccountCredentialDomainProduction = "safedrive.io"
 fileprivate let SDAccountCredentialDomainStaging = "staging.safedrive.io"
 
-fileprivate let SDSSHCredentialDomainProduction = "ssh.safedrive.io"
-fileprivate let SDSSHCredentialDomainStaging = "staging.ssh.safedrive.io"
-
 fileprivate let SDAuthTokenDomainProduction = "session.safedrive.io"
 fileprivate let SDAuthTokenDomainStaging = "staging.session.safedrive.io"
 
@@ -88,14 +85,6 @@ func tokenDomain() -> String {
         return SDAuthTokenDomainProduction
     } else {
         return SDAuthTokenDomainStaging
-    }
-}
-
-func sshCredentialDomain() -> String {
-    if isProduction() {
-        return SDSSHCredentialDomainProduction
-    } else {
-        return SDSSHCredentialDomainStaging
     }
 }
 
