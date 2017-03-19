@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -52,12 +53,9 @@ DQ
                     </buttonCell>
                     <connections>
                         <action selector="report:" target="-2" id="bjw-Ja-yKz"/>
-                        <binding destination="-2" name="enabled" keyPath="self.reported" id="F7T-Kg-E7H">
+                        <binding destination="-2" name="enabled" keyPath="self.reported" id="1ve-hr-yb4">
                             <dictionary key="options">
-                                <integer key="NSMultipleValuesPlaceholder" value="1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="1"/>
-                                <integer key="NSNotApplicablePlaceholder" value="1"/>
-                                <integer key="NSNullPlaceholder" value="1"/>
+                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
@@ -68,41 +66,51 @@ DQ
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r6z-DS-SQh">
-                    <rect key="frame" x="-2" y="303" width="315" height="68"/>
+                    <rect key="frame" x="-2" y="58" width="315" height="49"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" placeholderString="error message" id="BUV-9b-6nz">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" placeholderString="" id="BUV-9b-6nz">
                         <font key="font" size="13" name="Raleway-Regular"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GI9-8q-snL">
-                    <rect key="frame" x="0.0" y="61" width="311" height="234"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <clipView key="contentView" ambiguous="YES" id="K2U-S9-reb">
-                        <rect key="frame" x="1" y="1" width="309" height="232"/>
+                <box fixedFrame="YES" title="Installation Log" translatesAutoresizingMaskIntoConstraints="NO" id="KvQ-Tw-Sdm">
+                    <rect key="frame" x="-3" y="111" width="317" height="231"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="3A8-J5-mk2">
+                        <rect key="frame" x="2" y="2" width="313" height="214"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView ambiguous="YES" importsGraphics="NO" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="KgF-Pk-qai">
-                                <rect key="frame" x="0.0" y="0.0" width="309" height="232"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="309" height="232"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            </textView>
+                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GI9-8q-snL">
+                                <rect key="frame" x="20" y="20" width="273" height="174"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="K2U-S9-reb">
+                                    <rect key="frame" x="0.0" y="0.0" width="273" height="174"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView ambiguous="YES" editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsNonContiguousLayout="YES" textCompletion="NO" id="KgF-Pk-qai">
+                                            <rect key="frame" x="0.0" y="0.0" width="273" height="174"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="273" height="174"/>
+                                            <size key="maxSize" width="463" height="10000000"/>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="gFg-jl-8lu">
+                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.5" horizontal="NO" id="GKI-Hv-yMQ">
+                                    <rect key="frame" x="257" y="0.0" width="16" height="174"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="gFg-jl-8lu">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="GKI-Hv-yMQ">
-                        <rect key="frame" x="294" y="1" width="16" height="232"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
+                    </view>
+                </box>
             </subviews>
             <point key="canvasLocation" x="139.5" y="169"/>
         </customView>
