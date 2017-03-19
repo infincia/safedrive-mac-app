@@ -120,6 +120,8 @@ class RestoreSelectionWindowController: NSWindowController {
 
     weak var restoreSelectionDelegate: RestoreSelectionDelegate?
     
+    var realm: Realm?
+    
     convenience init() {
         self.init(windowNibName: "RestoreSelectionWindow")
     }
@@ -134,6 +136,13 @@ class RestoreSelectionWindowController: NSWindowController {
         
         self.folderID = folderID
         
+        guard let realm = try? Realm() else {
+            SDLog("failed to create realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
+        
+        self.realm = realm
         
     }
     
@@ -142,8 +151,8 @@ class RestoreSelectionWindowController: NSWindowController {
         self.spinner.stopAnimation(self)
         self.errorField.stringValue = ""
         
-        guard let realm = try? Realm() else {
-            SDLog("failed to create realm!!!")
+        guard let realm = self.realm else {
+            SDLog("failed to get realm!!!")
             Crashlytics.sharedInstance().crash()
             return
         }
@@ -215,11 +224,13 @@ class RestoreSelectionWindowController: NSWindowController {
 
             return
         }
-        guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
+        guard let realm = self.realm else {
+            SDLog("failed to get realm!!!")
             Crashlytics.sharedInstance().crash()
+            
             return
         }
+
         
         if let syncSession = realm.objects(PersistedSyncSession.self).filter("uniqueClientID == '\(uniqueClientID)' AND name == %@", v.sessionName).last {
             self.restoreSelectionDelegate?.selectedSession(syncSession.name!, folderID: self.folderID, destination: self.destination.url!)
@@ -241,8 +252,8 @@ class RestoreSelectionWindowController: NSWindowController {
         self.errorField.stringValue = ""
         self.sdk.getSessions(completionQueue: DispatchQueue.main, success: { (sessions: [SDSyncSession]) in
             self.errorField.stringValue = ""
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
+            guard let realm = self.realm else {
+                SDLog("failed to get realm!!!")
                 Crashlytics.sharedInstance().crash()
                 return
             }
