@@ -50,6 +50,10 @@ class DropdownController: NSObject {
         
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func awakeFromNib() {
         self.statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
         // menu loaded from SDDropdownMenu.xib
