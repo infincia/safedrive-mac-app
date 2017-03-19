@@ -196,8 +196,6 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         
         self.scheduleSelection.selectItem(at: -1)
         
-        self.readSyncFolders(self)
-        
         self.setTab(0)        
     }
     
@@ -754,6 +752,8 @@ extension PreferencesWindowController: SDAccountProtocol {
         let folders = realm.objects(SyncFolder.self).filter("uniqueClientID == '\(uniqueClientID)'")
         
         self.folders = folders
+        
+        self.readSyncFolders(self)
         
         let recoveryPhrase = try? self.sdk.getKeychainItem(withUser: currentUser.email, service: recoveryKeyDomain())
                 
