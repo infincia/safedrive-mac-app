@@ -107,9 +107,6 @@ class AccountController: NSObject {
         guard let email = self.email, let password = self.password, let uniqueClientID = self.uniqueClientID else {
             return
         }
-        
-        
-        self.signOut()
 
         SDErrorHandlerSetUniqueClientId(uniqueClientID)
 
