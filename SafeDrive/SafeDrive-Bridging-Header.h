@@ -5,8 +5,6 @@
 
 #import "SDConstants.h"
 
-#import "HKTHashProvider.h"
-
 #import "SDSystemAPI.h"
 
 @import DCOAboutWindow;

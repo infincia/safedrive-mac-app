@@ -17,7 +17,6 @@
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
 		AA13CB9F1A7212F000A91C7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13CB9D1A7212F000A91C7A /* main.m */; };
-		AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1A460F1BEDE685004A5310 /* HKTHashProvider.m */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
 		AA2DAB261CB32A6800951762 /* rsync-3.1.2 in Copy Files */ = {isa = PBXBuildFile; fileRef = AA2DAB241CB3293F00951762 /* rsync-3.1.2 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA2DAB291CB3664D00951762 /* sshfs-2.7 in Copy Files */ = {isa = PBXBuildFile; fileRef = AA2DAB271CB3664200951762 /* sshfs-2.7 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -258,8 +257,6 @@
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileCheck.swift; path = "Open File Warning Window/OpenFileCheck.swift"; sourceTree = "<group>"; };
 		AA13CB9D1A7212F000A91C7A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = safedriveaskpass/main.m; sourceTree = SOURCE_ROOT; };
-		AA1A460E1BEDE685004A5310 /* HKTHashProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKTHashProvider.h; sourceTree = "<group>"; };
-		AA1A460F1BEDE685004A5310 /* HKTHashProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKTHashProvider.m; sourceTree = "<group>"; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
 		AA2DAB241CB3293F00951762 /* rsync-3.1.2 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "rsync-3.1.2"; path = "Bundled Dependencies/rsync-3.1.2"; sourceTree = "<group>"; };
 		AA2DAB271CB3664200951762 /* sshfs-2.7 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "sshfs-2.7"; path = "Bundled Dependencies/sshfs-2.7"; sourceTree = "<group>"; };
@@ -494,7 +491,6 @@
 				AA3168161A191B72006CC0EB /* Supporting Files */,
 				AA61F8481C05356D00D992FE /* SyncController */,
 				AAF85BFB1A23A4BC0063B54F /* SystemAPI */,
-				AA9E7DE31A79505600E3C3E8 /* Utilities */,
 				AA5C1A951BB234DD006A0C8C /* XPC */,
 			);
 			path = SafeDrive;
@@ -690,15 +686,6 @@
 				AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */,
 			);
 			name = ErrorHandler;
-			sourceTree = "<group>";
-		};
-		AA9E7DE31A79505600E3C3E8 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				AA1A460E1BEDE685004A5310 /* HKTHashProvider.h */,
-				AA1A460F1BEDE685004A5310 /* HKTHashProvider.m */,
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 		AAAF1A401BF59446008E7865 /* Account Controller */ = {
@@ -1313,7 +1300,6 @@
 				AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */,
 				AAD89BD51E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift in Sources */,
 				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,
-				AA1A46101BEDE685004A5310 /* HKTHashProvider.m in Sources */,
 				AA3EB8361E55686E003A2E79 /* SyncSession.swift in Sources */,
 				AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */,
 				AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */,
