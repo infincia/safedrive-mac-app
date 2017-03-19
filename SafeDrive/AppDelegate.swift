@@ -330,27 +330,13 @@ extension AppDelegate: SDApplicationEventProtocol {
 extension AppDelegate: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
-        guard let currentUser = notification.object as? User else {
+        guard let _ = notification.object as? User else {
             return
-        }
-        
-        let uniqueClientID = currentUser.uniqueClientId
-        
-        assert(Thread.isMainThread, "Not main thread!!!")
-        self.syncScheduler!.running = true
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async { () -> Void in
-            do {
-                try self.syncScheduler?.syncSchedulerLoop(uniqueClientID)
-            } catch {
-                SDLog("Error starting scheduler: \(error)")
-                Crashlytics.sharedInstance().crash()
-            }
         }
     }
     
     func didSignOut(notification: Foundation.Notification) {
         assert(Thread.isMainThread, "Not main thread!!!")
-        self.syncScheduler?.stop()
         self.preferencesWindowController?.close()
     }
     
