@@ -9,8 +9,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FailedViewController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
-                <outlet property="errorMessage" destination="KgF-Pk-qai" id="1AS-Pr-ppG"/>
                 <outlet property="panelMessage" destination="r6z-DS-SQh" id="bhf-dN-O6Q"/>
+                <outlet property="scrollView" destination="GI9-8q-snL" id="JLA-H2-HAp"/>
                 <outlet property="spinner" destination="6gX-R1-7NC" id="87i-b5-aEi"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
