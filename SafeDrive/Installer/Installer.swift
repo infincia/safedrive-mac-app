@@ -37,7 +37,7 @@ class Installer: NSObject {
     }
     
     fileprivate var isCLIAppInstalled: Bool {
-        let destination = URL(string: "file://usr/local/bin/safedrive")!
+        let destination = URL(string: "file:///usr/local/bin/safedrive")!
         return FileManager.default.fileExists(atPath: destination.path)
     }
     
