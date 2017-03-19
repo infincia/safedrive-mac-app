@@ -122,8 +122,6 @@ class AccountController: NSObject {
             DispatchQueue.main.async(execute: {() -> Void in
                 NotificationCenter.default.post(name: Notification.Name.accountStatus, object: status)
             })
-            let internalUserName = status.userName
-            
             
             self.sdk.getAccountDetails(completionQueue: DispatchQueue.main, success: { (details) in
                 
