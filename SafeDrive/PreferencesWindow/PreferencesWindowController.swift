@@ -647,7 +647,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         
         if self.syncListView.selectedRow != -1 {
         
-            let syncFolder = folders[self.syncListView.selectedRow]
+            let syncFolder = folders[self.syncListView.selectedRow - 1]
 
             let uniqueID = syncFolder.uniqueID
             
