@@ -28,7 +28,9 @@ class AccountController: NSObject {
     
     fileprivate let userQueue = DispatchQueue(label: "io.safedrive.accountQueue")
 
+    // swiftlint:disable variable_name
     var _currentUser: User?
+    // swiftlint:enable variable_name
     
     var currentUser: User? {
         get {

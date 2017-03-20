@@ -303,12 +303,14 @@ extension AppDelegate: SDApplicationEventProtocol {
                  running if the app wasn't.
                  
                  */
+                // swiftlint:disable force_try
                 try! realm.write {
                     let syncFolders = realm.objects(SyncFolder.self).filter("uniqueClientID == '\(uniqueClientID)'")
                     syncFolders.setValue(false, forKey: "syncing")
                     syncFolders.setValue(false, forKey: "restoring")
                     syncFolders.setValue(nil, forKey: "currentSyncUUID")
                 }
+                // swiftlint:enable force_try
                 
             }
             
