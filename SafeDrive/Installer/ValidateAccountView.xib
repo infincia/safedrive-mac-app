@@ -9,8 +9,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ValidateAccountViewController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
                 <outlet property="createAccountButton" destination="fgV-yU-dIi" id="9nV-1G-WS6"/>
-                <outlet property="emailField" destination="ybq-Ux-TKE" id="6Ga-XE-WQO"/>
-                <outlet property="passwordField" destination="XFz-vv-7TO" id="7Jv-dl-ypK"/>
                 <outlet property="signInButton" destination="Dye-Ez-xs5" id="i3d-0P-vuY"/>
                 <outlet property="spinner" destination="xNW-l6-cEs" id="tIT-jv-pQQ"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>

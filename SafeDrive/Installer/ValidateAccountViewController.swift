@@ -13,10 +13,6 @@ class ValidateAccountViewController: NSViewController {
     
     @IBOutlet var spinner: NSProgressIndicator!
     
-    @IBOutlet weak var emailField: NSTextField!
-    
-    @IBOutlet weak var passwordField: NSTextField!
-    
     @IBOutlet weak var signInButton: NSButton!
     
     @IBOutlet weak var createAccountButton: NSButton!
