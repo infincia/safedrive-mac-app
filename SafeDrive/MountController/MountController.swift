@@ -476,14 +476,24 @@ class MountController: NSObject {
     // MARK: - High level API
     
     func connectVolume() {
+        
+        guard let user = self.internalUserName,
+            let host = self.remoteHost,
+            let port = self.remotePort else {
+                SDLog("API contract invalid: connectVolume in MountController")
+                Crashlytics.sharedInstance().crash()
+                return
+        }
+        
+        
     
         self.mounting = true
     
         var urlComponents = URLComponents()
-        urlComponents.user = self.internalUserName
-        urlComponents.host = self.remoteHost
+        urlComponents.user = user
+        urlComponents.host = host
         urlComponents.path = SDDefaultServerPath
-        urlComponents.port = Int(self.remotePort!)
+        urlComponents.port = Int(port)
         let sshURL: URL = urlComponents.url!
         
         self.startMountTask(sshURL: sshURL, success: { mountURL in
