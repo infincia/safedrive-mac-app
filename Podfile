@@ -7,7 +7,6 @@ def shared_pods
     pod 'RegexKitLite', '~> 4.0'
     pod 'Realm','~> 2.4.4'
     pod 'RealmSwift', '~> 2.4.4'
-    pod 'FontAwesome.swift', :git => 'https://github.com/infincia/FontAwesome.swift', :branch => 'osx'
 end
 
 target 'safedriveaskpass' do
@@ -27,6 +26,7 @@ end
 target 'SafeDrive' do
     use_frameworks!
     shared_pods
+    pod 'FontAwesome.swift', :git => 'https://github.com/infincia/FontAwesome.swift', :branch => 'osx'
     pod 'IYLoginItem', '~> 0.1'
     pod 'DCOAboutWindow', '~> 0.2.0'
     pod 'LetsMove', '~> 1.22'
