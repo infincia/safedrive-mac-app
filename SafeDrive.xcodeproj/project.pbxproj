@@ -89,7 +89,6 @@
 		AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */; };
 		AAA88BCF1C83D243009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
 		AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
-		AAA88BD41C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
 		AAA88BD51C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
 		AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD61C851F17009BE1C7 /* AccountController.swift */; };
 		AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD81C857FFB009BE1C7 /* DropdownController.swift */; };
@@ -1397,7 +1396,6 @@
 				AA5754051C7FFCC10040E8B0 /* AppDelegate.swift in Sources */,
 				AAD44A271D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AA50716C1E2ED86A006F59C8 /* Util.swift in Sources */,
-				AAA88BD41C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
