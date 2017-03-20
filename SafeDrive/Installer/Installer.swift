@@ -6,6 +6,7 @@
 
 
 import Foundation
+import SafeDriveSDK
 
 protocol InstallerDelegate: class {
     func needsDependencies()
@@ -39,6 +40,25 @@ class Installer: NSObject {
     fileprivate var isCLIAppInstalled: Bool {
         let destination = URL(string: "file:///usr/local/bin/safedrive")!
         return FileManager.default.fileExists(atPath: destination.path)
+    }
+    
+    fileprivate var isCLIAppCurrent: Bool {
+        let pipe: Pipe = Pipe()
+        let task: Process = Process()
+        task.launchPath = "/usr/local/bin/safedrive"
+        task.arguments = ["version"]
+        task.standardOutput = pipe
+        task.launch()
+        task.waitUntilExit()
+        if task.terminationStatus == 0 {
+            let data = pipe.fileHandleForReading.readDataToEndOfFile()
+            let cs = CharacterSet(charactersIn: "\n ")
+            if let output = String(data: data, encoding: .utf8) {
+                let version = output.trimmingCharacters(in: cs)
+                return version == SafeDriveSDK.sddk_version
+            }
+        }
+        return false
     }
     
     var dependenciesValidated: Bool {
