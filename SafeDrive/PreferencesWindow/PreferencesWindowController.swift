@@ -62,6 +62,9 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     // MARK: General Tab
     
+    @IBOutlet var volumeNameField: NSTextField!
+    @IBOutlet var volumeNameWarningField: NSTextField!
+    
     // MARK: Account tab
     @IBOutlet var assignedStorageField: NSTextField!
     @IBOutlet var usedStorageField: NSTextField!
@@ -718,10 +721,15 @@ extension PreferencesWindowController: SDMountStateProtocol {
 
     func mountStateMounted(notification: Foundation.Notification) {
         self.mountStatusField.stringValue = NSLocalizedString("Yes", comment: "String for volume mount status of mounted")
+        self.volumeNameField.isEnabled = false
+        self.volumeNameWarningField.isHidden = false
     }
     
     func mountStateUnmounted(notification: Foundation.Notification) {
         self.mountStatusField.stringValue = NSLocalizedString("No", comment: "String for volume mount status of unmounted")
+        self.volumeNameField.isEnabled = true
+        self.volumeNameWarningField.isHidden = true
+
     }
     
     func mountStateDetails(notification: Foundation.Notification) {
