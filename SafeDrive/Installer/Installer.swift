@@ -42,7 +42,7 @@ class Installer: NSObject {
     }
     
     var dependenciesValidated: Bool {
-        return self.isOSXFUSEInstalled
+        return self.isOSXFUSEInstalled && self.isCLIAppInstalled
     }
     
     init(delegate: InstallerDelegate?) {
@@ -71,7 +71,7 @@ class Installer: NSObject {
             do {
                 try self.installOSXFUSE()
                 try self.deployService()
-                //try self.installCLI()
+                try self.installCLI()
             } catch let error as NSError {
                 DispatchQueue.main.async {
                     self.delegate?.didFail(error: error)
