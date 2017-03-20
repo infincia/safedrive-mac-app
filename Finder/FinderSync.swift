@@ -208,7 +208,7 @@ class FinderSync: FIFinderSync {
                 } as! AppXPCProtocol
             
                 app.getMountState({ (mounted) in
-                    DispatchQueue.main.sync(execute: {() -> Void in
+                    DispatchQueue.main.async(execute: {() -> Void in
                         if mounted {
                             self.mountMenuItem.title = "Unmount SafeDrive"
                         } else {
