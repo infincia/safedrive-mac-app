@@ -10,10 +10,6 @@ def realm
     pod 'RealmSwift', '~> 2.4.4'
 end
 
-target 'safedriveaskpass' do
-
-end
-
 target 'SafeDriveService' do
     use_frameworks!
     shared_pods

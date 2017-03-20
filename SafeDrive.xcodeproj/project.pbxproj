@@ -121,7 +121,6 @@
 		AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */; };
 		AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */; };
 		C27845CE7BD23C719058BA91 /* Pods_SafeDriveFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD6EC24044905614D475A32 /* Pods_SafeDriveFinder.framework */; };
-		CB318BB235B0208F023B6555 /* libPods-safedriveaskpass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A70AFF655DD12BA4B7FE7E /* libPods-safedriveaskpass.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -258,7 +257,6 @@
 		446CEAF581261A2CE8036039 /* Pods-SafeDriveService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveService.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveService/Pods-SafeDriveService.debug.xcconfig"; sourceTree = "<group>"; };
 		6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDrive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FD6EC24044905614D475A32 /* Pods_SafeDriveFinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDriveFinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7CA6A0DD4710D7A753C6214E /* Pods-safedriveaskpass.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.release.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.release.xcconfig"; sourceTree = "<group>"; };
 		7EB73E606E32D60409155C42 /* Pods-SafeDriveFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.release.xcconfig"; sourceTree = "<group>"; };
 		81810F9B8E9F2AB8468A4A0C /* Pods-SafeDrive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDrive.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDrive/Pods-SafeDrive.release.xcconfig"; sourceTree = "<group>"; };
 		919F110D04C41D55CB26D7F1 /* Pods-SafeDriveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -368,7 +366,6 @@
 		AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "update-version.sh"; sourceTree = "<group>"; };
 		ACCC0E28E50D1255EF3C3795 /* Pods_SafeDriveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDriveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A70AFF655DD12BA4B7FE7E /* libPods-safedriveaskpass.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-safedriveaskpass.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED4A6330229FF00A63DDB948 /* Pods-safedriveaskpass.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safedriveaskpass.debug.xcconfig"; path = "Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass.debug.xcconfig"; sourceTree = "<group>"; };
 		F2E81629B3367D715FA39D12 /* Pods-SafeDriveService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveService.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveService/Pods-SafeDriveService.release.xcconfig"; sourceTree = "<group>"; };
 		F9B3056709C1BE77D9B18858 /* Pods_SafeDriveService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDriveService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -396,7 +393,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB318BB235B0208F023B6555 /* libPods-safedriveaskpass.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,8 +440,6 @@
 				F2E81629B3367D715FA39D12 /* Pods-SafeDriveService.release.xcconfig */,
 				919F110D04C41D55CB26D7F1 /* Pods-SafeDriveTests.debug.xcconfig */,
 				0791540171204BCAA0A0AC66 /* Pods-SafeDriveTests.release.xcconfig */,
-				ED4A6330229FF00A63DDB948 /* Pods-safedriveaskpass.debug.xcconfig */,
-				7CA6A0DD4710D7A753C6214E /* Pods-safedriveaskpass.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -838,11 +832,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA4E77401A3E9B1D0054BBCA /* Build configuration list for PBXNativeTarget "safedriveaskpass" */;
 			buildPhases = (
-				8E49A3CB16D7D7C0B6B5EA80 /* [CP] Check Pods Manifest.lock */,
 				AA4E77361A3E9B1D0054BBCA /* Sources */,
 				AA4E77371A3E9B1D0054BBCA /* Frameworks */,
 				AA4E77381A3E9B1D0054BBCA /* CopyFiles */,
-				429AC2A6CDD5F0A60A0C7E46 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1101,21 +1093,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		429AC2A6CDD5F0A60A0C7E46 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-safedriveaskpass/Pods-safedriveaskpass-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		762A74DA8A5CE8F581520366 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1147,21 +1124,6 @@
 			showEnvVarsInLog = 0;
 		};
 		8DE689EEFEE78B3473A2BF65 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		8E49A3CB16D7D7C0B6B5EA80 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1699,7 +1661,6 @@
 		};
 		AA4E773E1A3E9B1D0054BBCA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED4A6330229FF00A63DDB948 /* Pods-safedriveaskpass.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "";
@@ -1723,7 +1684,6 @@
 		};
 		AA4E773F1A3E9B1D0054BBCA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7CA6A0DD4710D7A753C6214E /* Pods-safedriveaskpass.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "";
