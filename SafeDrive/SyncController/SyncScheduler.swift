@@ -43,6 +43,8 @@ class SyncScheduler {
     
     fileprivate let runQueue = DispatchQueue(label: "io.safedrive.runQueue")
     
+    fileprivate let syncControllerQueue = DispatchQueue(label: "syncControllerQueue")
+
     var email: String?
     var internalUserName: String?
     var password: String?
@@ -350,9 +352,9 @@ class SyncScheduler {
             
             syncController.restore = isRestore
             
-            DispatchQueue.main.sync(execute: {() -> Void in
+            self.syncControllerQueue.sync {
                 self.syncControllers.append(syncController)
-            })
+            }
             
             syncController.startSyncTask(progress: { (_, _, _, percent, bandwidth) in
                 // use for updating sync progress
@@ -396,8 +398,10 @@ class SyncScheduler {
                     let duration = NSDate().timeIntervalSince(syncDate)
                     realm.create(SyncTask.self, value: ["uuid": name, "success": true, "duration": duration, "progress": 0.0, "bandwidth": ""], update: true)
                 }
-                if let index = self.syncControllers.index(of: syncController) {
-                    self.syncControllers.remove(at: index)
+                self.syncControllerQueue.sync {
+                    if let index = self.syncControllers.index(of: syncController) {
+                        self.syncControllers.remove(at: index)
+                    }
                 }
             }, failure: { (_: URL, error: Swift.Error?) -> Void in
                 SDErrorHandlerReport(error)
@@ -412,10 +416,11 @@ class SyncScheduler {
                     let duration = NSDate().timeIntervalSince(syncDate)
                     realm.create(SyncTask.self, value: ["uuid": name, "success": false, "duration": duration, "message": error!.localizedDescription, "progress": 0.0, "bandwidth": ""], update: true)
                 }
-                if let index = self.syncControllers.index(of: syncController) {
-                    self.syncControllers.remove(at: index)
+                self.syncControllerQueue.async {
+                    if let index = self.syncControllers.index(of: syncController) {
+                        self.syncControllers.remove(at: index)
+                    }
                 }
-                
             })
         })
     }
@@ -436,13 +441,13 @@ extension SyncScheduler: SDAccountProtocol {
     
     func didSignOut(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignOut called on background thread")
-
-        for syncController in self.syncControllers {
-            syncController.stopSyncTask {
-                return
+        syncControllerQueue.sync {
+            for syncController in self.syncControllers {
+                syncController.stopSyncTask {
+                    return
+                }
             }
         }
-        
         self.realm = nil
         self.email = nil
         self.password = nil
