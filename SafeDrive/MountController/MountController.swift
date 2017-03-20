@@ -186,12 +186,12 @@ class MountController: NSObject {
                 })
                 
                 if self.mounted {
-                    DispatchQueue.main.sync(execute: {() -> Void in
+                    DispatchQueue.main.async(execute: {() -> Void in
                         NotificationCenter.default.post(name: Notification.Name.mountDetails, object:self.mountDetails)
                         NotificationCenter.default.post(name: Notification.Name.mounted, object:nil)
                     })
                 } else {
-                    DispatchQueue.main.sync(execute: {() -> Void in
+                    DispatchQueue.main.async(execute: {() -> Void in
                         NotificationCenter.default.post(name: Notification.Name.mountDetails, object:nil)
                         NotificationCenter.default.post(name: Notification.Name.unmounted, object:nil)
                     })
@@ -458,7 +458,7 @@ class MountController: NSObject {
             outputPipeHandle.readabilityHandler = nil
             
             if task.terminationStatus == 0 {
-                DispatchQueue.main.sync(execute: {() -> Void in
+                DispatchQueue.main.async(execute: {() -> Void in
                     weakSelf?.mountURL = mountURL
                     successBlock(mountURL)
                 })
