@@ -35,7 +35,7 @@ class FlatWindow: NSWindow {
         self.closeButton.isBordered = false
         self.closeButton.setButtonType(.momentaryChange)
         self.closeButton.target = self
-        self.closeButton.action = #selector(self.windowController!.close)
+        self.closeButton.action = #selector(self.close(_:))
         self.backgroundColor = NSColor.clear
         let offset = 8
         let size = 9
@@ -68,6 +68,16 @@ class FlatWindow: NSWindow {
         }
         set {
             
+        }
+    }
+    
+    func close(_ sender: AnyObject?) {
+        if let delegate = self.delegate {
+            if delegate.responds(to: #selector(delegate.windowShouldClose(_:))) {
+                if delegate.windowShouldClose!(self) {
+                    self.windowController!.close()
+                }
+            }
         }
     }
 }
