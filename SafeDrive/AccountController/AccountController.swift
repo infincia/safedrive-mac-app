@@ -86,6 +86,8 @@ class AccountController: NSObject {
     
     fileprivate var sharedSystemAPI = SDSystemAPI.shared()    
     
+    fileprivate var realm: Realm?
+    
     override init() {
         super.init()
         
@@ -151,6 +153,8 @@ class AccountController: NSObject {
             return
         }
         
+        self.realm = nil
+        
         do {
             try self.sdk.deleteKeychainItem(withUser: user.email, service: tokenDomain())
         } catch let error as SDKError {
@@ -203,7 +207,7 @@ class AccountController: NSObject {
     fileprivate func accountLoop() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             while true {
-                guard let _ = self.email, let _ = self.password, let _ = self.uniqueClientID else {
+                guard let _ = self.email, let _ = self.password, let _ = self.uniqueClientID, let _ = self.realm else {
                     Thread.sleep(forTimeInterval: 1)
 
                     continue
@@ -312,7 +316,13 @@ class AccountController: NSObject {
 
 extension AccountController: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
+        guard let realm = try? Realm() else {
+            SDLog("failed to get realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
         
+        self.realm = realm
     }
     
     func applicationDidConfigureClient(notification: Notification) {
