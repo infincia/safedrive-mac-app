@@ -19,16 +19,12 @@ class FlatWindowBackgroundView: NSImageView {
 
 class FlatWindow: NSWindow {
     var closeButton = NSButton(frame: NSRect.zero)
-    // swiftlint:disable variable_name
-    var _keepOnTop = false
-    // swiftlint:enable variable_name
 
     var keepOnTop: Bool {
         get {
-            return _keepOnTop
+            return self.level == Int(CGWindowLevelForKey(CGWindowLevelKey.statusWindow))
         }
         set (newValue) {
-            _keepOnTop = newValue
             self.level = Int(CGWindowLevelForKey(CGWindowLevelKey.statusWindow))
         }
     }
