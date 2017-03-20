@@ -86,7 +86,8 @@ class WelcomeWindowController: NSWindowController {
     func setState(_ state: State) {
         assert(Thread.current == Thread.main, "NOT MAIN THREAD")
         self.state = state
-        
+        SDLog("welcome state changed: \(state)")
+
         switch state {
         case .welcome:
             self.welcomeViewController.check()
@@ -232,7 +233,6 @@ extension WelcomeWindowController: NSPageControllerDelegate {
     }
     
     func pageController(_ pageController: NSPageController, didTransitionTo object: Any) {
-        SDLog("pageController transition to: \(object)")
         self.configureMainWindow()
     }
 }
@@ -271,6 +271,19 @@ enum State {
     case validateClient(email: String, password: String, clients: [SoftwareClient])
     case ready
     case failed(error: Error, uniqueClientID: String?)
+}
+
+extension State : CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .welcome: return "welcome"
+        case .validateDependencies: return "validating dependencies"
+        case .validateAccount: return "validating account"
+        case .validateClient(_, _, _): return "validating client"
+        case .ready: return "ready"
+        case .failed(_, _): return "failed"
+        }
+    }
 }
 
 extension State: RawRepresentable {
