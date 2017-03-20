@@ -241,6 +241,8 @@ class SyncScheduler {
     }
     
     func cancel(_ uniqueID: UInt64, completion: @escaping () -> Void) {
+        assert(Thread.current == Thread.main, "didSignOut called on background thread")
+
         for syncController in self.syncControllers {
             if syncController.uniqueID == uniqueID {
                 syncController.stopSyncTask {
@@ -422,6 +424,8 @@ class SyncScheduler {
 extension SyncScheduler: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didSignIn called on background thread")
+
         guard let currentUser = notification.object as? User else {
             SDLog("API contract invalid: didSignIn in SyncScheduler")
             return
@@ -431,6 +435,8 @@ extension SyncScheduler: SDAccountProtocol {
     }
     
     func didSignOut(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didSignOut called on background thread")
+
         for syncController in self.syncControllers {
             syncController.stopSyncTask {
                 return
@@ -447,6 +453,8 @@ extension SyncScheduler: SDAccountProtocol {
     }
     
     func didReceiveAccountStatus(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
+
         guard let accountStatus = notification.object as? AccountStatus else {
             SDLog("API contract invalid: didReceiveAccountStatus in SyncScheduler")
             return
@@ -457,6 +465,8 @@ extension SyncScheduler: SDAccountProtocol {
     }
     
     func didReceiveAccountDetails(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountDetails called on background thread")
+
         guard let _ = notification.object as? AccountDetails else {
             SDLog("API contract invalid: didReceiveAccountDetails in SyncScheduler")
             return
@@ -466,7 +476,8 @@ extension SyncScheduler: SDAccountProtocol {
 
 extension SyncScheduler: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
-        
+        assert(Thread.current == Thread.main, "applicationDidConfigureRealm called on background thread")
+
         guard let realm = try? Realm() else {
             //let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open Realm database, this is a fatal error", comment: "")]
             //throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
@@ -477,6 +488,8 @@ extension SyncScheduler: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureClient(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
+
         guard let uniqueClientID = notification.object as? String else {
             SDLog("API contract invalid: applicationDidConfigureClient in SyncScheduler")
             
@@ -487,6 +500,8 @@ extension SyncScheduler: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureUser(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
+
         guard let _ = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in SyncScheduler")
             

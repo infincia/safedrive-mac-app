@@ -334,18 +334,25 @@ protocol StateDelegate: class {
 extension WelcomeWindowController: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
-        
+        assert(Thread.current == Thread.main, "didSignIn called on background thread")
+
     }
     
     func didSignOut(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didSignOut called on background thread")
+
         self.setState(.welcome)
     }
     
     func didReceiveAccountStatus(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
+
 
     }
     
     func didReceiveAccountDetails(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountDetails called on background thread")
+
 
     }
 }

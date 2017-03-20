@@ -121,10 +121,13 @@ extension DropdownController: SDMountStateProtocol {
 
 extension DropdownController: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
-        
+        assert(Thread.current == Thread.main, "applicationDidConfigureRealm called on background thread")
+
     }
     
     func applicationDidConfigureClient(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
+
         guard let _ = notification.object as? String else {
             SDLog("API contract invalid: applicationDidConfigureClient in DropdownController")
             
@@ -134,6 +137,8 @@ extension DropdownController: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureUser(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
+
         guard let _ = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in DropdownController")
             

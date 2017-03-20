@@ -316,6 +316,8 @@ class AccountController: NSObject {
 
 extension AccountController: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureRealm called on background thread")
+
         guard let realm = try? Realm() else {
             SDLog("failed to get realm!!!")
             Crashlytics.sharedInstance().crash()
@@ -326,6 +328,8 @@ extension AccountController: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureClient(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
+
         guard let uniqueClientID = notification.object as? String else {
             SDLog("API contract invalid: applicationDidConfigureClient in AppDelegate")
             
@@ -336,6 +340,8 @@ extension AccountController: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureUser(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
+
         guard let user = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in AppDelegate")
             

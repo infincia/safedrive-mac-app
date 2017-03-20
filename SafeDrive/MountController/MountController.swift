@@ -588,6 +588,8 @@ extension MountController: SDAccountProtocol {
     // MARK: SDAccountProtocol
     
     func didSignIn(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didSignIn called on background thread")
+
         guard let currentUser = notification.object as? User else {
             return
         }
@@ -606,6 +608,8 @@ extension MountController: SDAccountProtocol {
     }
     
     func didSignOut(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didSignOut called on background thread")
+
         self.email = nil
         self.internalUserName = nil
         self.password = nil
@@ -615,6 +619,8 @@ extension MountController: SDAccountProtocol {
     }
     
     func didReceiveAccountStatus(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
+
         guard let accountStatus = notification.object as? AccountStatus else {
             SDLog("API contract invalid: didReceiveAccountStatus in MountController")
             return
@@ -626,6 +632,8 @@ extension MountController: SDAccountProtocol {
     }
     
     func didReceiveAccountDetails(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountDetails called on background thread")
+
 
     }
 }
@@ -633,23 +641,33 @@ extension MountController: SDAccountProtocol {
 extension MountController: SDVolumeEventProtocol {
 
     func volumeDidMount(notification: Notification) {
+        assert(Thread.current == Thread.main, "volumeDidMount called on background thread")
+
         NSWorkspace.shared().open((self.mountURL)!)
     }
     
     func volumeDidUnmount(notification: Notification) {
+        assert(Thread.current == Thread.main, "volumeDidMount called on background thread")
+
         //self.openFileWarning?.window?.close()
         //self.openFileWarning = nil
     }
     
     func volumeSubprocessDidTerminate(notification: Notification) {
+        assert(Thread.current == Thread.main, "volumeSubprocessDidTerminate called on background thread")
+
     
     }
     
     func volumeShouldMount(notification: Notification) {
+        assert(Thread.current == Thread.main, "volumeShouldMount called on background thread")
+
         self.connectVolume()
     }
     
     func volumeShouldUnmount(notification: Notification) {
+        assert(Thread.current == Thread.main, "volumeShouldUnmount called on background thread")
+
         guard let askForOpenApps = notification.object as? Bool else {
             SDLog("API contract invalid in Mount Controller.volumeShouldUnmount()")
             return
@@ -702,10 +720,13 @@ extension MountController: OpenFileWarningDelegate {
 
 extension MountController: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
-        
+        assert(Thread.current == Thread.main, "applicationDidConfigureRealm called on background thread")
+
     }
     
     func applicationDidConfigureClient(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
+
         guard let _ = notification.object as? String else {
             SDLog("API contract invalid: applicationDidConfigureClient in MountController")
             
@@ -715,6 +736,8 @@ extension MountController: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureUser(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
+
         guard let _ = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in MountController")
             

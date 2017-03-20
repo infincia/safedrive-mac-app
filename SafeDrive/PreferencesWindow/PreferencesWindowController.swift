@@ -720,12 +720,16 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
 extension PreferencesWindowController: SDMountStateProtocol {
 
     func mountStateMounted(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "mountStateMounted called on background thread")
+
         self.mountStatusField.stringValue = NSLocalizedString("Yes", comment: "String for volume mount status of mounted")
         self.volumeNameField.isEnabled = false
         self.volumeNameWarningField.isHidden = false
     }
     
     func mountStateUnmounted(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "mountStateUnmounted called on background thread")
+
         self.mountStatusField.stringValue = NSLocalizedString("No", comment: "String for volume mount status of unmounted")
         self.volumeNameField.isEnabled = true
         self.volumeNameWarningField.isHidden = true
@@ -733,6 +737,8 @@ extension PreferencesWindowController: SDMountStateProtocol {
     }
     
     func mountStateDetails(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "mountStateDetails called on background thread")
+
         if let mountDetails = notification.object as? [FileAttributeKey: AnyObject],
             let volumeTotalSpace = mountDetails[FileAttributeKey.systemSize] as? Int,
             let volumeFreeSpace = mountDetails[FileAttributeKey.systemFreeSize] as? Int {
@@ -758,6 +764,8 @@ extension PreferencesWindowController: SDAccountProtocol {
     // MARK: SDAccountProtocol
     
     func didSignIn(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didSignIn called on background thread")
+
         guard let realm = self.realm else {
             SDLog("failed to get realm!!!")
             Crashlytics.sharedInstance().crash()
@@ -849,6 +857,8 @@ extension PreferencesWindowController: SDAccountProtocol {
     }
     
     func didSignOut(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didSignOut called on background thread")
+
         self.syncFolderToken = nil
         self.syncTaskToken = nil
         self.folders = nil
@@ -862,6 +872,8 @@ extension PreferencesWindowController: SDAccountProtocol {
     }
     
     func didReceiveAccountStatus(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
+
         guard let accountStatus = notification.object as? AccountStatus,
               let status = accountStatus.status else {
             self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
@@ -875,6 +887,8 @@ extension PreferencesWindowController: SDAccountProtocol {
     }
     
     func didReceiveAccountDetails(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountDetails called on background thread")
+
         guard let accountDetails = notification.object as? AccountDetails else {
             SDLog("API contract invalid: didReceiveAccountDetails in PreferencesWindowController")
             return
@@ -899,6 +913,8 @@ extension PreferencesWindowController: SDAccountProtocol {
 extension PreferencesWindowController: SDServiceStatusProtocol {
     
     func didReceiveServiceStatus(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveServiceStatus called on background thread")
+
         guard let status = notification.object as? Bool else {
             SDLog("Validation failed: didReceiveServiceStatus")
             return
@@ -1207,6 +1223,8 @@ extension PreferencesWindowController: NSTableViewDataSource {
 
 extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
     func checkRecoveryPhrase(_ phrase: String?, success: @escaping () -> Void, failure: @escaping (_ error: SDKError) -> Void) {
+        assert(Thread.current == Thread.main, "checkRecoveryPhrase called on background thread")
+
         guard let email = self.email else {
             return
         }
@@ -1252,6 +1270,8 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
     }
     
     func storeRecoveryPhrase(_ phrase: String, success: @escaping () -> Void, failure: @escaping (_ error: Error) -> Void) {
+        assert(Thread.current == Thread.main, "storeRecoveryPhrase called on background thread")
+
         guard let email = self.email else {
             return
         }
@@ -1268,6 +1288,8 @@ extension PreferencesWindowController: RecoveryPhraseEntryDelegate {
 
 extension PreferencesWindowController: RestoreSelectionDelegate {
     func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL) {
+        assert(Thread.current == Thread.main, "selectedSession called on background thread")
+
         guard let uniqueClientID = self.uniqueClientID else {
             return
         }
@@ -1281,6 +1303,8 @@ extension PreferencesWindowController: RestoreSelectionDelegate {
 
 extension PreferencesWindowController: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureRealm called on background thread")
+
         guard let realm = try? Realm() else {
             SDLog("failed to get realm!!!")
             Crashlytics.sharedInstance().crash()
@@ -1299,6 +1323,8 @@ extension PreferencesWindowController: SDApplicationEventProtocol {
 }
     
     func applicationDidConfigureClient(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
+
         guard let uniqueClientID = notification.object as? String else {
             SDLog("API contract invalid: applicationDidConfigureClient in PreferencesWindowController")
             
@@ -1310,6 +1336,8 @@ extension PreferencesWindowController: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureUser(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
+
         guard let currentUser = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in PreferencesWindowController")
             
