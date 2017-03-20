@@ -87,7 +87,6 @@
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
 		AAA88BC71C82A5E9009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
 		AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */; };
-		AAA88BCE1C83D243009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
 		AAA88BCF1C83D243009BE1C7 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
 		AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
 		AAA88BD41C84B4CA009BE1C7 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
@@ -1390,7 +1389,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA7FE7A51E3D4AD5007EDF70 /* SDConstants.m in Sources */,
-				AAA88BCE1C83D243009BE1C7 /* SyncFolder.swift in Sources */,
 				AA6E272D1D876DD800038019 /* Notifications.swift in Sources */,
 				AA3EB8421E569E9D003A2E79 /* Protocols.swift in Sources */,
 				AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */,
