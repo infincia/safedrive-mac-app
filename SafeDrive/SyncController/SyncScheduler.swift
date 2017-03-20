@@ -69,9 +69,7 @@ class SyncScheduler {
     }
     
     fileprivate var syncQueue = [SyncEvent]()
-    
-    fileprivate var syncDispatchQueue = DispatchQueue(label: "io.safedrive.SyncScheduler.SyncQueue", attributes: [])
-    
+        
     let dbURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db")!.appendingPathComponent("sync.realm")
     
     var realm: Realm?
@@ -232,10 +230,8 @@ class SyncScheduler {
     }
     
     func queueSyncJob(_ uniqueClientID: String, folderID: UInt64, direction: SyncDirection, type: SyncType, name: String, destination: URL?) {
-        syncDispatchQueue.sync(execute: {() -> Void in
-            let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID, direction: direction, type: type, name: name, destination: destination)
-            self.sync(syncEvent)
-        })
+        let syncEvent = SyncEvent(uniqueClientID: uniqueClientID, folderID: folderID, direction: direction, type: type, name: name, destination: destination)
+        self.sync(syncEvent)
     }
     
     func stop() {
