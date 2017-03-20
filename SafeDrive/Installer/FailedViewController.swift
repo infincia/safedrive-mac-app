@@ -15,9 +15,7 @@ class FailedViewController: NSViewController {
     @IBOutlet var scrollView: NSScrollView!
     
     var errorMessage: NSTextView {
-        get {
-            return scrollView.contentView.documentView as! NSTextView
-        }
+        return scrollView.contentView.documentView as! NSTextView
     }
 
     @IBOutlet weak var panelMessage: NSTextField!
