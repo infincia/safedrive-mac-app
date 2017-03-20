@@ -21,8 +21,32 @@ class ValidateAccountViewController: NSViewController {
     
     @IBOutlet weak var createAccountButton: NSButton!
     
-    @IBOutlet var email: String?
-    @IBOutlet var password: String?
+    var email: String?
+    var password: String?
+    
+    var bindEmail: NSString {
+        get {
+            if let email = self.email {
+                return email as NSString
+            }
+            return ""
+        }
+        set (newValue) {
+            self.email = newValue as String
+        }
+    }
+    
+    var bindPassword: NSString {
+        get {
+            if let password = self.password {
+                return password as NSString
+            }
+            return ""
+        }
+        set (newValue) {
+            self.password = newValue as String
+        }
+    }
     
     fileprivate var isInteractiveLogin = false
     
@@ -87,8 +111,15 @@ class ValidateAccountViewController: NSViewController {
             if let currentUser = try? self.sdk.getKeychainItem(withUser: "currentuser", service: currentUserDomain()),
                 let password = try? self.sdk.getKeychainItem(withUser: currentUser, service: accountCredentialDomain()) {
                 DispatchQueue.main.async {
+                    
+                    self.willChangeValue(forKey: "bindEmail")
                     self.email = currentUser
+                    self.didChangeValue(forKey: "bindEmail")
+                    
+                    self.willChangeValue(forKey: "bindPassword")
                     self.password = password
+                    self.didChangeValue(forKey: "bindPassword")
+                    
                     self.signIn(nil)
                 }
                 return

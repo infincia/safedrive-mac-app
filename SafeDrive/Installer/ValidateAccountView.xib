@@ -40,7 +40,7 @@
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="value" keyPath="self.password" id="yAl-is-Ryl">
+                        <binding destination="-2" name="value" keyPath="self.bindPassword" id="ap0-BK-1Zt">
                             <dictionary key="options">
                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                 <bool key="NSConditionallySetsEditable" value="NO"/>
@@ -121,7 +121,7 @@
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="value" keyPath="self.email" id="VfP-i8-I2x">
+                        <binding destination="-2" name="value" keyPath="self.bindEmail" id="aGD-gK-Fuz">
                             <dictionary key="options">
                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                 <bool key="NSConditionallySetsEditable" value="NO"/>
