@@ -33,7 +33,7 @@
                     </secureTextFieldCell>
                     <connections>
                         <action selector="signIn:" target="-2" id="Axx-yG-Frg"/>
-                        <binding destination="-2" name="editable" keyPath="self.signingIn" id="Scr-cH-AID">
+                        <binding destination="-2" name="enabled" keyPath="self.signingIn" id="5Hz-Wk-qn2">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
@@ -114,7 +114,7 @@
                     </textFieldCell>
                     <connections>
                         <action selector="signIn:" target="-2" id="gYn-eM-O1Q"/>
-                        <binding destination="-2" name="editable" keyPath="self.signingIn" id="fgW-5j-o9u">
+                        <binding destination="-2" name="enabled" keyPath="self.signingIn" id="YMY-oJ-OMi">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
