@@ -84,7 +84,7 @@ class DropdownController: NSObject {
 extension DropdownController: SDAccountProtocol {
     
     func didSignIn(notification: Notification) {
-        guard let currentUser = notification.object as? User else {
+        guard let _ = notification.object as? User else {
             return
         }
         self.enableMenuItems(true)
@@ -125,7 +125,7 @@ extension DropdownController: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureClient(notification: Notification) {
-        guard let uniqueClientID = notification.object as? String else {
+        guard let _ = notification.object as? String else {
             SDLog("API contract invalid: applicationDidConfigureClient in DropdownController")
             
             return
@@ -134,7 +134,7 @@ extension DropdownController: SDApplicationEventProtocol {
     }
     
     func applicationDidConfigureUser(notification: Notification) {
-        guard let user = notification.object as? User else {
+        guard let _ = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in DropdownController")
             
             return
