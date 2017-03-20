@@ -3,6 +3,9 @@ platform :osx, '10.9'
 def shared_pods
     pod 'Fabric', '~>  1.6.11'
     pod 'Crashlytics', '~>  3.8.3'
+end
+
+def realm
     pod 'Realm','~> 2.4.4'
     pod 'RealmSwift', '~> 2.4.4'
 end
@@ -19,11 +22,13 @@ end
 target 'SafeDriveFinder' do
     use_frameworks!
     shared_pods
+    realm
 end
 
 target 'SafeDrive' do
     use_frameworks!
     shared_pods
+    realm
     pod 'FontAwesome.swift', :git => 'https://github.com/infincia/FontAwesome.swift', :branch => 'osx'
     #pod 'SwiftDate', git: 'https://github.com/malcommac/SwiftDate.git', branch: 'feature/swift-3.0'
     pod 'RegexKitLite', '~> 4.0'
