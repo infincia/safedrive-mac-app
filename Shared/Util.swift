@@ -119,4 +119,3 @@ func currentUserDomain() -> String {
         return SDCurrentUserDomainStaging
     }
 }
-
