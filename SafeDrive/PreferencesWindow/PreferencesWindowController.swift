@@ -544,7 +544,10 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         guard let uniqueClientID = self.uniqueClientID else {
             return
         }
-        let button: NSButton = sender as! NSButton
+        guard let button = sender as? NSButton else {
+            return
+        }
+        
         let folderID: UInt64 = UInt64(button.tag)
         startRestore(folderID)
         
