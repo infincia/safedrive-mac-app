@@ -502,6 +502,10 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                     // what the server calls 'syncing', we call 'active' to avoid confusion with syncing/restoring states
                     syncFolder!.active = syncing
                     
+                    syncFolder!.path = folderPath
+                    
+                    syncFolder!.name = folderName
+                    
                     realm.add(syncFolder!, update: true)
                 }
                 // swiftlint:enable force_try
