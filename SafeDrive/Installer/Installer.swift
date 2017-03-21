@@ -132,7 +132,7 @@ class Installer: NSObject {
             try fileManager.copyItem(at: launchAgentSourceURL, to: launchAgentDestinationURL)
         } catch let error as NSError {
             SDLog("Error copying launch agent: \(error)")
-            throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.serviceDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying launch agent: \(error)"])
+            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.serviceDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying launch agent: \(error)"])
         }
         
         // copy background service to ~/Library/Application Support/SafeDrive/
@@ -140,7 +140,7 @@ class Installer: NSObject {
             try fileManager.createDirectory(at: safeDriveApplicationSupportURL, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
             SDLog("Error creating support directory: \(error)")
-            throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.serviceDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error creating support directory: \(error)"])
+            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.serviceDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error creating support directory: \(error)"])
         }
         
         if fileManager.fileExists(atPath: serviceDestinationURL.path) {
@@ -154,7 +154,7 @@ class Installer: NSObject {
             try fileManager.copyItem(at: serviceSourceURL, to: serviceDestinationURL)
         } catch let error as NSError {
             SDLog("Error copying service: \(error)")
-            throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.serviceDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying service: \(error)"])
+            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.serviceDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying service: \(error)"])
         }
         
     }
@@ -169,10 +169,10 @@ class Installer: NSObject {
         if err != errAuthorizationSuccess {
             if err == errAuthorizationCanceled {
                 SDLog("User cancelled installer")
-                throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.fuseDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "FUSE installation cancelled by user"])
+                throw NSError(domain: SDErrorDomainNotReported, code: SDInstallationError.fuseDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "FUSE installation cancelled by user"])
             } else {
                 SDLog("Installer could not be launched")
-                throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.fuseDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Installer could not be launched"])
+                throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.fuseDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Installer could not be launched"])
             }
         } else {
             SDLog("Installer launched")
@@ -182,12 +182,12 @@ class Installer: NSObject {
     func installCLI() throws {
         
         guard let sdkBundle = Bundle.init(identifier: "io.safedrive.sdk") else {
-            let cliError = NSError(domain: SDMountErrorDomain, code:SDInstallationError.cliMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "SDK bundle app missing"])
+            let cliError = NSError(domain: SDErrorDomainInternal, code:SDInstallationError.cliMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "SDK bundle app missing"])
             throw cliError
         }
         SDLog("SDK location: \(sdkBundle.bundleURL.path)")
         guard let cli = sdkBundle.url(forResource: "io.safedrive.SafeDrive.cli", withExtension: nil) else {
-                let cliError = NSError(domain: SDMountErrorDomain, code:SDInstallationError.cliMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "CLI app missing"])
+                let cliError = NSError(domain: SDErrorDomainInternal, code:SDInstallationError.cliMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "CLI app missing"])
                 throw cliError
         }
         
@@ -202,7 +202,7 @@ class Installer: NSObject {
             try FileManager.default.createDirectory(at: usrlocalbin, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
             SDLog("Failed to create /usr/local/bin directory: \(error)")
-            throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Failed to create /usr/local/bin directory: \(error)"])
+            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Failed to create /usr/local/bin directory: \(error)"])
         }
         
         let fileManager: FileManager = FileManager.default
@@ -211,14 +211,14 @@ class Installer: NSObject {
                 try FileManager.default.removeItem(at: destination)
             } catch let error as NSError {
                 SDLog("Error removing old CLI app: \(error)")
-                throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error removing old CLI app: \(error)"])
+                throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error removing old CLI app: \(error)"])
             }
         }
         do {
             try fileManager.copyItem(at: cli, to: destination)
         } catch let error as NSError {
             SDLog("Error copying CLI app: \(error)")
-            throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying CLI app: \(error)"])
+            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying CLI app: \(error)"])
         }
     }
 }

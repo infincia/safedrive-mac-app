@@ -82,11 +82,11 @@ class FailedViewController: NSViewController {
         
         var e: NSError
         if let error = self.error as? SDKError {
-            e = NSError(domain: SDErrorInstallationDomain, code: error.kind.rawValue, userInfo: [NSLocalizedDescriptionKey: error.message])
+            e = NSError(domain: SDErrorDomainReported, code: error.kind.rawValue, userInfo: [NSLocalizedDescriptionKey: error.message])
         } else if let error = self.error as? NSError {
-            e = NSError(domain: SDErrorInstallationDomain, code: error.code, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
+            e = NSError(domain: SDErrorDomainReported, code: error.code, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
         } else {
-            e = NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
+            e = NSError(domain: SDErrorDomainReported, code: SDInstallationError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
         }
         
         let os: String = "OS X \(SDSystemAPI.shared().currentOSVersion()!)"

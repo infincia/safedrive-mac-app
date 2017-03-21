@@ -191,7 +191,7 @@ class SyncScheduler {
             guard let currentSyncUUID = folder.currentSyncUUID else {
                     let message = "warning: found restoring folder but no uuid: \(folder.name!)"
                     SDLog(message)
-                    let e = NSError(domain: SDErrorSyncDomain, code: SDSyncError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                    let e = NSError(domain: SDErrorDomainInternal, code: SDSyncError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     SDErrorHandlerReport(e)
                     continue
             }

@@ -94,7 +94,7 @@ func SDErrorHandlerReport(_ error: Error?) {
         
         // using archived NSError so the array can be serialized as a plist
         errorQueue.sync {
-            let whitelistErrorDomains = [SDErrorDomain, SDErrorSyncDomain, SDErrorSSHFSDomain, SDErrorAccountDomain, SDErrorAPIDomain, SDMountErrorDomain]
+            let whitelistErrorDomains = [SDErrorDomainInternal, SDErrorDomainReported]
             
             if whitelistErrorDomains.contains(error._domain) {
                 let os: String = "OS X \(SDSystemAPI.shared().currentOSVersion()!)"
