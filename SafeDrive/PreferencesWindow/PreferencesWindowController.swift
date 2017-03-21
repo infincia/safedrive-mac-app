@@ -527,7 +527,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     @IBAction func startSyncNow(_ sender: AnyObject) {
-        guard let uniqueClientID = self.uniqueClientID else {
+        guard let _ = self.uniqueClientID else {
             return
         }
         
@@ -541,7 +541,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     @IBAction func startRestoreNow(_ sender: AnyObject) {
-        guard let uniqueClientID = self.uniqueClientID else {
+        guard let _ = self.uniqueClientID else {
             return
         }
         guard let button = sender as? NSButton else {
