@@ -319,7 +319,6 @@
 		AA76DC201C8762A9007B320E /* Installer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Installer.swift; path = Installer/Installer.swift; sourceTree = "<group>"; };
 		AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeWindowController.swift; path = Installer/WelcomeWindowController.swift; sourceTree = "<group>"; };
 		AA76DC281C879076007B320E /* WelcomeWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeWindow.xib; path = Installer/WelcomeWindow.xib; sourceTree = "<group>"; };
-		AA76DC2C1C88D4C6007B320E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		AA7CD6171E68A21100EE7FAD /* ValidateDependenciesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateDependenciesViewController.swift; path = Installer/ValidateDependenciesViewController.swift; sourceTree = "<group>"; };
 		AA7CD6181E68A21100EE7FAD /* ValidateDependenciesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateDependenciesView.xib; path = Installer/ValidateDependenciesView.xib; sourceTree = "<group>"; };
@@ -502,7 +501,6 @@
 				AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */,
 				AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */,
 				AA3EB8401E569D28003A2E79 /* Protocols.swift */,
-				AA31684E1A192D64006CC0EB /* SafeDriveAPI */,
 				AA54495E1BC3664F00826A0B /* ServiceManager */,
 				AA3168161A191B72006CC0EB /* Supporting Files */,
 				AA61F8481C05356D00D992FE /* SyncController */,
@@ -569,14 +567,6 @@
 				AA6E272F1D87855100038019 /* MountController.swift */,
 			);
 			path = MountController;
-			sourceTree = "<group>";
-		};
-		AA31684E1A192D64006CC0EB /* SafeDriveAPI */ = {
-			isa = PBXGroup;
-			children = (
-				AA76DC2C1C88D4C6007B320E /* API.swift */,
-			);
-			path = SafeDriveAPI;
 			sourceTree = "<group>";
 		};
 		AA3168581A1953CF006CC0EB /* Dropdown Menu */ = {
