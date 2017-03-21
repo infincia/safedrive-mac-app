@@ -212,7 +212,7 @@ class RestoreSelectionWindowController: NSWindowController {
     }
     
     @IBAction func startRestore(sender: AnyObject?) {
-        guard let uniqueClientID = self.uniqueClientID else {
+        guard let _ = self.uniqueClientID else {
             return
         }
 

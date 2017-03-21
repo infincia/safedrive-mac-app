@@ -334,7 +334,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     @IBAction func removeSyncFolder(_ sender: AnyObject) {
-        guard let uniqueClientID = self.uniqueClientID else {
+        guard let _ = self.uniqueClientID else {
             return
         }
         guard let _ = self.email,
@@ -660,7 +660,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     @IBAction func setSyncFrequencyForFolder(_ sender: AnyObject) {
-        guard let uniqueClientID = self.uniqueClientID,
+        guard let _ = self.uniqueClientID,
               let folders = self.folders,
                let realm = self.realm else {
             return
@@ -712,7 +712,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     @IBAction func setSyncTime(_ sender: AnyObject) {
-        guard let uniqueClientID = self.uniqueClientID,
+        guard let _ = self.uniqueClientID,
               let folders = self.folders,
               let realm = self.realm else {
             return
@@ -787,7 +787,7 @@ extension PreferencesWindowController: SDAccountProtocol {
             Crashlytics.sharedInstance().crash()
             return
         }
-        guard let uniqueClientID = self.uniqueClientID else {
+        guard let _ = self.uniqueClientID else {
             SDLog("API contract invalid: didSignIn in PreferencesWindowController")
             return
         }
@@ -1053,7 +1053,7 @@ extension PreferencesWindowController: NSTableViewDelegate {
 
     func tableViewSelectionDidChange(_ notification: Notification) {
         guard let folders = self.folders,
-              let uniqueClientID = self.uniqueClientID,
+              let _ = self.uniqueClientID,
               let realm = self.realm else {
             return
         }

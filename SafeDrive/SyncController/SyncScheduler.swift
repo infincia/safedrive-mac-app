@@ -271,7 +271,6 @@ class SyncScheduler {
                 return
             }
             
-            let uniqueClientID = syncEvent.uniqueClientID
             let folderID = syncEvent.folderID
             var isRestore: Bool = false
             if syncEvent.direction == .reverse {
