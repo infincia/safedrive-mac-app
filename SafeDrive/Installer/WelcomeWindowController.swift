@@ -239,20 +239,17 @@ extension WelcomeWindowController: NSPageControllerDelegate {
 
 extension WelcomeWindowController: NSWindowDelegate {
     func windowShouldClose(_ sender: Any) -> Bool {
-        if !(self.state == .ready) {
-            let installInProgressAlert = NSAlert()
+        let alert = NSAlert()
+        alert.addButton(withTitle: NSLocalizedString("Yes", comment: "Button title"))
+        alert.addButton(withTitle: NSLocalizedString("No", comment: "Button title"))
+        alert.alertStyle = .warning
+        
+        switch state {
+        case .welcome:
+            alert.messageText = NSLocalizedString("Installation in progress", comment: "String informing the user that an installation is in progress")
             
-            installInProgressAlert.messageText = NSLocalizedString("Installation in progress", comment: "String informing the user that an installation is in progress")
-            
-            installInProgressAlert.informativeText = NSLocalizedString("Are you sure you want to cancel?", comment: "String asking the user if they want to cancel the installation")
-            
-            installInProgressAlert.addButton(withTitle: NSLocalizedString("Yes", comment: "Button title"))
-            
-            installInProgressAlert.addButton(withTitle: NSLocalizedString("No", comment: "Button title"))
-            
-            installInProgressAlert.alertStyle = .warning
-
-            installInProgressAlert.beginSheetModal(for: self.window!, completionHandler: { (response) in
+            alert.informativeText = NSLocalizedString("Are you sure you want to cancel?", comment: "String asking the user if they want to cancel the installation")
+            alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
                 
                 switch response {
                 case NSAlertFirstButtonReturn:
@@ -262,8 +259,60 @@ extension WelcomeWindowController: NSWindowDelegate {
                     return
                 }
             })
+            break
+        case .validateDependencies:
+            alert.messageText = NSLocalizedString("Installation in progress", comment: "String informing the user that an installation is in progress")
+            
+            alert.informativeText = NSLocalizedString("Are you sure you want to cancel?", comment: "String asking the user if they want to cancel the installation")
+            alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
+                
+                switch response {
+                case NSAlertFirstButtonReturn:
+                    NSApp.terminate(self)
+                    break
+                default:
+                    return
+                }
+            })
+            break
+            
+        case .validateAccount:
+            alert.messageText = NSLocalizedString("SafeDrive requires an account", comment: "String informing the user that safedrive requires an account")
+            
+            alert.informativeText = NSLocalizedString("Closing this window will close SafeDrive, do you want to do that?", comment: "String asking the user if they want to close safedrive")
+            alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
+                
+                switch response {
+                case NSAlertFirstButtonReturn:
+                    NSApp.terminate(self)
+                    break
+                default:
+                    return
+                }
+            })
+            break
+
+        case .validateClient:
+            alert.messageText = NSLocalizedString("SafeDrive requires a registered client", comment: "String informing the user that safedrive requires an account")
+            
+            alert.informativeText = NSLocalizedString("Closing this window will close SafeDrive, do you want to do that?", comment: "String asking the user if they want to close safedrive")
+            alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
+                
+                switch response {
+                case NSAlertFirstButtonReturn:
+                    NSApp.terminate(self)
+                    break
+                default:
+                    return
+                }
+            })
+            break
+        case .ready:
+            return true
+        case .failed:
+            return true
         }
-        return self.state == .ready
+        return false
     }
 }
 
