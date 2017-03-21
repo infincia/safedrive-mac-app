@@ -381,7 +381,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
 
             let syncFolders = realm.objects(SyncFolder.self)
             
-            let syncFolder = syncFolders.filter("uniqueClientID == '\(uniqueClientID)' AND uniqueID == %@", uniqueID).last!
+            let syncFolder = syncFolders.filter("uniqueID == %@", uniqueID).last!
             
             let host = Host()
             let machineName = host.localizedName!
@@ -419,7 +419,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                             print("failed to delete sync tasks associated with \(uniqueID)")
                         }
                         
-                        let syncFolder = realm.objects(SyncFolder.self).filter("uniqueClientID == '\(uniqueClientID)' AND uniqueID == %@", uniqueID).last!
+                        let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", uniqueID).last!
                         
                         do {
                             try realm.write {
@@ -535,7 +535,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         let folderID: UInt64 = UInt64(button.tag)
         
         if let folders = self.folders,
-            let folder = folders.filter("uniqueClientID == '\(uniqueClientID)' AND uniqueID == %@", folderID).last {
+            let folder = folders.filter("uniqueID == %@", folderID).last {
             startSync(folderID, encrypted: folder.encrypted)
         }
     }
@@ -548,7 +548,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         let folderID: UInt64 = UInt64(button.tag)
         
         guard let folders = self.folders,
-              let folder = folders.filter("uniqueClientID == '\(uniqueClientID)' AND uniqueID == %@", folderID).last else {
+              let folder = folders.filter("uniqueID == %@", folderID).last else {
             return
         }
         
@@ -671,7 +671,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                 syncFrequency = "daily"
             }
             
-            let realSyncFolder = folders.filter("uniqueClientID == '\(uniqueClientID)' AND uniqueID == %@", uniqueID).last!
+            let realSyncFolder = folders.filter("uniqueID == %@", uniqueID).last!
             // swiftlint:disable force_try
             try! realm.write {
                 realSyncFolder.syncFrequency = syncFrequency
@@ -707,7 +707,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
             
             let uniqueID = syncFolder.uniqueID
             
-            let realSyncFolder = folders.filter("uniqueClientID == '\(uniqueClientID)' AND uniqueID == %@", uniqueID).last!
+            let realSyncFolder = folders.filter("uniqueID == %@", uniqueID).last!
             // swiftlint:disable force_try
             try! realm.write {
                 realSyncFolder.syncTime = self.syncTimePicker.dateValue
@@ -784,7 +784,7 @@ extension PreferencesWindowController: SDAccountProtocol {
         self.email = currentUser.email
         self.password = currentUser.password
         
-        let folders = realm.objects(SyncFolder.self).filter("uniqueClientID == '\(uniqueClientID)'")
+        let folders = realm.objects(SyncFolder.self)
         
         self.folders = folders
         
@@ -1070,7 +1070,7 @@ extension PreferencesWindowController: NSTableViewDelegate {
             
             let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
 
-            if let syncTask = syncTasks.filter("syncFolder.uniqueClientID == %@ AND syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", uniqueClientID, syncFolder).sorted(byKeyPath: "syncDate").last {
+            if let syncTask = syncTasks.filter("syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", syncFolder).sorted(byKeyPath: "syncDate").last {
                 
                 if syncFolder.restoring {
                     let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
@@ -1139,7 +1139,7 @@ extension PreferencesWindowController: NSTableViewDelegate {
                 self.syncProgressField.stringValue = ""
             }
             
-            /*if let syncTask = syncTasks.filter("syncFolder.uniqueClientID == '\(uniqueClientID)' AND syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
+            /*if let syncTask = syncTasks.filter("syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
              lastSync = syncTask.syncDate {
              self.lastSyncField.stringValue = lastSync.toMediumString()
              }

@@ -157,7 +157,7 @@ class RestoreSelectionWindowController: NSWindowController {
             return
         }
 
-        guard let syncFolder = realm.objects(SyncFolder.self).filter("uniqueClientID == '\(self.uniqueClientID)' AND uniqueID == %@", self.folderID).last else {
+        guard let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", self.folderID).last else {
             SDLog("failed to get folder from realm!!!")
             Crashlytics.sharedInstance().crash()
             return
@@ -232,7 +232,7 @@ class RestoreSelectionWindowController: NSWindowController {
         }
 
         
-        if let syncSession = realm.objects(PersistedSyncSession.self).filter("uniqueClientID == '\(uniqueClientID)' AND name == %@", v.sessionName).last {
+        if let syncSession = realm.objects(PersistedSyncSession.self).filter("name == %@", v.sessionName).last {
             self.restoreSelectionDelegate?.selectedSession(syncSession.name!, folderID: self.folderID, destination: self.destination.url!)
             self.close()
         } else {
@@ -259,7 +259,7 @@ class RestoreSelectionWindowController: NSWindowController {
             }
             
             // try to delete all existing local records for this folder for consistency
-            let syncSessions = realm.objects(PersistedSyncSession.self).filter("uniqueClientID == '\(uniqueClientID)' AND folderId == %@", Int64(self.folderID))
+            let syncSessions = realm.objects(PersistedSyncSession.self).filter("folderId == %@", Int64(self.folderID))
             
             // swiftlint:disable force_try
             try! realm.write {

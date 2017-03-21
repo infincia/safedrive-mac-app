@@ -132,27 +132,27 @@ class SyncScheduler {
                 if currentDateComponents.minute == 0 {
                     // first minute of each hour for hourly syncs
                     // NOTE: this scheduler ignores syncTime on purpose, hourly syncs always run at xx:00
-                    let hourlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'hourly' AND syncing == false AND uniqueClientID == '\(uniqueClientID)'")
+                    let hourlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'hourly' AND syncing == false")
                     folders.append(contentsOf: hourlyFolders)
                 }
                 
                 
                 if currentDateComponents.day == 1 {
                     // first of the month for monthly syncs
-                    let monthlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'monthly' AND syncing == false AND uniqueClientID == '\(uniqueClientID)' AND syncTime == %@", syncDate)
+                    let monthlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'monthly' AND syncing == false AND syncTime == %@", syncDate)
                     folders.append(contentsOf: monthlyFolders)
                 }
                 
                 
                 if currentDateComponents.weekday == 1 {
                     // first day of the week for weekly syncs
-                    let weeklyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'weekly' AND syncing == false AND uniqueClientID == '\(uniqueClientID)' AND syncTime == %@", syncDate)
+                    let weeklyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'weekly' AND syncing == false AND syncTime == %@", syncDate)
                     folders.append(contentsOf: weeklyFolders)
                 }
                 
                 
                 // daily syncs at arbitrary times based on syncTime property
-                let dailyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'daily' AND syncing == false AND uniqueClientID == '\(uniqueClientID)' AND syncTime == %@", syncDate)
+                let dailyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'daily' AND syncing == false AND syncTime == %@", syncDate)
                 folders.append(contentsOf: dailyFolders)
                 
                 
@@ -186,7 +186,7 @@ class SyncScheduler {
          
          */
         
-        for folder in realm.objects(SyncFolder.self).filter("restoring == true AND uniqueClientID == '\(uniqueClientID)'") {
+        for folder in realm.objects(SyncFolder.self).filter("restoring == true") {
             let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
             guard let currentSyncUUID = folder.currentSyncUUID else {
                     let message = "warning: found restoring folder but no uuid: \(folder.name!)"
@@ -283,7 +283,7 @@ class SyncScheduler {
 
             let name = syncEvent.name.lowercased()
             
-            guard let folder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID) AND uniqueClientID == '\(uniqueClientID)'").first else {
+            guard let folder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").first else {
                 SDLog("failed to get sync folder for machine from realm!!!")
                 return
             }
