@@ -239,7 +239,6 @@ extension WelcomeWindowController: NSPageControllerDelegate {
 
 extension WelcomeWindowController: NSWindowDelegate {
     func windowShouldClose(_ sender: Any) -> Bool {
-        SDLog("window should close: \((self.state == .ready))")
         if !(self.state == .ready) {
             let installInProgressAlert = NSAlert()
             
