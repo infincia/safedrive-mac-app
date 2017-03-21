@@ -78,6 +78,7 @@ class DropdownController: NSObject {
     
     fileprivate func enableMenuItems(_ enabled: Bool) {
         self.preferencesMenuItem.isEnabled = enabled
+        self.connectMenuItem.isEnabled = enabled
     }
 }
 
