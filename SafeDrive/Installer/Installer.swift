@@ -192,8 +192,18 @@ class Installer: NSObject {
         }
         
         SDLog("CLI location: \(cli.path)")
+        
+        let usrlocalbin = URL(string: "file:///usr/local/bin")!
 
-        let destination = URL(string: "file:///usr/local/bin/safedrive")!
+
+        let destination = usrlocalbin.appendingPathComponent("safedrive")
+        
+        do {
+            try FileManager.default.createDirectory(at: usrlocalbin, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            SDLog("Failed to create /usr/local/bin directory: \(error)")
+            throw NSError(domain: SDErrorInstallationDomain, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Failed to create /usr/local/bin directory: \(error)"])
+        }
         
         let fileManager: FileManager = FileManager.default
         if FileManager.default.fileExists(atPath: destination.path) {
