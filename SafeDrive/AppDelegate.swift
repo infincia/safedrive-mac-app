@@ -287,8 +287,9 @@ extension AppDelegate: SDApplicationEventProtocol {
                 try! fileManager.removeItem(at: dbURL)
                 try! fileManager.moveItem(at: newdbURL, to: dbURL)
                 // swiftlint:enable force_try
-
-                
+            }
+            
+            autoreleasepool {
                 /*
                  Reset all sync folders at startup.
                  
@@ -304,6 +305,8 @@ extension AppDelegate: SDApplicationEventProtocol {
                  
                  */
                 // swiftlint:disable force_try
+                let realm = try! Realm(fileURL: dbURL)
+
                 try! realm.write {
                     let syncFolders = realm.objects(SyncFolder.self)
                     syncFolders.setValue(false, forKey: "syncing")
