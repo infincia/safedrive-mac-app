@@ -543,8 +543,16 @@ class MountController: NSObject {
                 
                 let notification = NSUserNotification()
                 
+                let e = error as NSError
+                let code = e.code
+                if code == fBsyErr {
+                    notification.informativeText = NSLocalizedString("Please close any open files on your SafeDrive", comment: "")
+
+                } else {
+                    notification.informativeText = NSLocalizedString("Unknown error occurred", comment: "")
+                }
+
                 notification.title = "SafeDrive unmount failed"
-                notification.informativeText = NSLocalizedString("Please close any open files on your SafeDrive", comment: "")
                 
                 notification.soundName = NSUserNotificationDefaultSoundName
                 
