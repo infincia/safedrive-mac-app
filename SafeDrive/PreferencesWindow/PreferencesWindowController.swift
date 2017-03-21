@@ -319,7 +319,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
 
                     self.readSyncFolders(self)
                     
-                    self.startSync(folderID, encrypted: syncFolder.encrypted)
+                    self.sync(folderID, encrypted: syncFolder.encrypted)
                 }, failure: { (error) in
                     SDErrorHandlerReport(error)
                     self.spinner.stopAnimation(self)
@@ -536,7 +536,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         
         if let folders = self.folders,
             let folder = folders.filter("uniqueID == %@", folderID).last {
-            startSync(folderID, encrypted: folder.encrypted)
+            sync(folderID, encrypted: folder.encrypted)
         }
     }
     
@@ -582,7 +582,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     // MARK: Sync control
     
-    func startSync(_ folderID: UInt64, encrypted: Bool) {
+    func sync(_ folderID: UInt64, encrypted: Bool) {
         guard let uniqueClientID = self.uniqueClientID else {
             return
         }
