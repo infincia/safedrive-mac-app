@@ -314,7 +314,7 @@ class SyncController: Equatable {
         
         self.syncTask = Process()
         
-        let rsyncPath = Bundle.main.path(forAuxiliaryExecutable: "rsync-3.1.2")
+        let rsyncPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.rsync")
         
         if rsyncPath != nil {
             self.syncTask.launchPath = rsyncPath

@@ -18,8 +18,8 @@
 		AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
 		AA13CB9F1A7212F000A91C7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13CB9D1A7212F000A91C7A /* main.m */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
-		AA2DAB261CB32A6800951762 /* rsync-3.1.2 in Copy Files */ = {isa = PBXBuildFile; fileRef = AA2DAB241CB3293F00951762 /* rsync-3.1.2 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AA2DAB291CB3664D00951762 /* sshfs-2.7 in Copy Files */ = {isa = PBXBuildFile; fileRef = AA2DAB271CB3664200951762 /* sshfs-2.7 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AA2DAB261CB32A6800951762 /* io.safedrive.SafeDrive.rsync in Copy Files */ = {isa = PBXBuildFile; fileRef = AA2DAB241CB3293F00951762 /* io.safedrive.SafeDrive.rsync */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AA2DAB291CB3664D00951762 /* io.safedrive.SafeDrive.sshfs in Copy Files */ = {isa = PBXBuildFile; fileRef = AA2DAB271CB3664200951762 /* io.safedrive.SafeDrive.sshfs */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
@@ -212,8 +212,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				AA2DAB291CB3664D00951762 /* sshfs-2.7 in Copy Files */,
-				AA2DAB261CB32A6800951762 /* rsync-3.1.2 in Copy Files */,
+				AA2DAB291CB3664D00951762 /* io.safedrive.SafeDrive.sshfs in Copy Files */,
+				AA2DAB261CB32A6800951762 /* io.safedrive.SafeDrive.rsync in Copy Files */,
 				AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */,
 			);
 			name = "Copy Files";
@@ -267,8 +267,8 @@
 		AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileCheck.swift; path = "Open File Warning Window/OpenFileCheck.swift"; sourceTree = "<group>"; };
 		AA13CB9D1A7212F000A91C7A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = safedriveaskpass/main.m; sourceTree = SOURCE_ROOT; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
-		AA2DAB241CB3293F00951762 /* rsync-3.1.2 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "rsync-3.1.2"; path = "Bundled Dependencies/rsync-3.1.2"; sourceTree = "<group>"; };
-		AA2DAB271CB3664200951762 /* sshfs-2.7 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "sshfs-2.7"; path = "Bundled Dependencies/sshfs-2.7"; sourceTree = "<group>"; };
+		AA2DAB241CB3293F00951762 /* io.safedrive.SafeDrive.rsync */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.rsync; path = "Bundled Dependencies/io.safedrive.SafeDrive.rsync"; sourceTree = "<group>"; };
+		AA2DAB271CB3664200951762 /* io.safedrive.SafeDrive.sshfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.sshfs; path = "Bundled Dependencies/io.safedrive.SafeDrive.sshfs"; sourceTree = "<group>"; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
 		AA3168131A191B72006CC0EB /* SafeDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3168171A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -702,8 +702,8 @@
 			isa = PBXGroup;
 			children = (
 				AA5071561E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg */,
-				AA2DAB241CB3293F00951762 /* rsync-3.1.2 */,
-				AA2DAB271CB3664200951762 /* sshfs-2.7 */,
+				AA2DAB241CB3293F00951762 /* io.safedrive.SafeDrive.rsync */,
+				AA2DAB271CB3664200951762 /* io.safedrive.SafeDrive.sshfs */,
 			);
 			name = "Bundled Dependencies";
 			sourceTree = "<group>";

@@ -251,7 +251,7 @@ class MountController: NSObject {
         
         self.sshfsTask = Process()
         
-        guard let sshfsPath = Bundle.main.path(forAuxiliaryExecutable: "sshfs-2.7") else {
+        guard let sshfsPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.sshfs") else {
             let message = NSLocalizedString("SSHFS missing, contact SafeDrive support", comment: "")
             let sshfsError = NSError(domain: SDMountErrorDomain, code:SDSystemError.sshfsMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
             failureBlock(mountURL, sshfsError)

@@ -186,7 +186,7 @@ class Installer: NSObject {
             throw cliError
         }
         SDLog("SDK location: \(sdkBundle.bundleURL.path)")
-        guard let cli = sdkBundle.url(forResource: "safedrive", withExtension: nil) else {
+        guard let cli = sdkBundle.url(forResource: "io.safedrive.SafeDrive.cli", withExtension: nil) else {
                 let cliError = NSError(domain: SDMountErrorDomain, code:SDInstallationError.cliMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "CLI app missing"])
                 throw cliError
         }
