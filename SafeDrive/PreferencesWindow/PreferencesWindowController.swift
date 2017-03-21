@@ -868,6 +868,8 @@ extension PreferencesWindowController: SDAccountProtocol {
                 break
             case .Cancelled:
                 break
+            case .FolderMissing:
+                break
             }
         })
     }

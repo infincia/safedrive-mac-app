@@ -268,6 +268,8 @@ class AccountController: NSObject {
                             break
                         case .Cancelled:
                             break
+                        case .FolderMissing:
+                            break
                         }
                     })
                     continue
