@@ -251,13 +251,18 @@ extension WelcomeWindowController: NSWindowDelegate {
             
             installInProgressAlert.addButton(withTitle: NSLocalizedString("No", comment: "Button title"))
             
-            let button = installInProgressAlert.runModal()
-            
-            if button == NSAlertFirstButtonReturn {
-                NSApp.terminate(self)
-            } else if button == NSAlertSecondButtonReturn {
-                // user cancelled
-            }
+            installInProgressAlert.alertStyle = .warning
+
+            installInProgressAlert.beginSheetModal(for: self.window!, completionHandler: { (response) in
+                
+                switch response {
+                case NSAlertFirstButtonReturn:
+                    NSApp.terminate(self)
+                    break
+                default:
+                    return
+                }
+            })
         }
         return self.state == .ready
     }
