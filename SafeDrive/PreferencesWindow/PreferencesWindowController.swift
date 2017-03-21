@@ -469,11 +469,13 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                  "folderPath" : /Volumes/MacOS/Music,
                  "addedDate"  : 1435864769463,
                  "encrypted"  : false
+                 "syncing"    : false
                  */
                 
                 let folderName = folder.name
                 let folderPath = folder.path
                 let folderId = folder.id
+                let syncing = folder.syncing
                 
                 let addedUnixDate = Double(folder.date)
                 
@@ -496,6 +498,9 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
                     
                     // this is the only place where the `added` property should be set on SyncFolders
                     syncFolder!.added = addedDate
+                    
+                    // what the server calls 'syncing', we call 'active' to avoid confusion with syncing/restoring states
+                    syncFolder!.active = syncing
                     
                     realm.add(syncFolder!, update: true)
                 }

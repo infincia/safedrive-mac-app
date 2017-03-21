@@ -11,6 +11,10 @@ class SyncFolder: Object {
     dynamic var name: String?
     dynamic var path: String?
     dynamic var uniqueID: Int32 = 0
+    
+    // whether the folder should be allowed to sync, is it disabled/missing etc
+    dynamic var active: Bool = true
+    
     dynamic var syncing: Bool = false
     dynamic var restoring: Bool = false
     

@@ -132,27 +132,27 @@ class SyncScheduler {
                 if currentDateComponents.minute == 0 {
                     // first minute of each hour for hourly syncs
                     // NOTE: this scheduler ignores syncTime on purpose, hourly syncs always run at xx:00
-                    let hourlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'hourly' AND syncing == false")
+                    let hourlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'hourly' AND syncing == false AND active == true")
                     folders.append(contentsOf: hourlyFolders)
                 }
                 
                 
                 if currentDateComponents.day == 1 {
                     // first of the month for monthly syncs
-                    let monthlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'monthly' AND syncing == false AND syncTime == %@", syncDate)
+                    let monthlyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'monthly' AND syncing == false AND active == true AND syncTime == %@", syncDate)
                     folders.append(contentsOf: monthlyFolders)
                 }
                 
                 
                 if currentDateComponents.weekday == 1 {
                     // first day of the week for weekly syncs
-                    let weeklyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'weekly' AND syncing == false AND syncTime == %@", syncDate)
+                    let weeklyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'weekly' AND syncing == false AND active == true AND syncTime == %@", syncDate)
                     folders.append(contentsOf: weeklyFolders)
                 }
                 
                 
                 // daily syncs at arbitrary times based on syncTime property
-                let dailyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'daily' AND syncing == false AND syncTime == %@", syncDate)
+                let dailyFolders = realm.objects(SyncFolder.self).filter("syncFrequency == 'daily' AND syncing == false AND active == true AND syncTime == %@", syncDate)
                 folders.append(contentsOf: dailyFolders)
                 
                 

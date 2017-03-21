@@ -260,12 +260,12 @@ extension AppDelegate: SDApplicationEventProtocol {
                 migrationBlock: { migration, oldSchemaVersion in
                     SDLog("Migrating db version \(oldSchemaVersion) to \(SDCurrentRealmSchema)")
                     migration.enumerateObjects(ofType: SyncFolder.className()) { _, newObject in
-                        if oldSchemaVersion < 14 {
+                        if oldSchemaVersion < 15 {
                             migration.delete(newObject!)
                         }
                     }
                     migration.enumerateObjects(ofType: SyncTask.className()) { _, newObject in
-                        if oldSchemaVersion < 14 {
+                        if oldSchemaVersion < 15 {
                             migration.delete(newObject!)
                         }
                     }
