@@ -564,6 +564,8 @@ class MountController: NSObject {
                             self.openFileWarning!.showWindow(self)
                         })
                     }
+                } else if code == fnfErr {
+                    notification.informativeText = NSLocalizedString("This is a bug in OS X, reboot may help", comment: "")
                 } else {
                     notification.informativeText = NSLocalizedString("Unknown error occurred (\(code))", comment: "")
                 }
