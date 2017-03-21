@@ -546,15 +546,20 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         }
         let button: NSButton = sender as! NSButton
         let folderID: UInt64 = UInt64(button.tag)
+        startRestore(folderID)
         
+    }
+    
+    func startRestore(_ uniqueID: UInt64) {
         guard let folders = self.folders,
-              let folder = folders.filter("uniqueID == %@", folderID).last else {
-            return
+            let folder = folders.filter("uniqueID == %@", uniqueID).last,
+             let uniqueClientID = self.uniqueClientID else {
+                return
         }
         
         if folder.encrypted {
-
-            self.restoreSelection = RestoreSelectionWindowController(delegate: self, uniqueClientID: uniqueClientID, folderID: folderID)
+            
+            self.restoreSelection = RestoreSelectionWindowController(delegate: self, uniqueClientID: uniqueClientID, folderID: uniqueID)
             
             guard let w = self.restoreSelection?.window else {
                     SDLog("no recovery phrase window available")
@@ -564,8 +569,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         } else {
             // unencrypted folders have no versioning, so the name is arbitrary
             let name = UUID().uuidString.lowercased()
-            startRestore(folderID, encrypted: folder.encrypted, name: name, destination: nil)
-
+            restore(uniqueID, encrypted: folder.encrypted, name: name, destination: nil)
         }
     }
     
@@ -586,7 +590,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         self.syncScheduler.queueSyncJob(uniqueClientID, folderID: folderID, direction: .forward, type: type, name: UUID().uuidString.lowercased(), destination: nil)
     }
     
-    func startRestore(_ folderID: UInt64, encrypted: Bool, name: String, destination: URL?) {
+    func restore(_ folderID: UInt64, encrypted: Bool, name: String, destination: URL?) {
         guard let uniqueClientID = self.uniqueClientID else {
             return
         }
