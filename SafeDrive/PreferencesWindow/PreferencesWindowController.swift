@@ -1365,3 +1365,9 @@ extension PreferencesWindowController: SDApplicationEventProtocol {
         
     }
 }
+
+extension PreferencesWindowController: NSWindowDelegate {
+    func windowShouldClose(_ sender: Any) -> Bool {
+        return true
+    }
+}
