@@ -565,7 +565,7 @@ class MountController: NSObject {
                         })
                     }
                 } else {
-                    notification.informativeText = NSLocalizedString("Unknown error occurred", comment: "")
+                    notification.informativeText = NSLocalizedString("Unknown error occurred (\(code))", comment: "")
                 }
 
                 notification.title = "SafeDrive unmount failed"
