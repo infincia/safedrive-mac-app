@@ -109,6 +109,7 @@ extension AppDelegate: NSApplicationDelegate {
             Crashlytics.sharedInstance().crash()
         }
         
+        NSUserNotificationCenter.default.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration), name: Notification.Name.applicationShouldFinishConfiguration, object: nil)
         
@@ -365,4 +366,18 @@ extension AppDelegate: CrashlyticsDelegate {
         
     }
     
+}
+
+extension AppDelegate: NSUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
+        return true
+    }
+    
+    func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
+        DispatchQueue.main.async {
+            NSApp.activate(ignoringOtherApps: true)
+            self.preferencesWindowController?.showWindow(nil)
+        }
+        center.removeAllDeliveredNotifications()
+    }
 }
