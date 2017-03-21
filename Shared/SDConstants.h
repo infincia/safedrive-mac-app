@@ -42,18 +42,6 @@ typedef NS_ENUM(NSUInteger, SDAccountStatus) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - Errors
-
-FOUNDATION_EXPORT NSString *const SDErrorDomain;
-FOUNDATION_EXPORT NSString *const SDErrorUIDomain;
-FOUNDATION_EXPORT NSString *const SDErrorInstallationDomain;
-FOUNDATION_EXPORT NSString *const SDErrorSyncDomain;
-FOUNDATION_EXPORT NSString *const SDErrorSSHFSDomain;
-FOUNDATION_EXPORT NSString *const SDErrorAccountDomain;
-FOUNDATION_EXPORT NSString *const SDErrorAPIDomain;
-FOUNDATION_EXPORT NSString *const SDMountErrorDomain;
-
-
 FOUNDATION_EXPORT NSInteger const SDErrorNone;
 
 NS_ASSUME_NONNULL_END

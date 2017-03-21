@@ -25,17 +25,6 @@ NSString *const SDWelcomeShownKey = @"welcomeShown";
 
 #pragma mark - Errors
 
-NSString *const SDErrorDomain = @"io.safedrive";
-NSString *const SDErrorUIDomain = @"io.safedrive.ui";
-NSString *const SDErrorInstallationDomain = @"io.safedrive.installation";
-NSString *const SDErrorSyncDomain = @"io.safedrive.sync";
-NSString *const SDErrorSSHFSDomain = @"io.safedrive.sshfs";
-NSString *const SDErrorAccountDomain = @"io.safedrive.account";
-NSString *const SDErrorAPIDomain = @"io.safedrive.api";
-NSString *const SDMountErrorDomain = @"io.safedrive.mount";
-
-
-
 NSInteger const SDErrorNone = 0;
 
 // This will be unnecessary once SDError enums are Swift w/String values, but it's safe as long as error.code is cast
