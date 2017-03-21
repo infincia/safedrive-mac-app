@@ -15,7 +15,10 @@ class SyncFolder: Object {
     // whether the folder should be allowed to sync, is it disabled/missing etc
     dynamic var active: Bool = true
     
+    // whether the folder is currently syncing
     dynamic var syncing: Bool = false
+
+    // whether the folder is currently restoring
     dynamic var restoring: Bool = false
     
     dynamic var currentSyncUUID: String?
