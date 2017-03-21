@@ -548,6 +548,22 @@ class MountController: NSObject {
                 if code == fBsyErr {
                     notification.informativeText = NSLocalizedString("Please close any open files on your SafeDrive", comment: "")
 
+                    if askForOpenApps {
+                        let c = OpenFileCheck()
+                        
+                        let processes = c.check(volume: url)
+                        
+                        if processes.count <= 0 {
+                            return
+                        }
+                        DispatchQueue.main.async(execute: {() -> Void in
+                            self.openFileWarning = OpenFileWarningWindowController(delegate: self, url: url, processes: processes)
+                            
+                            NSApp.activate(ignoringOtherApps: true)
+                            
+                            self.openFileWarning!.showWindow(self)
+                        })
+                    }
                 } else {
                     notification.informativeText = NSLocalizedString("Unknown error occurred", comment: "")
                 }
@@ -557,24 +573,6 @@ class MountController: NSObject {
                 notification.soundName = NSUserNotificationDefaultSoundName
                 
                 NSUserNotificationCenter.default.deliver(notification)
-                
-                if askForOpenApps {
-                    let c = OpenFileCheck()
-                    
-                    let processes = c.check(volume: url)
-                    
-                    if processes.count <= 0 {
-                        return
-                    }
-                    DispatchQueue.main.async(execute: {() -> Void in
-                        self.openFileWarning = OpenFileWarningWindowController(delegate: self, url: url, processes: processes)
-                        
-                        NSApp.activate(ignoringOtherApps: true)
-                        
-                        self.openFileWarning!.showWindow(self)
-                    })
-                    
-                }
                 
             })
         }
