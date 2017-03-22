@@ -168,10 +168,33 @@ class ValidateAccountViewController: NSViewController {
             self.signingIn = false
 
             self.spinner.stopAnimation(self)
-            self.delegate?.didFail(error: error, uniqueClientID: nil)
-            if !self.isInteractiveLogin {
-                self.delegate?.needsAccount()
+            SDLog("login error: \(error) (\(error.kind))")
+            if error.kind == .Authentication {
+                if !self.isInteractiveLogin {
+                    self.delegate?.needsAccount()
+                } else {
+                    let alert = NSAlert()
+                    alert.addButton(withTitle: NSLocalizedString("OK", comment: "Button title"))
+                    alert.alertStyle = .warning
+                    
+                    
+                    alert.messageText = NSLocalizedString("Login failed", comment: "String informing the user that an account is required")
+                    
+                    alert.informativeText = error.message
+                    alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in
+                        
+                        switch response {
+                        case NSAlertFirstButtonReturn:
+                            break
+                        default:
+                            return
+                        }
+                    })
+                }
+            } else {
+                self.delegate?.didFail(error: error, uniqueClientID: nil)
             }
+
         }
     }
     
