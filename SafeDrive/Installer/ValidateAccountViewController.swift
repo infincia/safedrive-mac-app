@@ -116,7 +116,24 @@ class ValidateAccountViewController: NSViewController {
         
         guard let email = self.email,
               let password = self.password else {
-            return
+                let alert = NSAlert()
+                alert.addButton(withTitle: NSLocalizedString("OK", comment: "Button title"))
+                alert.alertStyle = .warning
+                
+                
+                alert.messageText = NSLocalizedString("SafeDrive requires an account", comment: "String informing the user that an account is required")
+                
+                alert.informativeText = NSLocalizedString("No email or password entered", comment: "String informing the user that an email or password was not entered")
+                alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in
+                    
+                    switch response {
+                    case NSAlertFirstButtonReturn:
+                        break
+                    default:
+                        return
+                    }
+                })
+                return
         }
 
         self.signingIn = true
