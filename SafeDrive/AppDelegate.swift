@@ -211,7 +211,7 @@ extension AppDelegate: SDApplicationControlProtocol {
     
     func applicationShouldToggleMountState(notification: Foundation.Notification) {
         DispatchQueue.main.async(execute: {() -> Void in
-            if MountController.shared.mounted {
+            if self.mountController.mounted {
                 NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: true)
             } else {
                 NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: nil)
