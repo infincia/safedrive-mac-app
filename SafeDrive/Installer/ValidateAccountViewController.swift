@@ -17,33 +17,12 @@ class ValidateAccountViewController: NSViewController {
     
     @IBOutlet weak var createAccountButton: NSButton!
     
+    @IBOutlet weak var emailField: NSTextField!
+    @IBOutlet weak var passwordField: NSTextField!
+    
     var email: String?
     var password: String?
-    
-    var bindEmail: NSString {
-        get {
-            if let email = self.email {
-                return email as NSString
-            }
-            return ""
-        }
-        set (newValue) {
-            self.email = newValue as String
-        }
-    }
-    
-    var bindPassword: NSString {
-        get {
-            if let password = self.password {
-                return password as NSString
-            }
-            return ""
-        }
-        set (newValue) {
-            self.password = newValue as String
-        }
-    }
-    
+        
     fileprivate var isInteractiveLogin = false
     
     fileprivate var prompted = false
@@ -93,6 +72,8 @@ class ValidateAccountViewController: NSViewController {
     func reset() {
         self.email = nil
         self.password = nil
+        self.emailField.stringValue = ""
+        self.passwordField.stringValue = ""
         self.prompted = false
         self.spinner.stopAnimation(self)
         self.signingIn = false
@@ -108,14 +89,10 @@ class ValidateAccountViewController: NSViewController {
                 let password = try? self.sdk.getKeychainItem(withUser: currentUser, service: accountCredentialDomain()) {
                 DispatchQueue.main.async {
                     
-                    self.willChangeValue(forKey: "bindEmail")
                     self.email = currentUser
-                    self.didChangeValue(forKey: "bindEmail")
-                    
-                    self.willChangeValue(forKey: "bindPassword")
+                    self.emailField.stringValue = currentUser
                     self.password = password
-                    self.didChangeValue(forKey: "bindPassword")
-                    
+                    self.passwordField.stringValue = password
                     self.signIn(nil)
                 }
                 return
@@ -185,5 +162,31 @@ class ValidateAccountViewController: NSViewController {
         // Open the safedrive page in users default browser
         let url = URL(string: "https://\(webDomain())/")
         NSWorkspace.shared().open(url!)
+    }
+}
+
+
+extension ValidateAccountViewController: NSTextFieldDelegate {
+    
+    override func controlTextDidChange(_ notification: Notification) {
+        guard let field = notification.object as? NSTextField else {
+            return
+        }
+        
+        if field == self.emailField {
+            if field.stringValue.characters.count >= 1 {
+                self.email = field.stringValue
+            } else {
+                self.email = nil
+            }
+        } else if field == self.passwordField {
+            if field.stringValue.characters.count >= 1 {
+                self.password = field.stringValue
+            } else {
+                self.password = nil
+            }
+        } else {
+            // there are no more in the window
+        }
     }
 }

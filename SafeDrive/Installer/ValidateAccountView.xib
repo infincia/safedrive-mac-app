@@ -9,6 +9,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ValidateAccountViewController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
                 <outlet property="createAccountButton" destination="fgV-yU-dIi" id="9nV-1G-WS6"/>
+                <outlet property="emailField" destination="ybq-Ux-TKE" id="VrQ-SV-yhb"/>
+                <outlet property="passwordField" destination="XFz-vv-7TO" id="9DW-2R-pfh"/>
                 <outlet property="signInButton" destination="Dye-Ez-xs5" id="i3d-0P-vuY"/>
                 <outlet property="spinner" destination="xNW-l6-cEs" id="tIT-jv-pQQ"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -38,16 +40,7 @@
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="value" keyPath="self.bindPassword" id="ap0-BK-1Zt">
-                            <dictionary key="options">
-                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                <bool key="NSConditionallySetsEditable" value="NO"/>
-                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                                <string key="NSNullPlaceholder">password</string>
-                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
-                                <bool key="NSValidatesImmediately" value="YES"/>
-                            </dictionary>
-                        </binding>
+                        <outlet property="delegate" destination="-2" id="Ach-91-KJe"/>
                     </connections>
                 </secureTextField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dye-Ez-xs5">
@@ -59,25 +52,7 @@
                     </buttonCell>
                     <connections>
                         <action selector="signIn:" target="-2" id="u1Z-TQ-y4u"/>
-                        <binding destination="-2" name="enabled2" keyPath="self.email" previousBinding="tvq-D3-zm7" id="amP-dY-E5x">
-                            <dictionary key="options">
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNullPlaceholder" value="-1"/>
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                        <binding destination="-2" name="enabled3" keyPath="self.password" previousBinding="amP-dY-E5x" id="VUu-Wj-MoF">
-                            <dictionary key="options">
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNullPlaceholder" value="-1"/>
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                        <binding destination="-2" name="enabled" keyPath="self.signingIn" id="tvq-D3-zm7">
+                        <binding destination="-2" name="enabled" keyPath="self.signingIn" id="Xqg-6g-GIK">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
@@ -119,16 +94,7 @@
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="value" keyPath="self.bindEmail" id="aGD-gK-Fuz">
-                            <dictionary key="options">
-                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                <bool key="NSConditionallySetsEditable" value="NO"/>
-                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                                <string key="NSNullPlaceholder">email address</string>
-                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
-                                <bool key="NSValidatesImmediately" value="YES"/>
-                            </dictionary>
-                        </binding>
+                        <outlet property="delegate" destination="-2" id="zNv-p8-rrR"/>
                     </connections>
                 </textField>
                 <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="xNW-l6-cEs">
