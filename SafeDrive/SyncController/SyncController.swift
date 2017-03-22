@@ -239,10 +239,14 @@ class SyncController: Equatable {
                 if d > 1 {
                     let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(Double(current) / d), countStyle: ByteCountFormatter.CountStyle.decimal)
                     let bandwidth = "\(average_bandwidth)/s"
-                    progressBlock(total, current, new, percent, bandwidth)
+                    (self.syncProgressQueue).async {
+                        progressBlock(total, current, new, percent, bandwidth)
+                    }
                 }
             }, issue: { (message) in
-                issueBlock(message)
+                (self.syncProgressQueue).async {
+                    issueBlock(message)
+                }
             }, success: {
                 successBlock(self.localURL)
             }, failure: { (error) in
@@ -255,10 +259,14 @@ class SyncController: Equatable {
                 if d > 1 {
                     let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(Double(current) / d), countStyle: ByteCountFormatter.CountStyle.decimal)
                     let bandwidth = "\(average_bandwidth)/s"
-                    progressBlock(total, current, new, percent, bandwidth)
+                    (self.syncProgressQueue).async {
+                        progressBlock(total, current, new, percent, bandwidth)
+                    }
                 }
             }, issue: { (message) in
-                issueBlock(message)
+                (self.syncProgressQueue).async {
+                    issueBlock(message)
+                }
             }, success: {
                 successBlock(self.localURL)
             }, failure: { (error) in
