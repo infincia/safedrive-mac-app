@@ -30,9 +30,9 @@ class ValidateAccountViewController: NSViewController {
     fileprivate let signingInQueue = DispatchQueue(label: "signingInQueue")
 
     
-    var signingIn: NSNumber? {
+    var signingIn: NSNumber {
         get {
-            var s: NSNumber? // sane default
+            var s = NSNumber(value: 0) // sane default
             signingInQueue.sync {
                 s = self._signingIn
             }
@@ -45,7 +45,7 @@ class ValidateAccountViewController: NSViewController {
         }
     }
     
-    fileprivate var _signingIn: NSNumber? = NSNumber(value: 0)
+    fileprivate var _signingIn: NSNumber = NSNumber(value: 0)
 
     override func viewDidLoad() {
         if #available(OSX 10.10, *) {
