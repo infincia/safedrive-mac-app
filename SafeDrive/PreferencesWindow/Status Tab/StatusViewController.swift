@@ -1,0 +1,125 @@
+
+//  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
+//
+
+import Cocoa
+
+class StatusViewController: NSViewController {
+    
+    @IBOutlet var serviceStatusField: NSTextField!
+    @IBOutlet var mountStatusField: NSTextField!
+    @IBOutlet var volumeSizeField: NSTextField!
+    
+    @IBOutlet var volumeFreespaceField: NSTextField!
+    
+    @IBOutlet var volumeUsageBar: NSProgressIndicator!
+    
+    override func viewDidLoad() {
+        if #available(OSX 10.10, *) {
+            super.viewDidLoad()
+        } else {
+            // Fallback on earlier versions
+        }
+        // Do view setup here.
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    convenience init() {
+        self.init(nibName: "StatusView", bundle: nil)!
+        
+        // register SDMountStateProtocol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
+        
+        // register SDServiceStatusProtcol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDServiceStatusProtocol.didReceiveServiceStatus), name: Notification.Name.serviceStatus, object: nil)
+        
+        // register SDApplicationEventProtocol notifications
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
+    }
+    
+    
+}
+
+
+extension StatusViewController: SDMountStateProtocol {
+    
+    func mountStateMounted(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "mountStateMounted called on background thread")
+        
+        self.mountStatusField.stringValue = NSLocalizedString("Yes", comment: "String for volume mount status of mounted")
+    }
+    
+    func mountStateUnmounted(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "mountStateUnmounted called on background thread")
+        
+        self.mountStatusField.stringValue = NSLocalizedString("No", comment: "String for volume mount status of unmounted")
+    }
+    
+    func mountStateDetails(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "mountStateDetails called on background thread")
+        
+        if let mountDetails = notification.object as? [FileAttributeKey: AnyObject],
+            let volumeTotalSpace = mountDetails[FileAttributeKey.systemSize] as? Int,
+            let volumeFreeSpace = mountDetails[FileAttributeKey.systemFreeSize] as? Int {
+            self.volumeSizeField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(volumeTotalSpace), countStyle: .file)
+            self.volumeFreespaceField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(volumeFreeSpace), countStyle: .file)
+            let volumeUsedSpace = volumeTotalSpace - volumeFreeSpace
+            self.volumeUsageBar.maxValue = Double(volumeTotalSpace)
+            self.volumeUsageBar.minValue = 0
+            self.volumeUsageBar.doubleValue = Double(volumeUsedSpace)
+            
+        } else {
+            self.volumeSizeField.stringValue = NSLocalizedString("Unmounted", comment: "String for volume mount status of mounted")
+            self.volumeFreespaceField.stringValue = NSLocalizedString("Unmounted", comment: "String for volume mount status of unmounted")
+            self.volumeUsageBar.maxValue = 1
+            self.volumeUsageBar.minValue = 0
+            self.volumeUsageBar.doubleValue = 0
+        }
+    }
+}
+
+
+extension StatusViewController: SDServiceStatusProtocol {
+    
+    func didReceiveServiceStatus(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveServiceStatus called on background thread")
+        
+        guard let status = notification.object as? Bool else {
+            SDLog("Validation failed: didReceiveServiceStatus")
+            return
+        }
+        
+        self.serviceStatusField.stringValue = (status == true ? "Running" : "Stopped")
+    }
+}
+
+
+extension StatusViewController: SDApplicationEventProtocol {
+    func applicationDidConfigureRealm(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureRealm called on background thread")
+    }
+    
+    func applicationDidConfigureClient(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
+    }
+    
+    func applicationDidConfigureUser(notification: Notification) {
+        assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
+    }
+}
