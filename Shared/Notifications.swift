@@ -36,6 +36,8 @@ extension Notification.Name {
     static let accountSignOut = Notification.Name("accountSignOutNotification")
     static let accountStatus = Notification.Name("accountStatusNotification")
     static let accountDetails = Notification.Name("accountDetailsNotification")
+    static let accountLoadedRecoveryPhrase = Notification.Name("accountLoadedRecoveryPhraseNotification")
+    static let accountNeedsRecoveryPhrase = Notification.Name("accountNeedsRecoveryPhraseNotification")
 
     static let serviceStatus = Notification.Name("serviceStatusNotification")
 

@@ -26,6 +26,8 @@ protocol SDAccountProtocol: class {
     func didSignOut(notification: Notification)
     func didReceiveAccountStatus(notification: Notification)
     func didReceiveAccountDetails(notification: Notification)
+    @objc optional func didLoadRecoveryPhrase(notification: Notification)
+    @objc optional func didRequireRecoveryPhrase(notification: Notification)
 }
 
 @objc
