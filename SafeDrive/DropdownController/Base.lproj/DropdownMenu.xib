@@ -14,7 +14,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <menu id="Utt-EH-yKf" userLabel="Status Item Menu">
+        <menu autoenablesItems="NO" id="Utt-EH-yKf" userLabel="Status Item Menu">
             <items>
                 <menuItem title="Connect" keyEquivalent="m" id="UpL-Lb-jBl">
                     <connections>
