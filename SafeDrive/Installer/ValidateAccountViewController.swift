@@ -203,6 +203,12 @@ class ValidateAccountViewController: NSViewController {
         let url = URL(string: "https://\(webDomain())/")
         NSWorkspace.shared().open(url!)
     }
+    
+    @IBAction func resetPassword(_ sender: AnyObject) {
+        // Open the safedrive reset password page in users default browser
+        let url = URL(string: "https://\(webDomain())/#!/en/reset-password")
+        NSWorkspace.shared().open(url!)
+    }
 }
 
 
