@@ -597,13 +597,6 @@ extension MountController: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
-
-        guard let currentUser = notification.object as? User else {
-            return
-        }
-        
-        self.email = currentUser.email
-        self.password = currentUser.password
         
         // only mount SSHFS automatically if the user set it to automount
         if self.automount {

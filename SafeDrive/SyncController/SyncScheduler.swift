@@ -425,13 +425,6 @@ extension SyncScheduler: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
-
-        guard let currentUser = notification.object as? User else {
-            SDLog("API contract invalid: didSignIn in SyncScheduler")
-            return
-        }
-        self.email = currentUser.email
-        self.password = currentUser.password
     }
     
     func didSignOut(notification: Foundation.Notification) {

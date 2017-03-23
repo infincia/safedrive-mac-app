@@ -186,16 +186,10 @@ class AccountController: NSObject {
         self.sdk.login(email, password: password, unique_client_id: uniqueClientID, completionQueue: self.accountCompletionQueue, success: { (status) -> Void in
             self.signingIn = false
             self.signedIn = true
-            
-            DispatchQueue.main.async(execute: {() -> Void in
-                NotificationCenter.default.post(name: Notification.Name.accountStatus, object: status)
-            })
-            
             self.lastAccountStatusCheck = Date()
             
-            let currentUser = User(email: email, password: password)
             DispatchQueue.main.async(execute: {() -> Void in
-                NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: currentUser)
+                NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: status)
             })
         }, failure: { (error) in
             self.signingIn = false

@@ -586,13 +586,6 @@ extension SyncViewController: SDAccountProtocol {
             return
         }
         
-        guard let currentUser = notification.object as? User else {
-            SDLog("API contract invalid: didSignIn in PreferencesWindowController")
-            return
-        }
-        
-        self.email = currentUser.email
-        self.password = currentUser.password
         
         let folders = realm.objects(SyncFolder.self)
         

@@ -163,19 +163,13 @@ extension EncryptionViewController: SDAccountProtocol {
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
 
-        guard let _ = self.uniqueClientID else {
+        guard let _ = self.uniqueClientID,
+              let email = self.email else {
             SDLog("API contract invalid: didSignIn in PreferencesWindowController")
             return
         }
         
-        guard let currentUser = notification.object as? User else {
-            SDLog("API contract invalid: didSignIn in PreferencesWindowController")
-            return
-        }
-        
-        self.email = currentUser.email
-        
-        let recoveryPhrase = try? self.sdk.getKeychainItem(withUser: currentUser.email, service: recoveryKeyDomain())
+        let recoveryPhrase = try? self.sdk.getKeychainItem(withUser: email, service: recoveryKeyDomain())
         
         self.checkRecoveryPhrase(recoveryPhrase, success: {
             NotificationCenter.default.post(name: Notification.Name.accountLoadedRecoveryPhrase, object: nil)

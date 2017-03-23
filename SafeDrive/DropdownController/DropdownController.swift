@@ -85,9 +85,6 @@ class DropdownController: NSObject {
 extension DropdownController: SDAccountProtocol {
     
     func didSignIn(notification: Notification) {
-        guard let _ = notification.object as? User else {
-            return
-        }
         self.enableMenuItems(true)
     }
     
