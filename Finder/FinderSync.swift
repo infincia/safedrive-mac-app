@@ -234,6 +234,28 @@ class FinderSync: FIFinderSync {
     
     // MARK: - Setup handling
     
+    func clientConfigLoop() {
+        DispatchQueue.global(qos: DispatchQoS.default.qosClass).async {
+            while true {
+                guard let a = self.appConnection else {
+                    Thread.sleep(forTimeInterval: 1)
+                    continue
+                }
+                let app = a.remoteObjectProxyWithErrorHandler { error in
+                    print("remote proxy error: \(error)")
+                } as! AppXPCProtocol
+                
+                app.getUniqueClientID({ (ucid) -> Void in
+                    DispatchQueue.main.async {
+                        self.configureClient(uniqueClientID: ucid)
+                    }
+                })
+                
+                Thread.sleep(forTimeInterval: 1)
+            }
+        }
+    }
+    
     func configureClient(uniqueClientID: String?) {
         self.token = nil
         self.syncFolders = nil
