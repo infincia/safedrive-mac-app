@@ -7,7 +7,7 @@ import Cocoa
 import SafeDriveSDK
 
 class DropdownController: NSObject {
-    var statusItem: NSStatusItem?
+    fileprivate var statusItem: NSStatusItem?
     @IBOutlet fileprivate var statusItemMenu: NSMenu!
     @IBOutlet fileprivate var connectMenuItem: NSMenuItem!
     @IBOutlet fileprivate var preferencesMenuItem: NSMenuItem!
