@@ -38,7 +38,15 @@ class RecoveryPhraseWindowController: NSWindowController {
     }
     
     @IBAction func closeWindow(sender: AnyObject?) {
-        self.close()
+        guard let window = self.window else {
+            SDLog("API contract invalid: window not found in RecoveryPhraseWindowController")
+            return
+        }
+        if let parent = window.sheetParent {
+            parent.endSheet(window)
+        } else {
+            self.close()
+        }
     }
     
     @IBAction func checkRecoveryPhrase(sender: AnyObject?) {
