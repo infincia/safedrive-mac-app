@@ -322,6 +322,8 @@ class AccountController: NSObject {
                             break
                         }
                     }
+                    Thread.sleep(forTimeInterval: 1)
+
                     continue
                     
                 }
