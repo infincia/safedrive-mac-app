@@ -173,7 +173,7 @@ class AccountController: NSObject {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func signIn(_ successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: SDKError) -> Void) {
+    func signIn(_ failureBlock: @escaping (_ error: SDKError) -> Void) {
         guard let email = self.email, let password = self.password, let uniqueClientID = self.uniqueClientID else {
             return
         }
@@ -184,6 +184,7 @@ class AccountController: NSObject {
         Crashlytics.sharedInstance().setUserIdentifier(uniqueClientID)
         
         self.sdk.login(email, password: password, unique_client_id: uniqueClientID, completionQueue: self.accountCompletionQueue, success: { (status) -> Void in
+            self.signingIn = false
             self.signedIn = true
             
             DispatchQueue.main.async(execute: {() -> Void in
@@ -208,9 +209,9 @@ class AccountController: NSObject {
             DispatchQueue.main.async(execute: {() -> Void in
                 NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: currentUser)
             })
-            successBlock()
-            
         }, failure: { (error) in
+            self.signingIn = false
+            self.signedIn = false
             SDLog("failed to login with sdk: \(error.message)")
             failureBlock(error)
         })
@@ -289,12 +290,7 @@ class AccountController: NSObject {
 
                 if !self.signedIn && !self.signingIn {
                     self.signingIn = true
-                    self.signIn({ 
-                        self.signingIn = false
-                        self.signedIn = true
-                    }, failure: { (error) in
-                        self.signingIn = false
-                        self.signedIn = false
+                    self.signIn { (error) in
                         switch error.kind {
                         case .StateMissing:
                             break
@@ -343,8 +339,9 @@ class AccountController: NSObject {
                         case .FolderMissing:
                             break
                         }
-                    })
+                    }
                     continue
+                    
                 }
                 
                 if !self.signedIn {
