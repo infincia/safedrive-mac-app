@@ -191,6 +191,7 @@ class AccountController: NSObject {
                 NotificationCenter.default.post(name: Notification.Name.accountStatus, object: status)
             })
             
+            self.lastAccountStatusCheck = Date()
             
             let currentUser = User(email: email, password: password)
             DispatchQueue.main.async(execute: {() -> Void in
