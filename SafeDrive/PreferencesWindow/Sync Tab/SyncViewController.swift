@@ -130,8 +130,8 @@ class SyncViewController: NSViewController {
         let promptString: String = NSLocalizedString("Select", comment: "Button title")
         panel.prompt = promptString
         
-        panel.beginSheetModal(for: self.view.window!) { (result)  in
-            if result == NSFileHandlingPanelOKButton {
+        self.delegate.showModalWindow(panel) { (response) in
+            if response == NSFileHandlingPanelOKButton {
                 self.spinner.startAnimation(self)
                 let isEncrypted = (encryptedCheckbox.state == 1)
                 
@@ -198,7 +198,7 @@ class SyncViewController: NSViewController {
         alert.informativeText = "The synced files will be deleted from SafeDrive or moved to your Storage folder.\n\nWhich one would you like to do?"
         alert.alertStyle = .informational
         
-        alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in
+        self.delegate.showAlert(alert) { (response) in
             
             var op: SDSFTPOperation
             switch response {
@@ -293,7 +293,7 @@ class SyncViewController: NSViewController {
                     alert.runModal()
                 })
             }
-        })
+        }
     }
     
     @IBAction func readSyncFolders(_ sender: AnyObject) {
@@ -428,7 +428,9 @@ class SyncViewController: NSViewController {
                 SDLog("no recovery phrase window available")
                 return
             }
-            self.view.window?.beginSheet(w, completionHandler: nil)
+            self.delegate.showModalWindow(w) { (_) in
+                
+            }
         } else {
             // unencrypted folders have no versioning, so the name is arbitrary
             let name = UUID().uuidString.lowercased()
@@ -466,8 +468,7 @@ class SyncViewController: NSViewController {
         alert.messageText = "Restore folder?"
         alert.informativeText = "This will restore the selected folder contents from your SafeDrive.\n\nWarning: Any local files that have not been previously synced to SafeDrive may be lost."
         alert.alertStyle = .informational
-        
-        alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in
+        self.delegate.showAlert(alert) { (response) in
             
             switch response {
             case NSAlertFirstButtonReturn:
@@ -481,7 +482,7 @@ class SyncViewController: NSViewController {
             default:
                 return
             }
-        })
+        }
     }
     
     func stopSync(_ folderID: UInt64) {
@@ -494,8 +495,7 @@ class SyncViewController: NSViewController {
         alert.informativeText = "This folder is currently syncing, do you want to cancel?"
         alert.alertStyle = .informational
         
-        alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in
-            
+        self.delegate.showAlert(alert) { (response) in
             switch response {
             case NSAlertFirstButtonReturn:
                 return
@@ -507,7 +507,7 @@ class SyncViewController: NSViewController {
             default:
                 return
             }
-        })
+        }
     }
     
     @IBAction func setSyncFrequencyForFolder(_ sender: AnyObject) {
