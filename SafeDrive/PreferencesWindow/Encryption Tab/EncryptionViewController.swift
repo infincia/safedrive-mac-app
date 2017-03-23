@@ -249,7 +249,7 @@ extension EncryptionViewController: SDAccountProtocol {
         self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
         self.copyRecoveryPhraseButton.isEnabled = false
         
-        // TODO: fix  self.window?.makeKeyAndOrderFront(self)
+        self.view.window?.makeKeyAndOrderFront(self)
         NSApp.activate(ignoringOtherApps: true)
         
         guard let w = self.recoveryPhraseEntry?.window else {
