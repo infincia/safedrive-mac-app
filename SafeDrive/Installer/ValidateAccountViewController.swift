@@ -204,13 +204,19 @@ class ValidateAccountViewController: NSViewController {
     @IBAction func createAccount(_ sender: AnyObject?) {
         // Open the safedrive page in users default browser
         let url = URL(string: "https://\(webDomain())/")
+        // swiftlint:disable force_unwrapping
         NSWorkspace.shared().open(url!)
+        // swiftlint:enable force_unwrapping
+
     }
     
     @IBAction func resetPassword(_ sender: AnyObject) {
         // Open the safedrive reset password page in users default browser
         let url = URL(string: "https://\(webDomain())/#!/en/reset-password")
+        // swiftlint:disable force_unwrapping
         NSWorkspace.shared().open(url!)
+        // swiftlint:enable force_unwrapping
+
     }
 }
 
