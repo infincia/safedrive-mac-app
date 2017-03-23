@@ -26,7 +26,6 @@ class AccountController: NSObject {
     var email: String?
     var password: String?
     
-    fileprivate let userQueue = DispatchQueue(label: "io.safedrive.accountQueue")
 
     // swiftlint:disable variable_name
     var _currentUser: User?
@@ -35,13 +34,13 @@ class AccountController: NSObject {
     var currentUser: User? {
         get {
             var user: User?
-            userQueue.sync {
+            accountQueue.sync {
                 user = self._currentUser
             }
             return user
         }
         set (newValue) {
-            userQueue.sync(flags: .barrier, execute: {
+            accountQueue.sync(flags: .barrier, execute: {
                 self._currentUser = newValue
             })
         }
