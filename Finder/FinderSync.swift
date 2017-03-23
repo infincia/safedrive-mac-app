@@ -27,6 +27,8 @@ class FinderSync: FIFinderSync {
     var supportMenuItem: NSMenuItem!
     var preferenceMenuItem: NSMenuItem!
     var mountMenuItem: NSMenuItem!
+    
+    var uniqueClientID: String?
 
     override init() {
         super.init()
