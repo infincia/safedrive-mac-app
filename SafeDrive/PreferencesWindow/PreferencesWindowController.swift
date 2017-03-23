@@ -23,6 +23,13 @@ enum Tab: Int {
     case status
 }
 
+protocol PreferencesViewDelegate: class {
+    func setTab(_ tab: Tab)
+    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSModalResponse) -> Void))
+    func dismissModalWindow(_ window: NSWindow)
+    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSModalResponse) -> Void))
+}
+
 
 class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
 
