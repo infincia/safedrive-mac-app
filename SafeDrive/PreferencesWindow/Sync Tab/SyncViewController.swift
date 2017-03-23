@@ -581,11 +581,6 @@ extension SyncViewController: SDAccountProtocol {
             Crashlytics.sharedInstance().crash()
             return
         }
-        guard let _ = self.uniqueClientID else {
-            SDLog("API contract invalid: didSignIn in PreferencesWindowController")
-            return
-        }
-        
         
         let folders = realm.objects(SyncFolder.self)
         
