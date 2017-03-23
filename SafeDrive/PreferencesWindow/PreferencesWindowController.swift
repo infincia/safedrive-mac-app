@@ -41,7 +41,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     // ********************************************************
     // MARK: View management
     
-    @IBOutlet var containerView: NSView!
+    @IBOutlet fileprivate var containerView: NSView!
     
     var generalViewController: GeneralViewController!
     var accountViewController: AccountViewController!
@@ -50,11 +50,11 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     var statusViewController: StatusViewController!
     
     // MARK: Tab selections
-    @IBOutlet var generalButton: NSButton!
-    @IBOutlet var accountButton: NSButton!
-    @IBOutlet var encryptionButton: NSButton!
-    @IBOutlet var statusButton: NSButton!
-    @IBOutlet var syncButton: NSButton!
+    @IBOutlet fileprivate var generalButton: NSButton!
+    @IBOutlet fileprivate var accountButton: NSButton!
+    @IBOutlet fileprivate var encryptionButton: NSButton!
+    @IBOutlet fileprivate var statusButton: NSButton!
+    @IBOutlet fileprivate var syncButton: NSButton!
     
     // Initialization
     

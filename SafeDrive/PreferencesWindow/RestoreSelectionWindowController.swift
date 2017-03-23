@@ -111,11 +111,11 @@ class RestoreSelectionWindowController: NSWindowController {
     fileprivate var uniqueClientID: String!
     fileprivate var folderID: UInt64!
     
-    @IBOutlet weak var restoreSelectionList: NSTableView!
-    @IBOutlet weak var spinner: NSProgressIndicator!
-    @IBOutlet weak var errorField: NSTextField!
-    @IBOutlet weak var destination: NSPathControl!
-    @IBOutlet weak var destinationButton: NSButton!
+    @IBOutlet fileprivate weak var restoreSelectionList: NSTableView!
+    @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
+    @IBOutlet fileprivate weak var errorField: NSTextField!
+    @IBOutlet fileprivate weak var destination: NSPathControl!
+    @IBOutlet fileprivate weak var destinationButton: NSButton!
 
     weak var restoreSelectionDelegate: RestoreSelectionDelegate?
     

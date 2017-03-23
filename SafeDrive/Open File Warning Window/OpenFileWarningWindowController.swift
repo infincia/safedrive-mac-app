@@ -79,9 +79,9 @@ extension OpenFileWarningWindowController:  NSTableViewDelegate {
 
 
 class OpenFileWarningWindowController: NSWindowController {
-    @IBOutlet weak var spinner: NSProgressIndicator!
-    @IBOutlet weak var errorField: NSTextField!
-    @IBOutlet weak var processList: NSTableView!
+    @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
+    @IBOutlet fileprivate weak var errorField: NSTextField!
+    @IBOutlet fileprivate weak var processList: NSTableView!
     
     fileprivate weak var openFileWarningDelegate: OpenFileWarningDelegate?
     

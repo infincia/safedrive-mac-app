@@ -8,8 +8,8 @@ class GeneralViewController: NSViewController {
 
     fileprivate var sharedSystemAPI = SDSystemAPI.shared()
     
-    @IBOutlet var volumeNameField: NSTextField!
-    @IBOutlet var volumeNameWarningField: NSTextField!
+    @IBOutlet fileprivate var volumeNameField: NSTextField!
+    @IBOutlet fileprivate var volumeNameWarningField: NSTextField!
     
     fileprivate weak var delegate: PreferencesViewDelegate!
     

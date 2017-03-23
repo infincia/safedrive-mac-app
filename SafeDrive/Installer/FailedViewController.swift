@@ -10,19 +10,19 @@ class FailedViewController: NSViewController {
     
     var sdk = SafeDriveSDK.sharedSDK
     
-    @IBOutlet var spinner: NSProgressIndicator!
+    @IBOutlet fileprivate var spinner: NSProgressIndicator!
     
-    @IBOutlet var scrollView: NSScrollView!
+    @IBOutlet fileprivate var scrollView: NSScrollView!
     
     var errorMessage: NSTextView {
         return scrollView.contentView.documentView as! NSTextView
     }
 
-    @IBOutlet weak var panelMessage: NSTextField!
+    @IBOutlet fileprivate weak var panelMessage: NSTextField!
 
-    @IBOutlet weak var reportButton: NSButton!
+    @IBOutlet fileprivate weak var reportButton: NSButton!
     
-    @IBOutlet weak var okButton: NSButton!
+    @IBOutlet fileprivate weak var okButton: NSButton!
     
     fileprivate var uniqueClientId = String()
     

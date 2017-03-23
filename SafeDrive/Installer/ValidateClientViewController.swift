@@ -11,13 +11,13 @@ class ValidateClientViewController: NSViewController {
     
     fileprivate weak var delegate: StateDelegate?
     
-    @IBOutlet var spinner: NSProgressIndicator!
+    @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
     
-    @IBOutlet weak var clientList: NSTableView!
+    @IBOutlet fileprivate weak var clientList: NSTableView!
     
-    @IBOutlet weak var newClientButton: NSButton!
+    @IBOutlet fileprivate weak var newClientButton: NSButton!
     
-    @IBOutlet weak var replaceClientButton: NSButton!
+    @IBOutlet fileprivate weak var replaceClientButton: NSButton!
     
     var clients: [SoftwareClient]?
     

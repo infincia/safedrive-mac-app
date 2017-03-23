@@ -11,14 +11,14 @@ class ValidateAccountViewController: NSViewController {
         
     fileprivate weak var delegate: StateDelegate?
     
-    @IBOutlet var spinner: NSProgressIndicator!
+    @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
     
-    @IBOutlet weak var signInButton: NSButton!
+    @IBOutlet fileprivate weak var signInButton: NSButton!
     
-    @IBOutlet weak var createAccountButton: NSButton!
+    @IBOutlet fileprivate weak var createAccountButton: NSButton!
     
-    @IBOutlet weak var emailField: NSTextField!
-    @IBOutlet weak var passwordField: NSTextField!
+    @IBOutlet fileprivate weak var emailField: NSTextField!
+    @IBOutlet fileprivate weak var passwordField: NSTextField!
     
     var email: String?
     var password: String?

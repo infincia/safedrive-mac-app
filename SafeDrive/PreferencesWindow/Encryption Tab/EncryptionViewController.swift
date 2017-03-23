@@ -15,9 +15,9 @@ class EncryptionViewController: NSViewController {
 
     fileprivate var uniqueClientID: String?
 
-    @IBOutlet var copyRecoveryPhraseButton: NSButton!
+    @IBOutlet fileprivate var copyRecoveryPhraseButton: NSButton!
     
-    @IBOutlet var recoveryPhraseField: NSTextField!
+    @IBOutlet fileprivate var recoveryPhraseField: NSTextField!
     
     var email: String?
     

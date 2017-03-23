@@ -19,10 +19,10 @@ class SyncViewController: NSViewController {
     
     fileprivate weak var delegate: PreferencesViewDelegate!
     
-    @IBOutlet var syncListView: NSTableView!
-    @IBOutlet var spinner: NSProgressIndicator!
+    @IBOutlet fileprivate weak var syncListView: NSTableView!
+    @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
     
-    @IBOutlet var progress: NSProgressIndicator!
+    @IBOutlet fileprivate weak   var progress: NSProgressIndicator!
     
     //@IBOutlet var pathIndicator: NSPathControl!
     
@@ -30,17 +30,17 @@ class SyncViewController: NSViewController {
     
     //@IBOutlet var nextSyncField: NSTextField!
     
-    @IBOutlet var syncProgressField: NSTextField!
+    @IBOutlet fileprivate weak var syncProgressField: NSTextField!
     
-    @IBOutlet var syncFailureInfoButton: NSButton!
+    @IBOutlet fileprivate weak var syncFailureInfoButton: NSButton!
     
-    @IBOutlet var syncStatus: NSTextField!
+    @IBOutlet fileprivate weak var syncStatus: NSTextField!
     
-    @IBOutlet var syncTimePicker: NSDatePicker!
+    @IBOutlet fileprivate weak var syncTimePicker: NSDatePicker!
     
-    @IBOutlet var scheduleSelection: NSPopUpButton!
+    @IBOutlet fileprivate weak var scheduleSelection: NSPopUpButton!
     
-    @IBOutlet var failurePopover: NSPopover!
+    @IBOutlet fileprivate weak var failurePopover: NSPopover!
     
     fileprivate var restoreSelection: RestoreSelectionWindowController!
 

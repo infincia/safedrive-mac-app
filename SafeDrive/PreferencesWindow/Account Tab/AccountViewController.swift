@@ -7,12 +7,12 @@ import SafeDriveSDK
 
 class AccountViewController: NSViewController {
     
-    @IBOutlet var assignedStorageField: NSTextField!
-    @IBOutlet var usedStorageField: NSTextField!
-    @IBOutlet var availableStorageField: NSTextField!
+    @IBOutlet fileprivate var assignedStorageField: NSTextField!
+    @IBOutlet fileprivate var usedStorageField: NSTextField!
+    @IBOutlet fileprivate var availableStorageField: NSTextField!
     
-    @IBOutlet var accountStatusField: NSTextField!
-    @IBOutlet var accountExpirationField: NSTextField!
+    @IBOutlet fileprivate var accountStatusField: NSTextField!
+    @IBOutlet fileprivate var accountExpirationField: NSTextField!
     
     fileprivate weak var delegate: PreferencesViewDelegate!
 

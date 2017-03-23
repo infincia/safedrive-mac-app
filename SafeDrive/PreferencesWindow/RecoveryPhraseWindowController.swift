@@ -13,9 +13,9 @@ protocol RecoveryPhraseEntryDelegate: class {
 
 class RecoveryPhraseWindowController: NSWindowController {
     
-    @IBOutlet weak var recoveryPhraseField: NSTextField!
-    @IBOutlet weak var errorField: NSTextField!
-    @IBOutlet weak var spinner: NSProgressIndicator!
+    @IBOutlet fileprivate weak var recoveryPhraseField: NSTextField!
+    @IBOutlet fileprivate weak var errorField: NSTextField!
+    @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
 
     weak var recoveryDelegate: RecoveryPhraseEntryDelegate?
     

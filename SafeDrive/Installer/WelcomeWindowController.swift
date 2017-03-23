@@ -29,7 +29,7 @@ class WelcomeWindowController: NSWindowController {
     
     fileprivate var state = State.welcome
     
-    @IBOutlet var pageController: NSPageController!
+    @IBOutlet fileprivate weak var pageController: NSPageController!
     
     // MARK: Initializers
     

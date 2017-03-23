@@ -8,13 +8,13 @@ class StatusViewController: NSViewController {
     
     fileprivate weak var delegate: PreferencesViewDelegate!
 
-    @IBOutlet var serviceStatusField: NSTextField!
-    @IBOutlet var mountStatusField: NSTextField!
-    @IBOutlet var volumeSizeField: NSTextField!
+    @IBOutlet fileprivate var serviceStatusField: NSTextField!
+    @IBOutlet fileprivate var mountStatusField: NSTextField!
+    @IBOutlet fileprivate var volumeSizeField: NSTextField!
     
-    @IBOutlet var volumeFreespaceField: NSTextField!
+    @IBOutlet fileprivate var volumeFreespaceField: NSTextField!
     
-    @IBOutlet var volumeUsageBar: NSProgressIndicator!
+    @IBOutlet fileprivate var volumeUsageBar: NSProgressIndicator!
     
     override func viewDidLoad() {
         if #available(OSX 10.10, *) {

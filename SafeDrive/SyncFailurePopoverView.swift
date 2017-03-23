@@ -5,6 +5,7 @@
 //  Created by steve on 3/23/16.
 //  Copyright © 2016 Infincia LLC. All rights reserved.
 //
+// swiftlint:disable private_outlet
 
 import Cocoa
 
