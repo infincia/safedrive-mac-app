@@ -345,12 +345,18 @@ enum State {
 extension State : CustomStringConvertible {
     var description: String {
         switch self {
-        case .welcome: return "welcome"
-        case .validateDependencies: return "validating dependencies"
-        case .validateAccount: return "validating account"
-        case .validateClient(_, _, _): return "validating client"
-        case .ready: return "ready"
-        case .failed(_, _): return "failed"
+        case .welcome:
+            return "welcome"
+        case .validateDependencies:
+            return "validating dependencies"
+        case .validateAccount:
+            return "validating account"
+        case .validateClient(_, _, _):
+            return "validating client"
+        case .ready:
+            return "ready"
+        case .failed(_, _):
+            return "failed"
         }
     }
 }
@@ -360,23 +366,35 @@ extension State: RawRepresentable {
     
     init?(rawValue: RawValue) {
         switch rawValue {
-        case 0: self = .welcome
-        case 1: self = .validateDependencies
-        case 2: self = .validateAccount
-        case 3: self = .validateClient(email: "", password: "", clients: [SoftwareClient]())
-        case 4: self = .ready
-        default: return nil
+        case 0:
+            self = .welcome
+        case 1:
+            self = .validateDependencies
+        case 2:
+            self = .validateAccount
+        case 3:
+            self = .validateClient(email: "", password: "", clients: [SoftwareClient]())
+        case 4:
+            self = .ready
+        default:
+            return nil
         }
     }
     
     var rawValue: RawValue {
         switch self {
-        case .welcome: return 0
-        case .validateDependencies: return 1
-        case .validateAccount: return 2
-        case .validateClient(_, _, _): return 3
-        case .ready: return 4
-        case .failed(_, _): return 5
+        case .welcome:
+            return 0
+        case .validateDependencies:
+            return 1
+        case .validateAccount:
+            return 2
+        case .validateClient(_, _, _):
+            return 3
+        case .ready:
+            return 4
+        case .failed(_, _):
+            return 5
         }
     }
 }
