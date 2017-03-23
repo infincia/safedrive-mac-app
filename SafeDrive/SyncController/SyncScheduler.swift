@@ -70,9 +70,11 @@ class SyncScheduler {
     }
     
     fileprivate var syncQueue = [SyncEvent]()
-        
+    // swiftlint:disable force_unwrapping
+
     let dbURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db")!.appendingPathComponent("sync.realm")
-    
+    // swiftlint:enable force_unwrapping
+
     var realm: Realm?
     
     init() {
@@ -122,8 +124,10 @@ class SyncScheduler {
                 components.hour = currentDateComponents.hour
                 components.minute = currentDateComponents.minute
                 let calendar = Calendar.current
+                // swiftlint:disable force_unwrapping
                 let syncDate = calendar.date(from: components)!
-                
+                // swiftlint:enable force_unwrapping
+
                 var folders = [SyncFolder]()
                 
                 // only trigger in the first minute of each hour
@@ -165,7 +169,10 @@ class SyncScheduler {
                 }
                 
                 // keep loop in sync with clock time to the next minute
+                // swiftlint:disable force_unwrapping
                 let sleepSeconds = 60 - currentDateComponents.second!
+                // swiftlint:enable force_unwrapping
+
                 Thread.sleep(forTimeInterval: Double(sleepSeconds))
                 
             }
@@ -313,7 +320,10 @@ class SyncScheduler {
                 let host = Host()
                 let machineName = host.localizedName!
                 
+                // swiftlint:disable force_unwrapping
                 let defaultFolder: URL = URL(string: SDDefaultServerPath)!
+                // swiftlint:enable force_unwrapping
+
                 let machineFolder: URL = defaultFolder.appendingPathComponent(machineName, isDirectory: true)
                 let remoteFolder: URL = machineFolder.appendingPathComponent(folderName, isDirectory: true)
                 var urlComponents: URLComponents = URLComponents()
@@ -374,8 +384,10 @@ class SyncScheduler {
                     SDLog("failed to get sync folder for machine from realm!!!")
                     return
                 }
+                // swiftlint:disable force_unwrapping
                 var oldMessages = task.message != nil ? task.message! : ""
-                
+                // swiftlint:enable force_unwrapping
+
                 oldMessages.append(message)
                 oldMessages.append("\n")
                 try! realm.write {
