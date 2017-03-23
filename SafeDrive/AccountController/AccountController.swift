@@ -26,6 +26,7 @@ class AccountController: NSObject {
     var email: String?
     var password: String?
     
+    fileprivate let accountQueue = DispatchQueue(label: "io.safedrive.accountQueue")
     fileprivate let accountCompletionQueue = DispatchQueue(label: "io.safedrive.accountCompletionQueue")
 
     // swiftlint:disable variable_name
@@ -46,8 +47,6 @@ class AccountController: NSObject {
             })
         }
     }
-    
-    fileprivate let accountQueue = DispatchQueue(label: "io.safedrive.accountQueue")
     
     fileprivate let sdkCompletionQueue = DispatchQueue.main
 
