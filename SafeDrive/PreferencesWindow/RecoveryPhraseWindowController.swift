@@ -61,7 +61,7 @@ class RecoveryPhraseWindowController: NSWindowController {
                 
                 self.errorField.stringValue = ""
                 
-                self.close()
+                self.closeWindow(nil)
             }, failure: { (error) in
                 self.spinner.stopAnimation(self)
                 
