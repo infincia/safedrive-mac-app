@@ -11,6 +11,12 @@
 import Crashlytics
 import Foundation
 
+// http://stackoverflow.com/a/30593673/255309
+extension Collection where Indices.Iterator.Element == Index {
+    subscript (safe index: Index) -> Generator.Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
 
 // SafeDrive API constants
 
