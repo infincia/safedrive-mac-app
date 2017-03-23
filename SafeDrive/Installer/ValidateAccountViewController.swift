@@ -131,15 +131,15 @@ class ValidateAccountViewController: NSViewController {
                 alert.messageText = NSLocalizedString("SafeDrive requires an account", comment: "String informing the user that an account is required")
                 
                 alert.informativeText = NSLocalizedString("No email or password entered", comment: "String informing the user that an email or password was not entered")
-                alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in
-                    
+                
+                self.viewDelegate?.showAlert(alert) { (response) in
                     switch response {
                     case NSAlertFirstButtonReturn:
                         break
                     default:
                         return
                     }
-                })
+                }
                 return
         }
 
@@ -188,15 +188,15 @@ class ValidateAccountViewController: NSViewController {
                     alert.messageText = NSLocalizedString("Login failed", comment: "String informing the user that an account is required")
                     
                     alert.informativeText = error.message
-                    alert.beginSheetModal(for: self.view.window!, completionHandler: { (response) in
-                        
+                    
+                    self.viewDelegate?.showAlert(alert) { (response) in
                         switch response {
                         case NSAlertFirstButtonReturn:
                             break
                         default:
                             return
                         }
-                    })
+                    }
                 }
             } else {
                 self.delegate?.didFail(error: error, uniqueClientID: nil)
