@@ -3,6 +3,7 @@
 //
 
 // swiftlint:disable force_cast
+// swiftlint:disable file_length
 
 
 import Cocoa
