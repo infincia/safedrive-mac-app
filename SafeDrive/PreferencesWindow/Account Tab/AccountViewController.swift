@@ -63,6 +63,15 @@ extension AccountViewController: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
+        
+        guard let accountStatus = notification.object as? AccountStatus,
+            let status = accountStatus.status else {
+                self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
+                SDLog("API contract invalid: didSignIn in PreferencesWindowController")
+                return
+        }
+        self.accountStatusField.stringValue = status.capitalized
+        
     }
     
     func didSignOut(notification: Foundation.Notification) {
