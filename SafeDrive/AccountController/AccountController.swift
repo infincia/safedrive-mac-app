@@ -332,39 +332,71 @@ class AccountController: NSObject {
                     Thread.sleep(forTimeInterval: 1)
                     continue
                 }
-                Thread.sleep(forTimeInterval: 60 * 5) // 5 minutes
+                var checkStatus = false
                 
-                // reset the loop again if we aren't signed in for some reason
-                if !self.signedIn {
-                    continue
+                if let lastStatusCheck = self.lastAccountStatusCheck {
+                    let now = Date()
+                    let d = now.timeIntervalSince(lastStatusCheck)
+                    if d > 60 * 5 {
+                        checkStatus = true
+                    }
+                } else {
+                    checkStatus = true
                 }
                 
-                self.sdk.getAccountStatus(completionQueue: DispatchQueue.main, success: { (status) in
+                
+                if checkStatus && !self.checkingStatus {
+                    self.checkingStatus = true
+                    self.sdk.getAccountStatus(completionQueue: DispatchQueue.main, success: { (status) in
+                        self.checkingStatus = false
+                        self.lastAccountStatusCheck = Date()
+                        
                         DispatchQueue.main.async(execute: {() -> Void in
                             NotificationCenter.default.post(name: Notification.Name.accountStatus, object: status)
                         })
-                    
-                }, failure: { (error) in
-                    if !isProduction() {
-                        SDLog("Account status retrieval failed: \(error.message)")
-                        // don't report these for now, they're almost always going to be network failures
-                        // SDErrorHandlerReport(apiError);
-                    }
-                })
-                
-                self.sdk.getAccountDetails(completionQueue: DispatchQueue.main, success: { (details) in
-                    
-                    DispatchQueue.main.async(execute: {() -> Void in
-                        NotificationCenter.default.post(name: Notification.Name.accountDetails, object: details)
+                        
+                    }, failure: { (error) in
+                        self.checkingStatus = false
+                        if !isProduction() {
+                            SDLog("Account status retrieval failed: \(error.message)")
+                            // don't report these for now, they're almost always going to be network failures
+                            // SDErrorHandlerReport(apiError);
+                        }
                     })
-                    
-                }, failure: { (error) in
-                    if !isProduction() {
-                        SDLog("Account details retrieval failed: \(error.message)")
-                        // don't report these for now, they're almost always going to be network failures
-                        // SDErrorHandlerReport(apiError);
+                }
+                
+                var checkDetails = false
+                
+                if let lastDetailsCheck = self.lastAccountDetailsCheck {
+                    let now = Date()
+                    let d = now.timeIntervalSince(lastDetailsCheck)
+                    if d > 60 * 5 {
+                        checkDetails = true
                     }
-                })
+                } else {
+                    checkDetails = true
+                }
+                if checkDetails && !self.checkingDetails {
+                    self.checkingDetails = true
+                    
+                    self.sdk.getAccountDetails(completionQueue: DispatchQueue.main, success: { (details) in
+                        self.checkingDetails = false
+                        self.lastAccountDetailsCheck = Date()
+                        
+                        DispatchQueue.main.async(execute: {() -> Void in
+                            NotificationCenter.default.post(name: Notification.Name.accountDetails, object: details)
+                        })
+                        
+                    }, failure: { (error) in
+                        self.checkingDetails = false
+                        
+                        if !isProduction() {
+                            SDLog("Account details retrieval failed: \(error.message)")
+                            // don't report these for now, they're almost always going to be network failures
+                            // SDErrorHandlerReport(apiError);
+                        }
+                    })
+                }
             }
         })
     }
