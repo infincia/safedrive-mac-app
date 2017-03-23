@@ -435,9 +435,12 @@ class SyncController: Equatable {
                             let percent = capturedValues[2]
                             let bandwidth = capturedValues[3]
                             
-                            (self.syncProgressQueue).async(execute: {
-                                progressBlock(0, 0, 0, Double(percent)!, bandwidth)
-                            })
+                            (self.syncProgressQueue).async {
+                                guard let d = Double(percent) else {
+                                    return
+                                }
+                                progressBlock(0, 0, 0, d, bandwidth)
+                            }
                         }
                     }
                 }
@@ -456,7 +459,7 @@ class SyncController: Equatable {
         let errorPipeHandle = errorPipe.fileHandleForReading
         errorPipeHandle.readabilityHandler = { (handle: FileHandle!) in
             let errorString: String! = String(data: handle.availableData, encoding: String.Encoding.utf8)
-            var error: NSError!
+            var error: NSError?
             if errorString.contains("Could not chdir to home directory") {
                 /*
                  NSString *msg = [NSString stringWithFormat:@"Could not chdir to home directory"];
@@ -507,12 +510,12 @@ class SyncController: Equatable {
                 SDLog("Rsync: \(errorString)")
                 return
             }
-            if error != nil {
-                DispatchQueue.main.async(execute: {
+            if let e = error {
+                DispatchQueue.main.async {
                     self.syncFailure = true
-                    failureBlock(self.localURL, error)
-                })
-                SDLog("Rsync: \(SDErrorToString(error)), \(error.localizedDescription)")
+                    failureBlock(self.localURL, e)
+                }
+                SDLog("Rsync: \(SDErrorToString(e)), \(e.localizedDescription)")
             }
         }
         self.syncTask.standardError = errorPipe
