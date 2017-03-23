@@ -34,10 +34,12 @@ class AppDelegate: NSObject {
     
     fileprivate var sdk = SafeDriveSDK.sharedSDK
     
+    // swiftlint:disable force_unwrapping
     var CFBundleVersion = Int((Bundle.main.infoDictionary!["CFBundleVersion"])! as! String)!
     
     var CFBundleShortVersionString = (Bundle.main.infoDictionary!["CFBundleShortVersionString"])! as! String
-    
+    // swiftlint:enable force_unwrapping
+
     let SDBuildVersionLast = UserDefaults.standard.integer(forKey: SDBuildVersionLastKey)
     
     let SDRealmSchemaVersionLast = UserDefaults.standard.integer(forKey: SDRealmSchemaVersionLastKey)
@@ -133,8 +135,10 @@ extension AppDelegate: NSApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
         
         self.welcomeWindowController = WelcomeWindowController()
+        // swiftlint:disable force_unwrapping
         _ = self.welcomeWindowController.window!
-        
+        // swiftlint:enable force_unwrapping
+
         self.syncScheduler = SyncScheduler.sharedSyncScheduler
         
         self.mountController = MountController.shared
@@ -152,13 +156,17 @@ extension AppDelegate: NSApplicationDelegate {
         self.accountController = AccountController.sharedAccountController
         
         self.preferencesWindowController = PreferencesWindowController()
+        // swiftlint:disable force_unwrapping
         _ = self.preferencesWindowController.window!
+        // swiftlint:enable force_unwrapping
         
         let markdownURL = Bundle.main.url(forResource: "Changelog.md", withExtension: nil)
         
+        // swiftlint:disable force_unwrapping
         let data = FileManager.default.contents(atPath: markdownURL!.path)
         
         let markdown = String(data: data!, encoding: String.Encoding.utf8)!
+        // swiftlint:enable force_unwrapping
         
         self.aboutWindowController = DCOAboutWindowController()
         self.aboutWindowController.useTextViewForAcknowledgments = true
@@ -169,7 +177,10 @@ extension AppDelegate: NSApplicationDelegate {
         
         self.aboutWindowController.appVersion = version
         let websiteURLPath: String = "https://\(webDomain())"
+        // swiftlint:disable force_unwrapping
         self.aboutWindowController.appWebsiteURL = URL(string: websiteURLPath)!
+        // swiftlint:enable force_unwrapping
+
     }
     
     
@@ -252,7 +263,8 @@ extension AppDelegate: SDApplicationEventProtocol {
             let dbURL = uniqueClientURL.appendingPathComponent("sync.realm")
             
             let newdbURL = dbURL.appendingPathExtension("new")
-            
+            // swiftlint:disable force_unwrapping
+
             let config = Realm.Configuration(
                 fileURL: dbURL,
                 // Set the new schema version. This must be greater than the previously used
@@ -271,7 +283,8 @@ extension AppDelegate: SDApplicationEventProtocol {
                         }
                     }
             })
-            
+            // swiftlint:enable force_unwrapping
+
             Realm.Configuration.defaultConfiguration = config
             
             autoreleasepool {
