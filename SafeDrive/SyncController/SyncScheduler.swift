@@ -3,6 +3,7 @@
 //
 
 // swiftlint:disable force_try
+// swiftlint:disable file_length
 
 import Foundation
 
