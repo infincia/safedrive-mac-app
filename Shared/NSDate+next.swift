@@ -27,7 +27,7 @@ extension Date {
         let componentMask: NSCalendar.Unit = [.year, .month, .day, .hour, .minute]
         var components = (Calendar.current as NSCalendar).components(componentMask, from: self)
         if var month = components.month {
-            month  += 1
+            month += 1
             components.month = month
         }
         components.day = 1

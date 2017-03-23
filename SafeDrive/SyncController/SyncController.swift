@@ -47,8 +47,8 @@ class SyncController: Equatable {
             }
         }
         
-        guard let host  = serverURL.host,
-            let port  = serverURL.port,
+        guard let host = serverURL.host,
+            let port = serverURL.port,
             let user = serverURL.user else {
                 let error = NSError(domain: SDErrorDomainReported, code:SDSSHError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: "failed to unpack user information"])
                 
@@ -307,8 +307,8 @@ class SyncController: Equatable {
         
         let localPath = localURL.path
         
-        guard let host  = serverURL.host,
-            let port  = serverURL.port,
+        guard let host = serverURL.host,
+            let port = serverURL.port,
             let user = serverURL.user else {
                 let error = NSError(domain: SDErrorDomainInternal, code:SDSSHError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: "failed to unpack user information"])
                 

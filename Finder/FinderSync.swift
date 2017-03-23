@@ -83,11 +83,11 @@ class FinderSync: FIFinderSync {
             }
         })
         
-        self.mountMenuItem      = NSMenuItem(title: "Mount SafeDrive",
+        self.mountMenuItem = NSMenuItem(title: "Mount SafeDrive",
                                              action: #selector(FinderSync.toggleMountState(_:)),
                                              keyEquivalent: "")
         
-        self.supportMenuItem    = NSMenuItem(title: "SafeDrive Support",
+        self.supportMenuItem = NSMenuItem(title: "SafeDrive Support",
                                              action: #selector(FinderSync.support(_:)),
                                              keyEquivalent: "")
         
