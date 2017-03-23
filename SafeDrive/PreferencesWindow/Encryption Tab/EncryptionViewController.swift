@@ -190,7 +190,6 @@ extension EncryptionViewController: SDAccountProtocol {
             case .SessionMissing:
                 break
             case .RecoveryPhraseIncorrect:
-                // TODO: fix self.setTab(3)
                 NotificationCenter.default.post(name: Notification.Name.accountNeedsRecoveryPhrase, object: nil)
             case .InsufficientFreeSpace:
                 break
