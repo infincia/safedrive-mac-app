@@ -57,6 +57,10 @@ class EncryptionViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus), name: Notification.Name.accountStatus, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails), name: Notification.Name.accountDetails, object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didRequireRecoveryPhrase), name: Notification.Name.accountNeedsRecoveryPhrase, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didLoadRecoveryPhrase), name: Notification.Name.accountLoadedRecoveryPhrase, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didCreateRecoveryPhrase), name: Notification.Name.accountCreatedRecoveryPhrase, object: nil)
+        
         // register SDApplicationEventProtocol notifications
         
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
