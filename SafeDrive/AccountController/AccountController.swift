@@ -33,6 +33,10 @@ class AccountController: NSObject {
     var _currentUser: User?
     fileprivate var _signedIn: Bool = false
     fileprivate var _signingIn: Bool = false
+    fileprivate var _lastAccountStatusCheck: Date?
+    fileprivate var _lastAccountDetailsCheck: Date?
+    fileprivate var _checkingStatus: Bool = false
+    fileprivate var _checkingDetails: Bool = false
     // swiftlint:enable variable_name
     
     var currentUser: User? {
@@ -85,6 +89,70 @@ class AccountController: NSObject {
     
     
     fileprivate var sharedSystemAPI = SDSystemAPI.shared()    
+    var lastAccountStatusCheck: Date? {
+        get {
+            var s: Date?
+            accountQueue.sync {
+                s = self._lastAccountStatusCheck
+            }
+            return s
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._lastAccountStatusCheck = newValue
+            })
+        }
+    }
+    
+    
+    var lastAccountDetailsCheck: Date? {
+        get {
+            var s: Date?
+            accountQueue.sync {
+                s = self._lastAccountDetailsCheck
+            }
+            return s
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._lastAccountDetailsCheck = newValue
+            })
+        }
+    }
+    
+    
+    var checkingStatus: Bool {
+        get {
+            var s: Bool = false
+            accountQueue.sync {
+                s = self._checkingStatus
+            }
+            return s
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._checkingStatus = newValue
+            })
+        }
+    }
+    
+    
+    var checkingDetails: Bool {
+        get {
+            var s: Bool = false
+            accountQueue.sync {
+                s = self._checkingDetails
+            }
+            return s
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._checkingDetails = newValue
+            })
+        }
+    }
+    
+    
     
     fileprivate var realm: Realm?
     
