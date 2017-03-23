@@ -31,6 +31,8 @@ class AccountController: NSObject {
 
     // swiftlint:disable variable_name
     var _currentUser: User?
+    fileprivate var _signedIn: Bool = false
+    fileprivate var _signingIn: Bool = false
     // swiftlint:enable variable_name
     
     var currentUser: User? {
@@ -66,7 +68,6 @@ class AccountController: NSObject {
         }
     }
     
-    fileprivate var _signedIn: Bool = false
     
     var signingIn: Bool {
         get {
@@ -83,7 +84,6 @@ class AccountController: NSObject {
         }
     }
     
-    fileprivate var _signingIn: Bool = false
     
     fileprivate var sharedSystemAPI = SDSystemAPI.shared()    
     
