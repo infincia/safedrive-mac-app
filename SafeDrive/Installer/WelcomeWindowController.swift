@@ -419,6 +419,29 @@ protocol WelcomeViewDelegate: class {
     func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSModalResponse) -> Void))
 }
 
+// swiftlint:disable force_unwrapping
+extension WelcomeWindowController: WelcomeViewDelegate {
+    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSModalResponse) -> Void)) {
+        self.window!.makeKeyAndOrderFront(self)
+        NSApp.activate(ignoringOtherApps: true)
+        
+        self.window!.beginSheet(window, completionHandler: handler)
+    }
+    
+    
+    func dismissModalWindow(_ window: NSWindow) {
+        self.window!.endSheet(window)
+    }
+    
+    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSModalResponse) -> Void)) {
+        self.window!.makeKeyAndOrderFront(self)
+        NSApp.activate(ignoringOtherApps: true)
+        
+        alert.beginSheetModal(for: self.window!, completionHandler: handler)
+    }
+}
+// swiftlint:enable force_unwrapping
+
 extension WelcomeWindowController: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
