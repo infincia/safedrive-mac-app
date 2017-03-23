@@ -201,6 +201,7 @@ class RestoreSelectionWindowController: NSWindowController {
         let promptString: String = NSLocalizedString("Select", comment: "Button title")
         panel.prompt = promptString
         
+        // swiftlint:disable force_unwrapping
         panel.beginSheetModal(for: self.window!) { (result)  in
             if result == NSFileHandlingPanelOKButton {
                 if let new = panel.url {
@@ -208,6 +209,7 @@ class RestoreSelectionWindowController: NSWindowController {
                 }
             }
         }
+        // swiftlint:enable force_unwrapping
 
     }
     
