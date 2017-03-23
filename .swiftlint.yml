@@ -14,6 +14,7 @@ opt_in_rules: # some rules are only opt-in
   # - missing_docs
   # Find all the available rules by running:
   # swiftlint rules
+  - force_unwrapping
 included: # paths to include during linting. `--path` is ignored if present.
   - SafeDrive
   - Service
