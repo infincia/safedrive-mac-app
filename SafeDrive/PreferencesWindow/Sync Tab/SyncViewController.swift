@@ -248,7 +248,9 @@ class SyncViewController: NSViewController {
             urlComponents.host = localHost
             urlComponents.path = remoteFolder.path
             urlComponents.port = Int(localPort)
+            // swiftlint:disable force_unwrapping
             let remote: URL = urlComponents.url!
+            // swiftlint:enable force_unwrapping
             
             self.syncScheduler.cancel(uniqueID) {
                 let syncController = SyncController()

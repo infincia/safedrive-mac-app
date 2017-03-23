@@ -271,7 +271,9 @@ class SyncScheduler {
                 urlComponents.host = localHost
                 urlComponents.path = remoteFolder.path
                 urlComponents.port = Int(localPort)
+                // swiftlint:disable force_unwrapping
                 let remote: URL = urlComponents.url!
+                // swiftlint:enable force_unwrapping
                 
                 syncController.serverURL = remote
                 syncController.password = localPassword
