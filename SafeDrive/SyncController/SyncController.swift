@@ -30,9 +30,9 @@ class SyncController: Equatable {
     
     var uuid: String!
     
-    var spaceNeeded: UInt64?
+    var spaceNeeded: UInt64 = 0
     
-    var destination: URL?
+    var destination: URL!
     
     
     static func == (left: SyncController, right: SyncController) -> Bool {
@@ -232,11 +232,8 @@ class SyncController: Equatable {
                                             failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         let start_time = Date()
 
-        if self.restore {
-            let sessionSize = self.spaceNeeded != nil ? self.spaceNeeded! : 0
-            let selectedDestination = self.destination != nil ? self.destination! : self.localURL
-            
-            self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: selectedDestination!, sessionSize: sessionSize, completionQueue: syncResultQueue, progress: { (total, current, new, percent) in
+        if self.restore {            
+            self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: self.destination, sessionSize: self.spaceNeeded, completionQueue: syncResultQueue, progress: { (total, current, new, percent) in
                 let now = Date()
                 let d = now.timeIntervalSince(start_time)
                 if d > 1 {
