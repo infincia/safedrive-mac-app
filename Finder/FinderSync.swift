@@ -245,7 +245,8 @@ class FinderSync: FIFinderSync {
     }
     
     override func requestBadgeIdentifier(for url: URL) {
-        guard let syncFolder = self.syncFolderForURL(url) else {
+        guard let syncFolder = self.syncFolderForURL(url),
+        let path = syncFolder.path else {
             print("error")
             return
         }
@@ -255,7 +256,7 @@ class FinderSync: FIFinderSync {
         do {
             try fileAttributes = FileManager.default.attributesOfItem(atPath: url.path)
             print("Modified: \((fileAttributes[FileAttributeKey.modificationDate] as! Date))")
-            print("Using \(syncFolder.path!) for \( url.path) status")
+            print("Using \(path) for \( url.path) status")
         } catch {
             print("error: \(error)")
         }
