@@ -64,11 +64,11 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     convenience init() {
         self.init(windowNibName: "PreferencesWindow")
-        self.generalViewController = GeneralViewController()
-        self.accountViewController = AccountViewController()
-        self.syncViewController = SyncViewController()
-        self.encryptionViewController = EncryptionViewController()
-        self.statusViewController = StatusViewController()
+        self.generalViewController = GeneralViewController(delegate: self)
+        self.accountViewController = AccountViewController(delegate: self)
+        self.syncViewController = SyncViewController(delegate: self)
+        self.encryptionViewController = EncryptionViewController(delegate: self)
+        self.statusViewController = StatusViewController(delegate: self)
         
         let _ = self.generalViewController.view
         let _ = self.accountViewController.view

@@ -11,6 +11,8 @@ class EncryptionViewController: NSViewController {
     
     fileprivate var recoveryPhraseEntry: RecoveryPhraseWindowController!
     
+    fileprivate weak var delegate: PreferencesViewDelegate!
+
     fileprivate var uniqueClientID: String?
 
     @IBOutlet var copyRecoveryPhraseButton: NSButton!
@@ -40,12 +42,14 @@ class EncryptionViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init() {
+    convenience init(delegate: PreferencesViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "EncryptionView", bundle: nil)!
         // swiftlint:enable force_unwrapping
 
         self.recoveryPhraseEntry = RecoveryPhraseWindowController(delegate: self)
+
+        self.delegate = delegate
 
         // register SDAccountProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)

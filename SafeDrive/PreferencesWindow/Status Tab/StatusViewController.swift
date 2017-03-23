@@ -6,6 +6,8 @@ import Cocoa
 
 class StatusViewController: NSViewController {
     
+    fileprivate weak var delegate: PreferencesViewDelegate!
+
     @IBOutlet var serviceStatusField: NSTextField!
     @IBOutlet var mountStatusField: NSTextField!
     @IBOutlet var volumeSizeField: NSTextField!
@@ -35,11 +37,12 @@ class StatusViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init() {
+    convenience init(delegate: PreferencesViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "StatusView", bundle: nil)!
         // swiftlint:enable force_unwrapping
 
+        self.delegate = delegate
         
         // register SDMountStateProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)

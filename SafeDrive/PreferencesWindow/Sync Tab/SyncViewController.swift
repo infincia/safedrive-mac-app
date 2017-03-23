@@ -17,6 +17,8 @@ class SyncViewController: NSViewController {
 
     fileprivate var syncScheduler = SyncScheduler.sharedSyncScheduler
     
+    fileprivate weak var delegate: PreferencesViewDelegate!
+    
     @IBOutlet var syncListView: NSTableView!
     @IBOutlet var spinner: NSProgressIndicator!
     
@@ -85,10 +87,12 @@ class SyncViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init() {
+    convenience init(delegate: PreferencesViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "SyncView", bundle: nil)!
         // swiftlint:enable force_unwrapping
+
+        self.delegate = delegate
 
         // register SDAccountProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)

@@ -14,6 +14,9 @@ class AccountViewController: NSViewController {
     @IBOutlet var accountStatusField: NSTextField!
     @IBOutlet var accountExpirationField: NSTextField!
     
+    fileprivate weak var delegate: PreferencesViewDelegate!
+
+    
     override func viewDidLoad() {
         if #available(OSX 10.10, *) {
             super.viewDidLoad()
@@ -35,10 +38,12 @@ class AccountViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init() {
+    convenience init(delegate: PreferencesViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "AccountView", bundle: nil)!
         // swiftlint:enable force_unwrapping
+
+        self.delegate = delegate
 
         // register SDAccountProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)

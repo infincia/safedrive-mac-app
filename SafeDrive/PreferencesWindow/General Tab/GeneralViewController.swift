@@ -11,6 +11,7 @@ class GeneralViewController: NSViewController {
     @IBOutlet var volumeNameField: NSTextField!
     @IBOutlet var volumeNameWarningField: NSTextField!
     
+    fileprivate weak var delegate: PreferencesViewDelegate!
     
     var autostart: Bool {
         get {
@@ -55,11 +56,12 @@ class GeneralViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init() {
+    convenience init(delegate: PreferencesViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "GeneralView", bundle: nil)!
         // swiftlint:enable force_unwrapping
 
+        self.delegate = delegate
         
         // register SDMountStateProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
