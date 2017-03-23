@@ -576,6 +576,15 @@ extension SyncViewController: SDAccountProtocol {
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
         
+        guard let accountStatus = notification.object as? AccountStatus else {
+            SDLog("API contract invalid: didSignIn in MountController")
+            return
+        }
+        
+        self.internalUserName = accountStatus.userName
+        self.remoteHost = accountStatus.host
+        self.remotePort = accountStatus.port
+        
         guard let realm = self.realm else {
             SDLog("failed to get realm!!!")
             Crashlytics.sharedInstance().crash()
