@@ -54,7 +54,10 @@ class AccountViewController: NSViewController {
     @IBAction func loadAccountPage(_ sender: AnyObject) {
         // Open the safedrive account page in users default browser
         let url = URL(string: "https://\(webDomain())/#/en/dashboard/account/details")
+        // swiftlint:disable force_unwrapping
         NSWorkspace.shared().open(url!)
+        // swiftlint:enable force_unwrapping
+
     }
     
 }
