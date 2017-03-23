@@ -191,19 +191,6 @@ class AccountController: NSObject {
                 NotificationCenter.default.post(name: Notification.Name.accountStatus, object: status)
             })
             
-            self.sdk.getAccountDetails(completionQueue: DispatchQueue.main, success: { (details) in
-                
-                DispatchQueue.main.async(execute: {() -> Void in
-                    NotificationCenter.default.post(name: Notification.Name.accountDetails, object: details)
-                })
-                
-            }, failure: { (error) in
-                if !isProduction() {
-                    SDLog("Account details retrieval failed: \(error.message)")
-                    // don't report these for now, they're almost always going to be network failures
-                    // SDErrorHandlerReport(apiError);
-                }
-            })
             
             let currentUser = User(email: email, password: password)
             DispatchQueue.main.async(execute: {() -> Void in
