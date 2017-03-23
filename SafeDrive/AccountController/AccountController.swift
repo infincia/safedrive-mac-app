@@ -50,7 +50,6 @@ class AccountController: NSObject {
         }
     }
     
-    fileprivate let sdkCompletionQueue = DispatchQueue.main
 
     
     var signedIn: Bool {
@@ -116,7 +115,7 @@ class AccountController: NSObject {
         Crashlytics.sharedInstance().setUserEmail(email)
         Crashlytics.sharedInstance().setUserIdentifier(uniqueClientID)
         
-        self.sdk.login(email, password: password, unique_client_id: uniqueClientID, completionQueue: self.sdkCompletionQueue, success: { (status) -> Void in
+        self.sdk.login(email, password: password, unique_client_id: uniqueClientID, completionQueue: self.accountCompletionQueue, success: { (status) -> Void in
             self.signedIn = true
             
             DispatchQueue.main.async(execute: {() -> Void in
