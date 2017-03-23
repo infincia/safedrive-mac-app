@@ -56,11 +56,11 @@ class SyncScheduler {
     
     var running: Bool {
         get {
-            var r: Bool?
+            var r: Bool = false
             runQueue.sync {
                 r = self._running
             }
-            return r!
+            return r
         }
         set (newValue) {
             runQueue.sync(flags: .barrier, execute: {
@@ -197,13 +197,20 @@ class SyncScheduler {
         for folder in realm.objects(SyncFolder.self).filter("restoring == true") {
             let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
             guard let currentSyncUUID = folder.currentSyncUUID else {
-                    let message = "warning: found restoring folder but no uuid: \(folder.name!)"
+                    let message = "warning: found restoring folder but no uuid: \(folder.uniqueID)"
                     SDLog(message)
                     let e = NSError(domain: SDErrorDomainInternal, code: SDSyncError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
                     SDErrorHandlerReport(e)
                     continue
             }
-            
+
+            guard let name = folder.name else {
+                let message = "warning: found restoring folder but no name: \(folder.uniqueID)"
+                SDLog(message)
+                let e = NSError(domain: SDErrorDomainInternal, code: SDSyncError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
+                SDErrorHandlerReport(e)
+                continue
+            }
             
             
             let alert = NSAlert()
@@ -211,7 +218,7 @@ class SyncScheduler {
             alert.addButton(withTitle: "Yes")
             
             alert.messageText = "Continue restore?"
-            alert.informativeText = "SafeDrive could not finish restoring the \(folder.name!) folder, would you like to continue now? \n\nWarning: If you decline, the folder will resume syncing to the server, which may result in data loss"
+            alert.informativeText = "SafeDrive could not finish restoring the \(name) folder, would you like to continue now? \n\nWarning: If you decline, the folder will resume syncing to the server, which may result in data loss"
             alert.alertStyle = .informational
             
             alert.beginSheetModal(for: NSApp.mainWindow!) { (response) in
@@ -290,17 +297,15 @@ class SyncScheduler {
 
             let name = syncEvent.name.lowercased()
             
-            guard let folder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").first else {
+            guard let folder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").first,
+                  let folderName = folder.name,
+                  let localFolder = folder.url else {
                 SDLog("failed to get sync folder for machine from realm!!!")
                 return
             }
             
-            let folderName: String = folder.name!
-            
-            let localFolder: URL = folder.url! as URL
-            
             if folder.syncing {
-                SDLog("Sync for \(folder.name!) already in progress, cancelling")
+                SDLog("Sync for \(folderName) already in progress, cancelling")
                 //NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
                 return
             }
@@ -411,9 +416,9 @@ class SyncScheduler {
                         self.syncControllers.remove(at: index)
                     }
                 }
-            }, failure: { (_: URL, error: Swift.Error?) -> Void in
+            }, failure: { (_: URL, error: Error) -> Void in
                 SDErrorHandlerReport(error)
-                SDLog("Sync failed for \(folderName): \(error!.localizedDescription)")
+                SDLog("Sync failed for \(folderName): \(error.localizedDescription)")
                 guard let realm = try? Realm() else {
                     SDLog("failed to create realm!!!")
                     Crashlytics.sharedInstance().crash()
@@ -422,7 +427,7 @@ class SyncScheduler {
                 try! realm.write {
                     realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": false, "restoring": false, "currentSyncUUID": NSNull(), "lastSyncUUID": name], update: true)
                     let duration = NSDate().timeIntervalSince(syncDate)
-                    realm.create(SyncTask.self, value: ["uuid": name, "success": false, "duration": duration, "message": error!.localizedDescription, "progress": 0.0, "bandwidth": ""], update: true)
+                    realm.create(SyncTask.self, value: ["uuid": name, "success": false, "duration": duration, "message": error.localizedDescription, "progress": 0.0, "bandwidth": ""], update: true)
                 }
                 self.syncControllerQueue.async {
                     if let index = self.syncControllers.index(of: syncController) {
