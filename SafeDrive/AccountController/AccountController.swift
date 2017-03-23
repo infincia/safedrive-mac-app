@@ -397,6 +397,9 @@ class AccountController: NSObject {
                         }
                     })
                 }
+
+                Thread.sleep(forTimeInterval: 1)
+
             }
         })
     }
