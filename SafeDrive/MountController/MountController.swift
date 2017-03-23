@@ -665,7 +665,9 @@ extension MountController: SDVolumeEventProtocol {
     func volumeDidMount(notification: Notification) {
         assert(Thread.current == Thread.main, "volumeDidMount called on background thread")
 
-        NSWorkspace.shared().open((self.mountURL)!)
+        if let u = self.mountURL {
+            NSWorkspace.shared().open(u)
+        }
     }
     
     func volumeDidUnmount(notification: Notification) {
