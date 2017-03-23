@@ -413,6 +413,12 @@ protocol StateDelegate: class {
     func didFinish()
 }
 
+protocol WelcomeViewDelegate: class {
+    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSModalResponse) -> Void))
+    func dismissModalWindow(_ window: NSWindow)
+    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSModalResponse) -> Void))
+}
+
 extension WelcomeWindowController: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
