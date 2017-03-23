@@ -17,20 +17,20 @@ class MountController: NSObject {
     
     fileprivate let mountingQueue = DispatchQueue(label: "io.safedrive.mountingQueue")
     
-    var mountURL: URL?
+    fileprivate var mountURL: URL?
     
-    var sshfsTask: Process!
+    fileprivate var sshfsTask: Process!
         
     static let shared = MountController()
     
     fileprivate var openFileWarning: OpenFileWarningWindowController?
     
-    var email: String?
-    var internalUserName: String?
-    var password: String?
+    fileprivate var email: String?
+    fileprivate var internalUserName: String?
+    fileprivate var password: String?
     
-    var remoteHost: String?
-    var remotePort: UInt16?
+    fileprivate var remoteHost: String?
+    fileprivate var remotePort: UInt16?
     
     var currentVolumeName: String {
         if let volumeName = UserDefaults.standard.string(forKey: SDCurrentVolumeNameKey) {
