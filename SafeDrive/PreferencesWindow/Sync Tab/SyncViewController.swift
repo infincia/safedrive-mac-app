@@ -53,8 +53,10 @@ class SyncViewController: NSViewController {
     
     fileprivate var uniqueClientID: String?
     
+    // swiftlint:disable force_unwrapping
     fileprivate let dbURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db")!.appendingPathComponent("sync.realm")
-    
+    // swiftlint:enable force_unwrapping
+
     var email: String?
     var internalUserName: String?
     var password: String?
@@ -221,7 +223,10 @@ class SyncViewController: NSViewController {
             let host = Host()
             let machineName = host.localizedName!
             
+            // swiftlint:disable force_unwrapping
             let defaultFolder: URL = URL(string: SDDefaultServerPath)!
+            // swiftlint:enable force_unwrapping
+
             let machineFolder: URL = defaultFolder.appendingPathComponent(machineName, isDirectory: true)
             let remoteFolder: URL = machineFolder.appendingPathComponent(syncFolder.name!, isDirectory: true)
             var urlComponents: URLComponents = URLComponents()
@@ -330,6 +335,8 @@ class SyncViewController: NSViewController {
                 }
                 
                 // swiftlint:disable force_try
+                // swiftlint:disable force_unwrapping
+
                 try! realm.write {
                     
                     syncFolder!.uniqueClientID = uniqueClientID
@@ -346,6 +353,8 @@ class SyncViewController: NSViewController {
                     
                     realm.add(syncFolder!, update: true)
                 }
+                // swiftlint:enable force_unwrapping
+
                 // swiftlint:enable force_try
                 
             }
@@ -673,23 +682,28 @@ extension SyncViewController: NSTableViewDelegate {
             let host = Host()
             let machineName = host.localizedName!
             
+            // swiftlint:disable force_unwrapping
             tableCellView = tableView.make(withIdentifier: "MachineView", owner: self) as! SyncManagerTableCellView
             tableCellView.textField!.stringValue = machineName
             let cellImage: NSImage = NSImage(named: NSImageNameComputer)!
             cellImage.size = CGSize(width: 15.0, height: 15.0)
             tableCellView.imageView!.image = cellImage
+            // swiftlint:enable force_unwrapping
+
             //tableCellView.addButton.action = #selector(self.addSyncFolder(_:))
 
         } else {
             // this would normally require zero-indexing, but we're bumping the folder list down one row to make
             // room for the machine row
             let syncFolder = folders[row - 1]
-            
+            // swiftlint:disable force_unwrapping
             tableCellView = tableView.make(withIdentifier: "FolderView", owner: self) as! SyncManagerTableCellView
             tableCellView.textField!.stringValue = syncFolder.name!.capitalized
             let cellImage: NSImage = NSWorkspace.shared().icon(forFileType: NSFileTypeForHFSTypeCode(OSType(kGenericFolderIcon)))
             cellImage.size = CGSize(width: 15.0, height: 15.0)
             tableCellView.imageView!.image = cellImage
+            // swiftlint:enable force_unwrapping
+
             tableCellView.removeButton.tag = Int(syncFolder.uniqueID)
             tableCellView.syncNowButton.tag = Int(syncFolder.uniqueID)
             tableCellView.restoreNowButton.tag = Int(syncFolder.uniqueID)
@@ -781,12 +795,17 @@ extension SyncViewController: NSTableViewDelegate {
             self.progress.minValue = 0.0
             let syncTasks = realm.objects(SyncTask.self)
             
+            // swiftlint:disable force_unwrapping
             let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
-            
+            // swiftlint:enable force_unwrapping
+
             if let syncTask = syncTasks.filter("syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", syncFolder).sorted(byKeyPath: "syncDate").last {
                 
                 if syncFolder.restoring {
+                    // swiftlint:disable force_unwrapping
                     let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
+                    // swiftlint:enable force_unwrapping
+
                     self.syncStatus.stringValue = "Restoring"
                     if syncFolder.currentSyncUUID == syncTask.uuid {
                         self.progress.startAnimation(nil)
@@ -798,7 +817,10 @@ extension SyncViewController: NSTableViewDelegate {
                         self.syncProgressField.stringValue = ""
                     }
                 } else if syncFolder.syncing {
+                    // swiftlint:disable force_unwrapping
                     let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
+                    // swiftlint:enable force_unwrapping
+
                     self.syncStatus.stringValue = "Syncing"
                     if syncFolder.currentSyncUUID == syncTask.uuid {
                         self.progress.startAnimation(nil)
@@ -868,7 +890,10 @@ extension SyncViewController: NSTableViewDelegate {
                 components.hour = 0
                 components.minute = 0
                 let calendar = Calendar.current
+                // swiftlint:disable force_unwrapping
                 self.syncTimePicker.dateValue = calendar.date(from: components)!
+                // swiftlint:enable force_unwrapping
+
             case "daily":
                 self.scheduleSelection.selectItem(at: 1)
                 //self.nextSyncField.stringValue = NSDate().nextDayAt((realSyncFolder.syncTime?.hour)!, minute: (realSyncFolder.syncTime?.minute)!)?.toMediumString() ?? ""
@@ -907,7 +932,10 @@ extension SyncViewController: NSTableViewDelegate {
             components.hour = 0
             components.minute = 0
             let calendar = Calendar.current
+            // swiftlint:disable force_unwrapping
             self.syncTimePicker.dateValue = calendar.date(from: components)!
+            // swiftlint:enable force_unwrapping
+
             //self.pathIndicator.URL = nil
             self.progress.doubleValue = 0.0
             self.syncProgressField.stringValue = ""
