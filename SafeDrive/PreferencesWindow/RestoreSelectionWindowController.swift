@@ -163,7 +163,8 @@ class RestoreSelectionWindowController: NSWindowController {
             return
         }
         
-        if let url = URL(string: syncFolder.path!) {
+        if let path = syncFolder.path,
+            let url = URL(string: path) {
             self.destination.url = url
         } else {
             SDLog("failed to set default destination url: \(syncFolder.path)")
@@ -240,10 +241,16 @@ class RestoreSelectionWindowController: NSWindowController {
             
             return
         }
+        
+        guard let destination = self.destination.url else {
+            SDLog("no destination selected")
+            return
+        }
 
         
-        if let syncSession = realm.objects(PersistedSyncSession.self).filter("name == %@", v.sessionName).last {
-            self.restoreSelectionDelegate?.selectedSession(syncSession.name!, folderID: self.folderID, destination: self.destination.url!)
+        if let syncSession = realm.objects(PersistedSyncSession.self).filter("name == %@", v.sessionName).last,
+            let name = syncSession.name {
+            self.restoreSelectionDelegate?.selectedSession(name, folderID: self.folderID, destination: destination)
             self.close()
         } else {
             SDLog("failed to get session from realm!!!")
@@ -320,11 +327,11 @@ class RestoreSelectionWindowController: NSWindowController {
             self.spinner.stopAnimation(self)
             
             // select the first row automatically
-            let count = self.restoreSelectionList!.numberOfRows
+            let count = self.restoreSelectionList.numberOfRows
             if count >= 1 {
                 let indexSet = IndexSet(integer: 0)
-                self.restoreSelectionList!.selectRowIndexes(indexSet, byExtendingSelection: false)
-                self.restoreSelectionList!.becomeFirstResponder()
+                self.restoreSelectionList.selectRowIndexes(indexSet, byExtendingSelection: false)
+                self.restoreSelectionList.becomeFirstResponder()
             }
             
         }, failure: { (error) in
