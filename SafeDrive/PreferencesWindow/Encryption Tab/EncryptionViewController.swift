@@ -85,17 +85,6 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
         
         self.sdk.loadKeys(phrase, completionQueue: DispatchQueue.main, storePhrase: { (newPhrase) in
             
-            let alert = NSAlert()
-            alert.addButton(withTitle: "OK")
-            
-            alert.messageText = "New recovery phrase"
-            alert.informativeText = "A recovery phrase has been generated for your account, please write it down and keep it in a safe place:\n\n\(newPhrase)"
-            alert.alertStyle = .informational
-            
-            alert.beginSheetModal(for: self.view.window!, completionHandler: { (_) in
-                
-            })
-            
             self.storeRecoveryPhrase(newPhrase, success: {
                 
             }, failure: { (error) in
@@ -256,6 +245,24 @@ extension EncryptionViewController: SDAccountProtocol {
     
     func didCreateRecoveryPhrase(notification: Notification) {
         assert(Thread.current == Thread.main, "didCreateRecoveryPhrase called on background thread")
+        
+        guard let newPhrase = notification.object as? String else {
+            SDLog("API contract invalid: didSignIn in PreferencesWindowController")
+            return
+        }
+        
+        let alert = NSAlert()
+        alert.addButton(withTitle: "OK")
+        
+        alert.messageText = "New recovery phrase"
+        alert.informativeText = "A recovery phrase has been generated for your account, please write it down and keep it in a safe place:\n\n\(newPhrase)"
+        alert.alertStyle = .informational
+        
+        
+        self.delegate.setTab(Tab.encryption)
+        self.delegate.showAlert(alert) { (_) in
+            //
+        }
     }
     
     func didRequireRecoveryPhrase(notification: Notification) {
@@ -264,13 +271,13 @@ extension EncryptionViewController: SDAccountProtocol {
         self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
         self.copyRecoveryPhraseButton.isEnabled = false
         
-        self.view.window?.makeKeyAndOrderFront(self)
-        NSApp.activate(ignoringOtherApps: true)
-        
         guard let w = self.recoveryPhraseEntry?.window else {
             SDLog("no recovery phrase window available")
             return
         }
-        self.view.window?.beginSheet(w, completionHandler: nil)
+        self.delegate.setTab(Tab.encryption)
+        self.delegate.showModalWindow(w) { (_) in
+            //
+        }
     }
 }
