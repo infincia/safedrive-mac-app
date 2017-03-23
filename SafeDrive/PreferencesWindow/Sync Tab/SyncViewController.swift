@@ -132,11 +132,15 @@ class SyncViewController: NSViewController {
         
         self.delegate.showModalWindow(panel) { (response) in
             if response == NSFileHandlingPanelOKButton {
+                guard let url = panel.url else {
+                    return
+                }
+
                 self.spinner.startAnimation(self)
                 let isEncrypted = (encryptedCheckbox.state == 1)
                 
-                let folderName = panel.url!.lastPathComponent.lowercased()
-                let folderPath = panel.url!.path
+                let folderName = url.lastPathComponent.lowercased()
+                let folderPath = url.path
                 
                 self.sdk.addFolder(folderName, path: folderPath, completionQueue: DispatchQueue.main, success: { (folderID) in
                     guard let realm = self.realm else {
@@ -145,7 +149,7 @@ class SyncViewController: NSViewController {
                         return
                     }
                     
-                    let syncFolder = SyncFolder(name: panel.url!.lastPathComponent, url: panel.url!, uniqueID: Int32(folderID), encrypted: isEncrypted)
+                    let syncFolder = SyncFolder(name: url.lastPathComponent, url: url, uniqueID: Int32(folderID), encrypted: isEncrypted)
                     
                     // this is the only place where the `added` property should be set on SyncFolders
                     syncFolder.added = Date()
@@ -368,11 +372,11 @@ class SyncViewController: NSViewController {
             self.spinner.stopAnimation(self)
             
             // select the first row automatically
-            let count = self.syncListView!.numberOfRows
+            let count = self.syncListView.numberOfRows
             if count >= 1 {
                 let indexSet = IndexSet(integer: 1)
-                self.syncListView!.selectRowIndexes(indexSet, byExtendingSelection: false)
-                self.syncListView!.becomeFirstResponder()
+                self.syncListView.selectRowIndexes(indexSet, byExtendingSelection: false)
+                self.syncListView.becomeFirstResponder()
             }
             
         }, failure: { (error) in
