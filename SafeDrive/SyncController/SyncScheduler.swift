@@ -321,7 +321,9 @@ class SyncScheduler {
                 
             } else {
                 let host = Host()
+                // swiftlint:disable force_unwrapping
                 let machineName = host.localizedName!
+                // swiftlint:enable force_unwrapping
                 
                 // swiftlint:disable force_unwrapping
                 let defaultFolder: URL = URL(string: SDDefaultServerPath)!

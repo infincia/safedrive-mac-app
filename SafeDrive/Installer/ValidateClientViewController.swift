@@ -86,7 +86,9 @@ class ValidateClientViewController: NSViewController {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             
             let host = Host()
+            // swiftlint:disable force_unwrapping
             let machineName = host.localizedName!
+            // swiftlint:enable force_unwrapping
             
             if let uniqueClientID = try? SafeDriveSDK.sharedSDK.getKeychainItem(withUser: email, service: UCIDDomain()) {
                 SDLog("valid client found, continuing")
@@ -120,7 +122,9 @@ class ValidateClientViewController: NSViewController {
         
         let uniqueClientID = self.sdk.generateUniqueClientID()
         let host = Host()
+        // swiftlint:disable force_unwrapping
         let machineName = host.localizedName!
+        // swiftlint:enable force_unwrapping
         DispatchQueue.main.async {
             self.delegate?.didValidateClient(withEmail: email, password: password, name: machineName, uniqueClientID: uniqueClientID)
         }
@@ -150,7 +154,9 @@ class ValidateClientViewController: NSViewController {
         }
 
         let host = Host()
+        // swiftlint:disable force_unwrapping
         let machineName = host.localizedName!
+        // swiftlint:enable force_unwrapping
         
         self.delegate?.didValidateClient(withEmail: email, password: password, name: machineName, uniqueClientID: client.uniqueClientID)
     }

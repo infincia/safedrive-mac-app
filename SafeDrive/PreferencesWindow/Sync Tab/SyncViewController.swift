@@ -229,7 +229,9 @@ class SyncViewController: NSViewController {
             let syncFolder = syncFolders.filter("uniqueID == %@", uniqueID).last!
             
             let host = Host()
+            // swiftlint:disable force_unwrapping
             let machineName = host.localizedName!
+            // swiftlint:enable force_unwrapping
             
             // swiftlint:disable force_unwrapping
             let defaultFolder: URL = URL(string: SDDefaultServerPath)!
@@ -688,7 +690,9 @@ extension SyncViewController: NSTableViewDelegate {
         var tableCellView: SyncManagerTableCellView
         if row == 0 {
             let host = Host()
+            // swiftlint:disable force_unwrapping
             let machineName = host.localizedName!
+            // swiftlint:enable force_unwrapping
             
             // swiftlint:disable force_unwrapping
             tableCellView = tableView.make(withIdentifier: "MachineView", owner: self) as! SyncManagerTableCellView
