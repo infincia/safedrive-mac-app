@@ -17,8 +17,6 @@ class FinderSync: FIFinderSync {
     var appConnection: NSXPCConnection?
     var serviceConnection: NSXPCConnection?
     
-    let dbURL = storageURL().appendingPathComponent("sync.realm")
-    
     var token: RealmSwift.NotificationToken?
     
     var syncFolders: Results<SyncFolder>?
@@ -32,17 +30,6 @@ class FinderSync: FIFinderSync {
 
     override init() {
         super.init()
-        
-        var config = Realm.Configuration()
-        
-        config.fileURL = dbURL
-        config.schemaVersion = UInt64(SDCurrentRealmSchema)
-        
-        Realm.Configuration.defaultConfiguration = config
-        // swiftlint:disable force_try
-        let realm = try! Realm()
-        // swiftlint:enable force_try
-        self.syncFolders = realm.objects(SyncFolder.self)
         
         // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
         // swiftlint:disable force_unwrapping
@@ -60,29 +47,8 @@ class FinderSync: FIFinderSync {
             self.mountStateLoop()
         })
         
-        token = self.syncFolders!.addNotificationBlock({ (changes) in
-            switch changes {
-            case .initial(_):
-                break
-            case .update(_, _, _, let modifications):
-                var s = [URL]()
-                
-                for index in modifications {
-                    let folder = self.syncFolders![index]
-
-                    // swiftlint:disable force_unwrapping
-                    let u = folder.url!
-                    // swiftlint:enable force_unwrapping
-
-                    s.append(u)
-                    // force update of badges when top level folders change
-                    self.requestBadgeIdentifier(for: u)
-                }
-                FIFinderSyncController.default().directoryURLs = Set<URL>(s)
-                break
-            case .error:
-                break
-            }
+        DispatchQueue.global(qos: DispatchQoS.default.qosClass).async(execute: {() -> Void in
+            self.clientConfigLoop()
         })
         
         self.mountMenuItem = NSMenuItem(title: "Mount SafeDrive",
