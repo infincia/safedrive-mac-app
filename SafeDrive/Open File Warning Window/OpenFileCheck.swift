@@ -51,7 +51,10 @@ class OpenFileCheck: NSObject {
         task.waitUntilExit()
         
         let data = outputPipeHandle.readDataToEndOfFile()
+        // swiftlint:disable force_unwrapping
         let outputString = String(data: data, encoding: String.Encoding.utf8)!
+        // swiftlint:enable force_unwrapping
+
         
         SDLog("check(): lsof: \(outputString)")
         
@@ -67,7 +70,10 @@ class OpenFileCheck: NSObject {
                     let process = capturedValues as! [String]
                     let pid = process[1]
                     let command = process[2]
+                    // swiftlint:disable force_unwrapping
                     var p = RunningProcess(pid: Int(pid)!, command: command)
+                    // swiftlint:enable force_unwrapping
+
                     for app in NSWorkspace.shared().runningApplications {
                         if p.pid == Int(app.processIdentifier) {
                             p.icon = app.icon
