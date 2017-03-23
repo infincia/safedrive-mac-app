@@ -42,10 +42,12 @@ class FinderSync: FIFinderSync {
         self.syncFolders = realm.objects(SyncFolder.self)
         
         // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
+        // swiftlint:disable force_unwrapping
         FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImageNameStatusAvailable)!, label: "Idle", forBadgeIdentifier: "idle")
         FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImageNameStatusPartiallyAvailable)!, label: "Syncing", forBadgeIdentifier: "syncing")
         FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImageNameStatusUnavailable)!, label: "Error", forBadgeIdentifier: "error")
-        
+        // swiftlint:enable force_unwrapping
+
         FIFinderSyncController.default().directoryURLs = Set<URL>()
         DispatchQueue.global(qos: DispatchQoS.default.qosClass).async(execute: {() -> Void in
             self.serviceReconnectionLoop()
@@ -64,7 +66,11 @@ class FinderSync: FIFinderSync {
                 
                 for index in modifications {
                     let folder = self.syncFolders![index]
+
+                    // swiftlint:disable force_unwrapping
                     let u = folder.url!
+                    // swiftlint:enable force_unwrapping
+
                     s.append(u)
                     // force update of badges when top level folders change
                     self.requestBadgeIdentifier(for: u)
@@ -273,9 +279,14 @@ class FinderSync: FIFinderSync {
     }
     
     override var toolbarItemImage: NSImage {
+        // swiftlint:disable force_unwrapping
+
         return NSImage(named: NSImageNameLockLockedTemplate)!
+        // swiftlint:enable force_unwrapping
+
     }
     
+    // swiftlint:disable force_unwrapping
     override func menu(for menuKind: FIMenuKind) -> NSMenu {
         var m: NSMenu? = nil
         switch menuKind {
@@ -295,9 +306,14 @@ class FinderSync: FIFinderSync {
         }
         return m!
     }
-    
+    // swiftlint:enable force_unwrapping
+
     @IBAction func support(_ sender: AnyObject) {
+        // swiftlint:disable force_unwrapping
+
         NSWorkspace.shared().open(URL(string: "https://safedrive.io/support")!)
+        // swiftlint:enable force_unwrapping
+
     }
     
     @IBAction func restoreItems(_ sender: AnyObject) {
@@ -316,7 +332,11 @@ class FinderSync: FIFinderSync {
             let app = a.remoteObjectProxyWithErrorHandler { error in
                 print("remote proxy error: \(error)")
             } as! AppXPCProtocol
-            app.displayRestoreWindow(forURLs: [folder.url!])
+            // swiftlint:disable force_unwrapping
+            let url = folder.url!
+            // swiftlint:enable force_unwrapping
+
+            app.displayRestoreWindow(forURLs: [url])
         }
     }
     
@@ -371,8 +391,10 @@ class FinderSync: FIFinderSync {
             return nil
         }
         for item: SyncFolder in syncFolders {
-            
+            // swiftlint:disable force_unwrapping
             let registeredPath: String = item.path!
+            // swiftlint:enable force_unwrapping
+
             let testPath: String = url.path
             let options: NSString.CompareOptions = [.anchored, .caseInsensitive]
             
