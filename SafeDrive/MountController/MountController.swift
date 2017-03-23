@@ -739,10 +739,13 @@ extension MountController: SDApplicationEventProtocol {
     func applicationDidConfigureUser(notification: Notification) {
         assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
 
-        guard let _ = notification.object as? User else {
+        guard let currentUser = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in MountController")
             
             return
         }
+        
+        self.email = currentUser.email
+        self.password = currentUser.password
     }
 }
