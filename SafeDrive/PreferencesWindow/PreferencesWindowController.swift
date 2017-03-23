@@ -15,7 +15,7 @@ import RealmSwift
 
 import SafeDriveSDK
 
-enum ViewType: Int {
+enum Tab: Int {
     case general
     case account
     case sync
@@ -74,18 +74,21 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        self.setTab(0)        
+        self.setTab(Tab.general)
     }
     
     @IBAction func selectTab(_ sender: AnyObject) {
         
         if let button = sender as? NSButton {
-            setTab(button.tag)
+            guard let tab = Tab(rawValue: button.tag) else {
+                return
+            }
+            setTab(tab)
         }
     }
     
-    func setTab(_ index: NSInteger) {
-        guard let newViewController = viewControllerForIndex(index) else {
+    func setTab(_ tab: Tab) {
+        guard let newViewController = viewControllerForTab(tab) else {
             return
         }
         for view in containerView.subviews {
@@ -104,11 +107,8 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         //self.statusButton.highlighted = false
     }
     
-    fileprivate func viewControllerForIndex(_ index: Int) -> NSViewController? {
-        guard let viewType = ViewType(rawValue: index) else {
-            return nil
-        }
-        switch viewType {
+    fileprivate func viewControllerForTab(_ tab: Tab) -> NSViewController? {
+        switch tab {
         case .general:
             return generalViewController
         case .account:
