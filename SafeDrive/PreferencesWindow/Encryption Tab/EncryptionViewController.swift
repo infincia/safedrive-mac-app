@@ -87,6 +87,8 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
             
             self.storeRecoveryPhrase(newPhrase, success: {
                 
+                NotificationCenter.default.post(name: Notification.Name.accountCreatedRecoveryPhrase, object: newPhrase)
+
             }, failure: { (error) in
                 let se = SDKError(message: error.localizedDescription, kind: SDKErrorType.KeychainError)
                 failure(se)
