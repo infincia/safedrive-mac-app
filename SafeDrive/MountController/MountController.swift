@@ -65,11 +65,11 @@ class MountController: NSObject {
     
     var mounted: Bool {
         get {
-            var r: Bool?
+            var r: Bool = false
             mountStateQueue.sync {
                 r = self._mounted
             }
-            return r!
+            return r
         }
         set (newValue) {
             mountStateQueue.sync(flags: .barrier, execute: {
@@ -80,11 +80,11 @@ class MountController: NSObject {
     
     var mounting: Bool {
         get {
-            var r: Bool?
+            var r: Bool = false
             mountingQueue.sync {
                 r = self._mounting
             }
-            return r!
+            return r
         }
         set (newValue) {
             mountingQueue.sync(flags: .barrier, execute: {
@@ -385,7 +385,7 @@ class MountController: NSObject {
         let outputPipeHandle = outputPipe.fileHandleForReading
         
         outputPipeHandle.readabilityHandler = { (handle) in
-            var mountError: NSError!
+            var mountError: NSError?
 
             // swiftlint:disable force_unwrapping
             let outputString = String(data: handle.availableData, encoding: String.Encoding.utf8)!
@@ -441,11 +441,11 @@ class MountController: NSObject {
                 // failureBlock(mountURL, mountError);
                 return
             }
-            if mountError != nil {
+            if let e = mountError {
                 DispatchQueue.main.async(execute: {() -> Void in
-                    failureBlock(mountURL, mountError)
+                    failureBlock(mountURL, e)
                 })
-                SDLog("SSHFS Task error: %lu, %@", mountError.code, mountError.localizedDescription)
+                SDLog("SSHFS Task error: %lu, %@", e.code, e.localizedDescription)
             }
         }
         self.sshfsTask.standardError = outputPipe
