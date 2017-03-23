@@ -15,6 +15,13 @@ opt_in_rules: # some rules are only opt-in
   # Find all the available rules by running:
   # swiftlint rules
   - force_unwrapping
+  - closing_brace
+  - closure_end_indentation
+  - closure_spacing
+  - operator_usage_whitespace
+  - private_outlet
+  - sorted_imports
+  - switch_case_on_newline
 included: # paths to include during linting. `--path` is ignored if present.
   - SafeDrive
   - Service
