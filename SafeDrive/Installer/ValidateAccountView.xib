@@ -101,6 +101,17 @@
                     <rect key="frame" x="147" y="206" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AaY-ry-SVH">
+                    <rect key="frame" x="-6" y="105" width="323" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Reset Password" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iRt-N2-0Wl">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="13" name="Raleway-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="resetPassword:" target="-2" id="qke-Bk-uS9"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="138.5" y="167"/>
         </customView>
