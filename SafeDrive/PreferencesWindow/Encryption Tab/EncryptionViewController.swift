@@ -250,6 +250,10 @@ extension EncryptionViewController: SDAccountProtocol {
 
     }
     
+    func didCreateRecoveryPhrase(notification: Notification) {
+        assert(Thread.current == Thread.main, "didCreateRecoveryPhrase called on background thread")
+    }
+    
     func didRequireRecoveryPhrase(notification: Notification) {
         assert(Thread.current == Thread.main, "didRequireRecoveryPhrase called on background thread")
 
