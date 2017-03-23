@@ -84,6 +84,7 @@ class ValidateAccountViewController: NSViewController {
         self.prompted = false
         self.spinner.stopAnimation(self)
         self.signingIn = false
+        validateForm()
     }
     
     func check() {
@@ -100,6 +101,7 @@ class ValidateAccountViewController: NSViewController {
                     self.emailField.stringValue = currentUser
                     self.password = password
                     self.passwordField.stringValue = password
+                    self.validateForm()
                     self.signIn(nil)
                 }
                 return
@@ -222,6 +224,18 @@ class ValidateAccountViewController: NSViewController {
         // swiftlint:enable force_unwrapping
 
     }
+    
+    func validateForm() {
+        guard let email = self.email, let password = self.password, password.characters.count >= 1, email.characters.count >= 1 else {
+            self.signInButton.isEnabled = false
+            return
+        }
+        if password.characters.count >= 1 && email.characters.count >= 1 {
+            self.signInButton.isEnabled = true
+        } else {
+            self.signInButton.isEnabled = false
+        }
+    }
 }
 
 
@@ -247,5 +261,6 @@ extension ValidateAccountViewController: NSTextFieldDelegate {
         } else {
             // there are no more in the window
         }
+        self.validateForm()
     }
 }
