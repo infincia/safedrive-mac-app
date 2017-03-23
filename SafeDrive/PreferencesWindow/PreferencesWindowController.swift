@@ -113,12 +113,12 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
             return generalViewController
         case .account:
             return accountViewController
+        case .sync:
+            return syncViewController
         case .encryption:
             return encryptionViewController
         case .status:
             return statusViewController
-        case .sync:
-            return syncViewController
         }
     }
 }
