@@ -250,6 +250,8 @@ extension WelcomeWindowController: NSWindowDelegate {
             alert.messageText = NSLocalizedString("Installation in progress", comment: "String informing the user that an installation is in progress")
             
             alert.informativeText = NSLocalizedString("Are you sure you want to cancel?", comment: "String asking the user if they want to cancel the installation")
+            // swiftlint:disable force_unwrapping
+
             alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
                 
                 switch response {
@@ -260,11 +262,15 @@ extension WelcomeWindowController: NSWindowDelegate {
                     return
                 }
             })
+            // swiftlint:enable force_unwrapping
+
             break
         case .validateDependencies:
             alert.messageText = NSLocalizedString("Installation in progress", comment: "String informing the user that an installation is in progress")
             
             alert.informativeText = NSLocalizedString("Are you sure you want to cancel?", comment: "String asking the user if they want to cancel the installation")
+            
+            // swiftlint:disable force_unwrapping
             alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
                 
                 switch response {
@@ -275,12 +281,16 @@ extension WelcomeWindowController: NSWindowDelegate {
                     return
                 }
             })
+            // swiftlint:enable force_unwrapping
+
             break
             
         case .validateAccount:
             alert.messageText = NSLocalizedString("SafeDrive requires an account", comment: "String informing the user that safedrive requires an account")
             
             alert.informativeText = NSLocalizedString("Closing this window will close SafeDrive, do you want to do that?", comment: "String asking the user if they want to close safedrive")
+            
+            // swiftlint:disable force_unwrapping
             alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
                 
                 switch response {
@@ -291,12 +301,16 @@ extension WelcomeWindowController: NSWindowDelegate {
                     return
                 }
             })
+            // swiftlint:enable force_unwrapping
+
             break
 
         case .validateClient:
             alert.messageText = NSLocalizedString("SafeDrive requires a registered client", comment: "String informing the user that safedrive requires an account")
             
             alert.informativeText = NSLocalizedString("Closing this window will close SafeDrive, do you want to do that?", comment: "String asking the user if they want to close safedrive")
+            
+            // swiftlint:disable force_unwrapping
             alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
                 
                 switch response {
@@ -307,6 +321,8 @@ extension WelcomeWindowController: NSWindowDelegate {
                     return
                 }
             })
+            // swiftlint:enable force_unwrapping
+
             break
         case .ready:
             return true
