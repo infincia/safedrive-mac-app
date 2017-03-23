@@ -19,7 +19,7 @@ import SafeDriveSDK
 @NSApplicationMain
 class AppDelegate: NSObject {
     fileprivate var dropdownMenuController: DropdownController!
-    fileprivate var preferencesWindowController: PreferencesWindowController?
+    fileprivate var preferencesWindowController: PreferencesWindowController!
     
     fileprivate var accountController: AccountController!
     
@@ -29,8 +29,8 @@ class AppDelegate: NSObject {
     fileprivate var serviceRouter: ServiceXPCRouter!
     fileprivate var serviceManager: ServiceManager!
     
-    fileprivate var syncScheduler: SyncScheduler?
-    fileprivate var welcomeWindowController: WelcomeWindowController?
+    fileprivate var syncScheduler: SyncScheduler!
+    fileprivate var welcomeWindowController: WelcomeWindowController!
     
     fileprivate var sdk = SafeDriveSDK.sharedSDK
     
@@ -133,7 +133,7 @@ extension AppDelegate: NSApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
         
         self.welcomeWindowController = WelcomeWindowController()
-        _ = self.welcomeWindowController!.window!
+        _ = self.welcomeWindowController.window!
         
         self.syncScheduler = SyncScheduler.sharedSyncScheduler
         
@@ -152,7 +152,7 @@ extension AppDelegate: NSApplicationDelegate {
         self.accountController = AccountController.sharedAccountController
         
         self.preferencesWindowController = PreferencesWindowController()
-        _ = self.preferencesWindowController!.window!
+        _ = self.preferencesWindowController.window!
         
         let markdownURL = Bundle.main.url(forResource: "Changelog.md", withExtension: nil)
         
