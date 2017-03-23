@@ -31,7 +31,10 @@ class ValidateDependenciesViewController: NSViewController {
     }
     
     convenience init(installer: Installer, delegate: StateDelegate) {
+        // swiftlint:disable force_unwrapping
         self.init(nibName: "ValidateDependenciesView", bundle: nil)!
+        // swiftlint:enable force_unwrapping
+
         self.installer = installer
         self.installer.delegate = self
         self.delegate = delegate

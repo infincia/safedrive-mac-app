@@ -36,7 +36,10 @@ class StatusViewController: NSViewController {
     }
     
     convenience init() {
+        // swiftlint:disable force_unwrapping
         self.init(nibName: "StatusView", bundle: nil)!
+        // swiftlint:enable force_unwrapping
+
         
         // register SDMountStateProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)

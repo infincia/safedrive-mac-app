@@ -49,7 +49,10 @@ class ValidateClientViewController: NSViewController {
     }
     
     convenience init(delegate: StateDelegate) {
+        // swiftlint:disable force_unwrapping
         self.init(nibName: "ValidateClientView", bundle: nil)!
+        // swiftlint:enable force_unwrapping
+
         self.delegate = delegate
     }
     

@@ -65,7 +65,10 @@ class ValidateAccountViewController: NSViewController {
     }
     
     convenience init(delegate: StateDelegate) {
+        // swiftlint:disable force_unwrapping
         self.init(nibName: "ValidateAccountView", bundle: nil)!
+        // swiftlint:enable force_unwrapping
+
         self.delegate = delegate
     }
     

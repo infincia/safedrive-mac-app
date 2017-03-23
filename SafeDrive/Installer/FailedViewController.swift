@@ -50,7 +50,10 @@ class FailedViewController: NSViewController {
     }
     
     convenience init(delegate: StateDelegate) {
+        // swiftlint:disable force_unwrapping
         self.init(nibName: "FailedView", bundle: nil)!
+        // swiftlint:enable force_unwrapping
+
         self.delegate = delegate
     }
     

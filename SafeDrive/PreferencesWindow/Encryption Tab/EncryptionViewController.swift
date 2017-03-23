@@ -41,7 +41,10 @@ class EncryptionViewController: NSViewController {
     }
     
     convenience init() {
+        // swiftlint:disable force_unwrapping
         self.init(nibName: "EncryptionView", bundle: nil)!
+        // swiftlint:enable force_unwrapping
+
         self.recoveryPhraseEntry = RecoveryPhraseWindowController(delegate: self)
 
         // register SDAccountProtocol notifications

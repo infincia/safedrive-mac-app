@@ -25,7 +25,10 @@ class WelcomeViewController: NSViewController {
     }
     
     convenience init(delegate: StateDelegate) {
+        // swiftlint:disable force_unwrapping
         self.init(nibName: "WelcomeView", bundle: nil)!
+        // swiftlint:enable force_unwrapping
+
         self.delegate = delegate
     }
     

@@ -84,8 +84,10 @@ class SyncViewController: NSViewController {
     }
     
     convenience init() {
+        // swiftlint:disable force_unwrapping
         self.init(nibName: "SyncView", bundle: nil)!
-                
+        // swiftlint:enable force_unwrapping
+
         // register SDAccountProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
