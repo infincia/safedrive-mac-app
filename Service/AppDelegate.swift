@@ -21,8 +21,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("SafeDriveService build \(CFBundleVersion), protocol version \(kServiceXPCProtocolVersion) starting")
         
         self.listenerDelegate = ServiceListenerDelegate()
-        
+        // swiftlint:disable force_unwrapping
         let listener: NSXPCListener = NSXPCListener(machServiceName: Bundle.main.bundleIdentifier!)
+        // swiftlint:enable force_unwrapping
+
         listener.delegate = self.listenerDelegate
         listener.resume()
     }
