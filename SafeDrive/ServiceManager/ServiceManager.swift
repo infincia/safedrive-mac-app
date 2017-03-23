@@ -44,6 +44,7 @@ class ServiceManager: NSObject {
         })
     }
     
+    // swiftlint:disable force_unwrapping
     func loadService() {
         let servicePlist: URL = Bundle.main.url(forResource: "io.safedrive.SafeDrive.Service", withExtension: "plist")!
         let jobDict = NSDictionary(contentsOfFile: servicePlist.path)
@@ -57,7 +58,8 @@ class ServiceManager: NSObject {
             }
         }
     }
-    
+    // swiftlint:enable force_unwrapping
+
     func unloadService() {
         var jobError: Unmanaged<CFError>? = nil
         if !SMJobRemove(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString), nil, true, &jobError) {
