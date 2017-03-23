@@ -597,6 +597,14 @@ extension MountController: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
+        guard let accountStatus = notification.object as? AccountStatus else {
+            SDLog("API contract invalid: didSignIn in MountController")
+            return
+        }
+        
+        self.internalUserName = accountStatus.userName
+        self.remoteHost = accountStatus.host
+        self.remotePort = accountStatus.port
         
         // only mount SSHFS automatically if the user set it to automount
         if self.automount {
