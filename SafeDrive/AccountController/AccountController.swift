@@ -2,6 +2,9 @@
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
+// swiftlint:disable file_length
+
+
 import Foundation
 import Crashlytics
 import Realm
