@@ -232,6 +232,67 @@ class FinderSync: FIFinderSync {
         })
     }
     
+    // MARK: - Setup handling
+    
+    func configureClient(uniqueClientID: String) {
+        self.token = nil
+        self.syncFolders = nil
+        
+        let groupURL = storageURL()
+        
+        
+        let uniqueClientURL = groupURL.appendingPathComponent(uniqueClientID)
+        
+        do {
+            try FileManager.default.createDirectory(at: uniqueClientURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            Crashlytics.sharedInstance().crash()
+        }
+        
+        let dbURL = uniqueClientURL.appendingPathComponent("sync.realm")
+        
+        var config = Realm.Configuration()
+        
+        config.fileURL = dbURL
+        config.schemaVersion = UInt64(SDCurrentRealmSchema)
+        
+        Realm.Configuration.defaultConfiguration = config
+        
+        // we want a crash here at the moment so the process resets, they will
+        // generally be caused by a mismatch of the realm schema or a migration
+        // in progress
+        
+        // swiftlint:disable force_try
+        let realm = try! Realm()
+        // swiftlint:enable force_try
+        
+        let folders = realm.objects(SyncFolder.self)
+        self.syncFolders = folders
+        token = folders.addNotificationBlock({ (changes) in
+            switch changes {
+            case .initial(_):
+                break
+            case .update(_, _, _, let modifications):
+                var s = [URL]()
+                
+                for index in modifications {
+                    if let folders = self.syncFolders,
+                        let folder = folders[safe: index],
+                        let url = folder.url {
+                    
+                        s.append(url)
+                        // force update of badges when top level folders change
+                        self.requestBadgeIdentifier(for: url)
+                    }
+                }
+                FIFinderSyncController.default().directoryURLs = Set<URL>(s)
+                break
+            case .error:
+                break
+            }
+        })
+    }
+    
     // MARK: - Primary Finder Sync protocol methods
     
     override func beginObservingDirectory(at url: URL) {
