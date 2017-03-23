@@ -79,7 +79,10 @@ class SyncController: Equatable {
                     let sftp: NMSFTP! = NMSFTP.connect(with: session)
                     switch operation {
                     case SDSFTPOperation.moveFolder:
+                        // swiftlint:disable force_unwrapping
                         let storageDir = URL(string: "/storage/Storage/")!
+                        // swiftlint:enable force_unwrapping
+
                         let now = Date()
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyy-MM-dd@HH-mm-ss"
