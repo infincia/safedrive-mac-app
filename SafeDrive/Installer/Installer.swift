@@ -38,7 +38,10 @@ class Installer: NSObject {
     }
     
     fileprivate var isCLIAppInstalled: Bool {
+        // swiftlint:disable force_unwrapping
         let destination = URL(string: "file:///usr/local/bin/safedrive")!
+        // swiftlint:enable force_unwrapping
+
         return FileManager.default.fileExists(atPath: destination.path)
     }
     
@@ -120,7 +123,10 @@ class Installer: NSObject {
         
         // copy launch agent to ~/Library/LaunchAgents/
         let launchAgentDestinationURL = launchAgentsURL.appendingPathComponent("io.safedrive.SafeDrive.Service.plist", isDirectory: false)
+        // swiftlint:disable force_unwrapping
         let launchAgentSourceURL: URL = Bundle.main.url(forResource: "io.safedrive.SafeDrive.Service", withExtension: "plist")!
+        // swiftlint:enable force_unwrapping
+
         if FileManager.default.fileExists(atPath: launchAgentDestinationURL.path) {
             do {
                 try FileManager.default.removeItem(at: launchAgentDestinationURL)
@@ -163,7 +169,10 @@ class Installer: NSObject {
         let osxfuseURL = Bundle.main.url(forResource: "FUSE for macOS 3.5.4", withExtension: "pkg", subdirectory: nil)
         let privilegedTask = STPrivilegedTask()
         privilegedTask.setLaunchPath("/usr/sbin/installer")
+        // swiftlint:disable force_unwrapping
         privilegedTask.setArguments(["-pkg", (osxfuseURL?.path)!, "-target", "/"])
+        // swiftlint:enable force_unwrapping
+
         let err = privilegedTask.launch()
         
         if err != errAuthorizationSuccess {
@@ -192,8 +201,9 @@ class Installer: NSObject {
         }
         
         SDLog("CLI location: \(cli.path)")
-        
+        // swiftlint:disable force_unwrapping
         let usrlocalbin = URL(string: "file:///usr/local/bin")!
+        // swiftlint:enable force_unwrapping
 
 
         let destination = usrlocalbin.appendingPathComponent("safedrive")
