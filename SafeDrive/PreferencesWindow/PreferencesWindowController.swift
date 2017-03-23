@@ -100,19 +100,6 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         }
     }
     
-    func setTab(_ tab: Tab) {
-        guard let newViewController = viewControllerForTab(tab) else {
-            return
-        }
-        for view in containerView.subviews {
-            view.removeFromSuperview()
-        }
-        containerView.addSubview(newViewController.view)
-        self.resetButtons()
-        //button.highlighted = true
-        
-    }
-    
     fileprivate func resetButtons() {
         //self.generalButton.highlighted = false
         //self.accountButton.highlighted = false
@@ -172,3 +159,40 @@ extension PreferencesWindowController: SDAccountProtocol {
         self.setTab(Tab.encryption)
     }
 }
+
+// swiftlint:disable force_unwrapping
+
+extension PreferencesWindowController: PreferencesViewDelegate {
+    func setTab(_ tab: Tab) {
+        guard let newViewController = viewControllerForTab(tab) else {
+            return
+        }
+        for view in containerView.subviews {
+            view.removeFromSuperview()
+        }
+        containerView.addSubview(newViewController.view)
+        self.resetButtons()
+        //button.highlighted = true
+        
+    }
+    
+    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSModalResponse) -> Void)) {
+        self.window!.makeKeyAndOrderFront(self)
+        NSApp.activate(ignoringOtherApps: true)
+        
+        self.window!.beginSheet(window, completionHandler: handler)
+    }
+    
+
+    func dismissModalWindow(_ window: NSWindow) {
+        self.window!.endSheet(window)
+    }
+    
+    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSModalResponse) -> Void)) {
+        self.window!.makeKeyAndOrderFront(self)
+        NSApp.activate(ignoringOtherApps: true)
+        
+        alert.beginSheetModal(for: self.window!, completionHandler: handler)
+    }
+}
+// swiftlint:enable force_unwrapping
