@@ -226,7 +226,10 @@ class SyncViewController: NSViewController {
             
             let syncFolders = realm.objects(SyncFolder.self)
             
-            let syncFolder = syncFolders.filter("uniqueID == %@", uniqueID).last!
+            guard let syncFolder = syncFolders.filter("uniqueID == %@", uniqueID).last,
+                  let folderName = syncFolder.name else {
+                return
+            }
             
             let host = Host()
             // swiftlint:disable force_unwrapping
@@ -238,7 +241,7 @@ class SyncViewController: NSViewController {
             // swiftlint:enable force_unwrapping
 
             let machineFolder: URL = defaultFolder.appendingPathComponent(machineName, isDirectory: true)
-            let remoteFolder: URL = machineFolder.appendingPathComponent(syncFolder.name!, isDirectory: true)
+            let remoteFolder: URL = machineFolder.appendingPathComponent(folderName, isDirectory: true)
             var urlComponents: URLComponents = URLComponents()
             urlComponents.user = localInternalUserName
             urlComponents.password = localPassword
@@ -269,8 +272,8 @@ class SyncViewController: NSViewController {
                             print("failed to delete sync tasks associated with \(uniqueID)")
                         }
                         
-                        let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", uniqueID).last!
-                        
+                        let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", uniqueID)
+
                         do {
                             try realm.write {
                                 realm.delete(syncFolder)
@@ -519,38 +522,31 @@ class SyncViewController: NSViewController {
     @IBAction func setSyncFrequencyForFolder(_ sender: AnyObject) {
         guard let _ = self.uniqueClientID,
             let folders = self.folders,
-            let realm = self.realm else {
+            let realm = self.realm,
+            let syncFolder = folders[safe: self.syncListView.selectedRow] else {
                 return
         }
+
+        var syncFrequency: String
         
-        if self.syncListView.selectedRow != -1 {
-            
-            let syncFolder = folders[self.syncListView.selectedRow - 1]
-            
-            let uniqueID = syncFolder.uniqueID
-            
-            var syncFrequency: String
-            
-            switch self.scheduleSelection.indexOfSelectedItem {
-            case 0:
-                syncFrequency = "hourly"
-            case 1:
-                syncFrequency = "daily"
-            case 2:
-                syncFrequency = "weekly"
-            case 3:
-                syncFrequency = "monthly"
-            default:
-                syncFrequency = "daily"
-            }
-            
-            let realSyncFolder = folders.filter("uniqueID == %@", uniqueID).last!
-            // swiftlint:disable force_try
-            try! realm.write {
-                realSyncFolder.syncFrequency = syncFrequency
-            }
-            // swiftlint:enable force_try
+        switch self.scheduleSelection.indexOfSelectedItem {
+        case 0:
+            syncFrequency = "hourly"
+        case 1:
+            syncFrequency = "daily"
+        case 2:
+            syncFrequency = "weekly"
+        case 3:
+            syncFrequency = "monthly"
+        default:
+            syncFrequency = "daily"
         }
+        
+        // swiftlint:disable force_try
+        try! realm.write {
+            syncFolder.syncFrequency = syncFrequency
+        }
+        // swiftlint:enable force_try
     }
     
     
@@ -571,22 +567,16 @@ class SyncViewController: NSViewController {
     @IBAction func setSyncTime(_ sender: AnyObject) {
         guard let _ = self.uniqueClientID,
             let folders = self.folders,
-            let realm = self.realm else {
+            let realm = self.realm,
+            let syncFolder = folders[safe: self.syncListView.selectedRow] else {
                 return
         }
         
-        if self.syncListView.selectedRow != -1 {
-            let syncFolder = folders[self.syncListView.selectedRow]
-            
-            let uniqueID = syncFolder.uniqueID
-            
-            let realSyncFolder = folders.filter("uniqueID == %@", uniqueID).last!
-            // swiftlint:disable force_try
-            try! realm.write {
-                realSyncFolder.syncTime = self.syncTimePicker.dateValue
-            }
-            // swiftlint:enable force_try
+        // swiftlint:disable force_try
+        try! realm.write {
+            syncFolder.syncTime = self.syncTimePicker.dateValue
         }
+        // swiftlint:enable force_try
     }
 
     
