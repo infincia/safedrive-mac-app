@@ -234,14 +234,32 @@ class FinderSync: FIFinderSync {
     
     // MARK: - Setup handling
     
-    func configureClient(uniqueClientID: String) {
+    func configureClient(uniqueClientID: String?) {
         self.token = nil
         self.syncFolders = nil
         
+        guard let newID = uniqueClientID else {
+            return
+        }
+        
+        var needConfig = false
+        
+        if let existingID = self.uniqueClientID {
+            if existingID != newID {
+                needConfig = true
+            }
+        } else {
+            needConfig = true
+        }
+        self.uniqueClientID = newID
+
+        if !needConfig {
+            return
+        }
+        
         let groupURL = storageURL()
         
-        
-        let uniqueClientURL = groupURL.appendingPathComponent(uniqueClientID)
+        let uniqueClientURL = groupURL.appendingPathComponent(newID)
         
         do {
             try FileManager.default.createDirectory(at: uniqueClientURL, withIntermediateDirectories: true, attributes: nil)
