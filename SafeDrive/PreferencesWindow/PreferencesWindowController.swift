@@ -68,6 +68,12 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         let _ = self.syncViewController.view
         let _ = self.encryptionViewController.view
         let _ = self.statusViewController.view
+        
+        // register SDAccountProtocol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus), name: Notification.Name.accountStatus, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails), name: Notification.Name.accountDetails, object: nil)
     }
     
     // Window handling
@@ -126,5 +132,36 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
 extension PreferencesWindowController: NSWindowDelegate {
     func windowShouldClose(_ sender: Any) -> Bool {
         return true
+    }
+}
+
+extension PreferencesWindowController: SDAccountProtocol {
+    
+    func didSignIn(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didSignIn called on background thread")
+        self.setTab(Tab.general)
+    }
+    
+    func didSignOut(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didSignOut called on background thread")
+        self.setTab(Tab.general)
+    }
+    
+    func didReceiveAccountStatus(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
+    }
+    
+    func didReceiveAccountDetails(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountDetails called on background thread")
+    }
+    
+    func didLoadRecoveryPhrase(notification: Notification) {
+        assert(Thread.current == Thread.main, "didLoadRecoveryPhrase called on background thread")
+        
+    }
+    
+    func didRequireRecoveryPhrase(notification: Notification) {
+        assert(Thread.current == Thread.main, "didRequireRecoveryPhrase called on background thread")
+        self.setTab(Tab.encryption)
     }
 }
