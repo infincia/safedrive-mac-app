@@ -385,8 +385,12 @@ class MountController: NSObject {
         let outputPipeHandle = outputPipe.fileHandleForReading
         
         outputPipeHandle.readabilityHandler = { (handle) in
-            let outputString: String! = String(data: handle.availableData, encoding: String.Encoding.utf8)
             var mountError: NSError!
+
+            // swiftlint:disable force_unwrapping
+            let outputString = String(data: handle.availableData, encoding: String.Encoding.utf8)!
+            // swiftlint:enable force_unwrapping
+
             
             if outputString.contains("No such file or directory") {
                 mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Server could not find that volume name"])
@@ -497,8 +501,11 @@ class MountController: NSObject {
         urlComponents.host = host
         urlComponents.path = SDDefaultServerPath
         urlComponents.port = Int(port)
-        let sshURL: URL = urlComponents.url!
         
+        // swiftlint:disable force_unwrapping
+        let sshURL: URL = urlComponents.url!
+        // swiftlint:enable force_unwrapping
+
         self.startMountTask(sshURL: sshURL, success: { mountURL in
             
             /*
@@ -564,7 +571,10 @@ class MountController: NSObject {
                             
                             NSApp.activate(ignoringOtherApps: true)
                             
+                            // swiftlint:disable force_unwrapping
                             self.openFileWarning!.showWindow(self)
+                            // swiftlint:enable force_unwrapping
+
                         })
                     }
                 } else if code == fnfErr {
