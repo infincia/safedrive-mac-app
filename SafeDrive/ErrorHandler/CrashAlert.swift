@@ -1,6 +1,8 @@
 
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
+// swiftlint:disable force_unwrapping
+
 
 import Cocoa
 
