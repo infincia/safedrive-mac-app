@@ -37,7 +37,7 @@ class RecoveryPhraseWindowController: NSWindowController {
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
     
-    @IBAction func closeWindow(sender: AnyObject?) {
+    @IBAction func closeWindow(_ sender: AnyObject?) {
         guard let window = self.window else {
             SDLog("API contract invalid: window not found in RecoveryPhraseWindowController")
             return
@@ -49,7 +49,7 @@ class RecoveryPhraseWindowController: NSWindowController {
         }
     }
     
-    @IBAction func checkRecoveryPhrase(sender: AnyObject?) {
+    @IBAction func checkRecoveryPhrase(_ sender: AnyObject?) {
         self.spinner.startAnimation(self)
         self.errorField.stringValue = ""
         

@@ -54,7 +54,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="checkRecoveryPhraseWithSender:" target="-2" id="jNt-SG-Wxg"/>
+                            <action selector="checkRecoveryPhrase:" target="-2" id="Onu-xz-g7a"/>
                         </connections>
                     </button>
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="4EU-OM-1bD">
@@ -70,7 +70,7 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="closeWindowWithSender:" target="-2" id="fWL-cB-Cys"/>
+                            <action selector="closeWindow:" target="-2" id="DIQ-tl-yjg"/>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Eu-Xa-97Q">
