@@ -183,7 +183,15 @@ class RestoreSelectionWindowController: NSWindowController {
     }
     
     @IBAction func cancel(sender: AnyObject?) {
-        self.close()
+        guard let window = self.window else {
+            SDLog("API contract invalid: window not found in RestoreSelectionWindowController")
+            return
+        }
+        if let parent = window.sheetParent {
+            parent.endSheet(window)
+        } else {
+            self.close()
+        }
     }
     
     @IBAction func changeDestination(sender: AnyObject?) {
