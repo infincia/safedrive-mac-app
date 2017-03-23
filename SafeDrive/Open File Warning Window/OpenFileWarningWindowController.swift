@@ -95,11 +95,11 @@ class OpenFileWarningWindowController: NSWindowController {
     
     var shouldCheckRunning: Bool {
         get {
-            var r: Bool?
+            var r: Bool = false
             checkQueue.sync {
                 r = self._shouldCheckRunning
             }
-            return r!
+            return r
         }
         set (newValue) {
             checkQueue.sync(flags: .barrier, execute: {
@@ -143,13 +143,13 @@ class OpenFileWarningWindowController: NSWindowController {
                     
                     if let blockingProcesses = weakSelf?.openFileWarningDelegate?.blockingProcesses(self.url) {
                         let blockingSet = Set<RunningProcess>(blockingProcesses)
-                        SDLog("volume \(self.url!.lastPathComponent) has \(blockingProcesses.count) blocking processes")
+                        SDLog("volume \(self.url.lastPathComponent) has \(blockingProcesses.count) blocking processes")
 
                         let processes = Array(blockingSet.intersection(runningSet))
-                        SDLog("volume \(self.url!.lastPathComponent) has \(processes.count) processes with open files")
+                        SDLog("volume \(self.url.lastPathComponent) has \(processes.count) processes with open files")
                         DispatchQueue.main.sync {
                             if processes.count == 0 {
-                                SDLog("volume \(self.url!.path) is safe do disconnect now")
+                                SDLog("volume \(self.url.path) is safe do disconnect now")
                                 weakSelf?.openFileWarningDelegate?.tryAgain()
                                 weakSelf?.shouldCheckRunning = false
                                 weakSelf?.close(nil)
