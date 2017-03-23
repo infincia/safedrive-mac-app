@@ -12,5 +12,8 @@ let kAppXPCProtocolVersion: Int = 6
     func displayPreferencesWindow()
     func displayRestoreWindow(forURLs urls: [URL])
     func toggleMountState()
+    
+    func getUniqueClientID(_ replyBlock: @escaping (_ uniqueClientID: String?) -> Void)
+
 
 }
