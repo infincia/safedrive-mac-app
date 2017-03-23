@@ -332,7 +332,7 @@ class SyncViewController: NSViewController {
                 
                 let addedUnixDate = Double(folder.date)
                 
-                let addedDate: Date = Date(timeIntervalSince1970: addedUnixDate/1000)
+                let addedDate: Date = Date(timeIntervalSince1970: addedUnixDate / 1000)
                 
                 let encrypted = folder.encrypted
                 
