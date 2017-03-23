@@ -11,6 +11,8 @@ class ValidateAccountViewController: NSViewController {
         
     fileprivate weak var delegate: StateDelegate?
     
+    fileprivate weak var viewDelegate: WelcomeViewDelegate?
+
     @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
     
     @IBOutlet fileprivate weak var signInButton: NSButton!
@@ -64,12 +66,14 @@ class ValidateAccountViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(delegate: StateDelegate) {
+    convenience init(delegate: StateDelegate, viewDelegate: WelcomeViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "ValidateAccountView", bundle: nil)!
         // swiftlint:enable force_unwrapping
 
         self.delegate = delegate
+        
+        self.viewDelegate = viewDelegate
     }
     
     func reset() {

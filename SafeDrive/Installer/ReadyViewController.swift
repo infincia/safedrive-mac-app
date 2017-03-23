@@ -7,6 +7,8 @@ import Cocoa
 class ReadyViewController: NSViewController {
     fileprivate weak var delegate: StateDelegate?
 
+    fileprivate weak var viewDelegate: WelcomeViewDelegate?
+    
     override func viewDidLoad() {
         if #available(OSX 10.10, *) {
             super.viewDidLoad()
@@ -24,12 +26,14 @@ class ReadyViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(delegate: StateDelegate) {
+    convenience init(delegate: StateDelegate, viewDelegate: WelcomeViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "ReadyView", bundle: nil)!
         // swiftlint:enable force_unwrapping
 
         self.delegate = delegate
+        
+        self.viewDelegate = viewDelegate
     }
 
     

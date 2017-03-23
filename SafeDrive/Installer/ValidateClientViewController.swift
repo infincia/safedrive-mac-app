@@ -11,6 +11,8 @@ class ValidateClientViewController: NSViewController {
     
     fileprivate weak var delegate: StateDelegate?
     
+    fileprivate weak var viewDelegate: WelcomeViewDelegate?
+
     @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
     
     @IBOutlet fileprivate weak var clientList: NSTableView!
@@ -48,12 +50,14 @@ class ValidateClientViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(delegate: StateDelegate) {
+    convenience init(delegate: StateDelegate, viewDelegate: WelcomeViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "ValidateClientView", bundle: nil)!
         // swiftlint:enable force_unwrapping
 
         self.delegate = delegate
+        
+        self.viewDelegate = viewDelegate
     }
     
     func reset() {

@@ -8,6 +8,8 @@ import SafeDriveSDK
 class FailedViewController: NSViewController {
     fileprivate weak var delegate: StateDelegate?
     
+    fileprivate weak var viewDelegate: WelcomeViewDelegate?
+    
     var sdk = SafeDriveSDK.sharedSDK
     
     @IBOutlet fileprivate var spinner: NSProgressIndicator!
@@ -49,12 +51,14 @@ class FailedViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(delegate: StateDelegate) {
+    convenience init(delegate: StateDelegate, viewDelegate: WelcomeViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "FailedView", bundle: nil)!
         // swiftlint:enable force_unwrapping
 
         self.delegate = delegate
+        
+        self.viewDelegate = viewDelegate
     }
     
     func reset() {

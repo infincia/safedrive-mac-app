@@ -9,6 +9,7 @@ class ValidateDependenciesViewController: NSViewController {
 
     fileprivate weak var delegate: StateDelegate?
     
+    fileprivate weak var viewDelegate: WelcomeViewDelegate?
 
     @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
 
@@ -31,7 +32,7 @@ class ValidateDependenciesViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(installer: Installer, delegate: StateDelegate) {
+    convenience init(installer: Installer, delegate: StateDelegate, viewDelegate: WelcomeViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "ValidateDependenciesView", bundle: nil)!
         // swiftlint:enable force_unwrapping
@@ -39,6 +40,8 @@ class ValidateDependenciesViewController: NSViewController {
         self.installer = installer
         self.installer.delegate = self
         self.delegate = delegate
+        
+        self.viewDelegate = viewDelegate
     }
     
     func reset() {
