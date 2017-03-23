@@ -7,9 +7,9 @@
 // swiftlint:disable file_length
 
 import Cocoa
-import SafeDriveSDK
 import Realm
 import RealmSwift
+import SafeDriveSDK
 
 class SyncViewController: NSViewController {
     

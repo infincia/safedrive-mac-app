@@ -6,15 +6,13 @@
 
 
 import Cocoa
-
-import Fabric
 import Crashlytics
-
-import RealmSwift
+import Fabric
 import Realm
+import RealmSwift
+import SafeDriveSDK
 import Sparkle
 
-import SafeDriveSDK
 
 @NSApplicationMain
 class AppDelegate: NSObject {

@@ -3,9 +3,8 @@
 //
 
 import Cocoa
-
-import Fabric
 import Crashlytics
+import Fabric
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {

@@ -4,9 +4,8 @@
 
 // swiftlint:disable file_length
 
-
-import Foundation
 import Crashlytics
+import Foundation
 import Realm
 import RealmSwift
 

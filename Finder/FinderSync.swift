@@ -6,8 +6,8 @@
 // swiftlint:disable file_length
 
 import Cocoa
+import Crashlytics
 import FinderSync
-
 import Realm
 import RealmSwift
 

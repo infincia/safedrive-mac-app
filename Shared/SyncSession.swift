@@ -3,8 +3,8 @@
 //
 
 import Foundation
-import RealmSwift
 import Realm
+import RealmSwift
 
 class PersistedSyncSession: Object {
     dynamic var uniqueClientID: String?

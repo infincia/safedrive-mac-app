@@ -1,10 +1,11 @@
 
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
+// swiftlint:disable sorted_imports
 
 import Foundation
-import RealmSwift
 import Realm
+import RealmSwift
 
 class SyncFolder: Object {
     
