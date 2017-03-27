@@ -53,13 +53,6 @@
 
 #pragma mark - System information
 
--(NSString * _Nullable)currentOSVersion {
-    NSDictionary *systemVersionDictionary = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-    
-    NSString *systemVersion = [systemVersionDictionary objectForKey:@"ProductVersion"];
-    return systemVersion;
-}
-
 -(BOOL)autostart {
     return [[NSBundle mainBundle] isLoginItem];
 }

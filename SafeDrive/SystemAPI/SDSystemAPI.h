@@ -8,8 +8,6 @@
 
 +(SDSystemAPI * _Nonnull)sharedAPI;
 
--(NSString * _Nullable)currentOSVersion;
-
 -(BOOL)autostart;
 
 -(BOOL)enableAutostartWithError:(NSError * _Nullable * _Nullable)error;
