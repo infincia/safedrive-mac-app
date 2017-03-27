@@ -130,7 +130,7 @@ class SyncViewController: NSViewController {
         let promptString: String = NSLocalizedString("Select", comment: "Button title")
         panel.prompt = promptString
         
-        self.delegate.showModalWindow(panel) { (response) in
+        self.delegate.showPanel(panel) { (response) in
             if response == NSFileHandlingPanelOKButton {
                 guard let url = panel.url else {
                     return

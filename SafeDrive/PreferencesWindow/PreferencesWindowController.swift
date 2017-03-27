@@ -26,6 +26,7 @@ enum Tab: Int {
 protocol PreferencesViewDelegate: class {
     func setTab(_ tab: Tab)
     func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSModalResponse) -> Void))
+    func showPanel(_ panel: NSOpenPanel, completionHandler handler: @escaping ((NSModalResponse) -> Void))
     func dismissModalWindow(_ window: NSWindow)
     func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSModalResponse) -> Void))
 }
@@ -180,7 +181,13 @@ extension PreferencesWindowController: PreferencesViewDelegate {
         self.window!.makeKeyAndOrderFront(self)
         NSApp.activate(ignoringOtherApps: true)
         
-        self.window!.beginSheet(window, completionHandler: handler)
+        self.window!.beginSheet(window) { (response) in
+            handler(response)
+        }
+    }
+    
+    func showPanel(_ panel: NSOpenPanel, completionHandler handler: @escaping ((NSModalResponse) -> Void)) {
+        panel.beginSheetModal(for: self.window!, completionHandler: handler)
     }
     
 
