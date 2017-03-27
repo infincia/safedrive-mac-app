@@ -856,6 +856,7 @@ extension SyncViewController: NSTableViewDelegate {
                     self.syncFailureInfoButton.isHidden = false
                     self.syncFailureInfoButton.isEnabled = true
                     self.syncFailureInfoButton.toolTip = NSLocalizedString("Some issues detected, click here for details", comment: "")
+                    self.syncFailureInfoButton.action = #selector(self.showFailurePopover(_:))
                 } else {
                     failureView.message.textStorage?.setAttributedString(NSAttributedString(string: ""))
                     self.syncFailureInfoButton.isHidden = true
