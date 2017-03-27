@@ -97,7 +97,7 @@ func SDErrorHandlerReport(_ error: Error?) {
             let whitelistErrorDomains = [SDErrorDomainInternal, SDErrorDomainReported]
             
             if whitelistErrorDomains.contains(error._domain) {
-                let os: String = "OS X \(SDSystemAPI.shared().currentOSVersion()!)"
+                let os: String = "OS X \(currentOSVersion())"
 
                 let clientVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         

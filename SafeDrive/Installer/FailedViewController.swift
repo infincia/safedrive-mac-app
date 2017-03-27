@@ -96,7 +96,7 @@ class FailedViewController: NSViewController {
             e = NSError(domain: SDErrorDomainReported, code: SDInstallationError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
         }
         
-        let os: String = "OS X \(SDSystemAPI.shared().currentOSVersion()!)"
+        let os: String = "OS X \(currentOSVersion())"
         let clientVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
 
         self.sdk.reportError(e, forUniqueClientId: self.uniqueClientId, os: os, clientVersion: clientVersion, withLog: self.log, completionQueue: DispatchQueue.main, success: {
