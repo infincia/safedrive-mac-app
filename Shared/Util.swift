@@ -45,6 +45,16 @@ fileprivate let SDCurrentUserDomainProduction = "currentuser.safedrive.io"
 fileprivate let SDCurrentUserDomainStaging = "staging.currentuser.safedrive.io"
 
 
+func currentOSVersion() -> String {
+    let systemVersionPlist = "/System/Library/CoreServices/SystemVersion.plist"
+    guard let dict = NSDictionary(contentsOfFile: systemVersionPlist) as? [String: Any],
+          let systemVersion = dict["ProductVersion"] as? String else {
+        return "Unknowwn"
+    }
+
+    return systemVersion
+}
+
 func storageURL() -> URL {
     guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
         Crashlytics.sharedInstance().crash()
