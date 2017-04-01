@@ -6,8 +6,8 @@ def shared_pods
 end
 
 def realm
-    pod 'Realm','~> 2.4.4'
-    pod 'RealmSwift', '~> 2.4.4'
+    pod 'Realm','~> 2.5.0'
+    pod 'RealmSwift', '~> 2.5.0'
 end
 
 target 'SafeDriveService' do
