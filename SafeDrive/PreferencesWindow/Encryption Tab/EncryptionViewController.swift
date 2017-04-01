@@ -223,6 +223,8 @@ extension EncryptionViewController: SDAccountProtocol {
                 break
             case .FolderMissing:
                 break
+            case .KeyCorrupted:
+                break
             }
         })
     }

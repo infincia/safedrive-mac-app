@@ -322,6 +322,8 @@ class AccountController: NSObject {
                             break
                         case .FolderMissing:
                             break
+                        case .KeyCorrupted:
+                            break
                         }
                     }
                     Thread.sleep(forTimeInterval: 1)
