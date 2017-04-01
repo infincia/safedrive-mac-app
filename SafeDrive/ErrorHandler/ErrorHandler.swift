@@ -82,7 +82,7 @@ func SDLog(_ line: String, _ arguments: CVarArg...) {
 }
 
 func SDErrorHandlerReport(_ error: Error?) {
-    guard let error = error as? NSError else {
+    guard let error = error as NSError? else {
         fatalError()
     }
 

@@ -90,7 +90,7 @@ class FailedViewController: NSViewController {
         var e: NSError
         if let error = self.error as? SDKError {
             e = NSError(domain: SDErrorDomainReported, code: error.kind.rawValue, userInfo: [NSLocalizedDescriptionKey: error.message])
-        } else if let error = self.error as? NSError {
+        } else if let error = self.error as NSError? {
             e = NSError(domain: SDErrorDomainReported, code: error.code, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
         } else {
             e = NSError(domain: SDErrorDomainReported, code: SDInstallationError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
