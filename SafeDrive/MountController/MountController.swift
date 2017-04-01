@@ -505,7 +505,8 @@ class MountController: NSObject {
         // swiftlint:disable force_unwrapping
         let sshURL: URL = urlComponents.url!
         // swiftlint:enable force_unwrapping
-
+        let notification = NSUserNotification()
+        
         self.startMountTask(sshURL: sshURL, success: { mountURL in
             
             /*
@@ -519,12 +520,21 @@ class MountController: NSObject {
             }, notMounted: {
                 let error = NSError(domain:SDErrorDomainNotReported, code:SDSSHError.timeout.rawValue, userInfo:[NSLocalizedDescriptionKey: "Volume mount timeout"])
                 SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
+                notification.informativeText = error.localizedDescription
+                notification.title = "SafeDrive mount error"
+                notification.soundName = NSUserNotificationDefaultSoundName
+                NSUserNotificationCenter.default.deliver(notification)
+                
                 self.mounting = false
             })
             
             
         }, failure: { (_, mountError) in
             SDLog("SafeDrive startMountTaskWithVolumeName failure in mount controller: \(mountError)")
+            notification.informativeText = mountError.localizedDescription
+            notification.title = "SafeDrive mount error"
+            notification.soundName = NSUserNotificationDefaultSoundName
+            NSUserNotificationCenter.default.deliver(notification)
             SDErrorHandlerReport(mountError)
             self.mounting = false
             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
