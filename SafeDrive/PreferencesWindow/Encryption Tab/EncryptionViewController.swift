@@ -224,7 +224,18 @@ extension EncryptionViewController: SDAccountProtocol {
             case .FolderMissing:
                 break
             case .KeyCorrupted:
-                break
+                let alert = NSAlert()
+                alert.addButton(withTitle: "OK")
+                
+                alert.messageText = "Warning: keys corrupted"
+                alert.informativeText = "The keys in your account are corrupted, please restore the from backup or contact SafeDrive support for help"
+                alert.alertStyle = .critical
+                
+                
+                self.delegate.setTab(Tab.encryption)
+                self.delegate.showAlert(alert) { (_) in
+                    //
+                }
             }
         })
     }
