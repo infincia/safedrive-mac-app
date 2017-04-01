@@ -621,11 +621,7 @@ extension MountController: SDAccountProtocol {
         
         // only mount SSHFS automatically if the user set it to automount
         if self.automount {
-            self.checkMount(at: self.currentMountURL, timeout: 30, mounted: {
-
-            }, notMounted: {
-                self.connectVolume()
-            })
+            self.connectVolume()
         }
     }
     
