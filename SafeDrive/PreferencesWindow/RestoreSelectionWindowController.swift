@@ -166,7 +166,7 @@ class RestoreSelectionWindowController: NSWindowController {
             let url = URL(string: path) {
             self.destination.url = url
         } else {
-            SDLog("failed to set default destination url: \(syncFolder.path)")
+            SDLog("failed to set default destination url")
         }
         
         self.readSyncSessions(self)
