@@ -391,7 +391,7 @@ class MountController: NSObject {
             let outputString = String(data: handle.availableData, encoding: String.Encoding.utf8)!
             // swiftlint:enable force_unwrapping
 
-            
+            SDLog("mount output: \(outputString)")
             if outputString.contains("No such file or directory") {
                 mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Server could not find that volume name"])
             } else if outputString.contains("Not a directory") {
