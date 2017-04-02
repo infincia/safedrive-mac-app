@@ -99,7 +99,7 @@ class FailedViewController: NSViewController {
         let os: String = "OS X \(currentOSVersion())"
         let clientVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
 
-        self.sdk.reportError(e, forUniqueClientId: self.uniqueClientId, os: os, clientVersion: clientVersion, withLog: self.log, completionQueue: DispatchQueue.main, success: {
+        self.sdk.reportError(e, forUniqueClientId: self.uniqueClientId, os: os, clientVersion: clientVersion, completionQueue: DispatchQueue.main, success: {
             self.spinner.stopAnimation(self)
 
             self.panelMessage.stringValue = NSLocalizedString("Thank you for your report", comment: "")
