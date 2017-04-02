@@ -46,7 +46,6 @@ func SDErrorHandlerSetUniqueClientId(_ uniqueClientId: String?) {
 
 func SDLog(_ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) {
-        // pass through to Crashlytics
         if !isProduction() {
             CLSNSLogv(line, $0)
         } else {
