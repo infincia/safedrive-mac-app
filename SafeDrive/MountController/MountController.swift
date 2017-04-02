@@ -264,8 +264,8 @@ class MountController: NSObject {
         
         // MARK: - Set custom environment variables for sshfs subprocess
         
-        var sshfsEnvironment = ProcessInfo.processInfo.environment
-        
+        var sshfsEnvironment = [String: String]()
+
         /* path of our custom askpass helper so ssh can use it */
         guard let safeDriveAskpassPath = Bundle.main.path(forAuxiliaryExecutable: "safedriveaskpass") else {
             let askpassError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.askpassMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "Askpass helper missing"])
