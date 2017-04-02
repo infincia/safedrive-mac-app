@@ -368,7 +368,8 @@ class MountController: NSObject {
         //NSString *knownHostsFile = [[NSBundle mainBundle] pathForResource:@"known_hosts" ofType:nil];
         //SDLog(@"Known hosts file: %@", knownHostsFile);
         //[taskArguments addObject:[NSString stringWithFormat:@"-oUserKnownHostsFile=%@", knownHostsFile]];
-        
+        taskArguments.append("-oUserKnownHostsFile=")
+
         /* custom volume name */
         taskArguments.append("-ovolname=\(volumeName)")
         
