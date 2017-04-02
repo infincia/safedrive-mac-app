@@ -5,6 +5,7 @@
 #import <Foundation/Foundation.h>
 
 static int SSHAskPassReturnValueSuccess = 0;
+static int SSHAskPassReturnValueFailure = 1;
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
