@@ -339,7 +339,8 @@ class MountController: NSObject {
         taskArguments.append("-onoappledouble")
         taskArguments.append("-onegative_vncache")
         taskArguments.append("-oNumberOfPasswordPrompts=1")
-        
+        taskArguments.append("-odebug,loglevel=debug")
+
         /*
          This shouldn't be necessary and I don't like it, but it'll work for
          testing purposes until we can implement a UI and code for displaying
