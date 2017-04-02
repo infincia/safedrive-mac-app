@@ -8,20 +8,14 @@ import Crashlytics
 
 import SafeDriveSDK
 
-var logBuffer = [String]()
 var errors = [[AnyHashable: Any]]()
 let errorQueue = DispatchQueue(label: "io.safedrive.errorQueue")
 
 var serializedErrorLocation: URL!
 
-var serializedLogLocation: URL!
-
 var currentUniqueClientId = ""
 
 let reporterInterval: TimeInterval = 60
-
-let maxLogSize = 100
-
 
 // MARK:
 // MARK: Public API
@@ -34,19 +28,7 @@ func SDErrorHandlerInitialize() {
      ~/Library/Application Support/SafeDrive/SafeDrive-Errors.plist
      */
     serializedErrorLocation = localURL.appendingPathComponent("SafeDrive-Errors.plist", isDirectory:false)
-    
-    /*
-     Set serializedErrorLocation to an NSURL corresponding to:
-     ~/Library/Application Support/SafeDrive/SafeDrive-Log.plist
-     */
-    serializedLogLocation = localURL.appendingPathComponent("SafeDrive-Log.plist", isDirectory:false)
-    
-    
-    // restore any saved error reports from previous sessions
-    if let archivedLogBuffer = NSKeyedUnarchiver.unarchiveObject(withFile: serializedLogLocation.path) as? [String] {
-        logBuffer = archivedLogBuffer
-    }
-    
+
     if let archivedErrors = NSKeyedUnarchiver.unarchiveObject(withFile: serializedErrorLocation.path) as? [[AnyHashable: Any]] {
         errors = archivedErrors
     }
@@ -71,13 +53,6 @@ func SDLog(_ line: String, _ arguments: CVarArg...) {
         } else {
             CLSLogv(line, $0)
         }
-        // for RELEASE builds, redirect logs to the buffer in case there is an error
-        errorQueue.sync {
-            logBuffer.append(st)
-            shiftLog()
-            saveLog()
-        }
-        
     }
 }
 
@@ -102,7 +77,6 @@ func SDErrorHandlerReport(_ error: Error?) {
                 let clientVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         
                 let report: [String : Any] = [  "error": NSKeyedArchiver.archivedData(withRootObject: error),
-                                                "log": NSKeyedArchiver.archivedData(withRootObject: logBuffer),
                                                 "uniqueClientId": currentUniqueClientId,
                                                 "os": os,
                                                 "clientVersion": clientVersion ]
@@ -119,7 +93,6 @@ func SDUncaughtExceptionHandler(exception: NSException!) {
     
     errorQueue.sync {
         let report: [String : Any] = [ "stack": stack,
-                                       "log": logBuffer,
                                        "uniqueClientId": currentUniqueClientId ]
         errors.insert(report, at:0)
         saveErrors()
@@ -145,15 +118,8 @@ func startReportQueue() {
                     let reportOS = report["os"] as? String
 
                     let reportClientVersion = report["clientVersion"] as? String
-
-                    let reportLogArchive = report["log"] as! Data
                     
-                    let archivedError = report["error"] as! Data
-                    
-                    // Logs are stored as NSData in the log buffer so they can be transparently serialized to disk,
-                    // so we must unarchive them before use
-                    let reportLog = NSKeyedUnarchiver.unarchiveObject(with: reportLogArchive) as! [String]
-                    
+                    let archivedError = report["error"] as! Data                    
                     
                     // Errors are stored as NSData in the error array so they can be transparently serialized to disk,
                     // so we must unarchive them before use
@@ -162,7 +128,7 @@ func startReportQueue() {
                     //note: passing the same queue we're in here is only OK because the called method uses it
                     //      with dispatch_async, if that were not the case this would deadlock forever
                     
-                    SafeDriveSDK.sharedSDK.reportError(error, forUniqueClientId: reportUniqueClientId, os: reportOS, clientVersion: reportClientVersion, withLog:reportLog, completionQueue:errorQueue, success: {
+                    SafeDriveSDK.sharedSDK.reportError(error, forUniqueClientId: reportUniqueClientId, os: reportOS, clientVersion: reportClientVersion, completionQueue: errorQueue, success: {
                         
                         saveErrors()
                         
@@ -181,19 +147,6 @@ func startReportQueue() {
 }
 
 // NOTE: These MUST NOT be called outside of the errorQueue
-
-private func shiftLog() {
-    if logBuffer.count > maxLogSize {
-        logBuffer.remove(at: 0)
-    }
-}
-
-private func saveLog() {
-    
-    if !NSKeyedArchiver.archiveRootObject(logBuffer, toFile: serializedLogLocation.path) {
-        SDLog("WARNING: log database could not be saved!!!")
-    }
-}
 
 private func saveErrors() {
     if !NSKeyedArchiver.archiveRootObject(errors, toFile: serializedErrorLocation.path) {
