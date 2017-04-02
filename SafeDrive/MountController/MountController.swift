@@ -392,12 +392,12 @@ class MountController: NSObject {
             // swiftlint:enable force_unwrapping
 
             SDLog("mount output: \(outputString)")
-            if outputString.contains("No such file or directory") {
-                mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Server could not find that volume name"])
+            if outputString.contains("key_load_public: No such file or directory") {
+                // refers to searching for ssh keys in debug1 mode
             } else if outputString.contains("Not a directory") {
                 mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Server could not find that volume name"])
-            } else if outputString.contains("Permission denied") {
-                mountError = NSError(domain: SDErrorDomainNotReported, code:SDSSHError.authorization.rawValue, userInfo:[NSLocalizedDescriptionKey: "Permission denied"])
+            } else if outputString.contains("Permission denied (publickey,password)") {
+                mountError = NSError(domain: SDErrorDomainNotReported, code:SDSSHError.authorization.rawValue, userInfo:[NSLocalizedDescriptionKey: "Check username/password"])
             } else if outputString.contains("is itself on a OSXFUSE volume") {
                 mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.alreadyMounted.rawValue, userInfo:[NSLocalizedDescriptionKey: "Volume already mounted"])
                 /*
@@ -413,8 +413,6 @@ class MountController: NSObject {
                 //successBlock();
             } else if outputString.contains("Error resolving hostname") {
                 mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Error resolving hostname, contact support"])
-            } else if outputString.contains("remote host has disconnected") {
-                mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Mount failed, check username and password"])
             } else if outputString.contains("REMOTE HOST IDENTIFICATION HAS CHANGED") {
                 mountError = NSError(domain: SDErrorDomainReported, code:SDSSHError.hostFingerprintChanged.rawValue, userInfo:[NSLocalizedDescriptionKey: "Warning: server fingerprint changed!"])
             } else if outputString.contains("Host key verification failed") {
@@ -426,6 +424,8 @@ class MountController: NSObject {
                  Ignore this, minor bug in sshfs use of glib
                  
                  */
+            } else if outputString.contains("No such file or directory") {
+                mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Server could not find that volume name"])
             } else {
                 mountError = NSError(domain: SDErrorDomainReported, code:SDMountError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: "An unknown error occurred, contact support"])
                 /*
