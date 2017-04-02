@@ -63,6 +63,7 @@
 		AA58D2DD1E82DC15002D56E0 /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2DB1E82DC15002D56E0 /* StatusView.xib */; };
 		AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA650CF31D73A381008DA5CB /* Changelog.md in Resources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
+		AA675E631E90164000729A1E /* libsafedrive.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA675E611E900D9000729A1E /* libsafedrive.dylib */; };
 		AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
@@ -326,6 +327,7 @@
 		AA58D2DA1E82DC15002D56E0 /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusViewController.swift; path = "Status TAb/StatusViewController.swift"; sourceTree = "<group>"; };
 		AA58D2DB1E82DC15002D56E0 /* StatusView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StatusView.xib; path = "Status TAb/StatusView.xib"; sourceTree = "<group>"; };
 		AA650CF11D73A29A008DA5CB /* Changelog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
+		AA675E611E900D9000729A1E /* libsafedrive.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsafedrive.dylib; path = "safedrive-sdk/dist-x86_64-apple-darwin/lib/libsafedrive.dylib"; sourceTree = "<group>"; };
 		AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+next.swift"; path = "Shared/NSDate+next.swift"; sourceTree = "<group>"; };
 		AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = ServiceManager/ServiceManager.swift; sourceTree = "<group>"; };
 		AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTests.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA675E631E90164000729A1E /* libsafedrive.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +440,7 @@
 		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA675E611E900D9000729A1E /* libsafedrive.dylib */,
 				AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */,
 				AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */,
 				6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */,
@@ -1794,8 +1798,13 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/include";
 				INFOPLIST_FILE = safedriveaskpass/Info.plist;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/lib @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/lib",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.askpass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1810,8 +1819,13 @@
 				CODE_SIGN_IDENTITY = "";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = G738Z89QKM;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/include";
 				INFOPLIST_FILE = safedriveaskpass/Info.plist;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/lib @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/lib",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.askpass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
