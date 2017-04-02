@@ -392,7 +392,6 @@ class MountController: NSObject {
             let outputString = String(data: handle.availableData, encoding: String.Encoding.utf8)!
             // swiftlint:enable force_unwrapping
 
-            SDLog("mount output: \(outputString)")
             if outputString.contains("key_load_public: No such file or directory") {
                 // refers to searching for ssh keys in debug1 mode
             } else if outputString.contains("Not a directory") {
