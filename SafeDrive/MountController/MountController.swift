@@ -276,9 +276,9 @@ class MountController: NSObject {
         sshfsEnvironment["SSH_ASKPASS"] = safeDriveAskpassPath
         
         
-        /* pass the account password to the safedriveaskpass environment */
-        sshfsEnvironment["SSH_PASSWORD"] = self.password
-        
+        sshfsEnvironment["SAFEDRIVE_CURRENTUSER_DOMAIN"] = currentUserDomain()
+        sshfsEnvironment["SAFEDRIVE_ACCOUNT_DOMAIN"] = accountCredentialDomain()
+
         /*
          remove any existing SSH agent socket in the subprocess environment so we
          have full control over auth behavior
