@@ -112,6 +112,7 @@
 		AABF04AA1E6CC46E0084DF81 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A61E6CC46E0084DF81 /* FailedViewController.swift */; };
 		AABF04AB1E6CC46E0084DF81 /* ReadyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AABF04A71E6CC46E0084DF81 /* ReadyView.xib */; };
 		AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */; };
+		AACEB6FD1E949F6C00234F4A /* io.safedrive.SafeDrive.cli in Copy Files */ = {isa = PBXBuildFile; fileRef = AACEB6FC1E949F6C00234F4A /* io.safedrive.SafeDrive.cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */; };
 		AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
@@ -223,6 +224,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				AACEB6FD1E949F6C00234F4A /* io.safedrive.SafeDrive.cli in Copy Files */,
 				AA2DAB291CB3664D00951762 /* io.safedrive.SafeDrive.sshfs in Copy Files */,
 				AA2DAB261CB32A6800951762 /* io.safedrive.SafeDrive.rsync in Copy Files */,
 				AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */,
@@ -363,6 +365,7 @@
 		AABF04A61E6CC46E0084DF81 /* FailedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FailedViewController.swift; path = Installer/FailedViewController.swift; sourceTree = "<group>"; };
 		AABF04A71E6CC46E0084DF81 /* ReadyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReadyView.xib; path = Installer/ReadyView.xib; sourceTree = "<group>"; };
 		AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadyViewController.swift; path = Installer/ReadyViewController.swift; sourceTree = "<group>"; };
+		AACEB6FC1E949F6C00234F4A /* io.safedrive.SafeDrive.cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.cli; path = "safedrive-sdk/dist-x86_64-apple-darwin/bin/io.safedrive.SafeDrive.cli"; sourceTree = "<group>"; };
 		AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
 		AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCRouter.swift; path = SafeDrive/XPCHandlers/ServiceXPCRouter.swift; sourceTree = SOURCE_ROOT; };
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
@@ -482,6 +485,7 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AACEB6FC1E949F6C00234F4A /* io.safedrive.SafeDrive.cli */,
 				AA76DC241C8787AB007B320E /* Bundled Dependencies */,
 				AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */,
 				AA3D8EBA1C3D80A100CF0A3C /* Shared */,
