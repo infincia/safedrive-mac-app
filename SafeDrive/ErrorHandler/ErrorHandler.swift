@@ -47,9 +47,9 @@ func SDErrorHandlerSetUniqueClientId(_ uniqueClientId: String?) {
 func SDLog(_ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) { argumentPointer in
         if !isProduction() {
-            CLSNSLogv(line, $0)
+            CLSNSLogv(line, argumentPointer)
         } else {
-            CLSLogv(line, $0)
+            CLSLogv(line, argumentPointer)
         }
     }
 }
