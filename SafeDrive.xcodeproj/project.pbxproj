@@ -1822,7 +1822,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/include";
 				INFOPLIST_FILE = safedriveaskpass/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/lib @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @loader_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/lib",
@@ -1845,7 +1845,7 @@
 				DEVELOPMENT_TEAM = G738Z89QKM;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/include";
 				INFOPLIST_FILE = safedriveaskpass/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/lib @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @loader_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/lib",
