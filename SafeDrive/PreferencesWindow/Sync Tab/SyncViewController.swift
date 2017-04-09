@@ -1031,3 +1031,122 @@ extension SyncViewController: SDApplicationEventProtocol {
         
     }
 }
+
+extension SyncViewController {
+    @IBAction func verifyFolders(_ sender: AnyObject?) {
+        
+            guard let realm = self.realm else {
+                return
+            }
+            
+            let syncFolders = realm.objects(SyncFolder.self)
+            
+            for folder in syncFolders {
+                let folderName = folder.name!
+                let folderPath = folder.path!
+                let folderID = folder.uniqueID
+                
+                if !folder.exists() && folder.active {
+                    self.verifyFolder(folderName, folderPath: folderPath, folderID: folderID)
+                }
+            }
+        
+    }
+    
+    func verifyFolder(_ folderName: String, folderPath: String, folderID: Int32) {
+        DispatchQueue.main.async {
+            let alert = NSAlert()
+            alert.addButton(withTitle: "Find")
+            alert.addButton(withTitle: "Restore")
+            alert.addButton(withTitle: "Pause")
+            
+            alert.messageText = "SafeDrive cannot locate the \(folderName) folder"
+            alert.informativeText = "The folder may have been moved or deleted, would you like to find it, restore it from the server, or remove it from your account?"
+            alert.alertStyle = .warning
+            
+            self.delegate.showAlert(alert) { (response) in
+                switch response {
+                case NSAlertFirstButtonReturn:
+                    let panel: NSOpenPanel = NSOpenPanel()
+                    panel.delegate = self
+                    panel.canChooseFiles = false
+                    panel.allowsMultipleSelection = false
+                    panel.canChooseDirectories = true
+                    panel.canCreateDirectories = true
+                    let panelTitle: String = NSLocalizedString("find the \(folderName) folder", comment: "Title of window")
+                    panel.title = panelTitle
+                    let promptString: String = NSLocalizedString("Select", comment: "Button title")
+                    panel.prompt = promptString
+                    
+                    self.delegate.showPanel(panel) { (result) in
+            
+                        if result == NSFileHandlingPanelOKButton {
+                            let folderPath = panel.url!.path
+                            
+                            let completionQueue = DispatchQueue.main
+                            
+                            self.sdk.updateFolder(folderName, path: folderPath, syncing: true, uniqueID: UInt64(folderID), completionQueue: completionQueue, success: { (folderID) in
+                                guard let realm = self.realm else {
+                                    SDLog("failed to get realm!!!")
+                                    Crashlytics.sharedInstance().crash()
+                                    return
+                                }
+                                let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last!
+                                
+                                // swiftlint:disable force_try
+                                try! realm.write {
+                                    syncFolder.path = folderPath
+                                }
+                                // swiftlint:enable force_try
+                            }, failure: { (error) in
+                                SDErrorHandlerReport(error)
+                                self.spinner.stopAnimation(self)
+                                let alert: NSAlert = NSAlert()
+                                alert.messageText = NSLocalizedString("Error updating folder in your account", comment: "")
+                                alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                                alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+                                alert.runModal()
+                            })
+                        } else {
+                            DispatchQueue.main.async {
+                                self.verifyFolder(folderName, folderPath: folderPath, folderID: folderID)
+                            }
+                        }
+                    }
+                    break
+                case NSAlertSecondButtonReturn:
+                    self.startRestore(UInt64(folderID))
+                    break
+                case NSAlertThirdButtonReturn:
+                    self.sdk.updateFolder(folderName, path: folderPath, syncing: false, uniqueID: UInt64(folderID), completionQueue: DispatchQueue.main, success: {
+                        guard let realm = self.realm else {
+                            SDLog("failed to get realm!!!")
+                            Crashlytics.sharedInstance().crash()
+                            return
+                        }
+                        let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last!
+                        
+                        // swiftlint:disable force_try
+                        try! realm.write {
+                            syncFolder.active = false
+                            syncFolder.path = folderPath
+                        }
+                        // swiftlint:enable force_try
+                    }, failure: { (error) in
+                        SDErrorHandlerReport(error)
+                        self.spinner.stopAnimation(self)
+                        let alert: NSAlert = NSAlert()
+                        alert.messageText = NSLocalizedString("Error updating folder in your account", comment: "")
+                        alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                        alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+                        alert.runModal()
+                    })
+                    break
+                default:
+                    return
+                }
+            }
+        }
+    }
+
+}
