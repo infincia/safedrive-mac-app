@@ -29,7 +29,16 @@ int main(int argc, const char * argv[]) {
         }
         
         NSString *safedrive_currentuser_domain = [[[NSProcessInfo processInfo] environment] valueForKey:@"SAFEDRIVE_CURRENTUSER_DOMAIN"];
+        if (safedrive_currentuser_domain == nil) {
+            return SSHAskPassReturnValueFailure;
+        }
+        
         NSString *safedrive_account_domain = [[[NSProcessInfo processInfo] environment] valueForKey:@"SAFEDRIVE_ACCOUNT_DOMAIN"];
+        
+        if (safedrive_account_domain == nil) {
+            return SSHAskPassReturnValueFailure;
+        }
+        
         char * current_user = NULL;
         SDDKError *current_user_error = NULL;
         
