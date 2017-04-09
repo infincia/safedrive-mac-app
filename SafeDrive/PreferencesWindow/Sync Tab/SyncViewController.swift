@@ -400,17 +400,72 @@ class SyncViewController: NSViewController {
     }
     
     @IBAction func startSyncNow(_ sender: AnyObject) {
-        guard let _ = self.uniqueClientID else {
+        guard let _ = self.uniqueClientID,
+            let button: NSButton = sender as? NSButton,
+            let folders = self.folders,
+            let folder = folders.filter("uniqueID == %@", UInt64(button.tag)).last,
+            let folderName = folder.name,
+            let folderPath = folder.path else {
             return
         }
         
-        let button: NSButton = sender as! NSButton
         let folderID: UInt64 = UInt64(button.tag)
         
-        if let folders = self.folders,
-            let folder = folders.filter("uniqueID == %@", folderID).last {
-            sync(folderID, encrypted: folder.encrypted)
+        if folder.active {
+            if !folder.exists() {
+                self.verifyFolder(folderName, folderPath: folderPath, folderID: Int32(folderID))
+            } else {
+                sync(folderID, encrypted: folder.encrypted)
+            }
+        } else {
+            let alert = NSAlert()
+            alert.addButton(withTitle: "No")
+            alert.addButton(withTitle: "Yes")
+            
+            alert.messageText = "Folder paused"
+            alert.informativeText = "This folder is currently paused, do you want to set it to active again?"
+            alert.alertStyle = .informational
+            self.delegate.showAlert(alert) { (response) in
+                
+                switch response {
+                case NSAlertFirstButtonReturn:
+                    return
+                case NSAlertSecondButtonReturn:
+                    if folder.exists() {
+                        let completionQueue = DispatchQueue.main
+                        
+                        self.sdk.updateFolder(folderName, path: folderPath, syncing: true, uniqueID: UInt64(folderID), completionQueue: completionQueue, success: { (folderID) in
+                            guard let realm = self.realm,
+                                  let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last else {
+                                SDLog("failed to get realm!!!")
+                                return
+                            }
+                            
+                            
+                            // swiftlint:disable force_try
+                            try! realm.write {
+                                syncFolder.path = folderPath
+                            }
+                            // swiftlint:enable force_try
+                        }, failure: { (error) in
+                            SDErrorHandlerReport(error)
+                            self.spinner.stopAnimation(self)
+                            let alert: NSAlert = NSAlert()
+                            alert.messageText = NSLocalizedString("Error updating folder in your account", comment: "")
+                            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+                            alert.runModal()
+                        })
+                    } else {
+                        self.verifyFolder(folderName, folderPath: folderPath, folderID: Int32(folderID))
+                    }
+                    break
+                default:
+                    return
+                }
+            }
         }
+        
     }
     
     @IBAction func startRestoreNow(_ sender: AnyObject) {
@@ -429,25 +484,80 @@ class SyncViewController: NSViewController {
     func startRestore(_ uniqueID: UInt64) {
         guard let folders = self.folders,
             let folder = folders.filter("uniqueID == %@", uniqueID).last,
+            let folderName = folder.name,
+            let folderPath = folder.path,
             let uniqueClientID = self.uniqueClientID else {
                 return
         }
         
-        if folder.encrypted {
-            
-            self.restoreSelection = RestoreSelectionWindowController(delegate: self, uniqueClientID: uniqueClientID, folderID: uniqueID)
-            
-            guard let w = self.restoreSelection?.window else {
-                SDLog("no recovery phrase window available")
-                return
+        if folder.active {
+            if !folder.exists() {
+                self.verifyFolder(folderName, folderPath: folderPath, folderID: Int32(uniqueID))
+            } else {
+                if folder.encrypted {
+                    
+                    self.restoreSelection = RestoreSelectionWindowController(delegate: self, uniqueClientID: uniqueClientID, folderID: uniqueID)
+                    
+                    guard let w = self.restoreSelection?.window else {
+                        SDLog("no recovery phrase window available")
+                        return
+                    }
+                    self.delegate.showModalWindow(w) { (_) in
+                        
+                    }
+                } else {
+                    // unencrypted folders have no versioning, so the name is arbitrary
+                    let name = UUID().uuidString.lowercased()
+                    restore(uniqueID, encrypted: folder.encrypted, name: name, destination: nil)
+                }
             }
-            self.delegate.showModalWindow(w) { (_) in
-                
-            }
+            
         } else {
-            // unencrypted folders have no versioning, so the name is arbitrary
-            let name = UUID().uuidString.lowercased()
-            restore(uniqueID, encrypted: folder.encrypted, name: name, destination: nil)
+            let alert = NSAlert()
+            alert.addButton(withTitle: "No")
+            alert.addButton(withTitle: "Yes")
+            
+            alert.messageText = "Folder paused"
+            alert.informativeText = "This folder is currently paused, do you want to set it to active again?"
+            alert.alertStyle = .informational
+            self.delegate.showAlert(alert) { (response) in
+                
+                switch response {
+                case NSAlertFirstButtonReturn:
+                    return
+                case NSAlertSecondButtonReturn:
+                    
+                    if folder.exists() {
+                        let completionQueue = DispatchQueue.main
+                        
+                        self.sdk.updateFolder(folderName, path: folderPath, syncing: true, uniqueID: UInt64(uniqueID), completionQueue: completionQueue, success: { (folderID) in
+                            guard let realm = self.realm,
+                            let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last else {
+                                SDLog("failed to get realm!!!")
+                                return
+                            }
+                            
+                            // swiftlint:disable force_try
+                            try! realm.write {
+                                syncFolder.path = folderPath
+                            }
+                            // swiftlint:enable force_try
+                        }, failure: { (error) in
+                            SDErrorHandlerReport(error)
+                            self.spinner.stopAnimation(self)
+                            let alert: NSAlert = NSAlert()
+                            alert.messageText = NSLocalizedString("Error updating folder in your account", comment: "")
+                            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+                            alert.runModal()
+                        })
+                    } else {
+                        self.verifyFolder(folderName, folderPath: folderPath, folderID: Int32(uniqueID))
+                    }
+                default:
+                    return
+                }
+            }
         }
     }
     
