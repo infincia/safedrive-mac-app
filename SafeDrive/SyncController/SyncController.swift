@@ -404,7 +404,70 @@ class SyncController: Equatable {
         
         
         // MARK: - Set Rsync subprocess arguments
-        let sshCommand = "ssh -o StrictHostKeyChecking=no -p \(port)"
+        
+        
+        /*
+         Use a bundled known_hosts file as static root of trust.
+         
+         This serves two purposes:
+         
+         1. Users never have to click through fingerprint verification
+         prompts, or manually verify the fingerprint (most people won't).
+         We don't currently have code for scripting that part of an initial
+         ssh connection anyway, and it's not clear if we can even get sshfs
+         to put ssh in the right mode to print the fingerprint prompt on
+         stdout while running as a background process using SSH_ASKPASS
+         for authentication.
+         
+         2. Users are never going to be subject to man-in-the-middle attacks
+         as the fingerprint is preconfigured in the app
+         */
+        
+        
+        guard let knownHostsFile = Bundle.main.url(forResource: "known_hosts", withExtension: nil) else {
+            let message = NSLocalizedString("SSH hosts file missing, contact SafeDrive support", comment: "")
+            let configError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.configMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
+            failureBlock(self.localURL, configError)
+            return
+        }
+        
+        let tempHostsFile = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+        do {
+            try FileManager.default.copyItem(at: knownHostsFile, to: tempHostsFile)
+        } catch {
+            let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
+            let configError = NSError(domain: SDErrorDomainReported, code:SDSystemError.temporaryFile.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
+            failureBlock(self.localURL, configError)
+            return
+        }
+        
+        /* bundled config file to avoid environment differences */
+        guard let configFile = Bundle.main.url(forResource: "ssh_config", withExtension: nil) else {
+            let message = NSLocalizedString("SSH config missing, contact SafeDrive support", comment: "")
+            let configError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.configMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
+            failureBlock(self.localURL, configError)
+            return
+        }
+        
+        let tempConfigFile = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+        do {
+            try FileManager.default.copyItem(at: configFile, to: tempConfigFile)
+        } catch {
+            let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
+            let configError = NSError(domain: SDErrorDomainReported, code:SDSystemError.temporaryFile.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
+            failureBlock(self.localURL, configError)
+            return
+        }
+        
+        /* our own ssh binary */
+        guard let sshPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
+            let message = NSLocalizedString("SSH missing, contact SafeDrive support", comment: "")
+            let sshError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.sshMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
+            failureBlock(self.localURL, sshError)
+            return
+        }
+        
+        let sshCommand = "\(sshPath) -F\(tempConfigFile.path) -oUserKnownHostsFile=\"\(tempHostsFile.path)\" -p \(port)"
         
         var taskArguments = ["-e", sshCommand, "--delete", "-rlptX", "--info=progress2", "--no-inc-recursive"]
         
