@@ -96,6 +96,17 @@ class SyncFolder: Object {
         return false
     }
     
+    public func exists() -> Bool {
+        var isDirectory: ObjCBool = false
+        
+        if FileManager.default.fileExists(atPath: self.path!, isDirectory:&isDirectory) {
+            if isDirectory.boolValue {
+                return true
+            }
+        }
+        return false
+    }
+    
 // Specify properties to ignore (Realm won't persist these)
     
 //  override static func ignoredProperties() -> [String] {
