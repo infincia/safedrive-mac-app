@@ -322,11 +322,7 @@ class SyncController: Equatable {
         
         self.syncTask = Process()
         
-        let rsyncPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.rsync")
-        
-        if rsyncPath != nil {
-            self.syncTask.launchPath = rsyncPath
-        } else {
+        guard let rsyncPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.rsync") else {
             let message = NSLocalizedString("Rsync missing, contact SafeDrive support", comment: "")
             let rsyncError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.rsyncMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
             DispatchQueue.main.async(execute: {
@@ -335,6 +331,8 @@ class SyncController: Equatable {
             return
         }
         
+        self.syncTask.launchPath = rsyncPath
+
         // MARK: - Set custom environment variables for sshfs subprocess
         
         var rsyncEnvironment = ProcessInfo.processInfo.environment
