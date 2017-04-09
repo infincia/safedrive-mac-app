@@ -1037,21 +1037,24 @@ extension SyncViewController: SDApplicationEventProtocol {
 extension SyncViewController {
     @IBAction func verifyFolders(_ sender: AnyObject?) {
         
-            guard let realm = self.realm else {
-                return
-            }
+        guard let realm = self.realm else {
+            return
+        }
+        
+        let syncFolders = realm.objects(SyncFolder.self)
+        
+        for folder in syncFolders {
             
-            let syncFolders = realm.objects(SyncFolder.self)
-            
-            for folder in syncFolders {
-                let folderName = folder.name!
-                let folderPath = folder.path!
-                let folderID = folder.uniqueID
-                
-                if !folder.exists() && folder.active {
-                    self.verifyFolder(folderName, folderPath: folderPath, folderID: folderID)
-                }
+            guard let folderName = folder.name,
+                  let folderPath = folder.path else {
+                    continue
             }
+            let folderID = folder.uniqueID
+            
+            if !folder.exists() && folder.active {
+                self.verifyFolder(folderName, folderPath: folderPath, folderID: folderID)
+            }
+        }
         
     }
     
@@ -1083,17 +1086,19 @@ extension SyncViewController {
                     self.delegate.showPanel(panel) { (result) in
             
                         if result == NSFileHandlingPanelOKButton {
-                            let folderPath = panel.url!.path
+                            guard let folderPath = panel.url?.path else {
+                                return
+                            }
                             
                             let completionQueue = DispatchQueue.main
                             
                             self.sdk.updateFolder(folderName, path: folderPath, syncing: true, uniqueID: UInt64(folderID), completionQueue: completionQueue, success: { (folderID) in
-                                guard let realm = self.realm else {
+                                guard let realm = self.realm,
+                                      let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last else {
                                     SDLog("failed to get realm!!!")
                                     Crashlytics.sharedInstance().crash()
                                     return
                                 }
-                                let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last!
                                 
                                 // swiftlint:disable force_try
                                 try! realm.write {
@@ -1121,12 +1126,12 @@ extension SyncViewController {
                     break
                 case NSAlertThirdButtonReturn:
                     self.sdk.updateFolder(folderName, path: folderPath, syncing: false, uniqueID: UInt64(folderID), completionQueue: DispatchQueue.main, success: {
-                        guard let realm = self.realm else {
+                        guard let realm = self.realm,
+                              let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last else {
                             SDLog("failed to get realm!!!")
                             Crashlytics.sharedInstance().crash()
                             return
                         }
-                        let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last!
                         
                         // swiftlint:disable force_try
                         try! realm.write {
