@@ -1,0 +1,13 @@
+Host sftp-client.safedrive.io
+   ForwardAgent no
+   ForwardX11 no
+   PasswordAuthentication yes
+   HostbasedAuthentication no
+   BatchMode no
+   CheckHostIP no
+   NumberOfPasswordPrompts 1
+   StrictHostKeyChecking no
+   Ciphers aes128-ctr,aes192-ctr,aes256-ctr
+   MACs hmac-sha1
+   Tunnel no
+   RekeyLimit 1G 1h
