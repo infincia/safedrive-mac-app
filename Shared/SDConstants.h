@@ -81,7 +81,10 @@ typedef NS_ENUM(NSInteger, SDSystemError) {
     SDSystemErrorOSXFUSEMissing           = 2006,
     SDSystemErrorSSHFSMissing             = 2007,
     SDSystemErrorAskpassMissing           = 2008,
-    SDSystemErrorRsyncMissing             = 2009
+    SDSystemErrorRsyncMissing             = 2009,
+    SDSystemErrorTemporaryFile            = 2010,
+    SDSystemErrorSSHMissing               = 2011,
+    SDSystemErrorConfigMissing            = 2012,
 };
 
 #pragma mark - SafeDrive API related errors
