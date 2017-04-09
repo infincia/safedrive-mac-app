@@ -332,6 +332,15 @@ class MountController: NSObject {
         /* mount location */
         taskArguments.append(mountURL.path)
         
+        /* our own ssh binary */
+        guard let sshPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
+            let message = NSLocalizedString("SSH missing, contact SafeDrive support", comment: "")
+            let sshfsError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.sshMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
+            failureBlock(mountURL, sshfsError)
+            return
+        }
+        taskArguments.append("-ossh_command=\(sshPath)")
+
         /* basic sshfs options */
         taskArguments.append("-oauto_cache")
         taskArguments.append("-oreconnect")
