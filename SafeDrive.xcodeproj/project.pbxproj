@@ -61,6 +61,7 @@
 		AA58D2D91E82DBE4002D56E0 /* EncryptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2D71E82DBE4002D56E0 /* EncryptionView.xib */; };
 		AA58D2DC1E82DC15002D56E0 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2DA1E82DC15002D56E0 /* StatusViewController.swift */; };
 		AA58D2DD1E82DC15002D56E0 /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2DB1E82DC15002D56E0 /* StatusView.xib */; };
+		AA5D13A51E9AC5A400C81D4C /* io.safedrive.SafeDrive.ssh in Copy Files */ = {isa = PBXBuildFile; fileRef = AA8FE3E71E99888100CD5238 /* io.safedrive.SafeDrive.ssh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA650CF31D73A381008DA5CB /* Changelog.md in Resources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA675E631E90164000729A1E /* libsafedrive.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA675E611E900D9000729A1E /* libsafedrive.dylib */; };
@@ -92,8 +93,6 @@
 		AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */; };
 		AA7FE7A31E3D4AD4007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA7FE7A51E3D4AD5007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
-		AA8FE3E91E99888100CD5238 /* io.safedrive.SafeDrive.ssh in Resources */ = {isa = PBXBuildFile; fileRef = AA8FE3E71E99888100CD5238 /* io.safedrive.SafeDrive.ssh */; };
-		AA8FE3EC1E998BAC00CD5238 /* io.safedrive.SafeDrive.ssh in Copy Files */ = {isa = PBXBuildFile; fileRef = AA8FE3E71E99888100CD5238 /* io.safedrive.SafeDrive.ssh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAA50BB11E313AF200892E9D /* CUIThemeRenditionFix.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */; };
 		AAA50BE51E313BE900892E9D /* CUIThemeRenditionFix.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */; };
@@ -227,7 +226,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				AA8FE3EC1E998BAC00CD5238 /* io.safedrive.SafeDrive.ssh in Copy Files */,
+				AA5D13A51E9AC5A400C81D4C /* io.safedrive.SafeDrive.ssh in Copy Files */,
 				AACEB6FD1E949F6C00234F4A /* io.safedrive.SafeDrive.cli in Copy Files */,
 				AA2DAB291CB3664D00951762 /* io.safedrive.SafeDrive.sshfs in Copy Files */,
 				AA2DAB261CB32A6800951762 /* io.safedrive.SafeDrive.rsync in Copy Files */,
@@ -1092,7 +1091,6 @@
 				AA58D2DD1E82DC15002D56E0 /* StatusView.xib in Resources */,
 				AA76DC291C879076007B320E /* WelcomeWindow.xib in Resources */,
 				AA037B701E428EA600818B53 /* RecoveryPhraseWindow.xib in Resources */,
-				AA8FE3E91E99888100CD5238 /* io.safedrive.SafeDrive.ssh in Resources */,
 				AACDAD911E97548500F5B351 /* ssh_config in Resources */,
 				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
 				AA7CD61A1E68A21100EE7FAD /* ValidateDependenciesView.xib in Resources */,
