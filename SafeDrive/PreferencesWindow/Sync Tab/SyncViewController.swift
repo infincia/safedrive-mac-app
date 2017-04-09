@@ -1218,7 +1218,6 @@ extension SyncViewController {
                                 guard let realm = self.realm,
                                       let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last else {
                                     SDLog("failed to get realm!!!")
-                                    Crashlytics.sharedInstance().crash()
                                     return
                                 }
                                 
@@ -1251,7 +1250,6 @@ extension SyncViewController {
                         guard let realm = self.realm,
                               let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last else {
                             SDLog("failed to get realm!!!")
-                            Crashlytics.sharedInstance().crash()
                             return
                         }
                         

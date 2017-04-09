@@ -253,7 +253,6 @@ class RestoreSelectionWindowController: NSWindowController {
             self.close()
         } else {
             SDLog("failed to get session from realm!!!")
-            Crashlytics.sharedInstance().crash()
             return
         }
         
