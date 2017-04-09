@@ -10,6 +10,24 @@ static int SSHAskPassReturnValueFailure = 1;
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        NSString *safedrive_storage_directory = [[[NSProcessInfo processInfo] environment] valueForKey:@"SAFEDRIVE_STORAGE_DIRECTORY"];
+        if (safedrive_storage_directory == nil) {
+            return SSHAskPassReturnValueFailure;
+        }
+        
+        SDDKConfiguration sddk_config = SDDKConfigurationStaging;
+
+        if ([[[NSProcessInfo processInfo] environment] valueForKey:@"SAFEDRIVE_ENVIRONMENT_PRODUCTION"] != nil) {
+            sddk_config = SDDKConfigurationProduction;
+        }
+
+        SDDKError *error = NULL;
+        SDDKState *state = NULL;
+        
+        if (sddk_initialize(NULL, NULL, NULL, sddk_config,  [safedrive_storage_directory UTF8String], &state, &error) != 0) {
+            return SSHAskPassReturnValueFailure;
+        }
+        
         NSString *safedrive_currentuser_domain = [[[NSProcessInfo processInfo] environment] valueForKey:@"SAFEDRIVE_CURRENTUSER_DOMAIN"];
         NSString *safedrive_account_domain = [[[NSProcessInfo processInfo] environment] valueForKey:@"SAFEDRIVE_ACCOUNT_DOMAIN"];
         char * current_user = NULL;
