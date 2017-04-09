@@ -335,7 +335,7 @@ class SyncController: Equatable {
 
         // MARK: - Set custom environment variables for sshfs subprocess
         
-        var rsyncEnvironment = ProcessInfo.processInfo.environment
+        var rsyncEnvironment = [String: String]()
         
         /* path of our custom askpass helper so ssh can use it */
         guard let safeDriveAskpassPath = Bundle.main.path(forAuxiliaryExecutable: "safedriveaskpass") else {
