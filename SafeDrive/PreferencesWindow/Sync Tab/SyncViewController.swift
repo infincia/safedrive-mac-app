@@ -998,7 +998,9 @@ extension SyncViewController: SDApplicationEventProtocol {
         }
         
         self.syncTaskToken = realm.objects(SyncTask.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
-            self?.reload()
+            if let selectedIndexes = self?.syncListView.selectedRowIndexes {
+                self?.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: false)
+            }
         }
     }
     
