@@ -386,6 +386,8 @@ class SyncViewController: NSViewController {
                 self.syncListView.becomeFirstResponder()
             }
             
+            self.verifyFolders(nil)
+            
         }, failure: { (error) in
             SDErrorHandlerReport(error)
             self.spinner.stopAnimation(self)
