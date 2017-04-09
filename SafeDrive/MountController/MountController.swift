@@ -356,17 +356,6 @@ class MountController: NSObject {
         taskArguments.append("-odefer_permissions")
         taskArguments.append("-onoappledouble")
         taskArguments.append("-onegative_vncache")
-        taskArguments.append("-oNumberOfPasswordPrompts=1")
-        taskArguments.append("-odebug,loglevel=debug")
-
-        /*
-         This shouldn't be necessary and I don't like it, but it'll work for
-         testing purposes until we can implement a UI and code for displaying
-         server fingerprints and allowing users to check and accept them or use
-         the bundled known_hosts file to preapprove server fingerprints
-         */
-        taskArguments.append("-oCheckHostIP=no")
-        taskArguments.append("-oStrictHostKeyChecking=no")
         
         /*
          Use a bundled known_hosts file as static root of trust.
@@ -384,11 +373,51 @@ class MountController: NSObject {
          2. Users are never going to be subject to man-in-the-middle attacks
          as the fingerprint is preconfigured in the app
          */
-        //NSString *knownHostsFile = [[NSBundle mainBundle] pathForResource:@"known_hosts" ofType:nil];
-        //SDLog(@"Known hosts file: %@", knownHostsFile);
-        //[taskArguments addObject:[NSString stringWithFormat:@"-oUserKnownHostsFile=%@", knownHostsFile]];
-        taskArguments.append("-oUserKnownHostsFile=")
+        
+        
+        guard let knownHostsFile = Bundle.main.url(forResource: "known_hosts", withExtension: nil) else {
+            let message = NSLocalizedString("SSH hosts file missing, contact SafeDrive support", comment: "")
+            let configError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.configMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
+            failureBlock(mountURL, configError)
+            return
+        }
+        
+        let tempHostsFile = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+        do {
+            try FileManager.default.copyItem(at: knownHostsFile, to: tempHostsFile)
+        } catch {
+            let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
+            let configError = NSError(domain: SDErrorDomainReported, code:SDSystemError.temporaryFile.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
+            failureBlock(mountURL, configError)
+            return
+        }
+        
+        SDLog("Known hosts file: \(tempHostsFile.path))")
+        taskArguments.append("-oUserKnownHostsFile=\"\(tempHostsFile.path)\"")
 
+        
+        
+        /* bundled config file to avoid environment differences */
+        guard let configFile = Bundle.main.url(forResource: "ssh_config", withExtension: nil) else {
+            let message = NSLocalizedString("SSH config missing, contact SafeDrive support", comment: "")
+            let configError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.configMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
+            failureBlock(mountURL, configError)
+            return
+        }
+        
+        let tempConfigFile = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+        do {
+            try FileManager.default.copyItem(at: configFile, to: tempConfigFile)
+        } catch {
+            let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
+            let configError = NSError(domain: SDErrorDomainReported, code:SDSystemError.temporaryFile.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
+            failureBlock(mountURL, configError)
+            return
+        }
+        SDLog("Config file: \(tempConfigFile.path))")
+        taskArguments.append("-F\(tempConfigFile.path)")
+        
+        
         /* custom volume name */
         taskArguments.append("-ovolname=\(volumeName)")
         
