@@ -97,9 +97,12 @@ class SyncFolder: Object {
     }
     
     public func exists() -> Bool {
+        guard let folderPath = self.path else {
+            return false
+        }
         var isDirectory: ObjCBool = false
         
-        if FileManager.default.fileExists(atPath: self.path!, isDirectory:&isDirectory) {
+        if FileManager.default.fileExists(atPath: folderPath, isDirectory:&isDirectory) {
             if isDirectory.boolValue {
                 return true
             }
