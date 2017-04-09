@@ -491,7 +491,6 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
-				AACEB6FC1E949F6C00234F4A /* io.safedrive.SafeDrive.cli */,
 				AA76DC241C8787AB007B320E /* Bundled Dependencies */,
 				AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */,
 				AA3D8EBA1C3D80A100CF0A3C /* Shared */,
@@ -775,6 +774,7 @@
 		AA76DC241C8787AB007B320E /* Bundled Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				AACEB6FC1E949F6C00234F4A /* io.safedrive.SafeDrive.cli */,
 				AA8FE3E71E99888100CD5238 /* io.safedrive.SafeDrive.ssh */,
 				AA5071561E2D270C006F59C8 /* FUSE for macOS 3.5.4.pkg */,
 				AA2DAB241CB3293F00951762 /* io.safedrive.SafeDrive.rsync */,
