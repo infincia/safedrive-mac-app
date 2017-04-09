@@ -914,8 +914,20 @@ extension SyncViewController: NSTableViewDelegate {
             // swiftlint:disable force_unwrapping
             let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
             // swiftlint:enable force_unwrapping
-
-            if let syncTask = syncTasks.filter("syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", syncFolder).sorted(byKeyPath: "syncDate").last {
+            
+            if !syncFolder.active {
+                self.syncStatus.stringValue = "Paused"
+                failureView.message.textStorage?.setAttributedString(NSAttributedString(string: ""))
+                self.syncFailureInfoButton.action = nil
+                self.syncFailureInfoButton.isHidden = true
+                self.syncFailureInfoButton.isEnabled = false
+                self.syncFailureInfoButton.toolTip = nil
+                self.progress.stopAnimation(nil)
+                
+                self.progress.doubleValue = 0.0
+                
+                self.syncProgressField.stringValue = ""
+            } else if let syncTask = syncTasks.filter("syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", syncFolder).sorted(byKeyPath: "syncDate").last {
                 
                 if syncFolder.restoring {
                     // swiftlint:disable force_unwrapping
