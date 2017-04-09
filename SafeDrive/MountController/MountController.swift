@@ -318,6 +318,15 @@ class MountController: NSObject {
         //MARK: warning DO NOT REMOVE THIS. See above comment for the reason.
         sshfsEnvironment["DISPLAY"] = ""
         
+        
+        let tempDir = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+
+        sshfsEnvironment["SAFEDRIVE_STORAGE_DIRECTORY"] = "\(tempDir.path)"
+
+        if isProduction() {
+            sshfsEnvironment["SAFEDRIVE_ENVIRONMENT_PRODUCTION"] = "1"
+        }
+
         //SDLog("Subprocess environment: \(sshfsEnvironment)")
         self.sshfsTask.environment = sshfsEnvironment
         
