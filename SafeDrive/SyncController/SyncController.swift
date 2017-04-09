@@ -348,6 +348,8 @@ class SyncController: Equatable {
         }
         rsyncEnvironment["SSH_ASKPASS"] = safeDriveAskpassPath
         
+        rsyncEnvironment["SAFEDRIVE_CURRENTUSER_DOMAIN"] = currentUserDomain()
+        rsyncEnvironment["SAFEDRIVE_ACCOUNT_DOMAIN"] = accountCredentialDomain()
         
         /* pass the account password to the safedriveaskpass environment */
         rsyncEnvironment["SSH_PASSWORD"] = self.password
@@ -389,6 +391,14 @@ class SyncController: Equatable {
          */
         
         rsyncEnvironment["DISPLAY"] = ""
+        
+        let tempDir = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+        
+        rsyncEnvironment["SAFEDRIVE_STORAGE_DIRECTORY"] = "\(tempDir.path)"
+        
+        if isProduction() {
+            rsyncEnvironment["SAFEDRIVE_ENVIRONMENT_PRODUCTION"] = "1"
+        }
         
         self.syncTask.environment = rsyncEnvironment
         
