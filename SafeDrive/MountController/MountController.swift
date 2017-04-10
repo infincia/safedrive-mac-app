@@ -348,7 +348,7 @@ class MountController: NSObject {
             failureBlock(mountURL, sshfsError)
             return
         }
-        taskArguments.append("-ossh_command=\(sshPath)")
+        //taskArguments.append("-ossh_command=\(sshPath)")
 
         /* basic sshfs options */
         taskArguments.append("-oauto_cache")
