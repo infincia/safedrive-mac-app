@@ -111,6 +111,12 @@ class Installer: NSObject {
         let libraryURL = try! fileManager.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         
         let launchAgentsURL = libraryURL.appendingPathComponent("LaunchAgents", isDirectory: true)
+        do {
+            try fileManager.createDirectory(at: launchAgentsURL, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            SDLog("Error creating launch agents directory: \(error)")
+            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.serviceDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error creating launch agents directory: \(error)"])
+        }
         
         let applicationSupportURL = try! fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         // swiftlint:enable force_try
