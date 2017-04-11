@@ -127,6 +127,7 @@
 		AAD89BD21E5C197E007D8E82 /* OpenFileWarningWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */; };
 		AAD89BD31E5C197E007D8E82 /* OpenFileWarningWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */; };
 		AAD89BD51E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */; };
+		AAE216381E9BE8BD00BE956F /* setup.sh in Resources */ = {isa = PBXBuildFile; fileRef = AAE216371E9BE8BD00BE956F /* setup.sh */; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
 		AAF945F31C80125A00B972C3 /* SafeDriveService.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AAF945F41C80162700B972C3 /* io.safedrive.SafeDrive.Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */; };
@@ -379,6 +380,7 @@
 		AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningWindowController.swift; path = "Open File Warning Window/OpenFileWarningWindowController.swift"; sourceTree = "<group>"; };
 		AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OpenFileWarningWindow.xib; path = "Open File Warning Window/OpenFileWarningWindow.xib"; sourceTree = "<group>"; };
 		AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningTableCellView.swift; path = "Open File Warning Window/OpenFileWarningTableCellView.swift"; sourceTree = "<group>"; };
+		AAE216371E9BE8BD00BE956F /* setup.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = setup.sh; sourceTree = "<group>"; };
 		AAEA529F1A81A3EA00BF862C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = safedriveaskpass/Info.plist; sourceTree = SOURCE_ROOT; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -478,6 +480,7 @@
 		AA2E550E1A774DED00647637 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AAE216371E9BE8BD00BE956F /* setup.sh */,
 				AACDAD901E97548500F5B351 /* ssh_config */,
 				AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */,
 				AA650CF11D73A29A008DA5CB /* Changelog.md */,
@@ -1072,6 +1075,7 @@
 			files = (
 				AAD89BD31E5C197E007D8E82 /* OpenFileWarningWindow.xib in Resources */,
 				AA650CF31D73A381008DA5CB /* Changelog.md in Resources */,
+				AAE216381E9BE8BD00BE956F /* setup.sh in Resources */,
 				AAF945F41C80162700B972C3 /* io.safedrive.SafeDrive.Service.plist in Resources */,
 				AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */,
 				AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */,
