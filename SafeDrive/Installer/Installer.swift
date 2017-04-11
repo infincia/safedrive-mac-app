@@ -92,6 +92,7 @@ class Installer: NSObject {
     func installDependencies() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             do {
+                try self.setupDirectories()
                 try self.installOSXFUSE()
                 try self.deployService()
                 try self.installCLI()
@@ -209,13 +210,6 @@ class Installer: NSObject {
 
         let destination = usrlocalbin.appendingPathComponent("safedrive")
         
-        do {
-            try FileManager.default.createDirectory(at: usrlocalbin, withIntermediateDirectories: true, attributes: nil)
-        } catch let error as NSError {
-            SDLog("Failed to create /usr/local/bin directory: \(error)")
-            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Failed to create /usr/local/bin directory: \(error)"])
-        }
-        
         let fileManager: FileManager = FileManager.default
         if FileManager.default.fileExists(atPath: destination.path) {
             do {
@@ -230,6 +224,31 @@ class Installer: NSObject {
         } catch let error as NSError {
             SDLog("Error copying CLI app: \(error)")
             throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying CLI app: \(error)"])
+        }
+    }
+    
+    func setupDirectories() throws {
+        guard let setupScript = Bundle.main.url(forResource: "setup", withExtension: "sh", subdirectory: nil) else {
+            let e = NSError(domain: SDErrorDomainInternal, code:SDInstallationError.setupDirectories.rawValue, userInfo:[NSLocalizedDescriptionKey: "Setup script missing"])
+            throw e
+        }
+
+        let privilegedTask = STPrivilegedTask()
+        privilegedTask.setLaunchPath("/bin/bash")
+        privilegedTask.setArguments([setupScript.path])
+        
+        let err = privilegedTask.launch()
+        
+        if err != errAuthorizationSuccess {
+            if err == errAuthorizationCanceled {
+                SDLog("User cancelled setup")
+                throw NSError(domain: SDErrorDomainNotReported, code: SDInstallationError.setupDirectories.rawValue, userInfo: [NSLocalizedDescriptionKey: "FUSE installation cancelled by user"])
+            } else {
+                SDLog("Setup could not be completed")
+                throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.setupDirectories.rawValue, userInfo: [NSLocalizedDescriptionKey: "Setup could not be completed"])
+            }
+        } else {
+            SDLog("Installer launched")
         }
     }
 }
