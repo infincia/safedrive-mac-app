@@ -63,8 +63,10 @@ NSString * _Nonnull SDErrorToString(NSError *error) {
             return @"SDInstallationErrorFuseDeployment";
         case SDInstallationErrorCLIMissing:
             return @"SDInstallationErrorCLIMissing";
+        case SDInstallationErrorSetupDirectories:
+            return @"SDInstallationErrorSetupDirectories";
     }
-     
+    
      switch ((enum SDSystemError)error.code) {
          case SDSystemErrorUnknown:
              return @"SDSystemErrorUnknown";
