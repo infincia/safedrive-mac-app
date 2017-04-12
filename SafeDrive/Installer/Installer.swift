@@ -122,7 +122,9 @@ class Installer: NSObject {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             do {
                 try self.setupDirectories()
-                try self.installOSXFUSE()
+                if !self.isOSXFUSEInstalled {
+                    try self.installOSXFUSE()
+                }
                 try self.deployService()
                 try self.installCLI()
             } catch let error as NSError {
