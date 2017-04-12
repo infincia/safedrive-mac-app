@@ -28,22 +28,11 @@ fileprivate let SDWebDomainProduction = "safedrive.io"
 // Keychain constants
 
 
-fileprivate let SDAccountCredentialDomainProduction = "safedrive.io"
-fileprivate let SDAccountCredentialDomainStaging = "staging.safedrive.io"
-
-fileprivate let SDAuthTokenDomainProduction = "session.safedrive.io"
-fileprivate let SDAuthTokenDomainStaging = "staging.session.safedrive.io"
-
-fileprivate let SDRecoveryKeyDomainProduction = "recovery.safedrive.io"
-fileprivate let SDRecoveryKeyDomainStaging = "staging.recovery.safedrive.io"
-
-// use the same UCID on production and staging until we have a reason not to
-fileprivate let SDUniqueClientIDDomainProduction = "ucid.safedrive.io"
-fileprivate let SDUniqueClientIDDomainStaging = "staging.ucid.safedrive.io"
-
-fileprivate let SDCurrentUserDomainProduction = "currentuser.safedrive.io"
-fileprivate let SDCurrentUserDomainStaging = "staging.currentuser.safedrive.io"
-
+fileprivate let SDAccountCredentialDomain = "safedrive.io"
+fileprivate let SDAuthTokenDomain = "session.safedrive.io"
+fileprivate let SDRecoveryKeyDomain = "recovery.safedrive.io"
+fileprivate let SDUniqueClientIDDomain = "ucid.safedrive.io"
+fileprivate let SDCurrentUserDomain = "currentuser.safedrive.io"
 
 func currentOSVersion() -> String {
     let systemVersionPlist = "/System/Library/CoreServices/SystemVersion.plist"
@@ -100,41 +89,23 @@ func apiDomain() -> String {
 }
 
 func tokenDomain() -> String {
-    if isProduction() {
-        return SDAuthTokenDomainProduction
-    } else {
-        return SDAuthTokenDomainStaging
-    }
+    return SDAuthTokenDomain
+    
 }
 
 func accountCredentialDomain() -> String {
-    if isProduction() {
-        return SDAccountCredentialDomainProduction
-    } else {
-        return SDAccountCredentialDomainStaging
-    }
+    return SDAccountCredentialDomain
 }
 
 func recoveryKeyDomain() -> String {
-    if isProduction() {
-        return SDRecoveryKeyDomainProduction
-    } else {
-        return SDRecoveryKeyDomainStaging
-    }
+    return SDRecoveryKeyDomain
 }
 
 func UCIDDomain() -> String {
-    if isProduction() {
-        return SDUniqueClientIDDomainProduction
-    } else {
-        return SDUniqueClientIDDomainStaging
-    }
+    return SDUniqueClientIDDomain
+    
 }
 
 func currentUserDomain() -> String {
-    if isProduction() {
-        return SDCurrentUserDomainProduction
-    } else {
-        return SDCurrentUserDomainStaging
-    }
+    return SDCurrentUserDomain
 }
