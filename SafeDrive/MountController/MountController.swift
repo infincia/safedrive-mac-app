@@ -217,8 +217,7 @@ class MountController: NSObject {
          prevent the code from ever running.
          */
         if self.mounted {
-            let mountError: NSError! = NSError(domain: SDErrorDomainNotReported, code: SDMountError.alreadyMounted.rawValue, userInfo: [NSLocalizedDescriptionKey: "Volume already mounted"])
-            failureBlock(mountURL, mountError)
+            successBlock(mountURL)
             return
         }
         
@@ -578,16 +577,18 @@ class MountController: NSObject {
             
             
         }, failure: { (_, mountError) in
-            SDLog("SafeDrive startMountTaskWithVolumeName failure in mount controller: \(mountError)")
-            notification.informativeText = mountError.localizedDescription
-            notification.title = "SafeDrive mount error"
-            notification.soundName = NSUserNotificationDefaultSoundName
-            NSUserNotificationCenter.default.deliver(notification)
-            SDErrorHandlerReport(mountError)
             self.mounting = false
             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
             let e = mountError as NSError
-            if e.code != SDMountError.alreadyMounted.rawValue {
+            if e.code == SDMountError.alreadyMounted.rawValue {
+                NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
+            } else {
+                SDLog("SafeDrive startMountTaskWithVolumeName failure in mount controller: \(mountError)")
+                notification.informativeText = mountError.localizedDescription
+                notification.title = "SafeDrive mount error"
+                notification.soundName = NSUserNotificationDefaultSoundName
+                NSUserNotificationCenter.default.deliver(notification)
+                SDErrorHandlerReport(mountError)
                 self.unmount(success: { _ in
                     //
                 }, failure: { (_, _) in
