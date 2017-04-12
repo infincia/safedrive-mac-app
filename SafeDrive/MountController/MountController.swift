@@ -586,11 +586,14 @@ class MountController: NSObject {
             SDErrorHandlerReport(mountError)
             self.mounting = false
             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
-            self.unmount(success: { _ in
-                //
-            }, failure: { (_, _) in
-                //
-            })
+            let e = mountError as NSError
+            if e.code != SDMountError.alreadyMounted.rawValue {
+                self.unmount(success: { _ in
+                    //
+                }, failure: { (_, _) in
+                    //
+                })
+            }
         })
     }
     
