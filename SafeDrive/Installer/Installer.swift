@@ -66,6 +66,15 @@ class Installer: NSObject {
         return false
     }
     
+    fileprivate var isDirectoryOK: Bool {
+        // swiftlint:disable force_unwrapping
+        let usrlocalbin = URL(string: "file:///usr/local/bin/safedrive")!
+        // swiftlint:enable force_unwrapping
+
+        var isDirectory: ObjCBool = false
+        return FileManager.default.fileExists(atPath: usrlocalbin.path, isDirectory: &isDirectory) && isDirectory.boolValue == true
+    }
+    
     fileprivate var isCLIAppInstalled: Bool {
         // swiftlint:disable force_unwrapping
         let destination = URL(string: "file:///usr/local/bin/safedrive")!
@@ -121,7 +130,9 @@ class Installer: NSObject {
     func installDependencies() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             do {
-                try self.setupDirectories()
+                if !self.isDirectoryOK {
+                    try self.setupDirectories()
+                }
                 if !self.isOSXFUSEInstalled {
                     try self.installOSXFUSE()
                 }
