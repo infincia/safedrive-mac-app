@@ -59,7 +59,7 @@ class Installer: NSObject {
                     m[key] = value
                 }
                 if let currentVersion = m["version"] {
-                    return currentVersion == "3.5.4"
+                    return currentVersion == "3.5.6"
                 }
             }
         }
