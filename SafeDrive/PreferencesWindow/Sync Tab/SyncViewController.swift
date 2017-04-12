@@ -532,7 +532,7 @@ class SyncViewController: NSViewController {
                         
                         self.sdk.updateFolder(folderName, path: folderPath, syncing: true, uniqueID: UInt64(uniqueID), completionQueue: completionQueue, success: { (folderID) in
                             guard let realm = self.realm,
-                            let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last else {
+                            let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", folderID).last else {
                                 SDLog("failed to get realm!!!")
                                 return
                             }
@@ -1216,7 +1216,7 @@ extension SyncViewController {
                             
                             self.sdk.updateFolder(folderName, path: folderPath, syncing: true, uniqueID: UInt64(folderID), completionQueue: completionQueue, success: { (folderID) in
                                 guard let realm = self.realm,
-                                      let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last else {
+                                      let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", folderID).last else {
                                     SDLog("failed to get realm!!!")
                                     return
                                 }
@@ -1248,7 +1248,7 @@ extension SyncViewController {
                 case NSAlertThirdButtonReturn:
                     self.sdk.updateFolder(folderName, path: folderPath, syncing: false, uniqueID: UInt64(folderID), completionQueue: DispatchQueue.main, success: {
                         guard let realm = self.realm,
-                              let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").last else {
+                              let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", folderID).last else {
                             SDLog("failed to get realm!!!")
                             return
                         }
