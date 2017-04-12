@@ -37,6 +37,35 @@ class Installer: NSObject {
         return false
     }
     
+    fileprivate var isOSXFUSECurrent: Bool {
+        let pipe: Pipe = Pipe()
+        let task: Process = Process()
+        task.launchPath = "/usr/sbin/pkgutil"
+        task.arguments = ["--pkg-info=com.github.osxfuse.pkg.Core"]
+        task.standardOutput = pipe
+        task.launch()
+        task.waitUntilExit()
+        if task.terminationStatus == 0 {
+            let data = pipe.fileHandleForReading.readDataToEndOfFile()
+            if let output = String(data: data, encoding: .utf8) {
+                let linefeed = CharacterSet(charactersIn: "\n")
+
+                let kv = output.components(separatedBy: linefeed)
+                var m = [String: String]()
+                for pair in kv {
+                    let kv = pair.components(separatedBy: ": ")
+                    let key = kv[0]
+                    let value = kv[1]
+                    m[key] = value
+                }
+                if let currentVersion = m["version"] {
+                    return currentVersion == "3.5.4"
+                }
+            }
+        }
+        return false
+    }
+    
     fileprivate var isCLIAppInstalled: Bool {
         // swiftlint:disable force_unwrapping
         let destination = URL(string: "file:///usr/local/bin/safedrive")!
