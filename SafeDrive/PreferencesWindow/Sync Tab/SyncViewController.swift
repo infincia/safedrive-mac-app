@@ -693,190 +693,7 @@ class SyncViewController: NSViewController {
         // swiftlint:enable force_try
     }
 
-    
-}
-
-extension SyncViewController: SDAccountProtocol {
-        
-    func didSignIn(notification: Foundation.Notification) {
-        assert(Thread.current == Thread.main, "didSignIn called on background thread")
-        
-        guard let accountStatus = notification.object as? AccountStatus else {
-            SDLog("API contract invalid: didSignIn in MountController")
-            return
-        }
-        
-        self.internalUserName = accountStatus.userName
-        self.remoteHost = accountStatus.host
-        self.remotePort = accountStatus.port
-        
-        guard let realm = self.realm else {
-            SDLog("failed to get realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
-        
-        let folders = realm.objects(SyncFolder.self)
-        
-        self.folders = folders
-        
-        self.readSyncFolders(self)
-    }
-    
-    func didSignOut(notification: Foundation.Notification) {
-        assert(Thread.current == Thread.main, "didSignOut called on background thread")
-        
-        self.syncFolderToken = nil
-        self.syncTaskToken = nil
-        self.folders = nil
-        self.realm = nil
-        self.email = nil
-        self.password = nil
-        self.internalUserName = nil
-        self.remoteHost = nil
-        self.remotePort = nil
-    }
-    
-    func didReceiveAccountStatus(notification: Foundation.Notification) {
-        assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
-        
-        guard let accountStatus = notification.object as? AccountStatus,
-            let _ = accountStatus.status else {
-                SDLog("API contract invalid: didReceiveAccountStatus in PreferencesWindowController")
-                return
-        }
-        self.internalUserName = accountStatus.userName
-        self.remoteHost = accountStatus.host
-        self.remotePort = accountStatus.port
-    }
-    
-    func didReceiveAccountDetails(notification: Foundation.Notification) {
-        assert(Thread.current == Thread.main, "didReceiveAccountDetails called on background thread")
-    }
-}
-
-extension SyncViewController: NSOpenSavePanelDelegate {
-    
-    func panel(_ sender: Any, validate url: URL) throws {
-        let fileManager: FileManager = FileManager.default
-        
-        // check if the candidate sync path is actually writable and readable
-        if !fileManager.isWritableFile(atPath: url.path) {
-            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, read/write permission denied", comment: "String informing the user that they do not have permission to read/write to the selected directory")]
-            throw NSError(domain: SDErrorDomainNotReported, code: SDSystemError.filePermissionDenied.rawValue, userInfo: errorInfo)
-        }
-        
-        // check if the candidate sync path is a parent or subdirectory of an existing registered sync folder
-        guard let realm = self.realm else {
-            SDLog("failed to get realm!!!")
-            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open local database, this is a fatal error", comment: "")]
-            throw NSError(domain: SDErrorDomainReported, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
-        }
-        
-        let syncFolders = realm.objects(SyncFolder.self)
-        if SyncFolder.hasConflictingFolderRegistered(url.path, syncFolders: syncFolders) {
-            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")]
-            throw NSError(domain: SDErrorDomainNotReported, code: SDSyncError.folderConflict.rawValue, userInfo: errorInfo)
-        }
-    }
-    
-}
-
-
-extension SyncViewController: NSTableViewDelegate {
-    
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let _ = self.uniqueClientID,
-            let folders = self.folders else {
-                return nil
-        }
-        
-        var tableCellView: SyncManagerTableCellView
-        if row == 0 {
-            let host = Host()
-            // swiftlint:disable force_unwrapping
-            let machineName = host.localizedName!
-            // swiftlint:enable force_unwrapping
-            
-            // swiftlint:disable force_unwrapping
-            tableCellView = tableView.make(withIdentifier: "MachineView", owner: self) as! SyncManagerTableCellView
-            tableCellView.textField!.stringValue = machineName
-            let cellImage: NSImage = NSImage(named: NSImageNameComputer)!
-            cellImage.size = CGSize(width: 15.0, height: 15.0)
-            tableCellView.imageView!.image = cellImage
-            // swiftlint:enable force_unwrapping
-
-            //tableCellView.addButton.action = #selector(self.addSyncFolder(_:))
-
-        } else {
-            // this would normally require zero-indexing, but we're bumping the folder list down one row to make
-            // room for the machine row
-            let syncFolder = folders[row - 1]
-            // swiftlint:disable force_unwrapping
-            tableCellView = tableView.make(withIdentifier: "FolderView", owner: self) as! SyncManagerTableCellView
-            tableCellView.textField!.stringValue = syncFolder.name!.capitalized
-            let cellImage: NSImage = NSWorkspace.shared().icon(forFileType: NSFileTypeForHFSTypeCode(OSType(kGenericFolderIcon)))
-            cellImage.size = CGSize(width: 15.0, height: 15.0)
-            tableCellView.imageView!.image = cellImage
-            // swiftlint:enable force_unwrapping
-
-            tableCellView.removeButton.tag = Int(syncFolder.uniqueID)
-            tableCellView.syncNowButton.tag = Int(syncFolder.uniqueID)
-            tableCellView.restoreNowButton.tag = Int(syncFolder.uniqueID)
-            
-            //tableCellView.removeButton.action = #selector(self.removeSyncFolder(_:))
-
-            
-            if syncFolder.syncing || syncFolder.restoring {
-                tableCellView.restoreNowButton.isEnabled = false
-                tableCellView.restoreNowButton.target = self
-                tableCellView.restoreNowButton.action = #selector(self.stopSyncNow(_:))
-                
-                tableCellView.syncNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
-                tableCellView.syncNowButton.target = self
-                tableCellView.syncNowButton.action = #selector(self.stopSyncNow(_:))
-            }
-            
-            if syncFolder.encrypted {
-                tableCellView.lockButton.image = NSImage(named: NSImageNameLockLockedTemplate)
-                tableCellView.lockButton.toolTip = NSLocalizedString("Encrypted", comment: "")
-            } else {
-                tableCellView.lockButton.image = NSImage(named: NSImageNameLockUnlockedTemplate)
-                tableCellView.lockButton.toolTip = NSLocalizedString("Unencrypted", comment: "")
-            }
-            
-            if syncFolder.syncing {
-                tableCellView.syncStatus.startAnimation(self)
-                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
-                tableCellView.syncNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
-            } else if syncFolder.restoring {
-                tableCellView.syncStatus.startAnimation(self)
-                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
-                tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
-            } else {
-                tableCellView.syncStatus.stopAnimation(self)
-                
-                tableCellView.restoreNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
-                tableCellView.restoreNowButton.target = self
-                tableCellView.restoreNowButton.action = #selector(self.startRestoreNow(_:))
-                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
-                
-                tableCellView.syncNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
-                tableCellView.syncNowButton.target = self
-                tableCellView.syncNowButton.action = #selector(self.startSyncNow(_:))
-                tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
-                
-            }
-        }
-        
-        return tableCellView
-    }
-    
-    func tableView(_ tableView: NSTableView, didAdd rowView: NSTableRowView, forRow row: Int) {
-        rowView.isGroupRowStyle = false
-    }
-    
-    func tableViewSelectionDidChange(_ notification: Notification) {
+    fileprivate func updateSyncDetailsPanel() {
         guard let folders = self.folders,
             let _ = self.uniqueClientID,
             let realm = self.realm else {
@@ -1071,6 +888,191 @@ extension SyncViewController: NSTableViewDelegate {
             
         }
     }
+}
+
+extension SyncViewController: SDAccountProtocol {
+    
+    func didSignIn(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didSignIn called on background thread")
+        
+        guard let accountStatus = notification.object as? AccountStatus else {
+            SDLog("API contract invalid: didSignIn in MountController")
+            return
+        }
+        
+        self.internalUserName = accountStatus.userName
+        self.remoteHost = accountStatus.host
+        self.remotePort = accountStatus.port
+        
+        guard let realm = self.realm else {
+            SDLog("failed to get realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
+        
+        let folders = realm.objects(SyncFolder.self)
+        
+        self.folders = folders
+        
+        self.readSyncFolders(self)
+    }
+    
+    func didSignOut(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didSignOut called on background thread")
+        
+        self.syncFolderToken = nil
+        self.syncTaskToken = nil
+        self.folders = nil
+        self.realm = nil
+        self.email = nil
+        self.password = nil
+        self.internalUserName = nil
+        self.remoteHost = nil
+        self.remotePort = nil
+    }
+    
+    func didReceiveAccountStatus(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
+        
+        guard let accountStatus = notification.object as? AccountStatus,
+            let _ = accountStatus.status else {
+                SDLog("API contract invalid: didReceiveAccountStatus in PreferencesWindowController")
+                return
+        }
+        self.internalUserName = accountStatus.userName
+        self.remoteHost = accountStatus.host
+        self.remotePort = accountStatus.port
+    }
+    
+    func didReceiveAccountDetails(notification: Foundation.Notification) {
+        assert(Thread.current == Thread.main, "didReceiveAccountDetails called on background thread")
+    }
+}
+
+extension SyncViewController: NSOpenSavePanelDelegate {
+    
+    func panel(_ sender: Any, validate url: URL) throws {
+        let fileManager: FileManager = FileManager.default
+        
+        // check if the candidate sync path is actually writable and readable
+        if !fileManager.isWritableFile(atPath: url.path) {
+            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, read/write permission denied", comment: "String informing the user that they do not have permission to read/write to the selected directory")]
+            throw NSError(domain: SDErrorDomainNotReported, code: SDSystemError.filePermissionDenied.rawValue, userInfo: errorInfo)
+        }
+        
+        // check if the candidate sync path is a parent or subdirectory of an existing registered sync folder
+        guard let realm = self.realm else {
+            SDLog("failed to get realm!!!")
+            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open local database, this is a fatal error", comment: "")]
+            throw NSError(domain: SDErrorDomainReported, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
+        }
+        
+        let syncFolders = realm.objects(SyncFolder.self)
+        if SyncFolder.hasConflictingFolderRegistered(url.path, syncFolders: syncFolders) {
+            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")]
+            throw NSError(domain: SDErrorDomainNotReported, code: SDSyncError.folderConflict.rawValue, userInfo: errorInfo)
+        }
+    }
+    
+}
+
+
+extension SyncViewController: NSTableViewDelegate {
+    
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let _ = self.uniqueClientID,
+            let folders = self.folders else {
+                return nil
+        }
+        
+        var tableCellView: SyncManagerTableCellView
+        if row == 0 {
+            let host = Host()
+            // swiftlint:disable force_unwrapping
+            let machineName = host.localizedName!
+            // swiftlint:enable force_unwrapping
+            
+            // swiftlint:disable force_unwrapping
+            tableCellView = tableView.make(withIdentifier: "MachineView", owner: self) as! SyncManagerTableCellView
+            tableCellView.textField!.stringValue = machineName
+            let cellImage: NSImage = NSImage(named: NSImageNameComputer)!
+            cellImage.size = CGSize(width: 15.0, height: 15.0)
+            tableCellView.imageView!.image = cellImage
+            // swiftlint:enable force_unwrapping
+
+            //tableCellView.addButton.action = #selector(self.addSyncFolder(_:))
+
+        } else {
+            // this would normally require zero-indexing, but we're bumping the folder list down one row to make
+            // room for the machine row
+            let syncFolder = folders[row - 1]
+            // swiftlint:disable force_unwrapping
+            tableCellView = tableView.make(withIdentifier: "FolderView", owner: self) as! SyncManagerTableCellView
+            tableCellView.textField!.stringValue = syncFolder.name!.capitalized
+            let cellImage: NSImage = NSWorkspace.shared().icon(forFileType: NSFileTypeForHFSTypeCode(OSType(kGenericFolderIcon)))
+            cellImage.size = CGSize(width: 15.0, height: 15.0)
+            tableCellView.imageView!.image = cellImage
+            // swiftlint:enable force_unwrapping
+
+            tableCellView.removeButton.tag = Int(syncFolder.uniqueID)
+            tableCellView.syncNowButton.tag = Int(syncFolder.uniqueID)
+            tableCellView.restoreNowButton.tag = Int(syncFolder.uniqueID)
+            
+            //tableCellView.removeButton.action = #selector(self.removeSyncFolder(_:))
+
+            
+            if syncFolder.syncing || syncFolder.restoring {
+                tableCellView.restoreNowButton.isEnabled = false
+                tableCellView.restoreNowButton.target = self
+                tableCellView.restoreNowButton.action = #selector(self.stopSyncNow(_:))
+                
+                tableCellView.syncNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
+                tableCellView.syncNowButton.target = self
+                tableCellView.syncNowButton.action = #selector(self.stopSyncNow(_:))
+            }
+            
+            if syncFolder.encrypted {
+                tableCellView.lockButton.image = NSImage(named: NSImageNameLockLockedTemplate)
+                tableCellView.lockButton.toolTip = NSLocalizedString("Encrypted", comment: "")
+            } else {
+                tableCellView.lockButton.image = NSImage(named: NSImageNameLockUnlockedTemplate)
+                tableCellView.lockButton.toolTip = NSLocalizedString("Unencrypted", comment: "")
+            }
+            
+            if syncFolder.syncing {
+                tableCellView.syncStatus.startAnimation(self)
+                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
+                tableCellView.syncNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
+            } else if syncFolder.restoring {
+                tableCellView.syncStatus.startAnimation(self)
+                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
+                tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
+            } else {
+                tableCellView.syncStatus.stopAnimation(self)
+                
+                tableCellView.restoreNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
+                tableCellView.restoreNowButton.target = self
+                tableCellView.restoreNowButton.action = #selector(self.startRestoreNow(_:))
+                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
+                
+                tableCellView.syncNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
+                tableCellView.syncNowButton.target = self
+                tableCellView.syncNowButton.action = #selector(self.startSyncNow(_:))
+                tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
+                
+            }
+        }
+        
+        return tableCellView
+    }
+    
+    func tableView(_ tableView: NSTableView, didAdd rowView: NSTableRowView, forRow row: Int) {
+        rowView.isGroupRowStyle = false
+    }
+    
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        self.updateSyncDetailsPanel()
+    }
     
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
         return (row >= 1)
@@ -1122,9 +1124,7 @@ extension SyncViewController: SDApplicationEventProtocol {
         }
         
         self.syncTaskToken = realm.objects(SyncTask.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
-            if let selectedIndexes = self?.syncListView.selectedRowIndexes {
-                self?.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: false)
-            }
+            self?.updateSyncDetailsPanel()
         }
     }
     
