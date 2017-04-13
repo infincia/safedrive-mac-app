@@ -22,6 +22,8 @@ class SyncController: Equatable {
     
     var restore: Bool = false
     
+    var folderName: String!
+    
     var localURL: URL!
     
     var serverURL: URL!
