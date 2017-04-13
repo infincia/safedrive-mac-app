@@ -39,7 +39,8 @@ class SyncScheduler {
     fileprivate var syncControllers = [SyncController]()
     
     fileprivate var _running = false
-    
+    fileprivate var _realmReady = false
+
     fileprivate let runQueue = DispatchQueue(label: "io.safedrive.runQueue")
     
     fileprivate let syncControllerQueue = DispatchQueue(label: "syncControllerQueue")
@@ -73,7 +74,21 @@ class SyncScheduler {
     let dbURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db")!.appendingPathComponent("sync.realm")
     // swiftlint:enable force_unwrapping
 
-    var realm: Realm?
+    
+    var realmReady: Bool {
+        get {
+            var r: Bool = false
+            runQueue.sync {
+                r = self._realmReady
+            }
+            return r
+        }
+        set (newValue) {
+            runQueue.sync(flags: .barrier, execute: {
+                self._realmReady = newValue
+            })
+        }
+    }
     
     init() {
         // register SDAccountProtocol notifications
@@ -98,7 +113,7 @@ class SyncScheduler {
         SDLog("Sync scheduler running")
         
         while self.running {
-            guard let uniqueClientID = self.uniqueClientID, let realm = self.realm else {
+            guard let uniqueClientID = self.uniqueClientID, self.realmReady == true else {
                 Thread.sleep(forTimeInterval: 1)
                 continue
             }
@@ -109,8 +124,11 @@ class SyncScheduler {
             }
             
             autoreleasepool {
-                realm.refresh()
-                realm.invalidate()
+                guard let realm = try? Realm() else {
+                    SDLog("failed to create realm!!!")
+                    Crashlytics.sharedInstance().crash()
+                    return
+                }
                 
                 let currentDate = Date()
                 
@@ -400,7 +418,7 @@ extension SyncScheduler: SDAccountProtocol {
                 }
             }
         }
-        self.realm = nil
+        self.realmReady = false
         self.email = nil
         self.password = nil
         self.uniqueClientID = nil
@@ -434,14 +452,8 @@ extension SyncScheduler: SDAccountProtocol {
 extension SyncScheduler: SDApplicationEventProtocol {
     func applicationDidConfigureRealm(notification: Notification) {
         assert(Thread.current == Thread.main, "applicationDidConfigureRealm called on background thread")
-
-        guard let realm = try? Realm() else {
-            //let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open Realm database, this is a fatal error", comment: "")]
-            //throw NSError(domain: SDErrorSyncDomain, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
-            return
-        }
         
-        self.realm = realm
+        self.realmReady = true
     }
     
     func applicationDidConfigureClient(notification: Notification) {
