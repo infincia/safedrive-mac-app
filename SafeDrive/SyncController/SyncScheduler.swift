@@ -222,12 +222,6 @@ class SyncScheduler {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             SDLog("Queued sync job \(syncEvent)")
 
-            guard let realm = try? Realm() else {
-                SDLog("failed to create realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
-            
             guard let _ = self.email,
                   let localPassword = self.password,
                   let localInternalUserName = self.internalUserName,
@@ -247,114 +241,127 @@ class SyncScheduler {
 
 
             let name = syncEvent.name.lowercased()
-            
-            guard let folder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").first,
-                  let folderName = folder.name,
-                  let localFolder = folder.url else {
-                SDLog("failed to get sync folder for machine from realm!!!")
-                return
-            }
-            
-            if folder.syncing {
-                SDLog("Sync for \(folderName) already in progress, cancelling")
-                //NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
-                return
-            }
-            
+            let syncDate = Date()
 
-            if folder.encrypted {
-                if isRestore {
-                    guard let session = realm.objects(PersistedSyncSession.self).filter("name == \"\(name)\"").first else {
-                        SDLog("failed to get sync session from realm!!!")
+            autoreleasepool {
+                guard let realm = try? Realm() else {
+                    SDLog("failed to create realm!!!")
+                    Crashlytics.sharedInstance().crash()
+                    return
+                }
+                
+                guard let folder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").first,
+                    let folderName = folder.name,
+                    let localFolder = folder.url else {
+                        SDLog("failed to get sync folder for machine from realm!!!")
+                        return
+                }
+                
+                if folder.syncing {
+                    SDLog("Sync for \(folderName) already in progress, cancelling")
+                    //NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
+                    return
+                }
+                
+                
+                if folder.encrypted {
+                    if isRestore {
+                        guard let session = realm.objects(PersistedSyncSession.self).filter("name == \"\(name)\"").first else {
+                            SDLog("failed to get sync session from realm!!!")
+                            return
+                        }
+                        
+                        syncController.spaceNeeded = UInt64(session.size)
+                    }
+                    
+                } else {
+                    let host = Host()
+                    // swiftlint:disable force_unwrapping
+                    let machineName = host.localizedName!
+                    // swiftlint:enable force_unwrapping
+                    
+                    // swiftlint:disable force_unwrapping
+                    let defaultFolder: URL = URL(string: SDDefaultServerPath)!
+                    // swiftlint:enable force_unwrapping
+                    
+                    let machineFolder: URL = defaultFolder.appendingPathComponent(machineName, isDirectory: true)
+                    let remoteFolder: URL = machineFolder.appendingPathComponent(folderName, isDirectory: true)
+                    var urlComponents: URLComponents = URLComponents()
+                    urlComponents.user = localInternalUserName
+                    urlComponents.host = localHost
+                    urlComponents.path = remoteFolder.path
+                    urlComponents.port = Int(localPort)
+                    // swiftlint:disable force_unwrapping
+                    let remote: URL = urlComponents.url!
+                    // swiftlint:enable force_unwrapping
+                    
+                    syncController.serverURL = remote
+                    syncController.password = localPassword
+                    
+                    syncController.spaceNeeded = 0
+                    
+                }
+                
+                
+                
+                try! realm.write {
+                    realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": true, "restoring": isRestore, "currentSyncUUID": name, "lastSyncUUID": name], update: true)
+                    realm.create(SyncTask.self, value: ["syncFolder": folder, "syncDate": syncDate, "uuid": name], update: true)
+                }
+                
+                syncController.uniqueID = UInt64(folder.uniqueID)
+                syncController.encrypted = folder.encrypted
+                syncController.uuid = name
+                syncController.localURL = localFolder
+                if let destination = syncEvent.destination {
+                    syncController.destination = destination
+                }
+                
+                syncController.restore = isRestore
+                syncController.folderName = folderName
+                
+                self.syncControllerQueue.sync {
+                    self.syncControllers.append(syncController)
+                }
+            }
+                
+            syncController.startSyncTask(progress: { (_, _, _, percent, bandwidth) in
+                autoreleasepool {
+                    // use for updating sync progress
+                    // WARNING: this block may be called more often than once per second on a background serial queue, DO NOT block it for long
+                    guard let realm = try? Realm() else {
+                        SDLog("failed to create realm!!!")
+                        Crashlytics.sharedInstance().crash()
                         return
                     }
-                
-                    syncController.spaceNeeded = UInt64(session.size)
-                }
-                
-            } else {
-                let host = Host()
-                // swiftlint:disable force_unwrapping
-                let machineName = host.localizedName!
-                // swiftlint:enable force_unwrapping
-                
-                // swiftlint:disable force_unwrapping
-                let defaultFolder: URL = URL(string: SDDefaultServerPath)!
-                // swiftlint:enable force_unwrapping
-
-                let machineFolder: URL = defaultFolder.appendingPathComponent(machineName, isDirectory: true)
-                let remoteFolder: URL = machineFolder.appendingPathComponent(folderName, isDirectory: true)
-                var urlComponents: URLComponents = URLComponents()
-                urlComponents.user = localInternalUserName
-                urlComponents.host = localHost
-                urlComponents.path = remoteFolder.path
-                urlComponents.port = Int(localPort)
-                // swiftlint:disable force_unwrapping
-                let remote: URL = urlComponents.url!
-                // swiftlint:enable force_unwrapping
-                
-                syncController.serverURL = remote
-                syncController.password = localPassword
-
-                syncController.spaceNeeded = 0
-
-            }
-            
-            
-            let syncDate = Date()
-            
-            try! realm.write {
-                realm.create(SyncFolder.self, value: ["uniqueID": folderID, "syncing": true, "restoring": isRestore, "currentSyncUUID": name, "lastSyncUUID": name], update: true)
-                realm.create(SyncTask.self, value: ["syncFolder": folder, "syncDate": syncDate, "uuid": name], update: true)
-            }
-
-            syncController.uniqueID = UInt64(folder.uniqueID)
-            syncController.encrypted = folder.encrypted
-            syncController.uuid = name
-            syncController.localURL = localFolder
-            if let destination = syncEvent.destination {
-                syncController.destination = destination
-            }
-            
-            syncController.restore = isRestore
-            
-            self.syncControllerQueue.sync {
-                self.syncControllers.append(syncController)
-            }
-            
-            syncController.startSyncTask(progress: { (_, _, _, percent, bandwidth) in
-                // use for updating sync progress
-                // WARNING: this block may be called more often than once per second on a background serial queue, DO NOT block it for long
-                guard let realm = try? Realm() else {
-                    SDLog("failed to create realm!!!")
-                    Crashlytics.sharedInstance().crash()
-                    return
-                }
-                
-                try! realm.write {
-                    realm.create(SyncTask.self, value: ["uuid": name, "progress": percent, "bandwidth": bandwidth], update: true)
+                    
+                    try! realm.write {
+                        realm.create(SyncTask.self, value: ["uuid": name, "progress": percent, "bandwidth": bandwidth], update: true)
+                    }
                 }
             }, issue: { (message) in
-                guard let realm = try? Realm() else {
-                    SDLog("failed to create realm!!!")
-                    Crashlytics.sharedInstance().crash()
-                    return
-                }
-                guard let task = realm.objects(SyncTask.self).filter("uuid == '\(name)'").last else {
-                    SDLog("failed to get sync folder for machine from realm!!!")
-                    return
-                }
-                // swiftlint:disable force_unwrapping
-                var oldMessages = task.message != nil ? task.message! : ""
-                // swiftlint:enable force_unwrapping
-
-                oldMessages.append(message)
-                oldMessages.append("\n")
-                try! realm.write {
-                    realm.create(SyncTask.self, value: ["uuid": name, "message": oldMessages], update: true)
+                autoreleasepool {
+                    guard let realm = try? Realm() else {
+                        SDLog("failed to create realm!!!")
+                        Crashlytics.sharedInstance().crash()
+                        return
+                    }
+                    guard let task = realm.objects(SyncTask.self).filter("uuid == '\(name)'").last else {
+                        SDLog("failed to get sync folder for machine from realm!!!")
+                        return
+                    }
+                    // swiftlint:disable force_unwrapping
+                    var oldMessages = task.message != nil ? task.message! : ""
+                    // swiftlint:enable force_unwrapping
+                    
+                    oldMessages.append(message)
+                    oldMessages.append("\n")
+                    try! realm.write {
+                        realm.create(SyncTask.self, value: ["uuid": name, "message": oldMessages], update: true)
+                    }
                 }
             }, success: { (_: URL) -> Void in
-                SDLog("Sync finished for \(folderName)")
+                SDLog("Sync finished for \(syncController.folderName)")
                 guard let realm = try? Realm() else {
                     SDLog("failed to create realm!!!")
                     Crashlytics.sharedInstance().crash()
@@ -373,7 +380,7 @@ class SyncScheduler {
                 }
             }, failure: { (_: URL, error: Error) -> Void in
                 SDErrorHandlerReport(error)
-                SDLog("Sync failed for \(folderName): \(error.localizedDescription)")
+                SDLog("Sync failed for \(syncController.folderName): \(error.localizedDescription)")
                 guard let realm = try? Realm() else {
                     SDLog("failed to create realm!!!")
                     Crashlytics.sharedInstance().crash()
