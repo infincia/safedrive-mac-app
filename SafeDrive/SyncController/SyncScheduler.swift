@@ -250,7 +250,7 @@ class SyncScheduler {
                     return
                 }
                 
-                guard let folder = realm.objects(SyncFolder.self).filter("uniqueID == \(folderID)").first,
+                guard let folder = realm.objects(SyncFolder.self).filter("uniqueID == %@", folderID).first,
                     let folderName = folder.name,
                     let localFolder = folder.url else {
                         SDLog("failed to get sync folder for machine from realm!!!")
