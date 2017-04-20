@@ -1178,7 +1178,6 @@ extension SyncViewController: SDApplicationEventProtocol {
         
         self.syncTaskToken = realm.objects(SyncTask.self).addNotificationBlock { [weak self] (_: RealmCollectionChange) in
             self?.reload()
-            self?.updateSyncDetailsPanel()
         }
     }
     
