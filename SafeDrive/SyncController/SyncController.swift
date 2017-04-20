@@ -233,12 +233,14 @@ class SyncController: Equatable {
                                             success successBlock: @escaping (_ local: URL) -> Void,
                                             failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         let start_time = Date()
+        var last_update = Date()
 
         if self.restore {            
             self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: self.destination, sessionSize: self.spaceNeeded, completionQueue: syncResultQueue, progress: { (total, current, new, percent) in
                 let now = Date()
-                let d = now.timeIntervalSince(start_time)
+                let d = now.timeIntervalSince(last_update)
                 if d > 1 {
+                    last_update = Date()
                     let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(Double(current) / d), countStyle: ByteCountFormatter.CountStyle.decimal)
                     let bandwidth = "\(average_bandwidth)/s"
                     (self.syncProgressQueue).async {
@@ -257,8 +259,9 @@ class SyncController: Equatable {
         } else {
             self.sdk.syncFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, completionQueue: syncResultQueue, progress: { (total, current, new, percent) in
                 let now = Date()
-                let d = now.timeIntervalSince(start_time)
+                let d = now.timeIntervalSince(last_update)
                 if d > 1 {
+                    last_update = Date()
                     let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(Double(current) / d), countStyle: ByteCountFormatter.CountStyle.decimal)
                     let bandwidth = "\(average_bandwidth)/s"
                     (self.syncProgressQueue).async {
