@@ -193,13 +193,37 @@ class SyncViewController: NSViewController {
         let button: NSButton = sender as! NSButton
         let uniqueID: UInt64 = UInt64(button.tag)
         SDLog("Deleting sync folder ID: %lu", uniqueID)
+        
+        guard let realm = self.realm else {
+            SDLog("failed to get realm!!!")
+            Crashlytics.sharedInstance().crash()
+            return
+        }
+        
+        let syncFolders = realm.objects(SyncFolder.self)
+        
+        guard let syncFolder = syncFolders.filter("uniqueID == %@", uniqueID).last else {
+                return
+        }
+        
+        let encrypted = syncFolder.encrypted
+        
+        
         let alert = NSAlert()
         alert.addButton(withTitle: "Cancel")
-        alert.addButton(withTitle: "Move to Storage folder")
         alert.addButton(withTitle: "Delete")
+        if !encrypted {
+            alert.addButton(withTitle: "Move to Storage folder")
+        }
+        
         
         alert.messageText = "Stop syncing this folder?"
-        alert.informativeText = "The synced files will be deleted from SafeDrive or moved to your Storage folder.\n\nWhich one would you like to do?"
+        
+        var unencryptedOption = ""
+        if !encrypted {
+            unencryptedOption = " or moved to your Storage folder"
+        }
+        alert.informativeText = "The synced files will be deleted from SafeDrive\(unencryptedOption).\n\nWhich one would you like to do?"
         alert.alertStyle = .informational
         
         self.delegate.showAlert(alert) { (response) in
@@ -209,10 +233,10 @@ class SyncViewController: NSViewController {
             case NSAlertFirstButtonReturn:
                 return
             case NSAlertSecondButtonReturn:
-                op = .moveFolder
+                op = .deleteFolder
                 break
             case NSAlertThirdButtonReturn:
-                op = .deleteFolder
+                op = .moveFolder
                 break
             default:
                 return
@@ -252,57 +276,65 @@ class SyncViewController: NSViewController {
             let remote: URL = urlComponents.url!
             // swiftlint:enable force_unwrapping
             
-            self.syncScheduler.cancel(uniqueID) {
-                let syncController = SyncController()
-                syncController.uniqueID = uniqueID
-                syncController.sftpOperation(op, remoteDirectory: remote, password: localPassword, success: {
+            
+            let serverCancel: () -> Void = {
+                self.sdk.removeFolder(uniqueID, completionQueue: DispatchQueue.main, success: {
+                    guard let realm = self.realm else {
+                        SDLog("failed to get realm!!!")
+                        Crashlytics.sharedInstance().crash()
+                        return
+                    }
                     
-                    self.sdk.removeFolder(uniqueID, completionQueue: DispatchQueue.main, success: {
-                        guard let realm = self.realm else {
-                            SDLog("failed to get realm!!!")
-                            Crashlytics.sharedInstance().crash()
-                            return
+                    let syncTasks = realm.objects(SyncTask.self).filter("syncFolder.uniqueID == %@", uniqueID)
+                    
+                    do {
+                        try realm.write {
+                            realm.delete(syncTasks)
                         }
-                        
-                        let syncTasks = realm.objects(SyncTask.self).filter("syncFolder.uniqueID == %@", uniqueID)
-                        
-                        do {
-                            try realm.write {
-                                realm.delete(syncTasks)
-                            }
-                        } catch {
-                            print("failed to delete sync tasks associated with \(uniqueID)")
+                    } catch {
+                        print("failed to delete sync tasks associated with \(uniqueID)")
+                    }
+                    
+                    let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", uniqueID)
+                    
+                    do {
+                        try realm.write {
+                            realm.delete(syncFolder)
                         }
-                        
-                        let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", uniqueID)
-
-                        do {
-                            try realm.write {
-                                realm.delete(syncFolder)
-                            }
-                        } catch {
-                            print("failed to delete sync folder \(uniqueID)")
-                        }
-                        self.reload()
-                        self.spinner.stopAnimation(self)
-                    }, failure: { (error) in
-                        SDErrorHandlerReport(error)
-                        self.spinner.stopAnimation(self)
-                        let alert: NSAlert = NSAlert()
-                        alert.messageText = NSLocalizedString("Error removing folder from your account", comment: "")
-                        alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
-                        alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-                        alert.runModal()
-                    })
+                    } catch {
+                        print("failed to delete sync folder \(uniqueID)")
+                    }
+                    self.reload()
+                    self.spinner.stopAnimation(self)
                 }, failure: { (error) in
                     SDErrorHandlerReport(error)
                     self.spinner.stopAnimation(self)
                     let alert: NSAlert = NSAlert()
-                    alert.messageText = NSLocalizedString("Error moving folder to Storage", comment: "")
-                    alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help:\n\n \(error.localizedDescription)", comment: "")
+                    alert.messageText = NSLocalizedString("Error removing folder from your account", comment: "")
+                    alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
                     alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
                     alert.runModal()
                 })
+            }
+            
+            self.syncScheduler.cancel(uniqueID) {
+                if encrypted {
+                    serverCancel()
+                } else {
+                    let syncController = SyncController()
+                    syncController.uniqueID = uniqueID
+                    syncController.sftpOperation(op, remoteDirectory: remote, password: localPassword, success: {
+                        serverCancel()
+                    }, failure: { (error) in
+                        SDErrorHandlerReport(error)
+                        self.spinner.stopAnimation(self)
+                        let alert: NSAlert = NSAlert()
+                        alert.messageText = NSLocalizedString("Error moving folder to Storage", comment: "")
+                        alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help:\n\n \(error.localizedDescription)", comment: "")
+                        alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+                        alert.runModal()
+                    })
+                }
             }
         }
     }
