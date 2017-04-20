@@ -723,6 +723,7 @@ class SyncViewController: NSViewController {
         self.syncListView.reloadData()
         self.syncListView.selectRowIndexes(selectedIndexes, byExtendingSelection: false)
         self.view.window?.makeFirstResponder(oldFirstResponder)
+        self.updateSyncDetailsPanel()
     }
     
     @objc
