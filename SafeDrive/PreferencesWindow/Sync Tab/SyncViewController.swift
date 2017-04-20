@@ -349,6 +349,7 @@ class SyncViewController: NSViewController {
         self.sdk.getFolders(completionQueue: DispatchQueue.main, success: { (folders: [Folder]) in
             self.scheduleSelection.selectItem(at: -1)
 
+            var currentFolderIDs = [Int32]()
             
             for folder in folders {
                 /*
@@ -366,6 +367,8 @@ class SyncViewController: NSViewController {
                 let folderPath = folder.path
                 let folderId = folder.id
                 let syncing = folder.syncing
+                
+                currentFolderIDs.append(Int32(folderId))
                 
                 let addedUnixDate = Double(folder.date)
                 
@@ -405,6 +408,31 @@ class SyncViewController: NSViewController {
                 // swiftlint:enable force_try
                 
             }
+            
+            // clean up any sync folders in the realm file that are not in the server's folder list
+            let folders = realm.objects(SyncFolder.self)
+            for storedFolder in folders {
+                if !currentFolderIDs.contains(storedFolder.uniqueID) {
+                    let syncTasks = realm.objects(SyncTask.self).filter("syncFolder.uniqueID == %@", storedFolder.uniqueID)
+                    
+                    do {
+                        try realm.write {
+                            realm.delete(syncTasks)
+                        }
+                    } catch {
+                        print("failed to delete sync tasks associated with \(storedFolder.uniqueID)")
+                    }
+                    
+                    do {
+                        try realm.write {
+                            realm.delete(storedFolder)
+                        }
+                    } catch {
+                        print("failed to delete sync folder \(storedFolder.uniqueID)")
+                    }
+                }
+            }
+            
             realm.refresh()
             self.reload()
             
