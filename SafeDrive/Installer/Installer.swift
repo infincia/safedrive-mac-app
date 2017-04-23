@@ -18,8 +18,6 @@ class Installer: NSObject {
     
     weak var delegate: InstallerDelegate?
     
-    var needsUpdate: Bool = false
-    
     fileprivate var prompted = false
     
         
