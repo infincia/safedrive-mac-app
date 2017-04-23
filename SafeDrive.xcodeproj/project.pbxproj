@@ -168,6 +168,13 @@
 			remoteGlobalIDString = AA5DCF651D6CFFDA00FEDAFB;
 			remoteInfo = SafeDriveSDK;
 		};
+		AAA3E6C31EAD5B4F0083CE66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AA5DCF651D6CFFDA00FEDAFB;
+			remoteInfo = SafeDriveSDK;
+		};
 		AABB0FBD1A3F28E400FA3530 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
@@ -887,10 +894,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				AA74423C1E0517D8004D8518 /* PBXTargetDependency */,
 				AABB0FBE1A3F28E400FA3530 /* PBXTargetDependency */,
 				AAF945F21C80121800B972C3 /* PBXTargetDependency */,
 				AAF946071C815D5A00B972C3 /* PBXTargetDependency */,
-				AA74423C1E0517D8004D8518 /* PBXTargetDependency */,
 			);
 			name = SafeDrive;
 			productName = SafeDrive;
@@ -929,6 +936,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AAA3E6C41EAD5B4F0083CE66 /* PBXTargetDependency */,
 			);
 			name = safedriveaskpass;
 			productName = "safedrive-askpass";
@@ -1496,6 +1504,11 @@
 			isa = PBXTargetDependency;
 			name = SafeDriveSDK;
 			targetProxy = AA74423B1E0517D8004D8518 /* PBXContainerItemProxy */;
+		};
+		AAA3E6C41EAD5B4F0083CE66 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SafeDriveSDK;
+			targetProxy = AAA3E6C31EAD5B4F0083CE66 /* PBXContainerItemProxy */;
 		};
 		AABB0FBE1A3F28E400FA3530 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
