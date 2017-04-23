@@ -450,8 +450,6 @@
 		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA675E611E900D9000729A1E /* libsafedrive.dylib */,
-				AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */,
 				AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */,
 				6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */,
 				6FD6EC24044905614D475A32 /* Pods_SafeDriveFinder.framework */,
@@ -494,6 +492,7 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AAA3E6AF1EAD4BA00083CE66 /* SDK */,
 				AA76DC241C8787AB007B320E /* Bundled Dependencies */,
 				AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */,
 				AA3D8EBA1C3D80A100CF0A3C /* Shared */,
@@ -778,7 +777,6 @@
 			isa = PBXGroup;
 			children = (
 				AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.5.6.pkg */,
-				AACEB6FC1E949F6C00234F4A /* io.safedrive.SafeDrive.cli */,
 				AA8FE3E71E99888100CD5238 /* io.safedrive.SafeDrive.ssh */,
 				AA2DAB241CB3293F00951762 /* io.safedrive.SafeDrive.rsync */,
 				AA2DAB271CB3664200951762 /* io.safedrive.SafeDrive.sshfs */,
@@ -793,6 +791,16 @@
 				AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */,
 			);
 			name = ErrorHandler;
+			sourceTree = "<group>";
+		};
+		AAA3E6AF1EAD4BA00083CE66 /* SDK */ = {
+			isa = PBXGroup;
+			children = (
+				AACEB6FC1E949F6C00234F4A /* io.safedrive.SafeDrive.cli */,
+				AA675E611E900D9000729A1E /* libsafedrive.dylib */,
+				AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */,
+			);
+			name = SDK;
 			sourceTree = "<group>";
 		};
 		AAAF1A401BF59446008E7865 /* Account Controller */ = {
