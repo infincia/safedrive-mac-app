@@ -271,7 +271,6 @@ class Installer: NSObject {
                 try FileManager.default.removeItem(at: destination)
             } catch let error as NSError {
                 SDLog("Error removing old CLI app: \(error)")
-                throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error removing old CLI app: \(error)"])
             }
         }
         do {
