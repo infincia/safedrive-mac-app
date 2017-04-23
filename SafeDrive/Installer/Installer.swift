@@ -72,7 +72,11 @@ class Installer: NSObject {
         // swiftlint:enable force_unwrapping
 
         var isDirectory: ObjCBool = false
-        return FileManager.default.fileExists(atPath: usrlocalbin.path, isDirectory: &isDirectory) && isDirectory.boolValue == true
+        let directoryExists = FileManager.default.fileExists(atPath: usrlocalbin.path, isDirectory: &isDirectory) && isDirectory.boolValue == true
+        
+        // check if the directory is actually writable and readable
+        let directoryIsWritable = FileManager.default.isWritableFile(atPath: usrlocalbin.path)
+        return directoryExists && directoryIsWritable
     }
     
     fileprivate var isCLIAppInstalled: Bool {
