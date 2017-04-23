@@ -230,7 +230,7 @@ class Installer: NSObject {
     }
     
     func installOSXFUSE() throws {
-        let osxfuseURL = Bundle.main.url(forResource: "FUSE for macOS 3.5.4", withExtension: "pkg", subdirectory: nil)
+        let osxfuseURL = Bundle.main.url(forResource: "FUSE for macOS 3.5.6", withExtension: "pkg", subdirectory: nil)
         let privilegedTask = STPrivilegedTask()
         privilegedTask.setLaunchPath("/usr/sbin/installer")
         // swiftlint:disable force_unwrapping
