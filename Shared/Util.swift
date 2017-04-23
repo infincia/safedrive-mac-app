@@ -7,8 +7,6 @@
 //
 // swiftlint:disable sorted_imports
 
-
-import Crashlytics
 import Foundation
 
 // http://stackoverflow.com/a/30593673/255309
@@ -46,7 +44,6 @@ func currentOSVersion() -> String {
 
 func storageURL() -> URL {
     guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
-        Crashlytics.sharedInstance().crash()
         exit(1)
     }
     let u: URL
