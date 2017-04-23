@@ -297,13 +297,13 @@ class Installer: NSObject {
         if err != errAuthorizationSuccess {
             if err == errAuthorizationCanceled {
                 SDLog("User cancelled setup")
-                throw NSError(domain: SDErrorDomainNotReported, code: SDInstallationError.setupDirectories.rawValue, userInfo: [NSLocalizedDescriptionKey: "FUSE installation cancelled by user"])
+                throw NSError(domain: SDErrorDomainNotReported, code: SDInstallationError.setupDirectories.rawValue, userInfo: [NSLocalizedDescriptionKey: "Directory setup cancelled by user"])
             } else {
                 SDLog("Setup could not be completed")
                 throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.setupDirectories.rawValue, userInfo: [NSLocalizedDescriptionKey: "Setup could not be completed"])
             }
         } else {
-            SDLog("Installer launched")
+            SDLog("Directory setup launched")
         }
     }
 }
