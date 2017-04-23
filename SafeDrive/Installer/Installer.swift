@@ -290,7 +290,7 @@ class Installer: NSObject {
 
         let privilegedTask = STPrivilegedTask()
         privilegedTask.setLaunchPath("/bin/bash")
-        privilegedTask.setArguments([setupScript.path])
+        privilegedTask.setArguments([setupScript.path, NSUserName()])
         
         let err = privilegedTask.launch()
         
