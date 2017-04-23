@@ -293,6 +293,7 @@ class Installer: NSObject {
         privilegedTask.setArguments([setupScript.path, NSUserName()])
         
         let err = privilegedTask.launch()
+        privilegedTask.waitUntilExit()
         
         if err != errAuthorizationSuccess {
             if err == errAuthorizationCanceled {
