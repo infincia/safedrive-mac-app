@@ -81,8 +81,19 @@ class Installer: NSObject {
         // swiftlint:disable force_unwrapping
         let destination = URL(string: "file:///usr/local/bin/safedrive")!
         // swiftlint:enable force_unwrapping
+        
+        if FileManager.default.fileExists(atPath: destination.path) {
+            do {
+                let attributes = try FileManager.default.attributesOfItem(atPath: destination.path)
+                let type = attributes[FileAttributeKey.type] as! FileAttributeType
+                let isSymlink = (type == FileAttributeType.typeSymbolicLink)
+                return isSymlink
+            } catch {
+                return false
+            }
+        }
 
-        return FileManager.default.fileExists(atPath: destination.path)
+        return false
     }
     
     fileprivate var isCLIAppCurrent: Bool {
@@ -264,10 +275,10 @@ class Installer: NSObject {
             }
         }
         do {
-            try fileManager.copyItem(at: cli, to: destination)
+            try fileManager.createSymbolicLink(at: destination, withDestinationURL: cli)
         } catch let error as NSError {
-            SDLog("Error copying CLI app: \(error)")
-            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying CLI app: \(error)"])
+            SDLog("Error installing CLI app symlink: \(error)")
+            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error installing CLI app symlink: \(error)"])
         }
     }
     
