@@ -10,3 +10,5 @@ CURRENT_USER=$1
 /usr/sbin/chown ${CURRENT_USER} /usr/local/bin
 /usr/bin/chgrp admin /usr/local/bin
 /bin/chmod 755 /usr/local/bin
+
+echo "Setup script finished"
