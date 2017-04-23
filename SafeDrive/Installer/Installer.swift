@@ -150,7 +150,9 @@ class Installer: NSObject {
                     try self.installOSXFUSE()
                 }
                 try self.deployService()
-                try self.installCLI()
+                if !self.isCLIAppInstalled {
+                    try self.installCLI()
+                }
             } catch let error as NSError {
                 DispatchQueue.main.async {
                     self.delegate?.didFail(error: error)
