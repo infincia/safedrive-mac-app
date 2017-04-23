@@ -68,7 +68,7 @@ class Installer: NSObject {
     
     fileprivate var isDirectoryOK: Bool {
         // swiftlint:disable force_unwrapping
-        let usrlocalbin = URL(string: "file:///usr/local/bin/safedrive")!
+        let usrlocalbin = URL(string: "file:///usr/local/bin")!
         // swiftlint:enable force_unwrapping
 
         var isDirectory: ObjCBool = false
