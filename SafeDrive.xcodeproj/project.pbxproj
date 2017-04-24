@@ -60,7 +60,6 @@
 		AA58D2DD1E82DC15002D56E0 /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2DB1E82DC15002D56E0 /* StatusView.xib */; };
 		AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA650CF31D73A381008DA5CB /* Changelog.md in Resources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
-		AA675E631E90164000729A1E /* libsafedrive.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA675E611E900D9000729A1E /* libsafedrive.dylib */; };
 		AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
@@ -90,10 +89,12 @@
 		AA7FE7A31E3D4AD4007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA7FE7A51E3D4AD5007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
-		AAA3E6BB1EAD4D650083CE66 /* io.safedrive.SafeDrive.daemon in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6B31EAD4CC40083CE66 /* io.safedrive.SafeDrive.daemon */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AAA3E6BC1EAD4D650083CE66 /* io.safedrive.SafeDrive.rsync in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6B41EAD4CC40083CE66 /* io.safedrive.SafeDrive.rsync */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AAA3E6BD1EAD4D650083CE66 /* io.safedrive.SafeDrive.ssh in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6B51EAD4CC40083CE66 /* io.safedrive.SafeDrive.ssh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AAA3E6BE1EAD4D650083CE66 /* io.safedrive.SafeDrive.sshfs in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6B61EAD4CC40083CE66 /* io.safedrive.SafeDrive.sshfs */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAA3E6FC1EADACFF0083CE66 /* libsafedrive.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA3E6FB1EADACFF0083CE66 /* libsafedrive.dylib */; };
+		AAA3E6FD1EADAD7D0083CE66 /* io.safedrive.SafeDrive.cli in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6ED1EADAB900083CE66 /* io.safedrive.SafeDrive.cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAA3E6FE1EADAD7D0083CE66 /* io.safedrive.SafeDrive.daemon in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6EE1EADAB900083CE66 /* io.safedrive.SafeDrive.daemon */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAA3E6FF1EADAD7D0083CE66 /* io.safedrive.SafeDrive.rsync in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6EF1EADAB900083CE66 /* io.safedrive.SafeDrive.rsync */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAA3E7001EADAD7D0083CE66 /* io.safedrive.SafeDrive.ssh in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6F01EADAB900083CE66 /* io.safedrive.SafeDrive.ssh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAA3E7011EADAD7D0083CE66 /* io.safedrive.SafeDrive.sshfs in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6F11EADAB900083CE66 /* io.safedrive.SafeDrive.sshfs */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAA50BB11E313AF200892E9D /* CUIThemeRenditionFix.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */; };
 		AAA50BE51E313BE900892E9D /* CUIThemeRenditionFix.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
@@ -114,7 +115,6 @@
 		AABF04AB1E6CC46E0084DF81 /* ReadyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AABF04A71E6CC46E0084DF81 /* ReadyView.xib */; };
 		AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */; };
 		AACDAD911E97548500F5B351 /* ssh_config in Resources */ = {isa = PBXBuildFile; fileRef = AACDAD901E97548500F5B351 /* ssh_config */; };
-		AACEB6FD1E949F6C00234F4A /* io.safedrive.SafeDrive.cli in Copy Files */ = {isa = PBXBuildFile; fileRef = AACEB6FC1E949F6C00234F4A /* io.safedrive.SafeDrive.cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */; };
 		AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
@@ -235,11 +235,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				AAA3E6BB1EAD4D650083CE66 /* io.safedrive.SafeDrive.daemon in Copy Files */,
-				AAA3E6BC1EAD4D650083CE66 /* io.safedrive.SafeDrive.rsync in Copy Files */,
-				AAA3E6BD1EAD4D650083CE66 /* io.safedrive.SafeDrive.ssh in Copy Files */,
-				AAA3E6BE1EAD4D650083CE66 /* io.safedrive.SafeDrive.sshfs in Copy Files */,
-				AACEB6FD1E949F6C00234F4A /* io.safedrive.SafeDrive.cli in Copy Files */,
+				AAA3E6FD1EADAD7D0083CE66 /* io.safedrive.SafeDrive.cli in Copy Files */,
+				AAA3E6FE1EADAD7D0083CE66 /* io.safedrive.SafeDrive.daemon in Copy Files */,
+				AAA3E6FF1EADAD7D0083CE66 /* io.safedrive.SafeDrive.rsync in Copy Files */,
+				AAA3E7001EADAD7D0083CE66 /* io.safedrive.SafeDrive.ssh in Copy Files */,
+				AAA3E7011EADAD7D0083CE66 /* io.safedrive.SafeDrive.sshfs in Copy Files */,
 				AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */,
 			);
 			name = "Copy Files";
@@ -339,7 +339,6 @@
 		AA58D2DA1E82DC15002D56E0 /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusViewController.swift; path = "Status TAb/StatusViewController.swift"; sourceTree = "<group>"; };
 		AA58D2DB1E82DC15002D56E0 /* StatusView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StatusView.xib; path = "Status TAb/StatusView.xib"; sourceTree = "<group>"; };
 		AA650CF11D73A29A008DA5CB /* Changelog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
-		AA675E611E900D9000729A1E /* libsafedrive.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsafedrive.dylib; path = "safedrive-sdk/dist-x86_64-apple-darwin/lib/libsafedrive.dylib"; sourceTree = "<group>"; };
 		AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+next.swift"; path = "Shared/NSDate+next.swift"; sourceTree = "<group>"; };
 		AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = ServiceManager/ServiceManager.swift; sourceTree = "<group>"; };
 		AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTests.swift; sourceTree = "<group>"; };
@@ -360,10 +359,12 @@
 		AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateAccountView.xib; path = Installer/ValidateAccountView.xib; sourceTree = "<group>"; };
 		AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateClientViewController.swift; path = Installer/ValidateClientViewController.swift; sourceTree = "<group>"; };
 		AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateClientView.xib; path = Installer/ValidateClientView.xib; sourceTree = "<group>"; };
-		AAA3E6B31EAD4CC40083CE66 /* io.safedrive.SafeDrive.daemon */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.daemon; path = "safedrive-sdk/dist-x86_64-apple-darwin/bin/io.safedrive.SafeDrive.daemon"; sourceTree = "<group>"; };
-		AAA3E6B41EAD4CC40083CE66 /* io.safedrive.SafeDrive.rsync */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.rsync; path = "safedrive-sdk/dist-x86_64-apple-darwin/bin/io.safedrive.SafeDrive.rsync"; sourceTree = "<group>"; };
-		AAA3E6B51EAD4CC40083CE66 /* io.safedrive.SafeDrive.ssh */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.ssh; path = "safedrive-sdk/dist-x86_64-apple-darwin/bin/io.safedrive.SafeDrive.ssh"; sourceTree = "<group>"; };
-		AAA3E6B61EAD4CC40083CE66 /* io.safedrive.SafeDrive.sshfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.sshfs; path = "safedrive-sdk/dist-x86_64-apple-darwin/bin/io.safedrive.SafeDrive.sshfs"; sourceTree = "<group>"; };
+		AAA3E6ED1EADAB900083CE66 /* io.safedrive.SafeDrive.cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.cli; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.cli"; sourceTree = "<group>"; };
+		AAA3E6EE1EADAB900083CE66 /* io.safedrive.SafeDrive.daemon */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.daemon; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.daemon"; sourceTree = "<group>"; };
+		AAA3E6EF1EADAB900083CE66 /* io.safedrive.SafeDrive.rsync */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.rsync; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.rsync"; sourceTree = "<group>"; };
+		AAA3E6F01EADAB900083CE66 /* io.safedrive.SafeDrive.ssh */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.ssh; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.ssh"; sourceTree = "<group>"; };
+		AAA3E6F11EADAB900083CE66 /* io.safedrive.SafeDrive.sshfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.sshfs; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.sshfs"; sourceTree = "<group>"; };
+		AAA3E6FB1EADACFF0083CE66 /* libsafedrive.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsafedrive.dylib; path = "safedrive-sdk/dist/x86_64-apple-darwin/lib/libsafedrive.dylib"; sourceTree = "<group>"; };
 		AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CUIThemeRenditionFix.xcassets; path = Shared/CUIThemeRenditionFix.xcassets; sourceTree = "<group>"; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTableRowView.swift; sourceTree = "<group>"; };
 		AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFolder.swift; path = Shared/SyncFolder.swift; sourceTree = "<group>"; };
@@ -380,7 +381,6 @@
 		AABF04A71E6CC46E0084DF81 /* ReadyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReadyView.xib; path = Installer/ReadyView.xib; sourceTree = "<group>"; };
 		AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadyViewController.swift; path = Installer/ReadyViewController.swift; sourceTree = "<group>"; };
 		AACDAD901E97548500F5B351 /* ssh_config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssh_config; sourceTree = "<group>"; };
-		AACEB6FC1E949F6C00234F4A /* io.safedrive.SafeDrive.cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.cli; path = "safedrive-sdk/dist-x86_64-apple-darwin/bin/io.safedrive.SafeDrive.cli"; sourceTree = "<group>"; };
 		AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
 		AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCRouter.swift; path = SafeDrive/XPCHandlers/ServiceXPCRouter.swift; sourceTree = SOURCE_ROOT; };
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
@@ -434,7 +434,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA675E631E90164000729A1E /* libsafedrive.dylib in Frameworks */,
+				AAA3E6FC1EADACFF0083CE66 /* libsafedrive.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +460,7 @@
 		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AAA3E6FB1EADACFF0083CE66 /* libsafedrive.dylib */,
 				AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */,
 				6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */,
 				6FD6EC24044905614D475A32 /* Pods_SafeDriveFinder.framework */,
@@ -803,12 +804,11 @@
 		AAA3E6AF1EAD4BA00083CE66 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
-				AAA3E6B31EAD4CC40083CE66 /* io.safedrive.SafeDrive.daemon */,
-				AAA3E6B41EAD4CC40083CE66 /* io.safedrive.SafeDrive.rsync */,
-				AAA3E6B51EAD4CC40083CE66 /* io.safedrive.SafeDrive.ssh */,
-				AAA3E6B61EAD4CC40083CE66 /* io.safedrive.SafeDrive.sshfs */,
-				AACEB6FC1E949F6C00234F4A /* io.safedrive.SafeDrive.cli */,
-				AA675E611E900D9000729A1E /* libsafedrive.dylib */,
+				AAA3E6ED1EADAB900083CE66 /* io.safedrive.SafeDrive.cli */,
+				AAA3E6EE1EADAB900083CE66 /* io.safedrive.SafeDrive.daemon */,
+				AAA3E6EF1EADAB900083CE66 /* io.safedrive.SafeDrive.rsync */,
+				AAA3E6F01EADAB900083CE66 /* io.safedrive.SafeDrive.ssh */,
+				AAA3E6F11EADAB900083CE66 /* io.safedrive.SafeDrive.sshfs */,
 				AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */,
 			);
 			name = SDK;
@@ -1688,7 +1688,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/include",
+					"$(PROJECT_DIR)/safedrive-sdk/dist/x86_64-apple-darwin/include",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
@@ -1754,7 +1754,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/include",
+					"$(PROJECT_DIR)/safedrive-sdk/dist/x86_64-apple-darwin/include",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SafeDrive/SafeDrive.pch;
@@ -1847,12 +1847,12 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/include";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist/x86_64-apple-darwin/include";
 				INFOPLIST_FILE = safedriveaskpass/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @loader_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/lib",
+					"$(PROJECT_DIR)/safedrive-sdk/dist/x86_64-apple-darwin/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "-r=\"designated => anchor apple generic and identifier \\\"io.safedrive.SafeDrive\\\" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G738Z89QKM)\"";
@@ -1870,12 +1870,12 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = G738Z89QKM;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/include";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist/x86_64-apple-darwin/include";
 				INFOPLIST_FILE = safedriveaskpass/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @loader_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/safedrive-sdk/dist-x86_64-apple-darwin/lib",
+					"$(PROJECT_DIR)/safedrive-sdk/dist/x86_64-apple-darwin/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "-r=\"designated => anchor apple generic and identifier \\\"io.safedrive.SafeDrive\\\" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G738Z89QKM)\"";
