@@ -1,6 +1,8 @@
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
+import Foundation
+
 let kServiceXPCProtocolVersion: Int = 4
 
 @objc protocol ServiceXPCProtocol {

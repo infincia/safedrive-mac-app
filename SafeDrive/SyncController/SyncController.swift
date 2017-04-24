@@ -4,6 +4,8 @@
 
 // swiftlint:disable file_length
 
+import Foundation
+
 import SafeDriveSDK
 
 class SyncController: Equatable {
