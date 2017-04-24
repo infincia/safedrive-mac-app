@@ -95,6 +95,48 @@
 		AAA3E6FF1EADAD7D0083CE66 /* io.safedrive.SafeDrive.rsync in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6EF1EADAB900083CE66 /* io.safedrive.SafeDrive.rsync */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAA3E7001EADAD7D0083CE66 /* io.safedrive.SafeDrive.ssh in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6F01EADAB900083CE66 /* io.safedrive.SafeDrive.ssh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAA3E7011EADAD7D0083CE66 /* io.safedrive.SafeDrive.sshfs in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6F11EADAB900083CE66 /* io.safedrive.SafeDrive.sshfs */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAA3E7031EADB7320083CE66 /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
+		AAA3E7051EADB7350083CE66 /* OpenFileWarningTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */; };
+		AAA3E7061EADB7380083CE66 /* OpenFileWarningWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */; };
+		AAA3E7071EADB73B0083CE66 /* RunningProcessCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */; };
+		AAA3E7081EADB73E0083CE66 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD61C851F17009BE1C7 /* AccountController.swift */; };
+		AAA3E7091EADB7410083CE66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */; };
+		AAA3E70A1EADB7450083CE66 /* DropdownController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD81C857FFB009BE1C7 /* DropdownController.swift */; };
+		AAA3E70B1EADB7480083CE66 /* CrashAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7D5D41CB09943001F9A8E /* CrashAlert.swift */; };
+		AAA3E70C1EADB74C0083CE66 /* FlatWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7D5CC1CAF85C0001F9A8E /* FlatWindow.swift */; };
+		AAA3E70D1EADB74F0083CE66 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A61E6CC46E0084DF81 /* FailedViewController.swift */; };
+		AAA3E70E1EADB7510083CE66 /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC201C8762A9007B320E /* Installer.swift */; };
+		AAA3E70F1EADB7530083CE66 /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */; };
+		AAA3E7101EADB7550083CE66 /* SoftwareClientTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC91E6A429100BB068A /* SoftwareClientTableCellView.swift */; };
+		AAA3E7111EADB7570083CE66 /* ValidateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD61C1E68A23300EE7FAD /* ValidateAccountViewController.swift */; };
+		AAA3E7121EADB75D0083CE66 /* ValidateClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */; };
+		AAA3E7131EADB75F0083CE66 /* ValidateDependenciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6171E68A21100EE7FAD /* ValidateDependenciesViewController.swift */; };
+		AAA3E7141EADB7610083CE66 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */; };
+		AAA3E7151EADB7630083CE66 /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */; };
+		AAA3E7161EADB76C0083CE66 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2CA1E82D9F0002D56E0 /* GeneralViewController.swift */; };
+		AAA3E7171EADB76E0083CE66 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2CE1E82DB86002D56E0 /* AccountViewController.swift */; };
+		AAA3E7181EADB7700083CE66 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
+		AAA3E7191EADB7720083CE66 /* SyncManagerTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */; };
+		AAA3E71A1EADB7740083CE66 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
+		AAA3E71B1EADB7760083CE66 /* SyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2D21E82DBA8002D56E0 /* SyncViewController.swift */; };
+		AAA3E71C1EADB7780083CE66 /* RestoreSelectionTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */; };
+		AAA3E71D1EADB77A0083CE66 /* RestoreSelectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */; };
+		AAA3E71E1EADB77D0083CE66 /* EncryptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2D61E82DBE4002D56E0 /* EncryptionViewController.swift */; };
+		AAA3E71F1EADB7800083CE66 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2DA1E82DC15002D56E0 /* StatusViewController.swift */; };
+		AAA3E7201EADB7820083CE66 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */; };
+		AAA3E7211EADB7840083CE66 /* RecoveryPhraseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */; };
+		AAA3E7221EADB78C0083CE66 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
+		AAA3E7231EADB78E0083CE66 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */; };
+		AAA3E7241EADB7940083CE66 /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */; };
+		AAA3E7251EADB7980083CE66 /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
+		AAA3E7261EADB79B0083CE66 /* ServiceXPCRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */; };
+		AAA3E7271EADB79C0083CE66 /* AppXPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */; };
+		AAA3E7281EADB8F90083CE66 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
+		AAA3E7291EADB8FA0083CE66 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
+		AAA3E72A1EADB8FE0083CE66 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
+		AAA3E72B1EADB9000083CE66 /* SyncFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */; };
+		AAA3E72C1EADB9020083CE66 /* SyncSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8351E55686E003A2E79 /* SyncSession.swift */; };
+		AAA3E72D1EADB9040083CE66 /* SyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD21C84B4CA009BE1C7 /* SyncTask.swift */; };
 		AAA50BB11E313AF200892E9D /* CUIThemeRenditionFix.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */; };
 		AAA50BE51E313BE900892E9D /* CUIThemeRenditionFix.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
@@ -1441,12 +1483,54 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAA3E70E1EADB7510083CE66 /* Installer.swift in Sources */,
+				AAA3E7151EADB7630083CE66 /* WelcomeWindowController.swift in Sources */,
+				AAA3E70A1EADB7450083CE66 /* DropdownController.swift in Sources */,
+				AAA3E72A1EADB8FE0083CE66 /* ServiceXPCProtocol.swift in Sources */,
+				AAA3E71C1EADB7780083CE66 /* RestoreSelectionTableCellView.swift in Sources */,
 				AA6E272C1D876DD800038019 /* Notifications.swift in Sources */,
 				AA6E27351D8839DC00038019 /* SyncController.swift in Sources */,
 				AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */,
+				AAA3E7201EADB7820083CE66 /* PreferencesWindowController.swift in Sources */,
+				AAA3E7071EADB73B0083CE66 /* RunningProcessCheck.swift in Sources */,
+				AAA3E72D1EADB9040083CE66 /* SyncTask.swift in Sources */,
+				AAA3E7181EADB7700083CE66 /* SyncFailurePopoverView.swift in Sources */,
+				AAA3E7221EADB78C0083CE66 /* Protocols.swift in Sources */,
+				AAA3E7251EADB7980083CE66 /* SDSystemAPI.m in Sources */,
+				AAA3E7081EADB73E0083CE66 /* AccountController.swift in Sources */,
+				AAA3E70B1EADB7480083CE66 /* CrashAlert.swift in Sources */,
+				AAA3E71B1EADB7760083CE66 /* SyncViewController.swift in Sources */,
+				AAA3E7171EADB76E0083CE66 /* AccountViewController.swift in Sources */,
+				AAA3E7051EADB7350083CE66 /* OpenFileWarningTableCellView.swift in Sources */,
+				AAA3E71F1EADB7800083CE66 /* StatusViewController.swift in Sources */,
+				AAA3E7231EADB78E0083CE66 /* ServiceManager.swift in Sources */,
+				AAA3E7241EADB7940083CE66 /* SyncScheduler.swift in Sources */,
+				AAA3E7141EADB7610083CE66 /* WelcomeViewController.swift in Sources */,
+				AAA3E7111EADB7570083CE66 /* ValidateAccountViewController.swift in Sources */,
+				AAA3E7061EADB7380083CE66 /* OpenFileWarningWindowController.swift in Sources */,
+				AAA3E70F1EADB7530083CE66 /* ReadyViewController.swift in Sources */,
+				AAA3E72C1EADB9020083CE66 /* SyncSession.swift in Sources */,
+				AAA3E72B1EADB9000083CE66 /* SyncFolder.swift in Sources */,
+				AAA3E7211EADB7840083CE66 /* RecoveryPhraseWindowController.swift in Sources */,
+				AAA3E7101EADB7550083CE66 /* SoftwareClientTableCellView.swift in Sources */,
+				AAA3E7191EADB7720083CE66 /* SyncManagerTableCellView.swift in Sources */,
+				AAA3E7121EADB75D0083CE66 /* ValidateClientViewController.swift in Sources */,
 				AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */,
+				AAA3E70C1EADB74C0083CE66 /* FlatWindow.swift in Sources */,
+				AAA3E7291EADB8FA0083CE66 /* AppXPCProtocol.swift in Sources */,
+				AAA3E7091EADB7410083CE66 /* AppDelegate.swift in Sources */,
+				AAA3E71D1EADB77A0083CE66 /* RestoreSelectionWindowController.swift in Sources */,
+				AAA3E7161EADB76C0083CE66 /* GeneralViewController.swift in Sources */,
+				AAA3E7281EADB8F90083CE66 /* NSDate+next.swift in Sources */,
+				AAA3E71A1EADB7740083CE66 /* SyncManagerTableRowView.swift in Sources */,
 				AA50716D1E2ED86C006F59C8 /* Util.swift in Sources */,
 				AA6DCB2E1CA57D50001473B0 /* UnitTests.swift in Sources */,
+				AAA3E7261EADB79B0083CE66 /* ServiceXPCRouter.swift in Sources */,
+				AAA3E70D1EADB74F0083CE66 /* FailedViewController.swift in Sources */,
+				AAA3E7031EADB7320083CE66 /* OpenFileCheck.swift in Sources */,
+				AAA3E7271EADB79C0083CE66 /* AppXPCDelegate.swift in Sources */,
+				AAA3E71E1EADB77D0083CE66 /* EncryptionViewController.swift in Sources */,
+				AAA3E7131EADB75F0083CE66 /* ValidateDependenciesViewController.swift in Sources */,
 				AA6E27311D87855100038019 /* MountController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
