@@ -28,7 +28,6 @@
 		AA3EB8411E569D28003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA3EB8421E569E9D003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA3EB8431E569E9D003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
-		AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4E77321A3E6E640054BBCA /* SDTestConstants.m */; };
 		AA4F8FC71E6A2D5700BB068A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */; };
 		AA4F8FC81E6A2D5700BB068A /* WelcomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */; };
 		AA4F8FCA1E6A429100BB068A /* SoftwareClientTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC91E6A429100BB068A /* SoftwareClientTableCellView.swift */; };
@@ -341,7 +340,6 @@
 		AA31681D1A191B72006CC0EB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeDriveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA31682B1A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA31682C1A191B72006CC0EB /* SafeDriveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SafeDriveTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDConstants.h; path = Shared/SDConstants.h; sourceTree = "<group>"; };
 		AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDConstants.m; path = Shared/SDConstants.m; sourceTree = "<group>"; };
 		AA3EB8351E55686E003A2E79 /* SyncSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncSession.swift; path = Shared/SyncSession.swift; sourceTree = "<group>"; };
@@ -349,8 +347,6 @@
 		AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionWindowController.swift; sourceTree = "<group>"; };
 		AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionTableCellView.swift; sourceTree = "<group>"; };
 		AA3EB8401E569D28003A2E79 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		AA4E77311A3E6E640054BBCA /* SDTestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTestConstants.h; sourceTree = "<group>"; };
-		AA4E77321A3E6E640054BBCA /* SDTestConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTestConstants.m; sourceTree = "<group>"; };
 		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewController.swift; path = Installer/WelcomeViewController.swift; sourceTree = "<group>"; };
 		AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeView.xib; path = Installer/WelcomeView.xib; sourceTree = "<group>"; };
@@ -613,9 +609,6 @@
 			isa = PBXGroup;
 			children = (
 				AA6DCB2F1CA57DB5001473B0 /* SafeDriveTests-Bridging-Header.h */,
-				AA31682C1A191B72006CC0EB /* SafeDriveTests.m */,
-				AA4E77311A3E6E640054BBCA /* SDTestConstants.h */,
-				AA4E77321A3E6E640054BBCA /* SDTestConstants.m */,
 				AA31682A1A191B72006CC0EB /* Supporting Files */,
 				AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */,
 			);
@@ -1490,7 +1483,6 @@
 				AAA3E71C1EADB7780083CE66 /* RestoreSelectionTableCellView.swift in Sources */,
 				AA6E272C1D876DD800038019 /* Notifications.swift in Sources */,
 				AA6E27351D8839DC00038019 /* SyncController.swift in Sources */,
-				AA4E77331A3E6E640054BBCA /* SDTestConstants.m in Sources */,
 				AAA3E7201EADB7820083CE66 /* PreferencesWindowController.swift in Sources */,
 				AAA3E7071EADB73B0083CE66 /* RunningProcessCheck.swift in Sources */,
 				AAA3E72D1EADB9040083CE66 /* SyncTask.swift in Sources */,
