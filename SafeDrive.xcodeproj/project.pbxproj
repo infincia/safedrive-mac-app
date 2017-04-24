@@ -380,7 +380,6 @@
 		AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+next.swift"; path = "Shared/NSDate+next.swift"; sourceTree = "<group>"; };
 		AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = ServiceManager/ServiceManager.swift; sourceTree = "<group>"; };
 		AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTests.swift; sourceTree = "<group>"; };
-		AA6DCB2F1CA57DB5001473B0 /* SafeDriveTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeDriveTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		AA6E272A1D876DD800038019 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Notifications.swift; path = Shared/Notifications.swift; sourceTree = "<group>"; };
 		AA6E272F1D87855100038019 /* MountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MountController.swift; sourceTree = "<group>"; };
 		AA6E27331D8839DC00038019 /* SyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncController.swift; sourceTree = "<group>"; };
@@ -608,7 +607,6 @@
 		AA3168291A191B72006CC0EB /* SafeDriveTests */ = {
 			isa = PBXGroup;
 			children = (
-				AA6DCB2F1CA57DB5001473B0 /* SafeDriveTests-Bridging-Header.h */,
 				AA31682A1A191B72006CC0EB /* Supporting Files */,
 				AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */,
 			);
@@ -1883,7 +1881,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safedrive.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "SafeDriveTests/SafeDriveTests-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SafeDrive.app/Contents/MacOS/SafeDrive";
 			};
@@ -1906,7 +1904,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safedrive.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "SafeDriveTests/SafeDriveTests-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SafeDrive.app/Contents/MacOS/SafeDrive";
 			};
