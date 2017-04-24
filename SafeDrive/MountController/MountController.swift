@@ -391,7 +391,6 @@ class MountController: NSObject {
             return
         }
         
-        SDLog("Known hosts file: \(tempHostsFile.path))")
         taskArguments.append("-oUserKnownHostsFile=\"\(tempHostsFile.path)\"")
 
         
@@ -413,7 +412,6 @@ class MountController: NSObject {
             failureBlock(mountURL, configError)
             return
         }
-        SDLog("Config file: \(tempConfigFile.path))")
         taskArguments.append("-F\(tempConfigFile.path)")
         
         
