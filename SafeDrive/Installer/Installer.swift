@@ -307,5 +307,10 @@ class Installer: NSObject {
         } else {
             SDLog("Directory setup launched")
         }
+        let data = privilegedTask.outputFileHandle().readDataToEndOfFile()
+        if let output = String(data: data, encoding: .utf8) {
+            SDLog("Directory setup output: \(output)")
+
+        }
     }
 }
