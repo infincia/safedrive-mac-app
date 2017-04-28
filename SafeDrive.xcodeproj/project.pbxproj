@@ -88,7 +88,7 @@
 		AA7FE7A31E3D4AD4007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA7FE7A51E3D4AD5007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
-		AAA3E6FC1EADACFF0083CE66 /* libsafedrive.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA3E6FB1EADACFF0083CE66 /* libsafedrive.dylib */; };
+		AAA3E6FC1EADACFF0083CE66 /* libsddk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA3E6FB1EADACFF0083CE66 /* libsddk.dylib */; };
 		AAA3E6FD1EADAD7D0083CE66 /* io.safedrive.SafeDrive.cli in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6ED1EADAB900083CE66 /* io.safedrive.SafeDrive.cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAA3E6FE1EADAD7D0083CE66 /* io.safedrive.SafeDrive.daemon in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6EE1EADAB900083CE66 /* io.safedrive.SafeDrive.daemon */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAA3E6FF1EADAD7D0083CE66 /* io.safedrive.SafeDrive.rsync in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6EF1EADAB900083CE66 /* io.safedrive.SafeDrive.rsync */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -401,7 +401,7 @@
 		AAA3E6EF1EADAB900083CE66 /* io.safedrive.SafeDrive.rsync */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.rsync; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.rsync"; sourceTree = "<group>"; };
 		AAA3E6F01EADAB900083CE66 /* io.safedrive.SafeDrive.ssh */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.ssh; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.ssh"; sourceTree = "<group>"; };
 		AAA3E6F11EADAB900083CE66 /* io.safedrive.SafeDrive.sshfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.sshfs; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.sshfs"; sourceTree = "<group>"; };
-		AAA3E6FB1EADACFF0083CE66 /* libsafedrive.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsafedrive.dylib; path = "safedrive-sdk/dist/x86_64-apple-darwin/lib/libsafedrive.dylib"; sourceTree = "<group>"; };
+		AAA3E6FB1EADACFF0083CE66 /* libsddk.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsddk.dylib; path = "safedrive-sdk/dist/x86_64-apple-darwin/lib/libsddk.dylib"; sourceTree = "<group>"; };
 		AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CUIThemeRenditionFix.xcassets; path = Shared/CUIThemeRenditionFix.xcassets; sourceTree = "<group>"; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTableRowView.swift; sourceTree = "<group>"; };
 		AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFolder.swift; path = Shared/SyncFolder.swift; sourceTree = "<group>"; };
@@ -471,7 +471,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAA3E6FC1EADACFF0083CE66 /* libsafedrive.dylib in Frameworks */,
+				AAA3E6FC1EADACFF0083CE66 /* libsddk.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,7 +497,7 @@
 		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AAA3E6FB1EADACFF0083CE66 /* libsafedrive.dylib */,
+				AAA3E6FB1EADACFF0083CE66 /* libsddk.dylib */,
 				AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */,
 				6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */,
 				6FD6EC24044905614D475A32 /* Pods_SafeDriveFinder.framework */,
