@@ -232,9 +232,9 @@ class Installer: NSObject {
     func installOSXFUSE() throws {
         let osxfuseURL = Bundle.main.url(forResource: "FUSE for macOS 3.5.6", withExtension: "pkg", subdirectory: nil)
         let privilegedTask = STPrivilegedTask()
-        privilegedTask.setLaunchPath("/usr/sbin/installer")
+        privilegedTask.launchPath = "/usr/sbin/installer"
         // swiftlint:disable force_unwrapping
-        privilegedTask.setArguments(["-pkg", (osxfuseURL?.path)!, "-target", "/"])
+        privilegedTask.arguments = ["-pkg", (osxfuseURL?.path)!, "-target", "/"]
         // swiftlint:enable force_unwrapping
 
         let err = privilegedTask.launch()
@@ -290,8 +290,8 @@ class Installer: NSObject {
         }
 
         let privilegedTask = STPrivilegedTask()
-        privilegedTask.setLaunchPath("/bin/bash")
-        privilegedTask.setArguments([setupScript.path, NSUserName()])
+        privilegedTask.launchPath = "/bin/bash")
+        privilegedTask.arguments = [setupScript.path, NSUserName()]
         
         let err = privilegedTask.launch()
         privilegedTask.waitUntilExit()
@@ -307,7 +307,7 @@ class Installer: NSObject {
         } else {
             SDLog("Directory setup launched")
         }
-        let data = privilegedTask.outputFileHandle().readDataToEndOfFile()
+        let data = privilegedTask.outputFileHandle.readDataToEndOfFile()
         if let output = String(data: data, encoding: .utf8) {
             SDLog("Directory setup output: \(output)")
 
