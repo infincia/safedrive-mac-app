@@ -6,6 +6,8 @@
 
 
 import Foundation
+import SystemConfiguration
+
 import SafeDriveSDK
 
 protocol InstallerDelegate: class {
@@ -284,14 +286,27 @@ class Installer: NSObject {
     }
     
     func setupDirectories() throws {
-        guard let setupScript = Bundle.main.url(forResource: "setup", withExtension: "sh", subdirectory: nil) else {
-            let e = NSError(domain: SDErrorDomainInternal, code:SDInstallationError.setupDirectories.rawValue, userInfo:[NSLocalizedDescriptionKey: "Setup script missing"])
-            throw e
+        guard let cli = Bundle.main.url(forAuxiliaryExecutable: "io.safedrive.SafeDrive.cli") else {
+            let cliError = NSError(domain: SDErrorDomainInternal, code:SDInstallationError.cliMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "CLI app missing"])
+            throw cliError
         }
+                
+        var uid: uid_t = 0
+        var gid: gid_t = 0
+        
+        guard let cfname = SCDynamicStoreCopyConsoleUser(nil, &uid, &gid) else {
+            SDLog("failed")
+            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.setupDirectories.rawValue, userInfo: [NSLocalizedDescriptionKey: "Failed to get user information from system"])
+        }
+        
+        let name = cfname as String
+        
+        SDLog("name = \(name), uid = \(uid), gid = \(gid)")
 
         let privilegedTask = STPrivilegedTask()
-        privilegedTask.launchPath = "/bin/bash")
-        privilegedTask.arguments = [setupScript.path, NSUserName()]
+
+        privilegedTask.launchPath = cli.path
+        privilegedTask.arguments = ["doctor", "--uid", String(uid), "--gid", String(gid)]
         
         let err = privilegedTask.launch()
         privilegedTask.waitUntilExit()
