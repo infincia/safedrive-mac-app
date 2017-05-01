@@ -4,29 +4,6 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
-#pragma mark - General constants
-
-FOUNDATION_EXPORT NSString *const SDDefaultVolumeName;
-FOUNDATION_EXPORT NSString *const SDDefaultServerPath;
-FOUNDATION_EXPORT NSInteger const SDDefaultServerPort;
-
-FOUNDATION_EXPORT NSString *const SDBuildVersionLastKey;
-FOUNDATION_EXPORT NSString *const SDRealmSchemaVersionLastKey;
-
-#pragma mark - Realm constants
-
-FOUNDATION_EXPORT NSUInteger const SDCurrentRealmSchema;
-
-#pragma mark - NSUserDefaults keys
-
-FOUNDATION_EXPORT NSString *const SDCurrentVolumeNameKey;
-FOUNDATION_EXPORT NSString *const SDMountAtLaunchKey;
-FOUNDATION_EXPORT NSString *const SDWelcomeShownKey;
-
-NS_ASSUME_NONNULL_END
-
 #pragma mark - Status Enums
 
 typedef NS_ENUM(NSUInteger, SDAccountStatus) {

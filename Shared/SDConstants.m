@@ -4,25 +4,6 @@
 
 #import "SDConstants.h"
 
-#pragma mark - General constants
-
-NSString *const SDDefaultVolumeName = @"SafeDrive";
-NSString *const SDDefaultServerPath = @"/storage";
-NSInteger const SDDefaultServerPort = 22;
-
-NSString *const SDBuildVersionLastKey = @"SDBuildVersionLastKey";
-NSString *const SDRealmSchemaVersionLastKey = @"SDRealmSchemaVersionLastKey";
-
-#pragma mark - Realm constants
-
-NSUInteger const SDCurrentRealmSchema = 15;
-
-#pragma mark - NSUserDefaults keys
-
-NSString *const SDCurrentVolumeNameKey = @"currentVolumeName";
-NSString *const SDMountAtLaunchKey = @"mountAtLaunch";
-NSString *const SDWelcomeShownKey = @"welcomeShown";
-
 #pragma mark - Errors
 
 NSInteger const SDErrorNone = 0;
