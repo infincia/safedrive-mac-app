@@ -176,7 +176,6 @@ class SyncController: Equatable {
                                             issue issueBlock: @escaping (_ message: String) -> Void,
                                             success successBlock: @escaping (_ local: URL) -> Void,
                                             failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
-        let start_time = Date()
         var last_update = Date()
 
         if self.restore {            
