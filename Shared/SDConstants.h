@@ -23,14 +23,6 @@ FOUNDATION_EXPORT NSInteger const SDErrorNone;
 
 NS_ASSUME_NONNULL_END
 
-#pragma mark - SFTP operations
-
-typedef NS_ENUM(NSInteger, SDSFTPOperation) {
-    SDSFTPOperationCreateFolder,
-    SDSFTPOperationDeleteFolder,
-    SDSFTPOperationMoveFolder
-};
-
 #pragma mark - SSH related errors
 
 typedef NS_ENUM(NSInteger, SDSSHError) {
