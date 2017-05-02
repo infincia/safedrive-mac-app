@@ -21,7 +21,7 @@ class AccountController: NSObject {
     
     fileprivate var sdk = SafeDriveSDK.sharedSDK
     
-    var accountStatus: SDAccountStatus = .unknown
+    var accountState: AccountState = .unknown
     
     var uniqueClientID: String?
     
@@ -230,7 +230,7 @@ class AccountController: NSObject {
         self.currentUser = nil
         self.email = nil
         self.password = nil
-        self.accountStatus = .unknown
+        self.accountState = .unknown
         self.uniqueClientID = nil
         
         // reset crashlytics email and telemetry API username
