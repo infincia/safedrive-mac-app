@@ -87,13 +87,15 @@ class FailedViewController: NSViewController {
         self.panelMessage.stringValue = NSLocalizedString("Sending error report to SafeDrive", comment: "")
         self.spinner.startAnimation(self)
         
-        var e: NSError
+        var e: Error
         if let error = self.error as? SDKError {
-            e = NSError(domain: SDErrorDomainReported, code: error.kind.rawValue, userInfo: [NSLocalizedDescriptionKey: error.message])
+            e = error
+        } else if let error = self.error as? SDError {
+            e = error
         } else if let error = self.error as NSError? {
             e = NSError(domain: SDErrorDomainReported, code: error.code, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])
         } else {
-            e = NSError(domain: SDErrorDomainReported, code: SDInstallationError.unknown.rawValue, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
+            e = SDError(message: "An unknown error occurred, contact support", kind: .unknown)
         }
         
         let os: String = "OS X \(currentOSVersion())"

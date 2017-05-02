@@ -64,29 +64,37 @@ extension RestoreSelectionWindowController: NSOpenSavePanelDelegate {
         
         // check if the candidate sync path is actually writable and readable
         if !fileManager.isWritableFile(atPath: url.path) {
-            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, read/write permission denied", comment: "String informing the user that they do not have permission to read/write to the selected directory")]
-            throw NSError(domain: SDErrorDomainNotReported, code: SDSystemError.filePermissionDenied.rawValue, userInfo: errorInfo)
+            let message = NSLocalizedString("Cannot select this directory, read/write permission denied", comment: "String informing the user that they do not have permission to read/write to the selected directory")
+            SDLog(message)
+            let error = SDError(message: message, kind: .filePermissionDenied)
+            throw error
         }
         
         // check if the candidate sync path is a parent or subdirectory of an existing registered sync folder
         guard let realm = try? Realm() else {
             SDLog("failed to create realm!!!")
-            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot open local database, this is a fatal error", comment: "")]
-            throw NSError(domain: SDErrorDomainReported, code: SDDatabaseError.openFailed.rawValue, userInfo: errorInfo)
+            let message = NSLocalizedString("Cannot open local database, this is a fatal error", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .openFailed)
+            throw error
         }
         
         let syncFolders = realm.objects(SyncFolder.self)
         if SyncFolder.hasConflictingFolderRegistered(url.path, syncFolders: syncFolders) {
-            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")]
-            throw NSError(domain: SDErrorDomainNotReported, code: SDSyncError.folderConflict.rawValue, userInfo: errorInfo)
+            let message = NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")
+            SDLog(message)
+            let error = SDError(message: message, kind: .folderConflict)
+            throw error
         }
         
         // check that enough space is available in the selected location
         let sessionIndex = self.restoreSelectionList.selectedRow
         
         guard sessionIndex != -1, let sessionView = restoreSelectionList.view(atColumn: 0, row: sessionIndex, makeIfNecessary: false) as? RestoreSelectionTableCellView else {
-            let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("Please select a session to restore so that SafeDrive can ensure there is enough free space available", comment: "String informing the user that a session must be selected so that we can check for available space")]
-            throw NSError(domain: SDErrorDomainNotReported, code: SDSyncError.folderConflict.rawValue, userInfo: errorInfo)
+            let message = NSLocalizedString("Please select a session to restore so that SafeDrive can ensure there is enough free space available", comment: "String informing the user that a session must be selected so that we can check for available space")
+            SDLog(message)
+            let error = SDError(message: message, kind: .folderConflict)
+            throw error
         }
         
     
@@ -94,8 +102,10 @@ extension RestoreSelectionWindowController: NSOpenSavePanelDelegate {
            let freeSpace = attr[FileAttributeKey.systemFreeSize] as? UInt64 {
             
             if sessionView.sessionSize > freeSpace {
-                let errorInfo: [AnyHashable: Any] = [NSLocalizedDescriptionKey: NSLocalizedString("The selected location does not have enough free space to restore the session", comment: "String informing the user that the restore folder location doesn't have enough free space")]
-                throw NSError(domain: SDErrorDomainNotReported, code: SDSyncError.folderConflict.rawValue, userInfo: errorInfo)
+                let message = NSLocalizedString("The selected location does not have enough free space to restore the session", comment: "String informing the user that the restore folder location doesn't have enough free space")
+                SDLog(message)
+                let error = SDError(message: message, kind: .folderConflict)
+                throw error
             }
         
         }

@@ -116,7 +116,9 @@ class ValidateClientViewController: NSViewController {
         SDLog("setting up client as new")
         guard let email = self.email,
               let password = self.password else {
-            self.delegate?.didFail(error: NSError(domain: SDErrorDomainInternal, code: SDSystemError.unknown.rawValue, userInfo: nil), uniqueClientID: nil)
+                let error = SDError(message: "API contract invalid", kind: .apiContractInvalid)
+                
+            self.delegate?.didFail(error: error, uniqueClientID: nil)
             return
         }
         
@@ -149,7 +151,9 @@ class ValidateClientViewController: NSViewController {
         
         guard let email = self.email,
               let password = self.password else {
-            self.delegate?.didFail(error: NSError(domain: SDErrorDomainInternal, code: SDInstallationError.unknown.rawValue, userInfo: nil), uniqueClientID: client.uniqueClientID)
+                let error = SDError(message: "An unknown error occurred, contact support", kind: .unknown)
+
+            self.delegate?.didFail(error: error, uniqueClientID: client.uniqueClientID)
             return
         }
 

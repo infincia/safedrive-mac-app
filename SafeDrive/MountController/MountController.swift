@@ -242,8 +242,8 @@ class MountController: NSObject {
             let port = sshURL.port,
             let user = sshURL.user else {
                 let message = NSLocalizedString("Credentials missing, contact SafeDrive support", comment: "")
-                let sshfsError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
-                failureBlock(mountURL, sshfsError)
+                let error = SDError(message: message, kind: .apiContractInvalid)
+                failureBlock(mountURL, error)
                 return
         }
         SDLog("Mounting ssh URL: \(sshURL)")
@@ -255,8 +255,8 @@ class MountController: NSObject {
         
         guard let sshfsPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.sshfs") else {
             let message = NSLocalizedString("SSHFS missing, contact SafeDrive support", comment: "")
-            let sshfsError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.sshfsMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
-            failureBlock(mountURL, sshfsError)
+            let error = SDError(message: message, kind: .sshfsMissing)
+            failureBlock(mountURL, error)
             return
         }
         self.sshfsTask.launchPath = sshfsPath
@@ -267,8 +267,9 @@ class MountController: NSObject {
 
         /* path of our custom askpass helper so ssh can use it */
         guard let safeDriveAskpassPath = Bundle.main.path(forAuxiliaryExecutable: "safedriveaskpass") else {
-            let askpassError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.askpassMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "Askpass helper missing"])
-            failureBlock(mountURL, askpassError)
+            let message = NSLocalizedString("Askpass helper missing, contact SafeDrive support", comment: "")
+            let error = SDError(message: message, kind: .askpassMissing)
+            failureBlock(mountURL, error)
             return
         }
         
@@ -343,8 +344,8 @@ class MountController: NSObject {
         /* our own ssh binary */
         guard let sshPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
             let message = NSLocalizedString("SSH missing, contact SafeDrive support", comment: "")
-            let sshfsError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.sshMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
-            failureBlock(mountURL, sshfsError)
+            let error = SDError(message: message, kind: .sshMissing)
+            failureBlock(mountURL, error)
             return
         }
         //taskArguments.append("-ossh_command=\(sshPath)")
@@ -376,8 +377,8 @@ class MountController: NSObject {
         
         guard let knownHostsFile = Bundle.main.url(forResource: "known_hosts", withExtension: nil) else {
             let message = NSLocalizedString("SSH hosts file missing, contact SafeDrive support", comment: "")
-            let configError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.configMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
-            failureBlock(mountURL, configError)
+            let error = SDError(message: message, kind: .configMissing)
+            failureBlock(mountURL, error)
             return
         }
         
@@ -386,8 +387,8 @@ class MountController: NSObject {
             try FileManager.default.copyItem(at: knownHostsFile, to: tempHostsFile)
         } catch {
             let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
-            let configError = NSError(domain: SDErrorDomainReported, code:SDSystemError.temporaryFile.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
-            failureBlock(mountURL, configError)
+            let error = SDError(message: message, kind: .temporaryFile)
+            failureBlock(mountURL, error)
             return
         }
         
@@ -398,8 +399,8 @@ class MountController: NSObject {
         /* bundled config file to avoid environment differences */
         guard let configFile = Bundle.main.url(forResource: "ssh_config", withExtension: nil) else {
             let message = NSLocalizedString("SSH config missing, contact SafeDrive support", comment: "")
-            let configError = NSError(domain: SDErrorDomainInternal, code:SDSystemError.configMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
-            failureBlock(mountURL, configError)
+            let error = SDError(message: message, kind: .askpassMissing)
+            failureBlock(mountURL, error)
             return
         }
         
@@ -408,8 +409,8 @@ class MountController: NSObject {
             try FileManager.default.copyItem(at: configFile, to: tempConfigFile)
         } catch {
             let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
-            let configError = NSError(domain: SDErrorDomainReported, code:SDSystemError.temporaryFile.rawValue, userInfo:[NSLocalizedDescriptionKey: message])
-            failureBlock(mountURL, configError)
+            let error = SDError(message: message, kind: .temporaryFile)
+            failureBlock(mountURL, error)
             return
         }
         taskArguments.append("-F\(tempConfigFile.path)")
@@ -431,7 +432,7 @@ class MountController: NSObject {
         let outputPipeHandle = outputPipe.fileHandleForReading
         
         outputPipeHandle.readabilityHandler = { (handle) in
-            var mountError: NSError?
+            var error: SDError?
 
             // swiftlint:disable force_unwrapping
             let outputString = String(data: handle.availableData, encoding: String.Encoding.utf8)!
@@ -440,11 +441,14 @@ class MountController: NSObject {
             if outputString.contains("key_load_public: No such file or directory") {
                 // refers to searching for ssh keys in debug1 mode
             } else if outputString.contains("Not a directory") {
-                mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Server could not find that volume name"])
+                let message = NSLocalizedString("Server could not find that volume name", comment: "")
+                error = SDError(message: message, kind: .mountFailed)
             } else if outputString.contains("Permission denied (publickey,password)") {
-                mountError = NSError(domain: SDErrorDomainNotReported, code:SDSSHError.authorization.rawValue, userInfo:[NSLocalizedDescriptionKey: "Check username/password"])
+                let message = NSLocalizedString("Check username/password", comment: "")
+                error = SDError(message: message, kind: .authorization)
             } else if outputString.contains("is itself on a OSXFUSE volume") {
-                mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.alreadyMounted.rawValue, userInfo:[NSLocalizedDescriptionKey: "Volume already mounted"])
+                let message = NSLocalizedString("Volume already mounted", comment: "")
+                error = SDError(message: message, kind: .alreadyMounted)
                 /*
                  no need to run the successblock again since the volume is already mounted
                  
@@ -457,22 +461,28 @@ class MountController: NSObject {
                  */
                 //successBlock();
             } else if outputString.contains("Error resolving hostname") {
-                mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Error resolving hostname, contact support"])
+                let message = NSLocalizedString("SafeDrive service unavailable", comment: "")
+                error = SDError(message: message, kind: .mountFailed)
             } else if outputString.contains("REMOTE HOST IDENTIFICATION HAS CHANGED") {
-                mountError = NSError(domain: SDErrorDomainReported, code:SDSSHError.hostFingerprintChanged.rawValue, userInfo:[NSLocalizedDescriptionKey: "Warning: server fingerprint changed!"])
+                let message = NSLocalizedString("Warning: server fingerprint changed!", comment: "")
+                error = SDError(message: message, kind: .hostFingerprintChanged)
             } else if outputString.contains("Host key verification failed") {
-                mountError = NSError(domain: SDErrorDomainReported, code:SDSSHError.hostKeyVerificationFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Warning: server key verification failed!"])
+                let message = NSLocalizedString("Warning: server key verification failed!", comment: "")
+                error = SDError(message: message, kind: .hostKeyVerificationFailed)
             } else if outputString.contains("failed to mount") {
-                mountError = NSError(domain: SDErrorDomainReported, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "An unknown error occurred, contact support"])
+                let message = NSLocalizedString("An unknown error occurred, contact support", comment: "")
+                error = SDError(message: message, kind: .mountFailed)
             } else if outputString.contains("g_slice_set_config: assertion") {
                 /*
                  Ignore this, minor bug in sshfs use of glib
                  
                  */
             } else if outputString.contains("No such file or directory") {
-                mountError = NSError(domain: SDErrorDomainNotReported, code:SDMountError.mountFailed.rawValue, userInfo:[NSLocalizedDescriptionKey: "Server could not find that volume name"])
+                let message = NSLocalizedString("An unknown error occurred, contact support", comment: "")
+                error = SDError(message: message, kind: .directoryMissing)
             } else {
-                mountError = NSError(domain: SDErrorDomainReported, code:SDMountError.unknown.rawValue, userInfo:[NSLocalizedDescriptionKey: "An unknown error occurred, contact support"])
+                let message = NSLocalizedString("An unknown error occurred, contact support", comment: "")
+                error = SDError(message: message, kind: .unknown)
                 /*
                  for the moment we don't want to call the failure block here, as
                  not everything that comes through stderr indicates a mount
@@ -486,11 +496,11 @@ class MountController: NSObject {
                 // failureBlock(mountURL, mountError);
                 return
             }
-            if let e = mountError {
+            if let e = error {
                 DispatchQueue.main.async(execute: {() -> Void in
                     failureBlock(mountURL, e)
                 })
-                SDLog("SSHFS Task error: %lu, %@", e.code, e.localizedDescription)
+                SDLog("SSHFS Task error: \(e), \(e.localizedDescription)")
             }
         }
         self.sshfsTask.standardError = outputPipe
@@ -563,7 +573,8 @@ class MountController: NSObject {
                 NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                 self.mounting = false
             }, notMounted: {
-                let error = NSError(domain:SDErrorDomainNotReported, code:SDSSHError.timeout.rawValue, userInfo:[NSLocalizedDescriptionKey: "Volume mount timeout"])
+                let message = NSLocalizedString("Volume mount timeout", comment: "")
+                let error = SDError(message: message, kind: .timeout)
                 SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
                 notification.informativeText = error.localizedDescription
                 notification.title = "SafeDrive mount error"
@@ -574,19 +585,18 @@ class MountController: NSObject {
             })
             
             
-        }, failure: { (_, mountError) in
+        }, failure: { (_, error) in
             self.mounting = false
             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
-            let e = mountError as NSError
-            if e.code == SDMountError.alreadyMounted.rawValue {
+            if let e = error as? SDError, e.kind == .alreadyMounted {
                 NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
             } else {
-                SDLog("SafeDrive startMountTaskWithVolumeName failure in mount controller: \(mountError)")
-                notification.informativeText = mountError.localizedDescription
+                SDLog("SafeDrive startMountTaskWithVolumeName failure in mount controller: \(error)")
+                notification.informativeText = error.localizedDescription
                 notification.title = "SafeDrive mount error"
                 notification.soundName = NSUserNotificationDefaultSoundName
                 NSUserNotificationCenter.default.deliver(notification)
-                SDErrorHandlerReport(mountError)
+                SDErrorHandlerReport(error)
                 self.unmount(success: { _ in
                     //
                 }, failure: { (_, _) in

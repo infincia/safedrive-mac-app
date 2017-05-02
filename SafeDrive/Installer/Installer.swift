@@ -174,8 +174,10 @@ class Installer: NSObject {
         do {
             try fileManager.createDirectory(at: launchAgentsURL, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
-            SDLog("Error creating launch agents directory: \(error)")
-            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.serviceDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error creating launch agents directory: \(error)"])
+            let message = NSLocalizedString("Error creating launch agents directory: \(error)", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .serviceDeployment)
+            throw error
         }
         
         let applicationSupportURL = try! fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -203,16 +205,20 @@ class Installer: NSObject {
         do {
             try fileManager.copyItem(at: launchAgentSourceURL, to: launchAgentDestinationURL)
         } catch let error as NSError {
-            SDLog("Error copying launch agent: \(error)")
-            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.serviceDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying launch agent: \(error)"])
+            let message = NSLocalizedString("Error copying launch agent: \(error)", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .serviceDeployment)
+            throw error
         }
         
         // copy background service to ~/Library/Application Support/SafeDrive/
         do {
             try fileManager.createDirectory(at: safeDriveApplicationSupportURL, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
-            SDLog("Error creating support directory: \(error)")
-            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.serviceDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error creating support directory: \(error)"])
+            let message = NSLocalizedString("Error creating support directory: \(error)", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .serviceDeployment)
+            throw error
         }
         
         if fileManager.fileExists(atPath: serviceDestinationURL.path) {
@@ -225,8 +231,10 @@ class Installer: NSObject {
         do {
             try fileManager.copyItem(at: serviceSourceURL, to: serviceDestinationURL)
         } catch let error as NSError {
-            SDLog("Error copying service: \(error)")
-            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.serviceDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error copying service: \(error)"])
+            let message = NSLocalizedString("Error copying service: \(error)", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .serviceDeployment)
+            throw error
         }
         
     }
@@ -244,10 +252,15 @@ class Installer: NSObject {
         if err != errAuthorizationSuccess {
             if err == errAuthorizationCanceled {
                 SDLog("User cancelled installer")
-                throw NSError(domain: SDErrorDomainNotReported, code: SDInstallationError.fuseDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "FUSE installation cancelled by user"])
+                let message = NSLocalizedString("FUSE installation cancelled by user", comment: "")
+                SDLog(message)
+                let error = SDError(message: message, kind: .fuseDeployment)
+                throw error
             } else {
-                SDLog("Installer could not be launched")
-                throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.fuseDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Installer could not be launched"])
+                let message = NSLocalizedString("Installer could not be launched", comment: "")
+                SDLog(message)
+                let error = SDError(message: message, kind: .fuseDeployment)
+                throw error
             }
         } else {
             SDLog("Installer launched")
@@ -257,8 +270,10 @@ class Installer: NSObject {
     func installCLI() throws {
 
         guard let cli = Bundle.main.url(forAuxiliaryExecutable: "io.safedrive.SafeDrive.cli") else {
-                let cliError = NSError(domain: SDErrorDomainInternal, code:SDInstallationError.cliMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "CLI app missing"])
-                throw cliError
+            let message = NSLocalizedString("CLI app missing, contact SafeDrive support", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .cliMissing)
+            throw error
         }
         
         SDLog("CLI location: \(cli.path)")
@@ -280,23 +295,29 @@ class Installer: NSObject {
         do {
             try fileManager.createSymbolicLink(at: destination, withDestinationURL: cli)
         } catch let error as NSError {
-            SDLog("Error installing CLI app symlink: \(error)")
-            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.cliDeployment.rawValue, userInfo: [NSLocalizedDescriptionKey: "Error installing CLI app symlink: \(error)"])
+            let message = NSLocalizedString("Error installing CLI app symlink: \(error)", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .cliDeployment)
+            throw error
         }
     }
     
     func setupDirectories() throws {
         guard let cli = Bundle.main.url(forAuxiliaryExecutable: "io.safedrive.SafeDrive.cli") else {
-            let cliError = NSError(domain: SDErrorDomainInternal, code:SDInstallationError.cliMissing.rawValue, userInfo:[NSLocalizedDescriptionKey: "CLI app missing"])
-            throw cliError
+            let message = NSLocalizedString("CLI app missing, contact SafeDrive support", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .cliMissing)
+            throw error
         }
                 
         var uid: uid_t = 0
         var gid: gid_t = 0
         
         guard let cfname = SCDynamicStoreCopyConsoleUser(nil, &uid, &gid) else {
-            SDLog("failed")
-            throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.setupDirectories.rawValue, userInfo: [NSLocalizedDescriptionKey: "Failed to get user information from system"])
+            let message = NSLocalizedString("Failed to get user information from system", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .setupDirectories)
+            throw error
         }
         
         let name = cfname as String
@@ -313,11 +334,15 @@ class Installer: NSObject {
         
         if err != errAuthorizationSuccess {
             if err == errAuthorizationCanceled {
-                SDLog("User cancelled setup")
-                throw NSError(domain: SDErrorDomainNotReported, code: SDInstallationError.setupDirectories.rawValue, userInfo: [NSLocalizedDescriptionKey: "Directory setup cancelled by user"])
+                let message = NSLocalizedString("Directory setup cancelled by user", comment: "")
+                SDLog(message)
+                let error = SDError(message: message, kind: .setupDirectories)
+                throw error
             } else {
-                SDLog("Setup could not be completed")
-                throw NSError(domain: SDErrorDomainReported, code: SDInstallationError.setupDirectories.rawValue, userInfo: [NSLocalizedDescriptionKey: "Setup could not be completed"])
+                let message = NSLocalizedString("Setup could not be completed", comment: "")
+                SDLog(message)
+                let error = SDError(message: message, kind: .setupDirectories)
+                throw error
             }
         } else {
             SDLog("Directory setup launched")
