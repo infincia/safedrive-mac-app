@@ -206,7 +206,7 @@ extension ValidateClientViewController:  NSTableViewDelegate {
             return
         }
         
-        let _ = view.softwareClient
+        _ = view.softwareClient
         
     }
 }
