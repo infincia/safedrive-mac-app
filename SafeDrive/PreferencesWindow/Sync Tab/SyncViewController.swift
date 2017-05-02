@@ -234,7 +234,7 @@ class SyncViewController: NSViewController {
             case NSAlertFirstButtonReturn:
                 return
             case NSAlertSecondButtonReturn:
-                op = .deleteFolder
+                op = .deletePath(recursive: true)
                 break
             case NSAlertThirdButtonReturn:
                 op = .moveFolder

@@ -97,6 +97,16 @@ class SyncController: Equatable {
                 self.sdk.remoteFSDeleteDirectory(path: serverURL.path, completionQueue: DispatchQueue.main, success: {
                     successBlock()
                 }, failure: { (error) in
+                    let msg = "SSH: failed to remove directory: \(serverURL.path). \(error.localizedDescription)"
+                    SDLog(msg)
+                    let error = SDError(message: msg, kind: .sftpOperationFailure)
+                    failureBlock(error)
+                })
+                break
+            case RemoteFSOperation.deletePath(let recursive):
+                self.sdk.remoteFSDeletePath(path: serverURL.path, recursive: recursive, completionQueue: DispatchQueue.main, success: {
+                    successBlock()
+                }, failure: { (error) in
                     let msg = "SSH: failed to remove path: \(serverURL.path). \(error.localizedDescription)"
                     SDLog(msg)
                     let error = SDError(message: msg, kind: .sftpOperationFailure)
