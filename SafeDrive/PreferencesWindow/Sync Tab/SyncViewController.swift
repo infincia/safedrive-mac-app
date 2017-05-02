@@ -261,7 +261,7 @@ class SyncViewController: NSViewController {
             // swiftlint:enable force_unwrapping
             
             // swiftlint:disable force_unwrapping
-            let defaultFolder: URL = URL(string: SDDefaultServerPath)!
+            let defaultFolder: URL = URL(string: defaultServerPath())!
             // swiftlint:enable force_unwrapping
 
             let machineFolder: URL = defaultFolder.appendingPathComponent(machineName, isDirectory: true)

@@ -38,16 +38,16 @@ class AppDelegate: NSObject {
     var CFBundleShortVersionString = (Bundle.main.infoDictionary!["CFBundleShortVersionString"])! as! String
     // swiftlint:enable force_unwrapping
 
-    let SDBuildVersionLast = UserDefaults.standard.integer(forKey: SDBuildVersionLastKey)
+    let SDBuildVersionLast = UserDefaults.standard.integer(forKey: userDefaultsBuildVersionLastKey())
     
-    let SDRealmSchemaVersionLast = UserDefaults.standard.integer(forKey: SDRealmSchemaVersionLastKey)
+    let SDRealmSchemaVersionLast = UserDefaults.standard.integer(forKey: userDefaultsRealmSchemaVersionLastKey())
     
     var environment: String = "STAGING"
 }
 
 extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Foundation.Notification) {
-        UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true, SDCurrentVolumeNameKey: SDDefaultVolumeName, SDMountAtLaunchKey: true])
+        UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true, userDefaultsCurrentVolumeNameKey(): defaultVolumeName(), userDefaultsMountAtLaunchKey(): true])
         Crashlytics.sharedInstance().delegate = self
         Fabric.with([Crashlytics.self])
         
@@ -87,7 +87,7 @@ extension AppDelegate: NSApplicationDelegate {
         SDLog("SDDK \(SafeDriveSDK.sddk_version)-\(SafeDriveSDK.sddk_channel)")
 
         
-        if SDRealmSchemaVersionLast > Int(SDCurrentRealmSchema) {
+        if SDRealmSchemaVersionLast > Int(currentRealmSchemaVersion()) {
             let alert: NSAlert = NSAlert()
             alert.messageText = "Unsupported downgrade"
             alert.addButton(withTitle: "Quit")
@@ -97,9 +97,9 @@ extension AppDelegate: NSApplicationDelegate {
             NSApp.terminate(nil)
         }
         
-        UserDefaults.standard.set(SDCurrentRealmSchema, forKey: SDRealmSchemaVersionLastKey)
+        UserDefaults.standard.set(currentRealmSchemaVersion(), forKey: userDefaultsRealmSchemaVersionLastKey())
         
-        UserDefaults.standard.set(CFBundleVersion, forKey: SDBuildVersionLastKey)
+        UserDefaults.standard.set(CFBundleVersion, forKey: userDefaultsBuildVersionLastKey())
         
         PFMoveToApplicationsFolderIfNecessary()
         
@@ -269,9 +269,9 @@ extension AppDelegate: SDApplicationEventProtocol {
                 fileURL: dbURL,
                 // Set the new schema version. This must be greater than the previously used
                 // version (if you've never set a schema version before, the version is 0).
-                schemaVersion: UInt64(SDCurrentRealmSchema),
+                schemaVersion: UInt64(currentRealmSchemaVersion()),
                 migrationBlock: { migration, oldSchemaVersion in
-                    SDLog("Migrating db version \(oldSchemaVersion) to \(SDCurrentRealmSchema)")
+                    SDLog("Migrating db version \(oldSchemaVersion) to \(currentRealmSchemaVersion())")
                     migration.enumerateObjects(ofType: SyncFolder.className()) { _, newObject in
                         if oldSchemaVersion < 15 {
                             migration.delete(newObject!)

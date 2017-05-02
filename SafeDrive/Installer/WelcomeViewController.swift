@@ -37,7 +37,7 @@ class WelcomeViewController: NSViewController {
     }
     
     func check() {
-        let welcomeShown = UserDefaults.standard.bool(forKey: SDWelcomeShownKey)
+        let welcomeShown = UserDefaults.standard.bool(forKey: userDefaultsWelcomeShownKey())
         if !welcomeShown {
             self.delegate?.needsWelcome()
         } else {
@@ -46,7 +46,7 @@ class WelcomeViewController: NSViewController {
     }
     
     @IBAction func next(_ sender: AnyObject?) {
-        UserDefaults.standard.set(true, forKey: SDWelcomeShownKey)
+        UserDefaults.standard.set(true, forKey: userDefaultsWelcomeShownKey())
         self.delegate?.didWelcomeUser()
     }
 }

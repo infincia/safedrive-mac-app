@@ -33,10 +33,10 @@ class MountController: NSObject {
     fileprivate var remotePort: UInt16?
     
     var currentVolumeName: String {
-        if let volumeName = UserDefaults.standard.string(forKey: SDCurrentVolumeNameKey) {
+        if let volumeName = UserDefaults.standard.string(forKey: userDefaultsCurrentVolumeNameKey()) {
             return volumeName
         }
-        return SDDefaultVolumeName
+        return defaultVolumeName()
     }
     
     var currentMountURL: URL {
@@ -56,10 +56,10 @@ class MountController: NSObject {
     
     var automount: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: SDMountAtLaunchKey)
+            return UserDefaults.standard.bool(forKey: userDefaultsMountAtLaunchKey())
         }
         set(newValue) {
-            UserDefaults.standard.set(newValue, forKey: SDMountAtLaunchKey)
+            UserDefaults.standard.set(newValue, forKey: userDefaultsMountAtLaunchKey())
         }
     }
     
@@ -554,7 +554,7 @@ class MountController: NSObject {
         var urlComponents = URLComponents()
         urlComponents.user = user
         urlComponents.host = host
-        urlComponents.path = SDDefaultServerPath
+        urlComponents.path = defaultServerPath()
         urlComponents.port = Int(port)
         
         // swiftlint:disable force_unwrapping
