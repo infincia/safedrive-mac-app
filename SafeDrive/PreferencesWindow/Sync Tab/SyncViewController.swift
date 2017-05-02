@@ -987,8 +987,7 @@ extension SyncViewController: SDAccountProtocol {
     func didReceiveAccountStatus(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
         
-        guard let accountStatus = notification.object as? AccountStatus,
-            let _ = accountStatus.status else {
+        guard let accountStatus = notification.object as? AccountStatus else {
                 SDLog("API contract invalid: didReceiveAccountStatus in PreferencesWindowController")
                 return
         }

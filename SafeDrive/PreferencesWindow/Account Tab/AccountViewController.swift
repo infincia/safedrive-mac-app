@@ -74,14 +74,12 @@ extension AccountViewController: SDAccountProtocol {
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
         
-        guard let accountStatus = notification.object as? AccountStatus,
-            let status = accountStatus.status else {
+        guard let accountStatus = notification.object as? AccountStatus else {
                 self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
                 SDLog("API contract invalid: didSignIn in PreferencesWindowController")
                 return
         }
-        self.accountStatusField.stringValue = status.capitalized
-        
+        self.accountStatusField.stringValue = String(describing: accountStatus.state)
     }
     
     func didSignOut(notification: Foundation.Notification) {
@@ -91,13 +89,12 @@ extension AccountViewController: SDAccountProtocol {
     func didReceiveAccountStatus(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
         
-        guard let accountStatus = notification.object as? AccountStatus,
-            let status = accountStatus.status else {
+        guard let accountStatus = notification.object as? AccountStatus else {
                 self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
                 SDLog("API contract invalid: didReceiveAccountStatus in PreferencesWindowController")
                 return
         }
-        self.accountStatusField.stringValue = status.capitalized
+        self.accountStatusField.stringValue = String(describing: accountStatus.state)
     }
     
     func didReceiveAccountDetails(notification: Foundation.Notification) {
