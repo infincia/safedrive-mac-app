@@ -32,8 +32,6 @@
 		AA4F8FC71E6A2D5700BB068A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */; };
 		AA4F8FC81E6A2D5700BB068A /* WelcomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */; };
 		AA4F8FCA1E6A429100BB068A /* SoftwareClientTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC91E6A429100BB068A /* SoftwareClientTableCellView.swift */; };
-		AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; };
-		AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA50716A1E2ED5F7006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
 		AA50716B1E2ED86A006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
 		AA50716C1E2ED86A006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
@@ -290,7 +288,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AA4FDEF81CAB9A02006FDEA9 /* NMSSH.framework in CopyFiles */,
 				AA74423A1E0517D8004D8518 /* SafeDriveSDK.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,7 +346,6 @@
 		AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewController.swift; path = Installer/WelcomeViewController.swift; sourceTree = "<group>"; };
 		AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeView.xib; path = Installer/WelcomeView.xib; sourceTree = "<group>"; };
 		AA4F8FC91E6A429100BB068A /* SoftwareClientTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoftwareClientTableCellView.swift; path = Installer/SoftwareClientTableCellView.swift; sourceTree = "<group>"; };
-		AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NMSSH.framework; path = Carthage/Build/Mac/NMSSH.framework; sourceTree = "<group>"; };
 		AA5071691E2ED5F7006F59C8 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = Shared/Util.swift; sourceTree = "<group>"; };
 		AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Storage-Status-backing.png"; sourceTree = "<group>"; };
 		AA543C711BFC57B50008FB8B /* Settings-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-Background.png"; sourceTree = "<group>"; };
@@ -450,7 +446,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA4FDEF61CAB99F6006FDEA9 /* NMSSH.framework in Frameworks */,
 				856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */,
 				AA7442381E0517D5004D8518 /* SafeDriveSDK.framework in Frameworks */,
 			);
@@ -497,7 +492,6 @@
 			children = (
 				AA3808761EB7B6AC00BA5F3E /* libz.tbd */,
 				AA3808741EB7B66D00BA5F3E /* libsddk.a */,
-				AA4FDEF51CAB99F6006FDEA9 /* NMSSH.framework */,
 				6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */,
 				6FD6EC24044905614D475A32 /* Pods_SafeDriveFinder.framework */,
 				F9B3056709C1BE77D9B18858 /* Pods_SafeDriveService.framework */,

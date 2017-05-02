@@ -16,8 +16,6 @@
 
 @import Sparkle;
 
-#import <NMSSH/NMSSH.h>
-
 @import RegexKitLite;
 
 @import Crashlytics;
