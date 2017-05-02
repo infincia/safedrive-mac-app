@@ -240,29 +240,6 @@ class AccountController: NSObject {
         
     }
     
-    // MARK: Private
-    
-    fileprivate func accountStatusFromString(_ string: String) -> SDAccountStatus {
-        switch string {
-        case "active":
-            return .active
-        case "trial":
-            return .trial
-        case "trial-expired":
-            return .trialExpired
-        case "expired":
-            return .expired
-        case "locked":
-            return .locked
-        case "reset-password":
-            return .resetPassword
-        case "pending-creation":
-            return .pendingCreation
-        default:
-            return .unknown
-        }
-    }
-    
     fileprivate func accountLoop() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             while true {
