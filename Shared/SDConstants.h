@@ -145,14 +145,6 @@ typedef NS_ENUM(NSInteger, SDInstallationError) {
     SDInstallationErrorSetupDirectories          = 7005,
 };
 
-#pragma mark - Sync state
-
-typedef NS_ENUM(NSInteger, SDSyncState) {
-    SDSyncStateUnknown = -1,
-    SDSyncStateRunning =  0,
-    SDSyncStateIdle    =  1
-};
-
 #pragma mark - Block definitions
 
 typedef void(^SDSuccessBlock)();
