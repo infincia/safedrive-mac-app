@@ -44,13 +44,7 @@ class SyncController: Equatable {
     }
     
     func sftpOperation(_ operation: RemoteFSOperation, remoteDirectory serverURL: URL, password: String, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
-        if let l = NMSSHLogger.shared() {
-            l.logLevel = NMSSHLogLevel.error
-            l.logBlock = { (level, format) in
-                //SDLog("\(format)")
-            }
-        }
-        
+
         guard let host = serverURL.host,
             let port = serverURL.port,
             let user = serverURL.user else {
@@ -63,120 +57,53 @@ class SyncController: Equatable {
         let machineDirectory = serverURL.deletingLastPathComponent()
         
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
-            guard let session = NMSSHSession.connect(toHost: host, port:port, withUsername:user),
-                let channel = session.channel else {
-                    let msg = "failed to create SSH session"
+
+            switch operation {
+            case RemoteFSOperation.moveFolder:
+                // swiftlint:disable force_unwrapping
+                let storageDir = URL(string: "/storage/Storage/")!
+                // swiftlint:enable force_unwrapping
+                
+                let now = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd@HH-mm-ss"
+                dateFormatter.locale = Locale.current
+                let dateString = dateFormatter.string(from: now)
+                let newName = String(format:"%@ - %@", serverURL.lastPathComponent, dateString)
+                let destinationDir = storageDir.appendingPathComponent(newName, isDirectory:true)
+                SDLog("Moving SyncFolder %@ to %@", serverURL.path, destinationDir.path)
+
+                self.sdk.remoteFSMoveDirectory(path: serverURL.path, newPath: destinationDir.path, completionQueue: DispatchQueue.main, success: {
+                    successBlock()
+                }, failure: { (error) in
+                    let msg = "SSH: failed to move path: \(serverURL.path). \(error.localizedDescription)"
                     SDLog(msg)
                     let error = SDError(message: msg, kind: .sftpOperationFailure)
-                    DispatchQueue.main.async(execute: {
-                        failureBlock(error)
-                    })
-                    return
-            }
-            
-            
-            if session.isConnected {
-                // this can be swapped out for a key method as needed
-                session.authenticate(byPassword: password)
-                
-                if session.isAuthorized {
-                    guard let sftp = NMSFTP.connect(with: session) else {
-                        let msg = "failed to create SFTP channel"
-                        SDLog(msg)
-                        let error = SDError(message: msg, kind: .sftpOperationFailure)
-                        DispatchQueue.main.async(execute: {
-                            failureBlock(error)
-                        })
-                        return
-                    }
-                    switch operation {
-                    case RemoteFSOperation.moveFolder:
-                        // swiftlint:disable force_unwrapping
-                        let storageDir = URL(string: "/storage/Storage/")!
-                        // swiftlint:enable force_unwrapping
-
-                        let now = Date()
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "yyyy-MM-dd@HH-mm-ss"
-                        dateFormatter.locale = Locale.current
-                        let dateString = dateFormatter.string(from: now)
-                        let newName = String(format:"%@ - %@", serverURL.lastPathComponent, dateString)
-                        let destinationDir = storageDir.appendingPathComponent(newName, isDirectory:true)
-                        SDLog("Moving SyncFolder %@ to %@", serverURL.path, destinationDir.path)
-                        // we do a remote SSH command instead of SFTP, mv is more reliable apparently
-                        
-                        let command = "mv \"\(serverURL.path)\" \"\(destinationDir.path)\""
-                        do {
-                            try channel.execute(command) //, timeout:30)
-                            DispatchQueue.main.async(execute: {
-                                successBlock()
-                            })
-                        } catch let moveError as NSError {
-                            let msg = "SSH: failed to move path: \(serverURL.path). \(moveError.localizedDescription)"
-                            SDLog(msg)
-                            let error = SDError(message: msg, kind: .sftpOperationFailure)
-                            DispatchQueue.main.async(execute: {
-                                failureBlock(error)
-                            })
-                        }
-                        break
-                        
-                    case RemoteFSOperation.createFolder:
-                        if sftp.directoryExists(atPath: machineDirectory.path) {
-                            DispatchQueue.main.async(execute: {
-                                successBlock()
-                            })
-                        } else if sftp.createDirectory(atPath: machineDirectory.path) {
-                            DispatchQueue.main.async(execute: {
-                                successBlock()
-                            })
-                        } else {
-                            let msg = "SFTP: failed to create path: \(machineDirectory.path)"
-                            SDLog(msg)
-                            let error = SDError(message: msg, kind: .sftpOperationFailure)
-                            DispatchQueue.main.async(execute: {
-                                self.syncFailure = true
-                                failureBlock(error)
-                            })
-                        }
-                        break
-                    case RemoteFSOperation.deleteFolder:
-                        // we do a remote SSH command instead of SFTP, as there is no "rm -rf" command in SFTP
-                        
-                        let command = "rm -rf \"\(serverURL.path)\""
-                        do {
-                            try channel.execute(command) //, timeout:30)
-                            DispatchQueue.main.async(execute: {
-                                successBlock()
-                            })
-                        } catch let removeError as NSError {
-                            let msg = "SSH: failed to remove path: \(serverURL.path). \(removeError.localizedDescription)"
-                            SDLog(msg)
-                            let error = SDError(message: msg, kind: .sftpOperationFailure)
-                            DispatchQueue.main.async(execute: {
-                                failureBlock(error)
-                            })
-                        }
-                        break
-                    }
-                    sftp.disconnect()
-                } else {
-                    let error = SDError(message: "SFTP: authorization failed", kind: .authorization)
-                    DispatchQueue.main.async(execute: {
-                        self.syncFailure = true
-                        failureBlock(error)
-                    })
-                }
-            } else {
-                let error = SDError(message: "SFTP: failed to connect", kind: .timeout)
-                DispatchQueue.main.async(execute: {
-                    self.syncFailure = true
                     failureBlock(error)
                 })
+                break
+                
+            case RemoteFSOperation.createFolder:
+                self.sdk.remoteFSCreateDirectory(path: serverURL.path, completionQueue: DispatchQueue.main, success: {
+                    successBlock()
+                }, failure: { (error) in
+                    let msg = "SSH: failed to create path: \(serverURL.path). \(error.localizedDescription)"
+                    SDLog(msg)
+                    let error = SDError(message: msg, kind: .sftpOperationFailure)
+                    failureBlock(error)
+                })
+                break
+            case RemoteFSOperation.deleteFolder:
+                self.sdk.remoteFSDeleteDirectory(path: serverURL.path, completionQueue: DispatchQueue.main, success: {
+                    successBlock()
+                }, failure: { (error) in
+                    let msg = "SSH: failed to remove path: \(serverURL.path). \(error.localizedDescription)"
+                    SDLog(msg)
+                    let error = SDError(message: msg, kind: .sftpOperationFailure)
+                    failureBlock(error)
+                })
+                break
             }
-            // all cases should end up disconnecting the session and channel
-            channel.closeShell()
-            session.disconnect()
         })
     }
     
