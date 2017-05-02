@@ -142,7 +142,7 @@ class SyncViewController: NSViewController {
                 let folderName = url.lastPathComponent.lowercased()
                 let folderPath = url.path
                 
-                self.sdk.addFolder(folderName, path: folderPath, completionQueue: DispatchQueue.main, success: { (folderID) in
+                self.sdk.addFolder(folderName, path: folderPath, encrypted: isEncrypted, completionQueue: DispatchQueue.main, success: { (folderID) in
                     guard let realm = self.realm else {
                         SDLog("failed to get realm!!!")
                         Crashlytics.sharedInstance().crash()
