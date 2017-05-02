@@ -1884,6 +1884,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safedrive.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "SafeDrive/SafeDrive-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SafeDrive.app/Contents/MacOS/SafeDrive";
 			};
@@ -1907,6 +1908,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.safedrive.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "SafeDrive/SafeDrive-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SafeDrive.app/Contents/MacOS/SafeDrive";
 			};
