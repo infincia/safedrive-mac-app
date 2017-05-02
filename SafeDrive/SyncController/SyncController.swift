@@ -405,7 +405,7 @@ class SyncController: Equatable {
             return
         }
         
-        let sshCommand = "ssh -F\(tempConfigFile.path) -oUserKnownHostsFile=\"\(tempHostsFile.path)\" -p \(port)"
+        let sshCommand = "\(sshPath) -F\(tempConfigFile.path) -oUserKnownHostsFile=\"\(tempHostsFile.path)\" -p \(port)"
 
         //let sshCommand = "\(sshPath) -F\(tempConfigFile.path) -oUserKnownHostsFile=\"\(tempHostsFile.path)\" -p \(port)"
         
