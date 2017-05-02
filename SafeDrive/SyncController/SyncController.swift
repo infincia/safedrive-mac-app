@@ -43,7 +43,7 @@ class SyncController: Equatable {
         return (left.uniqueID == right.uniqueID)
     }
     
-    func sftpOperation(_ operation: SDSFTPOperation, remoteDirectory serverURL: URL, password: String, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
+    func sftpOperation(_ operation: RemoteFSOperation, remoteDirectory serverURL: URL, password: String, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         if let l = NMSSHLogger.shared() {
             l.logLevel = NMSSHLogLevel.error
             l.logBlock = { (level, format) in
@@ -82,7 +82,7 @@ class SyncController: Equatable {
                 if session.isAuthorized {
                     let sftp: NMSFTP! = NMSFTP.connect(with: session)
                     switch operation {
-                    case SDSFTPOperation.moveFolder:
+                    case RemoteFSOperation.moveFolder:
                         // swiftlint:disable force_unwrapping
                         let storageDir = URL(string: "/storage/Storage/")!
                         // swiftlint:enable force_unwrapping
@@ -113,7 +113,7 @@ class SyncController: Equatable {
                         }
                         break
                         
-                    case SDSFTPOperation.createFolder:
+                    case RemoteFSOperation.createFolder:
                         if sftp.directoryExists(atPath: machineDirectory.path) {
                             DispatchQueue.main.async(execute: {
                                 successBlock()
@@ -132,7 +132,7 @@ class SyncController: Equatable {
                             })
                         }
                         break
-                    case SDSFTPOperation.deleteFolder:
+                    case RemoteFSOperation.deleteFolder:
                         // we do a remote SSH command instead of SFTP, as there is no "rm -rf" command in SFTP
                         
                         let command = "rm -rf \"\(serverURL.path)\""
@@ -641,7 +641,7 @@ class SyncController: Equatable {
         
         // MARK: - Launch subprocess and return
         
-        self.sftpOperation(SDSFTPOperation.createFolder, remoteDirectory:serverURL, password:password, success: {
+        self.sftpOperation(RemoteFSOperation.createFolder, remoteDirectory:serverURL, password:password, success: {
             self.syncTask.launch()
             
         }, failure: { (apiError) in

@@ -228,7 +228,7 @@ class SyncViewController: NSViewController {
         
         self.delegate.showAlert(alert) { (response) in
             
-            var op: SDSFTPOperation
+            var op: RemoteFSOperation
             switch response {
             case NSAlertFirstButtonReturn:
                 return
