@@ -180,6 +180,7 @@ class SyncViewController: NSViewController {
     
     @IBAction func removeSyncFolder(_ sender: AnyObject) {
         guard let _ = self.uniqueClientID else {
+            SDLog("ucid unavailable, cancelling remove sync folder")
             return
         }
         guard let _ = self.email,
