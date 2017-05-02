@@ -71,11 +71,11 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
         self.encryptionViewController = EncryptionViewController(delegate: self)
         self.statusViewController = StatusViewController(delegate: self)
         
-        let _ = self.generalViewController.view
-        let _ = self.accountViewController.view
-        let _ = self.syncViewController.view
-        let _ = self.encryptionViewController.view
-        let _ = self.statusViewController.view
+        _ = self.generalViewController.view
+        _ = self.accountViewController.view
+        _ = self.syncViewController.view
+        _ = self.encryptionViewController.view
+        _ = self.statusViewController.view
         
         // register SDAccountProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)

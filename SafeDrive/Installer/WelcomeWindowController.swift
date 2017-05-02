@@ -61,22 +61,22 @@ class WelcomeWindowController: NSWindowController {
         let pageIdentifiers = ["WelcomeViewController", "ValidateDependenciesViewController", "ValidateAccountViewController", "ValidateClientViewController", "ReadyViewController", "FailedViewController"]
         
         self.welcomeViewController = WelcomeViewController(delegate: self, viewDelegate: self)
-        let _ = self.welcomeViewController.view
+        _ = self.welcomeViewController.view
 
         self.validateDependenciesViewController = ValidateDependenciesViewController(installer: self.installer, delegate: self, viewDelegate: self)
-        let _ = self.validateDependenciesViewController.view
+        _ = self.validateDependenciesViewController.view
         
         self.validateAccountViewController = ValidateAccountViewController(delegate: self, viewDelegate: self)
-        let _ = self.validateAccountViewController.view
+        _ = self.validateAccountViewController.view
 
         self.validateClientViewController = ValidateClientViewController(delegate: self, viewDelegate: self)
-        let _ = self.validateClientViewController.view
+        _ = self.validateClientViewController.view
         
         self.readyViewController = ReadyViewController(delegate: self, viewDelegate: self)
-        let _ = self.readyViewController.view
+        _ = self.readyViewController.view
         
         self.failedViewController = FailedViewController(delegate: self, viewDelegate: self)
-        let _ = self.failedViewController.view
+        _ = self.failedViewController.view
 
         self.pageController.arrangedObjects = pageIdentifiers
         
