@@ -183,11 +183,7 @@ class SyncViewController: NSViewController {
             SDLog("ucid unavailable, cancelling remove sync folder")
             return
         }
-        guard let _ = self.email,
-            let localPassword = self.password,
-            let localInternalUserName = self.internalUserName,
-            let localPort = self.remotePort,
-            let localHost = self.remoteHost else {
+        guard let _ = self.email else {
                 SDLog("credentials unavailable, cancelling remove sync folder")
                 return
         }
@@ -267,15 +263,6 @@ class SyncViewController: NSViewController {
 
             let machineFolder: URL = defaultFolder.appendingPathComponent(machineName, isDirectory: true)
             let remoteFolder: URL = machineFolder.appendingPathComponent(folderName, isDirectory: true)
-            var urlComponents: URLComponents = URLComponents()
-            urlComponents.user = localInternalUserName
-            urlComponents.password = localPassword
-            urlComponents.host = localHost
-            urlComponents.path = remoteFolder.path
-            urlComponents.port = Int(localPort)
-            // swiftlint:disable force_unwrapping
-            let remote: URL = urlComponents.url!
-            // swiftlint:enable force_unwrapping
             
             
             let serverCancel: () -> Void = {
@@ -324,7 +311,7 @@ class SyncViewController: NSViewController {
                 } else {
                     let syncController = SyncController()
                     syncController.uniqueID = uniqueID
-                    syncController.sftpOperation(op, remoteDirectory: remote, password: localPassword, success: {
+                    syncController.sftpOperation(op, remoteDirectory: remoteFolder, success: {
                         serverCancel()
                     }, failure: { (error) in
                         SDErrorHandlerReport(error)

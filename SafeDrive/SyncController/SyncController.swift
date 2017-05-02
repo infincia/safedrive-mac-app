@@ -43,18 +43,7 @@ class SyncController: Equatable {
         return (left.uniqueID == right.uniqueID)
     }
     
-    func sftpOperation(_ operation: RemoteFSOperation, remoteDirectory serverURL: URL, password: String, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
-
-        guard let host = serverURL.host,
-            let port = serverURL.port,
-            let user = serverURL.user else {
-                let error = SDError(message: "failed to unpack user information", kind: .apiContractInvalid)
-                DispatchQueue.main.async(execute: {
-                    failureBlock(error)
-                })
-                return
-        }
-        let machineDirectory = serverURL.deletingLastPathComponent()
+    func sftpOperation(_ operation: RemoteFSOperation, remoteDirectory serverURL: URL, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
 
@@ -585,7 +574,7 @@ class SyncController: Equatable {
         
         // MARK: - Launch subprocess and return
         
-        self.sftpOperation(RemoteFSOperation.createFolder, remoteDirectory:serverURL, password:password, success: {
+        self.sftpOperation(RemoteFSOperation.createFolder, remoteDirectory:serverURL, success: {
             self.syncTask.launch()
             
         }, failure: { (apiError) in
