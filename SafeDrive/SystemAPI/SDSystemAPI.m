@@ -61,7 +61,7 @@
     NSError *loginItemError = nil;
     [[NSBundle mainBundle] addToLoginItems];
     if (!self.autostart) {
-        loginItemError = [NSError errorWithDomain:@"io.safedrive.reported" code:SDSystemErrorAddLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Adding login item failed"}];
+        loginItemError = [NSError errorWithDomain: @"io.safedrive.reported" code: 2001 userInfo: @{NSLocalizedDescriptionKey: @"Adding login item failed"}];
         if (error != nil) {
             *error = loginItemError;
         }
@@ -74,7 +74,7 @@
     NSError *loginItemError = nil;
     [[NSBundle mainBundle] removeFromLoginItems];
     if (self.autostart) {
-        loginItemError = [NSError errorWithDomain:@"io.safedrive.reported" code:SDSystemErrorRemoveLoginItemFailed userInfo:@{NSLocalizedDescriptionKey: @"Removing login item failed"}];
+        loginItemError = [NSError errorWithDomain: @"io.safedrive.reported" code: 2002 userInfo: @{NSLocalizedDescriptionKey: @"Removing login item failed"}];
         if (error != nil) {
             *error = loginItemError;
         }
