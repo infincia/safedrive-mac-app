@@ -25,8 +25,6 @@ target 'SafeDrive' do
     use_frameworks!
     shared_pods
     realm
-    pod 'FontAwesome.swift', :git => 'https://github.com/infincia/FontAwesome.swift', :branch => 'osx'
-    #pod 'SwiftDate', git: 'https://github.com/malcommac/SwiftDate.git', branch: 'feature/swift-3.0'
     pod 'RegexKitLite', '~> 4.0'
     pod 'IYLoginItem', '~> 0.1'
     pod 'DCOAboutWindow', '~> 0.2.0'
