@@ -80,7 +80,15 @@ class SyncController: Equatable {
                 session.authenticate(byPassword: password)
                 
                 if session.isAuthorized {
-                    let sftp: NMSFTP! = NMSFTP.connect(with: session)
+                    guard let sftp = NMSFTP.connect(with: session) else {
+                        let msg = "failed to create SFTP channel"
+                        SDLog(msg)
+                        let error = SDError(message: msg, kind: .sftpOperationFailure)
+                        DispatchQueue.main.async(execute: {
+                            failureBlock(error)
+                        })
+                        return
+                    }
                     switch operation {
                     case RemoteFSOperation.moveFolder:
                         // swiftlint:disable force_unwrapping
