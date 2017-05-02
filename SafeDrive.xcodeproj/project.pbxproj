@@ -22,7 +22,6 @@
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA3808751EB7B66D00BA5F3E /* libsddk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3808741EB7B66D00BA5F3E /* libsddk.a */; };
 		AA3808771EB7B6AC00BA5F3E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3808761EB7B6AC00BA5F3E /* libz.tbd */; };
-		AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA3EB8361E55686E003A2E79 /* SyncSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8351E55686E003A2E79 /* SyncSession.swift */; };
 		AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */; };
 		AA3EB83B1E556EE3003A2E79 /* RestoreSelectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */; };
@@ -87,8 +86,6 @@
 		AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */; };
 		AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */; };
 		AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */; };
-		AA7FE7A31E3D4AD4007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
-		AA7FE7A51E3D4AD5007EDF70 /* SDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */; };
 		AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAA3E6FD1EADAD7D0083CE66 /* io.safedrive.SafeDrive.cli in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6ED1EADAB900083CE66 /* io.safedrive.SafeDrive.cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAA3E6FE1EADAD7D0083CE66 /* io.safedrive.SafeDrive.daemon in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6EE1EADAB900083CE66 /* io.safedrive.SafeDrive.daemon */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -343,8 +340,6 @@
 		AA31682B1A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA3808741EB7B66D00BA5F3E /* libsddk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsddk.a; path = "safedrive-sdk/dist/x86_64-apple-darwin/lib/libsddk.a"; sourceTree = "<group>"; };
 		AA3808761EB7B6AC00BA5F3E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDConstants.h; path = Shared/SDConstants.h; sourceTree = "<group>"; };
-		AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDConstants.m; path = Shared/SDConstants.m; sourceTree = "<group>"; };
 		AA3EB8351E55686E003A2E79 /* SyncSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncSession.swift; path = Shared/SyncSession.swift; sourceTree = "<group>"; };
 		AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestoreSelectionWindow.xib; sourceTree = "<group>"; };
 		AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionWindowController.swift; sourceTree = "<group>"; };
@@ -676,8 +671,6 @@
 				AA6E272A1D876DD800038019 /* Notifications.swift */,
 				AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */,
 				AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */,
-				AA3D8EBB1C3D80E100CF0A3C /* SDConstants.h */,
-				AA3D8EBC1C3D80E100CF0A3C /* SDConstants.m */,
 				AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */,
 				AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */,
 				AA3EB8351E55686E003A2E79 /* SyncSession.swift */,
@@ -1449,7 +1442,6 @@
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AA6E27301D87855100038019 /* MountController.swift in Sources */,
 				AAA88BD31C84B4CA009BE1C7 /* SyncTask.swift in Sources */,
-				AA3D8EBD1C3D80E100CF0A3C /* SDConstants.m in Sources */,
 				AA4F8FCA1E6A429100BB068A /* SoftwareClientTableCellView.swift in Sources */,
 				AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */,
 				AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */,
@@ -1541,7 +1533,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA7FE7A51E3D4AD5007EDF70 /* SDConstants.m in Sources */,
 				AA6E272D1D876DD800038019 /* Notifications.swift in Sources */,
 				AA3EB8421E569E9D003A2E79 /* Protocols.swift in Sources */,
 				AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */,
@@ -1559,7 +1550,6 @@
 			files = (
 				AA6E272E1D876DD800038019 /* Notifications.swift in Sources */,
 				AA50716B1E2ED86A006F59C8 /* Util.swift in Sources */,
-				AA7FE7A31E3D4AD4007EDF70 /* SDConstants.m in Sources */,
 				AA3EB8431E569E9D003A2E79 /* Protocols.swift in Sources */,
 				AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AAA88BCF1C83D243009BE1C7 /* SyncFolder.swift in Sources */,
