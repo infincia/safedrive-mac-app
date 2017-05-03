@@ -94,6 +94,15 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
                 failure(se)
             })
             
+        }, issue: { (message) in
+            SDLog("\(message)")
+            
+            let notification = NSUserNotification()
+            notification.informativeText = message
+            notification.title = NSLocalizedString("Account issue", comment: "")
+            notification.soundName = NSUserNotificationDefaultSoundName
+            NSUserNotificationCenter.default.deliver(notification)
+
         }, success: {
             if let recoveryPhrase = try? self.sdk.getKeychainItem(withUser: email, service: recoveryKeyDomain()) {
                 self.recoveryPhraseField.stringValue = recoveryPhrase
