@@ -396,7 +396,7 @@ class SyncController: Equatable {
         }
         
         /* our own ssh binary */
-        guard let sshPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
+        guard let _ = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
             let message = NSLocalizedString("SSH missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .sshMissing)
             failureBlock(self.localURL, error)
