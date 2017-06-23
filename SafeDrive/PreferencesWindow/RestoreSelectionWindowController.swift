@@ -8,7 +8,7 @@ import RealmSwift
 import SafeDriveSDK
 
 protocol RestoreSelectionDelegate: class {
-    func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL)
+    func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL, type: SyncType)
 }
 
 extension RestoreSelectionWindowController: NSTableViewDataSource {
@@ -258,8 +258,10 @@ class RestoreSelectionWindowController: NSWindowController {
 
         
         if let syncSession = realm.objects(PersistedSyncSession.self).filter("name == %@", v.sessionName).last,
-            let name = syncSession.name {
-            self.restoreSelectionDelegate?.selectedSession(name, folderID: self.folderID, destination: destination)
+            let name = syncSession.name,
+            let folder = realm.objects(SyncFolder.self).filter("uniqueID == %@", Int64(self.folderID)).last {
+            let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
+            self.restoreSelectionDelegate?.selectedSession(name, folderID: self.folderID, destination: destination, type: type)
             self.close()
         } else {
             SDLog("failed to get session from realm!!!")

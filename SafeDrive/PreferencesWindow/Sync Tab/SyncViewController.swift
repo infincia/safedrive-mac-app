@@ -1120,13 +1120,12 @@ extension SyncViewController: NSTableViewDataSource {
 }
 
 extension SyncViewController: RestoreSelectionDelegate {
-    func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL) {
+    func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL, type: SyncType) {
         assert(Thread.current == Thread.main, "selectedSession called on background thread")
         
         guard let uniqueClientID = self.uniqueClientID else {
             return
         }
-        let type: SyncType = .encrypted
         
         self.syncScheduler.cancel(folderID) {
             self.syncScheduler.queueSyncJob(uniqueClientID, folderID: folderID, direction: .reverse, type: type, name: sessionName, destination: destination)
