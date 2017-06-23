@@ -211,6 +211,7 @@ extension EncryptionViewController: SDAccountProtocol {
             case .TokenExpired:
                 break
             case .CryptoError:
+                NotificationCenter.default.post(name: Notification.Name.accountNeedsRecoveryPhrase, object: nil)
                 break
             case .IO:
                 break
