@@ -168,7 +168,7 @@ extension WelcomeWindowController: StateDelegate {
         self.setState(.validateAccount)
     }
     
-    func didValidateAccount(withEmail email: String, password: String, clients: [SoftwareClient]) {
+    func didValidateAccount(withEmail email: String, password: String, clients: [SDKSoftwareClient]) {
         SDLog("validated account: \(email)")
         self.setState(.validateClient(email: email, password: password, clients: clients))
         let user = User(email: email, password: password)
@@ -337,7 +337,7 @@ enum State {
     case welcome
     case validateDependencies
     case validateAccount
-    case validateClient(email: String, password: String, clients: [SoftwareClient])
+    case validateClient(email: String, password: String, clients: [SDKSoftwareClient])
     case ready
     case failed(error: Error, uniqueClientID: String?)
 }
@@ -373,7 +373,7 @@ extension State: RawRepresentable {
         case 2:
             self = .validateAccount
         case 3:
-            self = .validateClient(email: "", password: "", clients: [SoftwareClient]())
+            self = .validateClient(email: "", password: "", clients: [SDKSoftwareClient]())
         case 4:
             self = .ready
         default:
@@ -425,7 +425,7 @@ protocol StateDelegate: class {
     func needsClient()
     func didWelcomeUser()
     func didValidateDependencies()
-    func didValidateAccount(withEmail email: String, password: String, clients: [SoftwareClient])
+    func didValidateAccount(withEmail email: String, password: String, clients: [SDKSoftwareClient])
     func didValidateClient(withEmail email: String, password: String, name: String, uniqueClientID: String)
     func didFail(error: Error, uniqueClientID: String?)
     func didFinish()

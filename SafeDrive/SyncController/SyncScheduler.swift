@@ -406,7 +406,7 @@ extension SyncScheduler: SDAccountProtocol {
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
         
-        guard let accountStatus = notification.object as? AccountStatus else {
+        guard let accountStatus = notification.object as? SDKAccountStatus else {
             SDLog("API contract invalid: didSignIn in SyncScheduler")
             return
         }
@@ -437,7 +437,7 @@ extension SyncScheduler: SDAccountProtocol {
     func didReceiveAccountStatus(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
 
-        guard let accountStatus = notification.object as? AccountStatus else {
+        guard let accountStatus = notification.object as? SDKAccountStatus else {
             SDLog("API contract invalid: didReceiveAccountStatus in SyncScheduler")
             return
         }
@@ -449,7 +449,7 @@ extension SyncScheduler: SDAccountProtocol {
     func didReceiveAccountDetails(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didReceiveAccountDetails called on background thread")
 
-        guard let _ = notification.object as? AccountDetails else {
+        guard let _ = notification.object as? SDKAccountDetails else {
             SDLog("API contract invalid: didReceiveAccountDetails in SyncScheduler")
             return
         }

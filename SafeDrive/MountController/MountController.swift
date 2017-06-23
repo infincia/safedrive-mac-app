@@ -680,7 +680,7 @@ extension MountController: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
-        guard let accountStatus = notification.object as? AccountStatus else {
+        guard let accountStatus = notification.object as? SDKAccountStatus else {
             SDLog("API contract invalid: didSignIn in MountController")
             return
         }
@@ -709,7 +709,7 @@ extension MountController: SDAccountProtocol {
     func didReceiveAccountStatus(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
 
-        guard let accountStatus = notification.object as? AccountStatus else {
+        guard let accountStatus = notification.object as? SDKAccountStatus else {
             SDLog("API contract invalid: didReceiveAccountStatus in MountController")
             return
         }

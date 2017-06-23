@@ -21,7 +21,7 @@ class ValidateClientViewController: NSViewController {
     
     @IBOutlet fileprivate weak var replaceClientButton: NSButton!
     
-    var clients: [SoftwareClient]?
+    var clients: [SDKSoftwareClient]?
     
     fileprivate var prompted = false
     
@@ -70,7 +70,7 @@ class ValidateClientViewController: NSViewController {
         self.isClientRegistered = false
     }
     
-    func check(email: String, password: String, clients: [SoftwareClient]) {
+    func check(email: String, password: String, clients: [SDKSoftwareClient]) {
         self.reset()
         
         SDLog("checking client")

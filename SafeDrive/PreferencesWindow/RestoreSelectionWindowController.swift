@@ -116,7 +116,7 @@ class RestoreSelectionWindowController: NSWindowController {
     
     fileprivate var sdk = SafeDriveSDK.sharedSDK
 
-    fileprivate var sessions = [SDSyncSession]()
+    fileprivate var sessions = [SDKSyncSession]()
 
     fileprivate var uniqueClientID: String!
     fileprivate var folderID: UInt64!
@@ -275,7 +275,7 @@ class RestoreSelectionWindowController: NSWindowController {
         
         self.spinner.startAnimation(self)
         self.errorField.stringValue = ""
-        self.sdk.getSessions(completionQueue: DispatchQueue.main, success: { (sessions: [SDSyncSession]) in
+        self.sdk.getSessions(completionQueue: DispatchQueue.main, success: { (sessions: [SDKSyncSession]) in
             self.errorField.stringValue = ""
             guard let realm = self.realm else {
                 SDLog("failed to get realm!!!")

@@ -8,9 +8,9 @@ import SafeDriveSDK
 
 class SoftwareClientTableCellView: NSTableCellView {
 
-    fileprivate var _softwareClient: SoftwareClient!
+    fileprivate var _softwareClient: SDKSoftwareClient!
     
-    var softwareClient: SoftwareClient {
+    var softwareClient: SDKSoftwareClient {
         get {
             return self._softwareClient
         }

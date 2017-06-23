@@ -43,12 +43,12 @@ class SyncController: Equatable {
         return (left.uniqueID == right.uniqueID)
     }
     
-    func sftpOperation(_ operation: RemoteFSOperation, remoteDirectory serverURL: URL, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
+    func sftpOperation(_ operation: SDKRemoteFSOperation, remoteDirectory serverURL: URL, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
 
             switch operation {
-            case RemoteFSOperation.moveFolder:
+            case SDKRemoteFSOperation.moveFolder:
                 // swiftlint:disable force_unwrapping
                 let storageDir = URL(string: "/storage/Storage/")!
                 // swiftlint:enable force_unwrapping
@@ -72,7 +72,7 @@ class SyncController: Equatable {
                 })
                 break
                 
-            case RemoteFSOperation.createFolder:
+            case SDKRemoteFSOperation.createFolder:
                 self.sdk.remoteFSCreateDirectory(path: serverURL.path, completionQueue: DispatchQueue.main, success: {
                     successBlock()
                 }, failure: { (error) in
@@ -82,7 +82,7 @@ class SyncController: Equatable {
                     failureBlock(error)
                 })
                 break
-            case RemoteFSOperation.deleteFolder:
+            case SDKRemoteFSOperation.deleteFolder:
                 self.sdk.remoteFSDeleteDirectory(path: serverURL.path, completionQueue: DispatchQueue.main, success: {
                     successBlock()
                 }, failure: { (error) in
@@ -92,7 +92,7 @@ class SyncController: Equatable {
                     failureBlock(error)
                 })
                 break
-            case RemoteFSOperation.deletePath(let recursive):
+            case SDKRemoteFSOperation.deletePath(let recursive):
                 self.sdk.remoteFSDeletePath(path: serverURL.path, recursive: recursive, completionQueue: DispatchQueue.main, success: {
                     successBlock()
                 }, failure: { (error) in
@@ -574,7 +574,7 @@ class SyncController: Equatable {
         
         // MARK: - Launch subprocess and return
         
-        self.sftpOperation(RemoteFSOperation.createFolder, remoteDirectory:serverURL, success: {
+        self.sftpOperation(SDKRemoteFSOperation.createFolder, remoteDirectory:serverURL, success: {
             self.syncTask.launch()
             
         }, failure: { (apiError) in

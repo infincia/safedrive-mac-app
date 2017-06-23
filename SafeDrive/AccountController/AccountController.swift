@@ -21,7 +21,7 @@ class AccountController: NSObject {
     
     fileprivate var sdk = SafeDriveSDK.sharedSDK
     
-    var accountState: AccountState = .unknown
+    var accountState: SDKAccountState = .unknown
     
     var uniqueClientID: String?
     

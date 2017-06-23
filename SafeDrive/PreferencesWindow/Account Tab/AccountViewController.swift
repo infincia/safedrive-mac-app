@@ -74,7 +74,7 @@ extension AccountViewController: SDAccountProtocol {
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
         
-        guard let accountStatus = notification.object as? AccountStatus else {
+        guard let accountStatus = notification.object as? SDKAccountStatus else {
                 self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
                 SDLog("API contract invalid: didSignIn in PreferencesWindowController")
                 return
@@ -89,7 +89,7 @@ extension AccountViewController: SDAccountProtocol {
     func didReceiveAccountStatus(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
         
-        guard let accountStatus = notification.object as? AccountStatus else {
+        guard let accountStatus = notification.object as? SDKAccountStatus else {
                 self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment:"")
                 SDLog("API contract invalid: didReceiveAccountStatus in PreferencesWindowController")
                 return
@@ -100,7 +100,7 @@ extension AccountViewController: SDAccountProtocol {
     func didReceiveAccountDetails(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didReceiveAccountDetails called on background thread")
         
-        guard let accountDetails = notification.object as? AccountDetails else {
+        guard let accountDetails = notification.object as? SDKAccountDetails else {
             SDLog("API contract invalid: didReceiveAccountDetails in PreferencesWindowController")
             return
         }
@@ -112,11 +112,10 @@ extension AccountViewController: SDAccountProtocol {
         self.assignedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(assignedStorage), countStyle: .file)
         self.usedStorageField.stringValue = ByteCountFormatter.string(fromByteCount: Int64(usedStorage), countStyle: .file)
         
-        let date: Date = Date(timeIntervalSince1970: Double(expirationDate) / 1000)
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
         dateFormatter.timeStyle = .none
         dateFormatter.dateStyle = .short
-        self.accountExpirationField.stringValue = dateFormatter.string(from: date)
+        self.accountExpirationField.stringValue = dateFormatter.string(from: expirationDate)
     }
 }

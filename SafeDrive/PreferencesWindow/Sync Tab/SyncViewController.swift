@@ -225,7 +225,7 @@ class SyncViewController: NSViewController {
         
         self.delegate.showAlert(alert) { (response) in
             
-            var op: RemoteFSOperation
+            var op: SDKRemoteFSOperation
             switch response {
             case NSAlertFirstButtonReturn:
                 return
@@ -334,7 +334,7 @@ class SyncViewController: NSViewController {
         }
         self.spinner.startAnimation(self)
         
-        self.sdk.getFolders(completionQueue: DispatchQueue.main, success: { (folders: [Folder]) in
+        self.sdk.getFolders(completionQueue: DispatchQueue.main, success: { (folders: [SDKSyncFolder]) in
             self.scheduleSelection.selectItem(at: -1)
 
             var currentFolderIDs = [Int32]()
@@ -358,9 +358,7 @@ class SyncViewController: NSViewController {
                 
                 currentFolderIDs.append(Int32(folderId))
                 
-                let addedUnixDate = Double(folder.date)
-                
-                let addedDate: Date = Date(timeIntervalSince1970: addedUnixDate / 1000)
+                let addedDate = folder.date
                 
                 let encrypted = folder.encrypted
                 
@@ -936,7 +934,7 @@ extension SyncViewController: SDAccountProtocol {
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
         
-        guard let accountStatus = notification.object as? AccountStatus else {
+        guard let accountStatus = notification.object as? SDKAccountStatus else {
             SDLog("API contract invalid: didSignIn in MountController")
             return
         }
@@ -975,7 +973,7 @@ extension SyncViewController: SDAccountProtocol {
     func didReceiveAccountStatus(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
         
-        guard let accountStatus = notification.object as? AccountStatus else {
+        guard let accountStatus = notification.object as? SDKAccountStatus else {
                 SDLog("API contract invalid: didReceiveAccountStatus in PreferencesWindowController")
                 return
         }
