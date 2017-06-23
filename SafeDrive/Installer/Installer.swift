@@ -6,9 +6,9 @@
 
 
 import Foundation
+import SafeDriveSDK
 import SystemConfiguration
 
-import SafeDriveSDK
 
 protocol InstallerDelegate: class {
     func needsDependencies()

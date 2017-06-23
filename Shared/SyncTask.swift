@@ -3,8 +3,8 @@
 //
 
 import Foundation
-import RealmSwift
 import Realm
+import RealmSwift
 
 class SyncTask: Object {
     dynamic var syncFolder: SyncFolder?
