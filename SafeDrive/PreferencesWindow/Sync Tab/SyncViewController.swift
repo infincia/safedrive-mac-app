@@ -670,7 +670,7 @@ class SyncViewController: NSViewController {
         guard let _ = self.uniqueClientID,
             let folders = self.folders,
             let realm = self.realm,
-            let syncFolder = folders[safe: self.syncListView.selectedRow] else {
+            let syncFolder = folders[safe: self.syncListView.selectedRow - 1] else {
                 return
         }
 
@@ -716,7 +716,7 @@ class SyncViewController: NSViewController {
         guard let _ = self.uniqueClientID,
             let folders = self.folders,
             let realm = self.realm,
-            let syncFolder = folders[safe: self.syncListView.selectedRow] else {
+            let syncFolder = folders[safe: self.syncListView.selectedRow - 1] else {
                 return
         }
         
