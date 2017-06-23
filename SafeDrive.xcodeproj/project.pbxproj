@@ -56,7 +56,6 @@
 		AA58D2D91E82DBE4002D56E0 /* EncryptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2D71E82DBE4002D56E0 /* EncryptionView.xib */; };
 		AA58D2DC1E82DC15002D56E0 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2DA1E82DC15002D56E0 /* StatusViewController.swift */; };
 		AA58D2DD1E82DC15002D56E0 /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2DB1E82DC15002D56E0 /* StatusView.xib */; };
-		AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA650CF31D73A381008DA5CB /* Changelog.md in Resources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
@@ -1431,7 +1430,6 @@
 				AA3EB83D1E557C20003A2E79 /* RestoreSelectionTableCellView.swift in Sources */,
 				AA58D2D81E82DBE4002D56E0 /* EncryptionViewController.swift in Sources */,
 				AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */,
-				AA650CF21D73A29A008DA5CB /* Changelog.md in Sources */,
 				AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AA6E27301D87855100038019 /* MountController.swift in Sources */,
