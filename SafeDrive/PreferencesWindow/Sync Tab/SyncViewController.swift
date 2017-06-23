@@ -728,142 +728,20 @@ class SyncViewController: NSViewController {
     }
 
     fileprivate func updateSyncDetailsPanel() {
-        guard let folders = self.folders,
+        guard self.syncListView.selectedRow != -1,
+            let folders = self.folders,
             let _ = self.uniqueClientID,
-            let realm = self.realm else {
-                return
-        }
-        
-        if self.syncListView.selectedRow != -1 {
-            // normally this would be one-indexed, but we're bumping the folder rows down to make room for
-            // the machine row
-            let syncFolder = folders[self.syncListView.selectedRow - 1]
-            
-            
-            if let syncTime = syncFolder.syncTime {
-                self.syncTimePicker.dateValue = syncTime as Date
-            } else {
-                SDLog("Failed to load date in sync manager")
-            }
-            
-            /*if let syncURL = realSyncFolder.url {
-             self.pathIndicator.URL = syncURL
-             }
-             else {
-             SDLog("Failed to load path in sync manager")
-             }*/
-            
-            let numberFormatter = NumberFormatter()
-            numberFormatter.minimumSignificantDigits = 2
-            numberFormatter.maximumSignificantDigits = 2
-            numberFormatter.locale = Locale.current
-            
-            self.progress.maxValue = 100.0
-            self.progress.minValue = 0.0
-            let syncTasks = realm.objects(SyncTask.self)
-            
-            // swiftlint:disable force_unwrapping
-            let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
-            // swiftlint:enable force_unwrapping
-            
-            if !syncFolder.active {
-                self.syncStatus.stringValue = "Paused"
-                failureView.message.textStorage?.setAttributedString(NSAttributedString(string: ""))
+            let realm = self.realm,
+            let syncFolder = folders[safe: self.syncListView.selectedRow - 1] else {
+                //self.lastSyncField.stringValue = ""
+                //self.nextSyncField.stringValue = ""
+                self.scheduleSelection.selectItem(at: -1)
+                self.scheduleSelection.isEnabled = false
+                self.syncStatus.stringValue = "Unknown"
                 self.syncFailureInfoButton.action = nil
                 self.syncFailureInfoButton.isHidden = true
                 self.syncFailureInfoButton.isEnabled = false
                 self.syncFailureInfoButton.toolTip = nil
-                self.progress.stopAnimation(nil)
-                
-                self.progress.doubleValue = 0.0
-                
-                self.syncProgressField.stringValue = ""
-            } else if let syncTask = syncTasks.filter("syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", syncFolder).sorted(byKeyPath: "syncDate").last {
-                
-                if syncFolder.restoring {
-                    // swiftlint:disable force_unwrapping
-                    let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
-                    // swiftlint:enable force_unwrapping
-
-                    self.syncStatus.stringValue = "Restoring"
-                    if syncFolder.currentSyncUUID == syncTask.uuid {
-                        self.progress.startAnimation(nil)
-                        self.progress.doubleValue = syncTask.progress
-                        self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
-                    } else {
-                        self.progress.stopAnimation(nil)
-                        self.progress.doubleValue = 0.0
-                        self.syncProgressField.stringValue = ""
-                    }
-                } else if syncFolder.syncing {
-                    // swiftlint:disable force_unwrapping
-                    let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
-                    // swiftlint:enable force_unwrapping
-
-                    self.syncStatus.stringValue = "Syncing"
-                    if syncFolder.currentSyncUUID == syncTask.uuid {
-                        self.progress.startAnimation(nil)
-                        self.progress.doubleValue = syncTask.progress
-                        self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
-                    } else {
-                        self.progress.stopAnimation(nil)
-                        self.progress.doubleValue = 0.0
-                        self.syncProgressField.stringValue = ""
-                    }
-                } else if syncTask.success {
-                    self.syncStatus.stringValue = "Success"
-                    self.progress.stopAnimation(nil)
-                    
-                    self.progress.doubleValue = 0.0
-                    self.syncProgressField.stringValue = ""
-                    
-                } else {
-                    self.syncStatus.stringValue = "Failed"
-                    self.progress.stopAnimation(nil)
-                    
-                    self.progress.doubleValue = 0.0
-                    self.syncProgressField.stringValue = ""
-                    
-                }
-                
-                if let messages = syncTask.message {
-                    failureView.message.textStorage?.setAttributedString(NSAttributedString(string: messages))
-                    self.syncFailureInfoButton.isHidden = false
-                    self.syncFailureInfoButton.isEnabled = true
-                    self.syncFailureInfoButton.toolTip = NSLocalizedString("Some issues detected, click here for details", comment: "")
-                    self.syncFailureInfoButton.action = #selector(self.showFailurePopover(_:))
-                } else {
-                    failureView.message.textStorage?.setAttributedString(NSAttributedString(string: ""))
-                    self.syncFailureInfoButton.isHidden = true
-                    self.syncFailureInfoButton.isEnabled = false
-                    self.syncFailureInfoButton.toolTip = ""
-                }
-            } else {
-                self.syncStatus.stringValue = "Waiting"
-                failureView.message.textStorage?.setAttributedString(NSAttributedString(string: ""))
-                self.syncFailureInfoButton.action = nil
-                self.syncFailureInfoButton.isHidden = true
-                self.syncFailureInfoButton.isEnabled = false
-                self.syncFailureInfoButton.toolTip = nil
-                self.progress.stopAnimation(nil)
-                
-                self.progress.doubleValue = 0.0
-                
-                self.syncProgressField.stringValue = ""
-            }
-            
-            /*if let syncTask = syncTasks.filter("syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
-             lastSync = syncTask.syncDate {
-             self.lastSyncField.stringValue = lastSync.toMediumString()
-             }
-             else {
-             self.lastSyncField.stringValue = ""
-             }*/
-            
-            switch syncFolder.syncFrequency {
-            case "hourly":
-                self.scheduleSelection.selectItem(at: 0)
-                //self.nextSyncField.stringValue = NSDate().nextHour()?.toMediumString() ?? ""
                 self.syncTimePicker.isEnabled = false
                 self.syncTimePicker.isHidden = true
                 var components = DateComponents()
@@ -873,39 +751,133 @@ class SyncViewController: NSViewController {
                 // swiftlint:disable force_unwrapping
                 self.syncTimePicker.dateValue = calendar.date(from: components)!
                 // swiftlint:enable force_unwrapping
-
-            case "daily":
-                self.scheduleSelection.selectItem(at: 1)
-                //self.nextSyncField.stringValue = NSDate().nextDayAt((realSyncFolder.syncTime?.hour)!, minute: (realSyncFolder.syncTime?.minute)!)?.toMediumString() ?? ""
-                self.syncTimePicker.isEnabled = true
-                self.syncTimePicker.isHidden = false
-            case "weekly":
-                self.scheduleSelection.selectItem(at: 2)
-                //self.nextSyncField.stringValue = NSDate().nextWeekAt((realSyncFolder.syncTime?.hour)!, minute: (syncItem.syncTime?.minute)!)?.toMediumString() ?? ""
-                self.syncTimePicker.isEnabled = true
-                self.syncTimePicker.isHidden = false
-            case "monthly":
-                self.scheduleSelection.selectItem(at: 3)
-                //self.nextSyncField.stringValue = NSDate().nextMonthAt((realSyncFolder.syncTime?.hour)!, minute: (realSyncFolder.syncTime?.minute)!)?.toMediumString() ?? ""
-                self.syncTimePicker.isEnabled = true
-                self.syncTimePicker.isHidden = false
-            default:
-                self.scheduleSelection.selectItem(at: -1)
-                //self.nextSyncField.stringValue = ""
-                self.syncTimePicker.isEnabled = false
-                self.syncTimePicker.isHidden = false
-            }
-            self.scheduleSelection.isEnabled = true
+                
+                //self.pathIndicator.URL = nil
+                self.progress.doubleValue = 0.0
+                self.syncProgressField.stringValue = ""
+                return
+        }
+        
+        
+        if let syncTime = syncFolder.syncTime {
+            self.syncTimePicker.dateValue = syncTime as Date
         } else {
-            //self.lastSyncField.stringValue = ""
-            //self.nextSyncField.stringValue = ""
-            self.scheduleSelection.selectItem(at: -1)
-            self.scheduleSelection.isEnabled = false
-            self.syncStatus.stringValue = "Unknown"
+            SDLog("Failed to load date in sync manager")
+        }
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.minimumSignificantDigits = 2
+        numberFormatter.maximumSignificantDigits = 2
+        numberFormatter.locale = Locale.current
+        
+        self.progress.maxValue = 100.0
+        self.progress.minValue = 0.0
+        let syncTasks = realm.objects(SyncTask.self)
+        
+        // swiftlint:disable force_unwrapping
+        let failureView = self.failurePopover.contentViewController!.view as! SyncFailurePopoverView
+        // swiftlint:enable force_unwrapping
+        
+        
+        if !syncFolder.active {
+            self.syncStatus.stringValue = "Paused"
+            failureView.message.textStorage?.setAttributedString(NSAttributedString(string: ""))
             self.syncFailureInfoButton.action = nil
             self.syncFailureInfoButton.isHidden = true
             self.syncFailureInfoButton.isEnabled = false
             self.syncFailureInfoButton.toolTip = nil
+            self.progress.stopAnimation(nil)
+            
+            self.progress.doubleValue = 0.0
+            
+            self.syncProgressField.stringValue = ""
+        } else if let syncTask = syncTasks.filter("syncFolder == %@ AND uuid == syncFolder.lastSyncUUID", syncFolder).sorted(byKeyPath: "syncDate").last {
+            
+            if syncFolder.restoring {
+                // swiftlint:disable force_unwrapping
+                let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
+                // swiftlint:enable force_unwrapping
+
+                self.syncStatus.stringValue = "Restoring"
+                if syncFolder.currentSyncUUID == syncTask.uuid {
+                    self.progress.startAnimation(nil)
+                    self.progress.doubleValue = syncTask.progress
+                    self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
+                } else {
+                    self.progress.stopAnimation(nil)
+                    self.progress.doubleValue = 0.0
+                    self.syncProgressField.stringValue = ""
+                }
+            } else if syncFolder.syncing {
+                // swiftlint:disable force_unwrapping
+                let progress = numberFormatter.string(from: NSNumber(value: syncTask.progress))!
+                // swiftlint:enable force_unwrapping
+
+                self.syncStatus.stringValue = "Syncing"
+                if syncFolder.currentSyncUUID == syncTask.uuid {
+                    self.progress.startAnimation(nil)
+                    self.progress.doubleValue = syncTask.progress
+                    self.syncProgressField.stringValue = "\(progress)% @ \(syncTask.bandwidth)"
+                } else {
+                    self.progress.stopAnimation(nil)
+                    self.progress.doubleValue = 0.0
+                    self.syncProgressField.stringValue = ""
+                }
+            } else if syncTask.success {
+                self.syncStatus.stringValue = "Success"
+                self.progress.stopAnimation(nil)
+                
+                self.progress.doubleValue = 0.0
+                self.syncProgressField.stringValue = ""
+                
+            } else {
+                self.syncStatus.stringValue = "Failed"
+                self.progress.stopAnimation(nil)
+                
+                self.progress.doubleValue = 0.0
+                self.syncProgressField.stringValue = ""
+                
+            }
+            
+            if let messages = syncTask.message {
+                failureView.message.textStorage?.setAttributedString(NSAttributedString(string: messages))
+                self.syncFailureInfoButton.isHidden = false
+                self.syncFailureInfoButton.isEnabled = true
+                self.syncFailureInfoButton.toolTip = NSLocalizedString("Some issues detected, click here for details", comment: "")
+                self.syncFailureInfoButton.action = #selector(self.showFailurePopover(_:))
+            } else {
+                failureView.message.textStorage?.setAttributedString(NSAttributedString(string: ""))
+                self.syncFailureInfoButton.isHidden = true
+                self.syncFailureInfoButton.isEnabled = false
+                self.syncFailureInfoButton.toolTip = ""
+            }
+        } else {
+            self.syncStatus.stringValue = "Waiting"
+            failureView.message.textStorage?.setAttributedString(NSAttributedString(string: ""))
+            self.syncFailureInfoButton.action = nil
+            self.syncFailureInfoButton.isHidden = true
+            self.syncFailureInfoButton.isEnabled = false
+            self.syncFailureInfoButton.toolTip = nil
+            self.progress.stopAnimation(nil)
+            
+            self.progress.doubleValue = 0.0
+            
+            self.syncProgressField.stringValue = ""
+        }
+        
+        /*if let syncTask = syncTasks.filter("syncFolder == %@ AND success == true", syncItem).sorted("syncDate").last,
+         lastSync = syncTask.syncDate {
+         self.lastSyncField.stringValue = lastSync.toMediumString()
+         }
+         else {
+         self.lastSyncField.stringValue = ""
+         }*/
+        
+        
+        switch syncFolder.syncFrequency {
+        case "hourly":
+            self.scheduleSelection.selectItem(at: 0)
+            //self.nextSyncField.stringValue = NSDate().nextHour()?.toMediumString() ?? ""
             self.syncTimePicker.isEnabled = false
             self.syncTimePicker.isHidden = true
             var components = DateComponents()
@@ -915,13 +887,30 @@ class SyncViewController: NSViewController {
             // swiftlint:disable force_unwrapping
             self.syncTimePicker.dateValue = calendar.date(from: components)!
             // swiftlint:enable force_unwrapping
-
-            //self.pathIndicator.URL = nil
-            self.progress.doubleValue = 0.0
-            self.syncProgressField.stringValue = ""
-            
+        case "daily":
+            self.scheduleSelection.selectItem(at: 1)
+            //self.nextSyncField.stringValue = NSDate().nextDayAt((realSyncFolder.syncTime?.hour)!, minute: (realSyncFolder.syncTime?.minute)!)?.toMediumString() ?? ""
+            self.syncTimePicker.isEnabled = true
+            self.syncTimePicker.isHidden = false
+        case "weekly":
+            self.scheduleSelection.selectItem(at: 2)
+            //self.nextSyncField.stringValue = NSDate().nextWeekAt((realSyncFolder.syncTime?.hour)!, minute: (syncItem.syncTime?.minute)!)?.toMediumString() ?? ""
+            self.syncTimePicker.isEnabled = true
+            self.syncTimePicker.isHidden = false
+        case "monthly":
+            self.scheduleSelection.selectItem(at: 3)
+            //self.nextSyncField.stringValue = NSDate().nextMonthAt((realSyncFolder.syncTime?.hour)!, minute: (realSyncFolder.syncTime?.minute)!)?.toMediumString() ?? ""
+            self.syncTimePicker.isEnabled = true
+            self.syncTimePicker.isHidden = false
+        default:
+            self.scheduleSelection.selectItem(at: -1)
+            //self.nextSyncField.stringValue = ""
+            self.syncTimePicker.isEnabled = false
+            self.syncTimePicker.isHidden = false
         }
+        self.scheduleSelection.isEnabled = true
     }
+    
 }
 
 extension SyncViewController: SDAccountProtocol {
