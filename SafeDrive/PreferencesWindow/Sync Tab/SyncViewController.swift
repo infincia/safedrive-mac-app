@@ -231,10 +231,8 @@ class SyncViewController: NSViewController {
                 return
             case NSAlertSecondButtonReturn:
                 op = .deletePath(recursive: true)
-                break
             case NSAlertThirdButtonReturn:
                 op = .moveFolder
-                break
             default:
                 return
             }
@@ -497,7 +495,6 @@ class SyncViewController: NSViewController {
                     } else {
                         self.verifyFolder(folderName, folderPath: folderPath, folderID: Int32(folderID))
                     }
-                    break
                 default:
                     return
                 }
@@ -639,7 +636,6 @@ class SyncViewController: NSViewController {
                 self.syncScheduler.cancel(folderID) {
                     self.syncScheduler.queueSyncJob(uniqueClientID, folderID: folderID, direction: .reverse, type: type, name: name, destination: destination)
                 }
-                break
             default:
                 return
             }
@@ -664,7 +660,6 @@ class SyncViewController: NSViewController {
                 self.syncScheduler.cancel(folderID) {
                     
                 }
-                break
             default:
                 return
             }
@@ -1285,10 +1280,8 @@ extension SyncViewController {
                             }
                         }
                     }
-                    break
                 case NSAlertSecondButtonReturn:
                     self.startRestore(UInt64(folderID))
-                    break
                 case NSAlertThirdButtonReturn:
                     self.sdk.updateFolder(folderName, path: folderPath, syncing: false, uniqueID: UInt64(folderID), completionQueue: DispatchQueue.main, success: {
                         guard let realm = self.realm,
@@ -1312,7 +1305,6 @@ extension SyncViewController {
                         alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
                         alert.runModal()
                     })
-                    break
                 default:
                     return
                 }
