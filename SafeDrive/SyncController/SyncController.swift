@@ -285,7 +285,7 @@ class SyncController: Equatable {
         rsyncEnvironment["SSH_ASKPASS"] = safeDriveAskpassPath
         
         /* pass the account password to the safedriveaskpass environment */
-        rsyncEnvironment["SSH_PASSWORD"] = self.password
+        //rsyncEnvironment["SSH_PASSWORD"] = self.password
         
         /*
          remove any existing SSH agent socket in the subprocess environment so we
