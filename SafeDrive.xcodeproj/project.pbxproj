@@ -17,13 +17,9 @@
 		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
-		AA0FBBFD1EDF5D6200CDD9EF /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AA0FBBFC1EDF5D6200CDD9EF /* libresolv.tbd */; };
-		AA13CB9F1A7212F000A91C7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13CB9D1A7212F000A91C7A /* main.m */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
-		AA3808751EB7B66D00BA5F3E /* libsddk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3808741EB7B66D00BA5F3E /* libsddk.a */; };
-		AA3808771EB7B6AC00BA5F3E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3808761EB7B6AC00BA5F3E /* libz.tbd */; };
 		AA3EB8361E55686E003A2E79 /* SyncSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8351E55686E003A2E79 /* SyncSession.swift */; };
 		AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */; };
 		AA3EB83B1E556EE3003A2E79 /* RestoreSelectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */; };
@@ -147,7 +143,6 @@
 		AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */; };
 		AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7D5CC1CAF85C0001F9A8E /* FlatWindow.swift */; };
 		AAB7D5D51CB09943001F9A8E /* CrashAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7D5D41CB09943001F9A8E /* CrashAlert.swift */; };
-		AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */ = {isa = PBXBuildFile; fileRef = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AABF04A91E6CC46E0084DF81 /* FailedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AABF04A51E6CC46E0084DF81 /* FailedView.xib */; };
 		AABF04AA1E6CC46E0084DF81 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A61E6CC46E0084DF81 /* FailedViewController.swift */; };
 		AABF04AB1E6CC46E0084DF81 /* ReadyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AABF04A71E6CC46E0084DF81 /* ReadyView.xib */; };
@@ -206,20 +201,6 @@
 			remoteGlobalIDString = AA5DCF651D6CFFDA00FEDAFB;
 			remoteInfo = SafeDriveSDK;
 		};
-		AAA3E6C31EAD5B4F0083CE66 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AA5DCF651D6CFFDA00FEDAFB;
-			remoteInfo = SafeDriveSDK;
-		};
-		AABB0FBD1A3F28E400FA3530 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AA4E77391A3E9B1D0054BBCA;
-			remoteInfo = safedriveaskpass;
-		};
 		AAF945F11C80121800B972C3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
@@ -248,15 +229,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA4E77381A3E9B1D0054BBCA /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		AA925C3B1B8F9BAA00222E46 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -279,7 +251,6 @@
 				AAA3E6FF1EADAD7D0083CE66 /* io.safedrive.SafeDrive.rsync in Copy Files */,
 				AAA3E7001EADAD7D0083CE66 /* io.safedrive.SafeDrive.ssh in Copy Files */,
 				AAA3E7011EADAD7D0083CE66 /* io.safedrive.SafeDrive.sshfs in Copy Files */,
-				AABB0FC01A3F292F00FA3530 /* safedriveaskpass in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,7 +302,6 @@
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileCheck.swift; path = "Open File Warning Window/OpenFileCheck.swift"; sourceTree = "<group>"; };
 		AA0FBBFC1EDF5D6200CDD9EF /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
-		AA13CB9D1A7212F000A91C7A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = safedriveaskpass/main.m; sourceTree = SOURCE_ROOT; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
 		AA3168131A191B72006CC0EB /* SafeDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -346,7 +316,6 @@
 		AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionWindowController.swift; sourceTree = "<group>"; };
 		AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionTableCellView.swift; sourceTree = "<group>"; };
 		AA3EB8401E569D28003A2E79 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = safedriveaskpass; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewController.swift; path = Installer/WelcomeViewController.swift; sourceTree = "<group>"; };
 		AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeView.xib; path = Installer/WelcomeView.xib; sourceTree = "<group>"; };
 		AA4F8FC91E6A429100BB068A /* SoftwareClientTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoftwareClientTableCellView.swift; path = Installer/SoftwareClientTableCellView.swift; sourceTree = "<group>"; };
@@ -425,7 +394,6 @@
 		AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningTableCellView.swift; path = "Open File Warning Window/OpenFileWarningTableCellView.swift"; sourceTree = "<group>"; };
 		AAE216371E9BE8BD00BE956F /* setup.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = setup.sh; sourceTree = "<group>"; };
 		AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.5.6.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FUSE for macOS 3.5.6.pkg"; path = "Bundled Dependencies/FUSE for macOS 3.5.6.pkg"; sourceTree = "<group>"; };
-		AAEA529F1A81A3EA00BF862C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = safedriveaskpass/Info.plist; sourceTree = SOURCE_ROOT; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SafeDrive.entitlements; sourceTree = "<group>"; };
@@ -460,16 +428,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				69AB0CB9201703699449D0B7 /* Pods_SafeDriveTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AA4E77371A3E9B1D0054BBCA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AA0FBBFD1EDF5D6200CDD9EF /* libresolv.tbd in Frameworks */,
-				AA3808771EB7B6AC00BA5F3E /* libz.tbd in Frameworks */,
-				AA3808751EB7B66D00BA5F3E /* libsddk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +503,6 @@
 				AA3D8EBA1C3D80A100CF0A3C /* Shared */,
 				AA3168151A191B72006CC0EB /* SafeDrive */,
 				AA3168291A191B72006CC0EB /* SafeDriveTests */,
-				AA4E773B1A3E9B1D0054BBCA /* safedriveaskpass */,
 				AAF946001C815D5A00B972C3 /* Finder */,
 				AA5754031C7FFCC10040E8B0 /* Service */,
 				5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */,
@@ -559,7 +516,6 @@
 			children = (
 				AA3168131A191B72006CC0EB /* SafeDrive.app */,
 				AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */,
-				AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */,
 				AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */,
 				AAF945FF1C815D5A00B972C3 /* SafeDriveFinder.appex */,
 			);
@@ -678,16 +634,6 @@
 				AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */,
 			);
 			name = Shared;
-			sourceTree = "<group>";
-		};
-		AA4E773B1A3E9B1D0054BBCA /* safedriveaskpass */ = {
-			isa = PBXGroup;
-			children = (
-				AAEA529F1A81A3EA00BF862C /* Info.plist */,
-				AA13CB9D1A7212F000A91C7A /* main.m */,
-			);
-			name = safedriveaskpass;
-			path = "safedrive-askpass";
 			sourceTree = "<group>";
 		};
 		AA54495E1BC3664F00826A0B /* ServiceManager */ = {
@@ -926,7 +872,6 @@
 			);
 			dependencies = (
 				AA74423C1E0517D8004D8518 /* PBXTargetDependency */,
-				AABB0FBE1A3F28E400FA3530 /* PBXTargetDependency */,
 				AAF945F21C80121800B972C3 /* PBXTargetDependency */,
 				AAF946071C815D5A00B972C3 /* PBXTargetDependency */,
 			);
@@ -955,24 +900,6 @@
 			productName = SafeDriveTests;
 			productReference = AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		AA4E77391A3E9B1D0054BBCA /* safedriveaskpass */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AA4E77401A3E9B1D0054BBCA /* Build configuration list for PBXNativeTarget "safedriveaskpass" */;
-			buildPhases = (
-				AA4E77361A3E9B1D0054BBCA /* Sources */,
-				AA4E77371A3E9B1D0054BBCA /* Frameworks */,
-				AA4E77381A3E9B1D0054BBCA /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				AAA3E6C41EAD5B4F0083CE66 /* PBXTargetDependency */,
-			);
-			name = safedriveaskpass;
-			productName = "safedrive-askpass";
-			productReference = AA4E773A1A3E9B1D0054BBCA /* safedriveaskpass */;
-			productType = "com.apple.product-type.tool";
 		};
 		AA5754011C7FFCC00040E8B0 /* SafeDriveService */ = {
 			isa = PBXNativeTarget;
@@ -1050,11 +977,6 @@
 						LastSwiftMigration = 0800;
 						TestTargetID = AA3168121A191B72006CC0EB;
 					};
-					AA4E77391A3E9B1D0054BBCA = {
-						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = G738Z89QKM;
-						ProvisioningStyle = Manual;
-					};
 					AA5754011C7FFCC00040E8B0 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = G738Z89QKM;
@@ -1095,7 +1017,6 @@
 			targets = (
 				AA3168121A191B72006CC0EB /* SafeDrive */,
 				AA3168251A191B72006CC0EB /* SafeDriveTests */,
-				AA4E77391A3E9B1D0054BBCA /* safedriveaskpass */,
 				AA5754011C7FFCC00040E8B0 /* SafeDriveService */,
 				AAF945FE1C815D5A00B972C3 /* SafeDriveFinder */,
 			);
@@ -1521,14 +1442,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA4E77361A3E9B1D0054BBCA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AA13CB9F1A7212F000A91C7A /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		AA5753FE1C7FFCC00040E8B0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1572,16 +1485,6 @@
 			isa = PBXTargetDependency;
 			name = SafeDriveSDK;
 			targetProxy = AA74423B1E0517D8004D8518 /* PBXContainerItemProxy */;
-		};
-		AAA3E6C41EAD5B4F0083CE66 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SafeDriveSDK;
-			targetProxy = AAA3E6C31EAD5B4F0083CE66 /* PBXContainerItemProxy */;
-		};
-		AABB0FBE1A3F28E400FA3530 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AA4E77391A3E9B1D0054BBCA /* safedriveaskpass */;
-			targetProxy = AABB0FBD1A3F28E400FA3530 /* PBXContainerItemProxy */;
 		};
 		AAF945F21C80121800B972C3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1896,56 +1799,6 @@
 			};
 			name = Release;
 		};
-		AA4E773E1A3E9B1D0054BBCA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEVELOPMENT_TEAM = G738Z89QKM;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist/x86_64-apple-darwin/include";
-				INFOPLIST_FILE = safedriveaskpass/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @loader_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/safedrive-sdk/dist/x86_64-apple-darwin/lib",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_CODE_SIGN_FLAGS = "-r=\"designated => anchor apple generic and identifier \\\"io.safedrive.SafeDrive\\\" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G738Z89QKM)\"";
-				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		AA4E773F1A3E9B1D0054BBCA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEVELOPMENT_TEAM = G738Z89QKM;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/safedrive-sdk/dist/x86_64-apple-darwin/include";
-				INFOPLIST_FILE = safedriveaskpass/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @loader_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/../Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/ @executable_path/Frameworks/SafeDriveSDK.framework/Versions/A/Frameworks/";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/safedrive-sdk/dist/x86_64-apple-darwin/lib",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_CODE_SIGN_FLAGS = "-r=\"designated => anchor apple generic and identifier \\\"io.safedrive.SafeDrive\\\" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G738Z89QKM)\"";
-				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
 		AA57540D1C7FFCC10040E8B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 446CEAF581261A2CE8036039 /* Pods-SafeDriveService.debug.xcconfig */;
@@ -2078,15 +1931,6 @@
 			buildConfigurations = (
 				AA3168341A191B72006CC0EB /* Debug */,
 				AA3168351A191B72006CC0EB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		AA4E77401A3E9B1D0054BBCA /* Build configuration list for PBXNativeTarget "safedriveaskpass" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AA4E773E1A3E9B1D0054BBCA /* Debug */,
-				AA4E773F1A3E9B1D0054BBCA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
