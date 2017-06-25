@@ -266,7 +266,7 @@ class MountController: NSObject {
         var sshfsEnvironment = [String: String]()
 
         /* path of our custom askpass helper so ssh can use it */
-        guard let safeDriveAskpassPath = Bundle.main.path(forAuxiliaryExecutable: "safedriveaskpass") else {
+        guard let safeDriveAskpassPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.askpass") else {
             let message = NSLocalizedString("Askpass helper missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .askpassMissing)
             failureBlock(mountURL, error)
@@ -276,9 +276,6 @@ class MountController: NSObject {
         sshfsEnvironment["SSH_ASKPASS"] = safeDriveAskpassPath
         
         
-        sshfsEnvironment["SAFEDRIVE_CURRENTUSER_DOMAIN"] = currentUserDomain()
-        sshfsEnvironment["SAFEDRIVE_ACCOUNT_DOMAIN"] = accountCredentialDomain()
-
         /*
          remove any existing SSH agent socket in the subprocess environment so we
          have full control over auth behavior
@@ -318,11 +315,6 @@ class MountController: NSObject {
         //MARK: warning DO NOT REMOVE THIS. See above comment for the reason.
         sshfsEnvironment["DISPLAY"] = ""
         
-        
-        let tempDir = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
-
-        sshfsEnvironment["SAFEDRIVE_STORAGE_DIRECTORY"] = "\(tempDir.path)"
-
         if isProduction() {
             sshfsEnvironment["SAFEDRIVE_ENVIRONMENT_PRODUCTION"] = "1"
         }
