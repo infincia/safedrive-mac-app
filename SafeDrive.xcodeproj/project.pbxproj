@@ -10,6 +10,7 @@
 		576E2A7947C0F5E84C15FABD /* Pods_SafeDriveService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9B3056709C1BE77D9B18858 /* Pods_SafeDriveService.framework */; };
 		69AB0CB9201703699449D0B7 /* Pods_SafeDriveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACCC0E28E50D1255EF3C3795 /* Pods_SafeDriveTests.framework */; };
 		856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */; };
+		AA0066751EFEDAE8005B390F /* io.safedrive.SafeDrive.askpass in Copy Files */ = {isa = PBXBuildFile; fileRef = AA0066721EFEDAA0005B390F /* io.safedrive.SafeDrive.askpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA037B6F1E428EA600818B53 /* RecoveryPhraseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */; };
 		AA037B701E428EA600818B53 /* RecoveryPhraseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */; };
 		AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */; };
@@ -272,6 +273,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				AA0066751EFEDAE8005B390F /* io.safedrive.SafeDrive.askpass in Copy Files */,
 				AAA3E6FD1EADAD7D0083CE66 /* io.safedrive.SafeDrive.cli in Copy Files */,
 				AAA3E6FE1EADAD7D0083CE66 /* io.safedrive.SafeDrive.daemon in Copy Files */,
 				AAA3E6FF1EADAD7D0083CE66 /* io.safedrive.SafeDrive.rsync in Copy Files */,
@@ -322,6 +324,7 @@
 		7EB73E606E32D60409155C42 /* Pods-SafeDriveFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.release.xcconfig"; sourceTree = "<group>"; };
 		81810F9B8E9F2AB8468A4A0C /* Pods-SafeDrive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDrive.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDrive/Pods-SafeDrive.release.xcconfig"; sourceTree = "<group>"; };
 		919F110D04C41D55CB26D7F1 /* Pods-SafeDriveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AA0066721EFEDAA0005B390F /* io.safedrive.SafeDrive.askpass */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.askpass; path = "../safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.askpass"; sourceTree = "<group>"; };
 		AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryPhraseWindowController.swift; sourceTree = "<group>"; };
 		AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecoveryPhraseWindow.xib; sourceTree = "<group>"; };
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreferencesWindow.xib; sourceTree = "<group>"; };
@@ -831,6 +834,7 @@
 		AAA3E6AF1EAD4BA00083CE66 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				AA0066721EFEDAA0005B390F /* io.safedrive.SafeDrive.askpass */,
 				AAA3E6ED1EADAB900083CE66 /* io.safedrive.SafeDrive.cli */,
 				AAA3E6EE1EADAB900083CE66 /* io.safedrive.SafeDrive.daemon */,
 				AAA3E6EF1EADAB900083CE66 /* io.safedrive.SafeDrive.rsync */,
