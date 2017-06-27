@@ -984,21 +984,11 @@ extension SyncViewController: NSOpenSavePanelDelegate {
             throw error
         }
         
-        // check if the candidate sync path is a parent or subdirectory of an existing registered sync folder
-        guard let realm = self.realm else {
-            SDLog("failed to get realm!!!")
-            let message = NSLocalizedString("Cannot open local database, this is a fatal error", comment: "")
-            SDLog(message)
-            let error = SDError(message: message, kind: .openFailed)
-            throw error
-        }
-        
-        let syncFolders = realm.objects(SyncFolder.self)
-        if SyncFolder.hasConflictingFolderRegistered(url.path, syncFolders: syncFolders) {
+        if try sdk.hasConflictingFolder(folderPath: url.path) {
             let message = NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")
             SDLog(message)
             let error = SDError(message: message, kind: .folderConflict)
-            throw error            
+            throw error
         }
     }
     
