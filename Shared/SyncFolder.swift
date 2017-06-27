@@ -77,25 +77,6 @@ class SyncFolder: Object {
         return "uniqueID"
     }
     
-    class func hasConflictingFolderRegistered<S: Sequence>(_ testFolder: String, syncFolders: S) -> Bool where S.Iterator.Element == SyncFolder {
-        let testURL = URL(fileURLWithPath: testFolder, isDirectory: true)
-        for folder in syncFolders {
-            // swiftlint:disable force_unwrapping
-            let registeredPath: String = folder.url!.absoluteString
-            // swiftlint:enable force_unwrapping
-
-            let options: NSString.CompareOptions = [.anchored, .caseInsensitive]
-            // check if testFolder is a parent or subdirectory of an existing folder
-            if testURL.absoluteString.range(of: registeredPath, options: options) != nil {
-                return true
-            }
-            if registeredPath.range(of: testURL.absoluteString, options: options) != nil {
-                return true
-            }
-        }
-        return false
-    }
-    
     public func exists() -> Bool {
         guard let folderPath = self.path else {
             return false
