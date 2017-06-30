@@ -294,13 +294,13 @@ class Installer: NSObject {
         let destination = usrlocalbin.appendingPathComponent("safedrive")
         
         let fileManager: FileManager = FileManager.default
-        if FileManager.default.fileExists(atPath: destination.path) {
-            do {
-                try FileManager.default.removeItem(at: destination)
-            } catch let error as NSError {
-                SDLog("Error removing old CLI app: \(error)")
-            }
+        
+        do {
+            try FileManager.default.removeItem(at: destination)
+        } catch let error as NSError {
+            SDLog("Error removing old CLI app: \(error)")
         }
+        
         do {
             try fileManager.createSymbolicLink(at: destination, withDestinationURL: cli)
         } catch let error as NSError {
