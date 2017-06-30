@@ -105,7 +105,11 @@ class FailedViewController: NSViewController {
             self.spinner.stopAnimation(self)
 
             self.panelMessage.stringValue = NSLocalizedString("Thank you for your report", comment: "")
-        }, failure: { (_) in
+        }, failure: { (error) in
+            SDLog("Error submitting report: \(error)")
+            let att = NSAttributedString(string: error.localizedDescription)
+            self.errorMessage.textStorage?.setAttributedString(att)
+            
             self.spinner.stopAnimation(self)
             self.reported = false
             self.panelMessage.stringValue = NSLocalizedString("Uh oh! It looks like the error report could not be sent, would you like to try again?", comment: "")
