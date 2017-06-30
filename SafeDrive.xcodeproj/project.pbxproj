@@ -10,7 +10,7 @@
 		576E2A7947C0F5E84C15FABD /* Pods_SafeDriveService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9B3056709C1BE77D9B18858 /* Pods_SafeDriveService.framework */; };
 		69AB0CB9201703699449D0B7 /* Pods_SafeDriveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACCC0E28E50D1255EF3C3795 /* Pods_SafeDriveTests.framework */; };
 		856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */; };
-		AA0066751EFEDAE8005B390F /* io.safedrive.SafeDrive.askpass in Copy Files */ = {isa = PBXBuildFile; fileRef = AA0066721EFEDAA0005B390F /* io.safedrive.SafeDrive.askpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AA0135C01F043C0400ABE8F5 /* Components.bundle in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AA0135BF1F043C0400ABE8F5 /* Components.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA037B6F1E428EA600818B53 /* RecoveryPhraseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */; };
 		AA037B701E428EA600818B53 /* RecoveryPhraseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */; };
 		AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */; };
@@ -82,11 +82,6 @@
 		AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */; };
 		AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */; };
 		AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
-		AAA3E6FD1EADAD7D0083CE66 /* io.safedrive.SafeDrive.cli in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6ED1EADAB900083CE66 /* io.safedrive.SafeDrive.cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AAA3E6FE1EADAD7D0083CE66 /* io.safedrive.SafeDrive.daemon in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6EE1EADAB900083CE66 /* io.safedrive.SafeDrive.daemon */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AAA3E6FF1EADAD7D0083CE66 /* io.safedrive.SafeDrive.rsync in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6EF1EADAB900083CE66 /* io.safedrive.SafeDrive.rsync */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AAA3E7001EADAD7D0083CE66 /* io.safedrive.SafeDrive.ssh in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6F01EADAB900083CE66 /* io.safedrive.SafeDrive.ssh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AAA3E7011EADAD7D0083CE66 /* io.safedrive.SafeDrive.sshfs in Copy Files */ = {isa = PBXBuildFile; fileRef = AAA3E6F11EADAB900083CE66 /* io.safedrive.SafeDrive.sshfs */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAA3E7031EADB7320083CE66 /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
 		AAA3E7051EADB7350083CE66 /* OpenFileWarningTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */; };
 		AAA3E7061EADB7380083CE66 /* OpenFileWarningWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */; };
@@ -160,6 +155,7 @@
 		AAD89BD21E5C197E007D8E82 /* OpenFileWarningWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */; };
 		AAD89BD31E5C197E007D8E82 /* OpenFileWarningWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */; };
 		AAD89BD51E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */; };
+		AAE08F731F05E31A00AC8885 /* Components.bundle in Copy Files */ = {isa = PBXBuildFile; fileRef = AA0135BF1F043C0400ABE8F5 /* Components.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AAE216381E9BE8BD00BE956F /* setup.sh in Resources */ = {isa = PBXBuildFile; fileRef = AAE216371E9BE8BD00BE956F /* setup.sh */; };
 		AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.5.6.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.5.6.pkg */; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
@@ -173,6 +169,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AA0135BE1F043C0400ABE8F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AA0135A41F043AA500ABE8F5;
+			remoteInfo = Components;
+		};
+		AA0135C11F043C1F00ABE8F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AA0135A31F043AA500ABE8F5;
+			remoteInfo = Components;
+		};
 		AA1A46071BED8521004A5310 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
@@ -233,8 +243,9 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 13;
+			dstSubfolderSpec = 7;
 			files = (
+				AA0135C01F043C0400ABE8F5 /* Components.bundle in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,14 +254,9 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 6;
+			dstSubfolderSpec = 7;
 			files = (
-				AA0066751EFEDAE8005B390F /* io.safedrive.SafeDrive.askpass in Copy Files */,
-				AAA3E6FD1EADAD7D0083CE66 /* io.safedrive.SafeDrive.cli in Copy Files */,
-				AAA3E6FE1EADAD7D0083CE66 /* io.safedrive.SafeDrive.daemon in Copy Files */,
-				AAA3E6FF1EADAD7D0083CE66 /* io.safedrive.SafeDrive.rsync in Copy Files */,
-				AAA3E7001EADAD7D0083CE66 /* io.safedrive.SafeDrive.ssh in Copy Files */,
-				AAA3E7011EADAD7D0083CE66 /* io.safedrive.SafeDrive.sshfs in Copy Files */,
+				AAE08F731F05E31A00AC8885 /* Components.bundle in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,7 +275,7 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstSubfolderSpec = 13;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,7 +301,7 @@
 		7EB73E606E32D60409155C42 /* Pods-SafeDriveFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.release.xcconfig"; sourceTree = "<group>"; };
 		81810F9B8E9F2AB8468A4A0C /* Pods-SafeDrive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDrive.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDrive/Pods-SafeDrive.release.xcconfig"; sourceTree = "<group>"; };
 		919F110D04C41D55CB26D7F1 /* Pods-SafeDriveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.debug.xcconfig"; sourceTree = "<group>"; };
-		AA0066721EFEDAA0005B390F /* io.safedrive.SafeDrive.askpass */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.askpass; path = "../safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.askpass"; sourceTree = "<group>"; };
+		AA01359B1F043A7500ABE8F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryPhraseWindowController.swift; sourceTree = "<group>"; };
 		AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecoveryPhraseWindow.xib; sourceTree = "<group>"; };
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreferencesWindow.xib; sourceTree = "<group>"; };
@@ -363,11 +369,6 @@
 		AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateAccountView.xib; path = Installer/ValidateAccountView.xib; sourceTree = "<group>"; };
 		AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateClientViewController.swift; path = Installer/ValidateClientViewController.swift; sourceTree = "<group>"; };
 		AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateClientView.xib; path = Installer/ValidateClientView.xib; sourceTree = "<group>"; };
-		AAA3E6ED1EADAB900083CE66 /* io.safedrive.SafeDrive.cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.cli; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.cli"; sourceTree = "<group>"; };
-		AAA3E6EE1EADAB900083CE66 /* io.safedrive.SafeDrive.daemon */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.daemon; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.daemon"; sourceTree = "<group>"; };
-		AAA3E6EF1EADAB900083CE66 /* io.safedrive.SafeDrive.rsync */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.rsync; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.rsync"; sourceTree = "<group>"; };
-		AAA3E6F01EADAB900083CE66 /* io.safedrive.SafeDrive.ssh */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.ssh; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.ssh"; sourceTree = "<group>"; };
-		AAA3E6F11EADAB900083CE66 /* io.safedrive.SafeDrive.sshfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.sshfs; path = "safedrive-sdk/dist/x86_64-apple-darwin/bin/io.safedrive.SafeDrive.sshfs"; sourceTree = "<group>"; };
 		AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CUIThemeRenditionFix.xcassets; path = Shared/CUIThemeRenditionFix.xcassets; sourceTree = "<group>"; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTableRowView.swift; sourceTree = "<group>"; };
 		AAA88BC61C82A5E9009BE1C7 /* SyncFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFolder.swift; path = Shared/SyncFolder.swift; sourceTree = "<group>"; };
@@ -480,6 +481,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AA01359A1F043A7500ABE8F5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				AA01359B1F043A7500ABE8F5 /* Info.plist */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		AA2E550E1A774DED00647637 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -505,6 +514,7 @@
 				AA3168291A191B72006CC0EB /* SafeDriveTests */,
 				AAF946001C815D5A00B972C3 /* Finder */,
 				AA5754031C7FFCC10040E8B0 /* Service */,
+				AA01359A1F043A7500ABE8F5 /* Components */,
 				5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */,
 				AA3168141A191B72006CC0EB /* Products */,
 				7DDFAD6B58FAFDC1F557BEDC /* Pods */,
@@ -733,6 +743,7 @@
 			children = (
 				AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */,
 				AA7442371E0517C8004D8518 /* SafeDriveSDKTests.xctest */,
+				AA0135BF1F043C0400ABE8F5 /* Components.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -780,12 +791,6 @@
 		AAA3E6AF1EAD4BA00083CE66 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
-				AA0066721EFEDAA0005B390F /* io.safedrive.SafeDrive.askpass */,
-				AAA3E6ED1EADAB900083CE66 /* io.safedrive.SafeDrive.cli */,
-				AAA3E6EE1EADAB900083CE66 /* io.safedrive.SafeDrive.daemon */,
-				AAA3E6EF1EADAB900083CE66 /* io.safedrive.SafeDrive.rsync */,
-				AAA3E6F01EADAB900083CE66 /* io.safedrive.SafeDrive.ssh */,
-				AAA3E6F11EADAB900083CE66 /* io.safedrive.SafeDrive.sshfs */,
 				AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */,
 			);
 			name = SDK;
@@ -871,6 +876,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AA0135C21F043C1F00ABE8F5 /* PBXTargetDependency */,
 				AA74423C1E0517D8004D8518 /* PBXTargetDependency */,
 				AAF945F21C80121800B972C3 /* PBXTargetDependency */,
 				AAF946071C815D5A00B972C3 /* PBXTargetDependency */,
@@ -1024,6 +1030,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		AA0135BF1F043C0400ABE8F5 /* Components.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Components.bundle;
+			remoteRef = AA0135BE1F043C0400ABE8F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1476,6 +1489,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		AA0135C21F043C1F00ABE8F5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Components;
+			targetProxy = AA0135C11F043C1F00ABE8F5 /* PBXContainerItemProxy */;
+		};
 		AA1A46081BED8521004A5310 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AA3168121A191B72006CC0EB /* SafeDrive */;
