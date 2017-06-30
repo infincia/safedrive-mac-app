@@ -269,7 +269,16 @@ class Installer: NSObject {
     
     func installCLI() throws {
 
-        guard let cli = Bundle.main.url(forAuxiliaryExecutable: "io.safedrive.SafeDrive.cli") else {
+        guard let componentsURL = Bundle.main.url(forResource: "Components", withExtension: "bundle"),
+            let components = Bundle.init(url: componentsURL) else {
+                let message = NSLocalizedString("Components missing, contact SafeDrive support", comment: "")
+                SDLog(message)
+                let error = SDError(message: message, kind: .cliMissing)
+                throw error
+        }
+        
+        
+        guard let cli = components.url(forAuxiliaryExecutable: "io.safedrive.SafeDrive.cli") else {
             let message = NSLocalizedString("CLI app missing, contact SafeDrive support", comment: "")
             SDLog(message)
             let error = SDError(message: message, kind: .cliMissing)
@@ -303,7 +312,17 @@ class Installer: NSObject {
     }
     
     func setupDirectories() throws {
-        guard let cli = Bundle.main.url(forAuxiliaryExecutable: "io.safedrive.SafeDrive.cli") else {
+        
+        guard let componentsURL = Bundle.main.url(forResource: "Components", withExtension: "bundle"),
+            let components = Bundle.init(url: componentsURL) else {
+                let message = NSLocalizedString("Components missing, contact SafeDrive support", comment: "")
+                SDLog(message)
+                let error = SDError(message: message, kind: .cliMissing)
+                throw error
+        }
+        
+        
+        guard let cli = components.url(forAuxiliaryExecutable: "io.safedrive.SafeDrive.cli") else {
             let message = NSLocalizedString("CLI app missing, contact SafeDrive support", comment: "")
             SDLog(message)
             let error = SDError(message: message, kind: .cliMissing)

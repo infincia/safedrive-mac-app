@@ -258,7 +258,19 @@ class SyncController: Equatable {
         
         self.syncTask = Process()
         
-        guard let rsyncPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.rsync") else {
+        
+        guard let componentsURL = Bundle.main.url(forResource: "Components", withExtension: "bundle"),
+            let components = Bundle.init(url: componentsURL) else {
+                let message = NSLocalizedString("Components missing, contact SafeDrive support", comment: "")
+                let error = SDError(message: message, kind: .configMissing)
+                DispatchQueue.main.async(execute: {
+                    failureBlock(self.localURL, error)
+                })
+                return
+        }
+        
+        
+        guard let rsyncPath = components.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.rsync") else {
             let message = NSLocalizedString("Rsync missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .rsyncMissing)
             DispatchQueue.main.async(execute: {
@@ -274,7 +286,7 @@ class SyncController: Equatable {
         var rsyncEnvironment = [String: String]()
         
         /* path of our custom askpass helper so ssh can use it */
-        guard let safeDriveAskpassPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.askpass") else {
+        guard let safeDriveAskpassPath = components.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.askpass") else {
             let error = SDError(message: "Askpass helper missing", kind: .askpassMissing)
             DispatchQueue.main.async(execute: {
                 self.syncFailure = true
@@ -389,7 +401,7 @@ class SyncController: Equatable {
         }
         
         /* our own ssh binary */
-        guard let _ = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
+        guard let _ = components.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
             let message = NSLocalizedString("SSH missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .sshMissing)
             failureBlock(self.localURL, error)
