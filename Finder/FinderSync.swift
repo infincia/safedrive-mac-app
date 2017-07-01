@@ -276,7 +276,7 @@ class FinderSync: FIFinderSync {
         self.syncFolders = folders
         token = folders.addNotificationBlock({ (changes) in
             switch changes {
-            case .initial(_):
+            case .initial:
                 break
             case .update(_, _, _, let modifications):
                 var s = [URL]()

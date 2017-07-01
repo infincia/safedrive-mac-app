@@ -351,11 +351,11 @@ extension State : CustomStringConvertible {
             return "validating dependencies"
         case .validateAccount:
             return "validating account"
-        case .validateClient(_, _, _):
+        case .validateClient:
             return "validating client"
         case .ready:
             return "ready"
-        case .failed(_, _):
+        case .failed:
             return "failed"
         }
     }
@@ -389,11 +389,11 @@ extension State: RawRepresentable {
             return 1
         case .validateAccount:
             return 2
-        case .validateClient(_, _, _):
+        case .validateClient:
             return 3
         case .ready:
             return 4
-        case .failed(_, _):
+        case .failed:
             return 5
         }
     }
