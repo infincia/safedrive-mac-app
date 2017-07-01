@@ -10,7 +10,6 @@
 		576E2A7947C0F5E84C15FABD /* Pods_SafeDriveService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9B3056709C1BE77D9B18858 /* Pods_SafeDriveService.framework */; };
 		69AB0CB9201703699449D0B7 /* Pods_SafeDriveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACCC0E28E50D1255EF3C3795 /* Pods_SafeDriveTests.framework */; };
 		856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */; };
-		AA0135C01F043C0400ABE8F5 /* Components.bundle in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AA0135BF1F043C0400ABE8F5 /* Components.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA037B6F1E428EA600818B53 /* RecoveryPhraseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */; };
 		AA037B701E428EA600818B53 /* RecoveryPhraseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */; };
 		AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */; };
@@ -81,6 +80,7 @@
 		AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */; };
 		AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */; };
 		AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */; };
+		AA9079AE1F07EE120067E383 /* SafeDriveFinder.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AAF945FF1C815D5A00B972C3 /* SafeDriveFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAA3E7031EADB7320083CE66 /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
 		AAA3E7051EADB7350083CE66 /* OpenFileWarningTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */; };
@@ -162,7 +162,6 @@
 		AAF945F31C80125A00B972C3 /* SafeDriveService.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AAF945F41C80162700B972C3 /* io.safedrive.SafeDrive.Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */; };
 		AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946031C815D5A00B972C3 /* FinderSync.swift */; };
-		AAF946081C815D5A00B972C3 /* SafeDriveFinder.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAF945FF1C815D5A00B972C3 /* SafeDriveFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */; };
 		AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */; };
 		C27845CE7BD23C719058BA91 /* Pods_SafeDriveFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD6EC24044905614D475A32 /* Pods_SafeDriveFinder.framework */; };
@@ -234,7 +233,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				AAF946081C815D5A00B972C3 /* SafeDriveFinder.appex in CopyFiles */,
 				AAF945F31C80125A00B972C3 /* SafeDriveService.app in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,9 +241,9 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 7;
+			dstSubfolderSpec = 13;
 			files = (
-				AA0135C01F043C0400ABE8F5 /* Components.bundle in Embed App Extensions */,
+				AA9079AE1F07EE120067E383 /* SafeDriveFinder.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
