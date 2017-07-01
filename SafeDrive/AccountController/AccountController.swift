@@ -23,10 +23,55 @@ class AccountController: NSObject {
     
     var accountState: SDKAccountState = .unknown
     
-    var uniqueClientID: String?
+    fileprivate var _uniqueClientID: String?
     
-    var email: String?
-    var password: String?
+    fileprivate var _email: String?
+    fileprivate var _password: String?
+    
+    var email: String? {
+        get {
+            var e: String?
+            accountQueue.sync {
+                e = self._email
+            }
+            return e
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._email = newValue
+            })
+        }
+    }
+    
+    var password: String? {
+        get {
+            var p: String?
+            accountQueue.sync {
+                p = self._password
+            }
+            return p
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._password = newValue
+            })
+        }
+    }
+    
+    var uniqueClientID: String? {
+        get {
+            var u: String?
+            accountQueue.sync {
+                u = self._uniqueClientID
+            }
+            return u
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._uniqueClientID = newValue
+            })
+        }
+    }
     
     fileprivate let accountQueue = DispatchQueue(label: "io.safedrive.accountQueue")
     fileprivate let accountCompletionQueue = DispatchQueue(label: "io.safedrive.accountCompletionQueue")
@@ -156,7 +201,22 @@ class AccountController: NSObject {
     
     
     
-    fileprivate var realm: Realm?
+    fileprivate var _realm: Realm?
+    
+    var realm: Realm? {
+        get {
+            var r: Realm?
+            accountQueue.sync {
+                r = self._realm
+            }
+            return r
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._realm = newValue
+            })
+        }
+    }
     
     override init() {
         super.init()
