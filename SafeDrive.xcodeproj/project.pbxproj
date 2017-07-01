@@ -301,7 +301,6 @@
 		7EB73E606E32D60409155C42 /* Pods-SafeDriveFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.release.xcconfig"; sourceTree = "<group>"; };
 		81810F9B8E9F2AB8468A4A0C /* Pods-SafeDrive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDrive.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDrive/Pods-SafeDrive.release.xcconfig"; sourceTree = "<group>"; };
 		919F110D04C41D55CB26D7F1 /* Pods-SafeDriveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.debug.xcconfig"; sourceTree = "<group>"; };
-		AA01359B1F043A7500ABE8F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryPhraseWindowController.swift; sourceTree = "<group>"; };
 		AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecoveryPhraseWindow.xib; sourceTree = "<group>"; };
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreferencesWindow.xib; sourceTree = "<group>"; };
@@ -483,14 +482,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		AA01359A1F043A7500ABE8F5 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				AA01359B1F043A7500ABE8F5 /* Info.plist */,
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
 		AA2E550E1A774DED00647637 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,7 +509,6 @@
 				AA3168291A191B72006CC0EB /* SafeDriveTests */,
 				AAF946001C815D5A00B972C3 /* Finder */,
 				AA5754031C7FFCC10040E8B0 /* Service */,
-				AA01359A1F043A7500ABE8F5 /* Components */,
 				5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */,
 				AA3168141A191B72006CC0EB /* Products */,
 				7DDFAD6B58FAFDC1F557BEDC /* Pods */,
