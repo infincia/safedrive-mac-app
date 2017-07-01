@@ -104,31 +104,41 @@ class RunningProcessCheck: NSObject {
         //    28103        ttys000           0:02.46           -zsh
         SDLog("runningProcesses(): ps: \(outputString)")
         
-        let fullRegex = "([0-9]+)\\s([0-9A-Za-z]+)\\s\\s\\s\\s([0-9\\:\\.]+)\\s([\\w\\-]+)\\n*"
+        let pattern = "([0-9]+)\\s([0-9A-Za-z]+)\\s\\s\\s\\s([0-9\\:\\.]+)\\s([\\w\\-]+)\\n*"
         
-        if outputString.isMatched(byRegex: fullRegex) {
+        if let regex = try? NSRegularExpression(pattern: pattern) {
+            let s = outputString as NSString
             
-            if let matches = outputString.arrayOfCaptureComponentsMatched(byRegex: fullRegex) as [AnyObject]! {
-                SDLog("runningProcesses(): \(matches.count) matches found")
-                
-                for capturedValues in matches {
-                    let process = capturedValues as! [String]
-                    let pid = process[1]
-                    let command = process[4]
-                    // swiftlint:disable force_unwrapping
-                    var p = RunningProcess(pid: Int(pid)!, command: command)
-                    // swiftlint:enable force_unwrapping
-
-                    for app in NSWorkspace.shared().runningApplications {
-                        if p.pid == Int(app.processIdentifier) {
-                            p.icon = app.icon
-                        }
-                    }
-                    processes.append(p)
-                    SDLog("runningProcesses(): found running process: <pid:\(pid), command:\(command)>")
+            
+            let result: [NSTextCheckingResult] = regex.matches(in: outputString, range: NSRange(location: 0, length: s.length))
+            
+            SDLog("runningProcesses(): \(result.count) matches found")
+            
+            for res in result {
+                if res.numberOfRanges < 5 {
+                    continue
                 }
+                
+                let pidRange = res.rangeAt(1)
+                let commandRange = res.rangeAt(4)
+                
+                let pid = s.substring(with: pidRange)
+                let command = s.substring(with: commandRange)
+                
+                // swiftlint:disable force_unwrapping
+                var p = RunningProcess(pid: Int(pid)!, command: command)
+                // swiftlint:enable force_unwrapping
+                
+                for app in NSWorkspace.shared().runningApplications {
+                    if p.pid == Int(app.processIdentifier) {
+                        p.icon = app.icon
+                    }
+                }
+                processes.append(p)
+                SDLog("runningProcesses(): found running process: <pid:\(pid), command:\(command)>")
             }
         }
+        
         SDLog("runningProcesses(): task exited, \(processes.count) processes running")
         
         return processes

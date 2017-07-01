@@ -437,31 +437,38 @@ class SyncController: Equatable {
         
         outputPipeHandle.readabilityHandler = { (handle) in
             
-            let outputString: String! = String(data:handle.availableData, encoding:String.Encoding.utf8)
-            let whitespaceRegex = "^\\s+$"
-            let fullRegex = "^\\s*([0-9,]+)\\s+([0-9]+)%\\s+([0-9\\.A-Za-z/]+)"
+            let outputString: String! = String(data: handle.availableData, encoding: String.Encoding.utf8)
+            //let whitespaceRegex = "^\\s+$"
+            
+            let pattern = "^\\s*([0-9,]+)\\s+([0-9]+)%\\s+([0-9\\.A-Za-z/]+)"
             // example: "              0   0%    0.00kB/s    0:00:00 (xfr#0, to-chk=0/11)"
-            if outputString.isMatched(byRegex: fullRegex) {
-                if let matches = outputString.arrayOfCaptureComponentsMatched(byRegex: fullRegex) as [AnyObject]! {
-                    if matches.count == 1 {
-                        let capturedValues = matches[0] as! [String]
-                        if capturedValues.count >= 3 {
-                            let percent = capturedValues[2]
-                            let bandwidth = capturedValues[3]
-                            
-                            (self.syncProgressQueue).async {
-                                guard let d = Double(percent) else {
-                                    return
-                                }
-                                progressBlock(0, 0, 0, d, bandwidth)
-                            }
-                        }
-                    }
+
+            if let regex = try? NSRegularExpression(pattern: pattern) {
+                let s = outputString as NSString
+
+                
+                let result: [NSTextCheckingResult] = regex.matches(in: outputString, range: NSRange(location: 0, length: s.length))
+                
+                if result.count == 0 {
+                    return
                 }
-            } else if outputString.isMatched(byRegex: whitespaceRegex) {
-                // skip all whitespace lines
-            } else {
-                SDLog("Rsync Task stdout output: %@", outputString)
+                
+                if result[0].numberOfRanges < 4 {
+                    return
+                }
+                
+                let percentRange = result[0].rangeAt(2) // <-- !!
+                let bandwidthRange = result[0].rangeAt(3) // <-- !!
+                
+                let percent = s.substring(with: percentRange)
+                let bandwidth = s.substring(with: bandwidthRange)
+                
+                (self.syncProgressQueue).async {
+                    guard let d = Double(percent) else {
+                        return
+                    }
+                    progressBlock(0, 0, 0, d, bandwidth)
+                }
             }
             
         }
