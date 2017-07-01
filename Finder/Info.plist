@@ -36,7 +36,7 @@
 		<string>$(PRODUCT_MODULE_NAME).FinderSync</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 2014-2016 SafeDrive. All rights reserved.</string>
+	<string>Copyright (c) 2014-2017 SafeDrive. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>
