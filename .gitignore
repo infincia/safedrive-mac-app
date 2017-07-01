@@ -42,3 +42,6 @@ profile
 
 # Windows Noise
 [Tt]humbs.db
+/RELEASE
+/STAGING
+/update
