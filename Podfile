@@ -25,7 +25,6 @@ target 'SafeDrive' do
     use_frameworks!
     shared_pods
     realm
-    pod 'RegexKitLite', '~> 4.0'
     pod 'IYLoginItem', '~> 0.1'
     pod 'DCOAboutWindow', '~> 0.2.0'
     pod 'LetsMove', '~> 1.22'

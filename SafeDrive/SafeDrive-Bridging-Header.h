@@ -16,6 +16,4 @@
 
 @import Sparkle;
 
-@import RegexKitLite;
-
 @import Crashlytics;
