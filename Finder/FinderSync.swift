@@ -8,17 +8,16 @@
 import Cocoa
 import Crashlytics
 import FinderSync
-import Realm
-import RealmSwift
+import SafeDriveSDK
 
 class FinderSync: FIFinderSync {
     
     var appConnection: NSXPCConnection?
     var serviceConnection: NSXPCConnection?
     
-    var token: RealmSwift.NotificationToken?
+    var folders = [SDKSyncFolder]()
     
-    var syncFolders: Results<SyncFolder>?
+    var tasks = [SDKSyncTask]()
     
     var toolbarMenu: NSMenu!
     var supportMenuItem: NSMenuItem!
@@ -222,8 +221,7 @@ class FinderSync: FIFinderSync {
     }
     
     func configureClient(uniqueClientID: String?) {
-        self.token = nil
-        self.syncFolders = nil
+        self.folders = [SDKSyncFolder]()
         
         guard let newID = uniqueClientID else {
             return
@@ -243,36 +241,8 @@ class FinderSync: FIFinderSync {
         if !needConfig {
             return
         }
-        
-        let groupURL = storageURL()
-        
-        let uniqueClientURL = groupURL.appendingPathComponent(newID)
-        
-        do {
-            try FileManager.default.createDirectory(at: uniqueClientURL, withIntermediateDirectories: true, attributes: nil)
-        } catch {
-            Crashlytics.sharedInstance().crash()
-        }
-        
-        let dbURL = uniqueClientURL.appendingPathComponent("sync.realm")
-        
-        var config = Realm.Configuration()
-        
-        config.fileURL = dbURL
-        config.schemaVersion = UInt64(currentRealmSchemaVersion())
-        
-        Realm.Configuration.defaultConfiguration = config
-        
-        // we want a crash here at the moment so the process resets, they will
-        // generally be caused by a mismatch of the realm schema or a migration
-        // in progress
-        
-        // swiftlint:disable force_try
-        let realm = try! Realm()
-        // swiftlint:enable force_try
-        
-        let folders = realm.objects(SyncFolder.self)
-        self.syncFolders = folders
+
+        /*        
         token = folders.addNotificationBlock({ (changes) in
             switch changes {
             case .initial:
@@ -295,7 +265,7 @@ class FinderSync: FIFinderSync {
             case .error:
                 break
             }
-        })
+        })*/
     }
     
     // MARK: - Primary Finder Sync protocol methods
@@ -313,8 +283,7 @@ class FinderSync: FIFinderSync {
     }
     
     override func requestBadgeIdentifier(for url: URL) {
-        guard let syncFolder = self.syncFolderForURL(url),
-        let path = syncFolder.path else {
+        guard let folder = self.syncFolderForURL(url) else {
             print("error")
             return
         }
@@ -324,12 +293,19 @@ class FinderSync: FIFinderSync {
         do {
             try fileAttributes = FileManager.default.attributesOfItem(atPath: url.path)
             print("Modified: \((fileAttributes[FileAttributeKey.modificationDate] as! Date))")
-            print("Using \(path) for \( url.path) status")
+            print("Using \(folder.path) for \(url.path) status")
         } catch {
             print("error: \(error)")
         }
         var badgeIdentifier: String
-        if syncFolder.syncing {
+        guard let task = self.tasks.first(where: { $0.folderID == folder.id }) else {
+            badgeIdentifier = "idle"
+
+            FIFinderSyncController.default().setBadgeIdentifier(badgeIdentifier, for: url)
+            return
+        }
+        
+        if task.syncing || task.restoring {
             badgeIdentifier = "syncing"
         } else {
             badgeIdentifier = "idle"
@@ -393,8 +369,7 @@ class FinderSync: FIFinderSync {
         // not using individual item urls yet
         //let items: [AnyObject] = FIFinderSyncController.defaultController().selectedItemURLs()!
         
-        let folder: SyncFolder? = self.syncFolderForURL(target)
-        if let folder = folder {
+        if let folder = self.syncFolderForURL(target) {
             guard let a = self.appConnection else {
                 print("App connection not found")
                 return
@@ -456,21 +431,16 @@ class FinderSync: FIFinderSync {
         })
     }
     
-    func syncFolderForURL(_ url: URL) -> SyncFolder? {
-        guard let syncFolders = try? Realm().objects(SyncFolder.self) else {
-            return nil
-        }
-        for item: SyncFolder in syncFolders {
-            // swiftlint:disable force_unwrapping
-            let registeredPath: String = item.path!
-            // swiftlint:enable force_unwrapping
+    func syncFolderForURL(_ url: URL) -> SDKSyncFolder? {
+        for folder in folders {
+            let registeredPath: String = folder.path
 
             let testPath: String = url.path
             let options: NSString.CompareOptions = [.anchored, .caseInsensitive]
             
             // check if testPath is contained by this sync folder
             if testPath.range(of: registeredPath, options: options) != nil {
-                return item
+                return folder
             }
         }
         return nil
