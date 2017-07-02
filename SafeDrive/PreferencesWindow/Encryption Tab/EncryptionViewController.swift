@@ -63,7 +63,6 @@ class EncryptionViewController: NSViewController {
         
         // register SDApplicationEventProtocol notifications
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
     }
@@ -139,9 +138,6 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
 
 
 extension EncryptionViewController: SDApplicationEventProtocol {
-    func applicationDidConfigureRealm(notification: Notification) {
-        assert(Thread.current == Thread.main, "applicationDidConfigureRealm called on background thread")
-    }
     
     func applicationDidConfigureClient(notification: Notification) {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
