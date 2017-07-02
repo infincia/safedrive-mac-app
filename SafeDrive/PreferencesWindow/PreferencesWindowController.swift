@@ -10,9 +10,6 @@ import Cocoa
 
 import Crashlytics
 
-import Realm
-import RealmSwift
-
 import SafeDriveSDK
 
 enum Tab: Int {
