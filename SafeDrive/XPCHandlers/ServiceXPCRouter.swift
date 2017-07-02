@@ -37,7 +37,9 @@ class ServiceXPCRouter: NSObject, NSXPCListenerDelegate {
         
         newConnection.interruptionHandler = {
             DispatchQueue.main.async {
-                
+                if let weakSelf = weakSelf {
+                    weakSelf.serviceConnection = nil
+                }
             }
         }
         newConnection.invalidationHandler = {
