@@ -5,11 +5,6 @@ def shared_pods
     pod 'Crashlytics', '~>  3.8.3'
 end
 
-def realm
-    pod 'Realm','~> 2.8.3'
-    pod 'RealmSwift', '~> 2.8.3'
-end
-
 target 'SafeDriveService' do
     use_frameworks!
     shared_pods
@@ -18,13 +13,11 @@ end
 target 'SafeDriveFinder' do
     use_frameworks!
     shared_pods
-    realm
 end
 
 target 'SafeDrive' do
     use_frameworks!
     shared_pods
-    realm
     pod 'IYLoginItem', '~> 0.1'
     pod 'DCOAboutWindow', '~> 0.2.0'
     pod 'LetsMove', '~> 1.22'
