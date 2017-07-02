@@ -6,8 +6,6 @@
 
 import Crashlytics
 import Foundation
-import Realm
-import RealmSwift
 
 import SafeDriveSDK
 
@@ -198,32 +196,12 @@ class AccountController: NSObject {
             })
         }
     }
-    
-    
-    
-    fileprivate var _realm: Realm?
-    
-    var realm: Realm? {
-        get {
-            var r: Realm?
-            accountQueue.sync {
-                r = self._realm
-            }
-            return r
-        }
-        set (newValue) {
-            accountQueue.sync(flags: .barrier, execute: {
-                self._realm = newValue
-            })
-        }
-    }
-    
+
     override init() {
         super.init()
         
         // register SDApplicationEventProtocol notifications
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
         
@@ -266,8 +244,6 @@ class AccountController: NSObject {
             return
         }
         
-        self.realm = nil
-        
         do {
             try self.sdk.deleteKeychainItem(withUser: user.email, service: tokenDomain())
         } catch let error as SDKError {
@@ -303,7 +279,7 @@ class AccountController: NSObject {
     fileprivate func accountLoop() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             while true {
-                guard let _ = self.email, let _ = self.password, let _ = self.uniqueClientID, let _ = self.realm else {
+                guard let _ = self.email, let _ = self.password, let _ = self.uniqueClientID else {
                     Thread.sleep(forTimeInterval: 1)
 
                     continue
@@ -448,17 +424,6 @@ class AccountController: NSObject {
 }
 
 extension AccountController: SDApplicationEventProtocol {
-    func applicationDidConfigureRealm(notification: Notification) {
-        assert(Thread.current == Thread.main, "applicationDidConfigureRealm called on background thread")
-
-        guard let realm = try? Realm() else {
-            SDLog("failed to get realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
-        
-        self.realm = realm
-    }
     
     func applicationDidConfigureClient(notification: Notification) {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
