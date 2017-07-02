@@ -129,7 +129,6 @@ class SyncController: Equatable {
                 })
             }
         })
-        
     }
     
     func startSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double, _ bandwidth: String) -> Void,

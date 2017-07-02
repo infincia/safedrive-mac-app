@@ -13,7 +13,6 @@ import RealmSwift
 
 class FinderSync: FIFinderSync {
     
-    
     var appConnection: NSXPCConnection?
     var serviceConnection: NSXPCConnection?
     
