@@ -4,6 +4,7 @@
 // swiftlint:disable private_outlet
 
 import Cocoa
+import SafeDriveSDK
 
 class RestoreSelectionTableCellView: NSTableCellView {
     
@@ -17,7 +18,6 @@ class RestoreSelectionTableCellView: NSTableCellView {
     
     @IBOutlet var date: NSTextField!
     @IBOutlet var size: NSTextField!
-    var sessionName: String!
-    var sessionID: UInt64!
-    var sessionSize: UInt64!
+
+    var session: SDKSyncSession!
 }

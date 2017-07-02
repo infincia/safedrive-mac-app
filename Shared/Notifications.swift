@@ -24,7 +24,6 @@ extension Notification.Name {
     static let applicationShouldToggleMountState = Notification.Name("applicationShouldToggleMountState")
     
     
-    static let applicationDidConfigureRealm = Notification.Name("applicationDidConfigureRealm")
     static let applicationDidConfigureClient = Notification.Name("applicationDidConfigureClient")
     static let applicationDidConfigureUser = Notification.Name("applicationDidConfigureUser")
 
@@ -41,5 +40,7 @@ extension Notification.Name {
     static let accountNeedsRecoveryPhrase = Notification.Name("accountNeedsRecoveryPhraseNotification")
 
     static let serviceStatus = Notification.Name("serviceStatusNotification")
+
+    static let syncEvent = Notification.Name("syncEventNotification")
 
 }

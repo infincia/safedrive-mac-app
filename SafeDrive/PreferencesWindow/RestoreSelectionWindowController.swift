@@ -3,12 +3,10 @@
 //
 
 import Cocoa
-import Realm
-import RealmSwift
 import SafeDriveSDK
 
 protocol RestoreSelectionDelegate: class {
-    func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL, type: SyncType)
+    func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL, session: SDKSyncSession?)
 }
 
 extension RestoreSelectionWindowController: NSTableViewDataSource {
@@ -29,11 +27,7 @@ extension RestoreSelectionWindowController: NSTableViewDataSource {
         dateFormatter.dateStyle = .short
         view.date.stringValue = dateFormatter.string(from: session.date)
         
-        view.sessionName = session.name
-        
-        view.sessionID = session.session_id
-        
-        view.sessionSize = session.size
+        view.session = session
         
         return view
     }
@@ -50,6 +44,10 @@ extension RestoreSelectionWindowController: NSTableViewDataSource {
 extension RestoreSelectionWindowController:  NSTableViewDelegate {
     func tableViewSelectionDidChange(_ notification: Notification) {
         let sessionIndex = restoreSelectionList.selectedRow
+        
+        guard sessionIndex >= 0 else {
+            return
+        }
         
         guard let _ = restoreSelectionList.view(atColumn: 0, row: sessionIndex, makeIfNecessary: false) as? RestoreSelectionTableCellView else {
             return
@@ -91,7 +89,7 @@ extension RestoreSelectionWindowController: NSOpenSavePanelDelegate {
         if let attr = try? fileManager.attributesOfFileSystem(forPath: url.path),
            let freeSpace = attr[FileAttributeKey.systemFreeSize] as? UInt64 {
             
-            if sessionView.sessionSize > freeSpace {
+            if sessionView.session.size > freeSpace {
                 let message = NSLocalizedString("The selected location does not have enough free space to restore the session", comment: "String informing the user that the restore folder location doesn't have enough free space")
                 SDLog(message)
                 let error = SDError(message: message, kind: .folderConflict)
@@ -109,7 +107,7 @@ class RestoreSelectionWindowController: NSWindowController {
     fileprivate var sessions = [SDKSyncSession]()
 
     fileprivate var uniqueClientID: String!
-    fileprivate var folderID: UInt64!
+    fileprivate var folder: SDKSyncFolder!
     
     @IBOutlet fileprivate weak var restoreSelectionList: NSTableView!
     @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
@@ -119,30 +117,19 @@ class RestoreSelectionWindowController: NSWindowController {
 
     weak var restoreSelectionDelegate: RestoreSelectionDelegate?
     
-    var realm: Realm?
-    
     convenience init() {
         self.init(windowNibName: "RestoreSelectionWindow")
     }
     
     
-    convenience init?(delegate: RestoreSelectionDelegate, uniqueClientID: String, folderID: UInt64) {
+    convenience init?(delegate: RestoreSelectionDelegate, uniqueClientID: String, folder: SDKSyncFolder) {
         self.init(windowNibName: "RestoreSelectionWindow")
 
         self.restoreSelectionDelegate = delegate
         
         self.uniqueClientID = uniqueClientID
         
-        self.folderID = folderID
-        
-        guard let realm = try? Realm() else {
-            SDLog("failed to create realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
-        
-        self.realm = realm
-        
+        self.folder = folder
     }
     
     override func windowDidLoad() {
@@ -150,20 +137,7 @@ class RestoreSelectionWindowController: NSWindowController {
         self.spinner.stopAnimation(self)
         self.errorField.stringValue = ""
         
-        guard let realm = self.realm else {
-            SDLog("failed to get realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
-
-        guard let syncFolder = realm.objects(SyncFolder.self).filter("uniqueID == %@", self.folderID).last else {
-            SDLog("failed to get folder from realm!!!")
-            Crashlytics.sharedInstance().crash()
-            return
-        }
-        
-        if let path = syncFolder.path,
-            let url = URL(string: path) {
+        if let url = URL(string: folder.path) {
             self.destination.url = url
         } else {
             SDLog("failed to set default destination url")
@@ -234,34 +208,21 @@ class RestoreSelectionWindowController: NSWindowController {
 
             return
         }
-        guard let realm = self.realm else {
-            SDLog("failed to get realm!!!")
-            Crashlytics.sharedInstance().crash()
-            
-            return
-        }
         
         guard let destination = self.destination.url else {
             SDLog("no destination selected")
             return
         }
-
         
-        if let syncSession = realm.objects(PersistedSyncSession.self).filter("name == %@", v.sessionName).last,
-            let name = syncSession.name,
-            let folder = realm.objects(SyncFolder.self).filter("uniqueID == %@", Int64(self.folderID)).last {
-            let type: SyncType = folder.encrypted ? .encrypted : .unencrypted
-            self.restoreSelectionDelegate?.selectedSession(name, folderID: self.folderID, destination: destination, type: type)
-            self.close()
-        } else {
-            SDLog("failed to get session from realm!!!")
-            return
-        }
+        let sessionName = v.session.name
+        
+        self.restoreSelectionDelegate?.selectedSession(sessionName, folderID: self.folder.id, destination: destination, session: v.session)
+        self.close()
         
     }
     
     @IBAction func readSyncSessions(_ sender: AnyObject) {
-        guard let uniqueClientID = self.uniqueClientID else {
+        guard let _ = self.uniqueClientID else {
             return
         }
         
@@ -269,55 +230,11 @@ class RestoreSelectionWindowController: NSWindowController {
         self.errorField.stringValue = ""
         self.sdk.getSessions(completionQueue: DispatchQueue.main, success: { (sessions: [SDKSyncSession]) in
             self.errorField.stringValue = ""
-            guard let realm = self.realm else {
-                SDLog("failed to get realm!!!")
-                Crashlytics.sharedInstance().crash()
-                return
-            }
             
-            // try to delete all existing local records for this folder for consistency
-            let syncSessions = realm.objects(PersistedSyncSession.self).filter("folderId == %@", Int64(self.folderID))
-            
-            // swiftlint:disable force_try
-            try! realm.write {
-                realm.delete(syncSessions)
-            }
             // swiftlint:enable force_try
             self.sessions.removeAll()
             for session in sessions {
-                /*
-                 Current sync session model:
-                 
-                 "id" : 1,
-                 "name" : <UUID>,
-                 "size" : 9000,
-                 "date"  : 1435864769463,
-                 */
-                
-                let name = session.name
-
-                let sessionId = session.session_id
-                
-                let folderId = session.folder_id
-                
-                let date = session.date
-                
-                let size = session.size
-                
-
-                let syncSession = PersistedSyncSession(syncDate: date, size: Int64(size), name: name, folderId: Int64(folderId), sessionId: Int64(sessionId))
-                
-                
-                // swiftlint:disable force_try
-                try! realm.write {
-                    
-                    syncSession.uniqueClientID = uniqueClientID
-                    
-                    realm.add(syncSession, update: true)
-                }
-                // swiftlint:enable force_try
-                
-                if session.folder_id == self.folderID {
+                if session.folder_id == self.folder.id {
                     self.sessions.append(session)
                 }
 
@@ -359,7 +276,7 @@ class RestoreSelectionWindowController: NSWindowController {
         self.spinner.startAnimation(self)
         self.errorField.stringValue = ""
         
-        self.sdk.removeSession(v.sessionID, completionQueue: DispatchQueue.main, success: {
+        self.sdk.removeSession(v.session.session_id, completionQueue: DispatchQueue.main, success: {
             self.errorField.stringValue = ""
             self.readSyncSessions(self)
         }, failure: { (error) in

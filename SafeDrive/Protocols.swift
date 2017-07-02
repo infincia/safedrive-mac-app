@@ -47,10 +47,13 @@ protocol SDApplicationControlProtocol: class {
 
 @objc
 protocol SDApplicationEventProtocol: class {
-    func applicationDidConfigureRealm(notification: Notification)
     func applicationDidConfigureClient(notification: Notification)
     func applicationDidConfigureUser(notification: Notification)
+}
 
+@objc
+protocol SDSyncEventProtocol: class {
+    func syncEvent(notification: Notification)
 }
 
 @objc

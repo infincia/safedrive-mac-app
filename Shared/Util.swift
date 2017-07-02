@@ -38,14 +38,9 @@ fileprivate let SDDefaultVolumeName = "SafeDrive"
 fileprivate let SDDefaultServerPath = "/storage"
 fileprivate let SDDefaultServerPort = 22
 
-// Realm constants
-
-fileprivate let SDCurrentRealmSchema = 15
-
 // UserDefaults keys
 
 fileprivate let SDBuildVersionLastKey = "SDBuildVersionLastKey"
-fileprivate let SDRealmSchemaVersionLastKey = "SDRealmSchemaVersionLastKey"
 
 fileprivate let SDCurrentVolumeNameKey = "currentVolumeName"
 fileprivate let SDMountAtLaunchKey = "mountAtLaunch"
@@ -155,16 +150,6 @@ func userDefaultsMountAtLaunchKey() -> String {
 func userDefaultsWelcomeShownKey() -> String {
     return SDWelcomeShownKey
 }
-
-
-func userDefaultsRealmSchemaVersionLastKey() -> String {
-    return SDRealmSchemaVersionLastKey
-}
-
-func currentRealmSchemaVersion() -> Int {
-    return SDCurrentRealmSchema
-}
-
 
 // SSH related errors
 

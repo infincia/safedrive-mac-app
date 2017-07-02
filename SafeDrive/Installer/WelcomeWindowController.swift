@@ -9,8 +9,6 @@
 import Cocoa
 
 import Crashlytics
-import Realm
-import RealmSwift
 import SafeDriveSDK
 
 class WelcomeWindowController: NSWindowController {
