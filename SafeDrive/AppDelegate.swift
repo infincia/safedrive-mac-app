@@ -8,8 +8,6 @@
 import Cocoa
 import Crashlytics
 import Fabric
-import Realm
-import RealmSwift
 import SafeDriveSDK
 import Sparkle
 
@@ -39,8 +37,6 @@ class AppDelegate: NSObject {
     // swiftlint:enable force_unwrapping
 
     let SDBuildVersionLast = UserDefaults.standard.integer(forKey: userDefaultsBuildVersionLastKey())
-    
-    let SDRealmSchemaVersionLast = UserDefaults.standard.integer(forKey: userDefaultsRealmSchemaVersionLastKey())
     
     var environment: String = "STAGING"
 }
@@ -86,19 +82,6 @@ extension AppDelegate: NSApplicationDelegate {
         
         SDLog("SDDK \(SafeDriveSDK.sddk_version)-\(SafeDriveSDK.sddk_channel)")
 
-        
-        if SDRealmSchemaVersionLast > Int(currentRealmSchemaVersion()) {
-            let alert: NSAlert = NSAlert()
-            alert.messageText = "Unsupported downgrade"
-            alert.addButton(withTitle: "Quit")
-            alert.informativeText = "Your currently installed version of SafeDrive is older than the previously installed version.\n\nThis is unsupported and can cause data loss or crashes.\n\nPlease reinstall the newest version available."
-            
-            alert.runModal()
-            NSApp.terminate(nil)
-        }
-        
-        UserDefaults.standard.set(currentRealmSchemaVersion(), forKey: userDefaultsRealmSchemaVersionLastKey())
-        
         UserDefaults.standard.set(CFBundleVersion, forKey: userDefaultsBuildVersionLastKey())
         
         PFMoveToApplicationsFolderIfNecessary()
@@ -125,7 +108,6 @@ extension AppDelegate: NSApplicationDelegate {
         
         // register SDApplicationEventProtocol notifications
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureRealm), name: Notification.Name.applicationDidConfigureRealm, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
         
@@ -236,9 +218,6 @@ extension AppDelegate: SDApplicationControlProtocol {
 }
 
 extension AppDelegate: SDApplicationEventProtocol {
-    func applicationDidConfigureRealm(notification: Notification) {
-        
-    }
     
     func applicationDidConfigureClient(notification: Notification) {
         guard let uniqueClientID = notification.object as? String else {
@@ -258,81 +237,6 @@ extension AppDelegate: SDApplicationEventProtocol {
             } catch {
                 SDLog("Failed to create group container, this is a fatal error")
                 Crashlytics.sharedInstance().crash()
-            }
-            
-            let dbURL = uniqueClientURL.appendingPathComponent("sync.realm")
-            
-            let newdbURL = dbURL.appendingPathExtension("new")
-            // swiftlint:disable force_unwrapping
-
-            let config = Realm.Configuration(
-                fileURL: dbURL,
-                // Set the new schema version. This must be greater than the previously used
-                // version (if you've never set a schema version before, the version is 0).
-                schemaVersion: UInt64(currentRealmSchemaVersion()),
-                migrationBlock: { migration, oldSchemaVersion in
-                    SDLog("Migrating db version \(oldSchemaVersion) to \(currentRealmSchemaVersion())")
-                    migration.enumerateObjects(ofType: SyncFolder.className()) { _, newObject in
-                        if oldSchemaVersion < 15 {
-                            migration.delete(newObject!)
-                        }
-                    }
-                    migration.enumerateObjects(ofType: SyncTask.className()) { _, newObject in
-                        if oldSchemaVersion < 15 {
-                            migration.delete(newObject!)
-                        }
-                    }
-            })
-            // swiftlint:enable force_unwrapping
-
-            Realm.Configuration.defaultConfiguration = config
-            
-            autoreleasepool {
-                let fileManager = FileManager.default
-                
-                do {
-                    try fileManager.removeItem(at: newdbURL)
-                } catch {
-                    // ignored, file may not exist at all, but if it does and we can't remove it we'll crash next and get a report
-                }
-                // swiftlint:disable force_try
-                let realm = try! Realm(fileURL: dbURL)
-                try! realm.writeCopy(toFile: newdbURL)
-                try! fileManager.removeItem(at: dbURL)
-                try! fileManager.moveItem(at: newdbURL, to: dbURL)
-                // swiftlint:enable force_try
-            }
-            
-            autoreleasepool {
-                /*
-                 Reset all sync folders at startup.
-                 
-                 Prevents the following issue:
-                 
-                 1) App starts syncing FolderA, sets its "syncing" field to true in the database
-                 2) App exits/crashes during sync
-                 3) App starts again
-                 4) App refuses to sync folderA again because the "syncing" field is still set to true
-                 
-                 We can do this because sync tasks ALWAYS exit when the app does, so it is not possible for a sync to have been
-                 running if the app wasn't.
-                 
-                 */
-                // swiftlint:disable force_try
-                let realm = try! Realm(fileURL: dbURL)
-
-                try! realm.write {
-                    let syncFolders = realm.objects(SyncFolder.self)
-                    syncFolders.setValue(false, forKey: "syncing")
-                    syncFolders.setValue(false, forKey: "restoring")
-                    syncFolders.setValue(nil, forKey: "currentSyncUUID")
-                }
-                // swiftlint:enable force_try
-                
-            }
-            
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: Notification.Name.applicationDidConfigureRealm, object: nil)
             }
         }
     }
