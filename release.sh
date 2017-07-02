@@ -71,7 +71,7 @@ PLIST=$(cat <<EOF
 ]]>
 </description>
 <pubDate>$DATE</pubDate>
-<enclosure url="https://cdn.infincia.com/safedrive/SafeDrive_${SCHEME}_v$VERSION.zip" sparkle:shortVersionString="$VERSION" sparkle:version="$BUILD" length="$FILESIZE" type="application/octet-stream"/>
+<enclosure url="https://cdn.infincia.com/safedrive/SafeDrive_${SCHEME}_$VERSION.zip" sparkle:shortVersionString="$VERSION" sparkle:version="$BUILD" length="$FILESIZE" type="application/octet-stream"/>
 </item>
 </channel>
 </rss>
