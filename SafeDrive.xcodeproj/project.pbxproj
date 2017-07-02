@@ -307,6 +307,8 @@
 		AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileCheck.swift; path = "Open File Warning Window/OpenFileCheck.swift"; sourceTree = "<group>"; };
 		AA0FBBFC1EDF5D6200CDD9EF /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
+		AA272A051F09B01900B47673 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		AA272A061F09B01900B47673 /* ci */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ci; sourceTree = "<group>"; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
 		AA3168131A191B72006CC0EB /* SafeDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3168171A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -495,6 +497,8 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AA272A051F09B01900B47673 /* .travis.yml */,
+				AA272A061F09B01900B47673 /* ci */,
 				AA9079A71F072A7D0067E383 /* exportOptions.plist */,
 				AA9079A81F072A7D0067E383 /* release.sh */,
 				AAA3E6AF1EAD4BA00083CE66 /* SDK */,
