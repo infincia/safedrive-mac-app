@@ -16,7 +16,6 @@ class SyncController: Equatable {
     fileprivate var syncFailure = false
     fileprivate var syncTerminated = false
     fileprivate let syncProgressQueue = DispatchQueue(label: "io.safedrive.SafeDrive.syncprogress", attributes: [])
-    fileprivate let syncResultQueue = DispatchQueue.main
 
     var uniqueID: UInt64!
     
@@ -168,7 +167,7 @@ class SyncController: Equatable {
         var last_update = Date()
 
         if self.restore {            
-            self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: self.destination, sessionSize: self.spaceNeeded, completionQueue: syncResultQueue, progress: { (total, current, new, percent) in
+            self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: self.destination, sessionSize: self.spaceNeeded, completionQueue: syncProgressQueue, progress: { (total, current, new, percent) in
                 let now = Date()
                 let d = now.timeIntervalSince(last_update)
                 if d > 1 {
@@ -189,7 +188,7 @@ class SyncController: Equatable {
                 failureBlock(self.localURL, error)
             })
         } else {
-            self.sdk.syncFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, completionQueue: syncResultQueue, progress: { (total, current, new, percent) in
+            self.sdk.syncFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, completionQueue: syncProgressQueue, progress: { (total, current, new, percent) in
                 let now = Date()
                 let d = now.timeIntervalSince(last_update)
                 if d > 1 {
@@ -225,10 +224,10 @@ class SyncController: Equatable {
         if fileManager.fileExists(atPath: localURL.path, isDirectory:&isDirectory) {
             if !isDirectory.boolValue == true {
                 let error = SDKError(message: "Folder missing", kind: SDKErrorType.FolderMissing)
-                DispatchQueue.main.async(execute: {
+                (self.syncProgressQueue).async {
                     self.syncFailure = true
                     failureBlock(self.localURL, error)
-                })
+                }
             }
         }
         
@@ -248,9 +247,9 @@ class SyncController: Equatable {
             let port = serverURL.port,
             let user = serverURL.user else {
                 let error = SDError(message: "failed to unwrap user information", kind: .apiContractInvalid)
-                DispatchQueue.main.async(execute: {
+                (self.syncProgressQueue).async {
                     failureBlock(self.localURL, error)
-                })
+                }
                 return
         }
         
@@ -263,9 +262,9 @@ class SyncController: Equatable {
             let components = Bundle.init(url: componentsURL) else {
                 let message = NSLocalizedString("Components missing, contact SafeDrive support", comment: "")
                 let error = SDError(message: message, kind: .configMissing)
-                DispatchQueue.main.async(execute: {
+                (self.syncProgressQueue).async {
                     failureBlock(self.localURL, error)
-                })
+                }
                 return
         }
         
@@ -273,9 +272,9 @@ class SyncController: Equatable {
         guard let rsyncPath = components.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.rsync") else {
             let message = NSLocalizedString("Rsync missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .rsyncMissing)
-            DispatchQueue.main.async(execute: {
+            (self.syncProgressQueue).async {
                 failureBlock(self.localURL, error)
-            })
+            }
             return
         }
         
@@ -288,10 +287,10 @@ class SyncController: Equatable {
         /* path of our custom askpass helper so ssh can use it */
         guard let safeDriveAskpassPath = components.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.askpass") else {
             let error = SDError(message: "Askpass helper missing", kind: .askpassMissing)
-            DispatchQueue.main.async(execute: {
+            (self.syncProgressQueue).async {
                 self.syncFailure = true
                 failureBlock(self.localURL, error)
-            })
+            }
             return
         }
         rsyncEnvironment["SSH_ASKPASS"] = safeDriveAskpassPath
@@ -368,7 +367,9 @@ class SyncController: Equatable {
         guard let knownHostsFile = Bundle.main.url(forResource: "known_hosts", withExtension: nil) else {
             let message = NSLocalizedString("SSH hosts file missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .configMissing)
-            failureBlock(self.localURL, error)
+            (self.syncProgressQueue).async {
+                failureBlock(self.localURL, error)
+            }
             return
         }
         
@@ -378,7 +379,9 @@ class SyncController: Equatable {
         } catch {
             let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .temporaryFile)
-            failureBlock(self.localURL, error)
+            (self.syncProgressQueue).async {
+                failureBlock(self.localURL, error)
+            }
             return
         }
         
@@ -386,7 +389,9 @@ class SyncController: Equatable {
         guard let configFile = Bundle.main.url(forResource: "ssh_config", withExtension: nil) else {
             let message = NSLocalizedString("SSH config missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .configMissing)
-            failureBlock(self.localURL, error)
+            (self.syncProgressQueue).async {
+                failureBlock(self.localURL, error)
+            }
             return
         }
         
@@ -396,7 +401,9 @@ class SyncController: Equatable {
         } catch {
             let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .temporaryFile)
-            failureBlock(self.localURL, error)
+            (self.syncProgressQueue).async {
+                failureBlock(self.localURL, error)
+            }
             return
         }
         
@@ -404,7 +411,9 @@ class SyncController: Equatable {
         guard let _ = components.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
             let message = NSLocalizedString("SSH missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .sshMissing)
-            failureBlock(self.localURL, error)
+            (self.syncProgressQueue).async {
+                failureBlock(self.localURL, error)
+            }
             return
         }
         
@@ -527,7 +536,7 @@ class SyncController: Equatable {
                 return
             }
             if let e = error {
-                DispatchQueue.main.async {
+                (self.syncProgressQueue).async {
                     self.syncFailure = true
                     failureBlock(self.localURL, e)
                 }
@@ -550,7 +559,7 @@ class SyncController: Equatable {
             errorPipeHandle.readabilityHandler = nil
             
             if task.terminationStatus == 0 {
-                DispatchQueue.main.async(execute: {
+                (self.syncProgressQueue).async {
                     guard let s = weakSelf else {
                         return
                     }
@@ -558,9 +567,9 @@ class SyncController: Equatable {
                     if !s.syncFailure {
                         successBlock(self.localURL)
                     }
-                })
+                }
             } else {
-                DispatchQueue.main.async(execute: {
+                (self.syncProgressQueue).async {
                     guard let s = weakSelf else {
                         return
                     }
@@ -579,7 +588,7 @@ class SyncController: Equatable {
                         let error = SDError(message: "An unknown error occurred, contact support", kind: .unknown)
                         failureBlock(self.localURL, error)
                     }
-                })
+                }
             }
         }
         
@@ -590,10 +599,10 @@ class SyncController: Equatable {
             self.syncTask.launch()
             
         }, failure: { (apiError) in
-            DispatchQueue.main.async(execute: { 
+            (self.syncProgressQueue).async {
                 self.syncFailure = true
                 failureBlock(self.localURL, apiError)
-            })
+            }
         })
     }
 }
