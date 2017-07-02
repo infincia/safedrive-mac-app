@@ -6,6 +6,9 @@ DATE=$(date -u)
 
 SCHEMES=("STAGING" "RELEASE")
 DEVELOPMENT_TEAM=G738Z89QKM
+VERSION=$(git describe --dirty)
+BUILD=$(git rev-list --count HEAD)
+
 
 for SCHEME in "${SCHEMES[@]}"; do
 
@@ -43,10 +46,6 @@ TEMP=$(mktemp -d)
 ditto -x -k $FILE $TEMP/
 
 echo "Creating update manifest"
-
-
-BUILD=$(/usr/libexec/plistbuddy -c "Print :CFBundleVersion" $TEMP/SafeDrive.app/Contents/Info.plist)
-VERSION=$(/usr/libexec/plistbuddy -c "Print :CFBundleShortVersionString" $TEMP/SafeDrive.app/Contents/Info.plist)
 
 echo "Processing $FILE"
 
