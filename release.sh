@@ -9,6 +9,8 @@ DEVELOPMENT_TEAM=G738Z89QKM
 VERSION=$(git describe --dirty)
 BUILD=$(git rev-list --count HEAD)
 
+rm -f ./update/*.zip
+
 
 for SCHEME in "${SCHEMES[@]}"; do
 
@@ -26,28 +28,12 @@ xcodebuild -quiet -exportArchive -archivePath ./${LOWER_SCHEME}/SafeDrive-${SCHE
 
 echo "Building archive"
 
-rm -f ./${LOWER_SCHEME}/*.zip
 
+ditto -c -k --sequesterRsrc --keepParent ./${LOWER_SCHEME}/SafeDrive.app update/SafeDrive_${SCHEME}_${VERSION}.app.zip
 
-FILE=$(dropdmg --base-name=SafeDrive_$SCHEME -g SafeDrive ./${LOWER_SCHEME}/SafeDrive.app)
-
-cp ${FILE} ./update/safedrive/
-
-FILESIZE=$(stat -f%z "$FILE")
-
-#es="${FILE%.zip}"
-#es="${es#*${SCHEME}_v}"
-
-#VERSION=$es
-
-
-TEMP=$(mktemp -d)
-
-ditto -x -k $FILE $TEMP/
+FILESIZE=$(stat -f%z update/SafeDrive_${SCHEME}_${VERSION}.app.zip)
 
 echo "Creating update manifest"
-
-echo "Processing $FILE"
 
 echo "Size: $FILESIZE"
 
