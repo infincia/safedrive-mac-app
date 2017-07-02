@@ -126,13 +126,13 @@ class FinderSync: FIFinderSync {
         
         newConnection.interruptionHandler = {() -> Void in
             DispatchQueue.main.async(execute: {() -> Void in
-                //print("Service connection interrupted")
+                print("Service connection interrupted")
             })
         }
         
         newConnection.invalidationHandler = {() -> Void in
             DispatchQueue.main.async(execute: {() -> Void in
-                //print("Service connection invalidated")
+                print("Service connection invalidated")
                 self.serviceConnection = nil
             })
         }
@@ -151,13 +151,13 @@ class FinderSync: FIFinderSync {
         
         newConnection.interruptionHandler = {() -> Void in
             DispatchQueue.main.async(execute: {() -> Void in
-                //print("App connection interrupted")
+                print("App connection interrupted")
                 
             })
         }
         newConnection.invalidationHandler = {() -> Void in
             DispatchQueue.main.async(execute: {() -> Void in
-                //print("App connection invalidated")
+                print("App connection invalidated")
                 self.appConnection = nil
                 
             })
