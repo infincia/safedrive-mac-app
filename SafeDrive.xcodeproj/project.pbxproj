@@ -18,6 +18,7 @@
 		AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
 		AA272A031F095E4B00B47673 /* SafeDriveSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA272A0C1F09C63B00B47673 /* build.sh in Resources */ = {isa = PBXBuildFile; fileRef = AA272A0B1F09C63B00B47673 /* build.sh */; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */; };
@@ -310,6 +311,7 @@
 		AA272A051F09B01900B47673 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		AA272A061F09B01900B47673 /* ci */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ci; sourceTree = "<group>"; };
 		AA272A0A1F09C55100B47673 /* push.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = push.sh; sourceTree = "<group>"; };
+		AA272A0B1F09C63B00B47673 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
 		AA3168131A191B72006CC0EB /* SafeDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3168171A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AA272A0B1F09C63B00B47673 /* build.sh */,
 				AA272A0A1F09C55100B47673 /* push.sh */,
 				AA272A051F09B01900B47673 /* .travis.yml */,
 				AA272A061F09B01900B47673 /* ci */,
@@ -1058,6 +1061,7 @@
 				AAF945F41C80162700B972C3 /* io.safedrive.SafeDrive.Service.plist in Resources */,
 				AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */,
 				AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */,
+				AA272A0C1F09C63B00B47673 /* build.sh in Resources */,
 				AA4F8FC81E6A2D5700BB068A /* WelcomeView.xib in Resources */,
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA58D2D11E82DB86002D56E0 /* AccountView.xib in Resources */,
