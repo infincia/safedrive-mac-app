@@ -31,9 +31,6 @@ before_install:
   - security default-keychain -s ${KEYCHAIN}
   - security unlock-keychain -p safedrive ${KEYCHAIN}
   - security import ${CERTIFICATE_P12} -k ${KEYCHAIN} -P "" -T /usr/bin/codesign
-            
-  - brew install cmake || true
-  - brew upgrade cmake || true
 
 install:
   - bash safedrive-sdk/ci/install.sh
