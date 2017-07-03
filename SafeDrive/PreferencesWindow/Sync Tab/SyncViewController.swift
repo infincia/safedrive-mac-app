@@ -496,6 +496,8 @@ class SyncViewController: NSViewController {
                 return
         }
         
+        self.spinner.startAnimation(self)
+
         dropdown.isEnabled = false
 
         var syncFrequency: String
@@ -515,6 +517,7 @@ class SyncViewController: NSViewController {
         
         self.sdk.updateFolder(folder.name, path: folder.path, syncing: folder.active, uniqueID: folder.id, syncFrequency: syncFrequency, syncTime: folder.syncTime, completionQueue: DispatchQueue.main, success: {
             dropdown.isEnabled = true
+            self.spinner.stopAnimation(self)
 
             self.readSyncFolders(self)
         }, failure: { (error) in
