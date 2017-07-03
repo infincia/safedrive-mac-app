@@ -6,6 +6,7 @@ DATE=$(date -u)
 
 SCHEMES=("STAGING" "RELEASE")
 DEVELOPMENT_TEAM=G738Z89QKM
+CODE_SIGN_IDENTITY="Developer ID Application"
 VERSION=$(git describe --dirty)
 BUILD=$(git rev-list --count HEAD)
 
