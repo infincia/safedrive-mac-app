@@ -268,86 +268,85 @@ class SyncScheduler {
             let syncController = SyncController()
 
 
-            autoreleasepool {
-                
-                guard let folder = self.folders.first(where: { (folder) -> Bool in
-                        return folder.id == folderID
-                    }) else {
-                        SDLog("failed to get sync folder from list")
+            
+            guard let folder = self.folders.first(where: { (folder) -> Bool in
+                return folder.id == folderID
+            }) else {
+                SDLog("failed to get sync folder from list")
+                return
+            }
+            
+            let localFolder = URL(fileURLWithPath: folder.path, isDirectory: true)
+            
+            if task.syncing {
+                SDLog("Sync for \(folder.name) already in progress, cancelling")
+                //NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
+                return
+            }
+            
+            
+            if folder.encrypted {
+                if isRestore {
+                    guard let session = syncEvent.session else {
+                        SDLog("failed to get sync session from list")
                         return
-                }
-                
-                let localFolder = URL(fileURLWithPath: folder.path, isDirectory: true)
-                
-                if task.syncing {
-                    SDLog("Sync for \(folder.name) already in progress, cancelling")
-                    //NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
-                    return
-                }
-                
-                
-                if folder.encrypted {
-                    if isRestore {
-                        guard let session = syncEvent.session else {
-                            SDLog("failed to get sync session from list")
-                            return
-                        }
-                        
-                        syncController.spaceNeeded = UInt64(session.size)
                     }
                     
-                } else {
-                    let host = Host()
-                    // swiftlint:disable force_unwrapping
-                    let machineName = host.localizedName!
-                    // swiftlint:enable force_unwrapping
-                    
-                    // swiftlint:disable force_unwrapping
-                    let defaultFolder: URL = URL(string: defaultServerPath())!
-                    // swiftlint:enable force_unwrapping
-                    
-                    let machineFolder: URL = defaultFolder.appendingPathComponent(machineName, isDirectory: true)
-                    let remoteFolder: URL = machineFolder.appendingPathComponent(folder.name, isDirectory: true)
-                    var urlComponents: URLComponents = URLComponents()
-                    urlComponents.user = localInternalUserName
-                    urlComponents.host = localHost
-                    urlComponents.path = remoteFolder.path
-                    urlComponents.port = Int(localPort)
-                    // swiftlint:disable force_unwrapping
-                    let remote: URL = urlComponents.url!
-                    // swiftlint:enable force_unwrapping
-                    
-                    syncController.serverURL = remote
-                    syncController.password = localPassword
-                    
-                    syncController.spaceNeeded = 0
-                    
+                    syncController.spaceNeeded = UInt64(session.size)
                 }
                 
+            } else {
+                let host = Host()
+                // swiftlint:disable force_unwrapping
+                let machineName = host.localizedName!
+                // swiftlint:enable force_unwrapping
                 
-             
-                task.syncDate = syncDate
-                task.name = name
-                task.message = ""
-                task.syncing = true
-                task.restoring = isRestore
+                // swiftlint:disable force_unwrapping
+                let defaultFolder: URL = URL(string: defaultServerPath())!
+                // swiftlint:enable force_unwrapping
                 
+                let machineFolder: URL = defaultFolder.appendingPathComponent(machineName, isDirectory: true)
+                let remoteFolder: URL = machineFolder.appendingPathComponent(folder.name, isDirectory: true)
+                var urlComponents: URLComponents = URLComponents()
+                urlComponents.user = localInternalUserName
+                urlComponents.host = localHost
+                urlComponents.path = remoteFolder.path
+                urlComponents.port = Int(localPort)
+                // swiftlint:disable force_unwrapping
+                let remote: URL = urlComponents.url!
+                // swiftlint:enable force_unwrapping
                 
-                syncController.uniqueID = folder.id
-                syncController.encrypted = folder.encrypted
-                syncController.uuid = name
-                syncController.localURL = localFolder
-                if let destination = syncEvent.destination {
-                    syncController.destination = destination
-                }
+                syncController.serverURL = remote
+                syncController.password = localPassword
                 
-                syncController.restore = isRestore
-                syncController.folderName = folder.name
+                syncController.spaceNeeded = 0
                 
-                self.syncControllerQueue.sync {
-                    self.syncControllers.append(syncController)
-                }
             }
+            
+            
+            
+            task.syncDate = syncDate
+            task.name = name
+            task.message = ""
+            task.syncing = true
+            task.restoring = isRestore
+            
+            
+            syncController.uniqueID = folder.id
+            syncController.encrypted = folder.encrypted
+            syncController.uuid = name
+            syncController.localURL = localFolder
+            if let destination = syncEvent.destination {
+                syncController.destination = destination
+            }
+            
+            syncController.restore = isRestore
+            syncController.folderName = folder.name
+            
+            self.syncControllerQueue.sync {
+                self.syncControllers.append(syncController)
+            }
+            
             
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: Notification.Name.syncEvent, object: folderID)
