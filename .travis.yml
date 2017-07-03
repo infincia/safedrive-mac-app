@@ -36,6 +36,7 @@ before_install:
   - brew upgrade cmake || true
 
 install:
+  - bash safedrive-sdk/ci/install.sh
   - bash ci/install.sh
 
 script:
