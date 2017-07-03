@@ -62,11 +62,11 @@ PLIST=$(cat <<EOF
 </rss>
 EOF)
 
-mkdir -p ./update/safedrive/
+mkdir -p ./update/
 
-echo $PLIST > ./update/safedrive/${LOWER_SCHEME}.xml
+echo $PLIST > ./update/${LOWER_SCHEME}.xml
 
 done
 
-rsync -rv --delete-during ./update/safedrive/ root@infincia.com:/data/update/safedrive/
+rsync -rv --delete-during ./update/ root@infincia.com:/data/update/safedrive/
 
