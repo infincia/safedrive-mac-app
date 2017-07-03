@@ -68,5 +68,4 @@ echo $PLIST > ./update/${LOWER_SCHEME}.xml
 
 done
 
-rsync -rv --delete-during ./update/ root@infincia.com:/data/update/safedrive/
 
