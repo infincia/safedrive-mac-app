@@ -309,7 +309,6 @@
 		AA0FBBFC1EDF5D6200CDD9EF /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
 		AA272A051F09B01900B47673 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
-		AA272A061F09B01900B47673 /* ci */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ci; sourceTree = "<group>"; };
 		AA272A0A1F09C55100B47673 /* push.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = push.sh; sourceTree = "<group>"; };
 		AA272A0B1F09C63B00B47673 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
@@ -503,7 +502,6 @@
 				AA272A0B1F09C63B00B47673 /* build.sh */,
 				AA272A0A1F09C55100B47673 /* push.sh */,
 				AA272A051F09B01900B47673 /* .travis.yml */,
-				AA272A061F09B01900B47673 /* ci */,
 				AA9079A71F072A7D0067E383 /* exportOptions.plist */,
 				AA9079A81F072A7D0067E383 /* release.sh */,
 				AAA3E6AF1EAD4BA00083CE66 /* SDK */,

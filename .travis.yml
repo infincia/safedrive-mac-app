@@ -34,13 +34,9 @@ before_install:
 
 install:
   - bash safedrive-sdk/ci/install.sh
-  - bash ci/install.sh
 
 script:
   - bash build.sh
-
-before_deploy:
-  - bash ci/before_deploy.sh
 
 deploy:
   provider: releases
