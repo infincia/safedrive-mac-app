@@ -11,6 +11,7 @@ BUILD=$(git rev-list --count HEAD)
 
 rm -f ./update/*.zip
 
+pod install
 
 for SCHEME in "${SCHEMES[@]}"; do
 
