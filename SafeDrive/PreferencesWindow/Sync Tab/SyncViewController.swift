@@ -132,8 +132,17 @@ class SyncViewController: NSViewController {
                 let folderPath = url.path
                 
                 self.sdk.addFolder(folderName, path: folderPath, encrypted: isEncrypted, completionQueue: DispatchQueue.main, success: { (folderID) in
-                    self.readSyncFolders(self)
-                    self.sync(folderID, encrypted: isEncrypted)
+                    self.readSyncFolders(success: { 
+                        self.sync(folderID, encrypted: isEncrypted)
+                    }, failure: { (error) in
+                        SDErrorHandlerReport(error)
+                        self.spinner.stopAnimation(self)
+                        let alert: NSAlert = NSAlert()
+                        alert.messageText = NSLocalizedString("Error occurred after adding folder to your account", comment: "")
+                        alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                        alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+                        alert.runModal()
+                    })
                 }, failure: { (error) in
                     SDErrorHandlerReport(error)
                     self.spinner.stopAnimation(self)
@@ -256,8 +265,16 @@ class SyncViewController: NSViewController {
     }
     
     @IBAction func readSyncFolders(_ sender: AnyObject) {
+        readSyncFolders(success: { 
+            //
+        }, failure: { (error) in
+            //
+        })
+    }
+    
+    func readSyncFolders(success: @escaping () -> Void, failure: @escaping (SDKError) -> Void) {
         guard let _ = self.uniqueClientID else {
-                return
+            return
         }
         self.spinner.startAnimation(self)
         
@@ -268,12 +285,14 @@ class SyncViewController: NSViewController {
             self.syncScheduler.folders = folders
             
             self.scheduleSelection.selectItem(at: -1)
-
+            
             self.reload()
             
             self.spinner.stopAnimation(self)
             
             self.verifyFolders(nil)
+            
+            success()
             
         }, failure: { (error) in
             SDErrorHandlerReport(error)
@@ -283,6 +302,7 @@ class SyncViewController: NSViewController {
             alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
             alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
             alert.runModal()
+            failure(error)
         })
     }
     
