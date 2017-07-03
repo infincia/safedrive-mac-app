@@ -555,12 +555,32 @@ class SyncViewController: NSViewController {
     
     @IBAction func setSyncTime(_ sender: AnyObject) {
         guard let _ = self.uniqueClientID,
-            let syncFolder = folders[safe: self.syncListView.selectedRow - 1] else {
+            let folder = folders[safe: self.syncListView.selectedRow - 1],
+            let timePicker = sender as? NSDatePicker else {
                 return
         }
         
-        // TODO: this is an SDK call spot
-        //syncFolder.syncTime = self.syncTimePicker.dateValue
+        self.spinner.startAnimation(self)
+
+        timePicker.isEnabled = false
+                
+        self.sdk.updateFolder(folder.name, path: folder.path, syncing: folder.active, uniqueID: folder.id, syncFrequency: folder.syncFrequency, syncTime: self.syncTimePicker.dateValue, completionQueue: DispatchQueue.main, success: {
+            self.spinner.stopAnimation(self)
+
+            self.readSyncFolders(self)
+            timePicker.isEnabled = true
+
+        }, failure: { (error) in
+            SDErrorHandlerReport(error)
+            self.spinner.stopAnimation(self)
+            timePicker.isEnabled = true
+
+            let alert: NSAlert = NSAlert()
+            alert.messageText = NSLocalizedString("Error updating folder in your account", comment: "")
+            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+            alert.runModal()
+        })
     }
 
     fileprivate func updateSyncDetailsPanel(folder: SDKSyncFolder) {
