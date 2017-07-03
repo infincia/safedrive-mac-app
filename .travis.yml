@@ -39,7 +39,7 @@ install:
   - bash ci/install.sh
 
 script:
-  - bash release.sh
+  - bash build.sh
 
 before_deploy:
   - bash ci/before_deploy.sh
