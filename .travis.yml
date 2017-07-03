@@ -15,12 +15,10 @@ matrix:
       env: TARGET=x86_64-apple-darwin
 
 
-#cache:
-#  directories:
-#    - src
-#    - dep
-#    - target
-#    - $HOME/.cargo
+cache:
+  directories:
+    - safedrive-sdk
+    - $HOME/.cargo
 
 before_install:
   - mkdir -p build
