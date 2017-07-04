@@ -159,7 +159,6 @@ extension ServiceManager: NSXPCListenerDelegate {
     
     func serviceReconnectionLoop() {
         while true {
-            //[self ensureServiceIsRunning];
             if self.serviceConnection == nil {
                 
                 self.updateNotificationSent = false
