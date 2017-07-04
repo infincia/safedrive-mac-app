@@ -65,16 +65,23 @@ class ServiceManager: NSObject {
     
     // swiftlint:disable force_unwrapping
     func loadService() {
-        let servicePlist: URL = Bundle.main.url(forResource: "io.safedrive.SafeDrive.Service", withExtension: "plist")!
-        let jobDict = NSDictionary(contentsOfFile: servicePlist.path)
-        var jobError: Unmanaged<CFError>? = nil
-        
-        if !SMJobSubmit(kSMDomainUserLaunchd, jobDict!, nil, &jobError) {
-            if let error = jobError?.takeRetainedValue() {
-                SDLog("Load service error: \(error)")
-                SDErrorHandlerReport(error)
-                
+        do {
+            try deployService()
+            
+            let servicePlist: URL = Bundle.main.url(forResource: "io.safedrive.SafeDrive.Service", withExtension: "plist")!
+            let jobDict = NSDictionary(contentsOfFile: servicePlist.path)
+            var jobError: Unmanaged<CFError>? = nil
+            
+            if !SMJobSubmit(kSMDomainUserLaunchd, jobDict!, nil, &jobError) {
+                if let error = jobError?.takeRetainedValue() {
+                    SDLog("Load service error: \(error)")
+                    SDErrorHandlerReport(error)
+                    
+                }
             }
+        } catch {
+            SDLog("Deploying service failed: \(error)")
+            SDErrorHandlerReport(error)
         }
     }
     // swiftlint:enable force_unwrapping
@@ -87,6 +94,81 @@ class ServiceManager: NSObject {
                 SDErrorHandlerReport(error)
             }
         }
+    }
+    
+    func deployService() throws {
+        let fileManager: FileManager = FileManager.default
+        // swiftlint:disable force_try
+        
+        let libraryURL = try! fileManager.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        
+        let launchAgentsURL = libraryURL.appendingPathComponent("LaunchAgents", isDirectory: true)
+        do {
+            try fileManager.createDirectory(at: launchAgentsURL, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            let message = NSLocalizedString("Error creating launch agents directory: \(error)", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .serviceDeployment)
+            throw error
+        }
+        
+        let applicationSupportURL = try! fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        // swiftlint:enable force_try
+        
+        let safeDriveApplicationSupportURL = applicationSupportURL.appendingPathComponent("SafeDrive", isDirectory: true)
+        
+        let serviceDestinationURL = safeDriveApplicationSupportURL.appendingPathComponent("SafeDriveService.app", isDirectory: true)
+        
+        let serviceSourceURL = Bundle.main.bundleURL.appendingPathComponent("Contents/PlugIns/SafeDriveService.app", isDirectory: true)
+        
+        // copy launch agent to ~/Library/LaunchAgents/
+        let launchAgentDestinationURL = launchAgentsURL.appendingPathComponent("io.safedrive.SafeDrive.Service.plist", isDirectory: false)
+        // swiftlint:disable force_unwrapping
+        let launchAgentSourceURL: URL = Bundle.main.url(forResource: "io.safedrive.SafeDrive.Service", withExtension: "plist")!
+        // swiftlint:enable force_unwrapping
+        
+        if FileManager.default.fileExists(atPath: launchAgentDestinationURL.path) {
+            do {
+                try FileManager.default.removeItem(at: launchAgentDestinationURL)
+            } catch let error as NSError {
+                SDLog("Error removing old launch agent: \(error)")
+            }
+        }
+        do {
+            try fileManager.copyItem(at: launchAgentSourceURL, to: launchAgentDestinationURL)
+        } catch let error as NSError {
+            let message = NSLocalizedString("Error copying launch agent: \(error)", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .serviceDeployment)
+            throw error
+        }
+        
+        // copy background service to ~/Library/Application Support/SafeDrive/
+        do {
+            try fileManager.createDirectory(at: safeDriveApplicationSupportURL, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            let message = NSLocalizedString("Error creating support directory: \(error)", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .serviceDeployment)
+            throw error
+        }
+        
+        if fileManager.fileExists(atPath: serviceDestinationURL.path) {
+            do {
+                try fileManager.removeItem(at: serviceDestinationURL)
+            } catch let error as NSError {
+                SDLog("Error removing old service: \(error)")
+            }
+        }
+        do {
+            try fileManager.copyItem(at: serviceSourceURL, to: serviceDestinationURL)
+        } catch let error as NSError {
+            let message = NSLocalizedString("Error copying service: \(error)", comment: "")
+            SDLog(message)
+            let error = SDError(message: message, kind: .serviceDeployment)
+            throw error
+        }
+        
     }
 }
 
@@ -143,18 +225,22 @@ extension ServiceManager: NSXPCListenerDelegate {
         return newConnection
     }
     
-    func ensureServiceIsRunning() -> Bool {
-        if !isProduction() {
-            // temporary kill/restart for background service until proper calls are implemented
-            // NOTE: This should not happen in production! Background service should NOT be killed arbitrarily.
-            //
-            //[NSThread sleepForTimeInterval:5];
+    func ensureServiceIsRunning() {
+        if isProduction() {
+            // ask the service to stop any important operations first.
+            // there aren't any at the moment, so this is a placeholder
         }
-        //CFDictionaryRef diref = SMJobCopyDictionary( kSMDomainUserLaunchd, (CFStringRef)@"io.safedrive.SafeDrive.Service");
-        //NSLog(@"Job status: %@", (NSDictionary *)CFBridgingRelease(diref));
-        //CFRelease(diref);
-        return true
-        //return
+        // temporary kill/restart for background service until proper calls are implemented
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
+            self.unloadService()
+            
+            // wait for service to exit before reloading it
+            while self.isServiceRunning {
+                Thread.sleep(forTimeInterval: 1)
+            }
+            
+            self.loadService()
+        })
     }
     
     func serviceReconnectionLoop() {

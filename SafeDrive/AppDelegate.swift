@@ -127,12 +127,7 @@ extension AppDelegate: NSApplicationDelegate {
         self.dropdownMenuController = DropdownController()
         
         self.serviceManager = ServiceManager.sharedServiceManager
-        self.serviceManager.unloadService()
-        
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
-            self.serviceManager.loadService()
-            self.serviceRouter = ServiceXPCRouter()
-        })
+        self.serviceManager.ensureServiceIsRunning()
         
         self.accountController = AccountController.sharedAccountController
         

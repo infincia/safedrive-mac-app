@@ -151,7 +151,6 @@ class Installer: NSObject {
                 if !self.isOSXFUSEInstalled {
                     try self.installOSXFUSE()
                 }
-                try self.deployService()
                 if !self.isCLIAppInstalled {
                     try self.installCLI()
                 }
@@ -160,81 +159,6 @@ class Installer: NSObject {
                     self.delegate?.didFail(error: error)
                 }
             }
-        }
-        
-    }
-    
-    func deployService() throws {
-        let fileManager: FileManager = FileManager.default
-        // swiftlint:disable force_try
-
-        let libraryURL = try! fileManager.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        
-        let launchAgentsURL = libraryURL.appendingPathComponent("LaunchAgents", isDirectory: true)
-        do {
-            try fileManager.createDirectory(at: launchAgentsURL, withIntermediateDirectories: true, attributes: nil)
-        } catch let error as NSError {
-            let message = NSLocalizedString("Error creating launch agents directory: \(error)", comment: "")
-            SDLog(message)
-            let error = SDError(message: message, kind: .serviceDeployment)
-            throw error
-        }
-        
-        let applicationSupportURL = try! fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        // swiftlint:enable force_try
-
-        let safeDriveApplicationSupportURL = applicationSupportURL.appendingPathComponent("SafeDrive", isDirectory: true)
-        
-        let serviceDestinationURL = safeDriveApplicationSupportURL.appendingPathComponent("SafeDriveService.app", isDirectory: true)
-        
-        let serviceSourceURL = Bundle.main.bundleURL.appendingPathComponent("Contents/PlugIns/SafeDriveService.app", isDirectory: true)
-        
-        // copy launch agent to ~/Library/LaunchAgents/
-        let launchAgentDestinationURL = launchAgentsURL.appendingPathComponent("io.safedrive.SafeDrive.Service.plist", isDirectory: false)
-        // swiftlint:disable force_unwrapping
-        let launchAgentSourceURL: URL = Bundle.main.url(forResource: "io.safedrive.SafeDrive.Service", withExtension: "plist")!
-        // swiftlint:enable force_unwrapping
-
-        if FileManager.default.fileExists(atPath: launchAgentDestinationURL.path) {
-            do {
-                try FileManager.default.removeItem(at: launchAgentDestinationURL)
-            } catch let error as NSError {
-                SDLog("Error removing old launch agent: \(error)")
-            }
-        }
-        do {
-            try fileManager.copyItem(at: launchAgentSourceURL, to: launchAgentDestinationURL)
-        } catch let error as NSError {
-            let message = NSLocalizedString("Error copying launch agent: \(error)", comment: "")
-            SDLog(message)
-            let error = SDError(message: message, kind: .serviceDeployment)
-            throw error
-        }
-        
-        // copy background service to ~/Library/Application Support/SafeDrive/
-        do {
-            try fileManager.createDirectory(at: safeDriveApplicationSupportURL, withIntermediateDirectories: true, attributes: nil)
-        } catch let error as NSError {
-            let message = NSLocalizedString("Error creating support directory: \(error)", comment: "")
-            SDLog(message)
-            let error = SDError(message: message, kind: .serviceDeployment)
-            throw error
-        }
-        
-        if fileManager.fileExists(atPath: serviceDestinationURL.path) {
-            do {
-                try fileManager.removeItem(at: serviceDestinationURL)
-            } catch let error as NSError {
-                SDLog("Error removing old service: \(error)")
-            }
-        }
-        do {
-            try fileManager.copyItem(at: serviceSourceURL, to: serviceDestinationURL)
-        } catch let error as NSError {
-            let message = NSLocalizedString("Error copying service: \(error)", comment: "")
-            SDLog(message)
-            let error = SDError(message: message, kind: .serviceDeployment)
-            throw error
         }
         
     }
