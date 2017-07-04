@@ -9,8 +9,9 @@ class ServiceManager: NSObject {
     
     fileprivate var serviceConnection: NSXPCConnection?
     fileprivate var appListener: NSXPCListener
-    fileprivate var currentServiceVersion = NSDecimalNumber(string: "0")
+    fileprivate var currentServiceVersion: Int?
     fileprivate weak var appXPCDelegate: AppXPCDelegate?
+    fileprivate var updateNotificationSent = false
     
     override init() {
         
@@ -159,6 +160,8 @@ extension ServiceManager: NSXPCListenerDelegate {
             //[self ensureServiceIsRunning];
             if self.serviceConnection == nil {
                 
+                self.updateNotificationSent = false
+                
                 self.serviceConnection = self.createServiceConnection()
                 
                 if let s = self.serviceConnection {
@@ -179,11 +182,17 @@ extension ServiceManager: NSXPCListenerDelegate {
                 }) as! ServiceXPCProtocol
                 
                 proxy.protocolVersion({ (version: Int!) in
-                    
-                    if version != kServiceXPCProtocolVersion {
-                        SDLog("Service needs to be updated!!!!!")
-                        if let s = self.serviceConnection {
-                            s.invalidate()
+                    self.currentServiceVersion = version
+
+                    if let runningVersion = self.currentServiceVersion {
+                        if runningVersion != kServiceXPCProtocolVersion {
+                            if !self.updateNotificationSent {
+                                self.updateNotificationSent = true
+                                SDLogWarn("Service needs to be updated (running: \(runningVersion), current \(kServiceXPCProtocolVersion))")
+                            }
+                            if let s = self.serviceConnection {
+                                s.invalidate()
+                            }
                         }
                     }
                 })
