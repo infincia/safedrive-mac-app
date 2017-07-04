@@ -43,7 +43,7 @@ class ServiceManager: NSObject {
     }
     
     
-    var serviceStatus: Bool {
+    var isServiceRunning: Bool {
         guard let _ = SMJobCopyDictionary(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString)) else {
             return false
         }
@@ -54,9 +54,9 @@ class ServiceManager: NSObject {
     fileprivate func serviceLoop() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
             while true {
-                let serviceStatus: Bool = self.serviceStatus
+                let running: Bool = self.isServiceRunning
                 DispatchQueue.main.async(execute: {() -> Void in
-                    NotificationCenter.default.post(name: Notification.Name.serviceStatus, object: serviceStatus)
+                    NotificationCenter.default.post(name: Notification.Name.serviceStatus, object: running)
                 })
                 Thread.sleep(forTimeInterval: 1)
             }
