@@ -81,6 +81,11 @@
 		AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */; };
 		AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */; };
 		AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */; };
+		AA88DD0B1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
+		AA88DD0C1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
+		AA88DD0D1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
+		AA88DD0E1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
+		AA88DD101F0C052D00C4858E /* FinderXPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0F1F0C052D00C4858E /* FinderXPCDelegate.swift */; };
 		AA9079AE1F07EE120067E383 /* SafeDriveFinder.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AAF945FF1C815D5A00B972C3 /* SafeDriveFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAA3E7031EADB7320083CE66 /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
@@ -368,6 +373,8 @@
 		AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateAccountView.xib; path = Installer/ValidateAccountView.xib; sourceTree = "<group>"; };
 		AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateClientViewController.swift; path = Installer/ValidateClientViewController.swift; sourceTree = "<group>"; };
 		AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateClientView.xib; path = Installer/ValidateClientView.xib; sourceTree = "<group>"; };
+		AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FinderXPCProtocol.swift; path = Shared/FinderXPCProtocol.swift; sourceTree = "<group>"; };
+		AA88DD0F1F0C052D00C4858E /* FinderXPCDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinderXPCDelegate.swift; sourceTree = "<group>"; };
 		AA9079A71F072A7D0067E383 /* exportOptions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = exportOptions.plist; sourceTree = "<group>"; };
 		AA9079A81F072A7D0067E383 /* release.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = release.sh; sourceTree = "<group>"; };
 		AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CUIThemeRenditionFix.xcassets; path = Shared/CUIThemeRenditionFix.xcassets; sourceTree = "<group>"; };
@@ -631,6 +638,7 @@
 				AA6E272A1D876DD800038019 /* Notifications.swift */,
 				AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */,
 				AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */,
+				AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */,
 				AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */,
 				AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */,
 			);
@@ -830,6 +838,7 @@
 				AAF946051C815D5A00B972C3 /* Info.plist */,
 				AAF9460C1C815E3500B972C3 /* SafeDriveFinder-Bridging-Header.h */,
 				AAF946011C815D5A00B972C3 /* Supporting Files */,
+				AA88DD0F1F0C052D00C4858E /* FinderXPCDelegate.swift */,
 			);
 			path = Finder;
 			sourceTree = "<group>";
@@ -1345,6 +1354,7 @@
 				AA6E272B1D876DD800038019 /* Notifications.swift in Sources */,
 				AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */,
 				AA76DC231C8779D2007B320E /* WelcomeWindowController.swift in Sources */,
+				AA88DD0B1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */,
 				AA3EB8411E569D28003A2E79 /* Protocols.swift in Sources */,
 				AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */,
 				AA50716A1E2ED5F7006F59C8 /* Util.swift in Sources */,
@@ -1395,6 +1405,7 @@
 				AAA3E70E1EADB7510083CE66 /* Installer.swift in Sources */,
 				AAA3E7151EADB7630083CE66 /* WelcomeWindowController.swift in Sources */,
 				AAA3E70A1EADB7450083CE66 /* DropdownController.swift in Sources */,
+				AA88DD0C1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */,
 				AAA3E72A1EADB8FE0083CE66 /* ServiceXPCProtocol.swift in Sources */,
 				AAA3E71C1EADB7780083CE66 /* RestoreSelectionTableCellView.swift in Sources */,
 				AA6E272C1D876DD800038019 /* Notifications.swift in Sources */,
@@ -1446,6 +1457,7 @@
 				AA6E272D1D876DD800038019 /* Notifications.swift in Sources */,
 				AA3EB8421E569E9D003A2E79 /* Protocols.swift in Sources */,
 				AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */,
+				AA88DD0D1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */,
 				AAD44A291D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AA5754101C8004660040E8B0 /* ServiceListenerDelegate.swift in Sources */,
 				AA5754051C7FFCC10040E8B0 /* AppDelegate.swift in Sources */,
@@ -1465,6 +1477,8 @@
 				AAD44A281D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */,
 				AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */,
+				AA88DD0E1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */,
+				AA88DD101F0C052D00C4858E /* FinderXPCDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
