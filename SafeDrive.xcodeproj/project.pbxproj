@@ -117,7 +117,6 @@
 		AAA3E7231EADB78E0083CE66 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */; };
 		AAA3E7241EADB7940083CE66 /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */; };
 		AAA3E7251EADB7980083CE66 /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
-		AAA3E7261EADB79B0083CE66 /* ServiceXPCRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */; };
 		AAA3E7271EADB79C0083CE66 /* AppXPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */; };
 		AAA3E7281EADB8F90083CE66 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AAA3E7291EADB8FA0083CE66 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
@@ -138,7 +137,6 @@
 		AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */; };
 		AACDAD911E97548500F5B351 /* ssh_config in Resources */ = {isa = PBXBuildFile; fileRef = AACDAD901E97548500F5B351 /* ssh_config */; };
 		AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
-		AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */; };
 		AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
 		AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
 		AAD44A271D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
@@ -387,7 +385,6 @@
 		AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadyViewController.swift; path = Installer/ReadyViewController.swift; sourceTree = "<group>"; };
 		AACDAD901E97548500F5B351 /* ssh_config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssh_config; sourceTree = "<group>"; };
 		AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
-		AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCRouter.swift; path = SafeDrive/XPCHandlers/ServiceXPCRouter.swift; sourceTree = SOURCE_ROOT; };
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
 		AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCProtocol.swift; path = Shared/AppXPCProtocol.swift; sourceTree = "<group>"; };
 		AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RunningProcessCheck.swift; path = "Open File Warning Window/RunningProcessCheck.swift"; sourceTree = "<group>"; };
@@ -716,7 +713,6 @@
 		AA5C1A951BB234DD006A0C8C /* XPC */ = {
 			isa = PBXGroup;
 			children = (
-				AAD44A211D88BCBC00ACCE79 /* ServiceXPCRouter.swift */,
 				AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */,
 			);
 			name = XPC;
@@ -1381,7 +1377,6 @@
 				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,
 				AA58D2D41E82DBA8002D56E0 /* SyncViewController.swift in Sources */,
 				AA7CD61E1E68A23300EE7FAD /* ValidateAccountViewController.swift in Sources */,
-				AAD44A221D88BCBC00ACCE79 /* ServiceXPCRouter.swift in Sources */,
 				AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */,
 				AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */,
 				AA3EB83B1E556EE3003A2E79 /* RestoreSelectionWindowController.swift in Sources */,
@@ -1435,7 +1430,6 @@
 				AAA3E71A1EADB7740083CE66 /* SyncManagerTableRowView.swift in Sources */,
 				AA50716D1E2ED86C006F59C8 /* Util.swift in Sources */,
 				AA6DCB2E1CA57D50001473B0 /* UnitTests.swift in Sources */,
-				AAA3E7261EADB79B0083CE66 /* ServiceXPCRouter.swift in Sources */,
 				AAA3E70D1EADB74F0083CE66 /* FailedViewController.swift in Sources */,
 				AAA3E7031EADB7320083CE66 /* OpenFileCheck.swift in Sources */,
 				AAA3E7271EADB79C0083CE66 /* AppXPCDelegate.swift in Sources */,

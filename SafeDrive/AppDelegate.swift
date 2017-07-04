@@ -22,7 +22,6 @@ class AppDelegate: NSObject {
     fileprivate var mountController: MountController!
     
     fileprivate var aboutWindowController: DCOAboutWindowController!
-    fileprivate var serviceRouter: ServiceXPCRouter!
     fileprivate var serviceManager: ServiceManager!
     
     fileprivate var syncScheduler: SyncScheduler!
