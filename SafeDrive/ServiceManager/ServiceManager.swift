@@ -29,10 +29,12 @@ class ServiceManager: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
         
-        self.serviceLoop()
 
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             self.serviceReconnectionLoop()
+        }
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+            self.serviceLoop()
         }
     }
     
