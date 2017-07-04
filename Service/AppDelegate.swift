@@ -3,8 +3,6 @@
 //
 
 import Cocoa
-import Crashlytics
-import Fabric
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -15,7 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true])
-        Fabric.with([Crashlytics.self])
+
         
         print("SafeDriveService build \(CFBundleVersion), protocol version \(kServiceXPCProtocolVersion) starting")
         

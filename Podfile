@@ -7,7 +7,6 @@ end
 
 target 'SafeDriveService' do
     use_frameworks!
-    shared_pods
 end
 
 target 'SafeDriveFinder' do
