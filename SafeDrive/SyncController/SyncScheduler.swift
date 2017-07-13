@@ -365,8 +365,7 @@ class SyncScheduler {
                 
             }, issue: { (message) in
 
-                // TODO: this isn't thread safe, need a sync queue somewhere inside the task
-                task.message.append(message + "\n")
+                task.log(message: message + "\n")
                 
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: Notification.Name.syncEvent, object: folderID)
