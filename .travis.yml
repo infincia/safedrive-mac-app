@@ -5,7 +5,8 @@ env:
     # This will be part of the release tarball
     - PROJECT_NAME="safedrive-mac-app"
     - CONFIGURATION="Release"
-    - CERTIFICATE_P12="build/developer-id.p12"
+    - DEVELOPER_ID_CERTIFICATE_P12="build/developer-id.p12"
+    - MAC_DEVELOPER_CERTIFICATE_P12="build/mac-developer.p12"
 
 matrix:
   include:
@@ -20,13 +21,15 @@ cache:
 
 before_install:
   - mkdir -p build
-  - openssl aes-256-cbc -K $encrypted_93e018832669_key -iv $encrypted_93e018832669_iv -in developer-id.p12.enc -out ${CERTIFICATE_P12} -d
+  - openssl aes-256-cbc -K $encrypted_93e018832669_key -iv $encrypted_93e018832669_iv -in mac-developer.p12.enc -out ${MAC_DEVELOPER_CERTIFICATE_P12} -d
+  - openssl aes-256-cbc -K $encrypted_93e018832669_key -iv $encrypted_93e018832669_iv -in developer-id.p12.enc -out ${DEVELOPER_ID_CERTIFICATE_P12} -d
   - export PATH="$PATH:$HOME/.cargo/bin"
   - export KEYCHAIN=build.keychain;
   - security create-keychain -p safedrive ${KEYCHAIN}
   - security default-keychain -s ${KEYCHAIN}
   - security unlock-keychain -p safedrive ${KEYCHAIN}
-  - security import ${CERTIFICATE_P12} -k ${KEYCHAIN} -P "" -T /usr/bin/codesign
+  - security import ${MAC_DEVELOPER_CERTIFICATE_P12} -k ${KEYCHAIN} -P "" -T /usr/bin/codesign
+  - security import ${DEVELOPER_ID_CERTIFICATE_P12} -k ${KEYCHAIN} -P "" -T /usr/bin/codesign
 
 install:
   - bash safedrive-sdk/ci/install.sh
