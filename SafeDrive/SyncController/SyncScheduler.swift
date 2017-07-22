@@ -446,6 +446,8 @@ extension SyncScheduler: SDAccountProtocol {
                 }
             }
         }
+        
+        self.sdk.ready = false
 
         self.email = nil
         self.password = nil
