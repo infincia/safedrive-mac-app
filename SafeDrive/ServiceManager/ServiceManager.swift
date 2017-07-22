@@ -3,9 +3,15 @@
 //
 
 import Cocoa
+import ServiceManagement
 
 class ServiceManager: NSObject {
     static let sharedServiceManager = ServiceManager()
+    
+    static let serviceName = "io.safedrive.SafeDrive.d"
+    static let appName = "SafeDrive"
+    
+    fileprivate var useLaunchAgent = true
     
     fileprivate var serviceConnection: NSXPCConnection?
     fileprivate var appListener: NSXPCListener
@@ -24,11 +30,23 @@ class ServiceManager: NSObject {
         appListener.delegate = self
         appListener.resume()
         
-        // register SDApplicationEventProtocol notifications
+        // register SDAccountProtocol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus), name: Notification.Name.accountStatus, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails), name: Notification.Name.accountDetails, object: nil)
         
+        // register SDApplicationEventProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
         
+        // register SDSyncEventProtocol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDSyncEventProtocol.syncEvent), name: Notification.Name.syncEvent, object: nil)
+        
+        // register SDMountStateProtocol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
 
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             self.serviceReconnectionLoop()
@@ -44,7 +62,7 @@ class ServiceManager: NSObject {
     
     
     var isServiceRunning: Bool {
-        guard let _ = SMJobCopyDictionary(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString)) else {
+        guard let _ = SMJobCopyDictionary(kSMDomainUserLaunchd, (ServiceManager.serviceName as CFString)) else {
             return false
         }
         return true
@@ -63,12 +81,30 @@ class ServiceManager: NSObject {
         })
     }
     
+    func enableLoginItem(_ state: Bool) -> Bool {
+        
+        let helper = Bundle.main.bundleURL.appendingPathComponent("Contents/Library/LoginItems/" + ServiceManager.serviceName, isDirectory: false)
+        
+        if LSRegisterURL(helper as CFURL, state) != noErr {
+            print("Failed to LSRegisterURL \(helper)")
+        }
+        
+        if (SMLoginItemSetEnabled((ServiceManager.serviceName as CFString), state)) {
+            return true
+        } else {
+            print("Failed to SMLoginItemSetEnabled \(helper)")
+            return false
+        }
+    }
+    
     // swiftlint:disable force_unwrapping
     func loadService() {
         do {
+            try deployLaunchAgent()
+            
             try deployService()
             
-            let servicePlist: URL = Bundle.main.url(forResource: "io.safedrive.SafeDrive.Service", withExtension: "plist")!
+            let servicePlist: URL = Bundle.main.url(forResource: ServiceManager.serviceName, withExtension: "plist")!
             let jobDict = NSDictionary(contentsOfFile: servicePlist.path)
             var jobError: Unmanaged<CFError>? = nil
             
@@ -88,7 +124,7 @@ class ServiceManager: NSObject {
 
     func unloadService() {
         var jobError: Unmanaged<CFError>? = nil
-        if !SMJobRemove(kSMDomainUserLaunchd, ("io.safedrive.SafeDrive.Service" as CFString), nil, true, &jobError) {
+        if !SMJobRemove(kSMDomainUserLaunchd, (ServiceManager.serviceName as CFString), nil, true, &jobError) {
             if let error = jobError?.takeRetainedValue() {
                 SDLog("Unload service error: \(error)")
                 SDErrorHandlerReport(error)
@@ -96,13 +132,13 @@ class ServiceManager: NSObject {
         }
     }
     
-    func deployService() throws {
+    func launchAgentURL() throws -> URL {
         let fileManager: FileManager = FileManager.default
-        // swiftlint:disable force_try
-        
-        let libraryURL = try! fileManager.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+
+        let libraryURL = try fileManager.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         
         let launchAgentsURL = libraryURL.appendingPathComponent("LaunchAgents", isDirectory: true)
+
         do {
             try fileManager.createDirectory(at: launchAgentsURL, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
@@ -112,19 +148,33 @@ class ServiceManager: NSObject {
             throw error
         }
         
-        let applicationSupportURL = try! fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        // swiftlint:enable force_try
+        return launchAgentsURL
+    }
+    
+    func serviceURL() -> URL {
         
-        let safeDriveApplicationSupportURL = applicationSupportURL.appendingPathComponent("SafeDrive", isDirectory: true)
+        let serviceSourceURL = Bundle.main.bundleURL.appendingPathComponent("Contents/Library/LoginItems/" + ServiceManager.serviceName, isDirectory: false)
         
-        let serviceDestinationURL = safeDriveApplicationSupportURL.appendingPathComponent("SafeDriveService.app", isDirectory: true)
+        return serviceSourceURL
+    }
+    
+    func serviceDestinationURL() throws -> URL {
+        let launchAgentsURL = try launchAgentURL()
         
-        let serviceSourceURL = Bundle.main.bundleURL.appendingPathComponent("Contents/PlugIns/SafeDriveService.app", isDirectory: true)
+        let serviceDestinationURL = launchAgentsURL.appendingPathComponent(ServiceManager.serviceName, isDirectory: false)
         
+        return serviceDestinationURL
+    }
+    
+    func deployLaunchAgent() throws {
+        let fileManager: FileManager = FileManager.default
+
+        let launchAgentsURL = try launchAgentURL()
+
         // copy launch agent to ~/Library/LaunchAgents/
-        let launchAgentDestinationURL = launchAgentsURL.appendingPathComponent("io.safedrive.SafeDrive.Service.plist", isDirectory: false)
+        let launchAgentDestinationURL = launchAgentsURL.appendingPathComponent(ServiceManager.serviceName + ".plist", isDirectory: false)
         // swiftlint:disable force_unwrapping
-        let launchAgentSourceURL: URL = Bundle.main.url(forResource: "io.safedrive.SafeDrive.Service", withExtension: "plist")!
+        let launchAgentSourceURL: URL = Bundle.main.url(forResource: ServiceManager.serviceName, withExtension: "plist")!
         // swiftlint:enable force_unwrapping
         
         if FileManager.default.fileExists(atPath: launchAgentDestinationURL.path) {
@@ -142,16 +192,16 @@ class ServiceManager: NSObject {
             let error = SDError(message: message, kind: .serviceDeployment)
             throw error
         }
+    }
+    
+    func deployService() throws {
+        let fileManager: FileManager = FileManager.default
         
+        let serviceURL = self.serviceURL()
+        
+        let serviceDestinationURL = try self.serviceDestinationURL()
+
         // copy background service to ~/Library/Application Support/SafeDrive/
-        do {
-            try fileManager.createDirectory(at: safeDriveApplicationSupportURL, withIntermediateDirectories: true, attributes: nil)
-        } catch let error as NSError {
-            let message = NSLocalizedString("Error creating support directory: \(error)", comment: "")
-            SDLog(message)
-            let error = SDError(message: message, kind: .serviceDeployment)
-            throw error
-        }
         
         if fileManager.fileExists(atPath: serviceDestinationURL.path) {
             do {
@@ -161,7 +211,7 @@ class ServiceManager: NSObject {
             }
         }
         do {
-            try fileManager.copyItem(at: serviceSourceURL, to: serviceDestinationURL)
+            try fileManager.copyItem(at: serviceURL, to: serviceDestinationURL)
         } catch let error as NSError {
             let message = NSLocalizedString("Error copying service: \(error)", comment: "")
             SDLog(message)
@@ -172,34 +222,126 @@ class ServiceManager: NSObject {
     }
 }
 
+extension ServiceManager: SDSyncEventProtocol {
+    func syncEvent(notification: Notification) {
+        guard let folderID = notification.object as? UInt64 else {
+            SDLog("API contract invalid: syncEvent in ServiceManager")
+            return
+        }
+        
+        if let s = self.serviceConnection {
+            let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                SDLogError("Connecting to service failed: \(error.localizedDescription)")
+            }) as! ServiceXPCProtocol
+            
+            proxy.syncEvent(folderID)
+        }
+    }
+}
+
 extension ServiceManager: SDApplicationEventProtocol {
     
     func applicationDidConfigureClient(notification: Notification) {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
 
-        guard let _ = notification.object as? String else {
+        guard let uniqueClientID = notification.object as? String else {
             SDLog("API contract invalid: applicationDidConfigureClient in ServiceManager")
             
             return
         }
         
+        if let s = self.serviceConnection {
+            let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                SDLogError("Connecting to service failed: \(error.localizedDescription)")
+            }) as! ServiceXPCProtocol
+            
+            proxy.applicationDidConfigureClient(uniqueClientID)
+        }
     }
     
     func applicationDidConfigureUser(notification: Notification) {
         assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
 
-        guard let _ = notification.object as? User else {
+        guard let user = notification.object as? User else {
             SDLog("API contract invalid: applicationDidConfigureUser in ServiceManager")
             
             return
         }
+        
+        if let s = self.serviceConnection {
+            let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                SDLogError("Connecting to service failed: \(error.localizedDescription)")
+            }) as! ServiceXPCProtocol
+            
+            proxy.applicationDidConfigureUser(user.email)
+        }
+    }
+}
+
+extension ServiceManager: SDAccountProtocol {
+    
+    func didSignIn(notification: Notification) {
+        if let s = self.serviceConnection {
+            let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                SDLogError("Connecting to service failed: \(error.localizedDescription)")
+            }) as! ServiceXPCProtocol
+            
+            proxy.didSignIn()
+        }
+    }
+    
+    func didSignOut(notification: Notification) {
+        if let s = self.serviceConnection {
+            let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                SDLogError("Connecting to service failed: \(error.localizedDescription)")
+            }) as! ServiceXPCProtocol
+            
+            proxy.didSignOut()
+        }
+    }
+    
+    func didReceiveAccountDetails(notification: Notification) {
+    }
+    
+    func didReceiveAccountStatus(notification: Notification) {
+    }
+    
+}
+
+extension ServiceManager: SDMountStateProtocol {
+    
+    func mountStateMounted(notification: Notification) {
+        
+        if let s = self.serviceConnection {
+            let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                SDLogError("Connecting to service failed: \(error.localizedDescription)")
+            }) as! ServiceXPCProtocol
+            
+            proxy.mountStateMounted()
+        }
+    }
+    
+    func mountStateUnmounted(notification: Notification) {
+        if let s = self.serviceConnection {
+            let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                SDLogError("Connecting to service failed: \(error.localizedDescription)")
+            }) as! ServiceXPCProtocol
+            
+            proxy.mountStateUnmounted()
+        }
+    }
+    
+    func mountStateDetails(notification: Notification) {
+        
     }
 }
 
 extension ServiceManager: NSXPCListenerDelegate {
     
     func createServiceConnection() -> NSXPCConnection {
-        let newConnection = NSXPCConnection(machServiceName:"io.safedrive.SafeDrive.Service", options:NSXPCConnection.Options(rawValue: UInt(0)))
+        //let newConnection = NSXPCConnection(serviceName: ServiceManager.serviceName)
+        
+        let newConnection = NSXPCConnection(machServiceName: ServiceManager.serviceName, options: NSXPCConnection.Options.init(rawValue: 0))
         
         let serviceInterface = NSXPCInterface(with: ServiceXPCProtocol.self)
         
@@ -232,14 +374,38 @@ extension ServiceManager: NSXPCListenerDelegate {
         }
         // temporary kill/restart for background service until proper calls are implemented
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
-            self.unloadService()
-            
-            // wait for service to exit before reloading it
-            while self.isServiceRunning {
-                Thread.sleep(forTimeInterval: 1)
+            if self.useLaunchAgent {
+                // disable the login item if we're using the launch agent
+                //if !self.enableLoginItem(false) {
+                //    SDLogError("failed to unload login item")
+                //} else {
+                //    SDLog("unloaded login item")
+                //}
+                
+                self.unloadService()
+                
+                // wait for service to exit before reloading it
+                while self.isServiceRunning {
+                    Thread.sleep(forTimeInterval: 1)
+                }
+                
+                self.loadService()
+            } else {
+                // forcefully unload the launch agent if we're using a login item
+                //self.unloadService()
+                
+                if !self.enableLoginItem(false) {
+                    SDLogError("failed to unload login item")
+                } else {
+                    SDLog("unloaded login item")
+                }
+                
+                if !self.enableLoginItem(true) {
+                    SDLogError("failed to load login item")
+                } else {
+                    SDLog("loaded login item")
+                }
             }
-            
-            self.loadService()
         })
     }
     
@@ -252,20 +418,19 @@ extension ServiceManager: NSXPCListenerDelegate {
                 self.serviceConnection = self.createServiceConnection()
                 
                 if let s = self.serviceConnection {
-                    let proxy = s.remoteObjectProxyWithErrorHandler({ (_) in
-                        //
+                    let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                        SDLogError("Connecting to service failed: \(error.localizedDescription)")
                     }) as! ServiceXPCProtocol
                     
-                    proxy.sendAppEndpoint(self.appListener.endpoint, reply: { (_) in
-                        
+                    proxy.sendAppEndpoint(self.appListener.endpoint, reply: { (state) in
+                        SDLog("App endpoint response: \(state)")
                     })
-                    
                 }
                 Thread.sleep(forTimeInterval: 1)
             }
             if let s = self.serviceConnection {
-                let proxy = s.remoteObjectProxyWithErrorHandler({ (_) in
-                    //
+                let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                    SDLog("error connecting to service \(error.localizedDescription)")
                 }) as! ServiceXPCProtocol
                 
                 proxy.protocolVersion({ (version: Int!) in

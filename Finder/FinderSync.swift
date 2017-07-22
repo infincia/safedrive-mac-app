@@ -6,7 +6,6 @@
 // swiftlint:disable file_length
 
 import Cocoa
-import Crashlytics
 import FinderSync
 import SafeDriveSDK
 
@@ -14,7 +13,9 @@ class FinderSync: FIFinderSync {
     
     var appConnection: NSXPCConnection?
     var serviceConnection: NSXPCConnection?
-    
+    fileprivate var finderListener: NSXPCListener
+    fileprivate weak var finderXPCDelegate: FinderXPCDelegate?
+
     var folders = [SDKSyncFolder]()
     
     var tasks = [SDKSyncTask]()
@@ -27,7 +28,13 @@ class FinderSync: FIFinderSync {
     var uniqueClientID: String?
 
     override init() {
+        finderXPCDelegate = FinderXPCDelegate()
+        finderListener = NSXPCListener.anonymous()
+        
         super.init()
+        
+        finderListener.delegate = self
+        finderListener.resume()
         
         // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
         // swiftlint:disable force_unwrapping
@@ -64,6 +71,25 @@ class FinderSync: FIFinderSync {
         self.toolbarMenu.addItem(self.supportMenuItem)
         self.toolbarMenu.addItem(self.preferenceMenuItem)
         self.toolbarMenu.addItem(self.mountMenuItem)
+        
+        // register SDAccountProtocol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountStatus), name: Notification.Name.accountStatus, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didReceiveAccountDetails), name: Notification.Name.accountDetails, object: nil)
+        
+        // register SDApplicationEventProtocol notifications
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureClient), name: Notification.Name.applicationDidConfigureClient, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
+        
+        // register SDSyncEventProtocol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDSyncEventProtocol.syncEvent), name: Notification.Name.syncEvent, object: nil)
+        
+        // register SDMountStateProtocol notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
         
     }
     
@@ -118,7 +144,7 @@ class FinderSync: FIFinderSync {
     }
     
     func createServiceConnection() -> NSXPCConnection {
-        let newConnection: NSXPCConnection = NSXPCConnection(machServiceName: "io.safedrive.SafeDrive.Service", options: NSXPCConnection.Options(rawValue: 0))
+        let newConnection: NSXPCConnection = NSXPCConnection(machServiceName: "io.safedrive.SafeDrive.d", options: NSXPCConnection.Options(rawValue: 0))
         
         let serviceInterface: NSXPCInterface = NSXPCInterface(with:ServiceXPCProtocol.self)
         
@@ -446,4 +472,83 @@ class FinderSync: FIFinderSync {
         return nil
     }
     
+    func enableMenuItems(_ enabled: Bool) {
+        self.supportMenuItem.isEnabled = enabled
+        self.preferenceMenuItem.isEnabled = enabled
+        self.mountMenuItem.isEnabled = enabled
+    }
+}
+
+extension FinderSync: NSXPCListenerDelegate {
+    
+    // MARK: - Finder Listener Delegate
+    
+    func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+        
+        let finderInterface = NSXPCInterface(with: FinderXPCProtocol.self)
+        newConnection.exportedInterface = finderInterface
+        newConnection.exportedObject = self.finderXPCDelegate
+        
+        newConnection.resume()
+        return true
+        
+    }
+}
+
+extension FinderSync: SDAccountProtocol {
+    
+    func didSignIn(notification: Notification) {
+        self.enableMenuItems(true)
+    }
+    
+    func didSignOut(notification: Notification) {
+        self.enableMenuItems(false)
+    }
+    
+    func didReceiveAccountDetails(notification: Notification) {
+    }
+    
+    func didReceiveAccountStatus(notification: Notification) {
+    }
+    
+}
+
+extension FinderSync: SDMountStateProtocol {
+    
+    func mountStateMounted(notification: Notification) {
+        //self.connectMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
+        //self.menuBarImage = NSImage(named: NSImageNameLockUnlockedTemplate)
+    }
+    
+    func mountStateUnmounted(notification: Notification) {
+        //self.connectMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
+        //self.menuBarImage = NSImage(named: NSImageNameLockLockedTemplate)
+    }
+    
+    func mountStateDetails(notification: Notification) {
+        
+    }
+}
+
+extension FinderSync: SDApplicationEventProtocol {
+    
+    func applicationDidConfigureClient(notification: Notification) {
+        guard let uniqueClientID = notification.object as? String else {
+            print("API contract invalid: applicationDidConfigureClient in FinderSync")
+            
+            return
+        }
+        DispatchQueue.main.async {
+            self.configureClient(uniqueClientID: uniqueClientID)
+        }
+        
+    }
+    
+    func applicationDidConfigureUser(notification: Notification) {
+        guard let _ = notification.object as? String else {
+            print("API contract invalid: applicationDidConfigureUser in FinderSync")
+            
+            return
+        }
+    }
 }

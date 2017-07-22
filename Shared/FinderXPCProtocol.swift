@@ -7,8 +7,16 @@ let kFinderXPCProtocolVersion: Int = 6
 
 @objc protocol FinderXPCProtocol {
     func protocolVersion(_ replyBlock: @escaping (_ version: Int) -> Void)
+    
+    func didSignIn()
+    func didSignOut()
+    
     func applicationDidConfigureClient(_ uniqueClientID: String)
     func applicationDidConfigureUser(_ email: String)
+    
     func syncEvent(_ folderID: UInt64)
-    func mountStateChanged(_ mounted: Bool)
+    
+    func mountStateMounted()
+    func mountStateUnmounted()
+
 }

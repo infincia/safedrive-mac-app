@@ -11,5 +11,16 @@ let kServiceXPCProtocolVersion: Int = 4
     func protocolVersion(_ replyBlock: @escaping (_ version: Int) -> Void)
     func sendAppEndpoint(_ endpoint: NSXPCListenerEndpoint, reply replyBlock: @escaping (_ success: Bool) -> Void)
     func getAppEndpoint(_ replyBlock: @escaping (_ endpoint: NSXPCListenerEndpoint) -> Void)
+    func addFinderConnection(_ endpoint: NSXPCListenerEndpoint, reply replyBlock: @escaping (_ success: Bool) -> Void)
 
+    func didSignIn()
+    func didSignOut()
+    
+    func applicationDidConfigureUser(_ email: String)
+    func applicationDidConfigureClient(_ uniqueClientID: String)
+    
+    func syncEvent(_ folderID: UInt64)
+    
+    func mountStateMounted()
+    func mountStateUnmounted()
 }

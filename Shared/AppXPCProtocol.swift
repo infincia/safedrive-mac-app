@@ -1,6 +1,8 @@
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
+import Foundation
+
 let kAppXPCProtocolVersion: Int = 6
 
 @objc protocol AppXPCProtocol {

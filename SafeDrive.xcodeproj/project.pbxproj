@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		576E2A7947C0F5E84C15FABD /* Pods_SafeDriveService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9B3056709C1BE77D9B18858 /* Pods_SafeDriveService.framework */; };
 		69AB0CB9201703699449D0B7 /* Pods_SafeDriveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACCC0E28E50D1255EF3C3795 /* Pods_SafeDriveTests.framework */; };
 		856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */; };
 		AA037B6F1E428EA600818B53 /* RecoveryPhraseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */; };
@@ -25,25 +24,18 @@
 		AA3EB83B1E556EE3003A2E79 /* RestoreSelectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */; };
 		AA3EB83D1E557C20003A2E79 /* RestoreSelectionTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */; };
 		AA3EB8411E569D28003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
-		AA3EB8421E569E9D003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA3EB8431E569E9D003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA4F8FC71E6A2D5700BB068A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */; };
 		AA4F8FC81E6A2D5700BB068A /* WelcomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */; };
 		AA4F8FCA1E6A429100BB068A /* SoftwareClientTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC91E6A429100BB068A /* SoftwareClientTableCellView.swift */; };
 		AA50716A1E2ED5F7006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
 		AA50716B1E2ED86A006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
-		AA50716C1E2ED86A006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
 		AA50716D1E2ED86C006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
 		AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */; };
 		AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C711BFC57B50008FB8B /* Settings-Background.png */; };
 		AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */; };
 		AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */; };
 		AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */; };
-		AA5754051C7FFCC10040E8B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5754041C7FFCC10040E8B0 /* AppDelegate.swift */; };
-		AA5754071C7FFCC10040E8B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA5754061C7FFCC10040E8B0 /* Assets.xcassets */; };
-		AA57540A1C7FFCC10040E8B0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA5754081C7FFCC10040E8B0 /* MainMenu.xib */; };
-		AA5754101C8004660040E8B0 /* ServiceListenerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57540F1C8004660040E8B0 /* ServiceListenerDelegate.swift */; };
-		AA5754121C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */; };
 		AA58D2CC1E82D9F0002D56E0 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2CA1E82D9F0002D56E0 /* GeneralViewController.swift */; };
 		AA58D2CD1E82D9F0002D56E0 /* GeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2CB1E82D9F0002D56E0 /* GeneralView.xib */; };
 		AA58D2D01E82DB86002D56E0 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2CE1E82DB86002D56E0 /* AccountViewController.swift */; };
@@ -56,13 +48,11 @@
 		AA58D2DD1E82DC15002D56E0 /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2DB1E82DC15002D56E0 /* StatusView.xib */; };
 		AA650CF31D73A381008DA5CB /* Changelog.md in Resources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
-		AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBD1C9125D4001C2869 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */; };
 		AA6DCB2E1CA57D50001473B0 /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6DCB2D1CA57D50001473B0 /* UnitTests.swift */; };
 		AA6E272B1D876DD800038019 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272A1D876DD800038019 /* Notifications.swift */; };
 		AA6E272C1D876DD800038019 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272A1D876DD800038019 /* Notifications.swift */; };
-		AA6E272D1D876DD800038019 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272A1D876DD800038019 /* Notifications.swift */; };
 		AA6E272E1D876DD800038019 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272A1D876DD800038019 /* Notifications.swift */; };
 		AA6E27301D87855100038019 /* MountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272F1D87855100038019 /* MountController.swift */; };
 		AA6E27311D87855100038019 /* MountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272F1D87855100038019 /* MountController.swift */; };
@@ -81,9 +71,11 @@
 		AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */; };
 		AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */; };
 		AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */; };
+		AA88C0141F1B225E0025F1D7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88C00E1F1B22400025F1D7 /* main.swift */; };
+		AA88C0151F1B225E0025F1D7 /* ServiceListenerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88C00F1F1B22400025F1D7 /* ServiceListenerDelegate.swift */; };
+		AA88C0171F1B234D0025F1D7 /* io.safedrive.SafeDrive.d.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA88C00D1F1B22400025F1D7 /* io.safedrive.SafeDrive.d.plist */; };
 		AA88DD0B1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
 		AA88DD0C1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
-		AA88DD0D1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
 		AA88DD0E1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
 		AA88DD101F0C052D00C4858E /* FinderXPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0F1F0C052D00C4858E /* FinderXPCDelegate.swift */; };
 		AA9079AE1F07EE120067E383 /* SafeDriveFinder.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AAF945FF1C815D5A00B972C3 /* SafeDriveFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -127,7 +119,6 @@
 		AAA3E7291EADB8FA0083CE66 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
 		AAA3E72A1EADB8FE0083CE66 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
 		AAA50BB11E313AF200892E9D /* CUIThemeRenditionFix.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */; };
-		AAA50BE51E313BE900892E9D /* CUIThemeRenditionFix.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
 		AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */; };
 		AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD61C851F17009BE1C7 /* AccountController.swift */; };
@@ -140,13 +131,16 @@
 		AABF04AA1E6CC46E0084DF81 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A61E6CC46E0084DF81 /* FailedViewController.swift */; };
 		AABF04AB1E6CC46E0084DF81 /* ReadyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AABF04A71E6CC46E0084DF81 /* ReadyView.xib */; };
 		AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */; };
+		AAC466D01F0CA881002088B6 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
+		AAC466D11F0CA883002088B6 /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
+		AAC466D21F0CA885002088B6 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
+		AAC466D31F0CA88A002088B6 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272A1D876DD800038019 /* Notifications.swift */; };
+		AAC466D81F0CBC4D002088B6 /* io.safedrive.SafeDrive.d in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AACDAD911E97548500F5B351 /* ssh_config in Resources */ = {isa = PBXBuildFile; fileRef = AACDAD901E97548500F5B351 /* ssh_config */; };
 		AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
 		AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
-		AAD44A271D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
 		AAD44A281D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
-		AAD44A291D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
 		AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
 		AAD69F181E665B4400FAB196 /* RunningProcessCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */; };
 		AAD89BD21E5C197E007D8E82 /* OpenFileWarningWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */; };
@@ -156,12 +150,9 @@
 		AAE216381E9BE8BD00BE956F /* setup.sh in Resources */ = {isa = PBXBuildFile; fileRef = AAE216371E9BE8BD00BE956F /* setup.sh */; };
 		AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.5.6.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.5.6.pkg */; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
-		AAF945F31C80125A00B972C3 /* SafeDriveService.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		AAF945F41C80162700B972C3 /* io.safedrive.SafeDrive.Service.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */; };
 		AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946031C815D5A00B972C3 /* FinderSync.swift */; };
 		AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */; };
 		AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */; };
-		C27845CE7BD23C719058BA91 /* Pods_SafeDriveFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD6EC24044905614D475A32 /* Pods_SafeDriveFinder.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,12 +205,12 @@
 			remoteGlobalIDString = AA5DCF651D6CFFDA00FEDAFB;
 			remoteInfo = SafeDriveSDK;
 		};
-		AAF945F11C80121800B972C3 /* PBXContainerItemProxy */ = {
+		AAC466D91F0CBEA5002088B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = AA5754011C7FFCC00040E8B0;
-			remoteInfo = SafeDriveService;
+			remoteGlobalIDString = AAC466C61F0C9BFD002088B6;
+			remoteInfo = io.safedrive.SafeDrive.Service;
 		};
 		AAF946061C815D5A00B972C3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -231,16 +222,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		AA1984771C74C84300BAECA5 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				AAF945F31C80125A00B972C3 /* SafeDriveService.app in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		AA925C3B1B8F9BAA00222E46 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -263,6 +244,26 @@
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AAC466C01F0C9301002088B6 /* Embed XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			name = "Embed XPC Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AADA2FAA1F0C4F61009D43CC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				AAC466D81F0CBC4D002088B6 /* io.safedrive.SafeDrive.d in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AAF9461A1C823A6B00B972C3 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -270,15 +271,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				AA74423A1E0517D8004D8518 /* SafeDriveSDK.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AAF9461D1C823A8500B972C3 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,12 +288,8 @@
 
 /* Begin PBXFileReference section */
 		0791540171204BCAA0A0AC66 /* Pods-SafeDriveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.release.xcconfig"; sourceTree = "<group>"; };
-		38D98E94ED68A38C2752F529 /* Pods-SafeDriveFinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.debug.xcconfig"; sourceTree = "<group>"; };
 		3A6E325ECFDFC6166274A27C /* Pods-SafeDrive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDrive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDrive/Pods-SafeDrive.debug.xcconfig"; sourceTree = "<group>"; };
-		446CEAF581261A2CE8036039 /* Pods-SafeDriveService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveService.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveService/Pods-SafeDriveService.debug.xcconfig"; sourceTree = "<group>"; };
 		6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDrive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6FD6EC24044905614D475A32 /* Pods_SafeDriveFinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDriveFinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7EB73E606E32D60409155C42 /* Pods-SafeDriveFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.release.xcconfig"; sourceTree = "<group>"; };
 		81810F9B8E9F2AB8468A4A0C /* Pods-SafeDrive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDrive.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDrive/Pods-SafeDrive.release.xcconfig"; sourceTree = "<group>"; };
 		919F110D04C41D55CB26D7F1 /* Pods-SafeDriveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryPhraseWindowController.swift; sourceTree = "<group>"; };
@@ -309,7 +297,6 @@
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreferencesWindow.xib; sourceTree = "<group>"; };
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileCheck.swift; path = "Open File Warning Window/OpenFileCheck.swift"; sourceTree = "<group>"; };
-		AA0FBBFC1EDF5D6200CDD9EF /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
 		AA272A051F09B01900B47673 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		AA272A0A1F09C55100B47673 /* push.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = push.sh; sourceTree = "<group>"; };
@@ -320,8 +307,6 @@
 		AA31681D1A191B72006CC0EB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeDriveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA31682B1A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA3808741EB7B66D00BA5F3E /* libsddk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsddk.a; path = "safedrive-sdk/dist/x86_64-apple-darwin/lib/libsddk.a"; sourceTree = "<group>"; };
-		AA3808761EB7B6AC00BA5F3E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestoreSelectionWindow.xib; sourceTree = "<group>"; };
 		AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionWindowController.swift; sourceTree = "<group>"; };
 		AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionTableCellView.swift; sourceTree = "<group>"; };
@@ -335,14 +320,6 @@
 		AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Light.ttf"; sourceTree = "<group>"; };
 		AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCDelegate.swift; path = SafeDrive/XPCHandlers/AppXPCDelegate.swift; sourceTree = SOURCE_ROOT; };
-		AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDriveService.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA5754041C7FFCC10040E8B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AA5754061C7FFCC10040E8B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		AA5754091C7FFCC10040E8B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		AA57540B1C7FFCC10040E8B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA57540F1C8004660040E8B0 /* ServiceListenerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceListenerDelegate.swift; sourceTree = "<group>"; };
-		AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = io.safedrive.SafeDrive.Service.plist; path = Service/io.safedrive.SafeDrive.Service.plist; sourceTree = "<group>"; };
-		AA5754131C80091F0040E8B0 /* SafeDriveService-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeDriveService-Bridging-Header.h"; sourceTree = "<group>"; };
 		AA58D2CA1E82D9F0002D56E0 /* GeneralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralViewController.swift; path = "General Tab/GeneralViewController.swift"; sourceTree = "<group>"; };
 		AA58D2CB1E82D9F0002D56E0 /* GeneralView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeneralView.xib; path = "General Tab/GeneralView.xib"; sourceTree = "<group>"; };
 		AA58D2CE1E82DB86002D56E0 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = "Account Tab/AccountViewController.swift"; sourceTree = "<group>"; };
@@ -373,6 +350,11 @@
 		AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateAccountView.xib; path = Installer/ValidateAccountView.xib; sourceTree = "<group>"; };
 		AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateClientViewController.swift; path = Installer/ValidateClientViewController.swift; sourceTree = "<group>"; };
 		AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateClientView.xib; path = Installer/ValidateClientView.xib; sourceTree = "<group>"; };
+		AA88C00B1F1B22400025F1D7 /* d.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = d.entitlements; path = SafeDrive.d/d.entitlements; sourceTree = "<group>"; };
+		AA88C00C1F1B22400025F1D7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SafeDrive.d/Info.plist; sourceTree = "<group>"; };
+		AA88C00D1F1B22400025F1D7 /* io.safedrive.SafeDrive.d.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = io.safedrive.SafeDrive.d.plist; path = SafeDrive.d/io.safedrive.SafeDrive.d.plist; sourceTree = "<group>"; };
+		AA88C00E1F1B22400025F1D7 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = SafeDrive.d/main.swift; sourceTree = "<group>"; };
+		AA88C00F1F1B22400025F1D7 /* ServiceListenerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceListenerDelegate.swift; path = SafeDrive.d/ServiceListenerDelegate.swift; sourceTree = "<group>"; };
 		AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FinderXPCProtocol.swift; path = Shared/FinderXPCProtocol.swift; sourceTree = "<group>"; };
 		AA88DD0F1F0C052D00C4858E /* FinderXPCDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinderXPCDelegate.swift; sourceTree = "<group>"; };
 		AA9079A71F072A7D0067E383 /* exportOptions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = exportOptions.plist; sourceTree = "<group>"; };
@@ -390,6 +372,7 @@
 		AABF04A61E6CC46E0084DF81 /* FailedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FailedViewController.swift; path = Installer/FailedViewController.swift; sourceTree = "<group>"; };
 		AABF04A71E6CC46E0084DF81 /* ReadyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReadyView.xib; path = Installer/ReadyView.xib; sourceTree = "<group>"; };
 		AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadyViewController.swift; path = Installer/ReadyViewController.swift; sourceTree = "<group>"; };
+		AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = io.safedrive.SafeDrive.d; sourceTree = BUILT_PRODUCTS_DIR; };
 		AACDAD901E97548500F5B351 /* ssh_config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssh_config; sourceTree = "<group>"; };
 		AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
@@ -403,7 +386,6 @@
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SafeDrive.entitlements; sourceTree = "<group>"; };
-		AAF945F81C801F1200B972C3 /* SafeDriveService.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SafeDriveService.entitlements; sourceTree = "<group>"; };
 		AAF945FF1C815D5A00B972C3 /* SafeDriveFinder.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SafeDriveFinder.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF946021C815D5A00B972C3 /* Finder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Finder.entitlements; sourceTree = "<group>"; };
 		AAF946031C815D5A00B972C3 /* FinderSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderSync.swift; sourceTree = "<group>"; };
@@ -414,9 +396,6 @@
 		AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTableCellView.swift; sourceTree = "<group>"; };
 		AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "update-version.sh"; sourceTree = "<group>"; };
 		ACCC0E28E50D1255EF3C3795 /* Pods_SafeDriveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDriveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B0A70AFF655DD12BA4B7FE7E /* libPods-safedriveaskpass.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-safedriveaskpass.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2E81629B3367D715FA39D12 /* Pods-SafeDriveService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveService.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveService/Pods-SafeDriveService.release.xcconfig"; sourceTree = "<group>"; };
-		F9B3056709C1BE77D9B18858 /* Pods_SafeDriveService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDriveService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,11 +416,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA5753FF1C7FFCC00040E8B0 /* Frameworks */ = {
+		AAC466C41F0C9BFD002088B6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				576E2A7947C0F5E84C15FABD /* Pods_SafeDriveService.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,7 +427,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C27845CE7BD23C719058BA91 /* Pods_SafeDriveFinder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,14 +436,8 @@
 		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA0FBBFC1EDF5D6200CDD9EF /* libresolv.tbd */,
-				AA3808761EB7B6AC00BA5F3E /* libz.tbd */,
-				AA3808741EB7B66D00BA5F3E /* libsddk.a */,
 				6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */,
-				6FD6EC24044905614D475A32 /* Pods_SafeDriveFinder.framework */,
-				F9B3056709C1BE77D9B18858 /* Pods_SafeDriveService.framework */,
 				ACCC0E28E50D1255EF3C3795 /* Pods_SafeDriveTests.framework */,
-				B0A70AFF655DD12BA4B7FE7E /* libPods-safedriveaskpass.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -476,10 +447,6 @@
 			children = (
 				3A6E325ECFDFC6166274A27C /* Pods-SafeDrive.debug.xcconfig */,
 				81810F9B8E9F2AB8468A4A0C /* Pods-SafeDrive.release.xcconfig */,
-				38D98E94ED68A38C2752F529 /* Pods-SafeDriveFinder.debug.xcconfig */,
-				7EB73E606E32D60409155C42 /* Pods-SafeDriveFinder.release.xcconfig */,
-				446CEAF581261A2CE8036039 /* Pods-SafeDriveService.debug.xcconfig */,
-				F2E81629B3367D715FA39D12 /* Pods-SafeDriveService.release.xcconfig */,
 				919F110D04C41D55CB26D7F1 /* Pods-SafeDriveTests.debug.xcconfig */,
 				0791540171204BCAA0A0AC66 /* Pods-SafeDriveTests.release.xcconfig */,
 			);
@@ -513,9 +480,9 @@
 				AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */,
 				AA3D8EBA1C3D80A100CF0A3C /* Shared */,
 				AA3168151A191B72006CC0EB /* SafeDrive */,
+				AA88C0091F1B222B0025F1D7 /* SafeDrive.d */,
 				AA3168291A191B72006CC0EB /* SafeDriveTests */,
 				AAF946001C815D5A00B972C3 /* Finder */,
-				AA5754031C7FFCC10040E8B0 /* Service */,
 				5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */,
 				AA3168141A191B72006CC0EB /* Products */,
 				7DDFAD6B58FAFDC1F557BEDC /* Pods */,
@@ -527,8 +494,8 @@
 			children = (
 				AA3168131A191B72006CC0EB /* SafeDrive.app */,
 				AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */,
-				AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */,
 				AAF945FF1C815D5A00B972C3 /* SafeDriveFinder.appex */,
+				AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -634,7 +601,6 @@
 			isa = PBXGroup;
 			children = (
 				AA5071691E2ED5F7006F59C8 /* Util.swift */,
-				AA5754111C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist */,
 				AA6E272A1D876DD800038019 /* Notifications.swift */,
 				AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */,
 				AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */,
@@ -651,20 +617,6 @@
 				AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */,
 			);
 			name = ServiceManager;
-			sourceTree = "<group>";
-		};
-		AA5754031C7FFCC10040E8B0 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				AA5754041C7FFCC10040E8B0 /* AppDelegate.swift */,
-				AA5754061C7FFCC10040E8B0 /* Assets.xcassets */,
-				AA57540B1C7FFCC10040E8B0 /* Info.plist */,
-				AA5754081C7FFCC10040E8B0 /* MainMenu.xib */,
-				AA5754131C80091F0040E8B0 /* SafeDriveService-Bridging-Header.h */,
-				AAF945F81C801F1200B972C3 /* SafeDriveService.entitlements */,
-				AA57540F1C8004660040E8B0 /* ServiceListenerDelegate.swift */,
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		AA58D2C41E82D8D3002D56E0 /* General Tab */ = {
@@ -786,6 +738,18 @@
 			name = ErrorHandler;
 			sourceTree = "<group>";
 		};
+		AA88C0091F1B222B0025F1D7 /* SafeDrive.d */ = {
+			isa = PBXGroup;
+			children = (
+				AA88C00B1F1B22400025F1D7 /* d.entitlements */,
+				AA88C00C1F1B22400025F1D7 /* Info.plist */,
+				AA88C00D1F1B22400025F1D7 /* io.safedrive.SafeDrive.d.plist */,
+				AA88C00E1F1B22400025F1D7 /* main.swift */,
+				AA88C00F1F1B22400025F1D7 /* ServiceListenerDelegate.swift */,
+			);
+			name = SafeDrive.d;
+			sourceTree = "<group>";
+		};
 		AAA3E6AF1EAD4BA00083CE66 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -866,18 +830,19 @@
 				AA3168111A191B72006CC0EB /* Resources */,
 				AAF9461A1C823A6B00B972C3 /* CopyFiles */,
 				AABB0FBF1A3F290400FA3530 /* Copy Files */,
-				AA1984771C74C84300BAECA5 /* CopyFiles */,
+				AADA2FAA1F0C4F61009D43CC /* CopyFiles */,
 				AA925C3B1B8F9BAA00222E46 /* Embed App Extensions */,
 				AAE474851BFBC1E200B1A555 /* Fabric.io */,
 				DFD57E6957DC22537ED3D54D /* [CP] Embed Pods Frameworks */,
 				85260E3FE7B654997BAC19CC /* [CP] Copy Pods Resources */,
+				AAC466C01F0C9301002088B6 /* Embed XPC Services */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AAC466DA1F0CBEA5002088B6 /* PBXTargetDependency */,
 				AA0135C21F043C1F00ABE8F5 /* PBXTargetDependency */,
 				AA74423C1E0517D8004D8518 /* PBXTargetDependency */,
-				AAF945F21C80121800B972C3 /* PBXTargetDependency */,
 				AAF946071C815D5A00B972C3 /* PBXTargetDependency */,
 			);
 			name = SafeDrive;
@@ -906,38 +871,30 @@
 			productReference = AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		AA5754011C7FFCC00040E8B0 /* SafeDriveService */ = {
+		AAC466C61F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA57540C1C7FFCC10040E8B0 /* Build configuration list for PBXNativeTarget "SafeDriveService" */;
+			buildConfigurationList = AAC466CB1F0C9BFD002088B6 /* Build configuration list for PBXNativeTarget "io.safedrive.SafeDrive.d" */;
 			buildPhases = (
-				2CA4AA16552CF066020FF953 /* [CP] Check Pods Manifest.lock */,
-				AA5753FE1C7FFCC00040E8B0 /* Sources */,
-				AA5753FF1C7FFCC00040E8B0 /* Frameworks */,
-				AA5754001C7FFCC00040E8B0 /* Resources */,
-				AAF9461D1C823A8500B972C3 /* CopyFiles */,
-				AAF945EF1C8011AB00B972C3 /* Fabic.io */,
-				FBE992B631A574F44E187789 /* [CP] Embed Pods Frameworks */,
-				24D851B4CE4F5EBDE34DB690 /* [CP] Copy Pods Resources */,
+				AAC466C31F0C9BFD002088B6 /* Sources */,
+				AAC466C41F0C9BFD002088B6 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = SafeDriveService;
-			productName = Service;
-			productReference = AA5754021C7FFCC00040E8B0 /* SafeDriveService.app */;
-			productType = "com.apple.product-type.application";
+			name = io.safedrive.SafeDrive.d;
+			productName = SafeDrive.d;
+			productReference = AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */;
+			productType = "com.apple.product-type.tool";
 		};
 		AAF945FE1C815D5A00B972C3 /* SafeDriveFinder */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AAF9460B1C815D5A00B972C3 /* Build configuration list for PBXNativeTarget "SafeDriveFinder" */;
 			buildPhases = (
-				915EA64E81801F59E8A9B766 /* [CP] Check Pods Manifest.lock */,
 				AAF945FB1C815D5A00B972C3 /* Sources */,
 				AAF945FC1C815D5A00B972C3 /* Frameworks */,
 				AAF945FD1C815D5A00B972C3 /* Resources */,
 				AAF946201C823A9E00B972C3 /* CopyFiles */,
-				D1E99613B67894DCCB41FD51 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -956,7 +913,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SD;
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Infincia LLC";
 				TargetAttributes = {
@@ -983,7 +940,12 @@
 						LastSwiftMigration = 0800;
 						TestTargetID = AA3168121A191B72006CC0EB;
 					};
-					AA5754011C7FFCC00040E8B0 = {
+					AAC466C61F0C9BFD002088B6 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = G738Z89QKM;
+						ProvisioningStyle = Automatic;
+					};
+					AAF945FE1C815D5A00B972C3 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = G738Z89QKM;
 						LastSwiftMigration = 0800;
@@ -993,12 +955,6 @@
 								enabled = 1;
 							};
 						};
-					};
-					AAF945FE1C815D5A00B972C3 = {
-						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = G738Z89QKM;
-						LastSwiftMigration = 0800;
-						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -1023,8 +979,8 @@
 			targets = (
 				AA3168121A191B72006CC0EB /* SafeDrive */,
 				AA3168251A191B72006CC0EB /* SafeDriveTests */,
-				AA5754011C7FFCC00040E8B0 /* SafeDriveService */,
 				AAF945FE1C815D5A00B972C3 /* SafeDriveFinder */,
+				AAC466C61F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
 			);
 		};
 /* End PBXProject section */
@@ -1058,13 +1014,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA88C0171F1B234D0025F1D7 /* io.safedrive.SafeDrive.d.plist in Resources */,
 				AAD89BD31E5C197E007D8E82 /* OpenFileWarningWindow.xib in Resources */,
 				AA650CF31D73A381008DA5CB /* Changelog.md in Resources */,
 				AAE216381E9BE8BD00BE956F /* setup.sh in Resources */,
-				AAF945F41C80162700B972C3 /* io.safedrive.SafeDrive.Service.plist in Resources */,
 				AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */,
 				AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */,
-				AA272A0C1F09C63B00B47673 /* build.sh in Resources */,
 				AA4F8FC81E6A2D5700BB068A /* WelcomeView.xib in Resources */,
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA58D2D11E82DB86002D56E0 /* AccountView.xib in Resources */,
@@ -1102,17 +1057,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA5754001C7FFCC00040E8B0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AAA50BE51E313BE900892E9D /* CUIThemeRenditionFix.xcassets in Resources */,
-				AA5754071C7FFCC10040E8B0 /* Assets.xcassets in Resources */,
-				AA57540A1C7FFCC10040E8B0 /* MainMenu.xib in Resources */,
-				AA5754121C8005890040E8B0 /* io.safedrive.SafeDrive.Service.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		AAF945FD1C815D5A00B972C3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1123,36 +1067,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		24D851B4CE4F5EBDE34DB690 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SafeDriveService/Pods-SafeDriveService-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2CA4AA16552CF066020FF953 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		3ECE79F6180CDD00BCB07D8C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1213,21 +1127,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		915EA64E81801F59E8A9B766 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		AA7FE7AD1E3DA3FC007EDF70 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1250,20 +1149,6 @@
 			inputPaths = (
 			);
 			name = Fabric.io;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" eabb6ed7a9190e38a2676da62aca50ed8731d38d 0f690c677243e5283f4f9a449728a17fc6d150abe16e2eade6a874763d25aea0";
-		};
-		AAF945EF1C8011AB00B972C3 /* Fabic.io */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Fabic.io;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1299,21 +1184,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D1E99613B67894DCCB41FD51 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		DFD57E6957DC22537ED3D54D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1327,21 +1197,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SafeDrive/Pods-SafeDrive-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FBE992B631A574F44E187789 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SafeDriveService/Pods-SafeDriveService-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1450,19 +1305,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA5753FE1C7FFCC00040E8B0 /* Sources */ = {
+		AAC466C31F0C9BFD002088B6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA6E272D1D876DD800038019 /* Notifications.swift in Sources */,
-				AA3EB8421E569E9D003A2E79 /* Protocols.swift in Sources */,
-				AA6C5BBA1C90D96F001C2869 /* NSDate+next.swift in Sources */,
-				AA88DD0D1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */,
-				AAD44A291D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */,
-				AA5754101C8004660040E8B0 /* ServiceListenerDelegate.swift in Sources */,
-				AA5754051C7FFCC10040E8B0 /* AppDelegate.swift in Sources */,
-				AAD44A271D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */,
-				AA50716C1E2ED86A006F59C8 /* Util.swift in Sources */,
+				AA88C0141F1B225E0025F1D7 /* main.swift in Sources */,
+				AA88C0151F1B225E0025F1D7 /* ServiceListenerDelegate.swift in Sources */,
+				AAC466D31F0CA88A002088B6 /* Notifications.swift in Sources */,
+				AAC466D01F0CA881002088B6 /* ServiceXPCProtocol.swift in Sources */,
+				AAC466D21F0CA885002088B6 /* AppXPCProtocol.swift in Sources */,
+				AAC466D11F0CA883002088B6 /* FinderXPCProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1505,10 +1357,10 @@
 			name = SafeDriveSDK;
 			targetProxy = AA74423B1E0517D8004D8518 /* PBXContainerItemProxy */;
 		};
-		AAF945F21C80121800B972C3 /* PBXTargetDependency */ = {
+		AAC466DA1F0CBEA5002088B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AA5754011C7FFCC00040E8B0 /* SafeDriveService */;
-			targetProxy = AAF945F11C80121800B972C3 /* PBXContainerItemProxy */;
+			target = AAC466C61F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */;
+			targetProxy = AAC466D91F0CBEA5002088B6 /* PBXContainerItemProxy */;
 		};
 		AAF946071C815D5A00B972C3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1533,14 +1385,6 @@
 			);
 			name = Localizable.strings;
 			path = Localization;
-			sourceTree = "<group>";
-		};
-		AA5754081C7FFCC10040E8B0 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AA5754091C7FFCC10040E8B0 /* Base */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		AAA88BDE1C85F5F7009BE1C7 /* DropdownMenu.xib */ = {
@@ -1818,64 +1662,51 @@
 			};
 			name = Release;
 		};
-		AA57540D1C7FFCC10040E8B0 /* Debug */ = {
+		AAC466CC1F0C9BFD002088B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 446CEAF581261A2CE8036039 /* Pods-SafeDriveService.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Service/SafeDriveService.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = SafeDrive.d/d.entitlements;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = G738Z89QKM;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Service/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				INFOPLIST_FILE = "$(SRCROOT)/SafeDrive.d/Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "-r=\"designated => anchor apple generic and identifier \\\"io.safedrive.SafeDrive\\\" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G738Z89QKM)\"";
-				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.Service;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.d;
+				PRODUCT_NAME = io.safedrive.SafeDrive.d;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Service/SafeDriveService-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
-		AA57540E1C7FFCC10040E8B0 /* Release */ = {
+		AAC466CD1F0C9BFD002088B6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F2E81629B3367D715FA39D12 /* Pods-SafeDriveService.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Service/SafeDriveService.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
-				COMBINE_HIDPI_IMAGES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = SafeDrive.d/d.entitlements;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = G738Z89QKM;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Service/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				INFOPLIST_FILE = "$(SRCROOT)/SafeDrive.d/Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "-r=\"designated => anchor apple generic and identifier \\\"io.safedrive.SafeDrive\\\" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G738Z89QKM)\"";
-				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.Service;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.d;
+				PRODUCT_NAME = io.safedrive.SafeDrive.d;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Service/SafeDriveService-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		AAF946091C815D5A00B972C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 38D98E94ED68A38C2752F529 /* Pods-SafeDriveFinder.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Finder/Finder.entitlements;
@@ -1901,7 +1732,6 @@
 		};
 		AAF9460A1C815D5A00B972C3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7EB73E606E32D60409155C42 /* Pods-SafeDriveFinder.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = Finder/Finder.entitlements;
@@ -1954,11 +1784,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA57540C1C7FFCC10040E8B0 /* Build configuration list for PBXNativeTarget "SafeDriveService" */ = {
+		AAC466CB1F0C9BFD002088B6 /* Build configuration list for PBXNativeTarget "io.safedrive.SafeDrive.d" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA57540D1C7FFCC10040E8B0 /* Debug */,
-				AA57540E1C7FFCC10040E8B0 /* Release */,
+				AAC466CC1F0C9BFD002088B6 /* Debug */,
+				AAC466CD1F0C9BFD002088B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

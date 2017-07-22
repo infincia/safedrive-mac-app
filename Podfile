@@ -5,15 +5,6 @@ def shared_pods
     pod 'Crashlytics', '~>  3.8.3'
 end
 
-target 'SafeDriveService' do
-    use_frameworks!
-end
-
-target 'SafeDriveFinder' do
-    use_frameworks!
-    shared_pods
-end
-
 target 'SafeDrive' do
     use_frameworks!
     shared_pods
