@@ -5,6 +5,7 @@
 
 import Cocoa
 import SafeDriveSDK
+import FontAwesomeIconFactory
 
 class RestoreSelectionTableCellView: NSTableCellView {
     
@@ -18,6 +19,7 @@ class RestoreSelectionTableCellView: NSTableCellView {
     
     @IBOutlet var date: NSTextField!
     @IBOutlet var size: NSTextField!
+    @IBOutlet var folder: NIKFontAwesomeImageView!
 
     var session: SDKSyncSession!
 }

@@ -4,6 +4,8 @@
 
 #import "SDSystemAPI.h"
 
+#import <FontAwesomeIconFactory/FontAwesomeIconFactory.h>
+
 @import DCOAboutWindow;
 
 @import LetsMove;

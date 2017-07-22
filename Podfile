@@ -14,6 +14,7 @@ target 'SafeDrive' do
     pod 'Sparkle', '~> 1.17.0'
     pod 'STPrivilegedTask', :git => 'https://github.com/sveinbjornt/STPrivilegedTask.git', :tag => '1.0.6'
     pod 'TSMarkdownParser', '~> 2.1.2'
+    pod 'FontAwesomeIconFactory', '~> 2.1.1'
     target 'SafeDriveTests' do
         inherit! :search_paths
     end

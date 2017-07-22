@@ -4,6 +4,7 @@
 // swiftlint:disable private_outlet
 
 import Cocoa
+import FontAwesomeIconFactory
 
 class SyncManagerTableCellView: NSTableCellView {
     
@@ -15,11 +16,11 @@ class SyncManagerTableCellView: NSTableCellView {
         super.init(frame: frameRect)
     }
     
-    @IBOutlet var lockButton: NSButton!
+    @IBOutlet var lockButton: NIKFontAwesomeButton!
     @IBOutlet var addButton: NSButton!
     @IBOutlet var removeButton: NSButton!
-    @IBOutlet var syncNowButton: NSButton!
-    @IBOutlet var restoreNowButton: NSButton!
+    @IBOutlet var syncNowButton: NIKFontAwesomeButton!
+    @IBOutlet var restoreNowButton: NIKFontAwesomeButton!
     @IBOutlet var syncStatus: NSProgressIndicator!
     var representedSyncItem: AnyObject?
 }

@@ -7,6 +7,7 @@
 // swiftlint:disable file_length
 
 import Cocoa
+import FontAwesomeIconFactory
 import SafeDriveSDK
 
 class SyncViewController: NSViewController {
@@ -864,10 +865,17 @@ extension SyncViewController: NSTableViewDelegate {
             tableCellView.restoreNowButton.tag = Int(folder.id)
             
             if folder.encrypted {
-                tableCellView.lockButton.image = NSImage(named: NSImageNameLockLockedTemplate)
+                
+                tableCellView.lockButton.icon = NIKFontAwesomeIcon.lock
+                tableCellView.lockButton.image?.isTemplate = true
+
+                //tableCellView.lockButton.image = NSImage(named: NSImageNameLockLockedTemplate)
                 tableCellView.lockButton.toolTip = NSLocalizedString("Encrypted", comment: "")
             } else {
-                tableCellView.lockButton.image = NSImage(named: NSImageNameLockUnlockedTemplate)
+                tableCellView.lockButton.icon = NIKFontAwesomeIcon.unlock
+                tableCellView.lockButton.image?.isTemplate = true
+
+                //tableCellView.lockButton.image = NSImage(named: NSImageNameLockUnlockedTemplate)
                 tableCellView.lockButton.toolTip = NSLocalizedString("Unencrypted", comment: "")
             }
             
@@ -878,12 +886,18 @@ extension SyncViewController: NSTableViewDelegate {
                 tableCellView.restoreNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
                 tableCellView.restoreNowButton.target = self
                 tableCellView.restoreNowButton.action = #selector(self.startRestoreNow(_:))
-                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
+                //tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
+                tableCellView.restoreNowButton.icon = NIKFontAwesomeIcon.arrowCircleODown
+                tableCellView.restoreNowButton.image?.isTemplate = true
+
                 
                 tableCellView.syncNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
                 tableCellView.syncNowButton.target = self
                 tableCellView.syncNowButton.action = #selector(self.startSyncNow(_:))
-                tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
+                //tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
+                tableCellView.syncNowButton.icon = NIKFontAwesomeIcon.arrowCircleOUp
+                tableCellView.syncNowButton.image?.isTemplate = true
+
                 
                 return tableCellView
             }
@@ -904,25 +918,42 @@ extension SyncViewController: NSTableViewDelegate {
             
             if task.syncing {
                 tableCellView.syncStatus.startAnimation(self)
-                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
-                tableCellView.syncNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
+                //tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
+                tableCellView.restoreNowButton.icon = NIKFontAwesomeIcon.arrowCircleODown
+                tableCellView.restoreNowButton.image?.isTemplate = true
+
+                //tableCellView.syncNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
+                tableCellView.syncNowButton.icon = NIKFontAwesomeIcon.stop
+                tableCellView.syncNowButton.image?.isTemplate = true
+
             } else if task.restoring {
                 tableCellView.syncStatus.startAnimation(self)
-                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
-                tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
+                //tableCellView.restoreNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
+                tableCellView.restoreNowButton.icon = NIKFontAwesomeIcon.stop
+                tableCellView.restoreNowButton.image?.isTemplate = true
+
+                //tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
+                tableCellView.syncNowButton.icon = NIKFontAwesomeIcon.arrowCircleOUp
+                tableCellView.syncNowButton.image?.isTemplate = true
+
             } else {
                 tableCellView.syncStatus.stopAnimation(self)
                 
                 tableCellView.restoreNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
                 tableCellView.restoreNowButton.target = self
                 tableCellView.restoreNowButton.action = #selector(self.startRestoreNow(_:))
-                tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
+                //tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
+                tableCellView.restoreNowButton.icon = NIKFontAwesomeIcon.arrowCircleODown
+                tableCellView.restoreNowButton.image?.isTemplate = true
+
                 
                 tableCellView.syncNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
                 tableCellView.syncNowButton.target = self
                 tableCellView.syncNowButton.action = #selector(self.startSyncNow(_:))
-                tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
-                
+                //tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
+                tableCellView.syncNowButton.icon = NIKFontAwesomeIcon.arrowCircleOUp
+                tableCellView.syncNowButton.image?.isTemplate = true
+
             }
         }
         
