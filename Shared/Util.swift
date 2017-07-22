@@ -59,7 +59,7 @@ func currentOSVersion() -> String {
 }
 
 func storageURL() -> URL {
-    guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.safedrive.db") else {
+    guard let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "G738Z89QKM.io.safedrive") else {
         exit(1)
     }
     let u: URL
