@@ -268,7 +268,7 @@ class SyncViewController: NSViewController {
     @IBAction func readSyncFolders(_ sender: AnyObject) {
         readSyncFolders(success: { 
             //
-        }, failure: { (error) in
+        }, failure: { (_) in
             //
         })
     }
