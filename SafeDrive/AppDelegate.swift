@@ -42,7 +42,7 @@ class AppDelegate: NSObject {
 
 extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Foundation.Notification) {
-        UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true, userDefaultsCurrentVolumeNameKey(): defaultVolumeName(), userDefaultsMountAtLaunchKey(): true])
+        UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true, userDefaultsCurrentVolumeNameKey(): defaultVolumeName(), keepMountedKey(): true])
         Crashlytics.sharedInstance().delegate = self
         Fabric.with([Crashlytics.self])
         

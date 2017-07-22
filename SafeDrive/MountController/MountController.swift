@@ -17,6 +17,15 @@ class MountController: NSObject {
     
     fileprivate let mountingQueue = DispatchQueue(label: "io.safedrive.mountingQueue")
     
+    fileprivate var _signedIn = false
+    
+    fileprivate let signedInQueue = DispatchQueue(label: "io.safedrive.signedInQueue")
+    
+    fileprivate var _lastMountAttempt: Date? = nil
+    
+    fileprivate let lastMountAttemptQueue = DispatchQueue(label: "io.safedrive.lastMountAttemptQueue")
+    
+    
     fileprivate var mountURL: URL?
     
     fileprivate var sshfsTask: Process!
@@ -37,6 +46,10 @@ class MountController: NSObject {
             return volumeName
         }
         return defaultVolumeName()
+    }
+    
+    var keepMounted: Bool {
+        return UserDefaults.standard.bool(forKey: keepMountedKey())
     }
     
     var currentMountURL: URL {
@@ -93,10 +106,42 @@ class MountController: NSObject {
         }
     }
     
+    var signedIn: Bool {
+        get {
+            var r: Bool = false
+            signedInQueue.sync {
+                r = self._signedIn
+            }
+            return r
+        }
+        set (newValue) {
+            signedInQueue.sync(flags: .barrier, execute: {
+                self._signedIn = newValue
+            })
+        }
+    }
+    
+    var lastMountAttempt: Date? {
+        get {
+            var r: Date? = nil
+            signedInQueue.sync {
+                r = self._lastMountAttempt
+            }
+            return r
+        }
+        set (newValue) {
+            signedInQueue.sync(flags: .barrier, execute: {
+                self._lastMountAttempt = newValue
+            })
+        }
+    }
+    
     override init() {
         super.init()
         self.mounted = false
         self.mounting = false
+        self.signedIn = false
+        self.lastMountAttempt = nil
         
         // register SDAccountProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
@@ -121,6 +166,7 @@ class MountController: NSObject {
         
         
         mountStateLoop()
+        mountLoop()
     }
     
     deinit {
@@ -202,6 +248,48 @@ class MountController: NSObject {
                 Thread.sleep(forTimeInterval: 1)
             }
         })
+    }
+    
+    func mountLoop() {
+        
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+            
+            while true {
+                
+                Thread.sleep(forTimeInterval: 1)
+                // this aligns the loop with initial sign in so there isn't
+                // a delay before mounting starts
+                if !self.signedIn {
+                    self.lastMountAttempt = nil
+                    continue
+                }
+                
+                
+                if !self.mounted && self.keepMounted {
+                    var attemptMount = false
+                    
+                    if let lastMountAttempt = self.lastMountAttempt {
+                        var now = Date()
+                        
+                        let d = now.timeIntervalSince(lastMountAttempt)
+                        
+                        if d > 60 {
+                            attemptMount = true
+                        }
+                    } else {
+                        attemptMount = true
+                    }
+                    
+                    if attemptMount {
+                        SDLogDebug("Attempting to mount drive")
+                        
+                        self.lastMountAttempt = Date()
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name.applicationShouldToggleMountState, object: nil)
+                    }
+                }
+            }
+        }
     }
     
     func startMountTask(sshURL: URL, success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
@@ -692,15 +780,14 @@ extension MountController: SDAccountProtocol {
         self.remoteHost = accountStatus.host
         self.remotePort = accountStatus.port
         
-        // only mount SSHFS automatically if the user set it to automount
-        if self.automount {
-            self.connectVolume()
-        }
+        self.signedIn = true
     }
     
     func didSignOut(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignOut called on background thread")
 
+        self.signedIn = false
+        
         self.email = nil
         self.internalUserName = nil
         self.password = nil
