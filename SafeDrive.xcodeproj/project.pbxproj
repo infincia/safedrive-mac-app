@@ -942,7 +942,7 @@
 					AAC466C61F0C9BFD002088B6 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = G738Z89QKM;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					AAF945FE1C815D5A00B972C3 = {
 						CreatedOnToolsVersion = 7.2;
