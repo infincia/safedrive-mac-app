@@ -48,9 +48,9 @@ class SyncController: Equatable {
 
             switch operation {
             case SDKRemoteFSOperation.moveFolder:
-                // swiftlint:disable force_unwrapping
-                let storageDir = URL(string: "/storage/Storage/")!
-                // swiftlint:enable force_unwrapping
+
+                let storageDir = URL(fileURLWithPath: "/storage/Storage/")
+
                 
                 let now = Date()
                 let dateFormatter = DateFormatter()

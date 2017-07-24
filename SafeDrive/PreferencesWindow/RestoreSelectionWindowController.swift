@@ -137,7 +137,7 @@ class RestoreSelectionWindowController: NSWindowController {
         self.spinner.stopAnimation(self)
         self.errorField.stringValue = ""
         
-        if let url = URL(string: folder.path) {
+        if let url = folder.url {
             self.destination.url = url
         } else {
             SDLog("failed to set default destination url")

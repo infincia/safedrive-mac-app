@@ -67,9 +67,7 @@ class Installer: NSObject {
     }
     
     fileprivate var isDirectoryOK: Bool {
-        // swiftlint:disable force_unwrapping
-        let usrlocalbin = URL(string: "file:///usr/local/bin")!
-        // swiftlint:enable force_unwrapping
+        let usrlocalbin = URL(fileURLWithPath: "/usr/local/bin")
 
         var isDirectory: ObjCBool = false
         let directoryExists = FileManager.default.fileExists(atPath: usrlocalbin.path, isDirectory: &isDirectory) && isDirectory.boolValue == true
@@ -80,9 +78,7 @@ class Installer: NSObject {
     }
     
     fileprivate var isCLIAppInstalled: Bool {
-        // swiftlint:disable force_unwrapping
-        let destination = URL(string: "file:///usr/local/bin/safedrive")!
-        // swiftlint:enable force_unwrapping
+        let destination = URL(fileURLWithPath: "/usr/local/bin/safedrive")
         
         if FileManager.default.fileExists(atPath: destination.path) {
             do {
@@ -210,10 +206,8 @@ class Installer: NSObject {
         }
         
         SDLog("CLI location: \(cli.path)")
-        // swiftlint:disable force_unwrapping
-        let usrlocalbin = URL(string: "file:///usr/local/bin")!
-        // swiftlint:enable force_unwrapping
 
+        let usrlocalbin = URL(fileURLWithPath: "/usr/local/bin")
 
         let destination = usrlocalbin.appendingPathComponent("safedrive")
         
