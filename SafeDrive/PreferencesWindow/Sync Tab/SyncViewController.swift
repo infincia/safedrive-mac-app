@@ -176,9 +176,7 @@ class SyncViewController: NSViewController {
             let machineName = host.localizedName!
             // swiftlint:enable force_unwrapping
             
-            // swiftlint:disable force_unwrapping
-            let defaultFolder: URL = URL(string: defaultServerPath())!
-            // swiftlint:enable force_unwrapping
+            let defaultFolder: URL = URL(fileURLWithPath: defaultServerPath())
 
             let machineFolder: URL = defaultFolder.appendingPathComponent(machineName, isDirectory: true)
             let remoteFolder: URL = machineFolder.appendingPathComponent(folder.name, isDirectory: true)
