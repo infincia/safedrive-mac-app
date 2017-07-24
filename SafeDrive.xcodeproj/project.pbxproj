@@ -15,6 +15,7 @@
 		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
+		AA11653A1F251C4700B7D8EF /* SafeDriveSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; };
 		AA11653C1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
 		AA11653D1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
 		AA11653E1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
@@ -439,6 +440,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA11653A1F251C4700B7D8EF /* SafeDriveSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
