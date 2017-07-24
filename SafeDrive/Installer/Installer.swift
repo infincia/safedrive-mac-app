@@ -52,7 +52,7 @@ class Installer: NSObject {
                 return false
             }
             if let currentVersion = result?["pkg-version"] as? String {
-                return Semver.gte(currentVersion, "3.5.6")
+                return Semver.gte(currentVersion, "3.6.3")
             }
         }
         return false
@@ -152,7 +152,7 @@ class Installer: NSObject {
     }
     
     func installOSXFUSE() throws {
-        let osxfuseURL = Bundle.main.url(forResource: "FUSE for macOS 3.5.6", withExtension: "pkg", subdirectory: nil)
+        let osxfuseURL = Bundle.main.url(forResource: "FUSE for macOS 3.6.3", withExtension: "pkg", subdirectory: nil)
         let privilegedTask = STPrivilegedTask()
         privilegedTask.launchPath = "/usr/sbin/installer"
         // swiftlint:disable force_unwrapping
