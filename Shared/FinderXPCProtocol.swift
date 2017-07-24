@@ -3,7 +3,7 @@
 
 import Foundation
 
-let kFinderXPCProtocolVersion: Int = 6
+let kFinderXPCProtocolVersion: Int = 7
 
 @objc protocol FinderXPCProtocol {
     func protocolVersion(_ replyBlock: @escaping (_ version: Int) -> Void)

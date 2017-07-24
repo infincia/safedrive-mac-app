@@ -3,7 +3,7 @@
 
 import Foundation
 
-let kAppXPCProtocolVersion: Int = 6
+let kAppXPCProtocolVersion: Int = 7
 
 @objc protocol AppXPCProtocol {
     func sendMessage(_ message: String, reply replyBlock: @escaping (_ reply: String) -> Void)
