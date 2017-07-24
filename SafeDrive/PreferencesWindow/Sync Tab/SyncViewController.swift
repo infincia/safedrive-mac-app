@@ -43,6 +43,8 @@ class SyncViewController: NSViewController {
     
     fileprivate var restoreSelection: RestoreSelectionWindowController!
 
+    fileprivate var addFolderWindow: AddFolderWindowController!
+
     fileprivate var folders = [SDKSyncFolder]()
     
     fileprivate var uniqueClientID: String?
@@ -101,59 +103,16 @@ class SyncViewController: NSViewController {
         guard let _ = self.uniqueClientID else {
             return
         }
-        let panel: NSOpenPanel = NSOpenPanel()
         
-        let encryptedCheckbox = NSButton()
-        let encryptedCheckboxTitle: String = NSLocalizedString("Encrypted", comment: "Option in select folder panel")
-        encryptedCheckbox.title = encryptedCheckboxTitle
-        encryptedCheckbox.setButtonType(.switch)
-        encryptedCheckbox.state = 1 //true
-        panel.accessoryView = encryptedCheckbox
         
-        panel.delegate = self
-        panel.canChooseFiles = false
-        panel.allowsMultipleSelection = false
-        panel.canChooseDirectories = true
-        panel.canCreateDirectories = true
-        let panelTitle: String = NSLocalizedString("Select a folder", comment: "Title of window")
-        panel.title = panelTitle
-        let promptString: String = NSLocalizedString("Select", comment: "Button title")
-        panel.prompt = promptString
-        
-        self.delegate.showPanel(panel) { (response) in
-            if response == NSFileHandlingPanelOKButton {
-                guard let url = panel.url else {
-                    return
-                }
-
-                self.spinner.startAnimation(self)
-                let isEncrypted = (encryptedCheckbox.state == 1)
+        self.addFolderWindow = AddFolderWindowController(delegate: self)
                 
-                let folderName = url.lastPathComponent.lowercased()
-                let folderPath = url.path
-                
-                self.sdk.addFolder(folderName, path: folderPath, encrypted: isEncrypted, completionQueue: DispatchQueue.main, success: { (folderID) in
-                    self.readSyncFolders(success: { 
-                        self.sync(folderID, encrypted: isEncrypted)
-                    }, failure: { (error) in
-                        SDErrorHandlerReport(error)
-                        self.spinner.stopAnimation(self)
-                        let alert: NSAlert = NSAlert()
-                        alert.messageText = NSLocalizedString("Error occurred after adding folder to your account", comment: "")
-                        alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
-                        alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-                        alert.runModal()
-                    })
-                }, failure: { (error) in
-                    SDErrorHandlerReport(error)
-                    self.spinner.stopAnimation(self)
-                    let alert: NSAlert = NSAlert()
-                    alert.messageText = NSLocalizedString("Error adding folder to your account", comment: "")
-                    alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
-                    alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-                    alert.runModal()
-                })
-            }
+        guard let w = self.addFolderWindow?.window else {
+            SDLog("no add folder window available")
+            return
+        }
+        self.delegate.showModalWindow(w) { (_) in
+            
         }
     }
     
@@ -1003,6 +962,24 @@ extension SyncViewController: NSTableViewDataSource {
     }
     
 }
+
+extension SyncViewController: AddFolderDelegate {
+    func add(_ folderName: String, folderPath: URL, encrypted: Bool, success: @escaping (UInt64) -> Void, failure: @escaping (SDKError) -> Void) {
+        assert(Thread.current == Thread.main, "selectedSession called on background thread")
+
+        
+        let folderPath = folderPath.path
+        
+        self.sdk.addFolder(folderName, path: folderPath, encrypted: encrypted, completionQueue: DispatchQueue.main, success: { (folderID) in
+            self.readSyncFolders(success: {
+                success(folderID)
+                self.sync(folderID, encrypted: encrypted)
+            }, failure: failure)
+        }, failure: failure)
+    }
+
+}
+
 
 extension SyncViewController: RestoreSelectionDelegate {
     func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL, session: SDKSyncSession?) {
