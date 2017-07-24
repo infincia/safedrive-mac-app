@@ -515,6 +515,7 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AA1165891F25C56700B7D8EF /* .swiftlint.yml */,
 				AA1165871F25B7C900B7D8EF /* SDDK */,
 				AA272A0B1F09C63B00B47673 /* build.sh */,
 				AA272A0A1F09C55100B47673 /* push.sh */,
@@ -1051,6 +1052,7 @@
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA58D2D11E82DB86002D56E0 /* AccountView.xib in Resources */,
 				AA58D2CD1E82D9F0002D56E0 /* GeneralView.xib in Resources */,
+				AA11658A1F25C56700B7D8EF /* .swiftlint.yml in Resources */,
 				AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */,
 				AA2E55101A774E0000647637 /* known_hosts in Resources */,
 				AABF04A91E6CC46E0084DF81 /* FailedView.xib in Resources */,
