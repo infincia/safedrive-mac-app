@@ -5,6 +5,9 @@
 //  Created by di wu on 1/20/15.
 //  Copyright (c) 2015 di wu. All rights reserved.
 //
+
+// swiftlint:disable force_unwrapping
+
 import Foundation
 
 struct Regex {
@@ -47,7 +50,7 @@ struct Regex {
 
 extension String {
     func matchRegex(_ pattern: Regex) -> Bool {
-        let range: NSRange = NSMakeRange(0, characters.count)
+        let range: NSRange = NSRange(location: 0, length: characters.count)
         if pattern.regex != nil {
             let matches: [AnyObject] = pattern.regex!.matches(in: self, options: pattern.matchingOptions, range: range)
             return matches.count > 0
@@ -61,7 +64,7 @@ extension String {
     
     func replaceRegex(_ pattern: Regex, template: String) -> String {
         if self.matchRegex(pattern) {
-            let range: NSRange = NSMakeRange(0, characters.count)
+            let range: NSRange = NSRange(location: 0, length: characters.count)
             if pattern.regex != nil {
                 return pattern.regex!.stringByReplacingMatches(in: self, options: pattern.matchingOptions, range: range, withTemplate: template)
             }
@@ -92,89 +95,89 @@ open class Semver {
     let IGNORE_PREFIX: String = "v"
     let IGNORE_EQ: String = "="
     
-    required public init(){
+    required public init() {
         
     }
     
-    open class func version() -> String{
+    open class func version() -> String {
         return "1.0.0"
     }
     
-    convenience init(version: String!){
+    convenience init(version: String!) {
         self.init()
         self.versionStr = version
-        if valid(){
+        if valid() {
             var v = versionStr.components(separatedBy: VERSION_DELIMITER) as Array
             major = v[0]
             minor = v[1]
             patch = v[2]
             
             var prerelease = versionStr.components(separatedBy: PRERELEASE_DELIMITER) as Array
-            if (prerelease.count > 1) {
+            if prerelease.count > 1 {
                 pre = prerelease[1]
             }
             
             var buildVersion = versionStr.components(separatedBy: BUILD_DELIMITER) as Array
-            if (buildVersion.count > 1) {
+            if buildVersion.count > 1 {
                 build = buildVersion[1]
             }
         }
     }
     
-    func diff(_ version2: String) -> Int{
+    func diff(_ version2: String) -> Int {
         let version = Semver(version: version2)
-        if (major.compare(version.major) != .orderedSame){
+        if major.compare(version.major) != .orderedSame {
             return major.compare(version.major).rawValue
         }
         
-        if (minor.compare(version.minor) != .orderedSame){
+        if minor.compare(version.minor) != .orderedSame {
             return minor.compare(version.minor).rawValue
         }
         
-        if (patch.compare(version.patch) != .orderedSame){
+        if patch.compare(version.patch) != .orderedSame {
             return patch.compare(version.patch, options: NSString.CompareOptions.numeric).rawValue
         }
         
         return 0
     }
     
-    open class func valid(_ version: String) -> Bool{
+    open class func valid(_ version: String) -> Bool {
         return Semver(version: version).valid()
     }
     
-    func valid() -> Bool{
-        if let _ = versionStr.range(of: SemVerRegexp, options: .regularExpression){
+    func valid() -> Bool {
+        if let _ = versionStr.range(of: SemVerRegexp, options: .regularExpression) {
             return true
         }
         return false
     }
     
-    open class func clean(_ version: String) -> String{
+    open class func clean(_ version: String) -> String {
         return Semver(version: version).clean()
     }
     
-    func clean() -> String{
+    func clean() -> String {
         versionStr = versionStr.trimmingCharacters(in: CharacterSet.whitespaces)
         return versionStr.replace("^[=v]+", template: "")
     }
     
-    open class func gt(_ version1: String, _ v: String) -> Bool{
+    open class func gt(_ version1: String, _ v: String) -> Bool {
         return Semver(version: version1).diff(v) > 0
     }
     
-    open class func lt(_ version1: String, _ v: String) -> Bool{
+    open class func lt(_ version1: String, _ v: String) -> Bool {
         return Semver(version: version1).diff(v) < 0
     }
     
-    open class func gte(_ version1: String, _ v: String) -> Bool{
+    open class func gte(_ version1: String, _ v: String) -> Bool {
         return Semver(version: version1).diff(v) >= 0
     }
     
-    open class func lte(_ version1: String, _ v: String) -> Bool{
+    open class func lte(_ version1: String, _ v: String) -> Bool {
         return Semver(version: version1).diff(v) <= 0
     }
     
-    open class func eq(_ version1: String, _ v: String) -> Bool{
+    open class func eq(_ version1: String, _ v: String) -> Bool {
         return Semver(version: version1).diff(v) == 0
     }
 }
