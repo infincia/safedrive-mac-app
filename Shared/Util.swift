@@ -53,7 +53,7 @@ func currentOSVersion() -> String {
     let systemVersionPlist = "/System/Library/CoreServices/SystemVersion.plist"
     guard let dict = NSDictionary(contentsOfFile: systemVersionPlist) as? [String: Any],
           let systemVersion = dict["ProductVersion"] as? String else {
-        return "Unknowwn"
+        return "macOS 10.x"
     }
 
     return systemVersion
