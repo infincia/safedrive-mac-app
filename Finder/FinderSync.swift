@@ -44,15 +44,16 @@ class FinderSync: FIFinderSync {
         // swiftlint:enable force_unwrapping
 
         FIFinderSyncController.default().directoryURLs = Set<URL>()
-        DispatchQueue.global(qos: .default).async {
+        
+        background {
             self.serviceReconnectionLoop()
         }
         
-        DispatchQueue.global(qos: .default).async {
+        background {
             self.mountStateLoop()
         }
         
-        DispatchQueue.global(qos: .default).async {
+        background {
             self.clientConfigLoop()
         }
         
@@ -198,7 +199,7 @@ class FinderSync: FIFinderSync {
     // MARK: - Mount handling
     
     func mountStateLoop() {
-        DispatchQueue.global(qos: .default).async {
+        background {
             while true {
                 guard let a = self.appConnection else {
                     Thread.sleep(forTimeInterval: 1)
