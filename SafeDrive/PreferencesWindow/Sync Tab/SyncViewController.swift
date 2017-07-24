@@ -842,32 +842,37 @@ extension SyncViewController: NSTableViewDelegate {
             
             //tableCellView.removeButton.action = #selector(self.removeSyncFolder(_:))
             
-            if task.syncing || task.restoring {
-                tableCellView.restoreNowButton.isEnabled = false
-                tableCellView.restoreNowButton.target = self
-                tableCellView.restoreNowButton.action = #selector(self.stopSyncNow(_:))
-                
-                tableCellView.syncNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
-                tableCellView.syncNowButton.target = self
-                tableCellView.syncNowButton.action = #selector(self.stopSyncNow(_:))
-            }
             
             if task.syncing {
                 tableCellView.syncStatus.startAnimation(self)
                 tableCellView.restoreNowButton.icon = NIKFontAwesomeIcon.arrowCircleODown
                 tableCellView.restoreNowButton.image?.isTemplate = true
+                tableCellView.restoreNowButton.isEnabled = false
+                tableCellView.restoreNowButton.target = self
+                tableCellView.restoreNowButton.action = #selector(self.stopSyncNow(_:))
 
                 tableCellView.syncNowButton.icon = NIKFontAwesomeIcon.timesCircle
                 tableCellView.syncNowButton.image?.isTemplate = true
+                tableCellView.syncNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
+                tableCellView.syncNowButton.target = self
+                tableCellView.syncNowButton.action = #selector(self.stopSyncNow(_:))
+
 
             } else if task.restoring {
                 tableCellView.syncStatus.startAnimation(self)
 
                 tableCellView.restoreNowButton.icon = NIKFontAwesomeIcon.timesCircle
                 tableCellView.restoreNowButton.image?.isTemplate = true
+                tableCellView.restoreNowButton.isEnabled = true && SafeDriveSDK.sharedSDK.ready
+                tableCellView.restoreNowButton.target = self
+                tableCellView.restoreNowButton.action = #selector(self.stopSyncNow(_:))
 
                 tableCellView.syncNowButton.icon = NIKFontAwesomeIcon.arrowCircleOUp
                 tableCellView.syncNowButton.image?.isTemplate = true
+                tableCellView.syncNowButton.isEnabled = false
+                tableCellView.syncNowButton.target = self
+                tableCellView.syncNowButton.action = #selector(self.stopSyncNow(_:))
+
 
             } else {
                 tableCellView.syncStatus.stopAnimation(self)
