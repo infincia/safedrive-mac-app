@@ -25,6 +25,8 @@ end
 
 target 'SafeDriveFinder' do
     use_frameworks!
+    pod 'FontAwesomeIconFactory', '~> 2.1.1'
+    pod 'PromiseKit', :git => 'https://github.com/infincia/PromiseKit.git', :branch => 'infincia', :commit => '31870803665d6207da296dcd65f140547b4cdb08'
 end
 
 
