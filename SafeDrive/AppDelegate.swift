@@ -59,7 +59,8 @@ extension AppDelegate: NSApplicationDelegate {
 
         let groupURL = storageURL()
         
-        let currentOS = currentOSVersion()
+        let currentOS = "macOS \(currentOSVersion())"
+        
         let logLevel = SDKLogLevel.debug
         
         // swiftlint:disable force_try
