@@ -146,7 +146,7 @@ class FinderSync: FIFinderSync {
     func createServiceConnection() -> NSXPCConnection {
         let newConnection: NSXPCConnection = NSXPCConnection(machServiceName: "io.safedrive.SafeDrive.d", options: NSXPCConnection.Options(rawValue: 0))
         
-        let serviceInterface: NSXPCInterface = NSXPCInterface(with:ServiceXPCProtocol.self)
+        let serviceInterface: NSXPCInterface = NSXPCInterface(with: ServiceXPCProtocol.self)
         
         newConnection.remoteObjectInterface = serviceInterface
         
@@ -170,7 +170,7 @@ class FinderSync: FIFinderSync {
     func createAppConnectionFromEndpoint(_ endpoint: NSXPCListenerEndpoint) -> NSXPCConnection {
         let newConnection: NSXPCConnection = NSXPCConnection(listenerEndpoint: endpoint)
         
-        let appInterface: NSXPCInterface = NSXPCInterface(with:AppXPCProtocol.self)
+        let appInterface: NSXPCInterface = NSXPCInterface(with: AppXPCProtocol.self)
         
         newConnection.remoteObjectInterface = appInterface
         
