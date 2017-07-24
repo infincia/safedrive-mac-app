@@ -1,5 +1,7 @@
 platform :osx, '10.9'
 
+swift_version = '3.0'
+
 def shared_pods
     pod 'Fabric', '~>  1.6.11'
     pod 'Crashlytics', '~>  3.8.3'
