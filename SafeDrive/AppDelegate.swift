@@ -176,6 +176,7 @@ extension AppDelegate: SDApplicationControlProtocol {
         }
     }
     
+    // TODO: move to preferences window controller
     func applicationShouldOpenPreferencesWindow(notification: Foundation.Notification) {
         DispatchQueue.main.async {
             NSApp.activate(ignoringOtherApps: true)
@@ -183,6 +184,7 @@ extension AppDelegate: SDApplicationControlProtocol {
         }
     }
     
+    // TODO: move to about window controller
     func applicationShouldOpenAboutWindow(notification: Foundation.Notification) {
         DispatchQueue.main.async {
             NSApp.activate(ignoringOtherApps: true)
@@ -190,6 +192,7 @@ extension AppDelegate: SDApplicationControlProtocol {
         }
     }
     
+    // TODO: move to preferences window controller
     func applicationShouldOpenSyncWindow(_ notification: Foundation.Notification) {
         DispatchQueue.main.async {
             NSApp.activate(ignoringOtherApps: true)
@@ -197,6 +200,7 @@ extension AppDelegate: SDApplicationControlProtocol {
         }
     }
     
+    // TODO: move to mount controller
     func applicationShouldToggleMountState(notification: Foundation.Notification) {
         DispatchQueue.main.async {
             if self.mountController.mounted {
