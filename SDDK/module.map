@@ -1,0 +1,5 @@
+module SDDK {
+    umbrella header "../safedrive-sdk/include/sddk.h"
+    module * { export * }
+    export *
+}
