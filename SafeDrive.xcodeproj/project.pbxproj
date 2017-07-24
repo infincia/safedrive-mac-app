@@ -148,6 +148,7 @@
 		AAE08F731F05E31A00AC8885 /* Components.bundle in Copy Files */ = {isa = PBXBuildFile; fileRef = AA0135BF1F043C0400ABE8F5 /* Components.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AAE216381E9BE8BD00BE956F /* setup.sh in Resources */ = {isa = PBXBuildFile; fileRef = AAE216371E9BE8BD00BE956F /* setup.sh */; };
 		AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.5.6.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.5.6.pkg */; };
+		AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg */; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
 		AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946031C815D5A00B972C3 /* FinderSync.swift */; };
 		AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */; };
@@ -382,6 +383,7 @@
 		AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningTableCellView.swift; path = "Open File Warning Window/OpenFileWarningTableCellView.swift"; sourceTree = "<group>"; };
 		AAE216371E9BE8BD00BE956F /* setup.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = setup.sh; sourceTree = "<group>"; };
 		AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.5.6.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FUSE for macOS 3.5.6.pkg"; path = "Bundled Dependencies/FUSE for macOS 3.5.6.pkg"; sourceTree = "<group>"; };
+		AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FUSE for macOS 3.6.3.pkg"; path = "Bundled Dependencies/FUSE for macOS 3.6.3.pkg"; sourceTree = "<group>"; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SafeDrive.entitlements; sourceTree = "<group>"; };
@@ -724,6 +726,7 @@
 			isa = PBXGroup;
 			children = (
 				AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.5.6.pkg */,
+				AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg */,
 			);
 			name = "Bundled Dependencies";
 			sourceTree = "<group>";
@@ -1030,6 +1033,7 @@
 				AABF04AB1E6CC46E0084DF81 /* ReadyView.xib in Resources */,
 				AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */,
 				AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.5.6.pkg in Resources */,
+				AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg in Resources */,
 				AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */,
 				AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */,
 				AAA50BB11E313AF200892E9D /* CUIThemeRenditionFix.xcassets in Resources */,
