@@ -854,21 +854,17 @@ extension SyncViewController: NSTableViewDelegate {
             
             if task.syncing {
                 tableCellView.syncStatus.startAnimation(self)
-                //tableCellView.restoreNowButton.image = NSImage(named: NSImageNameInvalidDataFreestandingTemplate)
                 tableCellView.restoreNowButton.icon = NIKFontAwesomeIcon.arrowCircleODown
                 tableCellView.restoreNowButton.image?.isTemplate = true
 
-                //tableCellView.syncNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
                 tableCellView.syncNowButton.icon = NIKFontAwesomeIcon.stop
                 tableCellView.syncNowButton.image?.isTemplate = true
 
             } else if task.restoring {
                 tableCellView.syncStatus.startAnimation(self)
-                //tableCellView.restoreNowButton.image = NSImage(named: NSImageNameStopProgressFreestandingTemplate)
                 tableCellView.restoreNowButton.icon = NIKFontAwesomeIcon.stop
                 tableCellView.restoreNowButton.image?.isTemplate = true
 
-                //tableCellView.syncNowButton.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
                 tableCellView.syncNowButton.icon = NIKFontAwesomeIcon.arrowCircleOUp
                 tableCellView.syncNowButton.image?.isTemplate = true
 
