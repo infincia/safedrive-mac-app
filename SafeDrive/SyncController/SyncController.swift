@@ -254,19 +254,7 @@ class SyncController: Equatable {
         
         self.syncTask = Process()
         
-        
-        guard let componentsURL = Bundle.main.url(forResource: "Components", withExtension: "bundle"),
-            let components = Bundle.init(url: componentsURL) else {
-                let message = NSLocalizedString("Components missing, contact SafeDrive support", comment: "")
-                let error = SDError(message: message, kind: .configMissing)
-                (self.syncProgressQueue).async {
-                    failureBlock(self.localURL, error)
-                }
-                return
-        }
-        
-        
-        guard let rsyncPath = components.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.rsync") else {
+        guard let rsyncPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.rsync") else {
             let message = NSLocalizedString("Rsync missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .rsyncMissing)
             (self.syncProgressQueue).async {
@@ -282,7 +270,7 @@ class SyncController: Equatable {
         var rsyncEnvironment = [String: String]()
         
         /* path of our custom askpass helper so ssh can use it */
-        guard let safeDriveAskpassPath = components.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.askpass") else {
+        guard let safeDriveAskpassPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.askpass") else {
             let error = SDError(message: "Askpass helper missing", kind: .askpassMissing)
             (self.syncProgressQueue).async {
                 self.syncFailure = true
@@ -405,7 +393,7 @@ class SyncController: Equatable {
         }
         
         /* our own ssh binary */
-        guard let _ = components.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
+        guard let _ = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
             let message = NSLocalizedString("SSH missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .sshMissing)
             (self.syncProgressQueue).async {

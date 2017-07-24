@@ -15,13 +15,24 @@
 		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
-		AA11653A1F251C4700B7D8EF /* SafeDriveSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; };
 		AA11653C1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
 		AA11653D1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
 		AA11653E1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
 		AA11653F1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
+		AA1165561F25B0B600B7D8EF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165511F25B0B600B7D8EF /* Constants.swift */; };
+		AA1165571F25B0B600B7D8EF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165511F25B0B600B7D8EF /* Constants.swift */; };
+		AA1165581F25B0B600B7D8EF /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165521F25B0B600B7D8EF /* Errors.swift */; };
+		AA1165591F25B0B600B7D8EF /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165521F25B0B600B7D8EF /* Errors.swift */; };
+		AA11655A1F25B0B600B7D8EF /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165531F25B0B600B7D8EF /* Models.swift */; };
+		AA11655B1F25B0B600B7D8EF /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165531F25B0B600B7D8EF /* Models.swift */; };
+		AA11655C1F25B0B600B7D8EF /* SafeDriveSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */; };
+		AA1165601F25B1C100B7D8EF /* libsddk.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11655F1F25B1C100B7D8EF /* libsddk.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AA1165781F25B48F00B7D8EF /* libsddk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA11655F1F25B1C100B7D8EF /* libsddk.dylib */; };
+		AA1165791F25B49200B7D8EF /* libsddk.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11655F1F25B1C100B7D8EF /* libsddk.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AA11658A1F25C56700B7D8EF /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = AA1165891F25C56700B7D8EF /* .swiftlint.yml */; };
+		AA11658B1F25C8D300B7D8EF /* libsddk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA11655F1F25B1C100B7D8EF /* libsddk.dylib */; };
+		AA1165911F25CDDE00B7D8EF /* SafeDriveSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
-		AA272A031F095E4B00B47673 /* SafeDriveSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA2A42221F2315DA00CC6010 /* AddFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42201F2315DA00CC6010 /* AddFolderWindow.xib */; };
 		AA2A42241F23281400CC6010 /* AddFolderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A42211F2315DA00CC6010 /* AddFolderWindowController.swift */; };
 		AA2A42281F23AF4E00CC6010 /* VerifyFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42261F23AF4E00CC6010 /* VerifyFolderWindow.xib */; };
@@ -67,8 +78,6 @@
 		AA6E27341D8839DC00038019 /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E27331D8839DC00038019 /* SyncController.swift */; };
 		AA6E27351D8839DC00038019 /* SyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E27331D8839DC00038019 /* SyncController.swift */; };
 		AA7319421A2F7EEB003E2391 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7319411A2F7EEB003E2391 /* Main.xib */; };
-		AA7442381E0517D5004D8518 /* SafeDriveSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		AA74423A1E0517D8004D8518 /* SafeDriveSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA76DC211C8762A9007B320E /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC201C8762A9007B320E /* Installer.swift */; };
 		AA76DC231C8779D2007B320E /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */; };
 		AA76DC291C879076007B320E /* WelcomeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA76DC281C879076007B320E /* WelcomeWindow.xib */; };
@@ -144,6 +153,11 @@
 		AAC466D21F0CA885002088B6 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
 		AAC466D31F0CA88A002088B6 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272A1D876DD800038019 /* Notifications.swift */; };
 		AAC466D81F0CBC4D002088B6 /* io.safedrive.SafeDrive.d in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAC722B71F25D08E00C8EC3D /* io.safedrive.SafeDrive.askpass in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656B1F25B21D00B7D8EF /* io.safedrive.SafeDrive.askpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAC722B81F25D08E00C8EC3D /* io.safedrive.SafeDrive.cli in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656C1F25B21D00B7D8EF /* io.safedrive.SafeDrive.cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAC722B91F25D08E00C8EC3D /* io.safedrive.SafeDrive.rsync in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656D1F25B21D00B7D8EF /* io.safedrive.SafeDrive.rsync */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAC722BA1F25D08E00C8EC3D /* io.safedrive.SafeDrive.ssh in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656E1F25B21D00B7D8EF /* io.safedrive.SafeDrive.ssh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAC722BB1F25D08E00C8EC3D /* io.safedrive.SafeDrive.sshfs in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656F1F25B21D00B7D8EF /* io.safedrive.SafeDrive.sshfs */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AACDAD911E97548500F5B351 /* ssh_config in Resources */ = {isa = PBXBuildFile; fileRef = AACDAD901E97548500F5B351 /* ssh_config */; };
 		AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
@@ -154,7 +168,6 @@
 		AAD89BD21E5C197E007D8E82 /* OpenFileWarningWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */; };
 		AAD89BD31E5C197E007D8E82 /* OpenFileWarningWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */; };
 		AAD89BD51E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */; };
-		AAE08F731F05E31A00AC8885 /* Components.bundle in Copy Files */ = {isa = PBXBuildFile; fileRef = AA0135BF1F043C0400ABE8F5 /* Components.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AAE216381E9BE8BD00BE956F /* setup.sh in Resources */ = {isa = PBXBuildFile; fileRef = AAE216371E9BE8BD00BE956F /* setup.sh */; };
 		AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg */; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
@@ -164,19 +177,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AA0135BE1F043C0400ABE8F5 /* PBXContainerItemProxy */ = {
+		AA11657E1F25B50C00B7D8EF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AA0135A41F043AA500ABE8F5;
-			remoteInfo = Components;
-		};
-		AA0135C11F043C1F00ABE8F5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */;
+			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = AA0135A31F043AA500ABE8F5;
-			remoteInfo = Components;
+			remoteGlobalIDString = AA11657A1F25B4C700B7D8EF;
+			remoteInfo = SDDK;
+		};
+		AA1165801F25B51000B7D8EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA11657A1F25B4C700B7D8EF;
+			remoteInfo = SDDK;
 		};
 		AA1A46071BED8521004A5310 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -184,34 +197,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = AA3168121A191B72006CC0EB;
 			remoteInfo = SafeDrive;
-		};
-		AA272A011F095E3F00B47673 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AA5DCF651D6CFFDA00FEDAFB;
-			remoteInfo = SafeDriveSDK;
-		};
-		AA7442341E0517C8004D8518 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AA5DCFBE1D6CFFDA00FEDAFB;
-			remoteInfo = SafeDriveSDK;
-		};
-		AA7442361E0517C8004D8518 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AA9D8AE91D6E9A300011DE1F;
-			remoteInfo = SafeDriveSDKTests;
-		};
-		AA74423B1E0517D8004D8518 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AA5DCF651D6CFFDA00FEDAFB;
-			remoteInfo = SafeDriveSDK;
 		};
 		AAC466D91F0CBEA5002088B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -230,6 +215,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		AA11658F1F25CB3900B7D8EF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				AAC722B71F25D08E00C8EC3D /* io.safedrive.SafeDrive.askpass in CopyFiles */,
+				AAC722B81F25D08E00C8EC3D /* io.safedrive.SafeDrive.cli in CopyFiles */,
+				AAC722B91F25D08E00C8EC3D /* io.safedrive.SafeDrive.rsync in CopyFiles */,
+				AAC722BA1F25D08E00C8EC3D /* io.safedrive.SafeDrive.ssh in CopyFiles */,
+				AAC722BB1F25D08E00C8EC3D /* io.safedrive.SafeDrive.sshfs in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA925C3B1B8F9BAA00222E46 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -239,17 +238,6 @@
 				AA9079AE1F07EE120067E383 /* SafeDriveFinder.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AABB0FBF1A3F290400FA3530 /* Copy Files */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-				AAE08F731F05E31A00AC8885 /* Components.bundle in Copy Files */,
-			);
-			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		AAC466C01F0C9301002088B6 /* Embed XPC Services */ = {
@@ -278,7 +266,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AA74423A1E0517D8004D8518 /* SafeDriveSDK.framework in CopyFiles */,
+				AA1165601F25B1C100B7D8EF /* libsddk.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +276,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AA272A031F095E4B00B47673 /* SafeDriveSDK.framework in CopyFiles */,
+				AA1165791F25B49200B7D8EF /* libsddk.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +294,18 @@
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileCheck.swift; path = "Open File Warning Window/OpenFileCheck.swift"; sourceTree = "<group>"; };
 		AA11653B1F256F1600B7D8EF /* Semver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Semver.swift; path = Shared/Semver.swift; sourceTree = "<group>"; };
+		AA1165511F25B0B600B7D8EF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Shared/Constants.swift; sourceTree = "<group>"; };
+		AA1165521F25B0B600B7D8EF /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Errors.swift; path = Shared/Errors.swift; sourceTree = "<group>"; };
+		AA1165531F25B0B600B7D8EF /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Models.swift; path = Shared/Models.swift; sourceTree = "<group>"; };
+		AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SafeDriveSDK.swift; path = Shared/SafeDriveSDK.swift; sourceTree = "<group>"; };
+		AA11655F1F25B1C100B7D8EF /* libsddk.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsddk.dylib; path = "safedrive-sdk/target/x86_64-apple-darwin/release/libsddk.dylib"; sourceTree = "<group>"; };
+		AA11656B1F25B21D00B7D8EF /* io.safedrive.SafeDrive.askpass */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.askpass; path = "safedrive-sdk/target/x86_64-apple-darwin/release/io.safedrive.SafeDrive.askpass"; sourceTree = "<group>"; };
+		AA11656C1F25B21D00B7D8EF /* io.safedrive.SafeDrive.cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.cli; path = "safedrive-sdk/target/x86_64-apple-darwin/release/io.safedrive.SafeDrive.cli"; sourceTree = "<group>"; };
+		AA11656D1F25B21D00B7D8EF /* io.safedrive.SafeDrive.rsync */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.rsync; path = "safedrive-sdk/target/x86_64-apple-darwin/release/io.safedrive.SafeDrive.rsync"; sourceTree = "<group>"; };
+		AA11656E1F25B21D00B7D8EF /* io.safedrive.SafeDrive.ssh */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.ssh; path = "safedrive-sdk/target/x86_64-apple-darwin/release/io.safedrive.SafeDrive.ssh"; sourceTree = "<group>"; };
+		AA11656F1F25B21D00B7D8EF /* io.safedrive.SafeDrive.sshfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.sshfs; path = "safedrive-sdk/target/x86_64-apple-darwin/release/io.safedrive.SafeDrive.sshfs"; sourceTree = "<group>"; };
+		AA1165881F25B7C900B7D8EF /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
+		AA1165891F25C56700B7D8EF /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
 		AA272A051F09B01900B47673 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		AA272A0A1F09C55100B47673 /* push.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = push.sh; sourceTree = "<group>"; };
@@ -352,7 +352,6 @@
 		AA6E27331D8839DC00038019 /* SyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncController.swift; sourceTree = "<group>"; };
 		AA7319411A2F7EEB003E2391 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		AA73194E1A2F893D003E2391 /* SafeDrive.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafeDrive.pch; sourceTree = "<group>"; };
-		AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafeDriveSDK.xcodeproj; path = "safedrive-sdk/SafeDriveSDK.xcodeproj"; sourceTree = "<group>"; };
 		AA76DC201C8762A9007B320E /* Installer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Installer.swift; path = Installer/Installer.swift; sourceTree = "<group>"; };
 		AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeWindowController.swift; path = Installer/WelcomeWindowController.swift; sourceTree = "<group>"; };
 		AA76DC281C879076007B320E /* WelcomeWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeWindow.xib; path = Installer/WelcomeWindow.xib; sourceTree = "<group>"; };
@@ -417,7 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */,
-				AA7442381E0517D5004D8518 /* SafeDriveSDK.framework in Frameworks */,
+				AA11658B1F25C8D300B7D8EF /* libsddk.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,7 +439,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA11653A1F251C4700B7D8EF /* SafeDriveSDK.framework in Frameworks */,
+				AA1165781F25B48F00B7D8EF /* libsddk.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +449,12 @@
 		5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA11656B1F25B21D00B7D8EF /* io.safedrive.SafeDrive.askpass */,
+				AA11656C1F25B21D00B7D8EF /* io.safedrive.SafeDrive.cli */,
+				AA11656D1F25B21D00B7D8EF /* io.safedrive.SafeDrive.rsync */,
+				AA11656E1F25B21D00B7D8EF /* io.safedrive.SafeDrive.ssh */,
+				AA11656F1F25B21D00B7D8EF /* io.safedrive.SafeDrive.sshfs */,
+				AA11655F1F25B1C100B7D8EF /* libsddk.dylib */,
 				6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */,
 				ACCC0E28E50D1255EF3C3795 /* Pods_SafeDriveTests.framework */,
 			);
@@ -465,6 +470,14 @@
 				0791540171204BCAA0A0AC66 /* Pods-SafeDriveTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		AA1165871F25B7C900B7D8EF /* SDDK */ = {
+			isa = PBXGroup;
+			children = (
+				AA1165881F25B7C900B7D8EF /* module.map */,
+			);
+			path = SDDK;
 			sourceTree = "<group>";
 		};
 		AA2A421F1F2315C400CC6010 /* Add Folder Window */ = {
@@ -502,12 +515,12 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AA1165871F25B7C900B7D8EF /* SDDK */,
 				AA272A0B1F09C63B00B47673 /* build.sh */,
 				AA272A0A1F09C55100B47673 /* push.sh */,
 				AA272A051F09B01900B47673 /* .travis.yml */,
 				AA9079A71F072A7D0067E383 /* exportOptions.plist */,
 				AA9079A81F072A7D0067E383 /* release.sh */,
-				AAA3E6AF1EAD4BA00083CE66 /* SDK */,
 				AA76DC241C8787AB007B320E /* Bundled Dependencies */,
 				AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */,
 				AA3D8EBA1C3D80A100CF0A3C /* Shared */,
@@ -634,6 +647,10 @@
 		AA3D8EBA1C3D80A100CF0A3C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				AA1165511F25B0B600B7D8EF /* Constants.swift */,
+				AA1165521F25B0B600B7D8EF /* Errors.swift */,
+				AA1165531F25B0B600B7D8EF /* Models.swift */,
+				AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */,
 				AA5071691E2ED5F7006F59C8 /* Util.swift */,
 				AA6E272A1D876DD800038019 /* Notifications.swift */,
 				AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */,
@@ -723,16 +740,6 @@
 			path = SyncController;
 			sourceTree = "<group>";
 		};
-		AA7442301E0517C7004D8518 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */,
-				AA7442371E0517C8004D8518 /* SafeDriveSDKTests.xctest */,
-				AA0135BF1F043C0400ABE8F5 /* Components.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		AA76DC1F1C876285007B320E /* Installer */ = {
 			isa = PBXGroup;
 			children = (
@@ -783,14 +790,6 @@
 				AA88C00F1F1B22400025F1D7 /* ServiceListenerDelegate.swift */,
 			);
 			name = SafeDrive.d;
-			sourceTree = "<group>";
-		};
-		AAA3E6AF1EAD4BA00083CE66 /* SDK */ = {
-			isa = PBXGroup;
-			children = (
-				AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */,
-			);
-			name = SDK;
 			sourceTree = "<group>";
 		};
 		AAAF1A401BF59446008E7865 /* Account Controller */ = {
@@ -852,6 +851,23 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXLegacyTarget section */
+		AA11657A1F25B4C700B7D8EF /* SDDK */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = release.sh;
+			buildConfigurationList = AA11657B1F25B4C700B7D8EF /* Build configuration list for PBXLegacyTarget "SDDK" */;
+			buildPhases = (
+			);
+			buildToolPath = /bin/bash;
+			buildWorkingDirectory = "$(SRCROOT)/safedrive-sdk";
+			dependencies = (
+			);
+			name = SDDK;
+			passBuildSettingsInEnvironment = 1;
+			productName = SDDK;
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
 		AA3168121A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXNativeTarget;
@@ -864,20 +880,19 @@
 				AA3168101A191B72006CC0EB /* Frameworks */,
 				AA3168111A191B72006CC0EB /* Resources */,
 				AAF9461A1C823A6B00B972C3 /* CopyFiles */,
-				AABB0FBF1A3F290400FA3530 /* Copy Files */,
 				AADA2FAA1F0C4F61009D43CC /* CopyFiles */,
 				AA925C3B1B8F9BAA00222E46 /* Embed App Extensions */,
 				AAE474851BFBC1E200B1A555 /* Fabric.io */,
 				DFD57E6957DC22537ED3D54D /* [CP] Embed Pods Frameworks */,
 				85260E3FE7B654997BAC19CC /* [CP] Copy Pods Resources */,
 				AAC466C01F0C9301002088B6 /* Embed XPC Services */,
+				AA11658F1F25CB3900B7D8EF /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AA11657F1F25B50C00B7D8EF /* PBXTargetDependency */,
 				AAC466DA1F0CBEA5002088B6 /* PBXTargetDependency */,
-				AA0135C21F043C1F00ABE8F5 /* PBXTargetDependency */,
-				AA74423C1E0517D8004D8518 /* PBXTargetDependency */,
 				AAF946071C815D5A00B972C3 /* PBXTargetDependency */,
 			);
 			name = SafeDrive;
@@ -934,7 +949,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				AA272A021F095E3F00B47673 /* PBXTargetDependency */,
+				AA1165811F25B51000B7D8EF /* PBXTargetDependency */,
 			);
 			name = SafeDriveFinder;
 			productName = Finder;
@@ -952,6 +967,11 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Infincia LLC";
 				TargetAttributes = {
+					AA11657A1F25B4C700B7D8EF = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = G738Z89QKM;
+						ProvisioningStyle = Automatic;
+					};
 					AA3168121A191B72006CC0EB = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = G738Z89QKM;
@@ -1005,45 +1025,16 @@
 			mainGroup = AA31680A1A191B72006CC0EB;
 			productRefGroup = AA3168141A191B72006CC0EB /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = AA7442301E0517C7004D8518 /* Products */;
-					ProjectRef = AA74422F1E0517C7004D8518 /* SafeDriveSDK.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				AA3168121A191B72006CC0EB /* SafeDrive */,
 				AA3168251A191B72006CC0EB /* SafeDriveTests */,
 				AAF945FE1C815D5A00B972C3 /* SafeDriveFinder */,
 				AAC466C61F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
+				AA11657A1F25B4C700B7D8EF /* SDDK */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		AA0135BF1F043C0400ABE8F5 /* Components.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Components.bundle;
-			remoteRef = AA0135BE1F043C0400ABE8F5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SafeDriveSDK.framework;
-			remoteRef = AA7442341E0517C8004D8518 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AA7442371E0517C8004D8518 /* SafeDriveSDKTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SafeDriveSDKTests.xctest;
-			remoteRef = AA7442361E0517C8004D8518 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AA3168111A191B72006CC0EB /* Resources */ = {
@@ -1267,6 +1258,7 @@
 				AA7CD6191E68A21100EE7FAD /* ValidateDependenciesViewController.swift in Sources */,
 				AA3EB83D1E557C20003A2E79 /* RestoreSelectionTableCellView.swift in Sources */,
 				AA58D2D81E82DBE4002D56E0 /* EncryptionViewController.swift in Sources */,
+				AA1165561F25B0B600B7D8EF /* Constants.swift in Sources */,
 				AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */,
 				AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
@@ -1280,6 +1272,7 @@
 				AA76DC2F1C8A17F4007B320E /* PreferencesWindowController.swift in Sources */,
 				AAD89BD51E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift in Sources */,
 				AAA88BD91C857FFB009BE1C7 /* DropdownController.swift in Sources */,
+				AA11655C1F25B0B600B7D8EF /* SafeDriveSDK.swift in Sources */,
 				AA58D2D41E82DBA8002D56E0 /* SyncViewController.swift in Sources */,
 				AA7CD61E1E68A23300EE7FAD /* ValidateAccountViewController.swift in Sources */,
 				AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */,
@@ -1291,6 +1284,8 @@
 				AA58D2CC1E82D9F0002D56E0 /* GeneralViewController.swift in Sources */,
 				AA037B6F1E428EA600818B53 /* RecoveryPhraseWindowController.swift in Sources */,
 				AAB7D5D51CB09943001F9A8E /* CrashAlert.swift in Sources */,
+				AA1165581F25B0B600B7D8EF /* Errors.swift in Sources */,
+				AA11655A1F25B0B600B7D8EF /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1366,12 +1361,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA6E272E1D876DD800038019 /* Notifications.swift in Sources */,
+				AA11655B1F25B0B600B7D8EF /* Models.swift in Sources */,
+				AA1165571F25B0B600B7D8EF /* Constants.swift in Sources */,
 				AA11653E1F256F1600B7D8EF /* Semver.swift in Sources */,
 				AA50716B1E2ED86A006F59C8 /* Util.swift in Sources */,
+				AA1165591F25B0B600B7D8EF /* Errors.swift in Sources */,
 				AA3EB8431E569E9D003A2E79 /* Protocols.swift in Sources */,
 				AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AAD44A281D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */,
+				AA1165911F25CDDE00B7D8EF /* SafeDriveSDK.swift in Sources */,
 				AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */,
 				AA88DD0E1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */,
 				AA88DD101F0C052D00C4858E /* FinderXPCDelegate.swift in Sources */,
@@ -1381,25 +1380,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AA0135C21F043C1F00ABE8F5 /* PBXTargetDependency */ = {
+		AA11657F1F25B50C00B7D8EF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = Components;
-			targetProxy = AA0135C11F043C1F00ABE8F5 /* PBXContainerItemProxy */;
+			target = AA11657A1F25B4C700B7D8EF /* SDDK */;
+			targetProxy = AA11657E1F25B50C00B7D8EF /* PBXContainerItemProxy */;
+		};
+		AA1165811F25B51000B7D8EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA11657A1F25B4C700B7D8EF /* SDDK */;
+			targetProxy = AA1165801F25B51000B7D8EF /* PBXContainerItemProxy */;
 		};
 		AA1A46081BED8521004A5310 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AA3168121A191B72006CC0EB /* SafeDrive */;
 			targetProxy = AA1A46071BED8521004A5310 /* PBXContainerItemProxy */;
-		};
-		AA272A021F095E3F00B47673 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SafeDriveSDK;
-			targetProxy = AA272A011F095E3F00B47673 /* PBXContainerItemProxy */;
-		};
-		AA74423C1E0517D8004D8518 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SafeDriveSDK;
-			targetProxy = AA74423B1E0517D8004D8518 /* PBXContainerItemProxy */;
 		};
 		AAC466DA1F0CBEA5002088B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1443,6 +1437,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		AA11657C1F25B4C700B7D8EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = G738Z89QKM;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AA11657D1F25B4C700B7D8EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = G738Z89QKM;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		AA31682E1A191B72006CC0EB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1582,6 +1608,10 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				INFOPLIST_FILE = SafeDrive/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/safedrive-sdk/target/x86_64-apple-darwin/release",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "-r=\"designated => anchor apple generic and identifier \\\"io.safedrive.SafeDrive\\\" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G738Z89QKM)\"";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
@@ -1590,6 +1620,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/SDDK";
 				SWIFT_OBJC_BRIDGING_HEADER = "SafeDrive/SafeDrive-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1644,6 +1675,10 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				INFOPLIST_FILE = SafeDrive/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/safedrive-sdk/target/x86_64-apple-darwin/release",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "-r=\"designated => anchor apple generic and identifier \\\"io.safedrive.SafeDrive\\\" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G738Z89QKM)\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.safedrive.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1651,6 +1686,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/SDDK";
 				SWIFT_OBJC_BRIDGING_HEADER = "SafeDrive/SafeDrive-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1767,11 +1803,16 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Finder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/safedrive-sdk/target/x86_64-apple-darwin/release",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.Finder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/SDDK";
 				SWIFT_OBJC_BRIDGING_HEADER = "Finder/SafeDriveFinder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1792,11 +1833,16 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Finder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/safedrive-sdk/target/x86_64-apple-darwin/release",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.Finder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/SDDK";
 				SWIFT_OBJC_BRIDGING_HEADER = "Finder/SafeDriveFinder-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1805,6 +1851,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AA11657B1F25B4C700B7D8EF /* Build configuration list for PBXLegacyTarget "SDDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA11657C1F25B4C700B7D8EF /* Debug */,
+				AA11657D1F25B4C700B7D8EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AA31680E1A191B72006CC0EB /* Build configuration list for PBXProject "SafeDrive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
