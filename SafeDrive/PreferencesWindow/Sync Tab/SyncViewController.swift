@@ -45,6 +45,8 @@ class SyncViewController: NSViewController {
 
     fileprivate var addFolderWindow: AddFolderWindowController!
 
+    fileprivate var verifyFolderWindow: VerifyFolderWindowController!
+
     fileprivate var folders = [SDKSyncFolder]()
     
     fileprivate var uniqueClientID: String?
@@ -1068,73 +1070,56 @@ extension SyncViewController {
     func verifyFolder(_ folder: SDKSyncFolder) {
         
         DispatchQueue.main.async {
-            let alert = NSAlert()
-            alert.addButton(withTitle: "Find")
-            alert.addButton(withTitle: "Restore")
-            alert.addButton(withTitle: "Pause")
-            
-            alert.messageText = "SafeDrive cannot locate the \(folder.name) folder"
-            alert.informativeText = "The folder may have been moved or deleted, would you like to find it, restore it from the server, or remove it from your account?"
-            alert.alertStyle = .warning
-            
-            self.delegate.showAlert(alert) { (response) in
-                switch response {
-                case NSAlertFirstButtonReturn:
-                    let panel: NSOpenPanel = NSOpenPanel()
-                    panel.delegate = self
-                    panel.canChooseFiles = false
-                    panel.allowsMultipleSelection = false
-                    panel.canChooseDirectories = true
-                    panel.canCreateDirectories = true
-                    let panelTitle: String = NSLocalizedString("find the \(folder.name) folder", comment: "Title of window")
-                    panel.title = panelTitle
-                    let promptString: String = NSLocalizedString("Select", comment: "Button title")
-                    panel.prompt = promptString
-                    
-                    self.delegate.showPanel(panel) { (result) in
-            
-                        if result == NSFileHandlingPanelOKButton {
-                            guard let folderPath = panel.url?.path else {
-                                return
-                            }
-                            
-                            let completionQueue = DispatchQueue.main
-                            
-                            self.sdk.updateFolder(folder.name, path: folderPath, syncing: true, uniqueID: folder.id, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: completionQueue, success: { (_) in
-                                self.readSyncFolders(self)
-                            }, failure: { (error) in
-                                SDErrorHandlerReport(error)
-                                self.spinner.stopAnimation(self)
-                                let alert: NSAlert = NSAlert()
-                                alert.messageText = NSLocalizedString("Error updating folder in your account", comment: "")
-                                alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
-                                alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-                                alert.runModal()
-                            })
-                        } else {
-                            DispatchQueue.main.async {
-                                self.verifyFolder(folder)
-                            }
-                        }
-                    }
-                case NSAlertSecondButtonReturn:
-                    self.startRestore(folder.id)
-                case NSAlertThirdButtonReturn:
-                    self.sdk.updateFolder(folder.name, path: folder.path, syncing: false, uniqueID: folder.id, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: DispatchQueue.main, success: {
-                        self.readSyncFolders(self)
-                    }, failure: { (error) in
-                        SDErrorHandlerReport(error)
-                        self.spinner.stopAnimation(self)
-                        let alert: NSAlert = NSAlert()
-                        alert.messageText = NSLocalizedString("Error updating folder in your account", comment: "")
-                        alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
-                        alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-                        alert.runModal()
-                    })
-                default:
-                    return
-                }
+            guard let _ = self.uniqueClientID else {
+                return
             }
+            
+            
+            self.verifyFolderWindow = VerifyFolderWindowController(delegate: self, folder: folder)
+            
+            guard let w = self.verifyFolderWindow?.window else {
+                SDLog("no verify folder window available")
+                return
+            }
+            self.delegate.showModalWindow(w) { (_) in
+                
+            }
+        }
+    }
+}
+
+extension SyncViewController: VerifyFolderDelegate {
+    func verified(_ folder: SDKSyncFolder, solution: VerificationSolution, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
+        switch solution {
+        case .find:
+            self.sdk.updateFolder(folder.name, path: folder.path, syncing: true, uniqueID: folder.id, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: DispatchQueue.main, success: { (_) in
+                self.readSyncFolders(self)
+                success()
+            }, failure: { (error) in
+                failure(error)
+            })
+        case .pause:
+            self.sdk.updateFolder(folder.name, path: folder.path, syncing: false, uniqueID: folder.id, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: DispatchQueue.main, success: {
+                self.readSyncFolders(self)
+                success()
+            }, failure: { (error) in
+                failure(error)
+            })
+            break
+        case .restore:
+            // TODO: this needs to restrict the restore location
+            startRestore(folder.id)
+            DispatchQueue.main.async {
+                success()
+            }
+            break
+        case .remove:
+            self.sdk.removeFolder(folder.id, completionQueue: DispatchQueue.main, success: {
+                self.readSyncFolders(self)
+            }, failure: { (error) in
+                failure(error)
+            })
+            break
         }
     }
 
