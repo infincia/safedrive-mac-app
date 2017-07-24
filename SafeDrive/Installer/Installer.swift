@@ -41,26 +41,18 @@ class Installer: NSObject {
         let pipe: Pipe = Pipe()
         let task: Process = Process()
         task.launchPath = "/usr/sbin/pkgutil"
-        task.arguments = ["--pkg-info=com.github.osxfuse.pkg.Core"]
+        task.arguments = ["--pkg-info-plist=com.github.osxfuse.pkg.Core"]
         task.standardOutput = pipe
         task.launch()
         task.waitUntilExit()
         if task.terminationStatus == 0 {
             let data = pipe.fileHandleForReading.readDataToEndOfFile()
-            if let output = String(data: data, encoding: .utf8) {
-                let linefeed = CharacterSet(charactersIn: "\n")
-
-                let kv = output.components(separatedBy: linefeed)
-                var m = [String: String]()
-                for pair in kv {
-                    let kv = pair.components(separatedBy: ": ")
-                    let key = kv[0]
-                    let value = kv[1]
-                    m[key] = value
-                }
-                if let currentVersion = m["version"] {
-                    return currentVersion == "3.5.6"
-                }
+            
+            guard let result = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any] else {
+                return false
+            }
+            if let currentVersion = result?["pkg-version"] as? String {
+                return Semver.gte(currentVersion, "3.5.6")
             }
         }
         return false
