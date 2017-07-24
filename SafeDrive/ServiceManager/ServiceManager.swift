@@ -16,7 +16,12 @@ class ServiceManager: NSObject {
     fileprivate var serviceConnection: NSXPCConnection?
     fileprivate var appListener: NSXPCListener
     fileprivate var currentServiceVersion: Int?
-    fileprivate weak var appXPCDelegate: AppXPCDelegate?
+    // swiftlint:disable weak_delegate
+    // disabling lint because this isn't a delegate but an XPC exported 
+    // object owned by this class
+    fileprivate var appXPCDelegate: AppXPCDelegate?
+    // swiftlint:enable weak_delegate
+
     fileprivate var updateNotificationSent = false
     
     override init() {
