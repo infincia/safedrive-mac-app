@@ -67,10 +67,14 @@ class FinderSync: FIFinderSync {
         self.preferenceMenuItem = NSMenuItem(title: "SafeDrive Preferences",
                                              action: #selector(FinderSync.openPreferencesWindow(_:)),
                                              keyEquivalent: "")
+        
+        let sep = NSMenuItem.separator()
+        
         self.toolbarMenu = NSMenu()
-        self.toolbarMenu.addItem(self.supportMenuItem)
-        self.toolbarMenu.addItem(self.preferenceMenuItem)
         self.toolbarMenu.addItem(self.mountMenuItem)
+        self.toolbarMenu.addItem(self.preferenceMenuItem)
+        self.toolbarMenu.addItem(sep)
+        self.toolbarMenu.addItem(self.supportMenuItem)
         
         // register SDAccountProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
