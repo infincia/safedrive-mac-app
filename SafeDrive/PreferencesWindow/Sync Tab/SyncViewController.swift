@@ -857,12 +857,13 @@ extension SyncViewController: NSTableViewDelegate {
                 tableCellView.restoreNowButton.icon = NIKFontAwesomeIcon.arrowCircleODown
                 tableCellView.restoreNowButton.image?.isTemplate = true
 
-                tableCellView.syncNowButton.icon = NIKFontAwesomeIcon.stop
+                tableCellView.syncNowButton.icon = NIKFontAwesomeIcon.timesCircle
                 tableCellView.syncNowButton.image?.isTemplate = true
 
             } else if task.restoring {
                 tableCellView.syncStatus.startAnimation(self)
-                tableCellView.restoreNowButton.icon = NIKFontAwesomeIcon.stop
+
+                tableCellView.restoreNowButton.icon = NIKFontAwesomeIcon.timesCircle
                 tableCellView.restoreNowButton.image?.isTemplate = true
 
                 tableCellView.syncNowButton.icon = NIKFontAwesomeIcon.arrowCircleOUp
