@@ -21,7 +21,7 @@ class MountController: NSObject {
     
     fileprivate let signedInQueue = DispatchQueue(label: "io.safedrive.signedInQueue")
     
-    fileprivate var _lastMountAttempt: Date? = nil
+    fileprivate var _lastMountAttempt: Date?
     
     fileprivate let lastMountAttemptQueue = DispatchQueue(label: "io.safedrive.lastMountAttemptQueue")
     
@@ -269,7 +269,7 @@ class MountController: NSObject {
                     var attemptMount = false
                     
                     if let lastMountAttempt = self.lastMountAttempt {
-                        var now = Date()
+                        let now = Date()
                         
                         let d = now.timeIntervalSince(lastMountAttempt)
                         
