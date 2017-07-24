@@ -92,7 +92,7 @@ class ValidateAccountViewController: NSViewController {
         SDLog("checking account")
         
         
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+        DispatchQueue.global(priority: .default).async {
             if let currentUser = try? self.sdk.getKeychainItem(withUser: "currentuser", service: currentUserDomain()),
                 let password = try? self.sdk.getKeychainItem(withUser: currentUser, service: accountCredentialDomain()) {
                 DispatchQueue.main.async {

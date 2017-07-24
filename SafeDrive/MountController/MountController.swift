@@ -186,7 +186,7 @@ class MountController: NSObject {
 
     func checkMount(at url: URL, timeout: TimeInterval, mounted mountedBlock: @escaping () -> Void, notMounted notMountedBlock: @escaping () -> Void) {
         assert(Thread.current == Thread.main, "Mount check called on background thread")
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+        DispatchQueue.global(priority: .default).async {
             let start_time = Date()
             
             while Date().timeIntervalSince(start_time) < timeout {
@@ -206,7 +206,7 @@ class MountController: NSObject {
     
     func unmount(success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
         
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+        DispatchQueue.global(priority: .default).async {
             do {
                 try NSWorkspace.shared().unmountAndEjectDevice(at: self.currentMountURL)
                 DispatchQueue.main.async {
@@ -225,7 +225,7 @@ class MountController: NSObject {
     
     // MARK: warning Needs slight refactoring
     func mountStateLoop() {
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
+        DispatchQueue.global(priority: .default).async {
             while true {
                 let mountCheck = self.checkMount(at: self.currentMountURL)
                 
@@ -234,25 +234,25 @@ class MountController: NSObject {
                 })
                 
                 if self.mounted {
-                    DispatchQueue.main.async(execute: {() -> Void in
+                    DispatchQueue.main.async {
                         NotificationCenter.default.post(name: Notification.Name.mountDetails, object:self.mountDetails)
                         NotificationCenter.default.post(name: Notification.Name.mounted, object:nil)
-                    })
+                    }
                 } else {
-                    DispatchQueue.main.async(execute: {() -> Void in
+                    DispatchQueue.main.async {
                         NotificationCenter.default.post(name: Notification.Name.mountDetails, object:nil)
                         NotificationCenter.default.post(name: Notification.Name.unmounted, object:nil)
-                    })
+                    }
                 }
                 
                 Thread.sleep(forTimeInterval: 1)
             }
-        })
+        }
     }
     
     func mountLoop() {
         
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+        DispatchQueue.global(priority: .default).async {
             
             while true {
                 
@@ -344,9 +344,9 @@ class MountController: NSObject {
             let components = Bundle.init(url: componentsURL) else {
             let message = NSLocalizedString("Components missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .configMissing)
-            DispatchQueue.main.async(execute: {
+            DispatchQueue.main.async {
                 failureBlock(mountURL, error)
-            })
+            }
             return
         }
         
@@ -588,9 +588,9 @@ class MountController: NSObject {
                 return
             }
             if let e = error {
-                DispatchQueue.main.async(execute: {() -> Void in
+                DispatchQueue.main.async {
                     failureBlock(mountURL, e)
-                })
+                }
                 SDLog("SSHFS Task error: \(e), \(e.localizedDescription)")
             }
         }
@@ -611,10 +611,10 @@ class MountController: NSObject {
             outputPipeHandle.readabilityHandler = nil
             
             if task.terminationStatus == 0 {
-                DispatchQueue.main.async(execute: {() -> Void in
+                DispatchQueue.main.async {
                     weakSelf?.mountURL = mountURL
                     successBlock(mountURL)
-                })
+                }
             }
         }
         
@@ -703,7 +703,7 @@ class MountController: NSObject {
         
         SDLog("Dismounting volume: %@", volumeName)
         
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async {
+        DispatchQueue.global(priority: .high).async {
             self.unmount(success: { _ -> Void in
                 //
             }, failure: { (url, error) -> Void in
@@ -727,7 +727,7 @@ class MountController: NSObject {
                         if processes.count <= 0 {
                             return
                         }
-                        DispatchQueue.main.async(execute: {() -> Void in
+                        DispatchQueue.main.async {
                             self.openFileWarning = OpenFileWarningWindowController(delegate: self, url: url, processes: processes)
                             
                             NSApp.activate(ignoringOtherApps: true)
@@ -736,7 +736,7 @@ class MountController: NSObject {
                             self.openFileWarning!.showWindow(self)
                             // swiftlint:enable force_unwrapping
 
-                        })
+                        }
                     }
                 } else if code == fnfErr {
                     notification.informativeText = NSLocalizedString("This is a bug in OS X, reboot may help", comment: "")

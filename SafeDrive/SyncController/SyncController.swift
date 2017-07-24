@@ -44,7 +44,7 @@ class SyncController: Equatable {
     
     func sftpOperation(_ operation: SDKRemoteFSOperation, remoteDirectory serverURL: URL, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
+        DispatchQueue.global(priority: .default).async {
 
             switch operation {
             case SDKRemoteFSOperation.moveFolder:
@@ -102,7 +102,7 @@ class SyncController: Equatable {
                 })
                 break
             }
-        })
+        }
     }
     
     // MARK:
@@ -110,7 +110,7 @@ class SyncController: Equatable {
     
     func stopSyncTask(_ completion: @escaping () -> Void) {
         self.syncTerminated = true
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high).async(execute: {
+        DispatchQueue.global(priority: .high).async {
             if self.encrypted {
                 // just ask the SDK to cancel it
                 SafeDriveSDK.sharedSDK.cancelSyncTask(sessionName: self.uuid, completionQueue: DispatchQueue.main, success: { 
@@ -124,11 +124,11 @@ class SyncController: Equatable {
                     self.syncTask.terminate()
                     Thread.sleep(forTimeInterval: 0.1)
                 }
-                DispatchQueue.main.async(execute: {
+                DispatchQueue.main.async {
                     completion()
-                })
+                }
             }
-        })
+        }
     }
     
     func startSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double, _ bandwidth: String) -> Void,

@@ -83,7 +83,7 @@ class ValidateClientViewController: NSViewController {
         SDLog("have clients: \(self.hasRegisteredClients)")
         self.clientList.reloadData()
         
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+        DispatchQueue.global(priority: .default).async {
             
             let host = Host()
             // swiftlint:disable force_unwrapping

@@ -169,41 +169,40 @@ extension AppDelegate: NSApplicationDelegate {
 
 extension AppDelegate: SDApplicationControlProtocol {
     func applicationShouldOpenAccountWindow(notification: Foundation.Notification) {
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async {
             NSApp.activate(ignoringOtherApps: true)
-
-        })
+        }
     }
     
     func applicationShouldOpenPreferencesWindow(notification: Foundation.Notification) {
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async {
             NSApp.activate(ignoringOtherApps: true)
             self.preferencesWindowController?.showWindow(nil)
-        })
+        }
     }
     
     func applicationShouldOpenAboutWindow(notification: Foundation.Notification) {
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async {
             NSApp.activate(ignoringOtherApps: true)
             self.aboutWindowController.showWindow(nil)
-        })
+        }
     }
     
     func applicationShouldOpenSyncWindow(_ notification: Foundation.Notification) {
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async {
             NSApp.activate(ignoringOtherApps: true)
             self.preferencesWindowController?.showWindow(nil)
-        })
+        }
     }
     
     func applicationShouldToggleMountState(notification: Foundation.Notification) {
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async {
             if self.mountController.mounted {
                 NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: true)
             } else {
                 NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: nil)
             }
-        })
+        }
     }
     
     func applicationShouldFinishConfiguration(notification: Foundation.Notification) {

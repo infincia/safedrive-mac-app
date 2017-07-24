@@ -224,7 +224,7 @@ class SyncScheduler {
     }
     
     fileprivate func sync(_ syncEvent: SyncEvent) {
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
+        DispatchQueue.global(priority: .default).async {
             SDLog("Queued sync job \(syncEvent)")
 
             guard let _ = self.email,
@@ -418,7 +418,7 @@ class SyncScheduler {
                     NotificationCenter.default.post(name: Notification.Name.syncEvent, object: folderID)
                 }
             })
-        })
+        }
     }
 }
 

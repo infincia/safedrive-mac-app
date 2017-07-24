@@ -228,9 +228,9 @@ class AccountController: NSObject {
             self.signedIn = true
             self.lastAccountStatusCheck = Date()
             
-            DispatchQueue.main.async(execute: {() -> Void in
+            DispatchQueue.main.async {
                 NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: status)
-            })
+            }
         }, failure: { (error) in
             self.signingIn = false
             self.signedIn = false
@@ -277,7 +277,7 @@ class AccountController: NSObject {
     }
     
     fileprivate func accountLoop() {
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
+        DispatchQueue.global(priority: .default).async {
             while true {
                 guard let _ = self.email, let _ = self.password, let _ = self.uniqueClientID else {
                     Thread.sleep(forTimeInterval: 1)
@@ -368,9 +368,9 @@ class AccountController: NSObject {
                         self.checkingStatus = false
                         self.lastAccountStatusCheck = Date()
                         
-                        DispatchQueue.main.async(execute: {() -> Void in
+                        DispatchQueue.main.async {
                             NotificationCenter.default.post(name: Notification.Name.accountStatus, object: status)
-                        })
+                        }
                         
                     }, failure: { (error) in
                         self.checkingStatus = false
@@ -400,9 +400,9 @@ class AccountController: NSObject {
                         self.checkingDetails = false
                         self.lastAccountDetailsCheck = Date()
                         
-                        DispatchQueue.main.async(execute: {() -> Void in
+                        DispatchQueue.main.async {
                             NotificationCenter.default.post(name: Notification.Name.accountDetails, object: details)
-                        })
+                        }
                         
                     }, failure: { (error) in
                         self.checkingDetails = false
@@ -418,7 +418,7 @@ class AccountController: NSObject {
                 Thread.sleep(forTimeInterval: 1)
 
             }
-        })
+        }
     }
     
 }

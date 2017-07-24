@@ -48,10 +48,10 @@ class ServiceManager: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
 
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+        DispatchQueue.global(priority: .default).async {
             self.serviceReconnectionLoop()
         }
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+        DispatchQueue.global(priority: .default).async {
             self.serviceLoop()
         }
     }
@@ -70,15 +70,15 @@ class ServiceManager: NSObject {
     }
     
     fileprivate func serviceLoop() {
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
+        DispatchQueue.global(priority: .default).async {
             while true {
                 let running: Bool = self.isServiceRunning
-                DispatchQueue.main.async(execute: {() -> Void in
+                DispatchQueue.main.async {
                     NotificationCenter.default.post(name: Notification.Name.serviceStatus, object: running)
-                })
+                }
                 Thread.sleep(forTimeInterval: 1)
             }
-        })
+        }
     }
     
     func enableLoginItem(_ state: Bool) -> Bool {
@@ -373,7 +373,7 @@ extension ServiceManager: NSXPCListenerDelegate {
             // there aren't any at the moment, so this is a placeholder
         }
         // temporary kill/restart for background service until proper calls are implemented
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
+        DispatchQueue.global(priority: .default).async {
             if self.useLaunchAgent {
                 // disable the login item if we're using the launch agent
                 //if !self.enableLoginItem(false) {
@@ -406,7 +406,7 @@ extension ServiceManager: NSXPCListenerDelegate {
                     SDLog("loaded login item")
                 }
             }
-        })
+        }
     }
     
     func serviceReconnectionLoop() {

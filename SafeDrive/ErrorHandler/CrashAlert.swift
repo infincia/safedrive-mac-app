@@ -19,11 +19,11 @@ extension Int {
 
 class CrashAlert {
     class func show() {
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {() -> Void in
+        DispatchQueue.global(priority: .default).async {
             
             let suppressCrashAlerts = UserDefaults.standard.bool(forKey: "suppressCrashAlerts")
             if !suppressCrashAlerts {
-                DispatchQueue.main.async(execute: {() -> Void in
+                DispatchQueue.main.async {
                     let alert = NSAlert()
                     alert.addButton(withTitle: "OK")
                     alert.messageText = "SafeDrive crashed :("
@@ -36,8 +36,8 @@ class CrashAlert {
                     let shouldSuppressAlerts = alert.suppressionButton!.state.toBool()
                     
                     UserDefaults.standard.set(shouldSuppressAlerts, forKey: "suppressCrashAlerts")
-                })
+                }
             }
-        })
+        }
     }
 }

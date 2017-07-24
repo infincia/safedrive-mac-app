@@ -132,7 +132,7 @@ class OpenFileWarningWindowController: NSWindowController {
         self.processList.reloadData()
         weak var weakSelf: OpenFileWarningWindowController? = self
 
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+        DispatchQueue.global(priority: .default).async {
             while self.shouldCheckRunning {
                 
                 if let runningProcesses = weakSelf?.openFileWarningDelegate?.runningProcesses() {
