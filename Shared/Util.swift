@@ -48,6 +48,18 @@ fileprivate let SDMountAtLaunchKey = "mountAtLaunch"
 fileprivate let SDWelcomeShownKey = "welcomeShown"
 
 
+func background(_ block: @escaping () -> Void) {
+    if #available(OSX 10.10, *) {
+        DispatchQueue.global(qos: .default).async {
+            block()
+        }
+    } else {
+        DispatchQueue.global(priority: .default).async {
+            block()
+        }
+    }
+}
+
 
 func currentOSVersion() -> String {
     let systemVersionPlist = "/System/Library/CoreServices/SystemVersion.plist"
