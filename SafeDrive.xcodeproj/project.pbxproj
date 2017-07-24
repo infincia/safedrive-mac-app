@@ -15,6 +15,10 @@
 		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
+		AA11653C1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
+		AA11653D1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
+		AA11653E1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
+		AA11653F1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
 		AA272A031F095E4B00B47673 /* SafeDriveSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
@@ -297,6 +301,7 @@
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreferencesWindow.xib; sourceTree = "<group>"; };
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileCheck.swift; path = "Open File Warning Window/OpenFileCheck.swift"; sourceTree = "<group>"; };
+		AA11653B1F256F1600B7D8EF /* Semver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Semver.swift; path = Shared/Semver.swift; sourceTree = "<group>"; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
 		AA272A051F09B01900B47673 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		AA272A0A1F09C55100B47673 /* push.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = push.sh; sourceTree = "<group>"; };
@@ -608,6 +613,7 @@
 				AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */,
 				AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */,
 				AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */,
+				AA11653B1F256F1600B7D8EF /* Semver.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1236,6 +1242,7 @@
 				AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AA6E27301D87855100038019 /* MountController.swift in Sources */,
+				AA11653C1F256F1600B7D8EF /* Semver.swift in Sources */,
 				AA4F8FCA1E6A429100BB068A /* SoftwareClientTableCellView.swift in Sources */,
 				AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */,
 				AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */,
@@ -1272,6 +1279,7 @@
 				AAA3E7201EADB7820083CE66 /* PreferencesWindowController.swift in Sources */,
 				AAA3E7071EADB73B0083CE66 /* RunningProcessCheck.swift in Sources */,
 				AAA3E7181EADB7700083CE66 /* SyncFailurePopoverView.swift in Sources */,
+				AA11653D1F256F1600B7D8EF /* Semver.swift in Sources */,
 				AAA3E7221EADB78C0083CE66 /* Protocols.swift in Sources */,
 				AAA3E7251EADB7980083CE66 /* SDSystemAPI.m in Sources */,
 				AAA3E7081EADB73E0083CE66 /* AccountController.swift in Sources */,
@@ -1314,6 +1322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA88C0141F1B225E0025F1D7 /* main.swift in Sources */,
+				AA11653F1F256F1600B7D8EF /* Semver.swift in Sources */,
 				AA88C0151F1B225E0025F1D7 /* ServiceListenerDelegate.swift in Sources */,
 				AAC466D31F0CA88A002088B6 /* Notifications.swift in Sources */,
 				AAC466D01F0CA881002088B6 /* ServiceXPCProtocol.swift in Sources */,
@@ -1327,6 +1336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA6E272E1D876DD800038019 /* Notifications.swift in Sources */,
+				AA11653E1F256F1600B7D8EF /* Semver.swift in Sources */,
 				AA50716B1E2ED86A006F59C8 /* Util.swift in Sources */,
 				AA3EB8431E569E9D003A2E79 /* Protocols.swift in Sources */,
 				AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */,
