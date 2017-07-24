@@ -106,7 +106,7 @@ class Installer: NSObject {
     }
     
     var dependenciesValidated: Bool {
-        return self.isOSXFUSEInstalled && self.isCLIAppInstalled && self.isDirectoryOK
+        return self.isOSXFUSEInstalled && self.isOSXFUSECurrent && self.isCLIAppInstalled && self.isDirectoryOK
     }
     
     init(delegate: InstallerDelegate?) {
