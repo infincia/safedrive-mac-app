@@ -4,8 +4,8 @@
 // swiftlint:disable private_outlet
 
 import Cocoa
-import SafeDriveSDK
 import FontAwesomeIconFactory
+import SafeDriveSDK
 
 class RestoreSelectionTableCellView: NSTableCellView {
     
