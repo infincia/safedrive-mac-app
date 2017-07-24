@@ -44,17 +44,17 @@ class FinderSync: FIFinderSync {
         // swiftlint:enable force_unwrapping
 
         FIFinderSyncController.default().directoryURLs = Set<URL>()
-        DispatchQueue.global(qos: DispatchQoS.default.qosClass).async(execute: {() -> Void in
+        DispatchQueue.global(qos: .default).async {
             self.serviceReconnectionLoop()
-        })
+        }
         
-        DispatchQueue.global(qos: DispatchQoS.default.qosClass).async(execute: {() -> Void in
+        DispatchQueue.global(qos: .default).async {
             self.mountStateLoop()
-        })
+        }
         
-        DispatchQueue.global(qos: DispatchQoS.default.qosClass).async(execute: {() -> Void in
+        DispatchQueue.global(qos: .default).async {
             self.clientConfigLoop()
-        })
+        }
         
         self.mountMenuItem = NSMenuItem(title: "Mount SafeDrive",
                                              action: #selector(FinderSync.toggleMountState(_:)),
@@ -151,16 +151,16 @@ class FinderSync: FIFinderSync {
         newConnection.remoteObjectInterface = serviceInterface
         
         newConnection.interruptionHandler = {() -> Void in
-            DispatchQueue.main.async(execute: {() -> Void in
+            DispatchQueue.main.async {
                 print("Service connection interrupted")
-            })
+            }
         }
         
         newConnection.invalidationHandler = {() -> Void in
-            DispatchQueue.main.async(execute: {() -> Void in
+            DispatchQueue.main.async {
                 print("Service connection invalidated")
                 self.serviceConnection = nil
-            })
+            }
         }
         
         newConnection.resume()
@@ -176,17 +176,15 @@ class FinderSync: FIFinderSync {
         
         
         newConnection.interruptionHandler = {() -> Void in
-            DispatchQueue.main.async(execute: {() -> Void in
+            DispatchQueue.main.async {
                 print("App connection interrupted")
-                
-            })
+            }
         }
         newConnection.invalidationHandler = {() -> Void in
-            DispatchQueue.main.async(execute: {() -> Void in
+            DispatchQueue.main.async {
                 print("App connection invalidated")
                 self.appConnection = nil
-                
-            })
+            }
         }
         newConnection.resume()
         return newConnection
@@ -196,7 +194,7 @@ class FinderSync: FIFinderSync {
     // MARK: - Mount handling
     
     func mountStateLoop() {
-        DispatchQueue.global(qos: DispatchQoS.default.qosClass).async(execute: {() -> Void in
+        DispatchQueue.global(qos: .default).async {
             while true {
                 guard let a = self.appConnection else {
                     Thread.sleep(forTimeInterval: 1)
@@ -207,19 +205,18 @@ class FinderSync: FIFinderSync {
                 } as! AppXPCProtocol
             
                 app.getMountState({ (mounted) in
-                    DispatchQueue.main.async(execute: {() -> Void in
+                    DispatchQueue.main.async {
                         if mounted {
                             self.mountMenuItem.title = "Unmount SafeDrive"
                         } else {
                             self.mountMenuItem.title = "Mount SafeDrive"
                         }
-                        
-                    })
+                    }
                 })
                 
                 Thread.sleep(forTimeInterval: 1)
             }
-        })
+        }
     }
     
     // MARK: - Setup handling
@@ -448,13 +445,13 @@ class FinderSync: FIFinderSync {
     }
     
     func showMessage(_ title: String, withBody body: String) {
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async {
             let alert: NSAlert = NSAlert()
             alert.messageText = title
             alert.addButton(withTitle: "OK")
             alert.informativeText = body
             alert.runModal()
-        })
+        }
     }
     
     func syncFolderForURL(_ url: URL) -> SDKSyncFolder? {
