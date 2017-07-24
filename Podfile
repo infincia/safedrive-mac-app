@@ -23,4 +23,8 @@ target 'SafeDrive' do
 end
 
 
+target 'SafeDriveFinder' do
+    use_frameworks!
+end
+
 
