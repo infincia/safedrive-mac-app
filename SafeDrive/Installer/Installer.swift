@@ -114,7 +114,7 @@ class Installer: NSObject {
     }
     
     func check() {
-        DispatchQueue.global(priority: .default).async {
+        background {
             while !self.dependenciesValidated {
                 if !self.prompted {
                     self.prompted = true
@@ -131,7 +131,7 @@ class Installer: NSObject {
     }
     
     func installDependencies() {
-        DispatchQueue.global(priority: .default).async {
+        background {
             do {
                 if !self.isDirectoryOK {
                     try self.setupDirectories()

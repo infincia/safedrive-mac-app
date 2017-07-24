@@ -19,7 +19,7 @@ extension Int {
 
 class CrashAlert {
     class func show() {
-        DispatchQueue.global(priority: .default).async {
+        background {
             
             let suppressCrashAlerts = UserDefaults.standard.bool(forKey: "suppressCrashAlerts")
             if !suppressCrashAlerts {

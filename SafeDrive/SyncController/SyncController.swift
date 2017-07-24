@@ -44,7 +44,7 @@ class SyncController: Equatable {
     
     func sftpOperation(_ operation: SDKRemoteFSOperation, remoteDirectory serverURL: URL, success successBlock: @escaping () -> Void, failure failureBlock: @escaping (_ error: Error) -> Void) {
         
-        DispatchQueue.global(priority: .default).async {
+        background {
 
             switch operation {
             case SDKRemoteFSOperation.moveFolder:

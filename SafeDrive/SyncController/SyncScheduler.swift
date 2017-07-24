@@ -224,7 +224,7 @@ class SyncScheduler {
     }
     
     fileprivate func sync(_ syncEvent: SyncEvent) {
-        DispatchQueue.global(priority: .default).async {
+        background {
             SDLog("Queued sync job \(syncEvent)")
 
             guard let _ = self.email,

@@ -141,7 +141,7 @@ func SDUncaughtExceptionHandler(exception: NSException!) {
 // MARK: Private APIs
 
 func startReportQueue() {
-    DispatchQueue.global(priority: .default).async {
+    background {
         while true {
             errorQueue.sync {
                 

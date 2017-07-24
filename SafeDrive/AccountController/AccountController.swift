@@ -277,7 +277,7 @@ class AccountController: NSObject {
     }
     
     fileprivate func accountLoop() {
-        DispatchQueue.global(priority: .default).async {
+        background {
             while true {
                 guard let _ = self.email, let _ = self.password, let _ = self.uniqueClientID else {
                     Thread.sleep(forTimeInterval: 1)

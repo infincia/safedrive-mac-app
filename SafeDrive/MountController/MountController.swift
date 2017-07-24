@@ -186,7 +186,7 @@ class MountController: NSObject {
 
     func checkMount(at url: URL, timeout: TimeInterval, mounted mountedBlock: @escaping () -> Void, notMounted notMountedBlock: @escaping () -> Void) {
         assert(Thread.current == Thread.main, "Mount check called on background thread")
-        DispatchQueue.global(priority: .default).async {
+        background {
             let start_time = Date()
             
             while Date().timeIntervalSince(start_time) < timeout {
@@ -206,7 +206,7 @@ class MountController: NSObject {
     
     func unmount(success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
         
-        DispatchQueue.global(priority: .default).async {
+        background {
             do {
                 try NSWorkspace.shared().unmountAndEjectDevice(at: self.currentMountURL)
                 DispatchQueue.main.async {
@@ -225,7 +225,7 @@ class MountController: NSObject {
     
     // MARK: warning Needs slight refactoring
     func mountStateLoop() {
-        DispatchQueue.global(priority: .default).async {
+        background {
             while true {
                 let mountCheck = self.checkMount(at: self.currentMountURL)
                 
@@ -252,7 +252,7 @@ class MountController: NSObject {
     
     func mountLoop() {
         
-        DispatchQueue.global(priority: .default).async {
+        background {
             
             while true {
                 

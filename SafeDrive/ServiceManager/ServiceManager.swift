@@ -54,10 +54,10 @@ class ServiceManager: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
 
-        DispatchQueue.global(priority: .default).async {
+        background {
             self.serviceReconnectionLoop()
         }
-        DispatchQueue.global(priority: .default).async {
+        background {
             self.serviceLoop()
         }
     }
@@ -76,7 +76,7 @@ class ServiceManager: NSObject {
     }
     
     fileprivate func serviceLoop() {
-        DispatchQueue.global(priority: .default).async {
+        background {
             while true {
                 let running: Bool = self.isServiceRunning
                 DispatchQueue.main.async {
@@ -379,7 +379,7 @@ extension ServiceManager: NSXPCListenerDelegate {
             // there aren't any at the moment, so this is a placeholder
         }
         // temporary kill/restart for background service until proper calls are implemented
-        DispatchQueue.global(priority: .default).async {
+        background {
             if self.useLaunchAgent {
                 // disable the login item if we're using the launch agent
                 //if !self.enableLoginItem(false) {

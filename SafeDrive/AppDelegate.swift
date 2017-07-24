@@ -224,7 +224,7 @@ extension AppDelegate: SDApplicationEventProtocol {
 
             return
         }
-        DispatchQueue.global(priority: .default).async {
+        background {
             
             let groupURL = storageURL()
 
