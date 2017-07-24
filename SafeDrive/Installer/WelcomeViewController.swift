@@ -5,7 +5,7 @@
 import Cocoa
 
 class WelcomeViewController: NSViewController {
-    fileprivate weak var delegate: StateDelegate?
+    fileprivate weak var delegate: WelcomeStateDelegate?
     
     fileprivate weak var viewDelegate: WelcomeViewDelegate?
     
@@ -26,7 +26,7 @@ class WelcomeViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(delegate: StateDelegate, viewDelegate: WelcomeViewDelegate) {
+    convenience init(delegate: WelcomeStateDelegate, viewDelegate: WelcomeViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "WelcomeView", bundle: nil)!
         // swiftlint:enable force_unwrapping

@@ -7,7 +7,7 @@ import Cocoa
 class ValidateDependenciesViewController: NSViewController {
     var installer: Installer!
 
-    fileprivate weak var delegate: StateDelegate?
+    fileprivate weak var delegate: WelcomeStateDelegate?
     
     fileprivate weak var viewDelegate: WelcomeViewDelegate?
 
@@ -32,7 +32,7 @@ class ValidateDependenciesViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(installer: Installer, delegate: StateDelegate, viewDelegate: WelcomeViewDelegate) {
+    convenience init(installer: Installer, delegate: WelcomeStateDelegate, viewDelegate: WelcomeViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "ValidateDependenciesView", bundle: nil)!
         // swiftlint:enable force_unwrapping

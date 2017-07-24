@@ -9,7 +9,7 @@ class ValidateClientViewController: NSViewController {
 
     fileprivate var sdk = SafeDriveSDK.sharedSDK
     
-    fileprivate weak var delegate: StateDelegate?
+    fileprivate weak var delegate: WelcomeStateDelegate?
     
     fileprivate weak var viewDelegate: WelcomeViewDelegate?
 
@@ -50,7 +50,7 @@ class ValidateClientViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(delegate: StateDelegate, viewDelegate: WelcomeViewDelegate) {
+    convenience init(delegate: WelcomeStateDelegate, viewDelegate: WelcomeViewDelegate) {
         // swiftlint:disable force_unwrapping
         self.init(nibName: "ValidateClientView", bundle: nil)!
         // swiftlint:enable force_unwrapping

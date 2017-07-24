@@ -25,7 +25,7 @@ class WelcomeWindowController: NSWindowController {
 
     fileprivate var stateQueue = DispatchQueue(label: "io.safedrive.Installer.stateQueue")
     
-    fileprivate var state = State.welcome
+    fileprivate var state = WelcomeState.welcome
     
     @IBOutlet fileprivate weak var pageController: NSPageController!
     
@@ -78,11 +78,11 @@ class WelcomeWindowController: NSWindowController {
 
         self.pageController.arrangedObjects = pageIdentifiers
         
-        self.setState(.welcome)
+        self.setWelcomeState(.welcome)
         
     }
     
-    func setState(_ state: State) {
+    func setWelcomeState(_ state: WelcomeState) {
         assert(Thread.current == Thread.main, "NOT MAIN THREAD")
         self.state = state
         SDLog("welcome state changed: \(state)")
@@ -134,7 +134,7 @@ class WelcomeWindowController: NSWindowController {
 
 
 
-extension WelcomeWindowController: StateDelegate {
+extension WelcomeWindowController: WelcomeStateDelegate {
 
     func needsWelcome() {
         SDLog("needs welcome")
@@ -158,17 +158,17 @@ extension WelcomeWindowController: StateDelegate {
     
     func didWelcomeUser() {
         SDLog("welcomed user")
-        self.setState(.validateDependencies)
+        self.setWelcomeState(.validateDependencies)
     }
 
     func didValidateDependencies() {
         SDLog("validated dependencies")
-        self.setState(.validateAccount)
+        self.setWelcomeState(.validateAccount)
     }
     
     func didValidateAccount(withEmail email: String, password: String, clients: [SDKSoftwareClient]) {
         SDLog("validated account: \(email)")
-        self.setState(.validateClient(email: email, password: password, clients: clients))
+        self.setWelcomeState(.validateClient(email: email, password: password, clients: clients))
         let user = User(email: email, password: password)
         NotificationCenter.default.post(name: Notification.Name.applicationDidConfigureUser, object: user)
     }
@@ -177,18 +177,18 @@ extension WelcomeWindowController: StateDelegate {
         SDLog("validated client: \(name) (\(uniqueClientID))")
         do {
             try SafeDriveSDK.sharedSDK.setKeychainItem(withUser: email, service: UCIDDomain(), secret: uniqueClientID)
-            self.setState(.ready)
+            self.setWelcomeState(.ready)
             NotificationCenter.default.post(name: Notification.Name.applicationDidConfigureClient, object: uniqueClientID)
 
         } catch let keychainError as NSError {
             SDLog("failed to insert unique client ID in keychain: \(keychainError)")
-            self.setState(.failed(error: keychainError, uniqueClientID: uniqueClientID))
+            self.setWelcomeState(.failed(error: keychainError, uniqueClientID: uniqueClientID))
         }
     }
     
     func didFail(error: Error, uniqueClientID: String?) {
         SDLog("install failed: \(error)")
-        self.setState(.failed(error: error, uniqueClientID: uniqueClientID))
+        self.setWelcomeState(.failed(error: error, uniqueClientID: uniqueClientID))
     }
     
     func didFinish() {
@@ -331,7 +331,7 @@ extension WelcomeWindowController: NSWindowDelegate {
     }
 }
 
-enum State {
+enum WelcomeState {
     case welcome
     case validateDependencies
     case validateAccount
@@ -340,7 +340,7 @@ enum State {
     case failed(error: Error, uniqueClientID: String?)
 }
 
-extension State : CustomStringConvertible {
+extension WelcomeState : CustomStringConvertible {
     var description: String {
         switch self {
         case .welcome:
@@ -359,7 +359,7 @@ extension State : CustomStringConvertible {
     }
 }
 
-extension State: RawRepresentable {
+extension WelcomeState: RawRepresentable {
     typealias RawValue = Int
     
     init?(rawValue: RawValue) {
@@ -397,7 +397,7 @@ extension State: RawRepresentable {
     }
 }
 
-func == (lhs: State, rhs: State) -> Bool {
+func == (lhs: WelcomeState, rhs: WelcomeState) -> Bool {
     switch (lhs, rhs) {
     case (.welcome, .welcome):
         return true
@@ -416,7 +416,7 @@ func == (lhs: State, rhs: State) -> Bool {
     }
 }
 
-protocol StateDelegate: class {
+protocol WelcomeStateDelegate: class {
     func needsWelcome()
     func needsDependencies()
     func needsAccount()
@@ -468,7 +468,7 @@ extension WelcomeWindowController: SDAccountProtocol {
     func didSignOut(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignOut called on background thread")
 
-        self.setState(.welcome)
+        self.setWelcomeState(.welcome)
     }
     
     func didReceiveAccountStatus(notification: Foundation.Notification) {
