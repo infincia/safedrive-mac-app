@@ -11,6 +11,8 @@ disabled_rules: # rule identifiers to exclude from running
   - type_body_length
   - unused_optional_binding
   - for_where
+  - identifier_name
+  - todo
 opt_in_rules: # some rules are only opt-in
   # - empty_count
   # - missing_docs
