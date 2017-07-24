@@ -809,12 +809,6 @@ extension SyncViewController: NSOpenSavePanelDelegate {
             throw error
         }
         
-        if try sdk.hasConflictingFolder(folderPath: url.path) {
-            let message = NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")
-            SDLog(message)
-            let error = SDError(message: message, kind: .folderConflict)
-            throw error
-        }
     }
     
 }

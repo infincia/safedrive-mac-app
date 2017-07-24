@@ -68,13 +68,6 @@ extension RestoreSelectionWindowController: NSOpenSavePanelDelegate {
             throw error
         }
         
-        if try sdk.hasConflictingFolder(folderPath: url.path) {
-            let message = NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")
-            SDLog(message)
-            let error = SDError(message: message, kind: .folderConflict)
-            throw error
-        }
-        
         // check that enough space is available in the selected location
         let sessionIndex = self.restoreSelectionList.selectedRow
         
@@ -216,9 +209,33 @@ class RestoreSelectionWindowController: NSWindowController {
         
         let sessionName = v.session.name
         
-        self.restoreSelectionDelegate?.selectedSession(sessionName, folderID: self.folder.id, destination: destination, session: v.session)
-        self.close()
-        
+        self.sdk.hasConflictingFolder(folderPath: destination.path, completionQueue: DispatchQueue.main, success: { (conflict) in
+            
+            if conflict {
+                self.spinner.stopAnimation(self)
+
+                let alert: NSAlert = NSAlert()
+                alert.informativeText = NSLocalizedString("Cannot select this directory, it is a parent or subdirectory of an existing sync folder", comment: "String informing the user that the selected folder is a parent or subdirectory of an existing sync folder")
+                alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+                alert.runModal()
+            } else {
+                self.spinner.stopAnimation(self)
+
+                self.restoreSelectionDelegate?.selectedSession(sessionName, folderID: self.folder.id, destination: destination, session: v.session)
+                
+                self.close()
+            }
+        }, failure: { (error) in
+            SDErrorHandlerReport(error)
+            
+            self.spinner.stopAnimation(self)
+            
+            let alert: NSAlert = NSAlert()
+            alert.messageText = NSLocalizedString("Error adding folder to your account", comment: "")
+            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+            alert.runModal()
+        })
     }
     
     @IBAction func readSyncSessions(_ sender: AnyObject) {
