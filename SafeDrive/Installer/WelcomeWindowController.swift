@@ -9,7 +9,6 @@
 import Cocoa
 
 import Crashlytics
-import SafeDriveSDK
 
 class WelcomeWindowController: NSWindowController {
     

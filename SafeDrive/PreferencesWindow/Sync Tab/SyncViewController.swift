@@ -8,7 +8,6 @@
 
 import Cocoa
 import FontAwesomeIconFactory
-import SafeDriveSDK
 
 class SyncViewController: NSViewController {
     

@@ -6,8 +6,6 @@
 
 import Foundation
 
-import SafeDriveSDK
-
 class SyncController: Equatable {
     
     fileprivate var sdk = SafeDriveSDK.sharedSDK

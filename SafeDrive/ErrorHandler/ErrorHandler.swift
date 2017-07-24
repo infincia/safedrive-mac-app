@@ -6,7 +6,6 @@
 
 import Crashlytics
 
-import SafeDriveSDK
 
 var errors = [[AnyHashable: Any]]()
 let errorQueue = DispatchQueue(label: "io.safedrive.errorQueue")

@@ -3,7 +3,6 @@
 //
 
 import Cocoa
-import SafeDriveSDK
 
 protocol RecoveryPhraseEntryDelegate: class {
     func checkRecoveryPhrase(_ phrase: String?, success: @escaping () -> Void, failure: @escaping (_ error: SDKError) -> Void)

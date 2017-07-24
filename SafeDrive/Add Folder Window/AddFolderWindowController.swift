@@ -3,7 +3,6 @@
 //
 
 import Cocoa
-import SafeDriveSDK
 
 protocol AddFolderDelegate: class {
     func add(_ folderName: String, folderPath: URL, encrypted: Bool, success: @escaping SDKAddSyncFolderSuccess, failure: @escaping SDKFailure)

@@ -8,7 +8,6 @@
 import Cocoa
 import Crashlytics
 import Fabric
-import SafeDriveSDK
 import Sparkle
 
 

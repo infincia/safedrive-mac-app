@@ -10,8 +10,6 @@ import Cocoa
 
 import Crashlytics
 
-import SafeDriveSDK
-
 enum Tab: Int {
     case general
     case account

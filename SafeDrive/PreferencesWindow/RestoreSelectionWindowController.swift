@@ -3,7 +3,6 @@
 //
 
 import Cocoa
-import SafeDriveSDK
 
 protocol RestoreSelectionDelegate: class {
     func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL, session: SDKSyncSession?)

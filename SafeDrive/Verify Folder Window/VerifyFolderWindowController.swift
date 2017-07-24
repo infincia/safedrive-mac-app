@@ -6,7 +6,6 @@
 
 
 import Cocoa
-import SafeDriveSDK
 
 protocol VerifyFolderDelegate: class {
     func verified(_ folder: SDKSyncFolder, solution: VerificationSolution, success: @escaping SDKSuccess, failure: @escaping SDKFailure)

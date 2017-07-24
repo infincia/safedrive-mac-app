@@ -7,7 +7,6 @@
 
 import Cocoa
 import FinderSync
-import SafeDriveSDK
 
 class FinderSync: FIFinderSync {
     

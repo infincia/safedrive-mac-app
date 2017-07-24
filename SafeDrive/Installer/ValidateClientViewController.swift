@@ -3,7 +3,6 @@
 //
 
 import Cocoa
-import SafeDriveSDK
 
 class ValidateClientViewController: NSViewController {
 

@@ -4,7 +4,6 @@
 // swiftlint:disable private_outlet
 
 import Cocoa
-import SafeDriveSDK
 
 class SoftwareClientTableCellView: NSTableCellView {
 

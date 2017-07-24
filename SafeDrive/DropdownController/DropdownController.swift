@@ -4,7 +4,6 @@
 
 import Cocoa
 
-import SafeDriveSDK
 
 class DropdownController: NSObject {
     fileprivate var statusItem: NSStatusItem?

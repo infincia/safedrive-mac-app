@@ -7,7 +7,6 @@
 import Crashlytics
 import Foundation
 
-import SafeDriveSDK
 
 struct User {
     let email: String
