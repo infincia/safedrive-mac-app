@@ -755,23 +755,6 @@ extension SyncViewController: SDAccountProtocol {
     }
 }
 
-extension SyncViewController: NSOpenSavePanelDelegate {
-    
-    func panel(_ sender: Any, validate url: URL) throws {
-        let fileManager: FileManager = FileManager.default
-        
-        // check if the candidate sync path is actually writable and readable
-        if !fileManager.isWritableFile(atPath: url.path) {
-            let message = NSLocalizedString("Cannot select this directory, read/write permission denied", comment: "String informing the user that they do not have permission to read/write to the selected directory")
-            SDLog(message)
-            let error = SDError(message: message, kind: .filePermissionDenied)
-            throw error
-        }
-        
-    }
-    
-}
-
 
 extension SyncViewController: NSTableViewDelegate {
     
