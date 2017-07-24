@@ -60,9 +60,10 @@ extension AppDelegate: NSApplicationDelegate {
         let groupURL = storageURL()
         
         let currentOS = currentOSVersion()
+        let logLevel = SDKLogLevel.debug
         
         // swiftlint:disable force_try
-        try! self.sdk.setUp(client_version: CFBundleShortVersionString, operating_system: currentOS, language_code: languageCode, config: config, local_storage_path: groupURL.path)
+        try! self.sdk.setUp(client_version: CFBundleShortVersionString, operating_system: currentOS, language_code: languageCode, config: config, local_storage_path: groupURL.path, log_level: logLevel)
         // swiftlint:enable force_try
         
         // initialize error handler, from this point on SDLog() and SDErrorHandlerReport() should be safe to use
