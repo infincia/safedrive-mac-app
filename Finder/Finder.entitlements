@@ -14,7 +14,7 @@
 	<true/>
 	<key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
 	<array>
-		<string>io.safedrive.SafeDrive.Service</string>
+		<string>io.safedrive.SafeDrive.d</string>
 		<string>io.safedrive.SafeDrive</string>
 	</array>
 </dict>
