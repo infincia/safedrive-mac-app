@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="VerifyFolderWindowController" customModule="SafeDrive" customModuleProvider="target">
+            <connections>
+                <outlet property="findBox" destination="0CA-jT-aF2" id="bHo-Rk-aCT"/>
+                <outlet property="findText" destination="RO4-72-Whp" id="uqx-jW-078"/>
+                <outlet property="pauseBox" destination="VkL-Fx-NZt" id="QhS-Tw-brH"/>
+                <outlet property="pauseText" destination="bLw-qO-4YA" id="A0t-cc-Xi2"/>
+                <outlet property="removeBox" destination="Udq-4Z-gY2" id="Vji-ma-kMp"/>
+                <outlet property="removeText" destination="1UU-8x-ELB" id="a8c-Vd-0Lg"/>
+                <outlet property="restoreBox" destination="sLv-xR-BbC" id="8Hc-Bm-smj"/>
+                <outlet property="restoreText" destination="dd8-q6-WdT" id="P7O-RD-fBv"/>
+                <outlet property="source" destination="uWa-ad-ROR" id="ZQ4-YB-GjQ"/>
+                <outlet property="spinner" destination="4EU-OM-1bD" id="eQ6-qO-bAe"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="335"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
+            <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="335"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" id="oHa-MN-bfF">
+                        <rect key="frame" x="378" y="13" width="88" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Resolve" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2mA-T1-Ya5">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="resolveWithSender:" target="-2" id="eS6-jU-web"/>
+                        </connections>
+                    </button>
+                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="4EU-OM-1bD">
+                        <rect key="frame" x="360" y="22" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </progressIndicator>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" id="leQ-bl-EcA">
+                        <rect key="frame" x="18" y="264" width="444" height="51"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="yJA-Hi-66B">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">A folder may have been moved or deleted, SafeDrive cannot continue to sync the folder until it is found. What would you like to do?</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" id="bLw-qO-4YA">
+                        <rect key="frame" x="142" y="183" width="320" height="34"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Stop syncing this folder temporarily, I will find it later" id="Bv6-up-oNn">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" id="dd8-q6-WdT">
+                        <rect key="frame" x="142" y="138" width="320" height="35"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="I want to restore the folder back to its original location" id="Dsb-af-tgL">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <pathControl verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="uWa-ad-ROR">
+                        <rect key="frame" x="20" y="20" width="332" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <pathCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" alignment="left" placeholderString="" id="VIF-sG-0L4">
+                            <font key="font" metaFont="system"/>
+                            <url key="url" string="file:///Applications/"/>
+                            <color key="backgroundColor" red="0.89803921568627454" green="0.92549019607843142" blue="0.97254901960784312" alpha="0.0" colorSpace="deviceRGB"/>
+                        </pathCell>
+                    </pathControl>
+                    <button id="0CA-jT-aF2">
+                        <rect key="frame" x="31" y="224" width="90" height="39"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Find" bezelStyle="regularSquare" imagePosition="right" alignment="right" inset="2" id="9Cu-Ts-nbx">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="changeStateWithSender:" target="-2" id="Uh8-7S-ZHa"/>
+                        </connections>
+                    </button>
+                    <button tag="2" id="sLv-xR-BbC">
+                        <rect key="frame" x="31" y="137" width="90" height="37"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Restore " bezelStyle="regularSquare" imagePosition="right" alignment="right" inset="2" id="BH8-p3-M7D">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="changeStateWithSender:" target="-2" id="re7-QY-Zre"/>
+                        </connections>
+                    </button>
+                    <button tag="3" id="Udq-4Z-gY2">
+                        <rect key="frame" x="31" y="78" width="90" height="53"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Remove" bezelStyle="regularSquare" imagePosition="right" alignment="right" inset="2" id="czI-8Z-6Ak">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="changeStateWithSender:" target="-2" id="efP-t0-Vmt"/>
+                        </connections>
+                    </button>
+                    <button tag="1" id="VkL-Fx-NZt">
+                        <rect key="frame" x="31" y="182" width="90" height="36"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Pause" bezelStyle="regularSquare" imagePosition="right" alignment="right" inset="2" id="a7T-pI-nL8">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="changeStateWithSender:" target="-2" id="Aky-Bs-nJe"/>
+                        </connections>
+                    </button>
+                    <box horizontalHuggingPriority="750" boxType="separator" id="v5l-9L-J2j">
+                        <rect key="frame" x="57" y="50" width="142" height="212"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </box>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" id="1UU-8x-ELB">
+                        <rect key="frame" x="142" y="79" width="320" height="51"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="I no longer wish to sync this folder with my SafeDrive account, pleaes remove it from my account and delete all synced data" id="fhW-OZ-YME">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" id="RO4-72-Whp">
+                        <rect key="frame" x="142" y="225" width="320" height="37"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Allow me to choose where the folder is located and continue syncing it with my account" id="TBY-Km-P6i">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="70.5"/>
+        </window>
+        <userDefaultsController representsSharedInstance="YES" id="qOl-C3-GEB"/>
+    </objects>
+</document>

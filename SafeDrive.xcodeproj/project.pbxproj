@@ -21,6 +21,10 @@
 		AA11653F1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
 		AA272A031F095E4B00B47673 /* SafeDriveSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA7442351E0517C8004D8518 /* SafeDriveSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA2A42221F2315DA00CC6010 /* AddFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42201F2315DA00CC6010 /* AddFolderWindow.xib */; };
+		AA2A42241F23281400CC6010 /* AddFolderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A42211F2315DA00CC6010 /* AddFolderWindowController.swift */; };
+		AA2A42281F23AF4E00CC6010 /* VerifyFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42261F23AF4E00CC6010 /* VerifyFolderWindow.xib */; };
+		AA2A42291F23AF4E00CC6010 /* VerifyFolderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A42271F23AF4E00CC6010 /* VerifyFolderWindowController.swift */; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */; };
@@ -305,6 +309,10 @@
 		AA272A051F09B01900B47673 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		AA272A0A1F09C55100B47673 /* push.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = push.sh; sourceTree = "<group>"; };
 		AA272A0B1F09C63B00B47673 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
+		AA2A42201F2315DA00CC6010 /* AddFolderWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddFolderWindow.xib; path = "Add Folder Window/AddFolderWindow.xib"; sourceTree = "<group>"; };
+		AA2A42211F2315DA00CC6010 /* AddFolderWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddFolderWindowController.swift; path = "Add Folder Window/AddFolderWindowController.swift"; sourceTree = "<group>"; };
+		AA2A42261F23AF4E00CC6010 /* VerifyFolderWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VerifyFolderWindow.xib; path = "Verify Folder Window/VerifyFolderWindow.xib"; sourceTree = "<group>"; };
+		AA2A42271F23AF4E00CC6010 /* VerifyFolderWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyFolderWindowController.swift; path = "Verify Folder Window/VerifyFolderWindowController.swift"; sourceTree = "<group>"; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
 		AA3168131A191B72006CC0EB /* SafeDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3168171A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -457,6 +465,24 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AA2A421F1F2315C400CC6010 /* Add Folder Window */ = {
+			isa = PBXGroup;
+			children = (
+				AA2A42201F2315DA00CC6010 /* AddFolderWindow.xib */,
+				AA2A42211F2315DA00CC6010 /* AddFolderWindowController.swift */,
+			);
+			name = "Add Folder Window";
+			sourceTree = "<group>";
+		};
+		AA2A42251F23AF3400CC6010 /* Verify Folder Window */ = {
+			isa = PBXGroup;
+			children = (
+				AA2A42261F23AF4E00CC6010 /* VerifyFolderWindow.xib */,
+				AA2A42271F23AF4E00CC6010 /* VerifyFolderWindowController.swift */,
+			);
+			name = "Verify Folder Window";
+			sourceTree = "<group>";
+		};
 		AA2E550E1A774DED00647637 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -507,6 +533,7 @@
 		AA3168151A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXGroup;
 			children = (
+				AA2A421F1F2315C400CC6010 /* Add Folder Window */,
 				AAD89BCE1E5C194B007D8E82 /* Open File Check */,
 				AAAF1A401BF59446008E7865 /* Account Controller */,
 				AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */,
@@ -525,6 +552,7 @@
 				AA3168161A191B72006CC0EB /* Supporting Files */,
 				AA61F8481C05356D00D992FE /* SyncController */,
 				AAF85BFB1A23A4BC0063B54F /* SystemAPI */,
+				AA2A42251F23AF3400CC6010 /* Verify Folder Window */,
 				AA5C1A951BB234DD006A0C8C /* XPC */,
 			);
 			path = SafeDrive;
@@ -1046,11 +1074,13 @@
 				AACDAD911E97548500F5B351 /* ssh_config in Resources */,
 				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
 				AA7CD61A1E68A21100EE7FAD /* ValidateDependenciesView.xib in Resources */,
+				AA2A42281F23AF4E00CC6010 /* VerifyFolderWindow.xib in Resources */,
 				AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */,
 				AA58D2D51E82DBA8002D56E0 /* SyncView.xib in Resources */,
 				AA58D2D91E82DBE4002D56E0 /* EncryptionView.xib in Resources */,
 				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
 				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
+				AA2A42221F2315DA00CC6010 /* AddFolderWindow.xib in Resources */,
 				AA7319421A2F7EEB003E2391 /* Main.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1218,6 +1248,7 @@
 				AA88DD0B1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */,
 				AA3EB8411E569D28003A2E79 /* Protocols.swift in Sources */,
 				AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */,
+				AA2A42241F23281400CC6010 /* AddFolderWindowController.swift in Sources */,
 				AA50716A1E2ED5F7006F59C8 /* Util.swift in Sources */,
 				AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */,
 				AA58D2DC1E82DC15002D56E0 /* StatusViewController.swift in Sources */,
@@ -1254,6 +1285,7 @@
 				AA3EB83B1E556EE3003A2E79 /* RestoreSelectionWindowController.swift in Sources */,
 				AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */,
 				AAD89BD21E5C197E007D8E82 /* OpenFileWarningWindowController.swift in Sources */,
+				AA2A42291F23AF4E00CC6010 /* VerifyFolderWindowController.swift in Sources */,
 				AA58D2CC1E82D9F0002D56E0 /* GeneralViewController.swift in Sources */,
 				AA037B6F1E428EA600818B53 /* RecoveryPhraseWindowController.swift in Sources */,
 				AAB7D5D51CB09943001F9A8E /* CrashAlert.swift in Sources */,
