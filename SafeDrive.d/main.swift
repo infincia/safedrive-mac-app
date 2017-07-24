@@ -11,33 +11,35 @@ import Foundation
 import Cocoa
 import os.log
 
+let bundleId = "io.safedrive.SafeDrive.d"
+
 
 if #available(OSX 10.12, *) {
-    os_log("SafeDrive.d will start")
+    os_log("%@ will start", bundleId)
 } else {
-    NSLog("SafeDrive.d will start")
+    NSLog("%@ will start", bundleId)
 }
+
 let listenerDelegate = ServiceListenerDelegate()
-// swiftlint:disable force_unwrapping
-let listener: NSXPCListener = NSXPCListener(machServiceName: "io.safedrive.SafeDrive.Service")
-// swiftlint:enable force_unwrapping
+
+let listener = NSXPCListener(machServiceName: bundleId)
 
 listener.delegate = listenerDelegate
 listener.resume()
 
 if #available(OSX 10.12, *) {
-    os_log("SafeDrive.d listening")
+    os_log("%@ listening", bundleId)
 } else {
-    NSLog("SafeDrive.d listening")
+    NSLog("%@ listening", bundleId)
 }
 
 RunLoop.current.run()
 
 
 if #available(OSX 10.12, *) {
-    os_log("SafeDrive.Service will exit")
+    os_log("%@ will exit", bundleId)
 } else {
-    NSLog("SafeDrive.Service will exit")
+    NSLog("%@ will exit", bundleId)
 }
 exit(EXIT_FAILURE)
 
