@@ -8,8 +8,14 @@
 import Cocoa
 import Crashlytics
 import Fabric
+import PromiseKit
 import Sparkle
 
+extension Promise {
+    static var void: Promise<Void> {
+        return Promise<Void>(value: ())
+    }
+}
 
 @NSApplicationMain
 class AppDelegate: NSObject {
