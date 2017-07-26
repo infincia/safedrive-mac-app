@@ -72,12 +72,12 @@ class OpenFileCheck: NSObject {
             
             for res in result {
                 
-                if res.numberOfRanges < 4 {
+                if res.numberOfRanges < 3 {
                     continue
                 }
                 
                 let pidRange = res.rangeAt(1)
-                let commandRange = res.rangeAt(4)
+                let commandRange = res.rangeAt(2)
                 
                 let pid = s.substring(with: pidRange)
                 let command = s.substring(with: commandRange)
