@@ -121,24 +121,25 @@ public class SafeDriveSDK: NSObject {
         }
     }
     
-    public func removeClient(completionQueue queue: DispatchQueue, success: @escaping () -> Void, failure: @escaping SDKFailure) {
-
-        background {
-            var error: UnsafeMutablePointer<SDDKError>? = nil
-            var status: UnsafeMutablePointer<SDDKAccountStatus>? = nil
-            
-            let res = sddk_remove_client(self.state, &error)
-            defer {
-                if res == -1 {
-                    sddk_free_error(&error)
+    public func removeClient() -> Promise<Void> {
+        return Promise { fulfill, reject in
+            background {
+                var error: UnsafeMutablePointer<SDDKError>? = nil
+                var status: UnsafeMutablePointer<SDDKAccountStatus>? = nil
+                
+                let res = sddk_remove_client(self.state, &error)
+                defer {
+                    if res == -1 {
+                        sddk_free_error(&error)
+                    }
                 }
-            }
-            switch res {
-            case 0:
-                queue.async { success() }
-            default:
-                let e = SDKError(sdkError: error!.pointee)
-                queue.async { failure(e) }
+                switch res {
+                case 0:
+                    fulfill()
+                default:
+                    let e = SDKError(sdkError: error!.pointee)
+                    reject(e)
+                }
             }
         }
     }
