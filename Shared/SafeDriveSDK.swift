@@ -10,7 +10,7 @@
 // swiftlint:disable file_length
 
 import Foundation
-
+import PromiseKit
 import SDDK
 
 public class SafeDriveSDK: NSObject {
@@ -94,27 +94,29 @@ public class SafeDriveSDK: NSObject {
         sddk_free_state(&state)
     }
     
-    public func login(_ username: String, password: String, unique_client_id: String, completionQueue queue: DispatchQueue, success: @escaping (_ status: SDKAccountStatus) -> Void, failure: @escaping SDKFailure) {
-
-        background {
-            var error: UnsafeMutablePointer<SDDKError>? = nil
-            var status: UnsafeMutablePointer<SDDKAccountStatus>? = nil
-            
-            let res = sddk_login(self.state, unique_client_id, username, password, &status, &error)
-            defer {
-                if res == -1 {
-                    sddk_free_error(&error)
-                } else {
-                    sddk_free_account_status(&status)
+    public func login(_ username: String, password: String, unique_client_id: String) -> Promise<SDKAccountStatus> {
+        
+        return Promise { fulfill, reject in
+            background {
+                var error: UnsafeMutablePointer<SDDKError>? = nil
+                var status: UnsafeMutablePointer<SDDKAccountStatus>? = nil
+                
+                let res = sddk_login(self.state, unique_client_id, username, password, &status, &error)
+                defer {
+                    if res == -1 {
+                        sddk_free_error(&error)
+                    } else {
+                        sddk_free_account_status(&status)
+                    }
                 }
-            }
-            switch res {
-            case 0:
-                let s = SDKAccountStatus(account_status: status!.pointee)
-                queue.async { success(s) }
-            default:
-                let e = SDKError(sdkError: error!.pointee)
-                queue.async { failure(e) }
+                switch res {
+                case 0:
+                    let s = SDKAccountStatus(account_status: status!.pointee)
+                    fulfill(s)
+                default:
+                    let e = SDKError(sdkError: error!.pointee)
+                    reject(e)
+                }
             }
         }
     }

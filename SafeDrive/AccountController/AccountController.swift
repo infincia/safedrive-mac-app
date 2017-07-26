@@ -6,7 +6,7 @@
 
 import Crashlytics
 import Foundation
-
+import PromiseKit
 
 struct User {
     let email: String
@@ -212,32 +212,6 @@ class AccountController: NSObject {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func signIn(_ failureBlock: @escaping (_ error: SDKError) -> Void) {
-        guard let email = self.email, let password = self.password, let uniqueClientID = self.uniqueClientID else {
-            return
-        }
-
-        SDErrorHandlerSetUniqueClientId(uniqueClientID)
-
-        Crashlytics.sharedInstance().setUserEmail(email)
-        Crashlytics.sharedInstance().setUserIdentifier(uniqueClientID)
-        
-        self.sdk.login(email, password: password, unique_client_id: uniqueClientID, completionQueue: self.accountCompletionQueue, success: { (status) -> Void in
-            self.signingIn = false
-            self.signedIn = true
-            self.lastAccountStatusCheck = Date()
-            
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: status)
-            }
-        }, failure: { (error) in
-            self.signingIn = false
-            self.signedIn = false
-            SDLog("failed to login with sdk: \(error.message)")
-            failureBlock(error)
-        })
-    }
-    
     func signOut() {
         guard let user = self.currentUser else {
             return
@@ -278,7 +252,7 @@ class AccountController: NSObject {
     fileprivate func accountLoop() {
         background {
             while true {
-                guard let _ = self.email, let _ = self.password, let _ = self.uniqueClientID else {
+                guard let email = self.email, let password = self.password, let uniqueClientID = self.uniqueClientID else {
                     Thread.sleep(forTimeInterval: 1)
 
                     continue
@@ -286,7 +260,30 @@ class AccountController: NSObject {
 
                 if !self.signedIn && !self.signingIn {
                     self.signingIn = true
-                    self.signIn { (error) in
+                    
+                    firstly {
+                        self.sdk.login(email, password: password, unique_client_id: uniqueClientID)
+                    }.then { (status) -> Void in
+                        SDErrorHandlerSetUniqueClientId(uniqueClientID)
+                        
+                        Crashlytics.sharedInstance().setUserEmail(email)
+                        Crashlytics.sharedInstance().setUserIdentifier(uniqueClientID)
+                        
+                        self.signingIn = false
+                        self.signedIn = true
+                        self.lastAccountStatusCheck = Date()
+                            
+                        DispatchQueue.main.async {
+                            NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: status)
+                        }
+                    }.catch { (error) in
+                        guard let error = error as? SDKError else {
+                            return
+                        }
+                        self.signingIn = false
+                        self.signedIn = false
+                        SDLog("failed to login with sdk: \(error.message)")
+                        
                         switch error.kind {
                         case .StateMissing:
                             break
