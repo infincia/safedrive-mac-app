@@ -4,3 +4,6 @@
 [submodule "safedrive-sbb"]
 	path = safedrive-sbb
 	url = git@bitbucket.org:safedrive-team/safedrive-sbb.git
+[submodule "safedrive-sftpfs"]
+	path = safedrive-sftpfs
+	url = ssh://git@bitbucket.org/safedrive-team/safedrive-sftpfs.git
