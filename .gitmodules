@@ -1,3 +1,6 @@
 [submodule "safedrive-sdk"]
 	path = safedrive-sdk
 	url = https://github.com/infincia/safedrive-sdk.git
+[submodule "safedrive-sbb"]
+	path = safedrive-sbb
+	url = git@bitbucket.org:safedrive-team/safedrive-sbb.git
