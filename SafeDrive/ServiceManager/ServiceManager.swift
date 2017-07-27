@@ -428,7 +428,7 @@ extension ServiceManager: NSXPCListenerDelegate {
                         SDLogError("Connecting to service failed: \(error.localizedDescription)")
                     }) as! ServiceXPCProtocol
                     
-                    proxy.sendAppEndpoint(self.appListener.endpoint, reply: { (state) in
+                    proxy.setAppEndpoint(self.appListener.endpoint, reply: { (state) in
                         SDLog("App endpoint response: \(state)")
                     })
                 }

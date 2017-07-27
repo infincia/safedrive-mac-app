@@ -127,7 +127,7 @@ class ServiceListenerDelegate: NSObject, NSXPCListenerDelegate, ServiceXPCProtoc
         replyBlock(endpoint)
     }
     
-    func sendAppEndpoint(_ endpoint: NSXPCListenerEndpoint, reply replyBlock: @escaping (Bool) -> Void) {
+    func setAppEndpoint(_ endpoint: NSXPCListenerEndpoint, reply replyBlock: @escaping (Bool) -> Void) {
         self.appEndpoint = endpoint
         replyBlock(true)
     }
