@@ -58,6 +58,10 @@ class MountController: NSObject {
         return UserDefaults.standard.bool(forKey: useSFTPFSKey())
     }
     
+    var useCache: Bool {
+        return UserDefaults.standard.bool(forKey: useCacheKey())
+    }
+    
     var currentMountURL: URL {
         let home = NSHomeDirectory()
         let volumesDirectoryURL = URL(fileURLWithPath: home, isDirectory:true)
@@ -655,6 +659,8 @@ class MountController: NSObject {
         
         if useSFTPFS {
           self.sftpfs = ManagedSFTPFS.withMountpoint(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port as NSNumber)
+            
+            self.sftpfs?.setUseCache(self.useCache)
             
             self.sftpfs?.connect()
             
