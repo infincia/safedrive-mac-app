@@ -33,6 +33,8 @@
 		AA11658A1F25C56700B7D8EF /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = AA1165891F25C56700B7D8EF /* .swiftlint.yml */; };
 		AA11658B1F25C8D300B7D8EF /* libsddk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA11655F1F25B1C100B7D8EF /* libsddk.dylib */; };
 		AA1165911F25CDDE00B7D8EF /* SafeDriveSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */; };
+		AA16CE351F2A774400CD2399 /* sftpfs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE4CCEA1F2A721000233143 /* sftpfs.framework */; };
+		AA16CE361F2A775100CD2399 /* sftpfs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAE4CCEA1F2A721000233143 /* sftpfs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA16CE371F2ABC6100CD2399 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165531F25B0B600B7D8EF /* Models.swift */; };
 		AA16CE381F2ABC6400CD2399 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165521F25B0B600B7D8EF /* Errors.swift */; };
 		AA16CE391F2ABC6600CD2399 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165511F25B0B600B7D8EF /* Constants.swift */; };
@@ -198,6 +200,13 @@
 			remoteGlobalIDString = AA11657A1F25B4C700B7D8EF;
 			remoteInfo = SDDK;
 		};
+		AA16CE321F2A773D00CD2399 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AAE4CCE51F2A721000233143 /* sftpfs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AAF4A89D1F266C150089B89F;
+			remoteInfo = sftpfs;
+		};
 		AA1A46071BED8521004A5310 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
@@ -211,6 +220,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = AAC466C61F0C9BFD002088B6;
 			remoteInfo = io.safedrive.SafeDrive.Service;
+		};
+		AAE4CCE91F2A721000233143 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AAE4CCE51F2A721000233143 /* sftpfs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AAF4A89E1F266C150089B89F;
+			remoteInfo = sftpfs;
 		};
 		AAF946061C815D5A00B972C3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -273,6 +289,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				AA16CE361F2A775100CD2399 /* sftpfs.framework in CopyFiles */,
 				AA1165601F25B1C100B7D8EF /* libsddk.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,6 +421,7 @@
 		AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningTableCellView.swift; path = "Open File Warning Window/OpenFileWarningTableCellView.swift"; sourceTree = "<group>"; };
 		AAE216371E9BE8BD00BE956F /* setup.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = setup.sh; sourceTree = "<group>"; };
 		AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FUSE for macOS 3.6.3.pkg"; path = "Bundled Dependencies/FUSE for macOS 3.6.3.pkg"; sourceTree = "<group>"; };
+		AAE4CCE51F2A721000233143 /* sftpfs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sftpfs.xcodeproj; path = "safedrive-sftpfs/sftpfs.xcodeproj"; sourceTree = "<group>"; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SafeDrive.entitlements; sourceTree = "<group>"; };
@@ -426,6 +444,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA16CE351F2A774400CD2399 /* sftpfs.framework in Frameworks */,
 				856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */,
 				AA11658B1F25C8D300B7D8EF /* libsddk.dylib in Frameworks */,
 			);
@@ -531,6 +550,7 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AAE4CCE51F2A721000233143 /* sftpfs.xcodeproj */,
 				AA1165891F25C56700B7D8EF /* .swiftlint.yml */,
 				AA1165871F25B7C900B7D8EF /* SDDK */,
 				AA272A0B1F09C63B00B47673 /* build.sh */,
@@ -837,6 +857,14 @@
 			name = "Open File Check";
 			sourceTree = "<group>";
 		};
+		AAE4CCE61F2A721000233143 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AAE4CCEA1F2A721000233143 /* sftpfs.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AAF85BFB1A23A4BC0063B54F /* SystemAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -908,6 +936,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AA16CE331F2A773D00CD2399 /* PBXTargetDependency */,
 				AA11657F1F25B50C00B7D8EF /* PBXTargetDependency */,
 				AAC466DA1F0CBEA5002088B6 /* PBXTargetDependency */,
 				AAF946071C815D5A00B972C3 /* PBXTargetDependency */,
@@ -1044,6 +1073,12 @@
 			mainGroup = AA31680A1A191B72006CC0EB;
 			productRefGroup = AA3168141A191B72006CC0EB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AAE4CCE61F2A721000233143 /* Products */;
+					ProjectRef = AAE4CCE51F2A721000233143 /* sftpfs.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				AA3168121A191B72006CC0EB /* SafeDrive */,
@@ -1054,6 +1089,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AAE4CCEA1F2A721000233143 /* sftpfs.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = sftpfs.framework;
+			remoteRef = AAE4CCE91F2A721000233143 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AA3168111A191B72006CC0EB /* Resources */ = {
@@ -1445,6 +1490,11 @@
 			isa = PBXTargetDependency;
 			target = AA11657A1F25B4C700B7D8EF /* SDDK */;
 			targetProxy = AA1165801F25B51000B7D8EF /* PBXContainerItemProxy */;
+		};
+		AA16CE331F2A773D00CD2399 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = sftpfs;
+			targetProxy = AA16CE321F2A773D00CD2399 /* PBXContainerItemProxy */;
 		};
 		AA1A46081BED8521004A5310 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
