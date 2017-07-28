@@ -8,6 +8,9 @@
 import Foundation
 
 class MountController: NSObject {
+    
+    fileprivate var sftpfs: ManagedSFTPFS?
+    
     fileprivate var _mounted = false
     
     fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue")
@@ -49,6 +52,10 @@ class MountController: NSObject {
     
     var keepMounted: Bool {
         return UserDefaults.standard.bool(forKey: keepMountedKey())
+    }
+    
+    var useSFTPFS: Bool {
+        return UserDefaults.standard.bool(forKey: useSFTPFSKey())
     }
     
     var currentMountURL: URL {
@@ -642,12 +649,14 @@ class MountController: NSObject {
         // swiftlint:enable force_unwrapping
         let notification = NSUserNotification()
         
-        self.startMountTask(sshURL: sshURL, success: { mountURL in
+        let mountURL = self.currentMountURL
+        let volumeName = self.currentVolumeName
+
+        
+        if useSFTPFS {
+          self.sftpfs = ManagedSFTPFS.withMountpoint(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port as NSNumber)
             
-            /*
-             now check for a successful mount. if after 30 seconds there is no volume
-             mounted, it is a fair bet that an error occurred in the meantime
-             */
+            self.sftpfs?.connect()
             
             self.checkMount(at: mountURL, timeout: 30, mounted: {
                 NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
@@ -663,27 +672,50 @@ class MountController: NSObject {
                 
                 self.mounting = false
             })
-            
-            
-        }, failure: { (_, error) in
-            self.mounting = false
-            // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
-            if let e = error as? SDError, e.kind == .alreadyMounted {
-                NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
-            } else {
-                SDLog("SafeDrive startMountTaskWithVolumeName failure in mount controller: \(error)")
-                notification.informativeText = error.localizedDescription
-                notification.title = "SafeDrive mount error"
-                notification.soundName = NSUserNotificationDefaultSoundName
-                NSUserNotificationCenter.default.deliver(notification)
-                SDErrorHandlerReport(error)
-                self.unmount(success: { _ in
-                    //
-                }, failure: { (_, _) in
-                    //
+        } else {
+            self.startMountTask(sshURL: sshURL, success: { mountURL in
+                
+                /*
+                 now check for a successful mount. if after 30 seconds there is no volume
+                 mounted, it is a fair bet that an error occurred in the meantime
+                 */
+                
+                self.checkMount(at: mountURL, timeout: 30, mounted: {
+                    NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
+                    self.mounting = false
+                }, notMounted: {
+                    let message = NSLocalizedString("Volume mount timeout", comment: "")
+                    let error = SDError(message: message, kind: .timeout)
+                    SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
+                    notification.informativeText = error.localizedDescription
+                    notification.title = "SafeDrive mount error"
+                    notification.soundName = NSUserNotificationDefaultSoundName
+                    NSUserNotificationCenter.default.deliver(notification)
+                    
+                    self.mounting = false
                 })
-            }
-        })
+                
+                
+            }, failure: { (_, error) in
+                self.mounting = false
+                // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
+                if let e = error as? SDError, e.kind == .alreadyMounted {
+                    NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
+                } else {
+                    SDLog("SafeDrive startMountTaskWithVolumeName failure in mount controller: \(error)")
+                    notification.informativeText = error.localizedDescription
+                    notification.title = "SafeDrive mount error"
+                    notification.soundName = NSUserNotificationDefaultSoundName
+                    NSUserNotificationCenter.default.deliver(notification)
+                    SDErrorHandlerReport(error)
+                    self.unmount(success: { _ in
+                        //
+                    }, failure: { (_, _) in
+                        //
+                    })
+                }
+            })
+        }
     }
     
     func disconnectVolume(askForOpenApps: Bool) {
