@@ -43,6 +43,7 @@ fileprivate let SDDefaultServerPort = 22
 fileprivate let SDBuildVersionLastKey = "SDBuildVersionLastKey"
 
 fileprivate let SDUseSFTPFSKey = "useSFTPFS"
+fileprivate let SDUseCacheKey = "useCache"
 fileprivate let SDKeepMountedKey = "keepMounted"
 fileprivate let SDCurrentVolumeNameKey = "currentVolumeName"
 fileprivate let SDMountAtLaunchKey = "mountAtLaunch"
@@ -159,6 +160,10 @@ func userDefaultsCurrentVolumeNameKey() -> String {
 
 func useSFTPFSKey() -> String {
     return SDUseSFTPFSKey
+}
+
+func useCacheKey() -> String {
+    return SDUseCacheKey
 }
 
 func keepMountedKey() -> String {
