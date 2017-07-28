@@ -19,3 +19,5 @@
 @import Sparkle;
 
 @import Crashlytics;
+
+#import <sftpfs/sftpfs.h>
