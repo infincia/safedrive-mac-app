@@ -33,6 +33,10 @@
 		AA11658A1F25C56700B7D8EF /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = AA1165891F25C56700B7D8EF /* .swiftlint.yml */; };
 		AA11658B1F25C8D300B7D8EF /* libsddk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA11655F1F25B1C100B7D8EF /* libsddk.dylib */; };
 		AA1165911F25CDDE00B7D8EF /* SafeDriveSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */; };
+		AA16CE371F2ABC6100CD2399 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165531F25B0B600B7D8EF /* Models.swift */; };
+		AA16CE381F2ABC6400CD2399 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165521F25B0B600B7D8EF /* Errors.swift */; };
+		AA16CE391F2ABC6600CD2399 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165511F25B0B600B7D8EF /* Constants.swift */; };
+		AA16CE3A1F2ABC6A00CD2399 /* SafeDriveSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
 		AA2A42221F2315DA00CC6010 /* AddFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42201F2315DA00CC6010 /* AddFolderWindow.xib */; };
 		AA2A42241F23281400CC6010 /* AddFolderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A42211F2315DA00CC6010 /* AddFolderWindowController.swift */; };
@@ -1345,6 +1349,8 @@
 				AAA3E7151EADB7630083CE66 /* WelcomeWindowController.swift in Sources */,
 				AAA3E70A1EADB7450083CE66 /* DropdownController.swift in Sources */,
 				AA88DD0C1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */,
+				AA16CE381F2ABC6400CD2399 /* Errors.swift in Sources */,
+				AA16CE371F2ABC6100CD2399 /* Models.swift in Sources */,
 				AAA3E72A1EADB8FE0083CE66 /* ServiceXPCProtocol.swift in Sources */,
 				AAA3E71C1EADB7780083CE66 /* RestoreSelectionTableCellView.swift in Sources */,
 				AA6E272C1D876DD800038019 /* Notifications.swift in Sources */,
@@ -1361,6 +1367,7 @@
 				AAA3E7171EADB76E0083CE66 /* AccountViewController.swift in Sources */,
 				AAA3E7051EADB7350083CE66 /* OpenFileWarningTableCellView.swift in Sources */,
 				AAA3E71F1EADB7800083CE66 /* StatusViewController.swift in Sources */,
+				AA16CE3A1F2ABC6A00CD2399 /* SafeDriveSDK.swift in Sources */,
 				AAA3E7231EADB78E0083CE66 /* ServiceManager.swift in Sources */,
 				AAA3E7241EADB7940083CE66 /* SyncScheduler.swift in Sources */,
 				AAA3E7141EADB7610083CE66 /* WelcomeViewController.swift in Sources */,
@@ -1385,6 +1392,7 @@
 				AAA3E7031EADB7320083CE66 /* OpenFileCheck.swift in Sources */,
 				AAA3E7271EADB79C0083CE66 /* AppXPCDelegate.swift in Sources */,
 				AAA3E71E1EADB77D0083CE66 /* EncryptionViewController.swift in Sources */,
+				AA16CE391F2ABC6600CD2399 /* Constants.swift in Sources */,
 				AAA3E7131EADB75F0083CE66 /* ValidateDependenciesViewController.swift in Sources */,
 				AA6E27311D87855100038019 /* MountController.swift in Sources */,
 			);
