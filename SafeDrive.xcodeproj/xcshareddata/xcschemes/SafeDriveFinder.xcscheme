@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AAF945FE1C815D5A00B972C3"
-               BuildableName = "SafeDriveFinder.appex"
+               BuildableName = "SafeDrive.appex"
                BlueprintName = "SafeDriveFinder"
                ReferencedContainer = "container:SafeDrive.xcodeproj">
             </BuildableReference>
@@ -48,7 +48,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AAF945FE1C815D5A00B972C3"
-            BuildableName = "SafeDriveFinder.appex"
+            BuildableName = "SafeDrive.appex"
             BlueprintName = "SafeDriveFinder"
             ReferencedContainer = "container:SafeDrive.xcodeproj">
          </BuildableReference>
