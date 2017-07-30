@@ -662,7 +662,7 @@ class MountController: NSObject {
         let volumeName = self.currentVolumeName
 
         
-        if useSFTPFS {
+        if useSFTPFS && !useService {
           self.sftpfs = ManagedSFTPFS.withMountpoint(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port as NSNumber)
             
             self.sftpfs?.setUseCache(self.useCache)
