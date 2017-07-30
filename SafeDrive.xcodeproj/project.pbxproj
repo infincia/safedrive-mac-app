@@ -72,7 +72,7 @@
 		AA58D2D91E82DBE4002D56E0 /* EncryptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2D71E82DBE4002D56E0 /* EncryptionView.xib */; };
 		AA58D2DC1E82DC15002D56E0 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2DA1E82DC15002D56E0 /* StatusViewController.swift */; };
 		AA58D2DD1E82DC15002D56E0 /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2DB1E82DC15002D56E0 /* StatusView.xib */; };
-		AA5DAFE71F2E2E9B00CD48AE /* SFTPFS.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = AA5DAFDC1F2E2E9B00CD48AE /* SFTPFS.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AA5DAFE71F2E2E9B00CD48AE /* SFTPFSService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = AA5DAFDC1F2E2E9B00CD48AE /* SFTPFSService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA5DAFED1F2E2FDC00CD48AE /* sftpfs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE4CCEA1F2A721000233143 /* sftpfs.framework */; };
 		AA5DAFF41F2E34E700CD48AE /* SFTPFSDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5DAFF31F2E34E700CD48AE /* SFTPFSDelegate.swift */; };
 		AA5DAFF61F2E36C700CD48AE /* SFTPFSXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5DAFF51F2E36C700CD48AE /* SFTPFSXPCProtocol.swift */; };
@@ -289,7 +289,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				AA5DAFE71F2E2E9B00CD48AE /* SFTPFS.xpc in Embed XPC Services */,
+				AA5DAFE71F2E2E9B00CD48AE /* SFTPFSService.xpc in Embed XPC Services */,
 			);
 			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,9 +389,9 @@
 		AA58D2D71E82DBE4002D56E0 /* EncryptionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EncryptionView.xib; path = "Encryption Tab/EncryptionView.xib"; sourceTree = "<group>"; };
 		AA58D2DA1E82DC15002D56E0 /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusViewController.swift; path = "Status TAb/StatusViewController.swift"; sourceTree = "<group>"; };
 		AA58D2DB1E82DC15002D56E0 /* StatusView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StatusView.xib; path = "Status TAb/StatusView.xib"; sourceTree = "<group>"; };
-		AA5DAFDC1F2E2E9B00CD48AE /* SFTPFS.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = SFTPFS.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA5DAFDC1F2E2E9B00CD48AE /* SFTPFSService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = SFTPFSService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5DAFE41F2E2E9B00CD48AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA5DAFEF1F2E301500CD48AE /* SFTPFS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SFTPFS.entitlements; sourceTree = "<group>"; };
+		AA5DAFEF1F2E301500CD48AE /* SFTPFSService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SFTPFSService.entitlements; sourceTree = "<group>"; };
 		AA5DAFF11F2E34BE00CD48AE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		AA5DAFF31F2E34E700CD48AE /* SFTPFSDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFTPFSDelegate.swift; sourceTree = "<group>"; };
 		AA5DAFF51F2E36C700CD48AE /* SFTPFSXPCProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SFTPFSXPCProtocol.swift; path = Shared/SFTPFSXPCProtocol.swift; sourceTree = "<group>"; };
@@ -614,7 +614,7 @@
 				AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */,
 				AAF945FF1C815D5A00B972C3 /* SafeDrive.appex */,
 				AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
-				AA5DAFDC1F2E2E9B00CD48AE /* SFTPFS.xpc */,
+				AA5DAFDC1F2E2E9B00CD48AE /* SFTPFSService.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -809,7 +809,7 @@
 		AA5DAFDD1F2E2E9B00CD48AE /* SFTPFS-XPC */ = {
 			isa = PBXGroup;
 			children = (
-				AA5DAFEF1F2E301500CD48AE /* SFTPFS.entitlements */,
+				AA5DAFEF1F2E301500CD48AE /* SFTPFSService.entitlements */,
 				AA5DAFE41F2E2E9B00CD48AE /* Info.plist */,
 				AA5DAFF11F2E34BE00CD48AE /* main.swift */,
 				AA5DAFF31F2E34E700CD48AE /* SFTPFSDelegate.swift */,
@@ -1017,9 +1017,9 @@
 			productReference = AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		AA5DAFDB1F2E2E9B00CD48AE /* SFTPFS */ = {
+		AA5DAFDB1F2E2E9B00CD48AE /* SFTPFSService */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA5DAFEA1F2E2E9B00CD48AE /* Build configuration list for PBXNativeTarget "SFTPFS" */;
+			buildConfigurationList = AA5DAFEA1F2E2E9B00CD48AE /* Build configuration list for PBXNativeTarget "SFTPFSService" */;
 			buildPhases = (
 				AA5DAFD81F2E2E9B00CD48AE /* Sources */,
 				AA5DAFD91F2E2E9B00CD48AE /* Frameworks */,
@@ -1029,9 +1029,9 @@
 			dependencies = (
 				AA5DAFEC1F2E2FD500CD48AE /* PBXTargetDependency */,
 			);
-			name = SFTPFS;
+			name = SFTPFSService;
 			productName = test;
-			productReference = AA5DAFDC1F2E2E9B00CD48AE /* SFTPFS.xpc */;
+			productReference = AA5DAFDC1F2E2E9B00CD48AE /* SFTPFSService.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
 		AAC466C61F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */ = {
@@ -1165,7 +1165,7 @@
 				AAF945FE1C815D5A00B972C3 /* SafeDriveFinder */,
 				AAC466C61F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
 				AA11657A1F25B4C700B7D8EF /* SDDK */,
-				AA5DAFDB1F2E2E9B00CD48AE /* SFTPFS */,
+				AA5DAFDB1F2E2E9B00CD48AE /* SFTPFSService */,
 			);
 		};
 /* End PBXProject section */
@@ -1594,7 +1594,7 @@
 		};
 		AA5DAFE61F2E2E9B00CD48AE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AA5DAFDB1F2E2E9B00CD48AE /* SFTPFS */;
+			target = AA5DAFDB1F2E2E9B00CD48AE /* SFTPFSService */;
 			targetProxy = AA5DAFE51F2E2E9B00CD48AE /* PBXContainerItemProxy */;
 		};
 		AA5DAFEC1F2E2FD500CD48AE /* PBXTargetDependency */ = {
@@ -1990,7 +1990,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "SFTPFS-XPC/SFTPFS.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "SFTPFS-XPC/SFTPFSService.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
@@ -2031,7 +2031,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "SFTPFS-XPC/SFTPFS.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "SFTPFS-XPC/SFTPFSService.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
@@ -2198,7 +2198,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA5DAFEA1F2E2E9B00CD48AE /* Build configuration list for PBXNativeTarget "SFTPFS" */ = {
+		AA5DAFEA1F2E2E9B00CD48AE /* Build configuration list for PBXNativeTarget "SFTPFSService" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA5DAFE81F2E2E9B00CD48AE /* Debug */,

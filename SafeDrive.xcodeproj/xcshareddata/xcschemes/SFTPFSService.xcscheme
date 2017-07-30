@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AA5DAFDB1F2E2E9B00CD48AE"
-               BuildableName = "SFTPFS.xpc"
-               BlueprintName = "SFTPFS"
+               BuildableName = "SFTPFSService.xpc"
+               BlueprintName = "SFTPFSService"
                ReferencedContainer = "container:SafeDrive.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -48,8 +48,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA5DAFDB1F2E2E9B00CD48AE"
-            BuildableName = "SFTPFS.xpc"
-            BlueprintName = "SFTPFS"
+            BuildableName = "SFTPFSService.xpc"
+            BlueprintName = "SFTPFSService"
             ReferencedContainer = "container:SafeDrive.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -66,8 +66,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA5DAFDB1F2E2E9B00CD48AE"
-            BuildableName = "SFTPFS.xpc"
-            BlueprintName = "SFTPFS"
+            BuildableName = "SFTPFSService.xpc"
+            BlueprintName = "SFTPFSService"
             ReferencedContainer = "container:SafeDrive.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
