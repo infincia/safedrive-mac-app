@@ -11,8 +11,7 @@ let kSFTPFSXPCProtocolVersion: Int = 7
                 user: String,
                 password: String,
                 host: String,
-                port: UInt16,
-                reply replyBlock: @escaping (Bool) -> Void)
+                port: UInt16)
     
     func connect()
     

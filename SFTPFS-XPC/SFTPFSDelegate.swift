@@ -17,8 +17,7 @@ class SFTPFSDelegate: NSObject, NSXPCListenerDelegate, SFTPFSXPCProtocol {
         return true
     }
     
-    func create(_ mountpoint: String, label: String, user: String, password: String, host: String, port: UInt16, reply replyBlock: @escaping (Bool) -> Void) {
-        
+    func create(_ mountpoint: String, label: String, user: String, password: String, host: String, port: UInt16) {
     }
     
     func connect() {
