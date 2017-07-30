@@ -11,6 +11,8 @@ class MountController: NSObject {
     
     fileprivate var sftpfs: ManagedSFTPFS?
     
+    fileprivate var sftpfsConnection: NSXPCConnection?
+    
     fileprivate var _mounted = false
     
     fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue")
@@ -178,6 +180,31 @@ class MountController: NSObject {
         let nc = NSWorkspace.shared().notificationCenter
         nc.addObserver(self, selector: #selector(willSleep(_:)), name: Notification.Name.NSWorkspaceWillSleep, object: nil)
         
+        let connection = NSXPCConnection(serviceName: "io.safedrive.SafeDrive.SFTPFS")
+        
+        let serviceInterface = NSXPCInterface(with: SFTPFSXPCProtocol.self)
+        
+        connection.remoteObjectInterface = serviceInterface
+        
+        weak var weakSelf: MountController? = self
+        
+        connection.interruptionHandler = {
+            DispatchQueue.main.async {
+                if let weakSelf = weakSelf {
+                    weakSelf.sftpfsConnection = nil
+                }
+            }
+        }
+        connection.invalidationHandler = {
+            DispatchQueue.main.async {
+                if let weakSelf = weakSelf {
+                    weakSelf.sftpfsConnection = nil
+                }
+            }
+        }
+        connection.resume()
+        
+        self.sftpfsConnection = connection
         
         mountStateLoop()
         mountLoop()
