@@ -635,6 +635,7 @@ class MountController: NSObject {
     func connectVolume() {
         
         guard let user = self.internalUserName,
+            let password = self.password,
             let host = self.remoteHost,
             let port = self.remotePort else {
                 SDLog("API contract invalid: connectVolume in MountController")
