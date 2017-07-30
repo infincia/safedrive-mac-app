@@ -19,6 +19,8 @@ class SFTPFSDelegate: NSObject, NSXPCListenerDelegate, SFTPFSXPCProtocol {
     }
     
     func create(_ mountpoint: String, label: String, user: String, password: String, host: String, port: UInt16) {
+        ProcessInfo.processInfo.disableSuddenTermination()
+        
         self.sftpfs = ManagedSFTPFS.withMountpoint(mountpoint,
                                                    label: label,
                                                    user: user,
@@ -33,6 +35,7 @@ class SFTPFSDelegate: NSObject, NSXPCListenerDelegate, SFTPFSXPCProtocol {
     
     func disconnect() {
         self.sftpfs?.disconnect()
+        ProcessInfo.processInfo.enableSuddenTermination()
     }
     
     func useCache(reply replyBlock: @escaping (Bool)-> Void) {
