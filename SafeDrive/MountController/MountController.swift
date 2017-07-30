@@ -710,6 +710,20 @@ class MountController: NSObject {
                 
                 self.mounting = false
             })
+        } else if useSFTPFS && useService {
+            if let s = self.sftpfsConnection {
+                let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                    SDLogError("Connecting to sftpfs failed: \(error.localizedDescription)")
+                }) as! SFTPFSXPCProtocol
+                
+                proxy.create(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port)
+                
+                proxy.setUseCache(self.useCache)
+                
+                proxy.connect()
+            }
+            
+            
         } else {
             self.startMountTask(sshURL: sshURL, success: { mountURL in
                 
