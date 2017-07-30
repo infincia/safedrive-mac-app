@@ -72,6 +72,12 @@
 		AA58D2D91E82DBE4002D56E0 /* EncryptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2D71E82DBE4002D56E0 /* EncryptionView.xib */; };
 		AA58D2DC1E82DC15002D56E0 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2DA1E82DC15002D56E0 /* StatusViewController.swift */; };
 		AA58D2DD1E82DC15002D56E0 /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2DB1E82DC15002D56E0 /* StatusView.xib */; };
+		AA5DAFE71F2E2E9B00CD48AE /* SFTPFS.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = AA5DAFDC1F2E2E9B00CD48AE /* SFTPFS.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AA5DAFED1F2E2FDC00CD48AE /* sftpfs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE4CCEA1F2A721000233143 /* sftpfs.framework */; };
+		AA5DAFF41F2E34E700CD48AE /* SFTPFSDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5DAFF31F2E34E700CD48AE /* SFTPFSDelegate.swift */; };
+		AA5DAFF61F2E36C700CD48AE /* SFTPFSXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5DAFF51F2E36C700CD48AE /* SFTPFSXPCProtocol.swift */; };
+		AA5DAFF71F2E36C700CD48AE /* SFTPFSXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5DAFF51F2E36C700CD48AE /* SFTPFSXPCProtocol.swift */; };
+		AA5DAFF81F2E395C00CD48AE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5DAFF11F2E34BE00CD48AE /* main.swift */; };
 		AA650CF31D73A381008DA5CB /* Changelog.md in Resources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
@@ -214,6 +220,20 @@
 			remoteGlobalIDString = AA3168121A191B72006CC0EB;
 			remoteInfo = SafeDrive;
 		};
+		AA5DAFE51F2E2E9B00CD48AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA5DAFDB1F2E2E9B00CD48AE;
+			remoteInfo = test;
+		};
+		AA5DAFEB1F2E2FD500CD48AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AAE4CCE51F2A721000233143 /* sftpfs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AAF4A89D1F266C150089B89F;
+			remoteInfo = sftpfs;
+		};
 		AAC466D91F0CBEA5002088B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
@@ -269,6 +289,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
+				AA5DAFE71F2E2E9B00CD48AE /* SFTPFS.xpc in Embed XPC Services */,
 			);
 			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +389,12 @@
 		AA58D2D71E82DBE4002D56E0 /* EncryptionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EncryptionView.xib; path = "Encryption Tab/EncryptionView.xib"; sourceTree = "<group>"; };
 		AA58D2DA1E82DC15002D56E0 /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusViewController.swift; path = "Status TAb/StatusViewController.swift"; sourceTree = "<group>"; };
 		AA58D2DB1E82DC15002D56E0 /* StatusView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StatusView.xib; path = "Status TAb/StatusView.xib"; sourceTree = "<group>"; };
+		AA5DAFDC1F2E2E9B00CD48AE /* SFTPFS.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = SFTPFS.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA5DAFE41F2E2E9B00CD48AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA5DAFEF1F2E301500CD48AE /* SFTPFS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SFTPFS.entitlements; sourceTree = "<group>"; };
+		AA5DAFF11F2E34BE00CD48AE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		AA5DAFF31F2E34E700CD48AE /* SFTPFSDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFTPFSDelegate.swift; sourceTree = "<group>"; };
+		AA5DAFF51F2E36C700CD48AE /* SFTPFSXPCProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SFTPFSXPCProtocol.swift; path = Shared/SFTPFSXPCProtocol.swift; sourceTree = "<group>"; };
 		AA650CF11D73A29A008DA5CB /* Changelog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
 		AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+next.swift"; path = "Shared/NSDate+next.swift"; sourceTree = "<group>"; };
 		AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = ServiceManager/ServiceManager.swift; sourceTree = "<group>"; };
@@ -455,6 +482,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				69AB0CB9201703699449D0B7 /* Pods_SafeDriveTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA5DAFD91F2E2E9B00CD48AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA5DAFED1F2E2FDC00CD48AE /* sftpfs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +600,7 @@
 				AA88C0091F1B222B0025F1D7 /* SafeDrive.d */,
 				AA3168291A191B72006CC0EB /* SafeDriveTests */,
 				AAF946001C815D5A00B972C3 /* Finder */,
+				AA5DAFDD1F2E2E9B00CD48AE /* SFTPFS-XPC */,
 				5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */,
 				AA3168141A191B72006CC0EB /* Products */,
 				7DDFAD6B58FAFDC1F557BEDC /* Pods */,
@@ -578,6 +614,7 @@
 				AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */,
 				AAF945FF1C815D5A00B972C3 /* SafeDrive.appex */,
 				AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
+				AA5DAFDC1F2E2E9B00CD48AE /* SFTPFS.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -696,6 +733,7 @@
 				AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */,
 				AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */,
 				AA11653B1F256F1600B7D8EF /* Semver.swift */,
+				AA5DAFF51F2E36C700CD48AE /* SFTPFSXPCProtocol.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -766,6 +804,17 @@
 			);
 			name = XPC;
 			path = ServiceRouter;
+			sourceTree = "<group>";
+		};
+		AA5DAFDD1F2E2E9B00CD48AE /* SFTPFS-XPC */ = {
+			isa = PBXGroup;
+			children = (
+				AA5DAFEF1F2E301500CD48AE /* SFTPFS.entitlements */,
+				AA5DAFE41F2E2E9B00CD48AE /* Info.plist */,
+				AA5DAFF11F2E34BE00CD48AE /* main.swift */,
+				AA5DAFF31F2E34E700CD48AE /* SFTPFSDelegate.swift */,
+			);
+			path = "SFTPFS-XPC";
 			sourceTree = "<group>";
 		};
 		AA61F8481C05356D00D992FE /* SyncController */ = {
@@ -940,6 +989,7 @@
 				AA11657F1F25B50C00B7D8EF /* PBXTargetDependency */,
 				AAC466DA1F0CBEA5002088B6 /* PBXTargetDependency */,
 				AAF946071C815D5A00B972C3 /* PBXTargetDependency */,
+				AA5DAFE61F2E2E9B00CD48AE /* PBXTargetDependency */,
 			);
 			name = SafeDrive;
 			productName = SafeDrive;
@@ -966,6 +1016,23 @@
 			productName = SafeDriveTests;
 			productReference = AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AA5DAFDB1F2E2E9B00CD48AE /* SFTPFS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA5DAFEA1F2E2E9B00CD48AE /* Build configuration list for PBXNativeTarget "SFTPFS" */;
+			buildPhases = (
+				AA5DAFD81F2E2E9B00CD48AE /* Sources */,
+				AA5DAFD91F2E2E9B00CD48AE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA5DAFEC1F2E2FD500CD48AE /* PBXTargetDependency */,
+			);
+			name = SFTPFS;
+			productName = test;
+			productReference = AA5DAFDC1F2E2E9B00CD48AE /* SFTPFS.xpc */;
+			productType = "com.apple.product-type.xpc-service";
 		};
 		AAC466C61F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */ = {
 			isa = PBXNativeTarget;
@@ -1018,6 +1085,7 @@
 					AA11657A1F25B4C700B7D8EF = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = G738Z89QKM;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					AA3168121A191B72006CC0EB = {
@@ -1043,6 +1111,17 @@
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 						TestTargetID = AA3168121A191B72006CC0EB;
+					};
+					AA5DAFDB1F2E2E9B00CD48AE = {
+						CreatedOnToolsVersion = 9.0;
+						DevelopmentTeam = G738Z89QKM;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.Mac = {
+								enabled = 1;
+							};
+						};
 					};
 					AAC466C61F0C9BFD002088B6 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -1086,6 +1165,7 @@
 				AAF945FE1C815D5A00B972C3 /* SafeDriveFinder */,
 				AAC466C61F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
 				AA11657A1F25B4C700B7D8EF /* SDDK */,
+				AA5DAFDB1F2E2E9B00CD48AE /* SFTPFS */,
 			);
 		};
 /* End PBXProject section */
@@ -1361,6 +1441,7 @@
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AA6E27301D87855100038019 /* MountController.swift in Sources */,
 				AA11653C1F256F1600B7D8EF /* Semver.swift in Sources */,
+				AA5DAFF61F2E36C700CD48AE /* SFTPFSXPCProtocol.swift in Sources */,
 				AA4F8FCA1E6A429100BB068A /* SoftwareClientTableCellView.swift in Sources */,
 				AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */,
 				AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */,
@@ -1443,6 +1524,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA5DAFD81F2E2E9B00CD48AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA5DAFF71F2E36C700CD48AE /* SFTPFSXPCProtocol.swift in Sources */,
+				AA5DAFF41F2E34E700CD48AE /* SFTPFSDelegate.swift in Sources */,
+				AA5DAFF81F2E395C00CD48AE /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AAC466C31F0C9BFD002088B6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1501,6 +1592,16 @@
 			target = AA3168121A191B72006CC0EB /* SafeDrive */;
 			targetProxy = AA1A46071BED8521004A5310 /* PBXContainerItemProxy */;
 		};
+		AA5DAFE61F2E2E9B00CD48AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA5DAFDB1F2E2E9B00CD48AE /* SFTPFS */;
+			targetProxy = AA5DAFE51F2E2E9B00CD48AE /* PBXContainerItemProxy */;
+		};
+		AA5DAFEC1F2E2FD500CD48AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = sftpfs;
+			targetProxy = AA5DAFEB1F2E2FD500CD48AE /* PBXContainerItemProxy */;
+		};
 		AAC466DA1F0CBEA5002088B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AAC466C61F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */;
@@ -1548,15 +1649,20 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEBUGGING_SYMBOLS = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = G738Z89QKM;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "test/SDDK-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1565,13 +1671,17 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = G738Z89QKM;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "test/SDDK-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1681,7 +1791,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3A6E325ECFDFC6166274A27C /* Pods-SafeDrive.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1749,7 +1859,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 81810F9B8E9F2AB8468A4A0C /* Pods-SafeDrive.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1861,6 +1971,87 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "SafeDrive/SafeDrive-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SafeDrive.app/Contents/MacOS/SafeDrive";
+			};
+			name = Release;
+		};
+		AA5DAFE81F2E2E9B00CD48AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "SFTPFS-XPC/SFTPFS.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = G738Z89QKM;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				INFOPLIST_FILE = "SFTPFS-XPC/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.SFTPFS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		AA5DAFE91F2E2E9B00CD48AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "SFTPFS-XPC/SFTPFS.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = G738Z89QKM;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				INFOPLIST_FILE = "SFTPFS-XPC/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.SFTPFS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -2003,6 +2194,15 @@
 			buildConfigurations = (
 				AA3168341A191B72006CC0EB /* Debug */,
 				AA3168351A191B72006CC0EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA5DAFEA1F2E2E9B00CD48AE /* Build configuration list for PBXNativeTarget "SFTPFS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA5DAFE81F2E2E9B00CD48AE /* Debug */,
+				AA5DAFE91F2E2E9B00CD48AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
