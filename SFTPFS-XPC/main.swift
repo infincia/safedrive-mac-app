@@ -18,7 +18,7 @@ if #available(OSX 10.12, *) {
 
 let listenerDelegate = SFTPFSDelegate()
 
-let listener = NSXPCListener(machServiceName: bundleId)
+let listener = NSXPCListener.service()
 
 listener.delegate = listenerDelegate
 listener.resume()
