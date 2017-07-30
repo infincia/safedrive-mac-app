@@ -28,11 +28,8 @@
 		AA11655B1F25B0B600B7D8EF /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165531F25B0B600B7D8EF /* Models.swift */; };
 		AA11655C1F25B0B600B7D8EF /* SafeDriveSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */; };
 		AA1165601F25B1C100B7D8EF /* libsddk.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11655F1F25B1C100B7D8EF /* libsddk.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AA1165781F25B48F00B7D8EF /* libsddk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA11655F1F25B1C100B7D8EF /* libsddk.dylib */; };
-		AA1165791F25B49200B7D8EF /* libsddk.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11655F1F25B1C100B7D8EF /* libsddk.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA11658A1F25C56700B7D8EF /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = AA1165891F25C56700B7D8EF /* .swiftlint.yml */; };
 		AA11658B1F25C8D300B7D8EF /* libsddk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA11655F1F25B1C100B7D8EF /* libsddk.dylib */; };
-		AA1165911F25CDDE00B7D8EF /* SafeDriveSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */; };
 		AA16CE351F2A774400CD2399 /* sftpfs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE4CCEA1F2A721000233143 /* sftpfs.framework */; };
 		AA16CE361F2A775100CD2399 /* sftpfs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAE4CCEA1F2A721000233143 /* sftpfs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA16CE371F2ABC6100CD2399 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165531F25B0B600B7D8EF /* Models.swift */; };
@@ -321,7 +318,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AA1165791F25B49200B7D8EF /* libsddk.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,7 +500,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA1165781F25B48F00B7D8EF /* libsddk.dylib in Frameworks */,
 				012DA754E2ED03C676FA00B2 /* Pods_SafeDriveFinder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1562,7 +1557,6 @@
 				AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */,
 				AAD44A281D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */,
-				AA1165911F25CDDE00B7D8EF /* SafeDriveSDK.swift in Sources */,
 				AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */,
 				AA88DD0E1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */,
 				AA88DD101F0C052D00C4858E /* FinderXPCDelegate.swift in Sources */,
