@@ -58,6 +58,10 @@ class MountController: NSObject {
         return UserDefaults.standard.bool(forKey: useSFTPFSKey())
     }
     
+    var useService: Bool {
+        return UserDefaults.standard.bool(forKey: useServiceKey())
+    }
+    
     var useCache: Bool {
         return UserDefaults.standard.bool(forKey: useCacheKey())
     }
