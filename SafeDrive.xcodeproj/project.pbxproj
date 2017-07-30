@@ -803,7 +803,7 @@
 				AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */,
 			);
 			name = XPC;
-			path = ServiceRouter;
+			path = XPCHandlers;
 			sourceTree = "<group>";
 		};
 		AA5DAFDD1F2E2E9B00CD48AE /* SFTPFS-XPC */ = {
