@@ -456,6 +456,7 @@
 		AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncScheduler.swift; sourceTree = "<group>"; };
 		AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SafeDrive-Bridging-Header.h"; sourceTree = "<group>"; };
 		AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTableCellView.swift; sourceTree = "<group>"; };
+		AAFE6EC71F2E556C00490179 /* SFTPFSService-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SFTPFSService-Bridging-Header.h"; sourceTree = "<group>"; };
 		AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "update-version.sh"; sourceTree = "<group>"; };
 		ACCC0E28E50D1255EF3C3795 /* Pods_SafeDriveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDriveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF645A5D1DBC0CEBA60654F /* Pods-SafeDriveFinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveFinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveFinder/Pods-SafeDriveFinder.debug.xcconfig"; sourceTree = "<group>"; };
@@ -808,6 +809,7 @@
 				AA5DAFE41F2E2E9B00CD48AE /* Info.plist */,
 				AA5DAFF11F2E34BE00CD48AE /* main.swift */,
 				AA5DAFF31F2E34E700CD48AE /* SFTPFSDelegate.swift */,
+				AAFE6EC71F2E556C00490179 /* SFTPFSService-Bridging-Header.h */,
 			);
 			path = "SFTPFS-XPC";
 			sourceTree = "<group>";
@@ -2002,7 +2004,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SFTPFS-XPC/SFTPFSService-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				SWIFT_VERSION = 3.0;
@@ -2043,7 +2045,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SFTPFS-XPC/SFTPFSService-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				SWIFT_VERSION = 3.0;
 			};
