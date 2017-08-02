@@ -19,7 +19,9 @@ public typealias SDKFailure = (_ error: SDKError) -> Void
 
 public typealias SDKAddSyncFolderSuccess = (_ folderID: UInt64) -> Void
 
-public typealias SDKSyncSessionProgress = @convention(block) (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double) -> Void
+public typealias SDKSyncSessionProgress = @convention(block) (_ total: UInt64, _ current: UInt64, _ new: UInt64) -> Void
+
+public typealias SDKSyncSessionBandwidth = @convention(block) (_ speed: UInt64) -> Void
 
 public typealias SDKSyncSessionIssue = @convention(block) (_ message: String) -> Void
 

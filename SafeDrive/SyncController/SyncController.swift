@@ -164,17 +164,21 @@ class SyncController: Equatable {
         var last_update = Date()
 
         if self.restore {            
-            self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: self.destination, sessionSize: self.spaceNeeded, completionQueue: syncProgressQueue, progress: { (total, current, new, percent) in
+            self.sdk.restoreFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, destination: self.destination, sessionSize: self.spaceNeeded, completionQueue: syncProgressQueue, progress: { (total, current, new) in
                 let now = Date()
                 let d = now.timeIntervalSince(last_update)
                 if d > 1 {
                     last_update = Date()
                     let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(Double(current) / d), countStyle: ByteCountFormatter.CountStyle.decimal)
                     let bandwidth = "\(average_bandwidth)/s"
+                    let percent = Double(current / total) * 100.0
                     (self.syncProgressQueue).async {
                         progressBlock(total, current, new, percent, bandwidth)
                     }
                 }
+            }, bandwidth: { (speed) in
+                let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(speed), countStyle: ByteCountFormatter.CountStyle.decimal)
+                let bandwidth = "\(average_bandwidth)/s"
             }, issue: { (message) in
                 (self.syncProgressQueue).async {
                     issueBlock(message)
@@ -185,17 +189,21 @@ class SyncController: Equatable {
                 failureBlock(self.localURL, error)
             })
         } else {
-            self.sdk.syncFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, completionQueue: syncProgressQueue, progress: { (total, current, new, percent) in
+            self.sdk.syncFolder(folderID: UInt64(self.uniqueID), sessionName: self.uuid, completionQueue: syncProgressQueue, progress: { (total, current, new) in
                 let now = Date()
                 let d = now.timeIntervalSince(last_update)
                 if d > 1 {
                     last_update = Date()
                     let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(Double(current) / d), countStyle: ByteCountFormatter.CountStyle.decimal)
                     let bandwidth = "\(average_bandwidth)/s"
+                    let percent = Double(current / total) * 100.0
                     (self.syncProgressQueue).async {
                         progressBlock(total, current, new, percent, bandwidth)
                     }
                 }
+            }, bandwidth: { (speed) in
+                let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(speed), countStyle: ByteCountFormatter.CountStyle.decimal)
+                let bandwidth = "\(average_bandwidth)/s"
             }, issue: { (message) in
                 (self.syncProgressQueue).async {
                     issueBlock(message)

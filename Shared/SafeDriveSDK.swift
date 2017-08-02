@@ -154,15 +154,15 @@ public class SafeDriveSDK: NSObject {
                                      unsafeBitCast(issue, to: UnsafeMutableRawPointer.self),
                                      self.state!,
                                      &error,
-                                     recoveryPhrase, { (context, context2, phrase) in
+                                     recoveryPhrase, { (context, phrase) in
                 // call back to Swift to save the phrase somewhere
                 let b = unsafeBitCast(context, to: SDKSaveRecoveryPhrase.self)
                 let p = String(cString: phrase!)
                 var m = phrase
                 b(p)
-            }, { (_, context2, message) in
+            }, { (context, message) in
                 // call back to Swift to report the issue
-                let b = unsafeBitCast(context2, to: SDKIssue.self)
+                let b = unsafeBitCast(context, to: SDKIssue.self)
                 let p = String(cString: message!)
                 var m = message
                 b(p)
@@ -530,24 +530,28 @@ public class SafeDriveSDK: NSObject {
         }
     }
     
-    public func syncFolder(folderID: UInt64, sessionName: String, completionQueue queue: DispatchQueue, progress: @escaping SDKSyncSessionProgress, issue: @escaping SDKSyncSessionIssue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
+    public func syncFolder(folderID: UInt64, sessionName: String, completionQueue queue: DispatchQueue, progress: @escaping SDKSyncSessionProgress, bandwidth: @escaping SDKSyncSessionBandwidth, issue: @escaping SDKSyncSessionIssue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
         
         background {
             var error: UnsafeMutablePointer<SDDKError>? = nil
 
             let res = sddk_sync(unsafeBitCast(progress, to: UnsafeMutableRawPointer.self),
+                                unsafeBitCast(bandwidth, to: UnsafeMutableRawPointer.self),
                                 unsafeBitCast(issue, to: UnsafeMutableRawPointer.self),
                                 self.state!,
                                 &error,
                                 sessionName,
-                                folderID, { (context, _, total, current, new, percent, _) in
+                                folderID, { (context, total, current, new) in
                 // call back to Swift to report progress
                 let b = unsafeBitCast(context, to: SDKSyncSessionProgress.self)
-                b(total, current, new, percent)
-            }, { (_, context2, message) in
+                b(total, current, new)
+            }, { (context, speed) in
+                let b = unsafeBitCast(context, to: SDKSyncSessionBandwidth.self)
+                b(speed)
+            }, { (context, message) in
                 let m = String(cString: message!)
 
-                let b = unsafeBitCast(context2, to: SDKSyncSessionIssue.self)
+                let b = unsafeBitCast(context, to: SDKSyncSessionIssue.self)
                 b(m)
             })
             defer {
@@ -566,27 +570,31 @@ public class SafeDriveSDK: NSObject {
 
     }
     
-    public func restoreFolder(folderID: UInt64, sessionName: String, destination: URL, sessionSize: UInt64, completionQueue queue: DispatchQueue, progress: @escaping SDKSyncSessionProgress, issue: @escaping SDKSyncSessionIssue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
+    public func restoreFolder(folderID: UInt64, sessionName: String, destination: URL, sessionSize: UInt64, completionQueue queue: DispatchQueue, progress: @escaping SDKSyncSessionProgress, bandwidth: @escaping SDKSyncSessionBandwidth, issue: @escaping SDKSyncSessionIssue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
         
         background {
         
             var error: UnsafeMutablePointer<SDDKError>? = nil
 
             let res = sddk_restore(unsafeBitCast(progress, to: UnsafeMutableRawPointer.self),
+                                   unsafeBitCast(bandwidth, to: UnsafeMutableRawPointer.self),
                                    unsafeBitCast(issue, to: UnsafeMutableRawPointer.self),
                                    self.state!,
                                    &error,
                                    sessionName,
                                    folderID,
                                    destination.path,
-                                   sessionSize, { (context, _, total, current, new, percent, _) in
+                                   sessionSize, { (context, total, current, new) in
                 // call back to Swift to report progress
                 let b = unsafeBitCast(context, to: SDKSyncSessionProgress.self)
-                b(total, current, new, percent)
-            }, { (_, context2, message) in
+                b(total, current, new)
+            }, { (context, speed) in
+                let b = unsafeBitCast(context, to: SDKSyncSessionBandwidth.self)
+                b(speed)
+            }, { (context, message) in
                 let m = String(cString: message!)
 
-                let b = unsafeBitCast(context2, to: SDKSyncSessionIssue.self)
+                let b = unsafeBitCast(context, to: SDKSyncSessionIssue.self)
                 b(m)
             })
             defer {
