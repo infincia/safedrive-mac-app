@@ -669,7 +669,19 @@ class MountController: NSObject {
                 Crashlytics.sharedInstance().crash()
                 return
         }
-        
+        guard let volicon = Bundle.main.url(forResource: "sd", withExtension: "icns") else {
+            let message = NSLocalizedString("Volume icon missing, contact SafeDrive support", comment: "")
+            let error = SDError(message: message, kind: .configMissing)
+            SDLog("\(error)")
+            let notification = NSUserNotification()
+
+            notification.informativeText = error.localizedDescription
+            notification.title = "SafeDrive mount error"
+            notification.soundName = NSUserNotificationDefaultSoundName
+            NSUserNotificationCenter.default.deliver(notification)
+            
+            return
+        }
         
     
         self.mounting = true
@@ -693,6 +705,8 @@ class MountController: NSObject {
           self.sftpfs = ManagedSFTPFS.withMountpoint(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port as NSNumber)
             
             self.sftpfs?.setUseCache(self.useCache)
+            
+            self.sftpfs?.setIcon(volicon)
             
             self.sftpfs?.connect()
             
@@ -720,6 +734,8 @@ class MountController: NSObject {
                 
                 proxy.setUseCache(self.useCache)
                 
+                proxy.setIcon(volicon)
+
                 proxy.connect()
             }
             

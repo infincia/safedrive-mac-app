@@ -38,6 +38,10 @@ class SFTPFSDelegate: NSObject, NSXPCListenerDelegate, SFTPFSXPCProtocol {
         ProcessInfo.processInfo.enableSuddenTermination()
     }
     
+    func setIcon(_ url: URL) {
+        self.sftpfs?.setIcon(url)
+    }
+
     func useCache(reply replyBlock: @escaping (Bool)-> Void) {
         if let state = self.sftpfs?.useCache() {
             replyBlock(state)

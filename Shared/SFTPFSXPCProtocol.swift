@@ -17,6 +17,8 @@ let kSFTPFSXPCProtocolVersion: Int = 7
     
     func disconnect()
     
+    func setIcon(_ url: URL)
+
     func useCache(reply replyBlock: @escaping (Bool) -> Void)
     
     func setUseCache(_ state: Bool)
