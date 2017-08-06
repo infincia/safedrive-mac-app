@@ -129,13 +129,16 @@ class SyncController: Equatable {
         }
     }
     
-    func startSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double, _ bandwidth: String) -> Void,
+    func startSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double) -> Void,
+                       bandwidth bandwidthBlock: @escaping (_ bandwidth: String) -> Void,
                        issue issueBlock: @escaping (_ message: String) -> Void,
                        success successBlock: @escaping (_ local: URL) -> Void,
                        failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
         if self.encrypted {
-            startEncryptedSyncTask(progress: { (total, current, new, percent, bandwidth) in
-                progressBlock(total, current, new, percent, bandwidth)
+            startEncryptedSyncTask(progress: { (total, current, new, percent) in
+                progressBlock(total, current, new, percent)
+            }, bandwidth: { (speed) in
+                bandwidthBlock(speed)
             }, issue: { (message) in
                 issueBlock(message)
             }, success: { (url) in
@@ -144,8 +147,9 @@ class SyncController: Equatable {
                 failureBlock(url, error)
             })
         } else {
-            startUnencryptedSyncTask(progress: { (total, current, new, percent, bandwidth) in
-                progressBlock(total, current, new, percent, bandwidth)
+            startUnencryptedSyncTask(progress: { (total, current, new, percent, speed) in
+                progressBlock(total, current, new, percent)
+                bandwidthBlock(speed)
             }, issue: { (message) in
                 issueBlock(message)
             }, success: { (url) in
@@ -157,7 +161,8 @@ class SyncController: Equatable {
         
     }
     
-    fileprivate func startEncryptedSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double, _ bandwidth: String) -> Void,
+    fileprivate func startEncryptedSyncTask(progress progressBlock: @escaping (_ total: UInt64, _ current: UInt64, _ new: UInt64, _ percent: Double) -> Void,
+                                            bandwidth bandwidthBlock: @escaping (_ bandwidth: String) -> Void,
                                             issue issueBlock: @escaping (_ message: String) -> Void,
                                             success successBlock: @escaping (_ local: URL) -> Void,
                                             failure failureBlock: @escaping (_ local: URL, _ error: Error) -> Void) {
@@ -169,16 +174,15 @@ class SyncController: Equatable {
                 let d = now.timeIntervalSince(last_update)
                 if d > 1 {
                     last_update = Date()
-                    let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(Double(current) / d), countStyle: ByteCountFormatter.CountStyle.decimal)
-                    let bandwidth = "\(average_bandwidth)/s"
                     let percent = Double(current / total) * 100.0
                     (self.syncProgressQueue).async {
-                        progressBlock(total, current, new, percent, bandwidth)
+                        progressBlock(total, current, new, percent)
                     }
                 }
             }, bandwidth: { (speed) in
                 let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(speed), countStyle: ByteCountFormatter.CountStyle.decimal)
                 let bandwidth = "\(average_bandwidth)/s"
+                bandwidthBlock(bandwidth)
             }, issue: { (message) in
                 (self.syncProgressQueue).async {
                     issueBlock(message)
@@ -194,16 +198,15 @@ class SyncController: Equatable {
                 let d = now.timeIntervalSince(last_update)
                 if d > 1 {
                     last_update = Date()
-                    let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(Double(current) / d), countStyle: ByteCountFormatter.CountStyle.decimal)
-                    let bandwidth = "\(average_bandwidth)/s"
                     let percent = Double(current / total) * 100.0
                     (self.syncProgressQueue).async {
-                        progressBlock(total, current, new, percent, bandwidth)
+                        progressBlock(total, current, new, percent)
                     }
                 }
             }, bandwidth: { (speed) in
                 let average_bandwidth = ByteCountFormatter.string(fromByteCount: Int64(speed), countStyle: ByteCountFormatter.CountStyle.decimal)
                 let bandwidth = "\(average_bandwidth)/s"
+                bandwidthBlock(bandwidth)
             }, issue: { (message) in
                 (self.syncProgressQueue).async {
                     issueBlock(message)

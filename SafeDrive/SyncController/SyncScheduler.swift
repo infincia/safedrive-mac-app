@@ -349,17 +349,21 @@ class SyncScheduler {
                 NotificationCenter.default.post(name: Notification.Name.syncEvent, object: folderID)
             }
 
-            syncController.startSyncTask(progress: { (_, _, _, percent, bandwidth) in
+            syncController.startSyncTask(progress: { (_, _, _, percent) in
                 // use for updating sync progress
                 // WARNING: this block may be called more often than once per second on a background serial queue, DO NOT block it for long
                 
-                task.bandwidth = bandwidth
                 task.progress = percent
                 
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: Notification.Name.syncEvent, object: folderID)
                 }
+            }, bandwidth: { (speed) in
                 
+                task.bandwidth = speed
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: Notification.Name.syncEvent, object: folderID)
+                }
             }, issue: { (message) in
 
                 task.log(message: message + "\n")
