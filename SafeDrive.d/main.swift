@@ -1,10 +1,7 @@
+
+//  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
-//  main.swift
-//  SafeDrive.Helper
-//
-//  Created by steve on 7/5/17.
-//  Copyright © 2017 Infincia LLC. All rights reserved.
-//
+
 
 import Foundation
 
