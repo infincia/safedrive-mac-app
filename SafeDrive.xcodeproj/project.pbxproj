@@ -1027,7 +1027,7 @@
 				AA5DAFEC1F2E2FD500CD48AE /* PBXTargetDependency */,
 			);
 			name = SFTPFSService;
-			productName = test;
+			productName = SFTPFSService;
 			productReference = AA5DAFDC1F2E2E9B00CD48AE /* SFTPFSService.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
