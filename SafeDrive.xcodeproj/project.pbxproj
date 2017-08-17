@@ -36,6 +36,13 @@
 		AA16CE381F2ABC6400CD2399 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165521F25B0B600B7D8EF /* Errors.swift */; };
 		AA16CE391F2ABC6600CD2399 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165511F25B0B600B7D8EF /* Constants.swift */; };
 		AA16CE3A1F2ABC6A00CD2399 /* SafeDriveSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */; };
+		AA192C001F37C64A0037245A /* IPCService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = AA192BF51F37C64A0037245A /* IPCService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AA192C081F37C7800037245A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C061F37C7800037245A /* main.swift */; };
+		AA192C091F37C7800037245A /* IPCListenerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C071F37C7800037245A /* IPCListenerDelegate.swift */; };
+		AA192C0B1F37C9280037245A /* IPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C0A1F37C9280037245A /* IPCProtocol.swift */; };
+		AA192C0C1F37C9430037245A /* IPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C0A1F37C9280037245A /* IPCProtocol.swift */; };
+		AA192C0D1F37C9470037245A /* IPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C0A1F37C9280037245A /* IPCProtocol.swift */; };
+		AA192C0F1F37CA890037245A /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
 		AA2A42221F2315DA00CC6010 /* AddFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42201F2315DA00CC6010 /* AddFolderWindow.xib */; };
 		AA2A42241F23281400CC6010 /* AddFolderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A42211F2315DA00CC6010 /* AddFolderWindowController.swift */; };
@@ -210,6 +217,13 @@
 			remoteGlobalIDString = AAF4A89D1F266C150089B89F;
 			remoteInfo = sftpfs;
 		};
+		AA192BFE1F37C64A0037245A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA192BF41F37C64A0037245A;
+			remoteInfo = IPCService;
+		};
 		AA1A46071BED8521004A5310 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AA31680B1A191B72006CC0EB /* Project object */;
@@ -286,6 +300,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
+				AA192C001F37C64A0037245A /* IPCService.xpc in Embed XPC Services */,
 				AA5DAFE71F2E2E9B00CD48AE /* SFTPFSService.xpc in Embed XPC Services */,
 			);
 			name = "Embed XPC Services";
@@ -348,6 +363,12 @@
 		AA11656F1F25B21D00B7D8EF /* io.safedrive.SafeDrive.sshfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.sshfs; path = "safedrive-sdk/target/x86_64-apple-darwin/release/io.safedrive.SafeDrive.sshfs"; sourceTree = "<group>"; };
 		AA1165881F25B7C900B7D8EF /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 		AA1165891F25C56700B7D8EF /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		AA192BF51F37C64A0037245A /* IPCService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = IPCService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA192BFD1F37C64A0037245A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA192C051F37C7800037245A /* IPCService.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = IPCService.entitlements; sourceTree = "<group>"; };
+		AA192C061F37C7800037245A /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		AA192C071F37C7800037245A /* IPCListenerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPCListenerDelegate.swift; sourceTree = "<group>"; };
+		AA192C0A1F37C9280037245A /* IPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IPCProtocol.swift; path = Shared/IPCProtocol.swift; sourceTree = "<group>"; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
 		AA272A051F09B01900B47673 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		AA272A0A1F09C55100B47673 /* push.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = push.sh; sourceTree = "<group>"; };
@@ -464,6 +485,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AA192BF21F37C64A0037245A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA3168101A191B72006CC0EB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -545,6 +573,17 @@
 			path = SDDK;
 			sourceTree = "<group>";
 		};
+		AA192BF61F37C64A0037245A /* IPCService */ = {
+			isa = PBXGroup;
+			children = (
+				AA192C051F37C7800037245A /* IPCService.entitlements */,
+				AA192C071F37C7800037245A /* IPCListenerDelegate.swift */,
+				AA192C061F37C7800037245A /* main.swift */,
+				AA192BFD1F37C64A0037245A /* Info.plist */,
+			);
+			path = IPCService;
+			sourceTree = "<group>";
+		};
 		AA2A421F1F2315C400CC6010 /* Add Folder Window */ = {
 			isa = PBXGroup;
 			children = (
@@ -597,6 +636,7 @@
 				AA3168291A191B72006CC0EB /* SafeDriveTests */,
 				AAF946001C815D5A00B972C3 /* Finder */,
 				AA5DAFDD1F2E2E9B00CD48AE /* SFTPFS-XPC */,
+				AA192BF61F37C64A0037245A /* IPCService */,
 				5FC4E43BDEE8F39CFAF5A5C2 /* Frameworks */,
 				AA3168141A191B72006CC0EB /* Products */,
 				7DDFAD6B58FAFDC1F557BEDC /* Pods */,
@@ -611,6 +651,7 @@
 				AAF945FF1C815D5A00B972C3 /* SafeDrive.appex */,
 				AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
 				AA5DAFDC1F2E2E9B00CD48AE /* SFTPFSService.xpc */,
+				AA192BF51F37C64A0037245A /* IPCService.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -726,6 +767,7 @@
 				AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */,
 				AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */,
 				AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */,
+				AA192C0A1F37C9280037245A /* IPCProtocol.swift */,
 				AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */,
 				AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */,
 				AA11653B1F256F1600B7D8EF /* Semver.swift */,
@@ -960,6 +1002,23 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
+		AA192BF41F37C64A0037245A /* IPCService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA192C031F37C64A0037245A /* Build configuration list for PBXNativeTarget "IPCService" */;
+			buildPhases = (
+				AA192BF11F37C64A0037245A /* Sources */,
+				AA192BF21F37C64A0037245A /* Frameworks */,
+				AA192BF31F37C64A0037245A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IPCService;
+			productName = IPCService;
+			productReference = AA192BF51F37C64A0037245A /* IPCService.xpc */;
+			productType = "com.apple.product-type.xpc-service";
+		};
 		AA3168121A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA3168301A191B72006CC0EB /* Build configuration list for PBXNativeTarget "SafeDrive" */;
@@ -987,6 +1046,7 @@
 				AAC466DA1F0CBEA5002088B6 /* PBXTargetDependency */,
 				AAF946071C815D5A00B972C3 /* PBXTargetDependency */,
 				AA5DAFE61F2E2E9B00CD48AE /* PBXTargetDependency */,
+				AA192BFF1F37C64A0037245A /* PBXTargetDependency */,
 			);
 			name = SafeDrive;
 			productName = SafeDrive;
@@ -1085,6 +1145,17 @@
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
+					AA192BF41F37C64A0037245A = {
+						CreatedOnToolsVersion = 9.0;
+						DevelopmentTeam = G738Z89QKM;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
 					AA3168121A191B72006CC0EB = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = G738Z89QKM;
@@ -1163,6 +1234,7 @@
 				AAC466C61F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
 				AA11657A1F25B4C700B7D8EF /* SDDK */,
 				AA5DAFDB1F2E2E9B00CD48AE /* SFTPFSService */,
+				AA192BF41F37C64A0037245A /* IPCService */,
 			);
 		};
 /* End PBXProject section */
@@ -1178,6 +1250,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AA192BF31F37C64A0037245A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA3168111A191B72006CC0EB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1405,6 +1484,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AA192BF11F37C64A0037245A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA192C081F37C7800037245A /* main.swift in Sources */,
+				AA192C0B1F37C9280037245A /* IPCProtocol.swift in Sources */,
+				AA192C091F37C7800037245A /* IPCListenerDelegate.swift in Sources */,
+				AA192C0F1F37CA890037245A /* FinderXPCProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA31680F1A191B72006CC0EB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1422,6 +1512,7 @@
 				AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */,
 				AA6C5BBD1C9125D4001C2869 /* ServiceManager.swift in Sources */,
 				AABF04AA1E6CC46E0084DF81 /* FailedViewController.swift in Sources */,
+				AA192C0C1F37C9430037245A /* IPCProtocol.swift in Sources */,
 				AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */,
 				AAD69F181E665B4400FAB196 /* RunningProcessCheck.swift in Sources */,
@@ -1549,6 +1640,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA192C0D1F37C9470037245A /* IPCProtocol.swift in Sources */,
 				AA6E272E1D876DD800038019 /* Notifications.swift in Sources */,
 				AA11655B1F25B0B600B7D8EF /* Models.swift in Sources */,
 				AA1165571F25B0B600B7D8EF /* Constants.swift in Sources */,
@@ -1582,6 +1674,11 @@
 			isa = PBXTargetDependency;
 			name = sftpfs;
 			targetProxy = AA16CE321F2A773D00CD2399 /* PBXContainerItemProxy */;
+		};
+		AA192BFF1F37C64A0037245A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA192BF41F37C64A0037245A /* IPCService */;
+			targetProxy = AA192BFE1F37C64A0037245A /* PBXContainerItemProxy */;
 		};
 		AA1A46081BED8521004A5310 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1678,6 +1775,67 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "test/SDDK-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		AA192C011F37C64A0037245A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = IPCService/IPCService.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = G738Z89QKM;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IPCService/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = G738Z89QKM.io.safedrive.IPCService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		AA192C021F37C64A0037245A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = IPCService/IPCService.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = G738Z89QKM;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IPCService/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = G738Z89QKM.io.safedrive.IPCService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -2163,6 +2321,15 @@
 			buildConfigurations = (
 				AA11657C1F25B4C700B7D8EF /* Debug */,
 				AA11657D1F25B4C700B7D8EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA192C031F37C64A0037245A /* Build configuration list for PBXNativeTarget "IPCService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA192C011F37C64A0037245A /* Debug */,
+				AA192C021F37C64A0037245A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
