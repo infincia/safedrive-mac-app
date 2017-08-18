@@ -16,6 +16,9 @@ if #available(OSX 10.12, *) {
     NSLog("%@ will start", bundleId)
 }
 
+ProcessInfo.processInfo.disableSuddenTermination()
+
+
 let listenerDelegate = SFTPFSDelegate()
 
 let listener = NSXPCListener.service()
