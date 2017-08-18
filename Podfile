@@ -13,7 +13,7 @@ target 'SafeDrive' do
     pod 'IYLoginItem', '~> 0.1'
     pod 'DCOAboutWindow', '~> 0.2.0'
     pod 'LetsMove', '~> 1.22'
-    pod 'Sparkle', '~> 1.18.0'
+    pod 'Sparkle', '~> 1.18.1'
     pod 'STPrivilegedTask', :git => 'https://github.com/sveinbjornt/STPrivilegedTask.git', :tag => '1.0.6'
     pod 'TSMarkdownParser', '~> 2.1.2'
     pod 'FontAwesomeIconFactory', '~> 2.1.1'
