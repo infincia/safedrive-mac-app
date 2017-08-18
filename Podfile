@@ -17,7 +17,7 @@ target 'SafeDrive' do
     pod 'STPrivilegedTask', :git => 'https://github.com/sveinbjornt/STPrivilegedTask.git', :tag => '1.0.6'
     pod 'TSMarkdownParser', '~> 2.1.2'
     pod 'FontAwesomeIconFactory', '~> 2.1.1'
-    pod 'PromiseKit', :git => 'https://github.com/infincia/PromiseKit.git', :branch => 'infincia', :commit => '31870803665d6207da296dcd65f140547b4cdb08'
+    pod 'PromiseKit', :git => 'https://github.com/infincia/PromiseKit.git', :branch => 'infincia', :commit => 'ecf2619ccc431ea9b55f9d4ffcbc979db47b19ec'
     
     target 'SafeDriveTests' do
         inherit! :search_paths
@@ -28,7 +28,7 @@ end
 target 'SafeDriveFinder' do
     use_frameworks!
     pod 'FontAwesomeIconFactory', '~> 2.1.1'
-    pod 'PromiseKit', :git => 'https://github.com/infincia/PromiseKit.git', :branch => 'infincia', :commit => '31870803665d6207da296dcd65f140547b4cdb08'
+    pod 'PromiseKit', :git => 'https://github.com/infincia/PromiseKit.git', :branch => 'infincia', :commit => 'ecf2619ccc431ea9b55f9d4ffcbc979db47b19ec'
 end
 
 
