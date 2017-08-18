@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AA192BF41F37C64A0037245A"
-               BuildableName = "IPCService.xpc"
+               BuildableName = "IPCService.app"
                BlueprintName = "IPCService"
                ReferencedContainer = "container:SafeDrive.xcodeproj">
             </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA192BF41F37C64A0037245A"
-            BuildableName = "IPCService.xpc"
+            BuildableName = "IPCService.app"
             BlueprintName = "IPCService"
             ReferencedContainer = "container:SafeDrive.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA192BF41F37C64A0037245A"
-            BuildableName = "IPCService.xpc"
+            BuildableName = "IPCService.app"
             BlueprintName = "IPCService"
             ReferencedContainer = "container:SafeDrive.xcodeproj">
          </BuildableReference>

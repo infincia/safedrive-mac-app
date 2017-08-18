@@ -36,7 +36,6 @@
 		AA16CE381F2ABC6400CD2399 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165521F25B0B600B7D8EF /* Errors.swift */; };
 		AA16CE391F2ABC6600CD2399 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165511F25B0B600B7D8EF /* Constants.swift */; };
 		AA16CE3A1F2ABC6A00CD2399 /* SafeDriveSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */; };
-		AA192C001F37C64A0037245A /* IPCService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = AA192BF51F37C64A0037245A /* IPCService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA192C081F37C7800037245A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C061F37C7800037245A /* main.swift */; };
 		AA192C091F37C7800037245A /* IPCListenerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C071F37C7800037245A /* IPCListenerDelegate.swift */; };
 		AA192C0B1F37C9280037245A /* IPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C0A1F37C9280037245A /* IPCProtocol.swift */; };
@@ -44,6 +43,7 @@
 		AA192C0D1F37C9470037245A /* IPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C0A1F37C9280037245A /* IPCProtocol.swift */; };
 		AA192C0F1F37CA890037245A /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
+		AA1E454E1F46AE890092F49D /* IPCService.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA192BF51F37C64A0037245A /* IPCService.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA2A42221F2315DA00CC6010 /* AddFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42201F2315DA00CC6010 /* AddFolderWindow.xib */; };
 		AA2A42241F23281400CC6010 /* AddFolderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A42211F2315DA00CC6010 /* AddFolderWindowController.swift */; };
 		AA2A42281F23AF4E00CC6010 /* VerifyFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42261F23AF4E00CC6010 /* VerifyFolderWindow.xib */; };
@@ -300,7 +300,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				AA192C001F37C64A0037245A /* IPCService.xpc in Embed XPC Services */,
 				AA5DAFE71F2E2E9B00CD48AE /* SFTPFSService.xpc in Embed XPC Services */,
 			);
 			name = "Embed XPC Services";
@@ -312,6 +311,7 @@
 			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
+				AA1E454E1F46AE890092F49D /* IPCService.app in CopyFiles */,
 				AAC466D81F0CBC4D002088B6 /* io.safedrive.SafeDrive.d in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -363,7 +363,7 @@
 		AA11656F1F25B21D00B7D8EF /* io.safedrive.SafeDrive.sshfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.sshfs; path = "safedrive-sdk/target/x86_64-apple-darwin/release/io.safedrive.SafeDrive.sshfs"; sourceTree = "<group>"; };
 		AA1165881F25B7C900B7D8EF /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 		AA1165891F25C56700B7D8EF /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
-		AA192BF51F37C64A0037245A /* IPCService.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = IPCService.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA192BF51F37C64A0037245A /* IPCService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPCService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA192BFD1F37C64A0037245A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA192C051F37C7800037245A /* IPCService.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = IPCService.entitlements; sourceTree = "<group>"; };
 		AA192C061F37C7800037245A /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -651,7 +651,7 @@
 				AAF945FF1C815D5A00B972C3 /* SafeDrive.appex */,
 				AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
 				AA5DAFDC1F2E2E9B00CD48AE /* SFTPFSService.xpc */,
-				AA192BF51F37C64A0037245A /* IPCService.xpc */,
+				AA192BF51F37C64A0037245A /* IPCService.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1016,8 +1016,8 @@
 			);
 			name = IPCService;
 			productName = IPCService;
-			productReference = AA192BF51F37C64A0037245A /* IPCService.xpc */;
-			productType = "com.apple.product-type.xpc-service";
+			productReference = AA192BF51F37C64A0037245A /* IPCService.app */;
+			productType = "com.apple.product-type.application";
 		};
 		AA3168121A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXNativeTarget;
@@ -1807,6 +1807,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
@@ -1837,6 +1838,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};

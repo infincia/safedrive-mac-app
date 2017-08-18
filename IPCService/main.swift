@@ -21,7 +21,7 @@ ProcessInfo.processInfo.disableSuddenTermination()
 
 let listenerDelegate = IPCListenerDelegate()
 
-let listener = NSXPCListener.service()
+let listener = NSXPCListener.init(machServiceName: bundleId)
 
 listener.delegate = listenerDelegate
 listener.resume()
