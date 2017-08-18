@@ -198,7 +198,7 @@ extension AppDelegate: SDApplicationControlProtocol {
     }
     
     // TODO: move to preferences window controller
-    func applicationShouldOpenSyncWindow(_ notification: Foundation.Notification) {
+    @objc func applicationShouldOpenSyncWindow(_ notification: Foundation.Notification) {
         DispatchQueue.main.async {
             NSApp.activate(ignoringOtherApps: true)
             self.preferencesWindowController?.showWindow(nil)

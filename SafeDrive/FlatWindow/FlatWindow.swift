@@ -23,16 +23,20 @@ class FlatWindow: NSWindow {
 
     var keepOnTop: Bool {
         get {
-            return self.level == Int(CGWindowLevelForKey(CGWindowLevelKey.statusWindow))
+            return self.level == NSWindow.Level.modalPanel// Int(CGWindowLevelForKey(CGWindowLevelKey.statusWindow))
         }
         set (newValue) {
-            self.level = Int(CGWindowLevelForKey(CGWindowLevelKey.statusWindow))
+            if newValue {
+                self.level = NSWindow.Level.modalPanel
+            } else {
+                self.level = NSWindow.Level.normal
+            }
         }
     }
     
     override func awakeFromNib() {
         self.isOpaque = false
-        self.closeButton.image = NSImage(named: NSImageNameStopProgressTemplate)
+        self.closeButton.image = NSImage(named: NSImage.Name.stopProgressTemplate)
         self.closeButton.isBordered = false
         self.closeButton.setButtonType(.momentaryChange)
         self.closeButton.target = self
@@ -72,7 +76,7 @@ class FlatWindow: NSWindow {
         }
     }
     
-    func close(_ sender: AnyObject?) {
+    @objc func close(_ sender: AnyObject?) {
         if let delegate = self.delegate {
             if delegate.responds(to: #selector(delegate.windowShouldClose(_:))) {
                 if delegate.windowShouldClose!(self) {

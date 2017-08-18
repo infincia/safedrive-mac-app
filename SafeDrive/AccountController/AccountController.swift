@@ -99,7 +99,7 @@ class AccountController: NSObject {
     }
     
 
-    
+    @objc
     var signedIn: Bool {
         get {
             var s: Bool = false // sane default, signing in twice due to "false negative" doesn't hurt anything

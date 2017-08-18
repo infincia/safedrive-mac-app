@@ -14,7 +14,7 @@ extension RestoreSelectionWindowController: NSTableViewDataSource {
             return nil
         }
         
-        let view = tableView.make(withIdentifier: "RestoreSelectionCellView", owner: self) as! RestoreSelectionTableCellView
+        let view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "RestoreSelectionCellView"), owner: self) as! RestoreSelectionTableCellView
         
         let session = self.sessions[row]
         
@@ -110,12 +110,12 @@ class RestoreSelectionWindowController: NSWindowController {
     weak var restoreSelectionDelegate: RestoreSelectionDelegate?
     
     convenience init() {
-        self.init(windowNibName: "RestoreSelectionWindow")
+        self.init(windowNibName: NSNib.Name(rawValue: "RestoreSelectionWindow"))
     }
     
     
     convenience init?(delegate: RestoreSelectionDelegate, uniqueClientID: String, folder: SDKSyncFolder) {
-        self.init(windowNibName: "RestoreSelectionWindow")
+        self.init(windowNibName: NSNib.Name(rawValue: "RestoreSelectionWindow"))
 
         self.restoreSelectionDelegate = delegate
         
@@ -177,7 +177,7 @@ class RestoreSelectionWindowController: NSWindowController {
         
         // swiftlint:disable force_unwrapping
         panel.beginSheetModal(for: self.window!) { (result)  in
-            if result == NSFileHandlingPanelOKButton {
+            if result.rawValue == NSFileHandlingPanelOKButton {
                 if let new = panel.url {
                     self.destination.url = new
                 }

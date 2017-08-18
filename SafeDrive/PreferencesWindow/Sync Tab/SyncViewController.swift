@@ -70,7 +70,7 @@ class SyncViewController: NSViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -79,10 +79,10 @@ class SyncViewController: NSViewController {
     }
     
     convenience init(delegate: PreferencesViewDelegate) {
-        // swiftlint:disable force_unwrapping
-        self.init(nibName: "SyncView", bundle: nil)!
-        // swiftlint:enable force_unwrapping
 
+        self.init(nibName: NSNib.Name("SyncView"), bundle: nil)
+
+        
         self.delegate = delegate
 
         // register SDAccountProtocol notifications
@@ -159,11 +159,11 @@ class SyncViewController: NSViewController {
             
             var op: SDKRemoteFSOperation
             switch response {
-            case NSAlertFirstButtonReturn:
+            case NSApplication.ModalResponse.alertFirstButtonReturn:
                 return
-            case NSAlertSecondButtonReturn:
+            case NSApplication.ModalResponse.alertSecondButtonReturn:
                 op = .deletePath(recursive: true)
-            case NSAlertThirdButtonReturn:
+            case NSApplication.ModalResponse.alertThirdButtonReturn:
                 op = .moveFolder
             default:
                 return
@@ -292,13 +292,13 @@ class SyncViewController: NSViewController {
             self.delegate.showAlert(alert) { (response) in
                 
                 switch response {
-                case NSAlertFirstButtonReturn:
+                case NSApplication.ModalResponse.alertFirstButtonReturn:
                     return
-                case NSAlertSecondButtonReturn:
+                case NSApplication.ModalResponse.alertSecondButtonReturn:
                     if folder.exists() {
                         let completionQueue = DispatchQueue.main
                         
-                        self.sdk.updateFolder(folder.name, path: folder.path, syncing: true, uniqueID: folderID, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: completionQueue, success: { (_) in
+                        self.sdk.updateFolder(folder.name, path: folder.path, syncing: true, uniqueID: folderID, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: completionQueue, success: {
 
                         }, failure: { (error) in
                             SDErrorHandlerReport(error)
@@ -372,14 +372,14 @@ class SyncViewController: NSViewController {
             self.delegate.showAlert(alert) { (response) in
                 
                 switch response {
-                case NSAlertFirstButtonReturn:
+                case NSApplication.ModalResponse.alertFirstButtonReturn:
                     return
-                case NSAlertSecondButtonReturn:
+                case NSApplication.ModalResponse.alertSecondButtonReturn:
                     
                     if folder.exists() {
                         let completionQueue = DispatchQueue.main
                         
-                        self.sdk.updateFolder(folder.name, path: folder.path, syncing: true, uniqueID: uniqueID, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: completionQueue, success: { (_) in
+                        self.sdk.updateFolder(folder.name, path: folder.path, syncing: true, uniqueID: uniqueID, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: completionQueue, success: { 
 
                         }, failure: { (error) in
                             SDErrorHandlerReport(error)
@@ -431,9 +431,9 @@ class SyncViewController: NSViewController {
         self.delegate.showAlert(alert) { (response) in
             
             switch response {
-            case NSAlertFirstButtonReturn:
+            case NSApplication.ModalResponse.alertFirstButtonReturn:
                 return
-            case NSAlertSecondButtonReturn:
+            case NSApplication.ModalResponse.alertSecondButtonReturn:
                 // cancel any sync in progress so we don't have two rsync processes overwriting each other
                 self.syncScheduler.cancel(folderID) {
                     self.syncScheduler.queueSyncJob(uniqueClientID, folderID: folderID, direction: .reverse, name: name, destination: destination, session: session)
@@ -456,9 +456,9 @@ class SyncViewController: NSViewController {
         
         self.delegate.showAlert(alert) { (response) in
             switch response {
-            case NSAlertFirstButtonReturn:
+            case NSApplication.ModalResponse.alertFirstButtonReturn:
                 return
-            case NSAlertSecondButtonReturn:
+            case NSApplication.ModalResponse.alertSecondButtonReturn:
                 self.syncScheduler.cancel(folderID) {
                     
                 }
@@ -770,9 +770,9 @@ extension SyncViewController: NSTableViewDelegate {
             // swiftlint:enable force_unwrapping
             
             // swiftlint:disable force_unwrapping
-            tableCellView = tableView.make(withIdentifier: "MachineView", owner: self) as! SyncManagerTableCellView
+            tableCellView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MachineView"), owner: self) as! SyncManagerTableCellView
             tableCellView.textField!.stringValue = machineName
-            let cellImage: NSImage = NSImage(named: NSImageNameComputer)!
+            let cellImage: NSImage = NSImage(named: NSImage.Name.computer)!
             cellImage.size = CGSize(width: 15.0, height: 15.0)
             tableCellView.imageView!.image = cellImage
             // swiftlint:enable force_unwrapping
@@ -788,9 +788,9 @@ extension SyncViewController: NSTableViewDelegate {
             }
 
             // swiftlint:disable force_unwrapping
-            tableCellView = tableView.make(withIdentifier: "FolderView", owner: self) as! SyncManagerTableCellView
+            tableCellView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "FolderView"), owner: self) as! SyncManagerTableCellView
             tableCellView.textField!.stringValue = folder.name.capitalized
-            let cellImage: NSImage = NSWorkspace.shared().icon(forFileType: NSFileTypeForHFSTypeCode(OSType(kGenericFolderIcon)))
+            let cellImage: NSImage = NSWorkspace.shared.icon(forFileType: NSFileTypeForHFSTypeCode(OSType(kGenericFolderIcon)))
             cellImage.size = CGSize(width: 15.0, height: 15.0)
             tableCellView.imageView!.image = cellImage
             // swiftlint:enable force_unwrapping
@@ -1074,7 +1074,7 @@ extension SyncViewController: VerifyFolderDelegate {
     func verified(_ folder: SDKSyncFolder, solution: VerificationSolution, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
         switch solution {
         case .find:
-            self.sdk.updateFolder(folder.name, path: folder.path, syncing: true, uniqueID: folder.id, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: DispatchQueue.main, success: { (_) in
+            self.sdk.updateFolder(folder.name, path: folder.path, syncing: true, uniqueID: folder.id, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: DispatchQueue.main, success: { 
                 self.readSyncFolders(self)
                 success()
             }, failure: { (error) in

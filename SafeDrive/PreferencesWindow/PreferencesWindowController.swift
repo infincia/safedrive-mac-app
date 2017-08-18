@@ -20,10 +20,10 @@ enum Tab: Int {
 
 protocol PreferencesViewDelegate: class {
     func setTab(_ tab: Tab)
-    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSModalResponse) -> Void))
-    func showPanel(_ panel: NSOpenPanel, completionHandler handler: @escaping ((NSModalResponse) -> Void))
+    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSApplication.ModalResponse) -> Void))
+    func showPanel(_ panel: NSOpenPanel, completionHandler handler: @escaping ((NSApplication.ModalResponse) -> Void))
     func dismissModalWindow(_ window: NSWindow)
-    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSModalResponse) -> Void))
+    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSApplication.ModalResponse) -> Void))
 }
 
 
@@ -59,7 +59,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
     }
     
     convenience init() {
-        self.init(windowNibName: "PreferencesWindow")
+        self.init(windowNibName: NSNib.Name(rawValue: "PreferencesWindow"))
         self.generalViewController = GeneralViewController(delegate: self)
         self.accountViewController = AccountViewController(delegate: self)
         self.syncViewController = SyncViewController(delegate: self)
@@ -120,7 +120,7 @@ class PreferencesWindowController: NSWindowController, NSPopoverDelegate {
 }
 
 extension PreferencesWindowController: NSWindowDelegate {
-    func windowShouldClose(_ sender: Any) -> Bool {
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
         return true
     }
 }
@@ -172,7 +172,7 @@ extension PreferencesWindowController: PreferencesViewDelegate {
         
     }
     
-    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSModalResponse) -> Void)) {
+    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSApplication.ModalResponse) -> Void)) {
         self.window!.makeKeyAndOrderFront(self)
         NSApp.activate(ignoringOtherApps: true)
         
@@ -181,7 +181,7 @@ extension PreferencesWindowController: PreferencesViewDelegate {
         }
     }
     
-    func showPanel(_ panel: NSOpenPanel, completionHandler handler: @escaping ((NSModalResponse) -> Void)) {
+    func showPanel(_ panel: NSOpenPanel, completionHandler handler: @escaping ((NSApplication.ModalResponse) -> Void)) {
         panel.beginSheetModal(for: self.window!, completionHandler: handler)
     }
     
@@ -190,7 +190,7 @@ extension PreferencesWindowController: PreferencesViewDelegate {
         self.window!.endSheet(window)
     }
     
-    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSModalResponse) -> Void)) {
+    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSApplication.ModalResponse) -> Void)) {
         self.window!.makeKeyAndOrderFront(self)
         NSApp.activate(ignoringOtherApps: true)
         

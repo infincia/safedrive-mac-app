@@ -33,7 +33,7 @@ class CrashAlert {
                     
                     alert.runModal()
                     
-                    let shouldSuppressAlerts = alert.suppressionButton!.state.toBool()
+                    let shouldSuppressAlerts = alert.suppressionButton!.state.rawValue.toBool()
                     
                     UserDefaults.standard.set(shouldSuppressAlerts, forKey: "suppressCrashAlerts")
                 }

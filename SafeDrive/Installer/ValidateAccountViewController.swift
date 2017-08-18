@@ -30,7 +30,7 @@ class ValidateAccountViewController: NSViewController {
     
     fileprivate let signingInQueue = DispatchQueue(label: "signingInQueue")
 
-    
+    @objc
     var signingIn: NSNumber {
         get {
             var s = NSNumber(value: 0) // sane default
@@ -57,7 +57,7 @@ class ValidateAccountViewController: NSViewController {
         // Do view setup here.
     }
     
-    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
@@ -67,7 +67,7 @@ class ValidateAccountViewController: NSViewController {
     
     convenience init(delegate: WelcomeStateDelegate, viewDelegate: WelcomeViewDelegate) {
         // swiftlint:disable force_unwrapping
-        self.init(nibName: "ValidateAccountView", bundle: nil)!
+        self.init(nibName: NSNib.Name(rawValue: "ValidateAccountView"), bundle: nil)
         // swiftlint:enable force_unwrapping
 
         self.delegate = delegate
@@ -135,7 +135,7 @@ class ValidateAccountViewController: NSViewController {
                 
                 self.viewDelegate?.showAlert(alert) { (response) in
                     switch response {
-                    case NSAlertFirstButtonReturn:
+                    case NSApplication.ModalResponse.alertFirstButtonReturn:
                         break
                     default:
                         return
@@ -192,7 +192,7 @@ class ValidateAccountViewController: NSViewController {
                     
                     self.viewDelegate?.showAlert(alert) { (response) in
                         switch response {
-                        case NSAlertFirstButtonReturn:
+                        case NSApplication.ModalResponse.alertFirstButtonReturn:
                             break
                         default:
                             return
@@ -210,7 +210,7 @@ class ValidateAccountViewController: NSViewController {
         // Open the safedrive page in users default browser
         let url = URL(string: "https://\(webDomain())/")
         // swiftlint:disable force_unwrapping
-        NSWorkspace.shared().open(url!)
+        NSWorkspace.shared.open(url!)
         // swiftlint:enable force_unwrapping
 
     }
@@ -219,7 +219,7 @@ class ValidateAccountViewController: NSViewController {
         // Open the safedrive reset password page in users default browser
         let url = URL(string: "https://\(webDomain())/#!/en/reset-password")
         // swiftlint:disable force_unwrapping
-        NSWorkspace.shared().open(url!)
+        NSWorkspace.shared.open(url!)
         // swiftlint:enable force_unwrapping
 
     }

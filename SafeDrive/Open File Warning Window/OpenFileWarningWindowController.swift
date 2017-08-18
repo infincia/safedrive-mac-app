@@ -21,9 +21,9 @@ protocol OpenFileReactor: class {
 }
 
 extension OpenFileWarningWindowController: OpenFileReactor {
-    func didTerminate(_ notification: Notification) {
+    @objc func didTerminate(_ notification: Notification) {
         if let userInfo = notification.userInfo,
-            let app = userInfo[NSWorkspaceApplicationKey] as? NSRunningApplication {
+            let app = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
             
             let pid = app.processIdentifier
             let index = self.processes.index(where: { (process) -> Bool in
@@ -43,7 +43,7 @@ extension OpenFileWarningWindowController: NSTableViewDataSource {
             return nil
         }
         
-        let view = tableView.make(withIdentifier: "OpenFileWarningTableCellView", owner: self) as! OpenFileWarningTableCellView
+        let view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "OpenFileWarningTableCellView"), owner: self) as! OpenFileWarningTableCellView
         
         let process = self.processes[row]
         
@@ -110,18 +110,18 @@ class OpenFileWarningWindowController: NSWindowController {
     
     
     convenience init() {
-        self.init(windowNibName: "OpenFileWarningWindow")
+        self.init(windowNibName: NSNib.Name(rawValue: "OpenFileWarningWindow"))
     }
     
     
     convenience init?(delegate: OpenFileWarningDelegate, url: URL, processes: [RunningProcess]) {
-        self.init(windowNibName: "OpenFileWarningWindow")
+        self.init(windowNibName: NSNib.Name(rawValue: "OpenFileWarningWindow"))
 
         self.openFileWarningDelegate = delegate
         self.processes = processes
         self.url = url
-        let nc = NSWorkspace.shared().notificationCenter
-        nc.addObserver(self, selector: #selector(didTerminate(_:)), name: Notification.Name.NSWorkspaceDidTerminateApplication, object: nil)
+        let nc = NSWorkspace.shared.notificationCenter
+        nc.addObserver(self, selector: #selector(didTerminate(_:)), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
         
     }
     
@@ -168,7 +168,7 @@ class OpenFileWarningWindowController: NSWindowController {
     
     @IBAction func close(_ sender: AnyObject?) {
         self.shouldCheckRunning = false
-        let nc = NSWorkspace.shared().notificationCenter
+        let nc = NSWorkspace.shared.notificationCenter
         nc.removeObserver(self)
         self.openFileWarningDelegate?.finished()
     }

@@ -17,15 +17,15 @@ class SoftwareClientTableCellView: NSTableCellView {
             self._softwareClient = newValue
             self.uniqueClientID.stringValue = newValue.uniqueClientID
             if self._softwareClient.operatingSystem.lowercased().contains("linux") {
-                self.icon.image = NSImage(named: NSImageNameComputer)
+                self.icon.image = NSImage(named: NSImage.Name.computer)
             } else if self._softwareClient.operatingSystem.lowercased().contains("windows") {
-                self.icon.image = NSImage(named: NSImageNameComputer)
+                self.icon.image = NSImage(named: NSImage.Name.computer)
             } else if self._softwareClient.operatingSystem.lowercased().contains("mac") ||
                       self._softwareClient.operatingSystem.lowercased().contains("osx") ||
                       self._softwareClient.operatingSystem.lowercased().contains("os x") {
-                self.icon.image = NSImage(named: NSImageNameComputer)
+                self.icon.image = NSImage(named: NSImage.Name.computer)
             } else {
-                self.icon.image = NSImage(named: NSImageNameComputer)
+                self.icon.image = NSImage(named: NSImage.Name.computer)
             }
             
         }

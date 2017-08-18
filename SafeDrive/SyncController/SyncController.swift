@@ -462,8 +462,8 @@ class SyncController: Equatable {
                     return
                 }
                 
-                let percentRange = result[0].rangeAt(2) // <-- !!
-                let bandwidthRange = result[0].rangeAt(3) // <-- !!
+                let percentRange = result[0].range(at: 2) // <-- !!
+                let bandwidthRange = result[0].range(at: 3) // <-- !!
                 
                 let percent = s.substring(with: percentRange)
                 let bandwidth = s.substring(with: bandwidthRange)

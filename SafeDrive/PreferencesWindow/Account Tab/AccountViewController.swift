@@ -29,7 +29,7 @@ class AccountViewController: NSViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -38,10 +38,8 @@ class AccountViewController: NSViewController {
     }
     
     convenience init(delegate: PreferencesViewDelegate) {
-        // swiftlint:disable force_unwrapping
-        self.init(nibName: "AccountView", bundle: nil)!
-        // swiftlint:enable force_unwrapping
-
+        self.init(nibName: NSNib.Name("AccountView"), bundle: nil)
+        
         self.delegate = delegate
 
         // register SDAccountProtocol notifications
@@ -59,7 +57,7 @@ class AccountViewController: NSViewController {
         // Open the safedrive account page in users default browser
         let url = URL(string: "https://\(webDomain())/#/en/dashboard/account/details")
         // swiftlint:disable force_unwrapping
-        NSWorkspace.shared().open(url!)
+        NSWorkspace.shared.open(url!)
         // swiftlint:enable force_unwrapping
 
     }

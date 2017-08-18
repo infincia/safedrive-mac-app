@@ -119,8 +119,8 @@ class RunningProcessCheck: NSObject {
                     continue
                 }
                 
-                let pidRange = res.rangeAt(1)
-                let commandRange = res.rangeAt(4)
+                let pidRange = res.range(at: 1)
+                let commandRange = res.range(at: 4)
                 
                 let pid = s.substring(with: pidRange)
                 let command = s.substring(with: commandRange)
@@ -129,7 +129,7 @@ class RunningProcessCheck: NSObject {
                 var p = RunningProcess(pid: Int(pid)!, command: command)
                 // swiftlint:enable force_unwrapping
                 
-                for app in NSWorkspace.shared().runningApplications {
+                for app in NSWorkspace.shared.runningApplications {
                     if p.pid == Int(app.processIdentifier) {
                         p.icon = app.icon
                     }

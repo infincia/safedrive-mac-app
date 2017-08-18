@@ -33,7 +33,7 @@ class EncryptionViewController: NSViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -42,10 +42,10 @@ class EncryptionViewController: NSViewController {
     }
     
     convenience init(delegate: PreferencesViewDelegate) {
-        // swiftlint:disable force_unwrapping
-        self.init(nibName: "EncryptionView", bundle: nil)!
-        // swiftlint:enable force_unwrapping
 
+        self.init(nibName: NSNib.Name(rawValue: "EncryptionView"), bundle: nil)
+
+            
         self.recoveryPhraseEntry = RecoveryPhraseWindowController(delegate: self)
 
         self.delegate = delegate
@@ -67,7 +67,7 @@ class EncryptionViewController: NSViewController {
     }
     
     @IBAction func copyRecoveryPhrase(_ sender: AnyObject) {
-        let pasteBoard = NSPasteboard.general()
+        let pasteBoard = NSPasteboard.general
         pasteBoard.clearContents()
         pasteBoard.writeObjects([recoveryPhraseField.stringValue as NSString])
     }

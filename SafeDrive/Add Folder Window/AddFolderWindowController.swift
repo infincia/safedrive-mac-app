@@ -37,12 +37,12 @@ class AddFolderWindowController: NSWindowController {
     weak var addFolderDelegate: AddFolderDelegate?
     
     convenience init() {
-        self.init(windowNibName: "AddFolderWindow")
+        self.init(windowNibName: NSNib.Name("AddFolderWindow"))
     }
     
     
     convenience init?(delegate: AddFolderDelegate) {
-        self.init(windowNibName: "AddFolderWindow")
+        self.init(windowNibName: NSNib.Name("AddFolderWindow"))
 
         self.addFolderDelegate = delegate
     }
@@ -94,7 +94,7 @@ class AddFolderWindowController: NSWindowController {
         panel.prompt = promptString
         
         panel.beginSheetModal(for: window) { (result)  in
-            if result == NSFileHandlingPanelOKButton {
+            if result == NSApplication.ModalResponse.OK {
                 if let new = panel.url {
                     self.source.url = new
                     self.nameField.stringValue = new.lastPathComponent.lowercased()
@@ -105,7 +105,7 @@ class AddFolderWindowController: NSWindowController {
     }
     
     @IBAction func add(sender: AnyObject?) {
-        guard let url = self.source.url, let encrypted = self.encryptedBox.state.toBool() else {
+        guard let url = self.source.url, let encrypted = self.encryptedBox.state.rawValue.toBool() else {
             return
         }
         

@@ -135,7 +135,7 @@ public class SafeDriveSDK: NSObject {
                 }
                 switch res {
                 case 0:
-                    fulfill()
+                    fulfill(())
                 default:
                     let e = SDKError(sdkError: error!.pointee)
                     reject(e)

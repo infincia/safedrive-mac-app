@@ -11,7 +11,7 @@ import Foundation
 
 // http://stackoverflow.com/a/30593673/255309
 extension Collection {
-    subscript (safe index: Index) -> Generator.Element? {
+    subscript (safe index: Index) -> Iterator.Element? {
         return indices.contains(index) ? self[index] : nil
     }
 }

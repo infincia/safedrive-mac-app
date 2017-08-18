@@ -18,7 +18,7 @@ class WelcomeViewController: NSViewController {
         // Do view setup here.
     }
     
-    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
@@ -27,10 +27,10 @@ class WelcomeViewController: NSViewController {
     }
     
     convenience init(delegate: WelcomeStateDelegate, viewDelegate: WelcomeViewDelegate) {
-        // swiftlint:disable force_unwrapping
-        self.init(nibName: "WelcomeView", bundle: nil)!
-        // swiftlint:enable force_unwrapping
 
+        self.init(nibName: NSNib.Name(rawValue: "WelcomeView"), bundle: nil)
+
+        
         self.delegate = delegate
         
         self.viewDelegate = viewDelegate

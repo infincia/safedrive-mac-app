@@ -13,6 +13,7 @@ class DropdownController: NSObject {
 
     fileprivate var sdk = SafeDriveSDK.sharedSDK
 
+    @objc
     var sharedAccountController = AccountController.sharedAccountController
 
     fileprivate var menuBarImage: NSImage? {
@@ -29,7 +30,7 @@ class DropdownController: NSObject {
 
     override init() {
         super.init()
-        Bundle.main.loadNibNamed("DropdownMenu", owner: self, topLevelObjects: nil)
+        Bundle.main.loadNibNamed(NSNib.Name("DropdownMenu"), owner: self, topLevelObjects: nil)
         // register SDMountStateProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
@@ -53,12 +54,12 @@ class DropdownController: NSObject {
     }
     
     override func awakeFromNib() {
-        self.statusItem = NSStatusBar.system().statusItem(withLength: NSSquareStatusItemLength)
+        self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         // menu loaded from SDDropdownMenu.xib
         self.statusItem?.menu = self.statusItemMenu
         // this sets the tooltip of the menu bar item using a localized string from SafeDrive.strings
         self.statusItem?.toolTip = NSLocalizedString("SafeDriveAppName", comment: "Safe Drive Application Name")
-        self.menuBarImage = NSImage(named: NSImageNameLockLockedTemplate)
+        self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
         self.enableMenuItems(false)
     }
     
@@ -102,12 +103,12 @@ extension DropdownController: SDMountStateProtocol {
     
     func mountStateMounted(notification: Notification) {
         self.connectMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
-        self.menuBarImage = NSImage(named: NSImageNameLockUnlockedTemplate)
+        self.menuBarImage = NSImage(named: NSImage.Name.lockUnlockedTemplate)
     }
     
     func mountStateUnmounted(notification: Notification) {
         self.connectMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
-        self.menuBarImage = NSImage(named: NSImageNameLockLockedTemplate)
+        self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
     }
     
     func mountStateDetails(notification: Notification) {

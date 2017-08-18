@@ -76,8 +76,8 @@ class OpenFileCheck: NSObject {
                     continue
                 }
                 
-                let pidRange = res.rangeAt(1)
-                let commandRange = res.rangeAt(2)
+                let pidRange = res.range(at: 1)
+                let commandRange = res.range(at: 2)
                 
                 let pid = s.substring(with: pidRange)
                 let command = s.substring(with: commandRange)
@@ -86,14 +86,14 @@ class OpenFileCheck: NSObject {
                 var p = RunningProcess(pid: Int(pid)!, command: command)
                 // swiftlint:enable force_unwrapping
                 
-                for app in NSWorkspace.shared().runningApplications {
+                for app in NSWorkspace.shared.runningApplications {
                     if p.pid == Int(app.processIdentifier) {
                         p.icon = app.icon
                         p.isUserApplication = true
                     }
                 }
                 if p.icon == nil {
-                    let terminalIcon = NSWorkspace.shared().icon(forFile: "/Applications/Utilities/Terminal.app")
+                    let terminalIcon = NSWorkspace.shared.icon(forFile: "/Applications/Utilities/Terminal.app")
                     p.icon = terminalIcon
                     p.isUserApplication = false
                 }

@@ -39,7 +39,7 @@ class WelcomeWindowController: NSWindowController {
     }
     
     convenience init() {
-        self.init(windowNibName: "WelcomeWindow")
+        self.init(windowNibName: NSNib.Name("WelcomeWindow"))
         // register SDAccountProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
@@ -54,8 +54,14 @@ class WelcomeWindowController: NSWindowController {
         window.keepOnTop = true
     
         window.delegate = self
-
-        let pageIdentifiers = ["WelcomeViewController", "ValidateDependenciesViewController", "ValidateAccountViewController", "ValidateClientViewController", "ReadyViewController", "FailedViewController"]
+        
+        let pageIdentifiers: [NSPageController.ObjectIdentifier] =
+            [NSPageController.ObjectIdentifier(rawValue: "WelcomeViewController"),
+             NSPageController.ObjectIdentifier(rawValue: "ValidateDependenciesViewController"),
+             NSPageController.ObjectIdentifier(rawValue: "ValidateAccountViewController"),
+             NSPageController.ObjectIdentifier(rawValue: "ValidateClientViewController"),
+             NSPageController.ObjectIdentifier(rawValue: "ReadyViewController"),
+             NSPageController.ObjectIdentifier(rawValue: "FailedViewController")]
         
         self.welcomeViewController = WelcomeViewController(delegate: self, viewDelegate: self)
         _ = self.welcomeViewController.view
@@ -199,24 +205,23 @@ extension WelcomeWindowController: WelcomeStateDelegate {
 
 
 extension WelcomeWindowController: NSPageControllerDelegate {
-
-    func pageController(_ pageController: NSPageController, identifierFor object: Any) -> String {
-        return object as! String
-    }
-
-    func pageController(_ pageController: NSPageController, viewControllerForIdentifier identifier: String) -> NSViewController {
     
-        if identifier == "WelcomeViewController" {
+    func pageController(_ pageController: NSPageController, identifierFor object: Any) -> NSPageController.ObjectIdentifier {
+        return object as! NSPageController.ObjectIdentifier
+    }
+    
+    func pageController(_ pageController: NSPageController, viewControllerForIdentifier identifier: NSPageController.ObjectIdentifier) -> NSViewController {
+        if identifier == NSPageController.ObjectIdentifier(rawValue: "WelcomeViewController") {
             return self.welcomeViewController
-        } else if identifier == "ValidateDependenciesViewController" {
+        } else if identifier == NSPageController.ObjectIdentifier(rawValue: "ValidateDependenciesViewController") {
             return self.validateDependenciesViewController
-        } else if identifier == "ValidateAccountViewController" {
+        } else if identifier == NSPageController.ObjectIdentifier(rawValue: "ValidateAccountViewController") {
             return self.validateAccountViewController
-        } else if identifier == "ValidateClientViewController" {
+        } else if identifier == NSPageController.ObjectIdentifier(rawValue: "ValidateClientViewController") {
             return self.validateClientViewController
-        } else if identifier == "ReadyViewController" {
+        } else if identifier == NSPageController.ObjectIdentifier(rawValue: "ReadyViewController") {
             return self.readyViewController
-        } else if identifier == "FailedViewController" {
+        } else if identifier == NSPageController.ObjectIdentifier(rawValue: "FailedViewController") {
             return self.failedViewController
         }
         return NSViewController() // should never reach this point, silencing compiler
@@ -236,7 +241,7 @@ extension WelcomeWindowController: NSPageControllerDelegate {
 }
 
 extension WelcomeWindowController: NSWindowDelegate {
-    func windowShouldClose(_ sender: Any) -> Bool {
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
         let alert = NSAlert()
         alert.addButton(withTitle: NSLocalizedString("Yes", comment: "Button title"))
         alert.addButton(withTitle: NSLocalizedString("No", comment: "Button title"))
@@ -252,7 +257,7 @@ extension WelcomeWindowController: NSWindowDelegate {
             alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
                 
                 switch response {
-                case NSAlertFirstButtonReturn:
+                case NSApplication.ModalResponse.alertFirstButtonReturn:
                     NSApp.terminate(self)
                     break
                 default:
@@ -271,7 +276,7 @@ extension WelcomeWindowController: NSWindowDelegate {
             alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
                 
                 switch response {
-                case NSAlertFirstButtonReturn:
+                case NSApplication.ModalResponse.alertFirstButtonReturn:
                     NSApp.terminate(self)
                     break
                 default:
@@ -291,7 +296,7 @@ extension WelcomeWindowController: NSWindowDelegate {
             alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
                 
                 switch response {
-                case NSAlertFirstButtonReturn:
+                case NSApplication.ModalResponse.alertFirstButtonReturn:
                     NSApp.terminate(self)
                     break
                 default:
@@ -311,7 +316,7 @@ extension WelcomeWindowController: NSWindowDelegate {
             alert.beginSheetModal(for: self.window!, completionHandler: { (response) in
                 
                 switch response {
-                case NSAlertFirstButtonReturn:
+                case NSApplication.ModalResponse.alertFirstButtonReturn:
                     NSApp.terminate(self)
                     break
                 default:
@@ -429,14 +434,14 @@ protocol WelcomeStateDelegate: class {
 }
 
 protocol WelcomeViewDelegate: class {
-    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSModalResponse) -> Void))
+    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSApplication.ModalResponse) -> Void))
     func dismissModalWindow(_ window: NSWindow)
-    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSModalResponse) -> Void))
+    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSApplication.ModalResponse) -> Void))
 }
 
 // swiftlint:disable force_unwrapping
 extension WelcomeWindowController: WelcomeViewDelegate {
-    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSModalResponse) -> Void)) {
+    func showModalWindow(_ window: NSWindow, completionHandler handler: @escaping ((NSApplication.ModalResponse) -> Void)) {
         self.window!.makeKeyAndOrderFront(self)
         NSApp.activate(ignoringOtherApps: true)
         
@@ -448,7 +453,7 @@ extension WelcomeWindowController: WelcomeViewDelegate {
         self.window!.endSheet(window)
     }
     
-    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSModalResponse) -> Void)) {
+    func showAlert(_ alert: NSAlert, completionHandler handler: @escaping ((NSApplication.ModalResponse) -> Void)) {
         self.window!.makeKeyAndOrderFront(self)
         NSApp.activate(ignoringOtherApps: true)
         

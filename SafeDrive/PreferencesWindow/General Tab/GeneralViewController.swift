@@ -48,8 +48,9 @@ class GeneralViewController: NSViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
     }
     
     required init?(coder: NSCoder) {
@@ -57,10 +58,10 @@ class GeneralViewController: NSViewController {
     }
     
     convenience init(delegate: PreferencesViewDelegate) {
-        // swiftlint:disable force_unwrapping
-        self.init(nibName: "GeneralView", bundle: nil)!
-        // swiftlint:enable force_unwrapping
 
+        self.init(nibName: NSNib.Name(rawValue: "GeneralView"), bundle: nil)
+
+        
         self.delegate = delegate
         
         // register SDMountStateProtocol notifications

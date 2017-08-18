@@ -19,12 +19,12 @@ class RecoveryPhraseWindowController: NSWindowController {
     weak var recoveryDelegate: RecoveryPhraseEntryDelegate?
     
     convenience init() {
-        self.init(windowNibName: "RecoveryPhraseWindow")
+        self.init(windowNibName: NSNib.Name(rawValue: "RecoveryPhraseWindow"))
     }
     
     
     convenience init?(delegate: RecoveryPhraseEntryDelegate) {
-        self.init(windowNibName: "RecoveryPhraseWindow")
+        self.init(windowNibName: NSNib.Name(rawValue: "RecoveryPhraseWindow"))
 
         self.recoveryDelegate = delegate
     }

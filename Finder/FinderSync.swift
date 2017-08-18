@@ -37,9 +37,9 @@ class FinderSync: FIFinderSync {
         
         // Set up images for our badge identifiers. For demonstration purposes, this uses off-the-shelf images.
         // swiftlint:disable force_unwrapping
-        FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImageNameStatusAvailable)!, label: "Idle", forBadgeIdentifier: "idle")
-        FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImageNameStatusPartiallyAvailable)!, label: "Syncing", forBadgeIdentifier: "syncing")
-        FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImageNameStatusUnavailable)!, label: "Error", forBadgeIdentifier: "error")
+        FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImage.Name.statusAvailable)!, label: "Idle", forBadgeIdentifier: "idle")
+        FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImage.Name.statusPartiallyAvailable)!, label: "Syncing", forBadgeIdentifier: "syncing")
+        FIFinderSyncController.default().setBadgeImage(NSImage(named: NSImage.Name.statusUnavailable)!, label: "Error", forBadgeIdentifier: "error")
         // swiftlint:enable force_unwrapping
 
         FIFinderSyncController.default().directoryURLs = Set<URL>()
@@ -110,7 +110,7 @@ class FinderSync: FIFinderSync {
                 
                 let service = s.remoteObjectProxyWithErrorHandler { error in
                     print("remote proxy error: %@", error)
-                } as! ServiceXPCProtocol
+                } as! IPCProtocol
                 
                 service.ping({ reply in
                     print("Ping reply from service: \(reply)")
@@ -125,7 +125,7 @@ class FinderSync: FIFinderSync {
                 }
                 let service = s.remoteObjectProxyWithErrorHandler { error in
                     print("remote proxy error: \(error)")
-                } as! ServiceXPCProtocol
+                } as! IPCProtocol
                 
                 service.getAppEndpoint({ endpoint in
                     self.appConnection = self.createAppConnectionFromEndpoint(endpoint)
@@ -148,9 +148,9 @@ class FinderSync: FIFinderSync {
     }
     
     func createServiceConnection() -> NSXPCConnection {
-        let newConnection: NSXPCConnection = NSXPCConnection(machServiceName: "io.safedrive.SafeDrive.d", options: NSXPCConnection.Options(rawValue: 0))
+        let newConnection: NSXPCConnection = NSXPCConnection(machServiceName: "G738Z89QKM.io.safedrive.IPCService", options: NSXPCConnection.Options(rawValue: 0))
         
-        let serviceInterface: NSXPCInterface = NSXPCInterface(with: ServiceXPCProtocol.self)
+        let serviceInterface: NSXPCInterface = NSXPCInterface(with: IPCProtocol.self)
         
         newConnection.remoteObjectInterface = serviceInterface
         
@@ -354,7 +354,7 @@ class FinderSync: FIFinderSync {
     override var toolbarItemImage: NSImage {
         // swiftlint:disable force_unwrapping
 
-        return NSImage(named: NSImageNameLockLockedTemplate)!
+        return NSImage(named: NSImage.Name.lockLockedTemplate)!
         // swiftlint:enable force_unwrapping
 
     }
@@ -384,7 +384,7 @@ class FinderSync: FIFinderSync {
     @IBAction func support(_ sender: AnyObject) {
         // swiftlint:disable force_unwrapping
 
-        NSWorkspace.shared().open(URL(string: "https://safedrive.io/support")!)
+        NSWorkspace.shared.open(URL(string: "https://safedrive.io/support")!)
         // swiftlint:enable force_unwrapping
 
     }

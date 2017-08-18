@@ -101,12 +101,12 @@ class VerifyFolderWindowController: NSWindowController {
     var folder: SDKSyncFolder!
     
     convenience init() {
-        self.init(windowNibName: "VerifyFolderWindow")
+        self.init(windowNibName: NSNib.Name(rawValue: "VerifyFolderWindow"))
     }
     
     
     convenience init?(delegate: VerifyFolderDelegate, folder: SDKSyncFolder) {
-        self.init(windowNibName: "VerifyFolderWindow")
+        self.init(windowNibName: NSNib.Name(rawValue: "VerifyFolderWindow"))
 
         self.verifyFolderDelegate = delegate
         
@@ -183,7 +183,7 @@ class VerifyFolderWindowController: NSWindowController {
         
         // swiftlint:disable force_unwrapping
         panel.beginSheetModal(for: self.window!) { (result)  in
-            if result == NSFileHandlingPanelOKButton {
+            if result.rawValue == NSFileHandlingPanelOKButton {
                 if let new = panel.url {
                     self.source.url = new
                 }
@@ -215,7 +215,7 @@ class VerifyFolderWindowController: NSWindowController {
             
             panel.beginSheetModal(for: window) { (result) in
                 
-                if result == NSFileHandlingPanelOKButton {
+                if result.rawValue == NSFileHandlingPanelOKButton {
                     guard let folderPath = panel.url?.path else {
                         self.spinner.stopAnimation(self)
 
@@ -239,7 +239,7 @@ class VerifyFolderWindowController: NSWindowController {
                             alert.runModal()
                             
                         } else {
-                            self.verifyFolderDelegate?.verified(self.folder, solution: .find, success: { (_) in
+                            self.verifyFolderDelegate?.verified(self.folder, solution: .find, success: { 
                                 self.spinner.stopAnimation(self)
                                 
                                 self.close()
@@ -270,7 +270,7 @@ class VerifyFolderWindowController: NSWindowController {
                 }
             }
         case .restore:
-            self.verifyFolderDelegate?.verified(self.folder, solution: .restore, success: { (_) in
+            self.verifyFolderDelegate?.verified(self.folder, solution: .restore, success: { 
                 self.spinner.stopAnimation(self)
                 
                 self.close()
@@ -287,7 +287,7 @@ class VerifyFolderWindowController: NSWindowController {
                 alert.runModal()
             })
         case .remove:
-            self.verifyFolderDelegate?.verified(self.folder, solution: .remove, success: { (_) in
+            self.verifyFolderDelegate?.verified(self.folder, solution: .remove, success: { 
                 self.spinner.stopAnimation(self)
                 
                 self.close()
@@ -304,7 +304,7 @@ class VerifyFolderWindowController: NSWindowController {
                 alert.runModal()
             })
         case .pause:
-            self.verifyFolderDelegate?.verified(self.folder, solution: .pause, success: { (_) in
+            self.verifyFolderDelegate?.verified(self.folder, solution: .pause, success: { 
                 self.spinner.stopAnimation(self)
                 
                 self.close()

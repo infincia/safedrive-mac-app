@@ -177,8 +177,8 @@ class MountController: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationEventProtocol.applicationDidConfigureUser), name: Notification.Name.applicationDidConfigureUser, object: nil)
         
         
-        let nc = NSWorkspace.shared().notificationCenter
-        nc.addObserver(self, selector: #selector(willSleep(_:)), name: Notification.Name.NSWorkspaceWillSleep, object: nil)
+        let nc = NSWorkspace.shared.notificationCenter
+        nc.addObserver(self, selector: #selector(willSleep(_:)), name: NSWorkspace.willSleepNotification, object: nil)
         
         let connection = NSXPCConnection(serviceName: "io.safedrive.SafeDrive.SFTPFS")
         
@@ -249,7 +249,7 @@ class MountController: NSObject {
         
         background {
             do {
-                try NSWorkspace.shared().unmountAndEjectDevice(at: self.currentMountURL)
+                try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
                 DispatchQueue.main.async {
                     self.mountURL = nil
                     NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object:nil)
@@ -856,7 +856,7 @@ class MountController: NSObject {
 }
 
 extension MountController: SleepReactor {
-    func willSleep(_ notification: Notification) {
+    @objc func willSleep(_ notification: Notification) {
         if self.mounted {
             SDLog("machine going to sleep, unmounting SSHFS")
             self.disconnectVolume(askForOpenApps: true)
@@ -921,7 +921,7 @@ extension MountController: SDVolumeEventProtocol {
         assert(Thread.current == Thread.main, "volumeDidMount called on background thread")
 
         if let u = self.mountURL {
-            NSWorkspace.shared().open(u)
+            NSWorkspace.shared.open(u)
         }
     }
     
@@ -961,7 +961,7 @@ extension MountController: OpenFileWarningDelegate {
         SDLog("attempting to close \(process.command) (\(process.pid))")
         
         if process.isUserApplication {
-            for app in NSWorkspace.shared().runningApplications {
+            for app in NSWorkspace.shared.runningApplications {
                 if process.pid == Int(app.processIdentifier) {
                     SDLog("found \(process.pid), terminating")
                     app.terminate()

@@ -28,6 +28,7 @@ class ValidateClientViewController: NSViewController {
     
     fileprivate var password: String?
     
+    @objc
     var hasRegisteredClients = NSNumber(value: 0)
 
     fileprivate var isClientRegistered = false
@@ -41,7 +42,7 @@ class ValidateClientViewController: NSViewController {
         // Do view setup here.
     }
     
-    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
@@ -50,10 +51,10 @@ class ValidateClientViewController: NSViewController {
     }
     
     convenience init(delegate: WelcomeStateDelegate, viewDelegate: WelcomeViewDelegate) {
-        // swiftlint:disable force_unwrapping
-        self.init(nibName: "ValidateClientView", bundle: nil)!
-        // swiftlint:enable force_unwrapping
 
+        self.init(nibName: NSNib.Name(rawValue: "ValidateClientView"), bundle: nil)
+
+        
         self.delegate = delegate
         
         self.viewDelegate = viewDelegate
@@ -174,7 +175,7 @@ extension ValidateClientViewController: NSTableViewDataSource {
             return nil
         }
         
-        let view = tableView.make(withIdentifier: "SoftwareClientTableCellView", owner: self) as! SoftwareClientTableCellView
+        let view = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SoftwareClientTableCellView"), owner: self) as! SoftwareClientTableCellView
         
         let client = clients[row]
 
