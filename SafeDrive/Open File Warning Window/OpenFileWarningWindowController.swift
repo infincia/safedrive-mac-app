@@ -80,7 +80,7 @@ extension OpenFileWarningWindowController:  NSTableViewDelegate {
 
 class OpenFileWarningWindowController: NSWindowController {
     @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
-    @IBOutlet fileprivate weak var errorField: NSTextField!
+
     @IBOutlet fileprivate weak var processList: NSTableView!
     
     fileprivate weak var openFileWarningDelegate: OpenFileWarningDelegate?
@@ -128,7 +128,7 @@ class OpenFileWarningWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
         self.spinner.stopAnimation(self)
-        self.errorField.stringValue = ""
+
         self.processList.reloadData()
         weak var weakSelf: OpenFileWarningWindowController? = self
 

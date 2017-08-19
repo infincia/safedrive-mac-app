@@ -9,7 +9,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="OpenFileWarningWindowController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
-                <outlet property="errorField" destination="N2E-QF-KWE" id="yA4-6U-96y"/>
                 <outlet property="processList" destination="kEu-as-Zdd" id="zFg-TY-zdw"/>
                 <outlet property="spinner" destination="oFp-q9-yWB" id="M8j-lP-ZsZ"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
@@ -29,15 +28,6 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Blank Window" id="jW8-lR-1sd"/>
                     </imageView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2E-QF-KWE">
-                        <rect key="frame" x="18" y="263" width="306" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" placeholderString="" id="nEt-JT-Yr8">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" red="0.82281091370000004" green="0.123445706" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <box fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qk7-ZG-3DJ" userLabel="Processes">
                         <rect key="frame" x="22" y="65" width="307" height="308"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
