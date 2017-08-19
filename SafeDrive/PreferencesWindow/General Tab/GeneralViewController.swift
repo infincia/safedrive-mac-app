@@ -10,7 +10,10 @@ class GeneralViewController: NSViewController {
     
     @IBOutlet fileprivate var volumeNameField: NSTextField!
     @IBOutlet fileprivate var volumeNameWarningField: NSTextField!
-    
+    @IBOutlet fileprivate var useSFTPFSCheckbox: NSButton!
+    @IBOutlet fileprivate var useCacheCheckbox: NSButton!
+    @IBOutlet fileprivate var useServiceCheckbox: NSButton!
+
     fileprivate weak var delegate: PreferencesViewDelegate!
     
     var autostart: Bool {
@@ -79,6 +82,9 @@ extension GeneralViewController: SDMountStateProtocol {
         
         self.volumeNameField.isEnabled = false
         self.volumeNameWarningField.isHidden = false
+        self.useSFTPFSCheckbox.isEnabled = false
+        self.useCacheCheckbox.isEnabled = false
+        self.useServiceCheckbox.isEnabled = false
     }
     
     func mountStateUnmounted(notification: Foundation.Notification) {
@@ -86,7 +92,9 @@ extension GeneralViewController: SDMountStateProtocol {
     
         self.volumeNameField.isEnabled = true
         self.volumeNameWarningField.isHidden = true
-        
+        self.useSFTPFSCheckbox.isEnabled = true
+        self.useCacheCheckbox.isEnabled = true
+        self.useServiceCheckbox.isEnabled = true
     }
     
     func mountStateDetails(notification: Foundation.Notification) {

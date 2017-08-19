@@ -8,6 +8,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="GeneralViewController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
+                <outlet property="useCacheCheckbox" destination="M6V-eg-vcg" id="Ypc-C3-Arh"/>
+                <outlet property="useSFTPFSCheckbox" destination="6Tz-YG-A4w" id="P4d-7g-09O"/>
+                <outlet property="useServiceCheckbox" destination="XrK-PO-PUX" id="CDy-77-hDd"/>
                 <outlet property="view" destination="CsQ-6a-jd3" id="GOE-jQ-Izc"/>
                 <outlet property="volumeNameField" destination="9ji-NX-eSa" id="BJR-fN-kDE"/>
                 <outlet property="volumeNameWarningField" destination="BUl-T9-wgV" id="3aF-PC-POG"/>
