@@ -31,7 +31,7 @@ xcodebuild -quiet -exportArchive -archivePath ./${LOWER_SCHEME}/SafeDrive-${SCHE
 echo "Building archive"
 
 
-ditto -c -k --sequesterRsrc --keepParent ./${LOWER_SCHEME}/SafeDrive.app update/SafeDrive_${SCHEME}_${VERSION}.app.zip
+ditto -c -k --sequesterRsrc --keepParent ./${LOWER_SCHEME}/SafeDrive.app update/SafeDrive_${SCHEME}_${VERSION}.zip
 
 FILESIZE=$(stat -f%z update/SafeDrive_${SCHEME}_${VERSION}.app.zip)
 
