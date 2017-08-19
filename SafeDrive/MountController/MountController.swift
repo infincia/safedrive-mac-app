@@ -541,6 +541,10 @@ class MountController: NSObject {
         /* custom volume name */
         taskArguments.append("-ovolname=\(volumeName)")
         
+        /* convert to and from UTF8 NFC, the server filenames MUST be in that form */
+        
+        taskArguments.append("-omodules=iconv,from_code=UTF-8")
+        
         /* custom port if needed */
         taskArguments.append("-p\(port)")
         
