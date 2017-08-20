@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>v0.9.47</string>
+	<string>v0.9.48</string>
 	<key>CFBundleVersion</key>
-	<string>1904</string>
+	<string>1920</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright (c) 2014-2017 SafeDrive. All rights reserved.</string>
 </dict>
