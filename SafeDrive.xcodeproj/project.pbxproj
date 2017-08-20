@@ -1829,7 +1829,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = IPCService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks @executable_path/../Frameworks @executable_path/../../../../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = G738Z89QKM.io.safedrive.IPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1861,7 +1861,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = IPCService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks @executable_path/../Frameworks @executable_path/../../../../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = G738Z89QKM.io.safedrive.IPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
