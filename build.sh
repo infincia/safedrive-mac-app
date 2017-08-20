@@ -33,7 +33,7 @@ echo "Building archive"
 
 ditto -c -k --sequesterRsrc --keepParent ./${LOWER_SCHEME}/SafeDrive.app update/SafeDrive_${SCHEME}_${VERSION}.zip
 
-FILESIZE=$(stat -f%z update/SafeDrive_${SCHEME}_${VERSION}.app.zip)
+FILESIZE=$(stat -f%z update/SafeDrive_${SCHEME}_${VERSION}.zip)
 
 echo "Creating update manifest"
 
