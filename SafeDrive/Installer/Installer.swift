@@ -176,6 +176,23 @@ class Installer: NSObject {
         } else {
             SDLog("Installer launched")
         }
+        
+        privilegedTask.waitUntilExit()
+
+        let exitCode = privilegedTask.terminationStatus
+        
+        if exitCode != 0 {
+            let data = privilegedTask.outputFileHandle.readDataToEndOfFile()
+            if let output = String(data: data, encoding: .utf8) {
+                SDLog("Directory setup failed: \(output)")
+                let error = SDError(message: "FUSE setup failed: \(output)", kind: .fuseDeployment)
+                throw error
+            } else {
+                SDLog("Directory setup failed")
+                let error = SDError(message: "FUSE setup failed", kind: .fuseDeployment)
+                throw error
+            }
+        }
     }
     
     func installCLI() throws {
