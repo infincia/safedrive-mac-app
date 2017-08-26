@@ -257,7 +257,6 @@ class Installer: NSObject {
         privilegedTask.arguments = ["doctor", "--uid", String(uid), "--gid", String(gid)]
         
         let err = privilegedTask.launch()
-        privilegedTask.waitUntilExit()
         
         if err != errAuthorizationSuccess {
             if err == errAuthorizationCanceled {
@@ -274,10 +273,22 @@ class Installer: NSObject {
         } else {
             SDLog("Directory setup launched")
         }
-        let data = privilegedTask.outputFileHandle.readDataToEndOfFile()
-        if let output = String(data: data, encoding: .utf8) {
-            SDLog("Directory setup output: \(output)")
+        
+        privilegedTask.waitUntilExit()
 
+        let exitCode = privilegedTask.terminationStatus
+        
+        if exitCode != 0 {
+            let data = privilegedTask.outputFileHandle.readDataToEndOfFile()
+            if let output = String(data: data, encoding: .utf8) {
+                SDLog("Directory setup failed: \(output)")
+                let error = SDError(message: "Directory setup failed: \(output)", kind: .setupDirectories)
+                throw error
+            } else {
+                SDLog("Directory setup failed")
+                let error = SDError(message: "Directory setup failed", kind: .setupDirectories)
+                throw error
+            }
         }
     }
 }
