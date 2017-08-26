@@ -73,7 +73,7 @@ extension ValidateDependenciesViewController: InstallerDelegate {
         self.delegate?.didValidateDependencies()
     }
     
-    func didFail(error: NSError) {
+    func didFail(error: Error) {
         self.spinner.stopAnimation(self)
 
         self.delegate?.didFail(error: error, uniqueClientID: nil)

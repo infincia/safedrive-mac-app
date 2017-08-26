@@ -12,7 +12,7 @@ import SystemConfiguration
 protocol InstallerDelegate: class {
     func needsDependencies()
     func didValidateDependencies()
-    func didFail(error: NSError)
+    func didFail(error: Error)
 }
 
 class Installer: NSObject {
