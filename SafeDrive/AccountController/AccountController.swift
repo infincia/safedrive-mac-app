@@ -82,6 +82,8 @@ class AccountController: NSObject {
     
     fileprivate var _lastAccountDetailsError: SDKError?
     fileprivate var _lastAccountStatusError: SDKError?
+    fileprivate var _lastAccountSignInError: SDKError?
+
     fileprivate var _checkingStatus: Bool = false
     fileprivate var _checkingDetails: Bool = false
     // swiftlint:enable variable_name
@@ -198,6 +200,22 @@ class AccountController: NSObject {
         }
     }
     
+    var lastAccountSignInError: SDKError? {
+        get {
+            var s: SDKError?
+            accountQueue.sync {
+                s = self._lastAccountSignInError
+            }
+            return s
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._lastAccountSignInError = newValue
+            })
+        }
+    }
+    
+    
     var checkingStatus: Bool {
         get {
             var s: Bool = false
@@ -277,6 +295,8 @@ class AccountController: NSObject {
         
         self.lastAccountStatusError = nil
         self.lastAccountDetailsError = nil
+        self.lastAccountSignInError = nil
+        
         // reset crashlytics email and telemetry API username
         Crashlytics.sharedInstance().setUserEmail(nil)
         SDErrorHandlerSetUniqueClientId(nil)
@@ -307,6 +327,8 @@ class AccountController: NSObject {
                         self.signingIn = false
                         self.signedIn = true
                         self.lastAccountStatusCheck = Date()
+                        
+                        self.lastAccountSignInError = nil
                             
                         DispatchQueue.main.async {
                             NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: status)
@@ -317,57 +339,45 @@ class AccountController: NSObject {
                         }
                         self.signingIn = false
                         self.signedIn = false
-                        SDLog("failed to login with sdk: \(error.message)")
                         
+                        var reportError = false
+                        var showError = false
+                        
+                        // ignore authentication errors and only show the user an error message
+                        // if this is the first error and we have not shown this exact error already
                         switch error.kind {
-                        case .StateMissing:
-                            break
-                        case .Internal:
-                            break
-                        case .RequestFailure:
-                            break
-                        case .NetworkFailure:
-                            break
-                        case .Conflict:
-                            break
-                        case .BlockMissing:
-                            break
-                        case .SessionMissing:
-                            break
-                        case .RecoveryPhraseIncorrect:
-                            break
-                        case .InsufficientFreeSpace:
-                            break
                         case .Authentication:
                             break
-                        case .UnicodeError:
+                        default:
+                            if let existingError = self.lastAccountSignInError {
+                                if existingError != error {
+                                    self.lastAccountSignInError = error
+                                    showError = true
+                                    reportError = true
+                                }
+                            } else {
+                                self.lastAccountSignInError = error
+                                showError = true
+                                reportError = true
+                            }
                             break
-                        case .TokenExpired:
-                            break
-                        case .CryptoError:
-                            break
-                        case .IO:
-                            break
-                        case .SyncAlreadyInProgress:
-                            break
-                        case .RestoreAlreadyInProgress:
-                            break
-                        case .ExceededRetries:
-                            break
-                        case .KeychainError:
-                            break
-                        case .BlockUnreadable:
-                            break
-                        case .SessionUnreadable:
-                            break
-                        case .ServiceUnavailable:
-                            break
-                        case .Cancelled:
-                            break
-                        case .FolderMissing:
-                            break
-                        case .KeyCorrupted:
-                            break
+                        }
+                        
+                        if showError {
+                            let title = NSLocalizedString("SafeDrive unavailable", comment: "")
+                            
+                            SDLog("SafeDrive signIn failure in account controller (this message will only appear once): \(error.message)")
+                            
+                            let notification = NSUserNotification()
+                            
+                            notification.informativeText = error.message
+                            notification.title = title
+                            notification.soundName = NSUserNotificationDefaultSoundName
+                            NSUserNotificationCenter.default.deliver(notification)
+                        }
+                        
+                        if reportError && error.kind != .NetworkFailure {
+                            SDErrorHandlerReport(error)
                         }
                     }
                     Thread.sleep(forTimeInterval: 1)
