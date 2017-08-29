@@ -62,6 +62,14 @@ public struct SDKError {
         
         self.kind = type
     }
+    
+    public static func == (left: SDKError, right: SDKError) -> Bool {
+        return (left.kind == right.kind)
+    }
+    
+    public static func != (left: SDKError, right: SDKError) -> Bool {
+        return (left.kind != right.kind)
+    }
 }
 
 extension SDKError: LocalizedError {
