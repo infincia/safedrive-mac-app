@@ -194,6 +194,7 @@ extension WelcomeWindowController: WelcomeStateDelegate {
     func didFail(error: Error, uniqueClientID: String?) {
         SDLog("install failed: \(error)")
         self.setWelcomeState(.failed(error: error, uniqueClientID: uniqueClientID))
+        self.showWindow(self)
     }
     
     func didFinish() {
