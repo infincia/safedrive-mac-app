@@ -293,6 +293,9 @@ class AccountController: NSObject {
         self.accountState = .unknown
         self.uniqueClientID = nil
         
+        self.lastAccountStatusCheck = nil
+        self.lastAccountDetailsCheck = nil
+        
         self.lastAccountStatusError = nil
         self.lastAccountDetailsError = nil
         self.lastAccountSignInError = nil
