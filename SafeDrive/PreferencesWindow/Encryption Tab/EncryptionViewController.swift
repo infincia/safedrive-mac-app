@@ -19,6 +19,25 @@ class EncryptionViewController: NSViewController {
     @IBOutlet fileprivate var recoveryPhraseField: NSTextField!
     
     var email: String?
+
+    fileprivate let loadKeysQueue = DispatchQueue(label: "io.safedrive.loadKeysQueue")
+
+    var _lastLoadKeysError: SDKError?
+    
+    var lastLoadKeysError: SDKError? {
+        get {
+            var s: SDKError?
+            loadKeysQueue.sync {
+                s = self._lastLoadKeysError
+            }
+            return s
+        }
+        set (newValue) {
+            loadKeysQueue.sync(flags: .barrier, execute: {
+                self._lastLoadKeysError = newValue
+            })
+        }
+    }
     
     override func viewDidLoad() {
         if #available(OSX 10.10, *) {
@@ -112,7 +131,44 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
             success()
             
         }, failure: { (error) in
-            SDLog("failed to load keys with sdk: \(error.message)")
+            var reportError = false
+            var showError = false
+
+            switch error.kind {
+            case .Authentication:
+                break
+            default:
+                if let existingError = self.lastLoadKeysError {
+                    if existingError != error {
+                        self.lastLoadKeysError = error
+                        reportError = true
+                        showError = true
+                    }
+                } else {
+                    self.lastLoadKeysError = error
+                    reportError = true
+                    showError = true
+                }
+                break
+            }
+            
+            if showError {
+                SDLog("SafeDrive loadKeys failure in encryption view controller (this message will only appear once): \(error.message)")
+
+                let title = NSLocalizedString("SafeDrive keys unavailable", comment: "")
+                
+                let notification = NSUserNotification()
+                
+                notification.informativeText = error.message
+                notification.title = title
+                notification.soundName = NSUserNotificationDefaultSoundName
+                NSUserNotificationCenter.default.deliver(notification)
+            }
+            
+            if reportError && error.kind != .NetworkFailure {
+                SDErrorHandlerReport(error)
+            }
+            
             failure(error)
             
         })
