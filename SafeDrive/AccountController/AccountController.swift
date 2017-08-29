@@ -79,6 +79,9 @@ class AccountController: NSObject {
     fileprivate var _signingIn: Bool = false
     fileprivate var _lastAccountStatusCheck: Date?
     fileprivate var _lastAccountDetailsCheck: Date?
+    
+    fileprivate var _lastAccountDetailsError: SDKError?
+    fileprivate var _lastAccountStatusError: SDKError?
     fileprivate var _checkingStatus: Bool = false
     fileprivate var _checkingDetails: Bool = false
     // swiftlint:enable variable_name
@@ -165,6 +168,36 @@ class AccountController: NSObject {
     }
     
     
+    var lastAccountDetailsError: SDKError? {
+        get {
+            var s: SDKError?
+            accountQueue.sync {
+                s = self._lastAccountDetailsError
+            }
+            return s
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._lastAccountDetailsError = newValue
+            })
+        }
+    }
+    
+    var lastAccountStatusError: SDKError? {
+        get {
+            var s: SDKError?
+            accountQueue.sync {
+                s = self._lastAccountStatusError
+            }
+            return s
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._lastAccountStatusError = newValue
+            })
+        }
+    }
+    
     var checkingStatus: Bool {
         get {
             var s: Bool = false
@@ -242,6 +275,8 @@ class AccountController: NSObject {
         self.accountState = .unknown
         self.uniqueClientID = nil
         
+        self.lastAccountStatusError = nil
+        self.lastAccountDetailsError = nil
         // reset crashlytics email and telemetry API username
         Crashlytics.sharedInstance().setUserEmail(nil)
         SDErrorHandlerSetUniqueClientId(nil)
@@ -363,6 +398,7 @@ class AccountController: NSObject {
                     self.sdk.getAccountStatus(completionQueue: DispatchQueue.main, success: { (status) in
                         self.checkingStatus = false
                         self.lastAccountStatusCheck = Date()
+                        self.lastAccountStatusError = nil
                         
                         DispatchQueue.main.async {
                             NotificationCenter.default.post(name: Notification.Name.accountStatus, object: status)
@@ -370,10 +406,29 @@ class AccountController: NSObject {
                         
                     }, failure: { (error) in
                         self.checkingStatus = false
-                        if !isProduction() {
-                            SDLog("Account status retrieval failed: \(error.message)")
-                            // don't report these for now, they're almost always going to be network failures
-                            // SDErrorHandlerReport(apiError);
+                        
+                        var reportError = false
+                        
+                        switch error.kind {
+                        case .Authentication:
+                            break
+                        default:
+                            if let existingError = self.lastAccountStatusError {
+                                if existingError != error {
+                                    self.lastAccountStatusError = error
+                                    reportError = true
+                                }
+                            } else {
+                                self.lastAccountStatusError = error
+                                reportError = true
+                            }
+                            break
+                        }
+                        
+                        if reportError && error.kind != .NetworkFailure {
+                            SDLog("Account status retrieval failed (this message will only appear once): \(error.message)")
+                            
+                            SDErrorHandlerReport(error)
                         }
                     })
                 }
@@ -395,7 +450,8 @@ class AccountController: NSObject {
                     self.sdk.getAccountDetails(completionQueue: DispatchQueue.main, success: { (details) in
                         self.checkingDetails = false
                         self.lastAccountDetailsCheck = Date()
-                        
+                        self.lastAccountDetailsError = nil
+
                         DispatchQueue.main.async {
                             NotificationCenter.default.post(name: Notification.Name.accountDetails, object: details)
                         }
@@ -403,10 +459,28 @@ class AccountController: NSObject {
                     }, failure: { (error) in
                         self.checkingDetails = false
                         
-                        if !isProduction() {
-                            SDLog("Account details retrieval failed: \(error.message)")
-                            // don't report these for now, they're almost always going to be network failures
-                            // SDErrorHandlerReport(apiError);
+                        var reportError = false
+                        
+                        switch error.kind {
+                        case .Authentication:
+                            break
+                        default:
+                            if let existingError = self.lastAccountDetailsError {
+                                if existingError != error {
+                                    self.lastAccountDetailsError = error
+                                    reportError = true
+                                }
+                            } else {
+                                self.lastAccountDetailsError = error
+                                reportError = true
+                            }
+                            break
+                        }
+                        
+                        if reportError && error.kind != .NetworkFailure {
+                            SDLog("Account details retrieval failed (this message will only appear once): \(error.message)")
+                            
+                            SDErrorHandlerReport(error)
                         }
                     })
                 }
