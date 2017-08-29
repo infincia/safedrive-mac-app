@@ -532,5 +532,12 @@ extension AccountController: SDApplicationEventProtocol {
         self.currentUser = user
         self.email = user.email
         self.password = user.password
+        
+        self.lastAccountStatusCheck = nil
+        self.lastAccountDetailsCheck = nil
+        
+        self.lastAccountStatusError = nil
+        self.lastAccountDetailsError = nil
+        self.lastAccountSignInError = nil
     }
 }
