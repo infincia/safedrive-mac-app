@@ -107,7 +107,7 @@ class FinderSync: FIFinderSync {
                         
                         let service = s.remoteObjectProxyWithErrorHandler { error in
                             print("remote proxy error: %@", error)
-                            } as! IPCProtocol
+                        } as! IPCProtocol
                         
                         service.ping({ reply in
                             print("Ping reply from service: \(reply)")
@@ -122,7 +122,7 @@ class FinderSync: FIFinderSync {
                         }
                         let service = s.remoteObjectProxyWithErrorHandler { error in
                             print("remote proxy error: \(error)")
-                            } as! IPCProtocol
+                        } as! IPCProtocol
                         
                         service.getAppEndpoint({ endpoint in
                             self?.appConnection = self?.createAppConnectionFromEndpoint(endpoint)
@@ -132,7 +132,7 @@ class FinderSync: FIFinderSync {
                             }
                             let app = a.remoteObjectProxyWithErrorHandler { error in
                                 print("remote proxy error: \(error)")
-                                } as! AppXPCProtocol
+                            } as! AppXPCProtocol
                             
                             app.ping({ _ -> Void in
                                 //print("Ping reply from app: \(reply)");
@@ -208,7 +208,7 @@ class FinderSync: FIFinderSync {
                     }
                     let app = a.remoteObjectProxyWithErrorHandler { error in
                         print("remote proxy error: \(error)")
-                        } as! AppXPCProtocol
+                    } as! AppXPCProtocol
                     
                     app.getMountState({ (mounted) in
                         DispatchQueue.main.async {
@@ -241,7 +241,7 @@ class FinderSync: FIFinderSync {
                     }
                     let app = a.remoteObjectProxyWithErrorHandler { error in
                         print("remote proxy error: \(error)")
-                        } as! AppXPCProtocol
+                    } as! AppXPCProtocol
                     
                     app.getUniqueClientID({ (ucid) -> Void in
                         DispatchQueue.main.async {
