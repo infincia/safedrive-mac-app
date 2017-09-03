@@ -548,8 +548,8 @@ extension FinderSync: SDApplicationEventProtocol {
             
             return
         }
-        DispatchQueue.main.async {
-            self.configureClient(uniqueClientID: uniqueClientID)
+        DispatchQueue.main.async { [weak self] in
+            self?.configureClient(uniqueClientID: uniqueClientID)
         }
         
     }
