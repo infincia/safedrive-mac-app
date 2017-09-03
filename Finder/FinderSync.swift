@@ -44,17 +44,12 @@ class FinderSync: FIFinderSync {
 
         FIFinderSyncController.default().directoryURLs = Set<URL>()
         
-        background {
-            self.serviceReconnectionLoop()
-        }
+        self.serviceReconnectionLoop()
         
-        background {
-            self.mountStateLoop()
-        }
+        self.mountStateLoop()
         
-        background {
-            self.clientConfigLoop()
-        }
+        self.clientConfigLoop()
+        
         
         self.mountMenuItem = NSMenuItem(title: "Mount SafeDrive",
                                              action: #selector(FinderSync.toggleMountState(_:)),
@@ -100,50 +95,54 @@ class FinderSync: FIFinderSync {
     // MARK: - Service handling
     
     func serviceReconnectionLoop() {
-        outer: while true {
-            if self.serviceConnection == nil {
-                self.serviceConnection = self.createServiceConnection()
-                guard let s = self.serviceConnection else {
-                    Thread.sleep(forTimeInterval: 1)
-                    continue outer
-                }
-                
-                let service = s.remoteObjectProxyWithErrorHandler { error in
-                    print("remote proxy error: %@", error)
-                } as! IPCProtocol
-                
-                service.ping({ reply in
-                    print("Ping reply from service: \(reply)")
-                    
-                })
-            }
-            if self.appConnection == nil {
-                FIFinderSyncController.default().directoryURLs = Set<URL>()
-                guard let s = self.serviceConnection else {
-                    Thread.sleep(forTimeInterval: 1)
-                    continue outer
-                }
-                let service = s.remoteObjectProxyWithErrorHandler { error in
-                    print("remote proxy error: \(error)")
-                } as! IPCProtocol
-                
-                service.getAppEndpoint({ endpoint in
-                    self.appConnection = self.createAppConnectionFromEndpoint(endpoint)
-                    guard let a = self.appConnection else {
-                        Thread.sleep(forTimeInterval: 1)
-                        return
+        background { [weak self] in
+            while true {
+                autoreleasepool {
+                    if self?.serviceConnection == nil {
+                        self?.serviceConnection = self?.createServiceConnection()
+                        guard let s = self?.serviceConnection else {
+                            Thread.sleep(forTimeInterval: 1)
+                            return
+                        }
+                        
+                        let service = s.remoteObjectProxyWithErrorHandler { error in
+                            print("remote proxy error: %@", error)
+                            } as! IPCProtocol
+                        
+                        service.ping({ reply in
+                            print("Ping reply from service: \(reply)")
+                            
+                        })
                     }
-                    let app = a.remoteObjectProxyWithErrorHandler { error in
-                        print("remote proxy error: \(error)")
-                    } as! AppXPCProtocol
-                    
-                    app.ping({ _ -> Void in
-                        //print("Ping reply from app: \(reply)");
-                    })
-                })
-                
+                    if self?.appConnection == nil {
+                        FIFinderSyncController.default().directoryURLs = Set<URL>()
+                        guard let s = self?.serviceConnection else {
+                            Thread.sleep(forTimeInterval: 1)
+                            return
+                        }
+                        let service = s.remoteObjectProxyWithErrorHandler { error in
+                            print("remote proxy error: \(error)")
+                            } as! IPCProtocol
+                        
+                        service.getAppEndpoint({ endpoint in
+                            self?.appConnection = self?.createAppConnectionFromEndpoint(endpoint)
+                            guard let a = self?.appConnection else {
+                                Thread.sleep(forTimeInterval: 1)
+                                return
+                            }
+                            let app = a.remoteObjectProxyWithErrorHandler { error in
+                                print("remote proxy error: \(error)")
+                                } as! AppXPCProtocol
+                            
+                            app.ping({ _ -> Void in
+                                //print("Ping reply from app: \(reply)");
+                            })
+                        })
+                        
+                    }
+                    Thread.sleep(forTimeInterval: 1)
+                }
             }
-            Thread.sleep(forTimeInterval: 1)
         }
     }
     
@@ -198,51 +197,61 @@ class FinderSync: FIFinderSync {
     // MARK: - Mount handling
     
     func mountStateLoop() {
-        background {
+        background { [weak self] in
             while true {
-                guard let a = self.appConnection else {
-                    Thread.sleep(forTimeInterval: 1)
-                    continue
-                }
-                let app = a.remoteObjectProxyWithErrorHandler { error in
-                    print("remote proxy error: \(error)")
-                } as! AppXPCProtocol
-            
-                app.getMountState({ (mounted) in
-                    DispatchQueue.main.async {
-                        if mounted {
-                            self.mountMenuItem.title = "Unmount SafeDrive"
-                        } else {
-                            self.mountMenuItem.title = "Mount SafeDrive"
-                        }
+                autoreleasepool {
+                    guard let a = self?.appConnection else {
+                        Thread.sleep(forTimeInterval: 1)
+                        // this returns the autoreleasepool block, not the loop,
+                        // but the end result is the same
+                        return
                     }
-                })
-                
-                Thread.sleep(forTimeInterval: 1)
+                    let app = a.remoteObjectProxyWithErrorHandler { error in
+                        print("remote proxy error: \(error)")
+                        } as! AppXPCProtocol
+                    
+                    app.getMountState({ (mounted) in
+                        DispatchQueue.main.async {
+                            if mounted {
+                                self?.mountMenuItem.title = "Unmount SafeDrive"
+                            } else {
+                                self?.mountMenuItem.title = "Mount SafeDrive"
+                            }
+                        }
+                    })
+                    
+                    Thread.sleep(forTimeInterval: 1)
+                }
             }
+
         }
     }
     
     // MARK: - Setup handling
     
     func clientConfigLoop() {
-        DispatchQueue.global(qos: DispatchQoS.default.qosClass).async {
+        background { [weak self] in
             while true {
-                guard let a = self.appConnection else {
-                    Thread.sleep(forTimeInterval: 1)
-                    continue
-                }
-                let app = a.remoteObjectProxyWithErrorHandler { error in
-                    print("remote proxy error: \(error)")
-                } as! AppXPCProtocol
-                
-                app.getUniqueClientID({ (ucid) -> Void in
-                    DispatchQueue.main.async {
-                        self.configureClient(uniqueClientID: ucid)
+                autoreleasepool {
+                    guard let a = self?.appConnection else {
+                        Thread.sleep(forTimeInterval: 1)
+                        // this returns the autoreleasepool block, not the loop,
+                        // but the end result is the same
+                        return
                     }
-                })
-                
-                Thread.sleep(forTimeInterval: 1)
+                    let app = a.remoteObjectProxyWithErrorHandler { error in
+                        print("remote proxy error: \(error)")
+                        } as! AppXPCProtocol
+                    
+                    app.getUniqueClientID({ (ucid) -> Void in
+                        DispatchQueue.main.async {
+                            self?.configureClient(uniqueClientID: ucid)
+                        }
+                    })
+                    
+                    Thread.sleep(forTimeInterval: 1)
+                }
+
             }
         }
     }
