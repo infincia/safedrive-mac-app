@@ -170,7 +170,7 @@ class ValidateAccountViewController: NSViewController {
                 self.delegate?.didFail(error: keychainError, uniqueClientID: nil)
                 return
             }
-        }) { (error) in
+        }, failure: { (error) in
             self.signingIn = false
 
             self.spinner.stopAnimation(self)
@@ -201,7 +201,7 @@ class ValidateAccountViewController: NSViewController {
                 self.delegate?.didFail(error: error, uniqueClientID: nil)
             }
 
-        }
+        })
     }
     
     @IBAction func createAccount(_ sender: AnyObject?) {
