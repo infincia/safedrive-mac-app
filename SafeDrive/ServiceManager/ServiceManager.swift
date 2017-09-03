@@ -228,20 +228,15 @@ extension ServiceManager: NSXPCListenerDelegate {
         
         newConnection.remoteObjectInterface = serviceInterface
         
-        weak var weakSelf: ServiceManager? = self
-        
-        newConnection.interruptionHandler = {
+        newConnection.interruptionHandler = { [weak self] in
             DispatchQueue.main.async {
-                if let weakSelf = weakSelf {
-                    weakSelf.serviceConnection = nil
-                }
+                self?.serviceConnection = nil
+
             }
         }
-        newConnection.invalidationHandler = {
+        newConnection.invalidationHandler = { [weak self] in
             DispatchQueue.main.async {
-                if let weakSelf = weakSelf {
-                    weakSelf.serviceConnection = nil
-                }
+                self?.serviceConnection = nil
             }
         }
         newConnection.resume()
