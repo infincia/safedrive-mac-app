@@ -5,7 +5,6 @@
 //  Created by steve on 1/17/17.
 //  Copyright © 2017 Infincia LLC. All rights reserved.
 //
-// swiftlint:disable sorted_imports
 // swiftlint:disable private_over_fileprivate
 
 import Foundation

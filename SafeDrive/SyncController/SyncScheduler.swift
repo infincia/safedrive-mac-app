@@ -2,7 +2,6 @@
 //  Copyright (c) 2014-2016 SafeDrive. All rights reserved.
 //
 
-// swiftlint:disable force_try
 // swiftlint:disable file_length
 
 import Crashlytics
@@ -63,7 +62,6 @@ class SyncScheduler {
     }
     
     fileprivate var syncQueue = [SyncEvent]()
-    // swiftlint:disable force_unwrapping
     
     init() {
         // register SDAccountProtocol notifications
