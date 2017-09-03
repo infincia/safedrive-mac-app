@@ -30,8 +30,9 @@ if #available(OSX 10.12, *) {
     NSLog("%@ listening", bundleId)
 }
 
-RunLoop.current.run()
-
+autoreleasepool {
+    RunLoop.current.run()
+}
 
 if #available(OSX 10.12, *) {
     os_log("%@ will exit", bundleId)
