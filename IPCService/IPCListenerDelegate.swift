@@ -144,17 +144,17 @@ class IPCListenerDelegate: NSObject, NSXPCListenerDelegate, IPCProtocol {
             self.finderConnections.append(newConnection)
         }
         
-        newConnection.interruptionHandler = {() -> Void in
-            self.finderConnectionsQueue.async {
+        newConnection.interruptionHandler = { [weak self] in
+            self?.finderConnectionsQueue.async {
                 print("Finder connection interrupted")
             }
         }
-        newConnection.invalidationHandler = {() -> Void in
-            self.finderConnectionsQueue.async {
+        newConnection.invalidationHandler = { [weak self] in
+            self?.finderConnectionsQueue.async {
                 print("Finder connection invalidated")
 
-                if let index = self.finderConnections.index(of: newConnection) {
-                    self.finderConnections.remove(at: index)
+                if let index = self?.finderConnections.index(of: newConnection) {
+                    self?.finderConnections.remove(at: index)
                 }
             }
         }
