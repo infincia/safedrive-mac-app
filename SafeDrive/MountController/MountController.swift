@@ -718,7 +718,7 @@ class MountController: NSObject {
                 NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                 self.mounting = false
             }, notMounted: {
-                let message = NSLocalizedString("Volume mount timeout", comment: "")
+                let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
                 let error = SDError(message: message, kind: .timeout)
                 SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
                 notification.informativeText = error.localizedDescription
@@ -766,7 +766,7 @@ class MountController: NSObject {
                     NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                     self.mounting = false
                 }, notMounted: {
-                    let message = NSLocalizedString("Volume mount timeout", comment: "")
+                    let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
                     let error = SDError(message: message, kind: .timeout)
                     SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
                     notification.informativeText = error.localizedDescription
