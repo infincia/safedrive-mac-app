@@ -47,7 +47,6 @@
 		AA2A42281F23AF4E00CC6010 /* VerifyFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42261F23AF4E00CC6010 /* VerifyFolderWindow.xib */; };
 		AA2A42291F23AF4E00CC6010 /* VerifyFolderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A42271F23AF4E00CC6010 /* VerifyFolderWindowController.swift */; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
-		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
 		AA3EB8411E569D28003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA3EB8431E569E9D003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA4F8FC71E6A2D5700BB068A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */; };
@@ -56,8 +55,6 @@
 		AA50716A1E2ED5F7006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
 		AA50716B1E2ED86A006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
 		AA50716D1E2ED86C006F59C8 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
-		AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */; };
-		AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AA543C711BFC57B50008FB8B /* Settings-Background.png */; };
 		AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */; };
 		AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */; };
 		AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */; };
@@ -180,6 +177,9 @@
 		AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
 		AAD44A281D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
 		AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
+		AAD5CFC11F73170C0008361D /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AAD5CFBF1F73170C0008361D /* Settings-Background.png */; };
+		AAD5CFC21F73170C0008361D /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AAD5CFC01F73170C0008361D /* Storage-Status-backing.png */; };
+		AAD5CFC41F7318A40008361D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD5CFC31F73187A0008361D /* Images.xcassets */; };
 		AAD69F181E665B4400FAB196 /* RunningProcessCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */; };
 		AAD89BD21E5C197E007D8E82 /* OpenFileWarningWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */; };
 		AAD89BD31E5C197E007D8E82 /* OpenFileWarningWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */; };
@@ -375,7 +375,6 @@
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
 		AA3168131A191B72006CC0EB /* SafeDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3168171A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA31681D1A191B72006CC0EB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeDriveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA31682B1A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA3EB8401E569D28003A2E79 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
@@ -383,8 +382,6 @@
 		AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeView.xib; path = Installer/WelcomeView.xib; sourceTree = "<group>"; };
 		AA4F8FC91E6A429100BB068A /* SoftwareClientTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoftwareClientTableCellView.swift; path = Installer/SoftwareClientTableCellView.swift; sourceTree = "<group>"; };
 		AA5071691E2ED5F7006F59C8 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = Shared/Util.swift; sourceTree = "<group>"; };
-		AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Storage-Status-backing.png"; sourceTree = "<group>"; };
-		AA543C711BFC57B50008FB8B /* Settings-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-Background.png"; sourceTree = "<group>"; };
 		AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Light.ttf"; sourceTree = "<group>"; };
 		AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCDelegate.swift; path = SafeDrive/XPCHandlers/AppXPCDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -456,6 +453,9 @@
 		AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
 		AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCProtocol.swift; path = Shared/AppXPCProtocol.swift; sourceTree = "<group>"; };
+		AAD5CFBF1F73170C0008361D /* Settings-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-Background.png"; sourceTree = "<group>"; };
+		AAD5CFC01F73170C0008361D /* Storage-Status-backing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Storage-Status-backing.png"; sourceTree = "<group>"; };
+		AAD5CFC31F73187A0008361D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RunningProcessCheck.swift; path = "Open File Warning Window/RunningProcessCheck.swift"; sourceTree = "<group>"; };
 		AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningWindowController.swift; path = "Open File Warning Window/OpenFileWarningWindowController.swift"; sourceTree = "<group>"; };
 		AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OpenFileWarningWindow.xib; path = "Open File Warning Window/OpenFileWarningWindow.xib"; sourceTree = "<group>"; };
@@ -602,6 +602,9 @@
 		AA2E550E1A774DED00647637 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AAD5CFC31F73187A0008361D /* Images.xcassets */,
+				AAD5CFBF1F73170C0008361D /* Settings-Background.png */,
+				AAD5CFC01F73170C0008361D /* Storage-Status-backing.png */,
 				AAA5582D1F283C2100724266 /* sd.icns */,
 				AAE216371E9BE8BD00BE956F /* setup.sh */,
 				AACDAD901E97548500F5B351 /* ssh_config */,
@@ -686,7 +689,6 @@
 		AA3168161A191B72006CC0EB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AA31681D1A191B72006CC0EB /* Images.xcassets */,
 				AA3168171A191B72006CC0EB /* Info.plist */,
 				AA31685C1A195B65006CC0EB /* Localization */,
 				AA73194E1A2F893D003E2391 /* SafeDrive.pch */,
@@ -721,8 +723,6 @@
 				AA58D2C91E82D8FC002D56E0 /* Status Tab */,
 				AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */,
 				AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */,
-				AA543C711BFC57B50008FB8B /* Settings-Background.png */,
-				AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */,
 			);
 			path = PreferencesWindow;
 			sourceTree = "<group>";
@@ -1280,14 +1280,13 @@
 				AAD89BD31E5C197E007D8E82 /* OpenFileWarningWindow.xib in Resources */,
 				AA650CF31D73A381008DA5CB /* Changelog.md in Resources */,
 				AAE216381E9BE8BD00BE956F /* setup.sh in Resources */,
-				AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */,
 				AA4F8FC81E6A2D5700BB068A /* WelcomeView.xib in Resources */,
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA58D2D11E82DB86002D56E0 /* AccountView.xib in Resources */,
 				AAA5582F1F283C2100724266 /* sd.icns in Resources */,
+				AAD5CFC41F7318A40008361D /* Images.xcassets in Resources */,
 				AA58D2CD1E82D9F0002D56E0 /* GeneralView.xib in Resources */,
 				AA11658A1F25C56700B7D8EF /* .swiftlint.yml in Resources */,
-				AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */,
 				AA2E55101A774E0000647637 /* known_hosts in Resources */,
 				AABF04A91E6CC46E0084DF81 /* FailedView.xib in Resources */,
 				AAC944AB1F730B4C009F8717 /* RecoveryPhraseWindow.xib in Resources */,
@@ -1295,6 +1294,7 @@
 				AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */,
 				AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg in Resources */,
 				AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */,
+				AAD5CFC11F73170C0008361D /* Settings-Background.png in Resources */,
 				AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */,
 				AAA50BB11E313AF200892E9D /* CUIThemeRenditionFix.xcassets in Resources */,
 				AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */,
@@ -1307,10 +1307,10 @@
 				AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */,
 				AA58D2D51E82DBA8002D56E0 /* SyncView.xib in Resources */,
 				AA58D2D91E82DBE4002D56E0 /* EncryptionView.xib in Resources */,
-				AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */,
 				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
 				AA2A42221F2315DA00CC6010 /* AddFolderWindow.xib in Resources */,
 				AA7319421A2F7EEB003E2391 /* Main.xib in Resources */,
+				AAD5CFC21F73170C0008361D /* Storage-Status-backing.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
