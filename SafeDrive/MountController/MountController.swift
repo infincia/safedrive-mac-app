@@ -673,7 +673,7 @@ class MountController: NSObject {
                 Crashlytics.sharedInstance().crash()
                 return
         }
-        guard let volicon = Bundle.main.url(forResource: "sd", withExtension: "icns") else {
+        guard let volicon = Bundle.main.url(forResource: "AppIcon", withExtension: "icns") else {
             let message = NSLocalizedString("Volume icon missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .configMissing)
             SDLog("\(error)")
