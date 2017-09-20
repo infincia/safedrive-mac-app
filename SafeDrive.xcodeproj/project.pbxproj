@@ -177,8 +177,6 @@
 		AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
 		AAD44A281D88CBAF00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
 		AAD44A2A1D88CBB100ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
-		AAD5CFC11F73170C0008361D /* Settings-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = AAD5CFBF1F73170C0008361D /* Settings-Background.png */; };
-		AAD5CFC21F73170C0008361D /* Storage-Status-backing.png in Resources */ = {isa = PBXBuildFile; fileRef = AAD5CFC01F73170C0008361D /* Storage-Status-backing.png */; };
 		AAD5CFC41F7318A40008361D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD5CFC31F73187A0008361D /* Images.xcassets */; };
 		AAD69F181E665B4400FAB196 /* RunningProcessCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */; };
 		AAD89BD21E5C197E007D8E82 /* OpenFileWarningWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */; };
@@ -453,8 +451,6 @@
 		AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
 		AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCProtocol.swift; path = Shared/AppXPCProtocol.swift; sourceTree = "<group>"; };
-		AAD5CFBF1F73170C0008361D /* Settings-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-Background.png"; sourceTree = "<group>"; };
-		AAD5CFC01F73170C0008361D /* Storage-Status-backing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Storage-Status-backing.png"; sourceTree = "<group>"; };
 		AAD5CFC31F73187A0008361D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RunningProcessCheck.swift; path = "Open File Warning Window/RunningProcessCheck.swift"; sourceTree = "<group>"; };
 		AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningWindowController.swift; path = "Open File Warning Window/OpenFileWarningWindowController.swift"; sourceTree = "<group>"; };
@@ -603,8 +599,6 @@
 			isa = PBXGroup;
 			children = (
 				AAD5CFC31F73187A0008361D /* Images.xcassets */,
-				AAD5CFBF1F73170C0008361D /* Settings-Background.png */,
-				AAD5CFC01F73170C0008361D /* Storage-Status-backing.png */,
 				AAA5582D1F283C2100724266 /* sd.icns */,
 				AAE216371E9BE8BD00BE956F /* setup.sh */,
 				AACDAD901E97548500F5B351 /* ssh_config */,
@@ -1294,7 +1288,6 @@
 				AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */,
 				AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg in Resources */,
 				AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */,
-				AAD5CFC11F73170C0008361D /* Settings-Background.png in Resources */,
 				AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */,
 				AAA50BB11E313AF200892E9D /* CUIThemeRenditionFix.xcassets in Resources */,
 				AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */,
@@ -1310,7 +1303,6 @@
 				AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */,
 				AA2A42221F2315DA00CC6010 /* AddFolderWindow.xib in Resources */,
 				AA7319421A2F7EEB003E2391 /* Main.xib in Resources */,
-				AAD5CFC21F73170C0008361D /* Storage-Status-backing.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
