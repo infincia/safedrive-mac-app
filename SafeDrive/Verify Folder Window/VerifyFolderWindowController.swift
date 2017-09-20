@@ -239,6 +239,8 @@ class VerifyFolderWindowController: NSWindowController {
                             alert.runModal()
                             
                         } else {
+                            self.folder.path = folderPath
+                            
                             self.verifyFolderDelegate?.verified(self.folder, solution: .find, success: { 
                                 self.spinner.stopAnimation(self)
                                 
