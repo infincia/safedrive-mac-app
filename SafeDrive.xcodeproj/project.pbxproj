@@ -10,8 +10,6 @@
 		012DA754E2ED03C676FA00B2 /* Pods_SafeDriveFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1C42BAD960C224DEF13165 /* Pods_SafeDriveFinder.framework */; };
 		69AB0CB9201703699449D0B7 /* Pods_SafeDriveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACCC0E28E50D1255EF3C3795 /* Pods_SafeDriveTests.framework */; };
 		856FEB9CEDB725A4DAEB1FEC /* Pods_SafeDrive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */; };
-		AA037B6F1E428EA600818B53 /* RecoveryPhraseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */; };
-		AA037B701E428EA600818B53 /* RecoveryPhraseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */; };
 		AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */; };
 		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
@@ -138,7 +136,6 @@
 		AAA3E71E1EADB77D0083CE66 /* EncryptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2D61E82DBE4002D56E0 /* EncryptionViewController.swift */; };
 		AAA3E71F1EADB7800083CE66 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2DA1E82DC15002D56E0 /* StatusViewController.swift */; };
 		AAA3E7201EADB7820083CE66 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */; };
-		AAA3E7211EADB7840083CE66 /* RecoveryPhraseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */; };
 		AAA3E7221EADB78C0083CE66 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AAA3E7231EADB78E0083CE66 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */; };
 		AAA3E7241EADB7940083CE66 /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */; };
@@ -175,6 +172,8 @@
 		AAC9448A1F730731009F8717 /* RestoreSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAC944871F730730009F8717 /* RestoreSelectionWindow.xib */; };
 		AAC9448B1F730731009F8717 /* RestoreSelectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC944881F730730009F8717 /* RestoreSelectionWindowController.swift */; };
 		AAC9448C1F730731009F8717 /* RestoreSelectionTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC944891F730730009F8717 /* RestoreSelectionTableCellView.swift */; };
+		AAC944AA1F730B4C009F8717 /* RecoveryPhraseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC944A81F730B4C009F8717 /* RecoveryPhraseWindowController.swift */; };
+		AAC944AB1F730B4C009F8717 /* RecoveryPhraseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAC944A91F730B4C009F8717 /* RecoveryPhraseWindow.xib */; };
 		AACDAD911E97548500F5B351 /* ssh_config in Resources */ = {isa = PBXBuildFile; fileRef = AACDAD901E97548500F5B351 /* ssh_config */; };
 		AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
@@ -343,8 +342,6 @@
 		6EDFBA7571B7FAE9BD73AB9B /* Pods_SafeDrive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SafeDrive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81810F9B8E9F2AB8468A4A0C /* Pods-SafeDrive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDrive.release.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDrive/Pods-SafeDrive.release.xcconfig"; sourceTree = "<group>"; };
 		919F110D04C41D55CB26D7F1 /* Pods-SafeDriveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.debug.xcconfig"; sourceTree = "<group>"; };
-		AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryPhraseWindowController.swift; sourceTree = "<group>"; };
-		AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecoveryPhraseWindow.xib; sourceTree = "<group>"; };
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreferencesWindow.xib; sourceTree = "<group>"; };
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileCheck.swift; path = "Open File Warning Window/OpenFileCheck.swift"; sourceTree = "<group>"; };
@@ -453,6 +450,8 @@
 		AAC944871F730730009F8717 /* RestoreSelectionWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestoreSelectionWindow.xib; sourceTree = "<group>"; };
 		AAC944881F730730009F8717 /* RestoreSelectionWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionWindowController.swift; sourceTree = "<group>"; };
 		AAC944891F730730009F8717 /* RestoreSelectionTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionTableCellView.swift; sourceTree = "<group>"; };
+		AAC944A81F730B4C009F8717 /* RecoveryPhraseWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryPhraseWindowController.swift; sourceTree = "<group>"; };
+		AAC944A91F730B4C009F8717 /* RecoveryPhraseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecoveryPhraseWindow.xib; sourceTree = "<group>"; };
 		AACDAD901E97548500F5B351 /* ssh_config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssh_config; sourceTree = "<group>"; };
 		AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
@@ -668,6 +667,7 @@
 				AA7319411A2F7EEB003E2391 /* Main.xib */,
 				AA31684D1A192D64006CC0EB /* MountController */,
 				AA3168471A192D26006CC0EB /* PreferencesWindow */,
+				AAC944A71F730B4C009F8717 /* RecoveryPhraseWindow */,
 				AA2E550E1A774DED00647637 /* Resources */,
 				AAC944861F730730009F8717 /* RestoreSelectionWindow */,
 				AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */,
@@ -723,8 +723,6 @@
 				AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */,
 				AA543C711BFC57B50008FB8B /* Settings-Background.png */,
 				AA543C701BFC57B50008FB8B /* Storage-Status-backing.png */,
-				AA037B6D1E428EA600818B53 /* RecoveryPhraseWindowController.swift */,
-				AA037B6E1E428EA600818B53 /* RecoveryPhraseWindow.xib */,
 			);
 			path = PreferencesWindow;
 			sourceTree = "<group>";
@@ -937,6 +935,15 @@
 				AAC944891F730730009F8717 /* RestoreSelectionTableCellView.swift */,
 			);
 			path = RestoreSelectionWindow;
+			sourceTree = "<group>";
+		};
+		AAC944A71F730B4C009F8717 /* RecoveryPhraseWindow */ = {
+			isa = PBXGroup;
+			children = (
+				AAC944A81F730B4C009F8717 /* RecoveryPhraseWindowController.swift */,
+				AAC944A91F730B4C009F8717 /* RecoveryPhraseWindow.xib */,
+			);
+			path = RecoveryPhraseWindow;
 			sourceTree = "<group>";
 		};
 		AAD89BCE1E5C194B007D8E82 /* Open File Check */ = {
@@ -1283,6 +1290,7 @@
 				AA543C761BFC57B50008FB8B /* Storage-Status-backing.png in Resources */,
 				AA2E55101A774E0000647637 /* known_hosts in Resources */,
 				AABF04A91E6CC46E0084DF81 /* FailedView.xib in Resources */,
+				AAC944AB1F730B4C009F8717 /* RecoveryPhraseWindow.xib in Resources */,
 				AABF04AB1E6CC46E0084DF81 /* ReadyView.xib in Resources */,
 				AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */,
 				AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg in Resources */,
@@ -1292,7 +1300,6 @@
 				AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */,
 				AA58D2DD1E82DC15002D56E0 /* StatusView.xib in Resources */,
 				AA76DC291C879076007B320E /* WelcomeWindow.xib in Resources */,
-				AA037B701E428EA600818B53 /* RecoveryPhraseWindow.xib in Resources */,
 				AACDAD911E97548500F5B351 /* ssh_config in Resources */,
 				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
 				AA7CD61A1E68A21100EE7FAD /* ValidateDependenciesView.xib in Resources */,
@@ -1549,6 +1556,7 @@
 				AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */,
 				AA6C5BBD1C9125D4001C2869 /* ServiceManager.swift in Sources */,
 				AABF04AA1E6CC46E0084DF81 /* FailedViewController.swift in Sources */,
+				AAC944AA1F730B4C009F8717 /* RecoveryPhraseWindowController.swift in Sources */,
 				AA192C0C1F37C9430037245A /* IPCProtocol.swift in Sources */,
 				AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAC9448B1F730731009F8717 /* RestoreSelectionWindowController.swift in Sources */,
@@ -1585,7 +1593,6 @@
 				AAD89BD21E5C197E007D8E82 /* OpenFileWarningWindowController.swift in Sources */,
 				AA2A42291F23AF4E00CC6010 /* VerifyFolderWindowController.swift in Sources */,
 				AA58D2CC1E82D9F0002D56E0 /* GeneralViewController.swift in Sources */,
-				AA037B6F1E428EA600818B53 /* RecoveryPhraseWindowController.swift in Sources */,
 				AAB7D5D51CB09943001F9A8E /* CrashAlert.swift in Sources */,
 				AA1165581F25B0B600B7D8EF /* Errors.swift in Sources */,
 				AA11655A1F25B0B600B7D8EF /* Models.swift in Sources */,
@@ -1624,7 +1631,6 @@
 				AAA3E7111EADB7570083CE66 /* ValidateAccountViewController.swift in Sources */,
 				AAA3E7061EADB7380083CE66 /* OpenFileWarningWindowController.swift in Sources */,
 				AAA3E70F1EADB7530083CE66 /* ReadyViewController.swift in Sources */,
-				AAA3E7211EADB7840083CE66 /* RecoveryPhraseWindowController.swift in Sources */,
 				AAA3E7101EADB7550083CE66 /* SoftwareClientTableCellView.swift in Sources */,
 				AAA3E7191EADB7720083CE66 /* SyncManagerTableCellView.swift in Sources */,
 				AAA3E7121EADB75D0083CE66 /* ValidateClientViewController.swift in Sources */,
