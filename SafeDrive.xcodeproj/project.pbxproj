@@ -810,9 +810,7 @@
 				AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */,
 				AA58D2D21E82DBA8002D56E0 /* SyncViewController.swift */,
 				AA58D2D31E82DBA8002D56E0 /* SyncView.xib */,
-				AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */,
-				AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */,
-				AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */,
+				AAC9447F1F7305EF009F8717 /* RestoreSelectionWindow */,
 			);
 			name = "Sync Tab";
 			sourceTree = "<group>";
@@ -931,6 +929,16 @@
 				AAB7D5CC1CAF85C0001F9A8E /* FlatWindow.swift */,
 			);
 			name = FlatWindow;
+			sourceTree = "<group>";
+		};
+		AAC9447F1F7305EF009F8717 /* RestoreSelectionWindow */ = {
+			isa = PBXGroup;
+			children = (
+				AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */,
+				AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */,
+				AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */,
+			);
+			name = RestoreSelectionWindow;
 			sourceTree = "<group>";
 		};
 		AAD89BCE1E5C194B007D8E82 /* Open File Check */ = {
