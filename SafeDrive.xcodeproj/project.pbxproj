@@ -50,9 +50,6 @@
 		AA2A42291F23AF4E00CC6010 /* VerifyFolderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A42271F23AF4E00CC6010 /* VerifyFolderWindowController.swift */; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
 		AA31681E1A191B72006CC0EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA31681D1A191B72006CC0EB /* Images.xcassets */; };
-		AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */; };
-		AA3EB83B1E556EE3003A2E79 /* RestoreSelectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */; };
-		AA3EB83D1E557C20003A2E79 /* RestoreSelectionTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */; };
 		AA3EB8411E569D28003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA3EB8431E569E9D003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA4F8FC71E6A2D5700BB068A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */; };
@@ -138,8 +135,6 @@
 		AAA3E7191EADB7720083CE66 /* SyncManagerTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946231C824DB700B972C3 /* SyncManagerTableCellView.swift */; };
 		AAA3E71A1EADB7740083CE66 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
 		AAA3E71B1EADB7760083CE66 /* SyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2D21E82DBA8002D56E0 /* SyncViewController.swift */; };
-		AAA3E71C1EADB7780083CE66 /* RestoreSelectionTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */; };
-		AAA3E71D1EADB77A0083CE66 /* RestoreSelectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */; };
 		AAA3E71E1EADB77D0083CE66 /* EncryptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2D61E82DBE4002D56E0 /* EncryptionViewController.swift */; };
 		AAA3E71F1EADB7800083CE66 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2DA1E82DC15002D56E0 /* StatusViewController.swift */; };
 		AAA3E7201EADB7820083CE66 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA76DC2E1C8A17F4007B320E /* PreferencesWindowController.swift */; };
@@ -177,6 +172,9 @@
 		AAC722B91F25D08E00C8EC3D /* io.safedrive.SafeDrive.rsync in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656D1F25B21D00B7D8EF /* io.safedrive.SafeDrive.rsync */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAC722BA1F25D08E00C8EC3D /* io.safedrive.SafeDrive.ssh in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656E1F25B21D00B7D8EF /* io.safedrive.SafeDrive.ssh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAC722BB1F25D08E00C8EC3D /* io.safedrive.SafeDrive.sshfs in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656F1F25B21D00B7D8EF /* io.safedrive.SafeDrive.sshfs */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AAC9448A1F730731009F8717 /* RestoreSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAC944871F730730009F8717 /* RestoreSelectionWindow.xib */; };
+		AAC9448B1F730731009F8717 /* RestoreSelectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC944881F730730009F8717 /* RestoreSelectionWindowController.swift */; };
+		AAC9448C1F730731009F8717 /* RestoreSelectionTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC944891F730730009F8717 /* RestoreSelectionTableCellView.swift */; };
 		AACDAD911E97548500F5B351 /* ssh_config in Resources */ = {isa = PBXBuildFile; fileRef = AACDAD901E97548500F5B351 /* ssh_config */; };
 		AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
@@ -383,9 +381,6 @@
 		AA31681D1A191B72006CC0EB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeDriveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA31682B1A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestoreSelectionWindow.xib; sourceTree = "<group>"; };
-		AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionWindowController.swift; sourceTree = "<group>"; };
-		AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionTableCellView.swift; sourceTree = "<group>"; };
 		AA3EB8401E569D28003A2E79 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewController.swift; path = Installer/WelcomeViewController.swift; sourceTree = "<group>"; };
 		AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WelcomeView.xib; path = Installer/WelcomeView.xib; sourceTree = "<group>"; };
@@ -455,6 +450,9 @@
 		AABF04A71E6CC46E0084DF81 /* ReadyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReadyView.xib; path = Installer/ReadyView.xib; sourceTree = "<group>"; };
 		AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadyViewController.swift; path = Installer/ReadyViewController.swift; sourceTree = "<group>"; };
 		AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = io.safedrive.SafeDrive.d; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAC944871F730730009F8717 /* RestoreSelectionWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestoreSelectionWindow.xib; sourceTree = "<group>"; };
+		AAC944881F730730009F8717 /* RestoreSelectionWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionWindowController.swift; sourceTree = "<group>"; };
+		AAC944891F730730009F8717 /* RestoreSelectionTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionTableCellView.swift; sourceTree = "<group>"; };
 		AACDAD901E97548500F5B351 /* ssh_config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssh_config; sourceTree = "<group>"; };
 		AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
@@ -671,6 +669,7 @@
 				AA31684D1A192D64006CC0EB /* MountController */,
 				AA3168471A192D26006CC0EB /* PreferencesWindow */,
 				AA2E550E1A774DED00647637 /* Resources */,
+				AAC944861F730730009F8717 /* RestoreSelectionWindow */,
 				AAF946111C82211600B972C3 /* SafeDrive-Bridging-Header.h */,
 				AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */,
 				AA3EB8401E569D28003A2E79 /* Protocols.swift */,
@@ -810,7 +809,6 @@
 				AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */,
 				AA58D2D21E82DBA8002D56E0 /* SyncViewController.swift */,
 				AA58D2D31E82DBA8002D56E0 /* SyncView.xib */,
-				AAC9447F1F7305EF009F8717 /* RestoreSelectionWindow */,
 			);
 			name = "Sync Tab";
 			sourceTree = "<group>";
@@ -931,14 +929,14 @@
 			name = FlatWindow;
 			sourceTree = "<group>";
 		};
-		AAC9447F1F7305EF009F8717 /* RestoreSelectionWindow */ = {
+		AAC944861F730730009F8717 /* RestoreSelectionWindow */ = {
 			isa = PBXGroup;
 			children = (
-				AA3EB83C1E557C20003A2E79 /* RestoreSelectionTableCellView.swift */,
-				AA3EB8381E556EE3003A2E79 /* RestoreSelectionWindow.xib */,
-				AA3EB8391E556EE3003A2E79 /* RestoreSelectionWindowController.swift */,
+				AAC944871F730730009F8717 /* RestoreSelectionWindow.xib */,
+				AAC944881F730730009F8717 /* RestoreSelectionWindowController.swift */,
+				AAC944891F730730009F8717 /* RestoreSelectionTableCellView.swift */,
 			);
-			name = RestoreSelectionWindow;
+			path = RestoreSelectionWindow;
 			sourceTree = "<group>";
 		};
 		AAD89BCE1E5C194B007D8E82 /* Open File Check */ = {
@@ -1271,11 +1269,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA88C0171F1B234D0025F1D7 /* io.safedrive.SafeDrive.d.plist in Resources */,
+				AAC9448A1F730731009F8717 /* RestoreSelectionWindow.xib in Resources */,
 				AAD89BD31E5C197E007D8E82 /* OpenFileWarningWindow.xib in Resources */,
 				AA650CF31D73A381008DA5CB /* Changelog.md in Resources */,
 				AAE216381E9BE8BD00BE956F /* setup.sh in Resources */,
 				AA543C771BFC57B50008FB8B /* Settings-Background.png in Resources */,
-				AA3EB83A1E556EE3003A2E79 /* RestoreSelectionWindow.xib in Resources */,
 				AA4F8FC81E6A2D5700BB068A /* WelcomeView.xib in Resources */,
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA58D2D11E82DB86002D56E0 /* AccountView.xib in Resources */,
@@ -1553,6 +1551,7 @@
 				AABF04AA1E6CC46E0084DF81 /* FailedViewController.swift in Sources */,
 				AA192C0C1F37C9430037245A /* IPCProtocol.swift in Sources */,
 				AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */,
+				AAC9448B1F730731009F8717 /* RestoreSelectionWindowController.swift in Sources */,
 				AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */,
 				AAD69F181E665B4400FAB196 /* RunningProcessCheck.swift in Sources */,
 				AA6E27341D8839DC00038019 /* SyncController.swift in Sources */,
@@ -1560,11 +1559,11 @@
 				AA76DC211C8762A9007B320E /* Installer.swift in Sources */,
 				AA58D2D01E82DB86002D56E0 /* AccountViewController.swift in Sources */,
 				AA7CD6191E68A21100EE7FAD /* ValidateDependenciesViewController.swift in Sources */,
-				AA3EB83D1E557C20003A2E79 /* RestoreSelectionTableCellView.swift in Sources */,
 				AA58D2D81E82DBE4002D56E0 /* EncryptionViewController.swift in Sources */,
 				AA1165561F25B0B600B7D8EF /* Constants.swift in Sources */,
 				AAB7D5CD1CAF85C0001F9A8E /* FlatWindow.swift in Sources */,
 				AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */,
+				AAC9448C1F730731009F8717 /* RestoreSelectionTableCellView.swift in Sources */,
 				AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */,
 				AA6E27301D87855100038019 /* MountController.swift in Sources */,
 				AA11653C1F256F1600B7D8EF /* Semver.swift in Sources */,
@@ -1582,7 +1581,6 @@
 				AA7CD61E1E68A23300EE7FAD /* ValidateAccountViewController.swift in Sources */,
 				AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */,
 				AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */,
-				AA3EB83B1E556EE3003A2E79 /* RestoreSelectionWindowController.swift in Sources */,
 				AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */,
 				AAD89BD21E5C197E007D8E82 /* OpenFileWarningWindowController.swift in Sources */,
 				AA2A42291F23AF4E00CC6010 /* VerifyFolderWindowController.swift in Sources */,
@@ -1605,7 +1603,6 @@
 				AA16CE381F2ABC6400CD2399 /* Errors.swift in Sources */,
 				AA16CE371F2ABC6100CD2399 /* Models.swift in Sources */,
 				AAA3E72A1EADB8FE0083CE66 /* ServiceXPCProtocol.swift in Sources */,
-				AAA3E71C1EADB7780083CE66 /* RestoreSelectionTableCellView.swift in Sources */,
 				AA6E272C1D876DD800038019 /* Notifications.swift in Sources */,
 				AA6E27351D8839DC00038019 /* SyncController.swift in Sources */,
 				AAA3E7201EADB7820083CE66 /* PreferencesWindowController.swift in Sources */,
@@ -1635,7 +1632,6 @@
 				AAA3E70C1EADB74C0083CE66 /* FlatWindow.swift in Sources */,
 				AAA3E7291EADB8FA0083CE66 /* AppXPCProtocol.swift in Sources */,
 				AAA3E7091EADB7410083CE66 /* AppDelegate.swift in Sources */,
-				AAA3E71D1EADB77A0083CE66 /* RestoreSelectionWindowController.swift in Sources */,
 				AAA3E7161EADB76C0083CE66 /* GeneralViewController.swift in Sources */,
 				AAA3E7281EADB8F90083CE66 /* NSDate+next.swift in Sources */,
 				AAA3E71A1EADB7740083CE66 /* SyncManagerTableRowView.swift in Sources */,
