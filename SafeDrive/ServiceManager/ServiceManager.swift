@@ -8,12 +8,12 @@ import ServiceManagement
 class ServiceManager: NSObject {
     static let sharedServiceManager = ServiceManager()
     
-    static let serviceName = "G738Z89QKM.io.safedrive.IPCService"
+    static let ipcServiceName = "G738Z89QKM.io.safedrive.IPCService"
     static let appName = "SafeDrive"
     
-    fileprivate var serviceConnection: NSXPCConnection?
+    fileprivate var ipcConnection: NSXPCConnection?
     fileprivate var appListener: NSXPCListener
-    fileprivate var currentServiceVersion: Int?
+    fileprivate var currentIPCServiceVersion: Int?
     // swiftlint:disable weak_delegate
     // disabling lint because this isn't a delegate but an XPC exported 
     // object owned by this class
@@ -68,7 +68,7 @@ class ServiceManager: NSObject {
             print("Failed to LSRegisterURL \(helper)")
         }
         
-        if (SMLoginItemSetEnabled((ServiceManager.serviceName as CFString), state)) {
+        if (SMLoginItemSetEnabled((ServiceManager.ipcServiceName as CFString), state)) {
             return true
         } else {
             print("Failed to SMLoginItemSetEnabled \(helper)")
@@ -83,7 +83,7 @@ class ServiceManager: NSObject {
     
     
     var isServiceRunning: Bool {
-        guard let _ = SMJobCopyDictionary(kSMDomainUserLaunchd, (ServiceManager.serviceName as CFString)) else {
+        guard let _ = SMJobCopyDictionary(kSMDomainUserLaunchd, (ServiceManager.ipcServiceName as CFString)) else {
             return false
         }
         return true
@@ -110,7 +110,7 @@ extension ServiceManager: SDSyncEventProtocol {
             return
         }
         
-        if let s = self.serviceConnection {
+        if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                 SDLogError("syncEvent connecting to service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
@@ -131,7 +131,7 @@ extension ServiceManager: SDApplicationEventProtocol {
             return
         }
         
-        if let s = self.serviceConnection {
+        if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                 SDLogError("applicationDidConfigureClient connecting to service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
@@ -149,7 +149,7 @@ extension ServiceManager: SDApplicationEventProtocol {
             return
         }
         
-        if let s = self.serviceConnection {
+        if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                 SDLogError("applicationDidConfigureUser connecting to service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
@@ -162,7 +162,7 @@ extension ServiceManager: SDApplicationEventProtocol {
 extension ServiceManager: SDAccountProtocol {
     
     func didSignIn(notification: Notification) {
-        if let s = self.serviceConnection {
+        if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                 SDLogError("didSignIn connecting to service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
@@ -172,7 +172,7 @@ extension ServiceManager: SDAccountProtocol {
     }
     
     func didSignOut(notification: Notification) {
-        if let s = self.serviceConnection {
+        if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                 SDLogError("didSignOut connecting to service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
@@ -193,7 +193,7 @@ extension ServiceManager: SDMountStateProtocol {
     
     func mountStateMounted(notification: Notification) {
         
-        if let s = self.serviceConnection {
+        if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                 SDLogError("Connecting to service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
@@ -203,7 +203,7 @@ extension ServiceManager: SDMountStateProtocol {
     }
     
     func mountStateUnmounted(notification: Notification) {
-        if let s = self.serviceConnection {
+        if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                 SDLogError("Connecting to service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
@@ -219,10 +219,10 @@ extension ServiceManager: SDMountStateProtocol {
 
 extension ServiceManager: NSXPCListenerDelegate {
     
-    func createServiceConnection() -> NSXPCConnection {
+    func createIPCServiceConnection() -> NSXPCConnection {
         //let newConnection = NSXPCConnection(serviceName: ServiceManager.serviceName)
         
-        let newConnection = NSXPCConnection(machServiceName: ServiceManager.serviceName, options: NSXPCConnection.Options.init(rawValue: 0))
+        let newConnection = NSXPCConnection(machServiceName: ServiceManager.ipcServiceName, options: NSXPCConnection.Options.init(rawValue: 0))
         
         let serviceInterface = NSXPCInterface(with: IPCProtocol.self)
         
@@ -230,20 +230,20 @@ extension ServiceManager: NSXPCListenerDelegate {
         
         newConnection.interruptionHandler = { [weak self] in
             DispatchQueue.main.async {
-                self?.serviceConnection = nil
+                self?.ipcConnection = nil
 
             }
         }
         newConnection.invalidationHandler = { [weak self] in
             DispatchQueue.main.async {
-                self?.serviceConnection = nil
+                self?.ipcConnection = nil
             }
         }
         newConnection.resume()
         return newConnection
     }
     
-    func ensureServiceIsRunning() {
+    func ensureIPCServiceIsRunning() {
         if isProduction() {
             // ask the service to stop any important operations first.
             // there aren't any at the moment, so this is a placeholder
@@ -266,13 +266,13 @@ extension ServiceManager: NSXPCListenerDelegate {
     
     func serviceReconnectionLoop() {
         while true {
-            if self.serviceConnection == nil {
+            if self.ipcConnection == nil {
                 
                 self.updateNotificationSent = false
                 
-                self.serviceConnection = self.createServiceConnection()
+                self.ipcConnection = self.createIPCServiceConnection()
                 
-                if let s = self.serviceConnection {
+                if let s = self.ipcConnection {
                     let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                         SDLogError("Connecting to service failed: \(error.localizedDescription)")
                     }) as! IPCProtocol

@@ -134,7 +134,7 @@ extension AppDelegate: NSApplicationDelegate {
         self.dropdownMenuController = DropdownController()
         
         self.serviceManager = ServiceManager.sharedServiceManager
-        self.serviceManager.ensureServiceIsRunning()
+        self.serviceManager.ensureIPCServiceIsRunning()
         
         self.accountController = AccountController.sharedAccountController
         
