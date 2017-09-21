@@ -4,18 +4,10 @@
 <dict>
 	<key>Label</key>
 	<string>io.safedrive.SafeDrive.d</string>
-	<key>ProgramArguments</key>
-	<array>
-		<string>/Users/steve/Library/LaunchAgents/io.safedrive.SafeDrive.d</string>
-	</array>
 	<key>MachServices</key>
 	<dict>
 		<key>io.safedrive.SafeDrive.d</key>
 		<true/>
 	</dict>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>KeepAlive</key>
-	<true/>
 </dict>
 </plist>
