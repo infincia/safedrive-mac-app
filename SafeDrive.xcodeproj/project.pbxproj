@@ -1018,6 +1018,20 @@
 			passBuildSettingsInEnvironment = 1;
 			productName = SDDK;
 		};
+		AA82A6171F738A330047B31A /* sdfuse */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = build_fuse.sh;
+			buildConfigurationList = AA82A61A1F738A330047B31A /* Build configuration list for PBXLegacyTarget "sdfuse" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/bash;
+			buildWorkingDirectory = "$(SRCROOT)/";
+			dependencies = (
+			);
+			name = sdfuse;
+			passBuildSettingsInEnvironment = 1;
+			productName = sdfuse;
+		};
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
@@ -1210,6 +1224,11 @@
 							};
 						};
 					};
+					AA82A6171F738A330047B31A = {
+						CreatedOnToolsVersion = 9.0;
+						DevelopmentTeam = G738Z89QKM;
+						ProvisioningStyle = Automatic;
+					};
 					AAC466C61F0C9BFD002088B6 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = G738Z89QKM;
@@ -1255,6 +1274,7 @@
 				AA11657A1F25B4C700B7D8EF /* SDDK */,
 				AA5DAFDB1F2E2E9B00CD48AE /* SFTPFSService */,
 				AA192BF41F37C64A0037245A /* IPCService */,
+				AA82A6171F738A330047B31A /* sdfuse */,
 			);
 		};
 /* End PBXProject section */
@@ -2260,6 +2280,46 @@
 			};
 			name = Release;
 		};
+		AA82A6181F738A330047B31A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = G738Z89QKM;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AA82A6191F738A330047B31A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = G738Z89QKM;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		AAC466CC1F0C9BFD002088B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2423,6 +2483,15 @@
 			buildConfigurations = (
 				AA5DAFE81F2E2E9B00CD48AE /* Debug */,
 				AA5DAFE91F2E2E9B00CD48AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA82A61A1F738A330047B31A /* Build configuration list for PBXLegacyTarget "sdfuse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA82A6181F738A330047B31A /* Debug */,
+				AA82A6191F738A330047B31A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
