@@ -142,8 +142,6 @@
 		AAA3E7291EADB8FA0083CE66 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
 		AAA3E72A1EADB8FE0083CE66 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
 		AAA50BB11E313AF200892E9D /* CUIThemeRenditionFix.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */; };
-		AAA5582F1F283C2100724266 /* sd.icns in Resources */ = {isa = PBXBuildFile; fileRef = AAA5582D1F283C2100724266 /* sd.icns */; };
-		AAA558301F283C2100724266 /* sd.icns in Resources */ = {isa = PBXBuildFile; fileRef = AAA5582D1F283C2100724266 /* sd.icns */; };
 		AAA88BBF1C824EE8009BE1C7 /* SyncManagerTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */; };
 		AAA88BCB1C838D2E009BE1C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */; };
 		AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA88BD61C851F17009BE1C7 /* AccountController.swift */; };
@@ -428,7 +426,6 @@
 		AA9079A71F072A7D0067E383 /* exportOptions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = exportOptions.plist; sourceTree = "<group>"; };
 		AA9079A81F072A7D0067E383 /* release.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = release.sh; sourceTree = "<group>"; };
 		AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CUIThemeRenditionFix.xcassets; path = Shared/CUIThemeRenditionFix.xcassets; sourceTree = "<group>"; };
-		AAA5582D1F283C2100724266 /* sd.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = sd.icns; sourceTree = "<group>"; };
 		AAA88BBE1C824EE8009BE1C7 /* SyncManagerTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTableRowView.swift; sourceTree = "<group>"; };
 		AAA88BCA1C838D2E009BE1C7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAA88BD61C851F17009BE1C7 /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountController.swift; path = AccountController/AccountController.swift; sourceTree = "<group>"; };
@@ -599,7 +596,6 @@
 			isa = PBXGroup;
 			children = (
 				AAD5CFC31F73187A0008361D /* Images.xcassets */,
-				AAA5582D1F283C2100724266 /* sd.icns */,
 				AAE216371E9BE8BD00BE956F /* setup.sh */,
 				AACDAD901E97548500F5B351 /* ssh_config */,
 				AAB617BF1A7B18080003CD30 /* Acknowledgments.rtf */,
@@ -1277,7 +1273,6 @@
 				AA4F8FC81E6A2D5700BB068A /* WelcomeView.xib in Resources */,
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA58D2D11E82DB86002D56E0 /* AccountView.xib in Resources */,
-				AAA5582F1F283C2100724266 /* sd.icns in Resources */,
 				AAD5CFC41F7318A40008361D /* Images.xcassets in Resources */,
 				AA58D2CD1E82D9F0002D56E0 /* GeneralView.xib in Resources */,
 				AA11658A1F25C56700B7D8EF /* .swiftlint.yml in Resources */,
@@ -1318,7 +1313,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAA558301F283C2100724266 /* sd.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
