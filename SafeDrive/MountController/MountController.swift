@@ -381,6 +381,13 @@ class MountController: NSObject {
         
         self.sshfsTask = Process()
         
+        guard let volicon = Bundle.main.url(forResource: "AppIcon", withExtension: "icns") else {
+            let message = NSLocalizedString("SSHFS missing, contact SafeDrive support", comment: "")
+            let error = SDError(message: message, kind: .sshfsMissing)
+            failureBlock(mountURL, error)
+            return
+        }
+        
         guard let sshfsPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.sshfs") else {
             let message = NSLocalizedString("SSHFS missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .sshfsMissing)
@@ -543,8 +550,12 @@ class MountController: NSObject {
         
         /* convert to and from UTF8 NFC, the server filenames MUST be in that form */
         
-        taskArguments.append("-omodules=iconv,from_code=UTF-8")
+        taskArguments.append("-omodules=volicon:iconv,from_code=UTF-8")
         
+        /* set volume icon*/
+
+        taskArguments.append("-oiconpath=\(volicon.path)")
+
         /* custom port if needed */
         taskArguments.append("-p\(port)")
         
