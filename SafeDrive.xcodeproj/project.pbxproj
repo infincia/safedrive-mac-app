@@ -449,6 +449,10 @@
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
 		AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCProtocol.swift; path = Shared/AppXPCProtocol.swift; sourceTree = "<group>"; };
 		AAD5CFC31F73187A0008361D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		AAD5CFC81F7354910008361D /* build_fuse.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_fuse.sh; sourceTree = "<group>"; };
+		AAD5CFC91F7354920008361D /* install_fuse.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_fuse.sh; sourceTree = "<group>"; };
+		AAD5CFCA1F7354920008361D /* uninstall_fuse.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = uninstall_fuse.sh; sourceTree = "<group>"; };
+		AAD5CFCB1F7354920008361D /* patch_fuse.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_fuse.sh; sourceTree = "<group>"; };
 		AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RunningProcessCheck.swift; path = "Open File Warning Window/RunningProcessCheck.swift"; sourceTree = "<group>"; };
 		AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningWindowController.swift; path = "Open File Warning Window/OpenFileWarningWindowController.swift"; sourceTree = "<group>"; };
 		AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OpenFileWarningWindow.xib; path = "Open File Warning Window/OpenFileWarningWindow.xib"; sourceTree = "<group>"; };
@@ -610,6 +614,7 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
+				AAD5CFD31F7354A30008361D /* sdfuse */,
 				AAE4CCE51F2A721000233143 /* sftpfs.xcodeproj */,
 				AA1165891F25C56700B7D8EF /* .swiftlint.yml */,
 				AA1165871F25B7C900B7D8EF /* SDDK */,
@@ -934,6 +939,17 @@
 				AAC944A91F730B4C009F8717 /* RecoveryPhraseWindow.xib */,
 			);
 			path = RecoveryPhraseWindow;
+			sourceTree = "<group>";
+		};
+		AAD5CFD31F7354A30008361D /* sdfuse */ = {
+			isa = PBXGroup;
+			children = (
+				AAD5CFC81F7354910008361D /* build_fuse.sh */,
+				AAD5CFC91F7354920008361D /* install_fuse.sh */,
+				AAD5CFCB1F7354920008361D /* patch_fuse.sh */,
+				AAD5CFCA1F7354920008361D /* uninstall_fuse.sh */,
+			);
+			name = sdfuse;
 			sourceTree = "<group>";
 		};
 		AAD89BCE1E5C194B007D8E82 /* Open File Check */ = {
