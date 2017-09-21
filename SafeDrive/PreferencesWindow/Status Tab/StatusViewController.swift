@@ -8,7 +8,6 @@ class StatusViewController: NSViewController {
     
     fileprivate weak var delegate: PreferencesViewDelegate!
 
-    @IBOutlet fileprivate var serviceStatusField: NSTextField!
     @IBOutlet fileprivate var mountStatusField: NSTextField!
     @IBOutlet fileprivate var volumeSizeField: NSTextField!
     
@@ -47,9 +46,6 @@ class StatusViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
-        
-        // register SDServiceStatusProtcol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDServiceStatusProtocol.didReceiveServiceStatus), name: Notification.Name.serviceStatus, object: nil)
         
         // register SDApplicationEventProtocol notifications
         
@@ -97,22 +93,6 @@ extension StatusViewController: SDMountStateProtocol {
         }
     }
 }
-
-
-extension StatusViewController: SDServiceStatusProtocol {
-    
-    func didReceiveServiceStatus(notification: Foundation.Notification) {
-        assert(Thread.current == Thread.main, "didReceiveServiceStatus called on background thread")
-        
-        guard let status = notification.object as? Bool else {
-            SDLog("Validation failed: didReceiveServiceStatus")
-            return
-        }
-        
-        self.serviceStatusField.stringValue = (status == true ? "Running" : "Stopped")
-    }
-}
-
 
 extension StatusViewController: SDApplicationEventProtocol {
     

@@ -52,10 +52,6 @@ class ServiceManager: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
         
         background {
-            self.serviceLoop()
-        }
-        
-        background {
             self.serviceReconnectionLoop()
         }
     }
@@ -79,27 +75,6 @@ class ServiceManager: NSObject {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-    }
-    
-    
-    var isServiceRunning: Bool {
-        guard let _ = SMJobCopyDictionary(kSMDomainUserLaunchd, (ServiceManager.ipcServiceName as CFString)) else {
-            return false
-        }
-        return true
-        
-    }
-    
-    fileprivate func serviceLoop() {
-        background {
-            while true {
-                let running: Bool = self.isServiceRunning
-                DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: Notification.Name.serviceStatus, object: running)
-                }
-                Thread.sleep(forTimeInterval: 1)
-            }
-        }
     }
 }
 

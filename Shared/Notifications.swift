@@ -39,8 +39,6 @@ extension Notification.Name {
     static let accountCreatedRecoveryPhrase = Notification.Name("accountCreatedRecoveryPhraseNotification")
     static let accountNeedsRecoveryPhrase = Notification.Name("accountNeedsRecoveryPhraseNotification")
 
-    static let serviceStatus = Notification.Name("serviceStatusNotification")
-
     static let syncEvent = Notification.Name("syncEventNotification")
 
 }

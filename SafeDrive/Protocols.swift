@@ -32,11 +32,6 @@ protocol SDAccountProtocol: class {
 }
 
 @objc
-protocol SDServiceStatusProtocol: class {
-    func didReceiveServiceStatus(notification: Notification)
-}
-
-@objc
 protocol SDApplicationControlProtocol: class {
     func applicationShouldOpenPreferencesWindow(notification: Notification)
     func applicationShouldOpenAccountWindow(notification: Notification)
