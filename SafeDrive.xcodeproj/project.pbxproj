@@ -97,6 +97,7 @@
 		AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */; };
 		AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */; };
 		AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */; };
+		AA82A6331F7410B80047B31A /* sdfuse.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA82A6321F7410B80047B31A /* sdfuse.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA88C0141F1B225E0025F1D7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88C00E1F1B22400025F1D7 /* main.swift */; };
 		AA88C0151F1B225E0025F1D7 /* ServiceListenerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88C00F1F1B22400025F1D7 /* ServiceListenerDelegate.swift */; };
 		AA88C0171F1B234D0025F1D7 /* io.safedrive.SafeDrive.d.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA88C00D1F1B22400025F1D7 /* io.safedrive.SafeDrive.d.plist */; };
@@ -268,6 +269,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				AA82A6331F7410B80047B31A /* sdfuse.bundle in CopyFiles */,
 				AAC722B71F25D08E00C8EC3D /* io.safedrive.SafeDrive.askpass in CopyFiles */,
 				AAC722B81F25D08E00C8EC3D /* io.safedrive.SafeDrive.cli in CopyFiles */,
 				AAC722B91F25D08E00C8EC3D /* io.safedrive.SafeDrive.rsync in CopyFiles */,
@@ -416,6 +418,7 @@
 		AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateAccountView.xib; path = Installer/ValidateAccountView.xib; sourceTree = "<group>"; };
 		AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateClientViewController.swift; path = Installer/ValidateClientViewController.swift; sourceTree = "<group>"; };
 		AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateClientView.xib; path = Installer/ValidateClientView.xib; sourceTree = "<group>"; };
+		AA82A6321F7410B80047B31A /* sdfuse.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = sdfuse.bundle; path = dist/sdfuse.bundle; sourceTree = "<group>"; };
 		AA88C00B1F1B22400025F1D7 /* d.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = d.entitlements; path = SafeDrive.d/d.entitlements; sourceTree = "<group>"; };
 		AA88C00C1F1B22400025F1D7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SafeDrive.d/Info.plist; sourceTree = "<group>"; };
 		AA88C00D1F1B22400025F1D7 /* io.safedrive.SafeDrive.d.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = io.safedrive.SafeDrive.d.plist; path = SafeDrive.d/io.safedrive.SafeDrive.d.plist; sourceTree = "<group>"; };
@@ -944,6 +947,7 @@
 		AAD5CFD31F7354A30008361D /* sdfuse */ = {
 			isa = PBXGroup;
 			children = (
+				AA82A6321F7410B80047B31A /* sdfuse.bundle */,
 				AAD5CFC81F7354910008361D /* build_fuse.sh */,
 				AAD5CFC91F7354920008361D /* install_fuse.sh */,
 				AAD5CFCB1F7354920008361D /* patch_fuse.sh */,
