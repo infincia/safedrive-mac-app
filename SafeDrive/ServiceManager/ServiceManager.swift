@@ -389,10 +389,10 @@ extension ServiceManager: NSXPCListenerDelegate {
                 return
             }
             if Semver.gte(currentServiceVersion, appVersion) {
-                SDLogError("Service up to date")
+                SDLog("Service up to date")
                 ServiceManager.delegate.didValidateService()
             } else {
-                SDLogError("Service update needed")
+                SDLogWarn("Service update needed")
                 ServiceManager.delegate.needsService()
             }
         }
