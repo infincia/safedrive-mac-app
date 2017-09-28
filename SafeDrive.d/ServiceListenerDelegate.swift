@@ -105,6 +105,63 @@ extension ServiceListenerDelegate: ServiceXPCProtocol {
     
     func protocolVersion(_ replyBlock: @escaping (Int) -> Void) {
         replyBlock(kServiceXPCProtocolVersion)
+    }
+    
+    func updateSDFS(_ source: String, _ replyBlock: @escaping (_ state: Bool, _ status: String) -> Void) {
+        do {
+            try unloadKext()
+        } catch {
+            // ignore, not fatal
+        }
         
+        do {
+            try FileManager.default.removeItem(atPath: "/Library/Filesystems/sdfs.fs")
+        } catch {
+            // ignore, not fatal
+        }
+        
+        do {
+            try FileManager.default.copyItem(atPath: source, toPath: "/Library/Filesystems/sdfs.fs")
+        } catch let error as NSError {
+            replyBlock(false, "\(error.localizedDescription)")
+            return
+        }
+        
+        guard let version = getSDFSVersion() else {
+            replyBlock(false, "Could not determine SDFS version")
+            return
+        }
+        
+        do {
+            try fixSDFSPermissions()
+        } catch let e as NSError {
+            replyBlock(false, "SDFS kext permissions could not be fixed: \(e.localizedDescription)")
+            return
+        }
+        
+        do {
+            try loadKext()
+        } catch let e as NSError {
+            replyBlock(false, "SDFS kext could not be loaded: \(e.localizedDescription)")
+            return
+        }
+        
+        replyBlock(true, version)
+    }
+
+    func currentSDFSVersion(_ replyBlock: @escaping (_ state: Bool, _ status: String) -> Void) {
+        guard let version = getSDFSVersion() else {
+            replyBlock(false, "N/A")
+            return
+        }
+        replyBlock(true, version)
+    }
+    
+    func currentServiceVersion(_ replyBlock: @escaping (_ version: String?) -> Void) {
+        guard let version = getServiceVersion() else {
+            replyBlock(nil)
+            return
+        }
+        replyBlock(version)
     }
 }
