@@ -2351,7 +2351,7 @@
 				DEVELOPMENT_TEAM = G738Z89QKM;
 				INFOPLIST_FILE = SafeDrive.d/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_CODE_SIGN_FLAGS = "-r=\"designated => anchor apple generic and identifier \\\"io.safedrive.SafeDrive\\\" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G738Z89QKM)\"";
+				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"-sectcreate",
 					__TEXT,
@@ -2385,7 +2385,7 @@
 				DEVELOPMENT_TEAM = G738Z89QKM;
 				INFOPLIST_FILE = SafeDrive.d/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_CODE_SIGN_FLAGS = "-r=\"designated => anchor apple generic and identifier \\\"io.safedrive.SafeDrive\\\" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G738Z89QKM)\"";
+				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"-sectcreate",
 					__TEXT,
