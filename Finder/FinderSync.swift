@@ -176,13 +176,7 @@ class FinderSync: FIFinderSync {
         let appInterface: NSXPCInterface = NSXPCInterface(with: AppXPCProtocol.self)
         
         newConnection.remoteObjectInterface = appInterface
-        
-        
-        newConnection.interruptionHandler = {() -> Void in
-            DispatchQueue.main.async {
-                print("App connection interrupted")
-            }
-        }
+
         newConnection.invalidationHandler = { [weak self] in
             DispatchQueue.main.async {
                 print("App connection invalidated")
