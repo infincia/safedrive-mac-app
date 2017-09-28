@@ -95,19 +95,6 @@ class FinderSync: FIFinderSync {
                 autoreleasepool {
                     if self?.serviceConnection == nil {
                         self?.serviceConnection = self?.createServiceConnection()
-                        guard let s = self?.serviceConnection else {
-                            Thread.sleep(forTimeInterval: 1)
-                            return
-                        }
-                        
-                        let service = s.remoteObjectProxyWithErrorHandler { error in
-                            print("remote proxy error: %@", error)
-                        } as! IPCProtocol
-                        
-                        service.ping({ reply in
-                            print("Ping reply from service: \(reply)")
-                            
-                        })
                     }
                     if self?.appConnection == nil {
                         FIFinderSyncController.default().directoryURLs = Set<URL>()
