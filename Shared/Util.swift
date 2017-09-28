@@ -63,6 +63,11 @@ func background(_ block: @escaping () -> Void) {
     }
 }
 
+func main(_ block: @escaping () -> Void) {
+    DispatchQueue.main.async {
+        block()
+    }
+}
 
 func currentOSVersion() -> String {
     let systemVersionPlist = "/System/Library/CoreServices/SystemVersion.plist"
