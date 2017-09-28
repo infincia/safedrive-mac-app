@@ -11,7 +11,7 @@ import os.log
 let bundleId = "G738Z89QKM.io.safedrive.IPCService"
 
 if #available(OSX 10.12, *) {
-    os_log("%@ will start", bundleId)
+    os_log("%{public}@ will start", bundleId)
 } else {
     NSLog("%@ will start", bundleId)
 }
@@ -27,7 +27,7 @@ listener.delegate = listenerDelegate
 listener.resume()
 
 if #available(OSX 10.12, *) {
-    os_log("%@ listening", bundleId)
+    os_log("%{public}@ listening", bundleId)
 } else {
     NSLog("%@ listening", bundleId)
 }
@@ -38,7 +38,7 @@ autoreleasepool {
 
 
 if #available(OSX 10.12, *) {
-    os_log("%@ will exit", bundleId)
+    os_log("%{public}@ will exit", bundleId)
 } else {
     NSLog("%@ will exit", bundleId)
 }
