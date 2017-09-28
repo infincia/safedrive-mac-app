@@ -4,7 +4,7 @@
 
 import Foundation
 
-class ServiceListenerDelegate: NSObject, NSXPCListenerDelegate, ServiceXPCProtocol {
+class ServiceListenerDelegate: NSObject {
     fileprivate func getSDFSVersion() -> String? {
         guard let sdfs = Bundle.init(path: "/Library/Filesystems/sdfs.fs"),
             let version = sdfs.infoDictionary?["CFBundleVersion"] as? String else {
@@ -79,7 +79,9 @@ class ServiceListenerDelegate: NSObject, NSXPCListenerDelegate, ServiceXPCProtoc
             throw NSError(domain: "io.safedrive.SafeDrive.d", code: 0x0005, userInfo: [NSLocalizedDescriptionKey: "SDFS kext loader binary could not be setuid"])
         }
     }
+}
 
+extension ServiceListenerDelegate: NSXPCListenerDelegate {
     func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
         
         let serviceInterface = NSXPCInterface(with: ServiceXPCProtocol.self)
@@ -88,7 +90,9 @@ class ServiceListenerDelegate: NSObject, NSXPCListenerDelegate, ServiceXPCProtoc
         newConnection.resume()
         return true
     }
-    
+}
+
+extension ServiceListenerDelegate: ServiceXPCProtocol {
     func sendMessage(_ message: String, reply replyBlock: @escaping (String) -> Void) {
         replyBlock("Got message: \(message)")
         
