@@ -16,6 +16,7 @@ class WelcomeWindowController: NSWindowController {
     
     fileprivate var welcomeViewController: WelcomeViewController!
 
+    fileprivate var validateServiceViewController: ValidateServiceViewController!
     fileprivate var validateDependenciesViewController: ValidateDependenciesViewController!
     fileprivate var validateAccountViewController: ValidateAccountViewController!
     fileprivate var validateClientViewController: ValidateClientViewController!
@@ -57,6 +58,7 @@ class WelcomeWindowController: NSWindowController {
         
         let pageIdentifiers: [NSPageController.ObjectIdentifier] =
             [NSPageController.ObjectIdentifier(rawValue: "WelcomeViewController"),
+             NSPageController.ObjectIdentifier(rawValue: "ValidateServiceViewController"),
              NSPageController.ObjectIdentifier(rawValue: "ValidateDependenciesViewController"),
              NSPageController.ObjectIdentifier(rawValue: "ValidateAccountViewController"),
              NSPageController.ObjectIdentifier(rawValue: "ValidateClientViewController"),
@@ -65,6 +67,9 @@ class WelcomeWindowController: NSWindowController {
         
         self.welcomeViewController = WelcomeViewController(delegate: self, viewDelegate: self)
         _ = self.welcomeViewController.view
+        
+        self.validateServiceViewController = ValidateServiceViewController(delegate: self, viewDelegate: self)
+        _ = self.validateServiceViewController.view
 
         self.validateDependenciesViewController = ValidateDependenciesViewController(installer: self.installer, delegate: self, viewDelegate: self)
         _ = self.validateDependenciesViewController.view
@@ -96,6 +101,10 @@ class WelcomeWindowController: NSWindowController {
         case .welcome:
             self.welcomeViewController.check()
             self.configureMainWindow()
+        case .validateService:
+            self.validateServiceViewController.check()
+            self.pageController.navigateForward(to: "ValidateServiceViewController")
+            self.configureMainWindow()
         case .validateDependencies:
             self.validateDependenciesViewController.check()
             self.pageController.navigateForward(to: "ValidateDependenciesViewController")
@@ -123,6 +132,8 @@ class WelcomeWindowController: NSWindowController {
         switch self.state {
         case .welcome:
             break
+        case .validateService:
+            break
         case .validateDependencies:
             break
         case .validateAccount:
@@ -146,6 +157,11 @@ extension WelcomeWindowController: WelcomeStateDelegate {
         self.showWindow(self)
     }
     
+    func needsService() {
+        SDLog("needs service")
+        self.showWindow(self)
+    }
+    
     func needsDependencies() {
         SDLog("needs dependencies")
         self.showWindow(self)
@@ -163,9 +179,14 @@ extension WelcomeWindowController: WelcomeStateDelegate {
     
     func didWelcomeUser() {
         SDLog("welcomed user")
-        self.setWelcomeState(.validateDependencies)
+        self.setWelcomeState(.validateService)
     }
 
+    func didValidateService() {
+        SDLog("validated service")
+        self.setWelcomeState(.validateDependencies)
+    }
+    
     func didValidateDependencies() {
         SDLog("validated dependencies")
         self.setWelcomeState(.validateAccount)
@@ -214,6 +235,8 @@ extension WelcomeWindowController: NSPageControllerDelegate {
     func pageController(_ pageController: NSPageController, viewControllerForIdentifier identifier: NSPageController.ObjectIdentifier) -> NSViewController {
         if identifier == NSPageController.ObjectIdentifier(rawValue: "WelcomeViewController") {
             return self.welcomeViewController
+        } else if identifier == NSPageController.ObjectIdentifier(rawValue: "ValidateServiceViewController") {
+            return self.validateServiceViewController
         } else if identifier == NSPageController.ObjectIdentifier(rawValue: "ValidateDependenciesViewController") {
             return self.validateDependenciesViewController
         } else if identifier == NSPageController.ObjectIdentifier(rawValue: "ValidateAccountViewController") {
@@ -268,7 +291,7 @@ extension WelcomeWindowController: NSWindowDelegate {
             // swiftlint:enable force_unwrapping
 
             break
-        case .validateDependencies:
+        case .validateDependencies, .validateService:
             alert.messageText = NSLocalizedString("Installation in progress", comment: "String informing the user that an installation is in progress")
             
             alert.informativeText = NSLocalizedString("Are you sure you want to cancel?", comment: "String asking the user if they want to cancel the installation")
@@ -338,6 +361,7 @@ extension WelcomeWindowController: NSWindowDelegate {
 
 enum WelcomeState {
     case welcome
+    case validateService
     case validateDependencies
     case validateAccount
     case validateClient(email: String, password: String, clients: [SDKSoftwareClient])
@@ -350,6 +374,8 @@ extension WelcomeState : CustomStringConvertible {
         switch self {
         case .welcome:
             return "welcome"
+        case .validateService:
+            return "validating service"
         case .validateDependencies:
             return "validating dependencies"
         case .validateAccount:
@@ -372,12 +398,14 @@ extension WelcomeState: RawRepresentable {
         case 0:
             self = .welcome
         case 1:
-            self = .validateDependencies
+            self = .validateService
         case 2:
-            self = .validateAccount
+            self = .validateDependencies
         case 3:
-            self = .validateClient(email: "", password: "", clients: [SDKSoftwareClient]())
+            self = .validateAccount
         case 4:
+            self = .validateClient(email: "", password: "", clients: [SDKSoftwareClient]())
+        case 5:
             self = .ready
         default:
             return nil
@@ -388,16 +416,18 @@ extension WelcomeState: RawRepresentable {
         switch self {
         case .welcome:
             return 0
-        case .validateDependencies:
+        case .validateService:
             return 1
-        case .validateAccount:
+        case .validateDependencies:
             return 2
-        case .validateClient:
+        case .validateAccount:
             return 3
-        case .ready:
+        case .validateClient:
             return 4
-        case .failed:
+        case .ready:
             return 5
+        case .failed:
+            return 6
         }
     }
 }
@@ -405,6 +435,8 @@ extension WelcomeState: RawRepresentable {
 func == (lhs: WelcomeState, rhs: WelcomeState) -> Bool {
     switch (lhs, rhs) {
     case (.welcome, .welcome):
+        return true
+    case (.validateService, .validateService):
         return true
     case (.validateDependencies, .validateDependencies):
         return true
@@ -423,10 +455,12 @@ func == (lhs: WelcomeState, rhs: WelcomeState) -> Bool {
 
 protocol WelcomeStateDelegate: class {
     func needsWelcome()
+    func needsService()
     func needsDependencies()
     func needsAccount()
     func needsClient()
     func didWelcomeUser()
+    func didValidateService()
     func didValidateDependencies()
     func didValidateAccount(withEmail email: String, password: String, clients: [SDKSoftwareClient])
     func didValidateClient(withEmail email: String, password: String, name: String, uniqueClientID: String)

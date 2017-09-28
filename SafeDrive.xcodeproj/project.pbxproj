@@ -34,6 +34,8 @@
 		AA16CE381F2ABC6400CD2399 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165521F25B0B600B7D8EF /* Errors.swift */; };
 		AA16CE391F2ABC6600CD2399 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165511F25B0B600B7D8EF /* Constants.swift */; };
 		AA16CE3A1F2ABC6A00CD2399 /* SafeDriveSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */; };
+		AA18515F1F75D11E00CC23C8 /* ValidateServiceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA18515D1F75D11D00CC23C8 /* ValidateServiceView.xib */; };
+		AA1851601F75D11E00CC23C8 /* ValidateServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA18515E1F75D11D00CC23C8 /* ValidateServiceViewController.swift */; };
 		AA192C081F37C7800037245A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C061F37C7800037245A /* main.swift */; };
 		AA192C091F37C7800037245A /* IPCListenerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C071F37C7800037245A /* IPCListenerDelegate.swift */; };
 		AA192C0B1F37C9280037245A /* IPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C0A1F37C9280037245A /* IPCProtocol.swift */; };
@@ -373,6 +375,8 @@
 		AA11656F1F25B21D00B7D8EF /* io.safedrive.SafeDrive.sshfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.sshfs; path = "safedrive-sdk/target/x86_64-apple-darwin/release/io.safedrive.SafeDrive.sshfs"; sourceTree = "<group>"; };
 		AA1165881F25B7C900B7D8EF /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 		AA1165891F25C56700B7D8EF /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		AA18515D1F75D11D00CC23C8 /* ValidateServiceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateServiceView.xib; path = Installer/ValidateServiceView.xib; sourceTree = "<group>"; };
+		AA18515E1F75D11D00CC23C8 /* ValidateServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateServiceViewController.swift; path = Installer/ValidateServiceViewController.swift; sourceTree = "<group>"; };
 		AA192BF51F37C64A0037245A /* IPCService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPCService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA192BFD1F37C64A0037245A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA192C051F37C7800037245A /* IPCService.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = IPCService.entitlements; sourceTree = "<group>"; };
@@ -887,6 +891,8 @@
 				AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */,
 				AA7CD6181E68A21100EE7FAD /* ValidateDependenciesView.xib */,
 				AA7CD6171E68A21100EE7FAD /* ValidateDependenciesViewController.swift */,
+				AA18515D1F75D11D00CC23C8 /* ValidateServiceView.xib */,
+				AA18515E1F75D11D00CC23C8 /* ValidateServiceViewController.swift */,
 				AA4F8FC61E6A2D5700BB068A /* WelcomeView.xib */,
 				AA4F8FC51E6A2D5700BB068A /* WelcomeViewController.swift */,
 				AA76DC281C879076007B320E /* WelcomeWindow.xib */,
@@ -1328,6 +1334,7 @@
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA58D2D11E82DB86002D56E0 /* AccountView.xib in Resources */,
 				AAD5CFC41F7318A40008361D /* Images.xcassets in Resources */,
+				AA18515F1F75D11E00CC23C8 /* ValidateServiceView.xib in Resources */,
 				AA58D2CD1E82D9F0002D56E0 /* GeneralView.xib in Resources */,
 				AA11658A1F25C56700B7D8EF /* .swiftlint.yml in Resources */,
 				AA2E55101A774E0000647637 /* known_hosts in Resources */,
@@ -1617,6 +1624,7 @@
 				AA11653C1F256F1600B7D8EF /* Semver.swift in Sources */,
 				AA5DAFF61F2E36C700CD48AE /* SFTPFSXPCProtocol.swift in Sources */,
 				AA4F8FCA1E6A429100BB068A /* SoftwareClientTableCellView.swift in Sources */,
+				AA1851601F75D11E00CC23C8 /* ValidateServiceViewController.swift in Sources */,
 				AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */,
 				AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */,
 				AA4F8FC71E6A2D5700BB068A /* WelcomeViewController.swift in Sources */,
