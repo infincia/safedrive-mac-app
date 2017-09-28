@@ -11,8 +11,8 @@ post_install do |installer|
 end
 
 def shared_pods
-    pod 'Fabric', '~>  1.6.12'
-    pod 'Crashlytics', '~>  3.8.5'
+    pod 'Fabric', '~>  1.6.13'
+    pod 'Crashlytics', '~>  3.8.6'
 end
 
 target 'SafeDrive' do
@@ -20,7 +20,7 @@ target 'SafeDrive' do
     shared_pods
     pod 'IYLoginItem', '~> 0.1'
     pod 'DCOAboutWindow', '~> 0.2.0'
-    pod 'LetsMove', '~> 1.22'
+    pod 'LetsMove', '~> 1.23'
     pod 'Sparkle', '~> 1.18.1'
     pod 'STPrivilegedTask', :git => 'https://github.com/sveinbjornt/STPrivilegedTask.git', :tag => '1.0.6'
     pod 'TSMarkdownParser', '~> 2.1.2'
