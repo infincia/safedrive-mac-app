@@ -46,11 +46,6 @@ class FinderSync: FIFinderSync {
         
         self.serviceReconnectionLoop()
         
-        self.mountStateLoop()
-        
-        self.clientConfigLoop()
-        
-        
         self.mountMenuItem = NSMenuItem(title: "Mount SafeDrive",
                                              action: #selector(FinderSync.toggleMountState(_:)),
                                              keyEquivalent: "")
@@ -187,69 +182,7 @@ class FinderSync: FIFinderSync {
         return newConnection
         
     }
-    
-    // MARK: - Mount handling
-    
-    func mountStateLoop() {
-        background { [weak self] in
-            while true {
-                autoreleasepool {
-                    guard let a = self?.appConnection else {
-                        Thread.sleep(forTimeInterval: 1)
-                        // this returns the autoreleasepool block, not the loop,
-                        // but the end result is the same
-                        return
-                    }
-                    let app = a.remoteObjectProxyWithErrorHandler { error in
-                        print("remote proxy error: \(error)")
-                    } as! AppXPCProtocol
-                    
-                    app.getMountState({ (mounted) in
-                        DispatchQueue.main.async {
-                            if mounted {
-                                self?.mountMenuItem.title = "Unmount SafeDrive"
-                            } else {
-                                self?.mountMenuItem.title = "Mount SafeDrive"
-                            }
-                        }
-                    })
-                    
-                    Thread.sleep(forTimeInterval: 1)
-                }
-            }
 
-        }
-    }
-    
-    // MARK: - Setup handling
-    
-    func clientConfigLoop() {
-        background { [weak self] in
-            while true {
-                autoreleasepool {
-                    guard let a = self?.appConnection else {
-                        Thread.sleep(forTimeInterval: 1)
-                        // this returns the autoreleasepool block, not the loop,
-                        // but the end result is the same
-                        return
-                    }
-                    let app = a.remoteObjectProxyWithErrorHandler { error in
-                        print("remote proxy error: \(error)")
-                    } as! AppXPCProtocol
-                    
-                    app.getUniqueClientID({ (ucid) -> Void in
-                        DispatchQueue.main.async {
-                            self?.configureClient(uniqueClientID: ucid)
-                        }
-                    })
-                    
-                    Thread.sleep(forTimeInterval: 1)
-                }
-
-            }
-        }
-    }
-    
     func configureClient(uniqueClientID: String?) {
         self.folders = [SDKSyncFolder]()
         
