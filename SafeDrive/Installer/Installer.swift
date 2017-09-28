@@ -21,42 +21,6 @@ class Installer: NSObject {
     
     fileprivate var prompted = false
     
-        
-    fileprivate var isOSXFUSEInstalled: Bool {
-        let pipe: Pipe = Pipe()
-        let task: Process = Process()
-        task.launchPath = "/usr/sbin/pkgutil"
-        task.arguments = ["--pkgs=com.github.osxfuse.pkg.Core"]
-        task.standardOutput = pipe
-        task.launch()
-        task.waitUntilExit()
-        if task.terminationStatus == 0 {
-            return true
-        }
-        return false
-    }
-    
-    fileprivate var isOSXFUSECurrent: Bool {
-        let pipe: Pipe = Pipe()
-        let task: Process = Process()
-        task.launchPath = "/usr/sbin/pkgutil"
-        task.arguments = ["--pkg-info-plist=com.github.osxfuse.pkg.Core"]
-        task.standardOutput = pipe
-        task.launch()
-        task.waitUntilExit()
-        if task.terminationStatus == 0 {
-            let data = pipe.fileHandleForReading.readDataToEndOfFile()
-            
-            guard let result = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any] else {
-                return false
-            }
-            if let currentVersion = result?["pkg-version"] as? String {
-                return Semver.gte(currentVersion, "3.6.3")
-            }
-        }
-        return false
-    }
-    
     fileprivate var isDirectoryOK: Bool {
         let usrlocalbin = URL(fileURLWithPath: "/usr/local/bin")
 
@@ -105,7 +69,7 @@ class Installer: NSObject {
     }
     
     var dependenciesValidated: Bool {
-        return self.isOSXFUSEInstalled && self.isOSXFUSECurrent && self.isCLIAppInstalled && self.isDirectoryOK
+        return self.isCLIAppInstalled && self.isDirectoryOK
     }
     
     init(delegate: InstallerDelegate?) {
@@ -135,9 +99,6 @@ class Installer: NSObject {
                 if !self.isDirectoryOK {
                     try self.setupDirectories()
                 }
-                if !self.isOSXFUSEInstalled {
-                    try self.installOSXFUSE()
-                }
                 if !self.isCLIAppInstalled {
                     try self.installCLI()
                 }
@@ -145,52 +106,6 @@ class Installer: NSObject {
                 DispatchQueue.main.async {
                     self.delegate?.didFail(error: error)
                 }
-            }
-        }
-        
-    }
-    
-    func installOSXFUSE() throws {
-        let osxfuseURL = Bundle.main.url(forResource: "FUSE for macOS 3.6.3", withExtension: "pkg", subdirectory: nil)
-        let privilegedTask = STPrivilegedTask()
-        privilegedTask.launchPath = "/usr/sbin/installer"
-        // swiftlint:disable force_unwrapping
-        privilegedTask.arguments = ["-pkg", (osxfuseURL?.path)!, "-target", "/"]
-        // swiftlint:enable force_unwrapping
-
-        let err = privilegedTask.launch()
-        
-        if err != errAuthorizationSuccess {
-            if err == errAuthorizationCanceled {
-                SDLog("User cancelled installer")
-                let message = NSLocalizedString("FUSE installation cancelled by user", comment: "")
-                SDLog(message)
-                let error = SDError(message: message, kind: .fuseDeployment)
-                throw error
-            } else {
-                let message = NSLocalizedString("Installer could not be launched", comment: "")
-                SDLog(message)
-                let error = SDError(message: message, kind: .fuseDeployment)
-                throw error
-            }
-        } else {
-            SDLog("Installer launched")
-        }
-        
-        privilegedTask.waitUntilExit()
-
-        let exitCode = privilegedTask.terminationStatus
-        
-        if exitCode != 0 {
-            let data = privilegedTask.outputFileHandle.readDataToEndOfFile()
-            if let output = String(data: data, encoding: .utf8) {
-                SDLog("Directory setup failed: \(output)")
-                let error = SDError(message: "FUSE setup failed: \(output)", kind: .fuseDeployment)
-                throw error
-            } else {
-                SDLog("Directory setup failed")
-                let error = SDError(message: "FUSE setup failed", kind: .fuseDeployment)
-                throw error
             }
         }
     }
