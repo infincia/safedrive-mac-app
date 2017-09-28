@@ -5,10 +5,21 @@
 import Cocoa
 import ServiceManagement
 
+protocol ServiceManagerDelegate: class {
+    func needsService()
+    func didValidateService()
+    func didValidateSDFS()
+    func didFail(error: Error)
+}
+
+
 class ServiceManager: NSObject {
     static let sharedServiceManager = ServiceManager()
+    static var delegate: ServiceManagerDelegate!
     
     static let ipcServiceName = "G738Z89QKM.io.safedrive.IPCService"
+    static let serviceName = "io.safedrive.SafeDrive.d"
+
     static let appName = "SafeDrive"
     
     fileprivate var ipcConnection: NSXPCConnection?
@@ -239,6 +250,76 @@ extension ServiceManager: NSXPCListenerDelegate {
         }
     }
     
+    func createServiceConnection() -> NSXPCConnection {
+        SDLog("creating connection to service")
+
+        var newConnection = NSXPCConnection(machServiceName: ServiceManager.serviceName, options: .privileged)
+        
+        let serviceInterface = NSXPCInterface(with: ServiceXPCProtocol.self)
+        
+        newConnection.remoteObjectInterface = serviceInterface
+        
+        newConnection.interruptionHandler = { [weak self] in
+            SDLog("service connection interrupted")
+            
+            DispatchQueue.main.async {
+                //newConnection = nil
+            }
+        }
+        
+        newConnection.invalidationHandler = { [weak self] in
+            SDLog("service connection invalidated")
+
+            DispatchQueue.main.async {
+                //newConnection = nil
+            }
+        }
+        newConnection.resume()
+        return newConnection
+    }
+    
+    func updateService() {
+        SDLog("Updating service")
+
+        if isProduction() {
+            // ask the service to stop any important operations first.
+            // there aren't any at the moment, so this is a placeholder
+        }
+
+        var authRef: AuthorizationRef?
+        var authItem = AuthorizationItem(name: kSMRightBlessPrivilegedHelper, valueLength: 0, value: UnsafeMutableRawPointer(bitPattern: 0), flags: 0)
+        
+        var authRights: AuthorizationRights = AuthorizationRights(count: 1, items: &authItem)
+        
+        let authFlags: AuthorizationFlags = [[], .extendRights, .interactionAllowed, .preAuthorize ]
+        
+        let status = AuthorizationCreate(&authRights, nil, authFlags, &authRef)
+        
+        if status != errAuthorizationSuccess {
+            let error = NSError(domain: NSOSStatusErrorDomain, code: Int(status), userInfo:nil)
+            
+            SDLogError("Service authorization error: \(error)")
+            let authError = SDError(message: "Authorization error: \(error)", kind: .serviceDeployment)
+            
+            ServiceManager.delegate.didFail(error: authError)
+        } else {
+            var cfError: Unmanaged<CFError>? = nil
+            
+            if !SMJobBless(kSMDomainSystemLaunchd, ServiceManager.serviceName as CFString, authRef, &cfError) {
+                let error = cfError!.takeRetainedValue() as Error
+                
+                SDLogError("Service installation error: \(error)")
+                let blessError = SDError(message: "\(error)", kind: .serviceDeployment)
+                ServiceManager.delegate.didFail(error: blessError)
+            } else {
+                SDLog("\(ServiceManager.serviceName) installed")
+                background {
+                    ServiceManager.delegate.didValidateService()
+                }
+            }
+        }
+    }
+    
     func serviceReconnectionLoop() {
         while true {
             if self.ipcConnection == nil {
@@ -262,6 +343,60 @@ extension ServiceManager: NSXPCListenerDelegate {
         }
     }
     
+    func updateSDFS() {
+        
+        let s = self.createServiceConnection()
+        
+        let sdfs = Bundle.main.bundleURL.appendingPathComponent("Contents/Library/Filesystems/sdfs.bundle", isDirectory: false)
+
+        let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+            SDLogError("Cannot update SDFS, connecting to service failed: \(error.localizedDescription)")
+            let error = SDError(message: "Cannot update SDFS, connecting to service failed: \(error.localizedDescription)", kind: .fuseDeployment)
+            ServiceManager.delegate.didFail(error: error)
+        }) as! ServiceXPCProtocol
+        
+        proxy.updateSDFS(sdfs.path) { (state, status) in
+            if state {
+                SDLog("SDFS updated, new version: \(status)")
+                ServiceManager.delegate.didValidateSDFS()
+            } else {
+                SDLogError("Cannot update SDFS, installation failed: \(status)")
+                let error = SDError(message: "Cannot update SDFS, installation failed: \(status)", kind: .fuseDeployment)
+                ServiceManager.delegate.didFail(error: error)
+            }
+        }
+    }
+    
+    func checkServiceVersion() {
+        
+        let s = self.createServiceConnection()
+
+        
+        guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
+            SDLogError("Cannot determine app version, this should never happen")
+            ServiceManager.delegate.needsService()
+            return
+        }
+        
+        let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+            SDLogError("Cannot communicate with service, connection failed: \(error.localizedDescription)")
+            ServiceManager.delegate.needsService()
+        }) as! ServiceXPCProtocol
+        
+        proxy.currentServiceVersion { (version) in
+            guard let currentServiceVersion = version else {
+                ServiceManager.delegate.needsService()
+                return
+            }
+            if Semver.gte(currentServiceVersion, appVersion) {
+                SDLogError("Service up to date")
+                ServiceManager.delegate.didValidateService()
+            } else {
+                SDLogError("Service update needed")
+                ServiceManager.delegate.needsService()
+            }
+        }
+    }
     
     // MARK: - App Listener Delegate
     
