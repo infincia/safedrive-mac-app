@@ -183,7 +183,6 @@
 		AAD89BD31E5C197E007D8E82 /* OpenFileWarningWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */; };
 		AAD89BD51E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */; };
 		AAE216381E9BE8BD00BE956F /* setup.sh in Resources */ = {isa = PBXBuildFile; fileRef = AAE216371E9BE8BD00BE956F /* setup.sh */; };
-		AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg in Resources */ = {isa = PBXBuildFile; fileRef = AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg */; };
 		AAF85BFE1A23A5510063B54F /* SDSystemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */; };
 		AAF946041C815D5A00B972C3 /* FinderSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF946031C815D5A00B972C3 /* FinderSync.swift */; };
 		AAF946101C8220F900B972C3 /* SyncScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF9460F1C8220F900B972C3 /* SyncScheduler.swift */; };
@@ -1342,7 +1341,6 @@
 				AAC944AB1F730B4C009F8717 /* RecoveryPhraseWindow.xib in Resources */,
 				AABF04AB1E6CC46E0084DF81 /* ReadyView.xib in Resources */,
 				AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */,
-				AAE216401E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg in Resources */,
 				AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */,
 				AAA88BDC1C85F5F7009BE1C7 /* DropdownMenu.xib in Resources */,
 				AAA50BB11E313AF200892E9D /* CUIThemeRenditionFix.xcassets in Resources */,
