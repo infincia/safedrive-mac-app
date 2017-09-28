@@ -7,6 +7,6 @@
 [submodule "safedrive-sftpfs"]
 	path = safedrive-sftpfs
 	url = ssh://git@bitbucket.org/safedrive-team/safedrive-sftpfs.git
-[submodule "sdfuse"]
-	path = sdfuse
-	url = git://github.com/infincia/sdfuse.git
+[submodule "sdfs"]
+	path = sdfs
+	url = git://github.com/infincia/sdfs.git

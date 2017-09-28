@@ -74,6 +74,7 @@
 		AA5DAFF61F2E36C700CD48AE /* SFTPFSXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5DAFF51F2E36C700CD48AE /* SFTPFSXPCProtocol.swift */; };
 		AA5DAFF71F2E36C700CD48AE /* SFTPFSXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5DAFF51F2E36C700CD48AE /* SFTPFSXPCProtocol.swift */; };
 		AA5DAFF81F2E395C00CD48AE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5DAFF11F2E34BE00CD48AE /* main.swift */; };
+		AA5F87AC1F74A53E00E0CE7B /* sdfs.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA82A6321F7410B80047B31A /* sdfs.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA650CF31D73A381008DA5CB /* Changelog.md in Resources */ = {isa = PBXBuildFile; fileRef = AA650CF11D73A29A008DA5CB /* Changelog.md */; };
 		AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
 		AA6C5BBB1C90D96F001C2869 /* NSDate+next.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C5BB81C90D96F001C2869 /* NSDate+next.swift */; };
@@ -97,7 +98,6 @@
 		AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */; };
 		AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */; };
 		AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */; };
-		AA82A6331F7410B80047B31A /* sdfuse.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA82A6321F7410B80047B31A /* sdfuse.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA88C0141F1B225E0025F1D7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88C00E1F1B22400025F1D7 /* main.swift */; };
 		AA88C0151F1B225E0025F1D7 /* ServiceListenerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88C00F1F1B22400025F1D7 /* ServiceListenerDelegate.swift */; };
 		AA88C0171F1B234D0025F1D7 /* io.safedrive.SafeDrive.d.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA88C00D1F1B22400025F1D7 /* io.safedrive.SafeDrive.d.plist */; };
@@ -269,12 +269,21 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				AA82A6331F7410B80047B31A /* sdfuse.bundle in CopyFiles */,
 				AAC722B71F25D08E00C8EC3D /* io.safedrive.SafeDrive.askpass in CopyFiles */,
 				AAC722B81F25D08E00C8EC3D /* io.safedrive.SafeDrive.cli in CopyFiles */,
 				AAC722B91F25D08E00C8EC3D /* io.safedrive.SafeDrive.rsync in CopyFiles */,
 				AAC722BA1F25D08E00C8EC3D /* io.safedrive.SafeDrive.ssh in CopyFiles */,
 				AAC722BB1F25D08E00C8EC3D /* io.safedrive.SafeDrive.sshfs in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA5F87AB1F74A53100E0CE7B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/Filesystems;
+			dstSubfolderSpec = 1;
+			files = (
+				AA5F87AC1F74A53E00E0CE7B /* sdfs.bundle in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,7 +427,7 @@
 		AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateAccountView.xib; path = Installer/ValidateAccountView.xib; sourceTree = "<group>"; };
 		AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateClientViewController.swift; path = Installer/ValidateClientViewController.swift; sourceTree = "<group>"; };
 		AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateClientView.xib; path = Installer/ValidateClientView.xib; sourceTree = "<group>"; };
-		AA82A6321F7410B80047B31A /* sdfuse.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = sdfuse.bundle; path = dist/sdfuse.bundle; sourceTree = "<group>"; };
+		AA82A6321F7410B80047B31A /* sdfs.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = sdfs.bundle; path = dist/sdfs.bundle; sourceTree = "<group>"; };
 		AA88C00B1F1B22400025F1D7 /* d.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = d.entitlements; path = SafeDrive.d/d.entitlements; sourceTree = "<group>"; };
 		AA88C00C1F1B22400025F1D7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SafeDrive.d/Info.plist; sourceTree = "<group>"; };
 		AA88C00D1F1B22400025F1D7 /* io.safedrive.SafeDrive.d.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = io.safedrive.SafeDrive.d.plist; path = SafeDrive.d/io.safedrive.SafeDrive.d.plist; sourceTree = "<group>"; };
@@ -452,10 +461,8 @@
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
 		AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCProtocol.swift; path = Shared/AppXPCProtocol.swift; sourceTree = "<group>"; };
 		AAD5CFC31F73187A0008361D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		AAD5CFC81F7354910008361D /* build_fuse.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_fuse.sh; sourceTree = "<group>"; };
-		AAD5CFC91F7354920008361D /* install_fuse.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_fuse.sh; sourceTree = "<group>"; };
-		AAD5CFCA1F7354920008361D /* uninstall_fuse.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = uninstall_fuse.sh; sourceTree = "<group>"; };
-		AAD5CFCB1F7354920008361D /* patch_fuse.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_fuse.sh; sourceTree = "<group>"; };
+		AAD5CFC81F7354910008361D /* build_sdfs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_sdfs.sh; sourceTree = "<group>"; };
+		AAD5CFCB1F7354920008361D /* patch_sdfs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_sdfs.sh; sourceTree = "<group>"; };
 		AAD69F171E665B4400FAB196 /* RunningProcessCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RunningProcessCheck.swift; path = "Open File Warning Window/RunningProcessCheck.swift"; sourceTree = "<group>"; };
 		AAD89BD01E5C197E007D8E82 /* OpenFileWarningWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningWindowController.swift; path = "Open File Warning Window/OpenFileWarningWindowController.swift"; sourceTree = "<group>"; };
 		AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OpenFileWarningWindow.xib; path = "Open File Warning Window/OpenFileWarningWindow.xib"; sourceTree = "<group>"; };
@@ -617,7 +624,7 @@
 		AA31680A1A191B72006CC0EB = {
 			isa = PBXGroup;
 			children = (
-				AAD5CFD31F7354A30008361D /* sdfuse */,
+				AAD5CFD31F7354A30008361D /* sdfs */,
 				AAE4CCE51F2A721000233143 /* sftpfs.xcodeproj */,
 				AA1165891F25C56700B7D8EF /* .swiftlint.yml */,
 				AA1165871F25B7C900B7D8EF /* SDDK */,
@@ -944,16 +951,14 @@
 			path = RecoveryPhraseWindow;
 			sourceTree = "<group>";
 		};
-		AAD5CFD31F7354A30008361D /* sdfuse */ = {
+		AAD5CFD31F7354A30008361D /* sdfs */ = {
 			isa = PBXGroup;
 			children = (
-				AA82A6321F7410B80047B31A /* sdfuse.bundle */,
-				AAD5CFC81F7354910008361D /* build_fuse.sh */,
-				AAD5CFC91F7354920008361D /* install_fuse.sh */,
-				AAD5CFCB1F7354920008361D /* patch_fuse.sh */,
-				AAD5CFCA1F7354920008361D /* uninstall_fuse.sh */,
+				AA82A6321F7410B80047B31A /* sdfs.bundle */,
+				AAD5CFC81F7354910008361D /* build_sdfs.sh */,
+				AAD5CFCB1F7354920008361D /* patch_sdfs.sh */,
 			);
-			name = sdfuse;
+			name = sdfs;
 			sourceTree = "<group>";
 		};
 		AAD89BCE1E5C194B007D8E82 /* Open File Check */ = {
@@ -1022,17 +1027,17 @@
 			passBuildSettingsInEnvironment = 1;
 			productName = SDDK;
 		};
-		AA82A6171F738A330047B31A /* sdfuse */ = {
+		AA82A6171F738A330047B31A /* sdfs */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = build_fuse.sh;
-			buildConfigurationList = AA82A61A1F738A330047B31A /* Build configuration list for PBXLegacyTarget "sdfuse" */;
+			buildArgumentsString = build_sdfs.sh;
+			buildConfigurationList = AA82A61A1F738A330047B31A /* Build configuration list for PBXLegacyTarget "sdfs" */;
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/bash;
 			buildWorkingDirectory = "$(SRCROOT)/";
 			dependencies = (
 			);
-			name = sdfuse;
+			name = sdfs;
 			passBuildSettingsInEnvironment = 1;
 			productName = sdfuse;
 		};
@@ -1074,6 +1079,7 @@
 				85260E3FE7B654997BAC19CC /* [CP] Copy Pods Resources */,
 				AAC466C01F0C9301002088B6 /* Embed XPC Services */,
 				AA11658F1F25CB3900B7D8EF /* CopyFiles */,
+				AA5F87AB1F74A53100E0CE7B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1278,7 +1284,7 @@
 				AA11657A1F25B4C700B7D8EF /* SDDK */,
 				AA5DAFDB1F2E2E9B00CD48AE /* SFTPFSService */,
 				AA192BF41F37C64A0037245A /* IPCService */,
-				AA82A6171F738A330047B31A /* sdfuse */,
+				AA82A6171F738A330047B31A /* sdfs */,
 			);
 		};
 /* End PBXProject section */
@@ -2491,7 +2497,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA82A61A1F738A330047B31A /* Build configuration list for PBXLegacyTarget "sdfuse" */ = {
+		AA82A61A1F738A330047B31A /* Build configuration list for PBXLegacyTarget "sdfs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA82A6181F738A330047B31A /* Debug */,
