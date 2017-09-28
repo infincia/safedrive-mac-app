@@ -87,7 +87,7 @@ extension ServiceManager: SDSyncEventProtocol {
         
         if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                SDLogError("syncEvent connecting to service failed: \(error.localizedDescription)")
+                SDLogError("syncEvent connecting to IPC service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
             
             proxy.syncEvent(folderID)
@@ -108,7 +108,7 @@ extension ServiceManager: SDApplicationEventProtocol {
         
         if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                SDLogError("applicationDidConfigureClient connecting to service failed: \(error.localizedDescription)")
+                SDLogError("applicationDidConfigureClient connecting to IPC service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
             
             proxy.applicationDidConfigureClient(uniqueClientID)
@@ -126,7 +126,7 @@ extension ServiceManager: SDApplicationEventProtocol {
         
         if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                SDLogError("applicationDidConfigureUser connecting to service failed: \(error.localizedDescription)")
+                SDLogError("applicationDidConfigureUser connecting to IPC service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
             
             proxy.applicationDidConfigureUser(user.email)
@@ -139,7 +139,7 @@ extension ServiceManager: SDAccountProtocol {
     func didSignIn(notification: Notification) {
         if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                SDLogError("didSignIn connecting to service failed: \(error.localizedDescription)")
+                SDLogError("didSignIn connecting to IPC service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
             
             proxy.didSignIn()
@@ -149,7 +149,7 @@ extension ServiceManager: SDAccountProtocol {
     func didSignOut(notification: Notification) {
         if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                SDLogError("didSignOut connecting to service failed: \(error.localizedDescription)")
+                SDLogError("didSignOut connecting to IPC service failed: \(error.localizedDescription)")
             }) as! IPCProtocol
             
             proxy.didSignOut()
@@ -170,7 +170,7 @@ extension ServiceManager: SDMountStateProtocol {
         
         if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                SDLogError("Connecting to service failed: \(error.localizedDescription)")
+                SDLogError("Connecting to service IPC failed: \(error.localizedDescription)")
             }) as! IPCProtocol
             
             proxy.mountStateMounted()
@@ -180,7 +180,7 @@ extension ServiceManager: SDMountStateProtocol {
     func mountStateUnmounted(notification: Notification) {
         if let s = self.ipcConnection {
             let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                SDLogError("Connecting to service failed: \(error.localizedDescription)")
+                SDLogError("Connecting to service IPC failed: \(error.localizedDescription)")
             }) as! IPCProtocol
             
             proxy.mountStateUnmounted()
@@ -249,7 +249,7 @@ extension ServiceManager: NSXPCListenerDelegate {
                 
                 if let s = self.ipcConnection {
                     let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                        SDLogError("Connecting to service failed: \(error.localizedDescription)")
+                        SDLogError("Connecting to IPC service failed: \(error.localizedDescription)")
                     }) as! IPCProtocol
                     
                     proxy.setAppEndpoint(self.appListener.endpoint, reply: { (state) in
