@@ -95,33 +95,26 @@ class FinderSync: FIFinderSync {
                 autoreleasepool {
                     if self?.serviceConnection == nil {
                         self?.serviceConnection = self?.createServiceConnection()
-                    }
-                    if self?.appConnection == nil {
-                        FIFinderSyncController.default().directoryURLs = Set<URL>()
-                        guard let s = self?.serviceConnection else {
-                            Thread.sleep(forTimeInterval: 1)
-                            return
-                        }
-                        let service = s.remoteObjectProxyWithErrorHandler { error in
-                            print("remote proxy error: \(error)")
-                        } as! IPCProtocol
-                        
-                        service.getAppEndpoint({ endpoint in
-                            self?.appConnection = self?.createAppConnectionFromEndpoint(endpoint)
-                            guard let a = self?.appConnection else {
+                        self?.enableMenuItems(false)
+                        print("IPC connection created")
+                    } else {
+                        if self?.appConnection == nil {
+                            FIFinderSyncController.default().directoryURLs = Set<URL>()
+                            guard let s = self?.serviceConnection else {
                                 Thread.sleep(forTimeInterval: 1)
                                 return
                             }
-                            let app = a.remoteObjectProxyWithErrorHandler { error in
+                            let service = s.remoteObjectProxyWithErrorHandler { error in
                                 print("remote proxy error: \(error)")
-                            } as! AppXPCProtocol
+                            } as! IPCProtocol
                             
-                            app.ping({ _ -> Void in
-                                //print("Ping reply from app: \(reply)");
+                            service.getAppEndpoint({ endpoint in
+                                print("App endpoint received")
+                                self?.appConnection = self?.createAppConnectionFromEndpoint(endpoint)
                             })
-                        })
-                        
+                        }
                     }
+
                     Thread.sleep(forTimeInterval: 1)
                 }
             }
