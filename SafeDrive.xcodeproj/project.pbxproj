@@ -98,6 +98,7 @@
 		AA7CD61F1E68A23300EE7FAD /* ValidateAccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD61D1E68A23300EE7FAD /* ValidateAccountView.xib */; };
 		AA7CD6221E68A26300EE7FAD /* ValidateClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7CD6201E68A26300EE7FAD /* ValidateClientViewController.swift */; };
 		AA7CD6231E68A26300EE7FAD /* ValidateClientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7CD6211E68A26300EE7FAD /* ValidateClientView.xib */; };
+		AA82A6391F7478C70047B31A /* io.safedrive.SafeDrive.d in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA88C0141F1B225E0025F1D7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88C00E1F1B22400025F1D7 /* main.swift */; };
 		AA88C0151F1B225E0025F1D7 /* ServiceListenerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88C00F1F1B22400025F1D7 /* ServiceListenerDelegate.swift */; };
 		AA88C0171F1B234D0025F1D7 /* io.safedrive.SafeDrive.d.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA88C00D1F1B22400025F1D7 /* io.safedrive.SafeDrive.d.plist */; };
@@ -159,7 +160,6 @@
 		AAC466D11F0CA883002088B6 /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
 		AAC466D21F0CA885002088B6 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
 		AAC466D31F0CA88A002088B6 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E272A1D876DD800038019 /* Notifications.swift */; };
-		AAC466D81F0CBC4D002088B6 /* io.safedrive.SafeDrive.d in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAC722B71F25D08E00C8EC3D /* io.safedrive.SafeDrive.askpass in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656B1F25B21D00B7D8EF /* io.safedrive.SafeDrive.askpass */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAC722B81F25D08E00C8EC3D /* io.safedrive.SafeDrive.cli in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656C1F25B21D00B7D8EF /* io.safedrive.SafeDrive.cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAC722B91F25D08E00C8EC3D /* io.safedrive.SafeDrive.rsync in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656D1F25B21D00B7D8EF /* io.safedrive.SafeDrive.rsync */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -287,6 +287,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA82A6381F7478B70047B31A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LaunchServices;
+			dstSubfolderSpec = 1;
+			files = (
+				AA82A6391F7478C70047B31A /* io.safedrive.SafeDrive.d in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA925C3B1B8F9BAA00222E46 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -316,7 +326,6 @@
 			dstSubfolderSpec = 1;
 			files = (
 				AA1E454E1F46AE890092F49D /* IPCService.app in CopyFiles */,
-				AAC466D81F0CBC4D002088B6 /* io.safedrive.SafeDrive.d in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1073,6 +1082,7 @@
 				AA3168111A191B72006CC0EB /* Resources */,
 				AAF9461A1C823A6B00B972C3 /* CopyFiles */,
 				AADA2FAA1F0C4F61009D43CC /* CopyFiles */,
+				AA82A6381F7478B70047B31A /* CopyFiles */,
 				AA925C3B1B8F9BAA00222E46 /* Embed App Extensions */,
 				AAE474851BFBC1E200B1A555 /* Fabric.io */,
 				DFD57E6957DC22537ED3D54D /* [CP] Embed Pods Frameworks */,
