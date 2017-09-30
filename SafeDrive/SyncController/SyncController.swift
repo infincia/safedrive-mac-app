@@ -336,6 +336,10 @@ class SyncController: Equatable {
             rsyncEnvironment["SAFEDRIVE_ENVIRONMENT_PRODUCTION"] = "1"
         }
         
+      
+        rsyncEnvironment["SAFEDRIVE_PASSWORD"] = password
+        
+        
         self.syncTask.environment = rsyncEnvironment
         
         

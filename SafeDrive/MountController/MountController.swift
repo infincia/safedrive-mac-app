@@ -455,7 +455,12 @@ class MountController: NSObject {
         if isProduction() {
             sshfsEnvironment["SAFEDRIVE_ENVIRONMENT_PRODUCTION"] = "1"
         }
+        
+        if let password = password {
+            sshfsEnvironment["SAFEDRIVE_PASSWORD"] = password
 
+        }
+        
         //SDLog("Subprocess environment: \(sshfsEnvironment)")
         self.sshfsTask.environment = sshfsEnvironment
         
