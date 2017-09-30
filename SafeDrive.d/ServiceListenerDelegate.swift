@@ -142,8 +142,7 @@ extension ServiceListenerDelegate: ServiceXPCProtocol {
         do {
             try loadNewKext()
         } catch let e as NSError {
-            replyBlock(false, "SDFS kext could not be loaded: \(e.localizedDescription)")
-            return
+            replyBlock(false, "\(e.localizedDescription)")
         }
         
         replyBlock(true, version)
