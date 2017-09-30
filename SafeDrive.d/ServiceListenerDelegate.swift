@@ -139,13 +139,16 @@ extension ServiceListenerDelegate: ServiceXPCProtocol {
             return
         }
         
+        replyBlock(true, version)
+    }
+    
+    func loadKext(_ replyBlock: @escaping (_ state: Bool, _ status: String) -> Void) {
         do {
             try loadNewKext()
+            replyBlock(true, "")
         } catch let e as NSError {
             replyBlock(false, "\(e.localizedDescription)")
         }
-        
-        replyBlock(true, version)
     }
 
     func currentSDFSVersion(_ replyBlock: @escaping (_ state: Bool, _ status: String) -> Void) {

@@ -12,4 +12,5 @@ let kServiceXPCProtocolVersion: Int = 5
     func currentServiceVersion(_ replyBlock: @escaping (_ version: String?) -> Void)
     func currentSDFSVersion(_ replyBlock: @escaping (_ state: Bool, _ status: String) -> Void)
     func updateSDFS(_ source: String, _ replyBlock: @escaping (_ state: Bool, _ status: String) -> Void)
+    func loadKext(_ replyBlock: @escaping (_ state: Bool, _ status: String) -> Void)
 }
