@@ -33,7 +33,7 @@ class ServiceListenerDelegate: NSObject {
         }
     }
     
-    fileprivate func loadKext() throws {
+    fileprivate func loadNewKext() throws {
         let pipe: Pipe = Pipe()
         let task: Process = Process()
         task.launchPath = "/Library/Filesystems/sdfs.fs/Contents/Resources/load_sdfs"
@@ -140,7 +140,7 @@ extension ServiceListenerDelegate: ServiceXPCProtocol {
         }
         
         do {
-            try loadKext()
+            try loadNewKext()
         } catch let e as NSError {
             replyBlock(false, "SDFS kext could not be loaded: \(e.localizedDescription)")
             return
