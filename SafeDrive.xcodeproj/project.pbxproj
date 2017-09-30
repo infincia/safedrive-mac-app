@@ -482,7 +482,6 @@
 		AAD89BD11E5C197E007D8E82 /* OpenFileWarningWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OpenFileWarningWindow.xib; path = "Open File Warning Window/OpenFileWarningWindow.xib"; sourceTree = "<group>"; };
 		AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileWarningTableCellView.swift; path = "Open File Warning Window/OpenFileWarningTableCellView.swift"; sourceTree = "<group>"; };
 		AAE216371E9BE8BD00BE956F /* setup.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = setup.sh; sourceTree = "<group>"; };
-		AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FUSE for macOS 3.6.3.pkg"; path = "Bundled Dependencies/FUSE for macOS 3.6.3.pkg"; sourceTree = "<group>"; };
 		AAE4CCE51F2A721000233143 /* sftpfs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sftpfs.xcodeproj; path = "safedrive-sftpfs/sftpfs.xcodeproj"; sourceTree = "<group>"; };
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -647,7 +646,6 @@
 				AA272A051F09B01900B47673 /* .travis.yml */,
 				AA9079A71F072A7D0067E383 /* exportOptions.plist */,
 				AA9079A81F072A7D0067E383 /* release.sh */,
-				AA76DC241C8787AB007B320E /* Bundled Dependencies */,
 				AAFEF7EF1C6FC5F6001C4358 /* update-version.sh */,
 				AA3D8EBA1C3D80A100CF0A3C /* Shared */,
 				AA3168151A191B72006CC0EB /* SafeDrive */,
@@ -901,14 +899,6 @@
 				AA76DC221C8779D2007B320E /* WelcomeWindowController.swift */,
 			);
 			name = Installer;
-			sourceTree = "<group>";
-		};
-		AA76DC241C8787AB007B320E /* Bundled Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				AAE2163F1E9DD6DB00BE956F /* FUSE for macOS 3.6.3.pkg */,
-			);
-			name = "Bundled Dependencies";
 			sourceTree = "<group>";
 		};
 		AA7B460D1C46F0F900EA8889 /* ErrorHandler */ = {
