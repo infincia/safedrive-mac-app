@@ -15,6 +15,10 @@ class ValidateServiceViewController: NSViewController {
 
     @IBOutlet fileprivate weak var installServiceButton: NSButton!
 
+    @IBOutlet fileprivate weak var needServiceMessage: NSTextField!
+
+    @IBOutlet fileprivate weak var needKextMessage: NSTextField!
+
     override func viewDidLoad() {
         if #available(OSX 10.10, *) {
             super.viewDidLoad()
@@ -45,6 +49,7 @@ class ValidateServiceViewController: NSViewController {
     
     func reset() {
         self.spinner.stopAnimation(self)
+        self.installServiceButton.isEnabled = true
     }
     
     func check() {
@@ -56,6 +61,8 @@ class ValidateServiceViewController: NSViewController {
         
     @IBAction func installService(_ sender: AnyObject?) {
         self.spinner.startAnimation(self)
+        self.installServiceButton.isEnabled = false
+
         self.serviceManager.updateService()
     }
 }
@@ -64,6 +71,8 @@ class ValidateServiceViewController: NSViewController {
 extension ValidateServiceViewController: ServiceManagerDelegate {
     func needsService() {
         main {
+            self.needServiceMessage.isHidden = false
+            self.needKextMessage.isHidden = true
             self.delegate?.needsService()
         }
     }
@@ -76,6 +85,20 @@ extension ValidateServiceViewController: ServiceManagerDelegate {
     
     func didValidateSDFS() {
         main {
+            self.serviceManager.loadKext()
+        }
+    }
+    
+    func needsKext() {
+        self.needServiceMessage.isHidden = true
+        self.needKextMessage.isHidden = false
+    }
+    
+    func didValidateKext() {
+        main {
+            self.needServiceMessage.isHidden = true
+            self.needKextMessage.isHidden = true
+            
             self.spinner.stopAnimation(self)
             self.delegate?.didValidateService()
         }

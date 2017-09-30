@@ -9,6 +9,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ValidateServiceViewController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
                 <outlet property="installServiceButton" destination="uRL-qe-WxU" id="Ofy-vz-NVc"/>
+                <outlet property="needKextMessage" destination="JUn-kd-dOp" id="lyt-Ac-zCi"/>
+                <outlet property="needServiceMessage" destination="M3G-5o-aaw" id="WvJ-Wf-I2h"/>
                 <outlet property="spinner" destination="0dm-fI-ew8" id="fUy-KS-N42"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -19,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="311" height="418"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3G-5o-aaw">
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3G-5o-aaw">
                     <rect key="frame" x="18" y="215" width="275" height="51"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" title="SafeDrive needs to install a background service, you may be prompted to enter your computer password" id="s74-A1-z2y">
@@ -43,6 +45,15 @@
                     <rect key="frame" x="147" y="59" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUn-kd-dOp">
+                    <rect key="frame" x="18" y="156" width="275" height="51"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" title="SafeDrive requires a kernel extension or 'kext', please make sure the extension has been allowed to load in System Preferences" id="2xH-IN-kmw">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <point key="canvasLocation" x="138.5" y="168"/>
         </customView>

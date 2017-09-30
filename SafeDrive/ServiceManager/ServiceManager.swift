@@ -9,6 +9,8 @@ protocol ServiceManagerDelegate: class {
     func needsService()
     func didValidateService()
     func didValidateSDFS()
+    func needsKext()
+    func didValidateKext()
     func didFail(error: Error)
 }
 
@@ -363,6 +365,26 @@ extension ServiceManager: NSXPCListenerDelegate {
                 SDLogError("Cannot update SDFS, installation failed: \(status)")
                 let error = SDError(message: "Cannot update SDFS, installation failed: \(status)", kind: .fuseDeployment)
                 ServiceManager.delegate.didFail(error: error)
+            }
+        }
+    }
+    
+    func loadKext() {
+        let s = self.createServiceConnection()
+
+        let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+            SDLogError("Cannot load SDFS kext: \(error.localizedDescription)")
+            let error = SDError(message: "Cannot load SDFS kext: \(error.localizedDescription)", kind: .kextLoading)
+            ServiceManager.delegate.didFail(error: error)
+        }) as! ServiceXPCProtocol
+        
+        proxy.loadKext { (state, status) in
+            if state {
+                SDLog("SDFS kext loaded")
+                ServiceManager.delegate.didValidateKext()
+            } else {
+                SDLogError("Cannot load SDFS kext: \(status)")
+                ServiceManager.delegate.needsKext()
             }
         }
     }
