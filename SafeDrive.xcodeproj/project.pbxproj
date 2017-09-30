@@ -157,6 +157,7 @@
 		AABF04AA1E6CC46E0084DF81 /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A61E6CC46E0084DF81 /* FailedViewController.swift */; };
 		AABF04AB1E6CC46E0084DF81 /* ReadyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AABF04A71E6CC46E0084DF81 /* ReadyView.xib */; };
 		AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */; };
+		AABFA6AC1F800B2D0055DFA8 /* libsdfs.2.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AABFA6AA1F800AF20055DFA8 /* libsdfs.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAC466D01F0CA881002088B6 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
 		AAC466D11F0CA883002088B6 /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
 		AAC466D21F0CA885002088B6 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
@@ -335,6 +336,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				AABFA6AC1F800B2D0055DFA8 /* libsdfs.2.dylib in CopyFiles */,
 				AA16CE361F2A775100CD2399 /* sftpfs.framework in CopyFiles */,
 				AA1165601F25B1C100B7D8EF /* libsddk.dylib in CopyFiles */,
 			);
@@ -461,6 +463,7 @@
 		AABF04A61E6CC46E0084DF81 /* FailedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FailedViewController.swift; path = Installer/FailedViewController.swift; sourceTree = "<group>"; };
 		AABF04A71E6CC46E0084DF81 /* ReadyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReadyView.xib; path = Installer/ReadyView.xib; sourceTree = "<group>"; };
 		AABF04A81E6CC46E0084DF81 /* ReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadyViewController.swift; path = Installer/ReadyViewController.swift; sourceTree = "<group>"; };
+		AABFA6AA1F800AF20055DFA8 /* libsdfs.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsdfs.2.dylib; path = dist/libsdfs.2.dylib; sourceTree = "<group>"; };
 		AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = io.safedrive.SafeDrive.d; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAC944871F730730009F8717 /* RestoreSelectionWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestoreSelectionWindow.xib; sourceTree = "<group>"; };
 		AAC944881F730730009F8717 /* RestoreSelectionWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectionWindowController.swift; sourceTree = "<group>"; };
@@ -967,6 +970,7 @@
 		AAD5CFD31F7354A30008361D /* sdfs */ = {
 			isa = PBXGroup;
 			children = (
+				AABFA6AA1F800AF20055DFA8 /* libsdfs.2.dylib */,
 				AA82A6321F7410B80047B31A /* sdfs.bundle */,
 				AAD5CFC81F7354910008361D /* build_sdfs.sh */,
 				AAD5CFCB1F7354920008361D /* patch_sdfs.sh */,
