@@ -18,6 +18,8 @@ class ValidateServiceViewController: NSViewController {
     @IBOutlet fileprivate weak var needServiceMessage: NSTextField!
 
     @IBOutlet fileprivate weak var needKextMessage: NSTextField!
+    
+    fileprivate var promptedForKext = false
 
     override func viewDidLoad() {
         if #available(OSX 10.10, *) {
@@ -90,8 +92,16 @@ extension ValidateServiceViewController: ServiceManagerDelegate {
     }
     
     func needsKext() {
-        self.needServiceMessage.isHidden = true
-        self.needKextMessage.isHidden = false
+        if !self.promptedForKext {
+            self.promptedForKext = true
+           
+            main {
+                self.delegate?.needsKext()
+                
+                self.needServiceMessage.isHidden = true
+                self.needKextMessage.isHidden = false
+            }
+        }
     }
     
     func didValidateKext() {
