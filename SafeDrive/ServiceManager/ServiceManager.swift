@@ -327,8 +327,10 @@ extension ServiceManager: NSXPCListenerDelegate {
             var cfError: Unmanaged<CFError>? = nil
             
             if !SMJobBless(kSMDomainSystemLaunchd, ServiceManager.serviceName as CFString, authRef, &cfError) {
+                // swiftlint:disable force_unwrapping
                 let error = cfError!.takeRetainedValue() as Error
-                
+                // swiftlint:enable force_unwrapping
+
                 SDLogError("Service installation error: \(error)")
                 let blessError = SDError(message: "\(error)", kind: .serviceDeployment)
                 ServiceManager.delegate.didFail(error: blessError)
