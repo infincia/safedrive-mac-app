@@ -44,7 +44,7 @@ class SyncViewController: NSViewController {
 
     fileprivate var addFolderWindow: AddFolderWindowController!
 
-    fileprivate var verifyFolderWindow: VerifyFolderWindowController!
+    fileprivate var verifyFolderWindows = [UInt64 : VerifyFolderWindowController]()
 
     fileprivate var folders = [SDKSyncFolder]()
     
@@ -1057,13 +1057,15 @@ extension SyncViewController {
             }
             
             
-            self.verifyFolderWindow = VerifyFolderWindowController(delegate: self, folder: folder)
+            let w = VerifyFolderWindowController(delegate: self, folder: folder)
             
-            guard let w = self.verifyFolderWindow?.window else {
+            self.verifyFolderWindows[folder.id] = w
+            
+            guard let win = w.window else {
                 SDLog("no verify folder window available")
                 return
             }
-            self.delegate.showModalWindow(w) { (_) in
+            self.delegate.showModalWindow(win) { (_) in
                 
             }
         }
@@ -1077,6 +1079,7 @@ extension SyncViewController: VerifyFolderDelegate {
             self.sdk.updateFolder(folder.name, path: folder.path, syncing: true, uniqueID: folder.id, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: DispatchQueue.main, success: { 
                 self.readSyncFolders(self)
                 success()
+                self.verifyFolderWindows.removeValue(forKey: folder.id)
             }, failure: { (error) in
                 failure(error)
             })
@@ -1084,6 +1087,7 @@ extension SyncViewController: VerifyFolderDelegate {
             self.sdk.updateFolder(folder.name, path: folder.path, syncing: false, uniqueID: folder.id, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: DispatchQueue.main, success: {
                 self.readSyncFolders(self)
                 success()
+                self.verifyFolderWindows.removeValue(forKey: folder.id)
             }, failure: { (error) in
                 failure(error)
             })
@@ -1093,11 +1097,13 @@ extension SyncViewController: VerifyFolderDelegate {
             startRestore(folder.id)
             DispatchQueue.main.async {
                 success()
+                self.verifyFolderWindows.removeValue(forKey: folder.id)
             }
             break
         case .remove:
             self.sdk.removeFolder(folder.id, completionQueue: DispatchQueue.main, success: {
                 self.readSyncFolders(self)
+                self.verifyFolderWindows.removeValue(forKey: folder.id)
             }, failure: { (error) in
                 failure(error)
             })
