@@ -274,7 +274,7 @@ extension ServiceManager: NSXPCListenerDelegate {
     func createServiceConnection() -> NSXPCConnection {
         SDLog("creating connection to service")
 
-        var newConnection = NSXPCConnection(machServiceName: ServiceManager.serviceName, options: .privileged)
+        let newConnection = NSXPCConnection(machServiceName: ServiceManager.serviceName, options: .privileged)
         
         let serviceInterface = NSXPCInterface(with: ServiceXPCProtocol.self)
         
