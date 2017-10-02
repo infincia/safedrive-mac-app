@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -48,7 +48,7 @@
                         <rect key="frame" x="360" y="22" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </progressIndicator>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" id="leQ-bl-EcA">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="leQ-bl-EcA">
                         <rect key="frame" x="18" y="264" width="444" height="51"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="yJA-Hi-66B">
@@ -58,7 +58,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" id="bLw-qO-4YA">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="bLw-qO-4YA">
                         <rect key="frame" x="142" y="183" width="320" height="34"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Stop syncing this folder temporarily, I will find it later" id="Bv6-up-oNn">
@@ -67,7 +67,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" id="dd8-q6-WdT">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="dd8-q6-WdT">
                         <rect key="frame" x="142" y="138" width="320" height="35"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="I want to restore the folder back to its original location" id="Dsb-af-tgL">
@@ -133,7 +133,7 @@
                         <rect key="frame" x="57" y="50" width="142" height="212"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </box>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" id="1UU-8x-ELB">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1UU-8x-ELB">
                         <rect key="frame" x="142" y="79" width="320" height="51"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="I no longer wish to sync this folder with my SafeDrive account, pleaes remove it from my account and delete all synced data" id="fhW-OZ-YME">
@@ -142,7 +142,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" id="RO4-72-Whp">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="RO4-72-Whp">
                         <rect key="frame" x="142" y="225" width="320" height="37"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Allow me to choose where the folder is located and continue syncing it with my account" id="TBY-Km-P6i">
