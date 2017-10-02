@@ -721,30 +721,7 @@ class MountController: NSObject {
         let volumeName = self.currentVolumeName
 
         
-        if useSFTPFS && !useService {
-          self.sftpfs = ManagedSFTPFS.withMountpoint(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port as NSNumber)
-            
-            self.sftpfs?.setUseCache(self.useCache)
-            
-            self.sftpfs?.setIcon(volicon)
-            
-            self.sftpfs?.connect()
-            
-            self.checkMount(at: mountURL, timeout: 30, mounted: {
-                NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
-                self.mounting = false
-            }, notMounted: {
-                let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
-                let error = SDError(message: message, kind: .timeout)
-                SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
-                notification.informativeText = error.localizedDescription
-                notification.title = "SafeDrive mount error"
-                notification.soundName = NSUserNotificationDefaultSoundName
-                NSUserNotificationCenter.default.deliver(notification)
-                
-                self.mounting = false
-            })
-        } else if useSFTPFS && useService {
+        if useSFTPFS {
             if let s = self.sftpfsConnection {
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                     SDLogError("Connecting to sftpfs failed: \(error.localizedDescription)")
