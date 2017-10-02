@@ -107,7 +107,7 @@ class VerifyFolderWindowController: NSWindowController {
     }
     
     
-    convenience init?(delegate: VerifyFolderDelegate, folder: SDKSyncFolder) {
+    convenience init(delegate: VerifyFolderDelegate, folder: SDKSyncFolder) {
         self.init(windowNibName: NSNib.Name(rawValue: "VerifyFolderWindow"))
 
         self.verifyFolderDelegate = delegate
