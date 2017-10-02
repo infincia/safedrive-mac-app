@@ -1103,6 +1103,9 @@ extension SyncViewController: VerifyFolderDelegate {
         case .remove:
             self.sdk.removeFolder(folder.id, completionQueue: DispatchQueue.main, success: {
                 self.readSyncFolders(self)
+             
+                success()
+                
                 self.verifyFolderWindows.removeValue(forKey: folder.id)
             }, failure: { (error) in
                 failure(error)
