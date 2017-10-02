@@ -162,6 +162,11 @@ extension WelcomeWindowController: WelcomeStateDelegate {
         self.showWindow(self)
     }
     
+    func needsKext() {
+        SDLog("needs kext")
+        self.showWindow(self)
+    }
+    
     func needsDependencies() {
         SDLog("needs dependencies")
         self.showWindow(self)
@@ -456,6 +461,7 @@ func == (lhs: WelcomeState, rhs: WelcomeState) -> Bool {
 protocol WelcomeStateDelegate: class {
     func needsWelcome()
     func needsService()
+    func needsKext()
     func needsDependencies()
     func needsAccount()
     func needsClient()
