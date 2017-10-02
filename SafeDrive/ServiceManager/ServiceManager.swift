@@ -19,6 +19,8 @@ class ServiceManager: NSObject {
     static let sharedServiceManager = ServiceManager()
     static var delegate: ServiceManagerDelegate!
     
+    public let loadKextQueue = DispatchQueue(label: "io.safedrive.loadKextQueue")
+
     static let ipcServiceName = "G738Z89QKM.io.safedrive.IPCService"
     static let serviceName = "io.safedrive.SafeDrive.d"
 
@@ -34,6 +36,23 @@ class ServiceManager: NSObject {
     // swiftlint:enable weak_delegate
 
     fileprivate var updateNotificationSent = false
+    
+    fileprivate var _loadedKext = false
+    
+    var loadedKext: Bool {
+        get {
+            var l: Bool = false
+            loadKextQueue.sync {
+                l = self._loadedKext
+            }
+            return l
+        }
+        set (newValue) {
+            loadKextQueue.sync(flags: .barrier, execute: {
+                self._loadedKext = newValue
+            })
+        }
+    }
     
     override init() {
         
@@ -371,20 +390,39 @@ extension ServiceManager: NSXPCListenerDelegate {
     
     func loadKext() {
         let s = self.createServiceConnection()
-
-        let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-            SDLogError("Cannot load SDFS kext: \(error.localizedDescription)")
-            let error = SDError(message: "Cannot load SDFS kext: \(error.localizedDescription)", kind: .kextLoading)
-            ServiceManager.delegate.didFail(error: error)
-        }) as! ServiceXPCProtocol
         
-        proxy.loadKext { (state, status) in
-            if state {
-                SDLog("SDFS kext loaded")
-                ServiceManager.delegate.didValidateKext()
-            } else {
-                SDLogError("Cannot load SDFS kext: \(status)")
-                ServiceManager.delegate.needsKext()
+        background {
+            outer: while !self.loadedKext {
+                SDLog("SDFS kext loading attempt")
+
+                let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                    SDLogError("Cannot load SDFS kext: \(error.localizedDescription)")
+                    let error = SDError(message: "Cannot load SDFS kext: \(error.localizedDescription)", kind: .kextLoading)
+                    main {
+                        ServiceManager.delegate.didFail(error: error)
+                    }
+                    
+                    // not actually loaded, but this breaks the loop for the
+                    // failure case
+                    self.loadedKext = true
+                }) as! ServiceXPCProtocol
+                
+                proxy.loadKext { (state, status) in
+                    if state {
+                        SDLog("SDFS kext loaded")
+                        main {
+                            ServiceManager.delegate.didValidateKext()
+                        }
+                        self.loadedKext = true
+                    } else {
+                        SDLogError("Cannot load SDFS kext: \(status)")
+                        main {
+                            ServiceManager.delegate.needsKext()
+                        }
+                        self.loadedKext = false
+                    }
+                }
+                Thread.sleep(forTimeInterval: 30)
             }
         }
     }
