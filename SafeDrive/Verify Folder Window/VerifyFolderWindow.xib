@@ -14,6 +14,7 @@
                 <outlet property="pauseText" destination="bLw-qO-4YA" id="A0t-cc-Xi2"/>
                 <outlet property="removeBox" destination="Udq-4Z-gY2" id="Vji-ma-kMp"/>
                 <outlet property="removeText" destination="1UU-8x-ELB" id="a8c-Vd-0Lg"/>
+                <outlet property="resolve" destination="oHa-MN-bfF" id="Tkr-9b-Peh"/>
                 <outlet property="restoreBox" destination="sLv-xR-BbC" id="8Hc-Bm-smj"/>
                 <outlet property="restoreText" destination="dd8-q6-WdT" id="P7O-RD-fBv"/>
                 <outlet property="source" destination="uWa-ad-ROR" id="ZQ4-YB-GjQ"/>

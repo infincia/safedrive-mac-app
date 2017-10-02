@@ -82,6 +82,8 @@ class VerifyFolderWindowController: NSWindowController {
     @IBOutlet fileprivate weak var spinner: NSProgressIndicator!
     @IBOutlet fileprivate weak var source: NSPathControl!
     @IBOutlet fileprivate weak var changeSource: NSButton!
+    @IBOutlet fileprivate weak var resolve: NSButton!
+
     @IBOutlet fileprivate weak var nameField: NSTextField!
 
     @IBOutlet fileprivate weak var findBox: NSButton!
