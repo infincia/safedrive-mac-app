@@ -291,6 +291,8 @@ extension SDError:  CustomNSError {
             return SDErrorDomainReported
          case .setupDirectories:
             return SDErrorDomainReported
+        case .kextLoading:
+            return SDErrorDomainNotReported
         }
     }
     
@@ -338,4 +340,6 @@ public enum SDErrorType: Int {
     case fuseDeployment = 7003
     case cliMissing = 7004
     case setupDirectories = 7005
+    case kextLoading = 7006
+
 }
