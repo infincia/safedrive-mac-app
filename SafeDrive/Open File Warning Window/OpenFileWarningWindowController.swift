@@ -130,6 +130,9 @@ class OpenFileWarningWindowController: NSWindowController {
         self.spinner.stopAnimation(self)
 
         self.processList.reloadData()
+        if let w = self.window as? FlatWindow {
+            w.keepOnTop = true
+        }
         weak var weakSelf: OpenFileWarningWindowController? = self
 
         background {
