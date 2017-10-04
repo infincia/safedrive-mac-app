@@ -78,11 +78,11 @@ extension AppDelegate: NSApplicationDelegate {
             if isProduction() {
                 SDLog("SafeDrive release build \(CFBundleVersion)")
                 environment = "RELEASE"
-                updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive/release.xml")
+                updater.feedURL = URL(string: "https://s3-eu-central-1.amazonaws.com/cdn.safedrive.io/mac/release.xml")
             } else {
                 SDLog("SafeDrive staging build \(CFBundleVersion)")
                 environment = "STAGING"
-                updater.feedURL = URL(string: "https://cdn.infincia.com/safedrive/staging.xml")
+                updater.feedURL = URL(string: "https://s3-eu-central-1.amazonaws.com/cdn.safedrive.io/mac/staging.xml")
             }
         }
         

@@ -47,7 +47,7 @@ PLIST=$(cat <<EOF
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
 <channel>
 <title>SafeDrive Changelog</title>
-<link>https://cdn.infincia.com/safedrive/${LOWER_SCHEME}.xml</link>
+<link>https://s3-eu-central-1.amazonaws.com/cdn.safedrive.io/mac/${LOWER_SCHEME}.xml</link>
 <description>Most recent changes</description>
 <language>en</language>
 <item>
@@ -59,7 +59,7 @@ PLIST=$(cat <<EOF
 ]]>
 </description>
 <pubDate>$DATE</pubDate>
-<enclosure url="https://cdn.infincia.com/safedrive/SafeDrive_${SCHEME}_$VERSION.zip" sparkle:shortVersionString="$VERSION" sparkle:version="$BUILD" length="$FILESIZE" type="application/octet-stream"/>
+<enclosure url="https://s3-eu-central-1.amazonaws.com/cdn.safedrive.io/mac/SafeDrive_${SCHEME}_$VERSION.zip" sparkle:shortVersionString="$VERSION" sparkle:version="$BUILD" length="$FILESIZE" type="application/octet-stream"/>
 </item>
 </channel>
 </rss>
