@@ -10,7 +10,8 @@ CODE_SIGN_IDENTITY="Developer ID Application"
 VERSION=$(git describe --dirty)
 BUILD=$(git rev-list --count HEAD)
 
-rm -f ./update/*.zip
+rm -rf ./update/mac
+mkdir -p ./update/mac
 
 pod install
 
@@ -31,9 +32,9 @@ xcodebuild -quiet -exportArchive -archivePath ./${LOWER_SCHEME}/SafeDrive-${SCHE
 echo "Building archive"
 
 
-ditto -c -k --sequesterRsrc --keepParent ./${LOWER_SCHEME}/SafeDrive.app update/SafeDrive_${SCHEME}_${VERSION}.zip
+ditto -c -k --sequesterRsrc --keepParent ./${LOWER_SCHEME}/SafeDrive.app update/mac/SafeDrive_${SCHEME}_${VERSION}.zip
 
-FILESIZE=$(stat -f%z update/SafeDrive_${SCHEME}_${VERSION}.zip)
+FILESIZE=$(stat -f%z update/mac/SafeDrive_${SCHEME}_${VERSION}.zip)
 
 echo "Creating update manifest"
 
@@ -64,9 +65,7 @@ PLIST=$(cat <<EOF
 </rss>
 EOF)
 
-mkdir -p ./update/
-
-echo $PLIST > ./update/${LOWER_SCHEME}.xml
+echo $PLIST > ./update/mac/${LOWER_SCHEME}.xml
 
 done
 
