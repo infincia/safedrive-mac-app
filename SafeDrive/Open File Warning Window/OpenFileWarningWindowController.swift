@@ -183,7 +183,6 @@ class OpenFileWarningWindowController: NSWindowController {
                         self.processList.reloadData()
                     }
                 } else {
-                    SDLog("skipping check for running processes")
                     DispatchQueue.main.sync {
                         self.spinner.stopAnimation(self)
                         if self.processes.count >= 1 {
