@@ -44,7 +44,7 @@ class SyncViewController: NSViewController {
 
     fileprivate var addFolderWindow: AddFolderWindowController!
 
-    fileprivate var verifyFolderWindows = [UInt64 : VerifyFolderWindowController]()
+    fileprivate var verifyFolderWindows = [UInt64: VerifyFolderWindowController]()
 
     fileprivate var folders = [SDKSyncFolder]()
     
