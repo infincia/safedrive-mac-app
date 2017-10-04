@@ -83,11 +83,11 @@ class OpenFileWarningWindowController: NSWindowController {
 
     @IBOutlet fileprivate weak var processList: NSTableView!
     
-    fileprivate weak var openFileWarningDelegate: OpenFileWarningDelegate?
+    fileprivate weak var openFileWarningDelegate: OpenFileWarningDelegate!
     
     fileprivate var processes = [RunningProcess]()
     
-    fileprivate var _shouldCheckRunning = true
+    fileprivate var _shouldCheckRunning = false
     
     fileprivate var url: URL!
     
@@ -114,57 +114,84 @@ class OpenFileWarningWindowController: NSWindowController {
     }
     
     
-    convenience init?(delegate: OpenFileWarningDelegate, url: URL, processes: [RunningProcess]) {
+    convenience init(delegate: OpenFileWarningDelegate) {
         self.init(windowNibName: NSNib.Name(rawValue: "OpenFileWarningWindow"))
-
         self.openFileWarningDelegate = delegate
-        self.processes = processes
-        self.url = url
         let nc = NSWorkspace.shared.notificationCenter
         nc.addObserver(self, selector: #selector(didTerminate(_:)), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
-        
+        // swiftlint:disable force_unwrapping
+        _ = self.window!
+        // swiftlint:enable force_unwrapping
+        self.checkLoop()
     }
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        self.spinner.stopAnimation(self)
-
-        self.processList.reloadData()
         if let w = self.window as? FlatWindow {
             w.keepOnTop = true
         }
-        weak var weakSelf: OpenFileWarningWindowController? = self
-
+    }
+    
+    func check(url: URL) {
+        main {
+            if !self.shouldCheckRunning {
+                self.shouldCheckRunning = true
+                self.showWindow(self)
+                self.spinner.startAnimation(self)
+                self.url = url
+            }
+        }
+    }
+    
+    func stop() {
+        main {
+            self.close()
+            self.shouldCheckRunning = false
+            self.spinner.stopAnimation(self)
+        }
+    }
+    
+    fileprivate func checkLoop() {
         background {
-            while self.shouldCheckRunning {
-                
-                if let runningProcesses = weakSelf?.openFileWarningDelegate?.runningProcesses() {
-                
-                    let runningSet = Set<RunningProcess>(runningProcesses)
-                    
-                    SDLog("there are \(runningProcesses.count) running processes")
-                    
-                    if let blockingProcesses = weakSelf?.openFileWarningDelegate?.blockingProcesses(self.url) {
-                        let blockingSet = Set<RunningProcess>(blockingProcesses)
-                        SDLog("volume \(self.url.lastPathComponent) has \(blockingProcesses.count) blocking processes")
+            while true {
+                Thread.sleep(forTimeInterval: 1)
 
-                        let processes = Array(blockingSet.intersection(runningSet))
-                        SDLog("volume \(self.url.lastPathComponent) has \(processes.count) processes with open files")
-                        DispatchQueue.main.sync {
-                            if processes.count == 0 {
-                                SDLog("volume \(self.url.path) is safe do disconnect now")
-                                weakSelf?.openFileWarningDelegate?.tryAgain()
-                                weakSelf?.shouldCheckRunning = false
-                                weakSelf?.close(nil)
-                                return
-                            }
-                            weakSelf?.processes = processes
-                            weakSelf?.processList.reloadData()
+                if self.shouldCheckRunning {
+                    SDLog("checking for running processes")
+
+                    let runningProcesses = self.openFileWarningDelegate.runningProcesses()
+                    let blockingProcesses = self.openFileWarningDelegate.blockingProcesses(self.url)
+
+                    let runningSet = Set<RunningProcess>(runningProcesses)
+                    let blockingSet = Set<RunningProcess>(blockingProcesses)
+                    let processesToClose = Array(blockingSet.intersection(runningSet))
+
+                    SDLog("volume \(self.url.lastPathComponent) has \(blockingProcesses.count) blocking processes")
+                    
+                    SDLog("volume \(self.url.lastPathComponent) has \(processesToClose.count) processes with open files")
+                    DispatchQueue.main.sync {
+                        self.spinner.stopAnimation(self)
+
+                        if processesToClose.count == 0 {
+                            SDLog("volume \(self.url.path) is safe do disconnect now")
+                            self.openFileWarningDelegate?.tryAgain()
+                            self.shouldCheckRunning = false
+                            self.close(nil)
+                            return
+                        }
+                        self.processes = processesToClose
+                        self.processList.reloadData()
+                    }
+                } else {
+                    SDLog("skipping check for running processes")
+                    DispatchQueue.main.sync {
+                        self.spinner.stopAnimation(self)
+                        if self.processes.count >= 1 {
+                            self.processes.removeAll()
+                            self.processList.reloadData()
                         }
                     }
                 }
-                
-                Thread.sleep(forTimeInterval: 1)
             }
         }
     }

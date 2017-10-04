@@ -36,7 +36,7 @@ class MountController: NSObject {
         
     static let shared = MountController()
     
-    fileprivate var openFileWarning: OpenFileWarningWindowController?
+    fileprivate var openFileWarning: OpenFileWarningWindowController!
     
     fileprivate var email: String?
     fileprivate var internalUserName: String?
@@ -152,6 +152,8 @@ class MountController: NSObject {
         self.mounting = false
         self.signedIn = false
         self.lastMountAttempt = nil
+        
+        self.openFileWarning = OpenFileWarningWindowController(delegate: self)
         
         // register SDAccountProtocol notifications
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
@@ -818,14 +820,9 @@ class MountController: NSObject {
                             return
                         }
                         DispatchQueue.main.async {
-                            self.openFileWarning = OpenFileWarningWindowController(delegate: self, url: url, processes: processes)
-                            
                             NSApp.activate(ignoringOtherApps: true)
                             
-                            // swiftlint:disable force_unwrapping
-                            self.openFileWarning!.showWindow(self)
-                            // swiftlint:enable force_unwrapping
-
+                            self.openFileWarning.check(url: url)
                         }
                     }
                 } else if code == fnfErr {
@@ -919,8 +916,7 @@ extension MountController: SDVolumeEventProtocol {
     func volumeDidUnmount(notification: Notification) {
         assert(Thread.current == Thread.main, "volumeDidMount called on background thread")
 
-        //self.openFileWarning?.window?.close()
-        //self.openFileWarning = nil
+        self.openFileWarning.stop()
     }
     
     func volumeSubprocessDidTerminate(notification: Notification) {
@@ -983,8 +979,7 @@ extension MountController: OpenFileWarningDelegate {
     }
     
     func finished() {
-        //self.openFileWarning?.window?.close()
-        //self.openFileWarning = nil
+        self.openFileWarning.stop()
     }
 }
 
