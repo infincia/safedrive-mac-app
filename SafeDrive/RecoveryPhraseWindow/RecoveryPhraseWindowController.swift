@@ -18,6 +18,25 @@ class RecoveryPhraseWindowController: NSWindowController {
 
     weak var recoveryDelegate: RecoveryPhraseEntryDelegate?
     
+    var _userInitiated = false
+    
+    var userInitiated: Bool {
+        get {
+            var u: Bool
+            userInitiatedQueue.sync {
+                u = self._userInitiated
+            }
+            return u
+        }
+        set (newValue) {
+            userInitiatedQueue.sync(flags: .barrier, execute: {
+                self._userInitiated = newValue
+            })
+        }
+    }
+    
+    fileprivate let userInitiatedQueue = DispatchQueue(label: "io.safedrive.userInitiatedQueue")
+    
     convenience init() {
         self.init(windowNibName: NSNib.Name(rawValue: "RecoveryPhraseWindow"))
     }
@@ -51,6 +70,7 @@ class RecoveryPhraseWindowController: NSWindowController {
     @IBAction func checkRecoveryPhrase(_ sender: AnyObject?) {
         self.spinner.startAnimation(self)
         self.errorField.stringValue = ""
+        self.userInitiated = true
         
         let phraseToCheck = recoveryPhraseField.stringValue
         
@@ -68,8 +88,9 @@ class RecoveryPhraseWindowController: NSWindowController {
                 
                 self.errorField.textColor = fadedRed
                 
-                self.errorField.stringValue = error.message
-                
+                if self.userInitiated {
+                    self.errorField.stringValue = error.message
+                }                
             })
         }, failure: { (error) in
             self.spinner.stopAnimation(self)
