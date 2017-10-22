@@ -40,7 +40,7 @@ extension RestoreSelectionWindowController: NSTableViewDataSource {
     }
 }
 
-extension RestoreSelectionWindowController:  NSTableViewDelegate {
+extension RestoreSelectionWindowController: NSTableViewDelegate {
     func tableViewSelectionDidChange(_ notification: Notification) {
         let sessionIndex = restoreSelectionList.selectedRow
         

@@ -66,7 +66,7 @@ extension OpenFileWarningWindowController: NSTableViewDataSource {
     }
 }
 
-extension OpenFileWarningWindowController:  NSTableViewDelegate {
+extension OpenFileWarningWindowController: NSTableViewDelegate {
     func tableViewSelectionDidChange(_ notification: Notification) {
         let sessionIndex = processList.selectedRow
         

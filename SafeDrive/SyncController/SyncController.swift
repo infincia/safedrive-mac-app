@@ -55,8 +55,8 @@ class SyncController: Equatable {
                 dateFormatter.dateFormat = "yyyy-MM-dd@HH-mm-ss"
                 dateFormatter.locale = Locale.current
                 let dateString = dateFormatter.string(from: now)
-                let newName = String(format:"%@ - %@", serverURL.lastPathComponent, dateString)
-                let destinationDir = storageDir.appendingPathComponent(newName, isDirectory:true)
+                let newName = String(format: "%@ - %@", serverURL.lastPathComponent, dateString)
+                let destinationDir = storageDir.appendingPathComponent(newName, isDirectory: true)
                 SDLog("Moving SyncFolder %@ to %@", serverURL.path, destinationDir.path)
 
                 self.sdk.remoteFSMoveDirectory(path: serverURL.path, newPath: destinationDir.path, completionQueue: DispatchQueue.main, success: {
@@ -224,7 +224,7 @@ class SyncController: Equatable {
         
         var isDirectory: ObjCBool = false
         
-        if fileManager.fileExists(atPath: localURL.path, isDirectory:&isDirectory) {
+        if fileManager.fileExists(atPath: localURL.path, isDirectory: &isDirectory) {
             if !isDirectory.boolValue == true {
                 let error = SDKError(message: "Folder missing", kind: SDKErrorType.FolderMissing)
                 (self.syncProgressQueue).async {
@@ -590,7 +590,7 @@ class SyncController: Equatable {
         
         // MARK: - Launch subprocess and return
         
-        self.sftpOperation(SDKRemoteFSOperation.createFolder, remoteDirectory:serverURL, success: {
+        self.sftpOperation(SDKRemoteFSOperation.createFolder, remoteDirectory: serverURL, success: {
             self.syncTask.launch()
             
         }, failure: { (apiError) in

@@ -194,7 +194,7 @@ public class SDKSyncFolder: Equatable, NSSecureCoding {
     public func exists() -> Bool {
         var isDirectory: ObjCBool = false
         
-        if FileManager.default.fileExists(atPath: path, isDirectory:&isDirectory) {
+        if FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory) {
             if isDirectory.boolValue {
                 return true
             }
@@ -552,7 +552,7 @@ public enum SDKAccountState {
     }
 }
 
-extension SDKAccountState : CustomStringConvertible {
+extension SDKAccountState: CustomStringConvertible {
      public var description: String {
         switch self {
         case .unknown:

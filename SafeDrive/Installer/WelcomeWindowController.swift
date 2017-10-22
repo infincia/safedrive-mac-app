@@ -360,7 +360,7 @@ enum WelcomeState {
     case failed(error: Error, uniqueClientID: String?)
 }
 
-extension WelcomeState : CustomStringConvertible {
+extension WelcomeState: CustomStringConvertible {
     var description: String {
         switch self {
         case .welcome:

@@ -78,7 +78,7 @@ extension SDKError: LocalizedError {
     }
 }
 
-extension SDKError:  CustomNSError {
+extension SDKError: CustomNSError {
     var errorDomain: String {
         switch self.kind {
         case .StateMissing:

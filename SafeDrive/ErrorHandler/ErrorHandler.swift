@@ -26,7 +26,7 @@ func SDErrorHandlerInitialize() {
      Set serializedErrorLocation to an NSURL corresponding to:
      ~/Library/Application Support/SafeDrive/SafeDrive-Errors.plist
      */
-    serializedErrorLocation = localURL.appendingPathComponent("SafeDrive-Errors.plist", isDirectory:false)
+    serializedErrorLocation = localURL.appendingPathComponent("SafeDrive-Errors.plist", isDirectory: false)
 
     if let archivedErrors = NSKeyedUnarchiver.unarchiveObject(withFile: serializedErrorLocation.path) as? [[AnyHashable: Any]] {
         errors = archivedErrors
@@ -113,11 +113,11 @@ func SDErrorHandlerReport(_ error: Error?) {
 
                 let clientVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         
-                let report: [String : Any] = [  "error": NSKeyedArchiver.archivedData(withRootObject: error),
+                let report: [String: Any] = [  "error": NSKeyedArchiver.archivedData(withRootObject: error),
                                                 "uniqueClientId": currentUniqueClientId,
                                                 "os": os,
                                                 "clientVersion": clientVersion ]
-                errors.insert(report, at:0)
+                errors.insert(report, at: 0)
                 saveErrors()
             }
         }
@@ -129,9 +129,9 @@ func SDUncaughtExceptionHandler(exception: NSException!) {
     print("Stack trace: %@", stack)
     
     errorQueue.sync {
-        let report: [String : Any] = [ "stack": stack,
+        let report: [String: Any] = [ "stack": stack,
                                        "uniqueClientId": currentUniqueClientId ]
-        errors.insert(report, at:0)
+        errors.insert(report, at: 0)
         saveErrors()
     }
 }
@@ -172,7 +172,7 @@ func startReportQueue() {
                     }, failure: { (_) in
                         
                         // put the report back in the queue and save it since this attempt failed
-                        errors.insert(report, at:0)
+                        errors.insert(report, at: 0)
                         
                         saveErrors()
                     })

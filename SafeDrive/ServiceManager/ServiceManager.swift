@@ -317,7 +317,7 @@ extension ServiceManager: NSXPCListenerDelegate {
         let status = AuthorizationCreate(&authRights, nil, authFlags, &authRef)
         
         if status != errAuthorizationSuccess {
-            let error = NSError(domain: NSOSStatusErrorDomain, code: Int(status), userInfo:nil)
+            let error = NSError(domain: NSOSStatusErrorDomain, code: Int(status), userInfo: nil)
             
             SDLogError("Service authorization error: \(error)")
             let authError = SDError(message: "Authorization error: \(error)", kind: .serviceDeployment)

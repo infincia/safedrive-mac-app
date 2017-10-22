@@ -25,7 +25,7 @@ enum VerificationSolution {
     case remove
 }
 
-extension VerificationState : CustomStringConvertible {
+extension VerificationState: CustomStringConvertible {
     var description: String {
         switch self {
         case .find:

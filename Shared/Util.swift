@@ -91,7 +91,7 @@ func storageURL() -> URL {
     }
 
     do {
-        try FileManager.default.createDirectory(at: u, withIntermediateDirectories:true, attributes:nil)
+        try FileManager.default.createDirectory(at: u, withIntermediateDirectories: true, attributes: nil)
     } catch let directoryError as NSError {
         print("Error creating support directory: \(directoryError.localizedDescription)")
     }
@@ -214,7 +214,7 @@ public let SDErrorDomainNotReported = "io.safedrive.notreported"
 public let SDErrorDomainReported = "io.safedrive.reported"
 public let SDErrorDomainInternal = "io.safedrive.internal"
 
-extension SDError:  CustomNSError {
+extension SDError: CustomNSError {
     var errorDomain: String {
         switch self.kind {
         case .unknown:

@@ -198,7 +198,7 @@ extension ValidateClientViewController: NSTableViewDataSource {
     }
 }
 
-extension ValidateClientViewController:  NSTableViewDelegate {
+extension ValidateClientViewController: NSTableViewDelegate {
     func tableViewSelectionDidChange(_ notification: Notification) {
         let i = clientList.selectedRow
         

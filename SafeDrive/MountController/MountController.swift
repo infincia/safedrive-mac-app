@@ -64,7 +64,7 @@ class MountController: NSObject {
     
     var currentMountURL: URL {
         let home = NSHomeDirectory()
-        let volumesDirectoryURL = URL(fileURLWithPath: home, isDirectory:true)
+        let volumesDirectoryURL = URL(fileURLWithPath: home, isDirectory: true)
         let mountURL = volumesDirectoryURL.appendingPathComponent(self.currentVolumeName)
         return mountURL
     }
@@ -248,7 +248,7 @@ class MountController: NSObject {
                 try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
                 DispatchQueue.main.async {
                     self.mountURL = nil
-                    NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object:nil)
+                    NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
                     successBlock(self.currentMountURL)
                 }
             } catch let error as NSError {
@@ -272,13 +272,13 @@ class MountController: NSObject {
                 
                 if self.mounted {
                     DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object:self.mountDetails)
-                        NotificationCenter.default.post(name: Notification.Name.mounted, object:nil)
+                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object: self.mountDetails)
+                        NotificationCenter.default.post(name: Notification.Name.mounted, object: nil)
                     }
                 } else {
                     DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object:nil)
-                        NotificationCenter.default.post(name: Notification.Name.unmounted, object:nil)
+                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object: nil)
+                        NotificationCenter.default.post(name: Notification.Name.unmounted, object: nil)
                     }
                 }
                 
@@ -353,7 +353,7 @@ class MountController: NSObject {
         
         
         do {
-            try fileManager.createDirectory(at: mountURL, withIntermediateDirectories:true, attributes:nil)
+            try fileManager.createDirectory(at: mountURL, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
             failureBlock(mountURL, error)
             return
