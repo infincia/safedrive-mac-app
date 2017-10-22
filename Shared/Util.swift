@@ -261,35 +261,35 @@ extension SDError: CustomNSError {
             return SDErrorDomainInternal
         case .temporaryFile:
             return SDErrorDomainNotReported
-         case .timeout:
+        case .timeout:
             return SDErrorDomainNotReported
-         case .syncFailed:
+        case .syncFailed:
             return SDErrorDomainNotReported
-         case .alreadyRunning:
+        case .alreadyRunning:
             return SDErrorDomainNotReported
-         case .folderConflict:
+        case .folderConflict:
             return SDErrorDomainNotReported
-         case .cancelled:
+        case .cancelled:
             return SDErrorDomainNotReported
-         case .mountFailed:
+        case .mountFailed:
             return SDErrorDomainNotReported
-         case .unmountFailed:
+        case .unmountFailed:
             return SDErrorDomainNotReported
-         case .alreadyMounted:
+        case .alreadyMounted:
             return SDErrorDomainNotReported
-         case .openFailed:
+        case .openFailed:
             return SDErrorDomainNotReported
-         case .migrationFailed:
+        case .migrationFailed:
             return SDErrorDomainReported
-         case .writeFailed:
+        case .writeFailed:
             return SDErrorDomainReported
-         case .serviceDeployment:
+        case .serviceDeployment:
             return SDErrorDomainReported
-         case .cliDeployment:
+        case .cliDeployment:
             return SDErrorDomainReported
-         case .fuseDeployment:
+        case .fuseDeployment:
             return SDErrorDomainReported
-         case .setupDirectories:
+        case .setupDirectories:
             return SDErrorDomainReported
         case .kextLoading:
             return SDErrorDomainNotReported
