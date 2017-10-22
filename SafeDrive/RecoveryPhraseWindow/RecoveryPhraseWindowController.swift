@@ -22,7 +22,7 @@ class RecoveryPhraseWindowController: NSWindowController {
     
     var userInitiated: Bool {
         get {
-            var u: Bool
+            var u: Bool = false
             userInitiatedQueue.sync {
                 u = self._userInitiated
             }
