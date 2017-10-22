@@ -149,7 +149,6 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
                     reportError = true
                     showError = true
                 }
-                break
             }
             
             if showError {
@@ -263,7 +262,6 @@ extension EncryptionViewController: SDAccountProtocol {
                 break
             case .CryptoError:
                 NotificationCenter.default.post(name: Notification.Name.accountNeedsRecoveryPhrase, object: nil)
-                break
             case .IO:
                 break
             case .SyncAlreadyInProgress:

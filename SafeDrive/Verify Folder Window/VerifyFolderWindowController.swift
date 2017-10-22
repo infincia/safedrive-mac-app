@@ -143,16 +143,12 @@ class VerifyFolderWindowController: NSWindowController {
         switch self.state {
         case .find:
             self.findText.isHidden = false
-            break
         case .pause:
             self.pauseText.isHidden = false
-            break
         case .restore:
             self.restoreText.isHidden = false
-            break
         case .remove:
             self.removeText.isHidden = false
-            break
         }
     }
     

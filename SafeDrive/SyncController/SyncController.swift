@@ -67,8 +67,6 @@ class SyncController: Equatable {
                     let error = SDError(message: msg, kind: .sftpOperationFailure)
                     failureBlock(error)
                 })
-                break
-                
             case SDKRemoteFSOperation.createFolder:
                 self.sdk.remoteFSCreateDirectory(path: serverURL.path, completionQueue: DispatchQueue.main, success: {
                     successBlock()
@@ -78,7 +76,6 @@ class SyncController: Equatable {
                     let error = SDError(message: msg, kind: .sftpOperationFailure)
                     failureBlock(error)
                 })
-                break
             case SDKRemoteFSOperation.deleteFolder:
                 self.sdk.remoteFSDeleteDirectory(path: serverURL.path, completionQueue: DispatchQueue.main, success: {
                     successBlock()
@@ -88,7 +85,6 @@ class SyncController: Equatable {
                     let error = SDError(message: msg, kind: .sftpOperationFailure)
                     failureBlock(error)
                 })
-                break
             case SDKRemoteFSOperation.deletePath(let recursive):
                 self.sdk.remoteFSDeletePath(path: serverURL.path, recursive: recursive, completionQueue: DispatchQueue.main, success: {
                     successBlock()
@@ -98,7 +94,6 @@ class SyncController: Equatable {
                     let error = SDError(message: msg, kind: .sftpOperationFailure)
                     failureBlock(error)
                 })
-                break
             }
         }
     }

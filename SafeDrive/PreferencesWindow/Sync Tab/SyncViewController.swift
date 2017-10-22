@@ -1091,7 +1091,6 @@ extension SyncViewController: VerifyFolderDelegate {
             }, failure: { (error) in
                 failure(error)
             })
-            break
         case .restore:
             // TODO: this needs to restrict the restore location
             startRestore(folder.id)
@@ -1099,7 +1098,6 @@ extension SyncViewController: VerifyFolderDelegate {
                 success()
                 self.verifyFolderWindows.removeValue(forKey: folder.id)
             }
-            break
         case .remove:
             self.sdk.removeFolder(folder.id, completionQueue: DispatchQueue.main, success: {
                 self.readSyncFolders(self)
@@ -1110,7 +1108,6 @@ extension SyncViewController: VerifyFolderDelegate {
             }, failure: { (error) in
                 failure(error)
             })
-            break
         }
     }
 

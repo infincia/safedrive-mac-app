@@ -363,7 +363,6 @@ class AccountController: NSObject {
                                 showError = true
                                 reportError = true
                             }
-                            break
                         }
                         
                         if showError {
@@ -435,7 +434,6 @@ class AccountController: NSObject {
                                 self.lastAccountStatusError = error
                                 reportError = true
                             }
-                            break
                         }
                         
                         if reportError && error.kind != .NetworkFailure {
@@ -487,7 +485,6 @@ class AccountController: NSObject {
                                 self.lastAccountDetailsError = error
                                 reportError = true
                             }
-                            break
                         }
                         
                         if reportError && error.kind != .NetworkFailure {

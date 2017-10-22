@@ -288,14 +288,11 @@ extension WelcomeWindowController: NSWindowDelegate {
                 switch response {
                 case NSApplication.ModalResponse.alertFirstButtonReturn:
                     NSApp.terminate(self)
-                    break
                 default:
                     return
                 }
             })
             // swiftlint:enable force_unwrapping
-
-            break
         case .validateDependencies, .validateService:
             alert.messageText = NSLocalizedString("Installation in progress", comment: "String informing the user that an installation is in progress")
             
@@ -307,15 +304,11 @@ extension WelcomeWindowController: NSWindowDelegate {
                 switch response {
                 case NSApplication.ModalResponse.alertFirstButtonReturn:
                     NSApp.terminate(self)
-                    break
                 default:
                     return
                 }
             })
             // swiftlint:enable force_unwrapping
-
-            break
-            
         case .validateAccount:
             alert.messageText = NSLocalizedString("SafeDrive requires an account", comment: "String informing the user that safedrive requires an account")
             
@@ -327,15 +320,11 @@ extension WelcomeWindowController: NSWindowDelegate {
                 switch response {
                 case NSApplication.ModalResponse.alertFirstButtonReturn:
                     NSApp.terminate(self)
-                    break
                 default:
                     return
                 }
             })
             // swiftlint:enable force_unwrapping
-
-            break
-
         case .validateClient:
             alert.messageText = NSLocalizedString("SafeDrive requires a registered client", comment: "String informing the user that safedrive requires an account")
             
@@ -347,14 +336,11 @@ extension WelcomeWindowController: NSWindowDelegate {
                 switch response {
                 case NSApplication.ModalResponse.alertFirstButtonReturn:
                     NSApp.terminate(self)
-                    break
                 default:
                     return
                 }
             })
             // swiftlint:enable force_unwrapping
-
-            break
         case .ready:
             return true
         case .failed:
