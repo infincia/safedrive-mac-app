@@ -79,6 +79,19 @@ class ServiceListenerDelegate: NSObject {
             throw NSError(domain: "io.safedrive.SafeDrive.d", code: 0x0005, userInfo: [NSLocalizedDescriptionKey: "SDFS kext loader binary could not be setuid"])
         }
     }
+    
+    fileprivate func forceUnmount(at path: String) throws {
+        let pipe: Pipe = Pipe()
+        let task: Process = Process()
+        task.launchPath = "/usr/sbin/diskutil"
+        task.arguments = ["unmount", "force", path]
+        task.standardOutput = pipe
+        task.launch()
+        task.waitUntilExit()
+        if task.terminationStatus != 0 {
+            throw NSError(domain: "io.safedrive.SafeDrive.d", code: 0x0006, userInfo: [NSLocalizedDescriptionKey: "Force unmount failed"])
+        }
+    }
 }
 
 extension ServiceListenerDelegate: NSXPCListenerDelegate {
