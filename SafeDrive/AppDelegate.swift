@@ -294,10 +294,17 @@ extension AppDelegate: NSUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
-        DispatchQueue.main.async {
-            NSApp.activate(ignoringOtherApps: true)
-            self.preferencesWindowController?.showWindow(nil)
+        guard let identifier = notification.identifier else {
+            return
         }
+        
+        switch identifier {
+        case "drive-mounted":
+            NSWorkspace.shared.open(self.mountController.currentMountURL)
+        default:
+            break
+        }
+
         center.removeDeliveredNotification(notification)
     }
 }
