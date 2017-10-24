@@ -299,8 +299,25 @@ extension AppDelegate: NSUserNotificationCenterDelegate {
         }
         
         switch identifier {
+        case "open-preferences":
+            main {
+                NSApp.activate(ignoringOtherApps: true)
+                self.preferencesWindowController?.showWindow(nil)
+            }
+        case "sign-in-failed":
+            break
+        case "recovery-phrase":
+            main {
+                NSApp.activate(ignoringOtherApps: true)
+                self.preferencesWindowController?.showWindow(nil)
+                self.preferencesWindowController?.setTab(Tab.encryption)
+            }
         case "drive-mounted":
             NSWorkspace.shared.open(self.mountController.currentMountURL)
+        case "drive-unmounted":
+            break
+        case "drive-mount-failed":
+            break
         default:
             break
         }
