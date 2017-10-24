@@ -264,11 +264,7 @@ class MountController: NSObject {
     func mountStateLoop() {
         background {
             while true {
-                let mountCheck = self.checkMount(at: self.currentMountURL)
-                
-                DispatchQueue.main.sync(execute: {() -> Void in
-                    self.mounted = mountCheck
-                })
+                self.mounted = self.checkMount(at: self.currentMountURL)
                 
                 if self.mounted {
                     DispatchQueue.main.async {
