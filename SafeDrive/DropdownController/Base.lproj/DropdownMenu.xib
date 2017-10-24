@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DropdownController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
+                <outlet property="forceToggleMenuItem" destination="K5x-xU-pUq" id="br4-Og-jWw"/>
                 <outlet property="preferencesMenuItem" destination="BHr-Vz-MCm" id="hmK-Se-VdA"/>
                 <outlet property="statusItemMenu" destination="Utt-EH-yKf" id="4bf-An-y8B"/>
                 <outlet property="toggleMenuItem" destination="UpL-Lb-jBl" id="eRg-42-E5P"/>
@@ -19,6 +20,12 @@
                 <menuItem title="Connect" keyEquivalent="d" id="UpL-Lb-jBl">
                     <connections>
                         <action selector="toggleMount:" target="-2" id="AbD-p0-4gP"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Force Disconnect" alternate="YES" keyEquivalent="D" id="K5x-xU-pUq" userLabel="Force disconnect Menu Item">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="forceToggleMount:" target="-2" id="vlh-H7-xob"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Settings" keyEquivalent="s" id="BHr-Vz-MCm">

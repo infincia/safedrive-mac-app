@@ -10,6 +10,7 @@ class DropdownController: NSObject {
     @IBOutlet fileprivate var statusItemMenu: NSMenu!
     @IBOutlet fileprivate var toggleMenuItem: NSMenuItem!
     @IBOutlet fileprivate var preferencesMenuItem: NSMenuItem!
+    @IBOutlet fileprivate var forceToggleMenuItem: NSMenuItem!
 
     fileprivate var sdk = SafeDriveSDK.sharedSDK
     
@@ -59,6 +60,12 @@ class DropdownController: NSObject {
         self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         // menu loaded from SDDropdownMenu.xib
         self.statusItem?.menu = self.statusItemMenu
+        
+        let mask = NSEvent.ModifierFlags.shift
+
+        self.forceToggleMenuItem.keyEquivalentModifierMask = mask
+        self.forceToggleMenuItem.isAlternate = true
+
         // this sets the tooltip of the menu bar item using a localized string from SafeDrive.strings
         self.statusItem?.toolTip = NSLocalizedString("SafeDriveAppName", comment: "Safe Drive Application Name")
         self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
@@ -67,6 +74,29 @@ class DropdownController: NSObject {
     
     @IBAction func toggleMount(_ sender: AnyObject) {
         NotificationCenter.default.post(name: Notification.Name.applicationShouldToggleMountState, object: nil)
+    }
+    
+    @IBAction func forceToggleMount(_ sender: AnyObject) {
+        if self.mounted {
+            let driveURL = MountController.shared.currentMountURL
+            ServiceManager.sharedServiceManager.forceUnmountSafeDrive(driveURL.path, {
+                NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
+            }, { (error) in
+                let notification = NSUserNotification()
+                
+                notification.identifier = "drive-force-unmount-failed"
+                
+                notification.title = "SafeDrive force unmount failed"
+                
+                notification.informativeText = error.localizedDescription
+                
+                notification.soundName = NSUserNotificationDefaultSoundName
+                
+                NSUserNotificationCenter.default.deliver(notification)
+            })
+        } else {
+           NotificationCenter.default.post(name: Notification.Name.applicationShouldToggleMountState, object: nil)
+        }
     }
     
     @IBAction func openPreferencesWindow(_ sender: AnyObject) {
@@ -80,6 +110,7 @@ class DropdownController: NSObject {
     fileprivate func enableMenuItems(_ enabled: Bool) {
         self.preferencesMenuItem.isEnabled = enabled
         self.toggleMenuItem.isEnabled = enabled
+        self.forceToggleMenuItem.isEnabled = enabled
     }
 }
 
@@ -106,12 +137,14 @@ extension DropdownController: SDMountStateProtocol {
     func mountStateMounted(notification: Notification) {
         self.mounted = true
         self.toggleMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
+        self.forceToggleMenuItem.title = NSLocalizedString("Force Disconnect", comment: "Menu title for forcefully disconnecting the volume")
         self.menuBarImage = NSImage(named: NSImage.Name.lockUnlockedTemplate)
     }
     
     func mountStateUnmounted(notification: Notification) {
         self.mounted = false
         self.toggleMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
+        self.forceToggleMenuItem.title = NSLocalizedString("Force Connect", comment: "Menu title for forcefully connecting the volume")
         self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
     }
     
