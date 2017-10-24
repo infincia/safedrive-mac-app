@@ -372,6 +372,8 @@ class AccountController: NSObject {
                             
                             let notification = NSUserNotification()
                             
+                            notification.identifier = "sign-in-failed"
+                            
                             notification.informativeText = error.message
                             notification.title = title
                             notification.soundName = NSUserNotificationDefaultSoundName
