@@ -101,6 +101,7 @@ extension AppDelegate: NSApplicationDelegate {
         }
         
         NSUserNotificationCenter.default.delegate = self
+        NSUserNotificationCenter.default.removeAllDeliveredNotifications()
         
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldFinishConfiguration), name: Notification.Name.applicationShouldFinishConfiguration, object: nil)
         
