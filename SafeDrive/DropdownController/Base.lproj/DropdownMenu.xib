@@ -7,9 +7,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DropdownController" customModule="SafeDrive" customModuleProvider="target">
             <connections>
-                <outlet property="connectMenuItem" destination="UpL-Lb-jBl" id="8CB-n0-sus"/>
                 <outlet property="preferencesMenuItem" destination="BHr-Vz-MCm" id="hmK-Se-VdA"/>
                 <outlet property="statusItemMenu" destination="Utt-EH-yKf" id="4bf-An-y8B"/>
+                <outlet property="toggleMenuItem" destination="UpL-Lb-jBl" id="eRg-42-E5P"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>

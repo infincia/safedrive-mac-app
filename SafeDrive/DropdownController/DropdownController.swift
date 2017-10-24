@@ -8,7 +8,7 @@ import Cocoa
 class DropdownController: NSObject {
     fileprivate var statusItem: NSStatusItem?
     @IBOutlet fileprivate var statusItemMenu: NSMenu!
-    @IBOutlet fileprivate var connectMenuItem: NSMenuItem!
+    @IBOutlet fileprivate var toggleMenuItem: NSMenuItem!
     @IBOutlet fileprivate var preferencesMenuItem: NSMenuItem!
 
     fileprivate var sdk = SafeDriveSDK.sharedSDK
@@ -79,7 +79,7 @@ class DropdownController: NSObject {
     
     fileprivate func enableMenuItems(_ enabled: Bool) {
         self.preferencesMenuItem.isEnabled = enabled
-        self.connectMenuItem.isEnabled = enabled
+        self.toggleMenuItem.isEnabled = enabled
     }
 }
 
@@ -104,14 +104,14 @@ extension DropdownController: SDAccountProtocol {
 extension DropdownController: SDMountStateProtocol {
     
     func mountStateMounted(notification: Notification) {
-        self.connectMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
         self.mounted = true
+        self.toggleMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
         self.menuBarImage = NSImage(named: NSImage.Name.lockUnlockedTemplate)
     }
     
     func mountStateUnmounted(notification: Notification) {
-        self.connectMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
         self.mounted = false
+        self.toggleMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
         self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
     }
     
