@@ -24,7 +24,6 @@
                 <menuItem title="Settings" keyEquivalent="s" id="BHr-Vz-MCm">
                     <connections>
                         <action selector="openPreferencesWindow:" target="-2" id="GVB-Ca-zFA"/>
-                        <binding destination="-2" name="enabled" keyPath="self.sharedAccountController.signedIn" id="FQ9-Ha-zDP"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Check For Updates..." keyEquivalent="u" id="9eo-yk-BqO">
