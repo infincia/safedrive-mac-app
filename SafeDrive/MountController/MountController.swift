@@ -732,10 +732,13 @@ class MountController: NSObject {
                 let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
                 let error = SDError(message: message, kind: .serviceDeployment)
                 SDLogError("\(message)")
-                notification.informativeText = error.localizedDescription
-                notification.title = "SafeDrive mount error"
-                notification.soundName = NSUserNotificationDefaultSoundName
-                NSUserNotificationCenter.default.deliver(notification)
+                
+                main {
+                    notification.informativeText = error.localizedDescription
+                    notification.title = "SafeDrive mount error"
+                    notification.soundName = NSUserNotificationDefaultSoundName
+                    NSUserNotificationCenter.default.deliver(notification)
+                }
             }
             
             
