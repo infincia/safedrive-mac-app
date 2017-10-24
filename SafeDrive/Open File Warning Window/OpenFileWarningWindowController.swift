@@ -22,6 +22,10 @@ protocol OpenFileReactor: class {
 
 extension OpenFileWarningWindowController: OpenFileReactor {
     @objc func didTerminate(_ notification: Notification) {
+        if !self.shouldCheckRunning {
+            return
+        }
+
         if let userInfo = notification.userInfo,
             let app = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
             
