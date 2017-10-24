@@ -691,7 +691,7 @@ class MountController: NSObject {
             let error = SDError(message: message, kind: .configMissing)
             SDLog("\(error)")
             let notification = NSUserNotification()
-
+            notification.identifier = "drive-mount-failed"
             notification.informativeText = error.localizedDescription
             notification.title = "SafeDrive mount error"
             notification.soundName = NSUserNotificationDefaultSoundName
