@@ -337,7 +337,9 @@ class MountController: NSObject {
          prevent the code from ever running.
          */
         if self.mounted {
-            successBlock(mountURL)
+            main {
+                successBlock(mountURL)
+            }
             return
         }
         
@@ -351,7 +353,9 @@ class MountController: NSObject {
         do {
             try fileManager.createDirectory(at: mountURL, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
-            failureBlock(mountURL, error)
+            main {
+                failureBlock(mountURL, error)
+            }
             return
         }
         
@@ -363,7 +367,9 @@ class MountController: NSObject {
             let user = sshURL.user else {
                 let message = NSLocalizedString("Credentials missing, contact SafeDrive support", comment: "")
                 let error = SDError(message: message, kind: .apiContractInvalid)
-                failureBlock(mountURL, error)
+                main {
+                    failureBlock(mountURL, error)
+                }
                 return
         }
         SDLog("Mounting ssh URL: \(sshURL)")
@@ -376,14 +382,18 @@ class MountController: NSObject {
         guard let volicon = Bundle.main.url(forResource: "AppIcon", withExtension: "icns") else {
             let message = NSLocalizedString("SSHFS missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .sshfsMissing)
-            failureBlock(mountURL, error)
+            main {
+                failureBlock(mountURL, error)
+            }
             return
         }
         
         guard let sshfsPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.sshfs") else {
             let message = NSLocalizedString("SSHFS missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .sshfsMissing)
-            failureBlock(mountURL, error)
+            main {
+                failureBlock(mountURL, error)
+            }
             return
         }
         self.sshfsTask.launchPath = sshfsPath
@@ -396,7 +406,9 @@ class MountController: NSObject {
         guard let safeDriveAskpassPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.askpass") else {
             let message = NSLocalizedString("Askpass helper missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .askpassMissing)
-            failureBlock(mountURL, error)
+            main {
+                failureBlock(mountURL, error)
+            }
             return
         }
         
@@ -471,7 +483,9 @@ class MountController: NSObject {
         guard let _ = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
             let message = NSLocalizedString("SSH missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .sshMissing)
-            failureBlock(mountURL, error)
+            main {
+                failureBlock(mountURL, error)
+            }
             return
         }
         //taskArguments.append("-ossh_command=\(sshPath)")
@@ -503,7 +517,9 @@ class MountController: NSObject {
         guard let knownHostsFile = Bundle.main.url(forResource: "known_hosts", withExtension: nil) else {
             let message = NSLocalizedString("SSH hosts file missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .configMissing)
-            failureBlock(mountURL, error)
+            main {
+                failureBlock(mountURL, error)
+            }
             return
         }
         
@@ -513,7 +529,9 @@ class MountController: NSObject {
         } catch {
             let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .temporaryFile)
-            failureBlock(mountURL, error)
+            main {
+                failureBlock(mountURL, error)
+            }
             return
         }
         
@@ -525,7 +543,9 @@ class MountController: NSObject {
         guard let configFile = Bundle.main.url(forResource: "ssh_config", withExtension: nil) else {
             let message = NSLocalizedString("SSH config missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .askpassMissing)
-            failureBlock(mountURL, error)
+            main {
+                failureBlock(mountURL, error)
+            }
             return
         }
         
@@ -535,7 +555,9 @@ class MountController: NSObject {
         } catch {
             let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .temporaryFile)
-            failureBlock(mountURL, error)
+            main {
+                failureBlock(mountURL, error)
+            }
             return
         }
         taskArguments.append("-F\(tempConfigFile.path)")
