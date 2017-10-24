@@ -478,7 +478,6 @@ class MountController: NSObject {
 
         /* basic sshfs options */
         taskArguments.append("-oauto_cache")
-        taskArguments.append("-oreconnect")
         taskArguments.append("-odefer_permissions")
         taskArguments.append("-onoappledouble")
         taskArguments.append("-onegative_vncache")
