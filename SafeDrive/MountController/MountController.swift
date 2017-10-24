@@ -929,6 +929,17 @@ extension MountController: SDVolumeEventProtocol {
         assert(Thread.current == Thread.main, "volumeDidMount called on background thread")
 
         self.openFileWarning.stop()
+
+        let notification = NSUserNotification()
+        
+        notification.identifier = "drive-unmounted"
+                
+        notification.title = "SafeDrive disconnected"
+        
+        notification.soundName = NSUserNotificationDefaultSoundName
+        
+        NSUserNotificationCenter.default.deliver(notification)
+        
     }
     
     func volumeSubprocessDidTerminate(notification: Notification) {
