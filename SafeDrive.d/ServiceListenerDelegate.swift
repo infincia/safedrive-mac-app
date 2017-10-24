@@ -179,4 +179,13 @@ extension ServiceListenerDelegate: ServiceXPCProtocol {
         }
         replyBlock(version)
     }
+    
+    func forceUnmountSafeDrive(_ path: String, _ replyBlock: @escaping (_ success: Bool, _ status: String) -> Void) {
+        do {
+            try forceUnmount(at: path)
+            replyBlock(true, "")
+        } catch let e as NSError {
+            replyBlock(false, "\(e.localizedDescription)")
+        }
+    }
 }

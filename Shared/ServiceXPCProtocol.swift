@@ -13,4 +13,5 @@ let kServiceXPCProtocolVersion: Int = 5
     func currentSDFSVersion(_ replyBlock: @escaping (_ state: Bool, _ status: String) -> Void)
     func updateSDFS(_ source: String, _ replyBlock: @escaping (_ state: Bool, _ status: String) -> Void)
     func loadKext(_ replyBlock: @escaping (_ state: Bool, _ status: String) -> Void)
+    func forceUnmountSafeDrive(_ path: String, _ replyBlock: @escaping (_ success: Bool, _ status: String) -> Void)
 }
