@@ -460,6 +460,35 @@ extension ServiceManager: NSXPCListenerDelegate {
         }
     }
     
+    public func forceUnmountSafeDrive(_ path: String, _ successBlock: @escaping () -> Void, _ failureBlock: @escaping (_ error: SDError) -> Void) {
+        
+        let s = self.createServiceConnection()
+        
+        let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+            SDLogError("Cannot communicate with service, connection failed: \(error.localizedDescription)")
+            
+        }) as! ServiceXPCProtocol
+        
+        
+        proxy.forceUnmountSafeDrive(path) { (success, status) in
+            if success {
+                SDLog("Force unmount succeeded")
+                
+                main {
+                    successBlock()
+                }
+            } else {
+                SDLogError("Force unmount failed: \(status)")
+                
+                let error = SDError(message: "Force unmount failed: \(status)", kind: .unmountFailed)
+
+                main {
+                    failureBlock(error)
+                }
+            }
+        }
+    }
+    
     // MARK: - App Listener Delegate
     
     func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
