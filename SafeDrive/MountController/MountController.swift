@@ -833,6 +833,8 @@ class MountController: NSObject {
                     notification.informativeText = NSLocalizedString("Unknown error occurred (\(code))", comment: "")
                 }
 
+                notification.identifier = "drive-unmount-failed"
+                
                 notification.title = "SafeDrive unmount failed"
                 
                 notification.soundName = NSUserNotificationDefaultSoundName
