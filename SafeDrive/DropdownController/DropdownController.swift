@@ -12,6 +12,8 @@ class DropdownController: NSObject {
     @IBOutlet fileprivate var preferencesMenuItem: NSMenuItem!
 
     fileprivate var sdk = SafeDriveSDK.sharedSDK
+    
+    fileprivate var mounted = false
 
     @objc
     var sharedAccountController = AccountController.sharedAccountController
@@ -103,11 +105,13 @@ extension DropdownController: SDMountStateProtocol {
     
     func mountStateMounted(notification: Notification) {
         self.connectMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
+        self.mounted = true
         self.menuBarImage = NSImage(named: NSImage.Name.lockUnlockedTemplate)
     }
     
     func mountStateUnmounted(notification: Notification) {
         self.connectMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
+        self.mounted = false
         self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
     }
     
