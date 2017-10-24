@@ -246,13 +246,13 @@ class MountController: NSObject {
         background {
             do {
                 try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
-                DispatchQueue.main.async {
+                main {
                     self.mountURL = nil
                     NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
                     successBlock(self.currentMountURL)
                 }
             } catch let error as NSError {
-                DispatchQueue.main.async {
+                main {
                     failureBlock(self.currentMountURL, error)
                 }
             }
@@ -635,7 +635,7 @@ class MountController: NSObject {
                 return
             }
             if let e = error {
-                DispatchQueue.main.async {
+                main {
                     failureBlock(mountURL, e)
                 }
                 SDLog("SSHFS Task error: \(e), \(e.localizedDescription)")
@@ -658,8 +658,9 @@ class MountController: NSObject {
             outputPipeHandle.readabilityHandler = nil
             
             if task.terminationStatus == 0 {
-                DispatchQueue.main.async {
-                    weakSelf?.mountURL = mountURL
+                weakSelf?.mountURL = mountURL
+
+                main {
                     successBlock(mountURL)
                 }
             }
@@ -795,7 +796,7 @@ class MountController: NSObject {
         
         SDLog("Dismounting volume: %@", volumeName)
         
-        DispatchQueue.global(priority: .high).async {
+        background {
             self.unmount(success: { _ -> Void in
                 //
             }, failure: { (url, error) -> Void in
