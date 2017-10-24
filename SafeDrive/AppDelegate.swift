@@ -298,6 +298,6 @@ extension AppDelegate: NSUserNotificationCenterDelegate {
             NSApp.activate(ignoringOtherApps: true)
             self.preferencesWindowController?.showWindow(nil)
         }
-        center.removeAllDeliveredNotifications()
+        center.removeDeliveredNotification(notification)
     }
 }
