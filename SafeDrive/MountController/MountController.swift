@@ -259,7 +259,6 @@ class MountController: NSObject {
                 }
             }
         }
-
     }
     
     // MARK: warning Needs slight refactoring
