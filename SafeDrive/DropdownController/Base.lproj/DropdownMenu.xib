@@ -16,7 +16,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu autoenablesItems="NO" id="Utt-EH-yKf" userLabel="Status Item Menu">
             <items>
-                <menuItem title="Connect" keyEquivalent="m" id="UpL-Lb-jBl">
+                <menuItem title="Connect" keyEquivalent="d" id="UpL-Lb-jBl">
                     <connections>
                         <action selector="toggleMount:" target="-2" id="AbD-p0-4gP"/>
                     </connections>
