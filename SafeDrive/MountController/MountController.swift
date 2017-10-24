@@ -911,10 +911,18 @@ extension MountController: SDVolumeEventProtocol {
 
     func volumeDidMount(notification: Notification) {
         assert(Thread.current == Thread.main, "volumeDidMount called on background thread")
-
-        if let u = self.mountURL {
-            NSWorkspace.shared.open(u)
-        }
+        
+        let notification = NSUserNotification()
+        
+        notification.identifier = "drive-mounted"
+        
+        notification.informativeText = NSLocalizedString("click here to show the drive in Finder", comment: "")
+        
+        notification.title = "SafeDrive connected"
+        
+        notification.soundName = NSUserNotificationDefaultSoundName
+        
+        NSUserNotificationCenter.default.deliver(notification)
     }
     
     func volumeDidUnmount(notification: Notification) {
