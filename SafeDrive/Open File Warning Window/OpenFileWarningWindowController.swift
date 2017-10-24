@@ -197,8 +197,6 @@ class OpenFileWarningWindowController: NSWindowController {
     
     @IBAction func close(_ sender: AnyObject?) {
         self.shouldCheckRunning = false
-        let nc = NSWorkspace.shared.notificationCenter
-        nc.removeObserver(self)
         self.openFileWarningDelegate?.finished()
     }
     
