@@ -13,6 +13,8 @@ class MountController: NSObject {
     
     fileprivate var sftpfsConnection: NSXPCConnection?
     
+    fileprivate let sftpfsQueue = DispatchQueue(label: "io.safedrive.sftpfsQueue")
+
     fileprivate var _mounted = false
     
     fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue")
@@ -185,15 +187,15 @@ class MountController: NSObject {
         weak var weakSelf: MountController? = self
         
         connection.interruptionHandler = {
-            DispatchQueue.main.async {
-                if let weakSelf = weakSelf {
+            if let weakSelf = weakSelf {
+                weakSelf.sftpfsQueue.async {
                     weakSelf.sftpfsConnection = nil
                 }
             }
         }
         connection.invalidationHandler = {
-            DispatchQueue.main.async {
-                if let weakSelf = weakSelf {
+            if let weakSelf = weakSelf {
+                weakSelf.sftpfsQueue.async {
                     weakSelf.sftpfsConnection = nil
                 }
             }
@@ -736,31 +738,33 @@ class MountController: NSObject {
 
         
         if useSFTPFS {
-            if let s = self.sftpfsConnection {
-                let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                    SDLogError("Connecting to sftpfs failed: \(error.localizedDescription)")
-                }) as! SFTPFSXPCProtocol
-                
-                proxy.create(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port)
-                
-                proxy.setUseCache(self.useCache)
-                
-                proxy.setIcon(volicon)
-
-                proxy.connect()
-            } else {
-                self.mounting = false
-                
-                let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
-                let error = SDError(message: message, kind: .serviceDeployment)
-                SDLogError("\(message)")
-                
-                main {
-                    notification.informativeText = error.localizedDescription
-                    notification.identifier = "drive-mount-failed"
-                    notification.title = "SafeDrive mount error"
-                    notification.soundName = NSUserNotificationDefaultSoundName
-                    NSUserNotificationCenter.default.deliver(notification)
+            sftpfsQueue.async {
+                if let s = self.sftpfsConnection {
+                    let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                        SDLogError("Connecting to sftpfs failed: \(error.localizedDescription)")
+                    }) as! SFTPFSXPCProtocol
+                    
+                    proxy.create(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port)
+                    
+                    proxy.setUseCache(self.useCache)
+                    
+                    proxy.setIcon(volicon)
+                    
+                    proxy.connect()
+                } else {
+                    self.mounting = false
+                    
+                    let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
+                    let error = SDError(message: message, kind: .serviceDeployment)
+                    SDLogError("\(message)")
+                    
+                    main {
+                        notification.informativeText = error.localizedDescription
+                        notification.identifier = "drive-mount-failed"
+                        notification.title = "SafeDrive mount error"
+                        notification.soundName = NSUserNotificationDefaultSoundName
+                        NSUserNotificationCenter.default.deliver(notification)
+                    }
                 }
             }
             
