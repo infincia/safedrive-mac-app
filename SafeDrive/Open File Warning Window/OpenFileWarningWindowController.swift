@@ -222,4 +222,23 @@ class OpenFileWarningWindowController: NSWindowController {
         }
     }
     
+    @IBAction func forceUnmount(_ sender: AnyObject) {
+        let driveURL = MountController.shared.currentMountURL
+        ServiceManager.sharedServiceManager.forceUnmountSafeDrive(driveURL.path, {
+            self.close(nil)
+            NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
+        }, { (error) in
+            let notification = NSUserNotification()
+            
+            notification.identifier = "drive-force-unmount-failed"
+            
+            notification.title = "SafeDrive force unmount failed"
+            
+            notification.informativeText = error.localizedDescription
+            
+            notification.soundName = NSUserNotificationDefaultSoundName
+            
+            NSUserNotificationCenter.default.deliver(notification)
+        })
+    }
 }
