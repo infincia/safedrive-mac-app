@@ -466,6 +466,11 @@ extension ServiceManager: NSXPCListenerDelegate {
         
         let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
             SDLogError("Cannot communicate with service, connection failed: \(error.localizedDescription)")
+            let error = SDError(message: "Force unmount failed: \(error)", kind: .unmountFailed)
+            
+            main {
+                failureBlock(error)
+            }
             
         }) as! ServiceXPCProtocol
         
