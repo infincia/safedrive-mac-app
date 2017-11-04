@@ -39,3 +39,5 @@ codesign --verbose --verify ${DIST_DIR}/sdfs.bundle
 cp -a /tmp/sdfs/library/Source/lib/.libs/libsdfs.2.dylib ${DIST_DIR}/libsdfs.2.dylib
 install_name_tool -id "@rpath/libsdfs.2.dylib" ${DIST_DIR}/libsdfs.2.dylib
 
+cp -a /tmp/sdfs/library/Source/lib/.libs/libsdfs.2.dylib.dSYM ${DIST_DIR}/libsdfs.2.dSYM
+
