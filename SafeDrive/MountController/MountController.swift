@@ -218,7 +218,6 @@ class MountController: NSObject {
     }
 
     func checkMount(at url: URL, timeout: TimeInterval, mounted mountedBlock: @escaping () -> Void, notMounted notMountedBlock: @escaping () -> Void) {
-        assert(Thread.current == Thread.main, "Mount check called on background thread")
         background {
             let start_time = Date()
             
