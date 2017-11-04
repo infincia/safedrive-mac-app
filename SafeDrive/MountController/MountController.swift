@@ -47,7 +47,7 @@ class MountController: NSObject {
     fileprivate var remoteHost: String?
     fileprivate var remotePort: UInt16?
     
-    fileprivate var useSFTPFS = false
+    fileprivate var useSFTPFS = true
     
     var currentVolumeName: String {
         if let volumeName = UserDefaults.standard.string(forKey: userDefaultsCurrentVolumeNameKey()) {
@@ -60,9 +60,7 @@ class MountController: NSObject {
         return UserDefaults.standard.bool(forKey: keepMountedKey())
     }
     
-    var useCache: Bool {
-        return UserDefaults.standard.bool(forKey: useCacheKey())
-    }
+    var useCache = true
     
     var currentMountURL: URL {
         let home = NSHomeDirectory()
