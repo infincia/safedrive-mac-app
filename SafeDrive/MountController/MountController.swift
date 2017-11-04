@@ -34,8 +34,6 @@ class MountController: NSObject {
     
     fileprivate var mountURL: URL?
     
-    fileprivate var sshfsTask: Process!
-        
     static let shared = MountController()
     
     fileprivate var openFileWarning: OpenFileWarningWindowController!
@@ -46,8 +44,6 @@ class MountController: NSObject {
     
     fileprivate var remoteHost: String?
     fileprivate var remotePort: UInt16?
-    
-    fileprivate var useSFTPFS = true
     
     var currentVolumeName: String {
         if let volumeName = UserDefaults.standard.string(forKey: userDefaultsCurrentVolumeNameKey()) {
@@ -324,372 +320,6 @@ class MountController: NSObject {
         }
     }
     
-    func startMountTask(sshURL: URL, success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
-        assert(Thread.current != Thread.main, "SSHFS task started from main thread")
-        
-        let mountURL = self.currentMountURL
-        let volumeName = self.currentVolumeName
-
-        /*
-         This is mostly insurance against running 2 sshfs processes at once, or
-         double-mounting. Disabling the login button when a mount succeeds should
-         prevent the code from ever running.
-         */
-        if self.mounted {
-            main {
-                successBlock(mountURL)
-            }
-            return
-        }
-        
-        
-        // MARK: - Create the mount path directory if it doesn't exist
-        
-        
-        let fileManager = FileManager.default
-        
-        
-        do {
-            try fileManager.createDirectory(at: mountURL, withIntermediateDirectories: true, attributes: nil)
-        } catch let error as NSError {
-            main {
-                failureBlock(mountURL, error)
-            }
-            return
-        }
-        
-        
-        // MARK: - Retrieve necessary parameters from ssh url
-        let serverPath = sshURL.path
-        guard let host = sshURL.host,
-            let port = sshURL.port,
-            let user = sshURL.user else {
-                let message = NSLocalizedString("Credentials missing, contact SafeDrive support", comment: "")
-                let error = SDError(message: message, kind: .apiContractInvalid)
-                main {
-                    failureBlock(mountURL, error)
-                }
-                return
-        }
-        SDLog("Mounting ssh URL: \(sshURL)")
-        
-        
-        // MARK: - Create the subprocess to be configured below
-        
-        self.sshfsTask = Process()
-        
-        guard let volicon = Bundle.main.url(forResource: "AppIcon", withExtension: "icns") else {
-            let message = NSLocalizedString("SSHFS missing, contact SafeDrive support", comment: "")
-            let error = SDError(message: message, kind: .sshfsMissing)
-            main {
-                failureBlock(mountURL, error)
-            }
-            return
-        }
-        
-        guard let sshfsPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.sshfs") else {
-            let message = NSLocalizedString("SSHFS missing, contact SafeDrive support", comment: "")
-            let error = SDError(message: message, kind: .sshfsMissing)
-            main {
-                failureBlock(mountURL, error)
-            }
-            return
-        }
-        self.sshfsTask.launchPath = sshfsPath
-        
-        // MARK: - Set custom environment variables for sshfs subprocess
-        
-        var sshfsEnvironment = [String: String]()
-
-        /* path of our custom askpass helper so ssh can use it */
-        guard let safeDriveAskpassPath = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.askpass") else {
-            let message = NSLocalizedString("Askpass helper missing, contact SafeDrive support", comment: "")
-            let error = SDError(message: message, kind: .askpassMissing)
-            main {
-                failureBlock(mountURL, error)
-            }
-            return
-        }
-        
-        sshfsEnvironment["SSH_ASKPASS"] = safeDriveAskpassPath
-        
-        /* pass the account password to the safedriveaskpass environment */
-        //sshfsEnvironment["SSH_PASSWORD"] = self.password
-        
-        /*
-         remove any existing SSH agent socket in the subprocess environment so we
-         have full control over auth behavior
-         */
-        sshfsEnvironment.removeValue(forKey: "SSH_AUTH_SOCK")
-        
-        /*
-         Set a blank DISPLAY environment variable. This is critical for making
-         sure that OpenSSH actually runs our custom askpass binary, even though
-         X11 isn't being used at all.
-         
-         If you're reading this code or working on it, just be aware that SSH auth
-         relying on an askpass will *fail* 100% of the time without this variable
-         set, even though it's blank.
-         
-         For the reason, see below.
-         
-         ------------------------------------------------------------------------
-         
-         OpenSSH will only run an askpass binary if a DISPLAY environment variable
-         is set. On OS X, that variable isn't present unless XQuartz is installed.
-         
-         Given that the original purpose of askpass was to display a GUI password
-         prompt using X11, this behavior makes some sense. If DISPLAY isn't set,
-         OpenSSH assumes the askpass won't be able to function because it won't
-         have access to X11, so it doesn't even try to run the askpass.
-         
-         It's a flawed assumption now, particularly on systems that don't rely on
-         X11 for native display, but Apple's version of OpenSSH doesn't patch it
-         out (likely because they don't use or even ship an askpass with OS X).
-         
-         Lastly, this only overrides the variable for the SSHFS process environment,
-         it won't interfere with use of XQuartz at all.
-         
-         */
-        
-        //MARK: warning DO NOT REMOVE THIS. See above comment for the reason.
-        sshfsEnvironment["DISPLAY"] = ""
-        
-        if isProduction() {
-            sshfsEnvironment["SAFEDRIVE_ENVIRONMENT_PRODUCTION"] = "1"
-        }
-        
-        if let password = password {
-            sshfsEnvironment["SAFEDRIVE_PASSWORD"] = password
-
-        }
-        
-        //SDLog("Subprocess environment: \(sshfsEnvironment)")
-        self.sshfsTask.environment = sshfsEnvironment
-        
-        
-        // MARK: - Set SSHFS subprocess arguments
-        
-        var taskArguments = [String]()
-        
-        /* server connection */
-        taskArguments.append("\(user)@\(host):\(serverPath)")
-        
-        /* mount location */
-        taskArguments.append(mountURL.path)
-        
-        /* our own ssh binary */
-        guard let _ = Bundle.main.path(forAuxiliaryExecutable: "io.safedrive.SafeDrive.ssh") else {
-            let message = NSLocalizedString("SSH missing, contact SafeDrive support", comment: "")
-            let error = SDError(message: message, kind: .sshMissing)
-            main {
-                failureBlock(mountURL, error)
-            }
-            return
-        }
-        //taskArguments.append("-ossh_command=\(sshPath)")
-
-        /* basic sshfs options */
-        taskArguments.append("-oauto_cache")
-        taskArguments.append("-odefer_permissions")
-        taskArguments.append("-onoappledouble")
-        taskArguments.append("-onegative_vncache")
-        
-        /*
-         Use a bundled known_hosts file as static root of trust.
-         
-         This serves two purposes:
-         
-         1. Users never have to click through fingerprint verification
-         prompts, or manually verify the fingerprint (most people won't).
-         We don't currently have code for scripting that part of an initial
-         ssh connection anyway, and it's not clear if we can even get sshfs
-         to put ssh in the right mode to print the fingerprint prompt on
-         stdout while running as a background process using SSH_ASKPASS
-         for authentication.
-         
-         2. Users are never going to be subject to man-in-the-middle attacks
-         as the fingerprint is preconfigured in the app
-         */
-        
-        
-        guard let knownHostsFile = Bundle.main.url(forResource: "known_hosts", withExtension: nil) else {
-            let message = NSLocalizedString("SSH hosts file missing, contact SafeDrive support", comment: "")
-            let error = SDError(message: message, kind: .configMissing)
-            main {
-                failureBlock(mountURL, error)
-            }
-            return
-        }
-        
-        let tempHostsFile = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
-        do {
-            try FileManager.default.copyItem(at: knownHostsFile, to: tempHostsFile)
-        } catch {
-            let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
-            let error = SDError(message: message, kind: .temporaryFile)
-            main {
-                failureBlock(mountURL, error)
-            }
-            return
-        }
-        
-        taskArguments.append("-oUserKnownHostsFile=\"\(tempHostsFile.path)\"")
-
-        
-        
-        /* bundled config file to avoid environment differences */
-        guard let configFile = Bundle.main.url(forResource: "ssh_config", withExtension: nil) else {
-            let message = NSLocalizedString("SSH config missing, contact SafeDrive support", comment: "")
-            let error = SDError(message: message, kind: .askpassMissing)
-            main {
-                failureBlock(mountURL, error)
-            }
-            return
-        }
-        
-        let tempConfigFile = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
-        do {
-            try FileManager.default.copyItem(at: configFile, to: tempConfigFile)
-        } catch {
-            let message = NSLocalizedString("Cannot create temporary file, contact SafeDrive support", comment: "")
-            let error = SDError(message: message, kind: .temporaryFile)
-            main {
-                failureBlock(mountURL, error)
-            }
-            return
-        }
-        taskArguments.append("-F\(tempConfigFile.path)")
-        
-        
-        /* custom volume name */
-        taskArguments.append("-ovolname=\(volumeName)")
-        
-        /* convert to and from UTF8 NFC, the server filenames MUST be in that form */
-        
-        taskArguments.append("-omodules=volicon:iconv,from_code=UTF-8")
-        
-        /* set volume icon*/
-
-        taskArguments.append("-oiconpath=\(volicon.path)")
-
-        /* custom port if needed */
-        taskArguments.append("-p\(port)")
-        
-        self.sshfsTask.arguments = taskArguments
-        
-        
-        // MARK: - Set asynchronous block to handle subprocess stderr and stdout
-        
-        let outputPipe = Pipe()
-        
-        let outputPipeHandle = outputPipe.fileHandleForReading
-        
-        outputPipeHandle.readabilityHandler = { (handle) in
-            var error: SDError?
-
-            // swiftlint:disable force_unwrapping
-            let outputString = String(data: handle.availableData, encoding: String.Encoding.utf8)!
-            // swiftlint:enable force_unwrapping
-
-            if outputString.contains("key_load_public: No such file or directory") {
-                // refers to searching for ssh keys in debug1 mode
-            } else if outputString.contains("Not a directory") {
-                let message = NSLocalizedString("Server could not find that volume name", comment: "")
-                error = SDError(message: message, kind: .mountFailed)
-            } else if outputString.contains("Permission denied (publickey,password)") {
-                let message = NSLocalizedString("Check username/password", comment: "")
-                error = SDError(message: message, kind: .authorization)
-            } else if outputString.contains("is itself on a OSXFUSE volume") {
-                let message = NSLocalizedString("Volume already mounted", comment: "")
-                error = SDError(message: message, kind: .alreadyMounted)
-                /*
-                 no need to run the successblock again since the volume is already mounted
-                 
-                 this is unlikely to happen in practice, we shouldn't even get to this
-                 point if the mount status code is reacting quickly
-                 
-                 this case may occur if the SafeDrive app quits/crashes but the sshfs process
-                 remains running and mounted. We'll deal with that at startup time
-                 since we'll be constantly watching for mount/unmount anyway
-                 */
-                //successBlock();
-            } else if outputString.contains("Error resolving hostname") {
-                let message = NSLocalizedString("SafeDrive service unavailable", comment: "")
-                error = SDError(message: message, kind: .mountFailed)
-            } else if outputString.contains("REMOTE HOST IDENTIFICATION HAS CHANGED") {
-                let message = NSLocalizedString("Warning: server fingerprint changed!", comment: "")
-                error = SDError(message: message, kind: .hostFingerprintChanged)
-            } else if outputString.contains("Host key verification failed") {
-                let message = NSLocalizedString("Warning: server key verification failed!", comment: "")
-                error = SDError(message: message, kind: .hostKeyVerificationFailed)
-            } else if outputString.contains("failed to mount") {
-                let message = NSLocalizedString("An unknown error occurred, contact support", comment: "")
-                error = SDError(message: message, kind: .mountFailed)
-            } else if outputString.contains("g_slice_set_config: assertion") {
-                /*
-                 Ignore this, minor bug in sshfs use of glib
-                 
-                 */
-            } else if outputString.contains("No such file or directory") {
-                let message = NSLocalizedString("An unknown error occurred, contact support", comment: "")
-                error = SDError(message: message, kind: .directoryMissing)
-            } else {
-                let message = NSLocalizedString("An unknown error occurred, contact support", comment: "")
-                error = SDError(message: message, kind: .unknown)
-                /*
-                 for the moment we don't want to call the failure block here, as
-                 not everything that comes through stderr indicates a mount
-                 failure.
-                 
-                 testing is required to discover and handle the stderr output that
-                 we actually need to handle and ignore the rest.
-                 
-                 */
-                SDLog("SSHFS Task output: %@", outputString)
-                // failureBlock(mountURL, mountError);
-                return
-            }
-            if let e = error {
-                main {
-                    failureBlock(mountURL, e)
-                }
-                SDLog("SSHFS Task error: \(e), \(e.localizedDescription)")
-            }
-        }
-        self.sshfsTask.standardError = outputPipe
-        self.sshfsTask.standardOutput = outputPipe
-        
-        
-        // MARK: - Set asynchronous block to handle subprocess termination
-        
-        
-        /*
-         clear the read and write blocks once the subprocess terminates, and then
-         call the success block if no error occurred.
-         
-         */
-        weak var weakSelf: MountController? = self
-        self.sshfsTask.terminationHandler = { (task: Process) in
-            outputPipeHandle.readabilityHandler = nil
-            
-            if task.terminationStatus == 0 {
-                weakSelf?.mountURL = mountURL
-
-                main {
-                    successBlock(mountURL)
-                }
-            }
-        }
-        
-        
-        // MARK: - Launch subprocess and return
-        
-        
-        //SDLog(@"Launching SSHFS with arguments: %@", taskArguments);
-        self.sshfsTask.launch()
-    }
-    
     // MARK: - High level API
     
     func connectVolume() {
@@ -724,93 +354,68 @@ class MountController: NSObject {
         urlComponents.host = host
         urlComponents.path = defaultServerPath()
         urlComponents.port = Int(port)
-        
-        // swiftlint:disable force_unwrapping
-        let sshURL: URL = urlComponents.url!
-        // swiftlint:enable force_unwrapping
+
         let notification = NSUserNotification()
         
         let mountURL = self.currentMountURL
         let volumeName = self.currentVolumeName
 
-        
-        if useSFTPFS {
-            sftpfsQueue.async {
-                if let s = self.sftpfsConnection {
-                    let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                        SDLogError("Connecting to sftpfs failed: \(error.localizedDescription)")
-                    }) as! SFTPFSXPCProtocol
+        sftpfsQueue.async {
+            if let s = self.sftpfsConnection {
+                let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                    SDLogError("Connecting to sftpfs failed: \(error.localizedDescription)")
+                }) as! SFTPFSXPCProtocol
+                
+                proxy.create(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port)
+                
+                proxy.setUseCache(self.useCache)
+                
+                proxy.setIcon(volicon)
+                
+                proxy.connect()
+                
+                /*
+                 now check for a successful mount. if after 30 seconds there is no volume
+                 mounted, it is a fair bet that an error occurred in the meantime
+                 */
+                
+                self.checkMount(at: mountURL, timeout: 30, mounted: {
+                    NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
+                    self.mounting = false
+                }, notMounted: {
+                    let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
+                    let error = SDError(message: message, kind: .timeout)
+                    SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
+                    notification.identifier = "drive-mount-failed"
+                    notification.informativeText = error.localizedDescription
+                    notification.title = "SafeDrive mount error"
+                    notification.soundName = NSUserNotificationDefaultSoundName
+                    NSUserNotificationCenter.default.deliver(notification)
                     
-                    proxy.create(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port)
-                    
-                    proxy.setUseCache(self.useCache)
-                    
-                    proxy.setIcon(volicon)
-                    
-                    proxy.connect()
-                } else {
                     self.mounting = false
                     
-                    let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
-                    let error = SDError(message: message, kind: .serviceDeployment)
-                    SDLogError("\(message)")
-                    
-                    main {
-                        notification.informativeText = error.localizedDescription
-                        notification.identifier = "drive-mount-failed"
-                        notification.title = "SafeDrive mount error"
-                        notification.soundName = NSUserNotificationDefaultSoundName
-                        NSUserNotificationCenter.default.deliver(notification)
-                    }
-                }
-            }
-            
-        } else {
-            background {
-                self.startMountTask(sshURL: sshURL, success: { mountURL in
-                    
-                    /*
-                     now check for a successful mount. if after 30 seconds there is no volume
-                     mounted, it is a fair bet that an error occurred in the meantime
-                     */
-                    
-                    self.checkMount(at: mountURL, timeout: 30, mounted: {
-                        NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
-                        self.mounting = false
-                    }, notMounted: {
-                        let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
-                        let error = SDError(message: message, kind: .timeout)
-                        SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
-                        notification.identifier = "drive-mount-failed"
-                        notification.informativeText = error.localizedDescription
-                        notification.title = "SafeDrive mount error"
-                        notification.soundName = NSUserNotificationDefaultSoundName
-                        NSUserNotificationCenter.default.deliver(notification)
-                        
-                        self.mounting = false
-                    })
-                    
-                    
-                }, failure: { (_, error) in
-                    self.mounting = false
                     // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
-                    if let e = error as? SDError, e.kind == .alreadyMounted {
-                        NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
-                    } else {
-                        SDLog("SafeDrive startMountTaskWithVolumeName failure in mount controller: \(error)")
-                        notification.identifier = "drive-mount-failed"
-                        notification.informativeText = error.localizedDescription
-                        notification.title = "SafeDrive mount error"
-                        notification.soundName = NSUserNotificationDefaultSoundName
-                        NSUserNotificationCenter.default.deliver(notification)
-                        SDErrorHandlerReport(error)
-                        self.unmount(success: { _ in
-                            //
-                        }, failure: { (_, _) in
-                            //
-                        })
-                    }
+                    
+                    self.unmount(success: { _ in
+                        //
+                    }, failure: { (_, _) in
+                        //
+                    })
                 })
+            } else {
+                self.mounting = false
+                
+                let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
+                let error = SDError(message: message, kind: .serviceDeployment)
+                SDLogError("\(message)")
+                
+                main {
+                    notification.informativeText = error.localizedDescription
+                    notification.identifier = "drive-mount-failed"
+                    notification.title = "SafeDrive mount error"
+                    notification.soundName = NSUserNotificationDefaultSoundName
+                    NSUserNotificationCenter.default.deliver(notification)
+                }
             }
         }
     }
