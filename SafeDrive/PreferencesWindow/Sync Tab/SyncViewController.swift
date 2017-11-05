@@ -635,7 +635,7 @@ class SyncViewController: NSViewController {
                 
             }
             
-            if syncTask.message.characters.count > 0 {
+            if syncTask.message.count > 0 {
                 failureView.message.textStorage?.setAttributedString(NSAttributedString(string: syncTask.message))
                 self.syncFailureInfoButton.isHidden = false
                 self.syncFailureInfoButton.isEnabled = true

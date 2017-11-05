@@ -223,11 +223,11 @@ class ValidateAccountViewController: NSViewController {
     }
     
     func validateForm() {
-        guard let email = self.email, let password = self.password, password.characters.count >= 1, email.characters.count >= 1 else {
+        guard let email = self.email, let password = self.password, password.count >= 1, email.count >= 1 else {
             self.signInButton.isEnabled = false
             return
         }
-        if password.characters.count >= 1 && email.characters.count >= 1 {
+        if password.count >= 1 && email.count >= 1 {
             self.signInButton.isEnabled = true
         } else {
             self.signInButton.isEnabled = false
@@ -244,13 +244,13 @@ extension ValidateAccountViewController: NSTextFieldDelegate {
         }
         
         if field == self.emailField {
-            if field.stringValue.characters.count >= 1 {
+            if field.stringValue.count >= 1 {
                 self.email = field.stringValue
             } else {
                 self.email = nil
             }
         } else if field == self.passwordField {
-            if field.stringValue.characters.count >= 1 {
+            if field.stringValue.count >= 1 {
                 self.password = field.stringValue
             } else {
                 self.password = nil
