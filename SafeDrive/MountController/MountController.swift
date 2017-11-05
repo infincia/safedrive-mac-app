@@ -338,7 +338,13 @@ class MountController: NSObject {
             let error = SDError(message: message, kind: .configMissing)
             SDLog("\(error)")
             let notification = NSUserNotification()
-            notification.identifier = "drive-mount-failed"
+
+            var userInfo = [String: Any]()
+            
+            userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
+            
+            notification.userInfo = userInfo
+            
             notification.informativeText = error.localizedDescription
             notification.title = "SafeDrive mount error"
             notification.soundName = NSUserNotificationDefaultSoundName
@@ -388,7 +394,13 @@ class MountController: NSObject {
                         let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
                         let error = SDError(message: message, kind: .timeout)
                         SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
-                        notification.identifier = "drive-mount-failed"
+                        
+                        var userInfo = [String: Any]()
+                        
+                        userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
+
+                        notification.userInfo = userInfo
+                        
                         notification.informativeText = error.localizedDescription
                         notification.title = "SafeDrive mount error"
                         notification.soundName = NSUserNotificationDefaultSoundName
@@ -413,7 +425,13 @@ class MountController: NSObject {
                     
                     main {
                         notification.informativeText = error.localizedDescription
-                        notification.identifier = "drive-mount-failed"
+                        
+                        var userInfo = [String: Any]()
+                        
+                        userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
+
+                        notification.userInfo = userInfo
+                        
                         notification.title = "SafeDrive mount error"
                         notification.soundName = NSUserNotificationDefaultSoundName
                         NSUserNotificationCenter.default.deliver(notification)
@@ -448,7 +466,13 @@ class MountController: NSObject {
                     let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
                     let error = SDError(message: message, kind: .timeout)
                     SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
-                    notification.identifier = "drive-mount-failed"
+                    
+                    var userInfo = [String: Any]()
+                    
+                    userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
+
+                    notification.userInfo = userInfo
+                    
                     notification.informativeText = error.localizedDescription
                     notification.title = "SafeDrive mount error"
                     notification.soundName = NSUserNotificationDefaultSoundName
@@ -509,8 +533,12 @@ class MountController: NSObject {
                 } else {
                     notification.informativeText = NSLocalizedString("Unknown error occurred (\(code))", comment: "")
                 }
+                
+                var userInfo = [String: Any]()
+                
+                userInfo["identifier"] = SDNotificationType.driveUnmountFailed.rawValue
 
-                notification.identifier = "drive-unmount-failed"
+                notification.userInfo = userInfo
                 
                 notification.title = "SafeDrive unmount failed"
                 
@@ -591,7 +619,11 @@ extension MountController: SDVolumeEventProtocol {
         
         let notification = NSUserNotification()
         
-        notification.identifier = "drive-mounted"
+        var userInfo = [String: Any]()
+        
+        userInfo["identifier"] = SDNotificationType.driveMounted.rawValue
+
+        notification.userInfo = userInfo
         
         notification.informativeText = NSLocalizedString("click here to show the drive in Finder", comment: "")
         
@@ -608,8 +640,12 @@ extension MountController: SDVolumeEventProtocol {
         self.openFileWarning.stop()
 
         let notification = NSUserNotification()
+                
+        var userInfo = [String: Any]()
         
-        notification.identifier = "drive-unmounted"
+        userInfo["identifier"] = SDNotificationType.driveUnmounted.rawValue
+
+        notification.userInfo = userInfo
                 
         notification.title = "SafeDrive disconnected"
         

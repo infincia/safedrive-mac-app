@@ -371,8 +371,12 @@ class AccountController: NSObject {
                             SDLog("SafeDrive signIn failure in account controller (this message will only appear once): \(error.message)")
                             
                             let notification = NSUserNotification()
+                                                        
+                            var userInfo = [String: Any]()
                             
-                            notification.identifier = "sign-in-failed"
+                            userInfo["identifier"] = SDNotificationType.signInFailed.rawValue
+                            
+                            notification.userInfo = userInfo
                             
                             notification.informativeText = error.message
                             notification.title = title

@@ -230,7 +230,11 @@ class OpenFileWarningWindowController: NSWindowController {
         }, { (error) in
             let notification = NSUserNotification()
             
-            notification.identifier = "drive-force-unmount-failed"
+            var userInfo = [String: Any]()
+            
+            userInfo["identifier"] = SDNotificationType.driveForceUnmountFailed.rawValue
+            
+            notification.userInfo = userInfo
             
             notification.title = "SafeDrive force unmount failed"
             

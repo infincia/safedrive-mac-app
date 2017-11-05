@@ -83,8 +83,12 @@ class DropdownController: NSObject {
                 NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
             }, { (error) in
                 let notification = NSUserNotification()
+                                
+                var userInfo = [String: Any]()
                 
-                notification.identifier = "drive-force-unmount-failed"
+                userInfo["identifier"] = SDNotificationType.driveForceUnmountFailed.rawValue
+                
+                notification.userInfo = userInfo
                 
                 notification.title = "SafeDrive force unmount failed"
                 

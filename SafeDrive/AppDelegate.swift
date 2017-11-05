@@ -295,31 +295,39 @@ extension AppDelegate: NSUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
-        guard let identifier = notification.identifier else {
+        
+        guard let userInfo = notification.userInfo else {
             return
         }
         
-        switch identifier {
-        case "open-preferences":
+        guard let identifier = userInfo["identifier"] as? String,
+              let notificationType = SDNotificationType(rawValue: identifier) else {
+            return
+        }
+        
+        switch notificationType {
+        case .openPreferences:
             main {
                 NSApp.activate(ignoringOtherApps: true)
                 self.preferencesWindowController?.showWindow(nil)
             }
-        case "sign-in-failed":
+        case .signInFailed:
             break
-        case "recovery-phrase":
+        case .recoveryPhrase:
             main {
                 NSApp.activate(ignoringOtherApps: true)
                 self.preferencesWindowController?.showWindow(nil)
                 self.preferencesWindowController?.setTab(Tab.encryption)
             }
-        case "drive-mounted":
+        case .driveMounted:
             NSWorkspace.shared.open(self.mountController.currentMountURL)
-        case "drive-unmounted":
+        case .driveUnmounted:
             break
-        case "drive-mount-failed":
+        case .driveMountFailed:
             break
-        default:
+        case .driveUnmountFailed:
+            break
+        case .driveForceUnmountFailed:
             break
         }
 

@@ -115,7 +115,13 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
             SDLog("\(message)")
             
             let notification = NSUserNotification()
-            notification.identifier = "recovery-phrase"
+            
+            var userInfo = [String: Any]()
+            
+            userInfo["identifier"] = SDNotificationType.recoveryPhrase.rawValue
+
+            notification.userInfo = userInfo
+            
             notification.informativeText = message
             notification.title = NSLocalizedString("Account issue", comment: "")
             notification.soundName = NSUserNotificationDefaultSoundName
@@ -158,7 +164,13 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
                 let title = NSLocalizedString("SafeDrive keys unavailable", comment: "")
                 
                 let notification = NSUserNotification()
-                notification.identifier = "recovery-phrase"
+                
+                var userInfo = [String: Any]()
+                
+                userInfo["identifier"] = SDNotificationType.recoveryPhrase.rawValue
+
+                notification.userInfo = userInfo
+                
                 notification.informativeText = error.message
                 notification.title = title
                 notification.soundName = NSUserNotificationDefaultSoundName
