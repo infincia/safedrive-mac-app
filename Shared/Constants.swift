@@ -20,6 +20,17 @@ public enum SDKLogLevel: UInt8 {
     case trace = 4
 }
 
+public enum SDNotificationType: String {
+    case driveForceUnmountFailed = "drive-force-unmount-failed"
+    case signInFailed = "sign-in-failed"
+    case driveMountFailed = "drive-mount-failed"
+    case driveUnmountFailed = "drive-unmount-failed"
+    case recoveryPhrase = "recovery-phrase"
+    case openPreferences = "open-preferences"
+    case driveMounted = "drive-mounted"
+    case driveUnmounted = "drive-unmounted"
+}
+
 
 // MARK: RemoteFS operations
 
