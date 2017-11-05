@@ -58,6 +58,8 @@ class MountController: NSObject {
     
     var useCache = true
     
+    var useXPC = false
+
     var currentMountURL: URL {
         let home = NSHomeDirectory()
         let volumesDirectoryURL = URL(fileURLWithPath: home, isDirectory: true)
@@ -360,18 +362,79 @@ class MountController: NSObject {
         let volumeName = self.currentVolumeName
 
         sftpfsQueue.async {
-            if let s = self.sftpfsConnection {
-                let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                    SDLogError("Connecting to sftpfs failed: \(error.localizedDescription)")
-                }) as! SFTPFSXPCProtocol
+            if self.useXPC {
+                if let s = self.sftpfsConnection {
+                    let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                        SDLogError("Connecting to sftpfs failed: \(error.localizedDescription)")
+                    }) as! SFTPFSXPCProtocol
+                    
+                    proxy.create(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port)
+                    
+                    proxy.setUseCache(self.useCache)
+                    
+                    proxy.setIcon(volicon)
+                    
+                    proxy.connect()
+                    
+                    /*
+                     now check for a successful mount. if after 30 seconds there is no volume
+                     mounted, it is a fair bet that an error occurred in the meantime
+                     */
+                    
+                    self.checkMount(at: mountURL, timeout: 30, mounted: {
+                        NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
+                        self.mounting = false
+                    }, notMounted: {
+                        let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
+                        let error = SDError(message: message, kind: .timeout)
+                        SDLog("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
+                        notification.identifier = "drive-mount-failed"
+                        notification.informativeText = error.localizedDescription
+                        notification.title = "SafeDrive mount error"
+                        notification.soundName = NSUserNotificationDefaultSoundName
+                        NSUserNotificationCenter.default.deliver(notification)
+                        
+                        self.mounting = false
+                        
+                        // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
+                        
+                        self.unmount(success: { _ in
+                            //
+                        }, failure: { (_, _) in
+                            //
+                        })
+                    })
+                } else {
+                    self.mounting = false
+                    
+                    let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
+                    let error = SDError(message: message, kind: .serviceDeployment)
+                    SDLogError("\(message)")
+                    
+                    main {
+                        notification.informativeText = error.localizedDescription
+                        notification.identifier = "drive-mount-failed"
+                        notification.title = "SafeDrive mount error"
+                        notification.soundName = NSUserNotificationDefaultSoundName
+                        NSUserNotificationCenter.default.deliver(notification)
+                    }
+                }
+            } else {
+                let newConnection = ManagedSFTPFS.withMountpoint(mountURL.path,
+                                                                 label: volumeName,
+                                                                 user: user,
+                                                                 password: password,
+                                                                 host: host,
+                                                                 port: port as NSNumber)
                 
-                proxy.create(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port)
                 
-                proxy.setUseCache(self.useCache)
+                newConnection.setUseCache(self.useCache)
                 
-                proxy.setIcon(volicon)
+                newConnection.setIcon(volicon)
                 
-                proxy.connect()
+                newConnection.connect()
+                
+                self.sftpfs = newConnection
                 
                 /*
                  now check for a successful mount. if after 30 seconds there is no volume
@@ -401,20 +464,6 @@ class MountController: NSObject {
                         //
                     })
                 })
-            } else {
-                self.mounting = false
-                
-                let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
-                let error = SDError(message: message, kind: .serviceDeployment)
-                SDLogError("\(message)")
-                
-                main {
-                    notification.informativeText = error.localizedDescription
-                    notification.identifier = "drive-mount-failed"
-                    notification.title = "SafeDrive mount error"
-                    notification.soundName = NSUserNotificationDefaultSoundName
-                    NSUserNotificationCenter.default.deliver(notification)
-                }
             }
         }
     }
