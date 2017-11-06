@@ -57,13 +57,13 @@ class SyncController: Equatable {
                 let dateString = dateFormatter.string(from: now)
                 let newName = String(format: "%@ - %@", serverURL.lastPathComponent, dateString)
                 let destinationDir = storageDir.appendingPathComponent(newName, isDirectory: true)
-                SDLog("Moving SyncFolder %@ to %@", serverURL.path, destinationDir.path)
+                SDLogDebug("Moving SyncFolder %@ to %@", serverURL.path, destinationDir.path)
 
                 self.sdk.remoteFSMoveDirectory(path: serverURL.path, newPath: destinationDir.path, completionQueue: DispatchQueue.main, success: {
                     successBlock()
                 }, failure: { (error) in
                     let msg = "SSH: failed to move path: \(serverURL.path). \(error.localizedDescription)"
-                    SDLog(msg)
+                    SDLogError(msg)
                     let error = SDError(message: msg, kind: .sftpOperationFailure)
                     failureBlock(error)
                 })
@@ -72,7 +72,7 @@ class SyncController: Equatable {
                     successBlock()
                 }, failure: { (error) in
                     let msg = "SSH: failed to create path: \(serverURL.path). \(error.localizedDescription)"
-                    SDLog(msg)
+                    SDLogError(msg)
                     let error = SDError(message: msg, kind: .sftpOperationFailure)
                     failureBlock(error)
                 })
@@ -81,7 +81,7 @@ class SyncController: Equatable {
                     successBlock()
                 }, failure: { (error) in
                     let msg = "SSH: failed to remove directory: \(serverURL.path). \(error.localizedDescription)"
-                    SDLog(msg)
+                    SDLogError(msg)
                     let error = SDError(message: msg, kind: .sftpOperationFailure)
                     failureBlock(error)
                 })
@@ -90,7 +90,7 @@ class SyncController: Equatable {
                     successBlock()
                 }, failure: { (error) in
                     let msg = "SSH: failed to remove path: \(serverURL.path). \(error.localizedDescription)"
-                    SDLog(msg)
+                    SDLogError(msg)
                     let error = SDError(message: msg, kind: .sftpOperationFailure)
                     failureBlock(error)
                 })
@@ -109,7 +109,7 @@ class SyncController: Equatable {
                 SafeDriveSDK.sharedSDK.cancelSyncTask(sessionName: self.uuid, completionQueue: DispatchQueue.main, success: { 
                     completion()
                 }, failure: { (error) in
-                    SDLog("unable to stop sync task for \(self.uuid): \(error)")
+                    SDLogError("unable to stop sync task for \(self.uuid): \(error)")
                 })
             } else {
                 // unencrypted sync has to stop the subprocess
@@ -527,7 +527,7 @@ class SyncController: Equatable {
                  
                  */
                 // failureBlock(localURL, mountError);
-                SDLog("Rsync: \(errorString)")
+                SDLogError("Rsync: \(errorString)")
                 return
             }
             if let e = error {
@@ -535,7 +535,7 @@ class SyncController: Equatable {
                     self.syncFailure = true
                     failureBlock(self.localURL, e)
                 }
-                SDLog("Rsync: \(e), \(e.localizedDescription)")
+                SDLogError("Rsync: \(e), \(e.localizedDescription)")
             }
         }
         self.syncTask.standardError = errorPipe

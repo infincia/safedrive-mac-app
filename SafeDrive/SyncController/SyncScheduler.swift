@@ -82,7 +82,7 @@ class SyncScheduler {
     
     func syncSchedulerLoop() throws {
 
-        SDLog("Sync scheduler running")
+        SDLogInfo("Sync scheduler running")
         
         while self.running {
             guard let uniqueClientID = self.uniqueClientID else {
@@ -222,14 +222,14 @@ class SyncScheduler {
     
     fileprivate func sync(_ syncEvent: SyncEvent) {
         background {
-            SDLog("Queued sync job \(syncEvent)")
+            SDLogInfo("Queued sync job \(syncEvent)")
 
             guard let _ = self.email,
                   let localPassword = self.password,
                   let localInternalUserName = self.internalUserName,
                   let localPort = self.remotePort,
                   let localHost = self.remoteHost else {
-                SDLog("credentials unavailable, cancelling sync")
+                SDLogWarn("credentials unavailable, cancelling sync")
                 return
             }
             
@@ -258,7 +258,7 @@ class SyncScheduler {
             
             
             guard let task = tempTask else {
-                SDLog("no sync task available")
+                SDLogWarn("no sync task available")
                 return
             }
             
@@ -269,14 +269,14 @@ class SyncScheduler {
             guard let folder = self.folders.first(where: { (folder) -> Bool in
                 return folder.id == folderID
             }) else {
-                SDLog("failed to get sync folder from list")
+                SDLogWarn("failed to get sync folder from list")
                 return
             }
             
             let localFolder = URL(fileURLWithPath: folder.path, isDirectory: true)
             
             if task.syncing {
-                SDLog("Sync for \(folder.name) already in progress, cancelling")
+                SDLogInfo("Sync for \(folder.name) already in progress, cancelling")
                 //NSError *error = [NSError errorWithDomain:SDErrorUIDomain code:SDSSHErrorSyncAlreadyRunning userInfo:@{NSLocalizedDescriptionKey: @"Sync already in progress"}];
                 return
             }
@@ -285,7 +285,7 @@ class SyncScheduler {
             if folder.encrypted {
                 if isRestore {
                     guard let session = syncEvent.session else {
-                        SDLog("failed to get sync session from list")
+                        SDLogWarn("failed to get sync session from list")
                         return
                     }
                     
@@ -371,7 +371,7 @@ class SyncScheduler {
                 }
                 
             }, success: { (_: URL) -> Void in
-                SDLog("Sync finished for \(syncController.folderName)")
+                SDLogInfo("Sync finished for \(syncController.folderName)")
                 
                 let duration = NSDate().timeIntervalSince(syncDate)
                 
@@ -394,7 +394,7 @@ class SyncScheduler {
                 
             }, failure: { (_: URL, error: Error) -> Void in
                 SDErrorHandlerReport(error)
-                SDLog("Sync failed for \(syncController.folderName): \(error.localizedDescription)")
+                SDLogInfo("Sync failed for \(syncController.folderName): \(error.localizedDescription)")
 
                 let duration = NSDate().timeIntervalSince(syncDate)
 
@@ -427,7 +427,7 @@ extension SyncScheduler: SDAccountProtocol {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
         
         guard let accountStatus = notification.object as? SDKAccountStatus else {
-            SDLog("API contract invalid: didSignIn in SyncScheduler")
+            SDLogError("API contract invalid: didSignIn in SyncScheduler")
             return
         }
         
@@ -460,7 +460,7 @@ extension SyncScheduler: SDAccountProtocol {
         assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
 
         guard let accountStatus = notification.object as? SDKAccountStatus else {
-            SDLog("API contract invalid: didReceiveAccountStatus in SyncScheduler")
+            SDLogError("API contract invalid: didReceiveAccountStatus in SyncScheduler")
             return
         }
         self.internalUserName = accountStatus.userName
@@ -472,7 +472,7 @@ extension SyncScheduler: SDAccountProtocol {
         assert(Thread.current == Thread.main, "didReceiveAccountDetails called on background thread")
 
         guard let _ = notification.object as? SDKAccountDetails else {
-            SDLog("API contract invalid: didReceiveAccountDetails in SyncScheduler")
+            SDLogError("API contract invalid: didReceiveAccountDetails in SyncScheduler")
             return
         }
     }
@@ -484,7 +484,7 @@ extension SyncScheduler: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
 
         guard let uniqueClientID = notification.object as? String else {
-            SDLog("API contract invalid: applicationDidConfigureClient in SyncScheduler")
+            SDLogError("API contract invalid: applicationDidConfigureClient in SyncScheduler")
             
             return
         }
@@ -496,7 +496,7 @@ extension SyncScheduler: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
 
         guard let currentUser = notification.object as? User else {
-            SDLog("API contract invalid: applicationDidConfigureUser in SyncScheduler")
+            SDLogError("API contract invalid: applicationDidConfigureUser in SyncScheduler")
             
             return
         }

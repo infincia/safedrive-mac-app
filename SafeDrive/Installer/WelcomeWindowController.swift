@@ -95,7 +95,7 @@ class WelcomeWindowController: NSWindowController {
     func setWelcomeState(_ state: WelcomeState) {
         assert(Thread.current == Thread.main, "NOT MAIN THREAD")
         self.state = state
-        SDLog("welcome state changed: \(state)")
+        SDLogDebug("welcome state changed: \(state)")
 
         switch state {
         case .welcome:
@@ -153,72 +153,72 @@ class WelcomeWindowController: NSWindowController {
 extension WelcomeWindowController: WelcomeStateDelegate {
 
     func needsWelcome() {
-        SDLog("needs welcome")
+        SDLogInfo("needs welcome")
         self.showWindow(self)
     }
     
     func needsService() {
-        SDLog("needs service")
+        SDLogInfo("needs service")
         self.showWindow(self)
     }
     
     func needsKext() {
-        SDLog("needs kext")
+        SDLogInfo("needs kext")
         self.showWindow(self)
     }
     
     func needsDependencies() {
-        SDLog("needs dependencies")
+        SDLogInfo("needs dependencies")
         self.showWindow(self)
     }
     
     func needsAccount() {
-        SDLog("needs account")
+        SDLogInfo("needs account")
         self.showWindow(self)
     }
     
     func needsClient() {
-        SDLog("needs client configuration")
+        SDLogInfo("needs client configuration")
         self.showWindow(self)
     }
     
     func didWelcomeUser() {
-        SDLog("welcomed user")
+        SDLogInfo("welcomed user")
         self.setWelcomeState(.validateService)
     }
 
     func didValidateService() {
-        SDLog("validated service")
+        SDLogInfo("validated service")
         self.setWelcomeState(.validateDependencies)
     }
     
     func didValidateDependencies() {
-        SDLog("validated dependencies")
+        SDLogInfo("validated dependencies")
         self.setWelcomeState(.validateAccount)
     }
     
     func didValidateAccount(withEmail email: String, password: String, clients: [SDKSoftwareClient]) {
-        SDLog("validated account: \(email)")
+        SDLogInfo("validated account: \(email)")
         self.setWelcomeState(.validateClient(email: email, password: password, clients: clients))
         let user = User(email: email, password: password)
         NotificationCenter.default.post(name: Notification.Name.applicationDidConfigureUser, object: user)
     }
     
     func didValidateClient(withEmail email: String, password: String, name: String, uniqueClientID: String) {
-        SDLog("validated client: \(name) (\(uniqueClientID))")
+        SDLogInfo("validated client: \(name) (\(uniqueClientID))")
         do {
             try SafeDriveSDK.sharedSDK.setKeychainItem(withUser: email, service: UCIDDomain(), secret: uniqueClientID)
             self.setWelcomeState(.ready)
             NotificationCenter.default.post(name: Notification.Name.applicationDidConfigureClient, object: uniqueClientID)
 
         } catch let keychainError as NSError {
-            SDLog("failed to insert unique client ID in keychain: \(keychainError)")
+            SDLogError("failed to insert unique client ID in keychain: \(keychainError)")
             self.setWelcomeState(.failed(error: keychainError, uniqueClientID: uniqueClientID))
         }
     }
     
     func didFail(error: Error, uniqueClientID: String?) {
-        SDLog("install failed: \(error)")
+        SDLogError("install failed: \(error)")
         self.setWelcomeState(.failed(error: error, uniqueClientID: uniqueClientID))
         self.showWindow(self)
     }

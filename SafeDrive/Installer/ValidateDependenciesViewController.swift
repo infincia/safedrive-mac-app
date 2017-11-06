@@ -51,7 +51,7 @@ class ValidateDependenciesViewController: NSViewController {
     func check() {
         self.reset()
         
-        SDLog("checking dependencies")
+        SDLogDebug("checking dependencies")
         self.installer.check()
     }
         

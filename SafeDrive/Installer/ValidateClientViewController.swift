@@ -73,14 +73,14 @@ class ValidateClientViewController: NSViewController {
     func check(email: String, password: String, clients: [SDKSoftwareClient]) {
         self.reset()
         
-        SDLog("checking client")
+        SDLogInfo("checking client")
 
         self.email = email
         self.password = password
         
         self.clients = clients
         self.hasRegisteredClients = NSNumber(value: clients.count)
-        SDLog("have clients: \(self.hasRegisteredClients)")
+        SDLogInfo("have clients: \(self.hasRegisteredClients)")
         self.clientList.reloadData()
         
         background {
@@ -91,7 +91,7 @@ class ValidateClientViewController: NSViewController {
             // swiftlint:enable force_unwrapping
             
             if let uniqueClientID = try? SafeDriveSDK.sharedSDK.getKeychainItem(withUser: email, service: UCIDDomain()) {
-                SDLog("valid client found, continuing")
+                SDLogInfo("valid client found, continuing")
 
                 DispatchQueue.main.async {
                     self.delegate?.didValidateClient(withEmail: email, password: password, name: machineName, uniqueClientID: uniqueClientID)
@@ -108,12 +108,12 @@ class ValidateClientViewController: NSViewController {
                 }
                 Thread.sleep(forTimeInterval: 1)
             }
-            SDLog("valid client found, continuing")
+            SDLogInfo("valid client found, continuing")
         }
     }
     
     @IBAction func newClient(_ sender: AnyObject?) {
-        SDLog("setting up client as new")
+        SDLogInfo("setting up client as new")
         guard let email = self.email,
               let password = self.password else {
                 let error = SDError(message: "API contract invalid", kind: .apiContractInvalid)
@@ -133,7 +133,7 @@ class ValidateClientViewController: NSViewController {
     }
     
     @IBAction func replaceClient(_ sender: AnyObject?) {
-        SDLog("replacing client")
+        SDLogInfo("replacing client")
 
         guard let clients = self.clients else {
             return
@@ -147,7 +147,7 @@ class ValidateClientViewController: NSViewController {
         
         let client = clients[sindex]
         
-        SDLog("client \(client.uniqueClientID) being replaced")
+        SDLogInfo("client \(client.uniqueClientID) being replaced")
         
         guard let email = self.email,
               let password = self.password else {

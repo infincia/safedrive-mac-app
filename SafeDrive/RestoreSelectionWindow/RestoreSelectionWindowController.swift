@@ -62,7 +62,7 @@ extension RestoreSelectionWindowController: NSOpenSavePanelDelegate {
         // check if the candidate sync path is actually writable and readable
         if !fileManager.isWritableFile(atPath: url.path) {
             let message = NSLocalizedString("Cannot select this directory, read/write permission denied", comment: "String informing the user that they do not have permission to read/write to the selected directory")
-            SDLog(message)
+            SDLogWarn(message)
             let error = SDError(message: message, kind: .filePermissionDenied)
             throw error
         }
@@ -72,7 +72,7 @@ extension RestoreSelectionWindowController: NSOpenSavePanelDelegate {
         
         guard sessionIndex != -1, let sessionView = restoreSelectionList.view(atColumn: 0, row: sessionIndex, makeIfNecessary: false) as? RestoreSelectionTableCellView else {
             let message = NSLocalizedString("Please select a session to restore so that SafeDrive can ensure there is enough free space available", comment: "String informing the user that a session must be selected so that we can check for available space")
-            SDLog(message)
+            SDLogWarn(message)
             let error = SDError(message: message, kind: .folderConflict)
             throw error
         }
@@ -83,7 +83,7 @@ extension RestoreSelectionWindowController: NSOpenSavePanelDelegate {
             
             if sessionView.session.size > freeSpace {
                 let message = NSLocalizedString("The selected location does not have enough free space to restore the session", comment: "String informing the user that the restore folder location doesn't have enough free space")
-                SDLog(message)
+                SDLogWarn(message)
                 let error = SDError(message: message, kind: .folderConflict)
                 throw error
             }
@@ -132,7 +132,7 @@ class RestoreSelectionWindowController: NSWindowController {
         if let url = folder.url {
             self.destination.url = url
         } else {
-            SDLog("failed to set default destination url")
+            SDLogWarn("failed to set default destination url")
         }
         
         self.readSyncSessions(self)
@@ -150,7 +150,7 @@ class RestoreSelectionWindowController: NSWindowController {
     
     @IBAction func cancel(sender: AnyObject?) {
         guard let window = self.window else {
-            SDLog("API contract invalid: window not found in RestoreSelectionWindowController")
+            SDLogError("API contract invalid: window not found in RestoreSelectionWindowController")
             return
         }
         if let parent = window.sheetParent {
@@ -196,13 +196,13 @@ class RestoreSelectionWindowController: NSWindowController {
         
         let sessionIndex = restoreSelectionList.selectedRow
         guard let v = restoreSelectionList.view(atColumn: 0, row: sessionIndex, makeIfNecessary: false) as? RestoreSelectionTableCellView else {
-            SDLog("failed to get session view")
+            SDLogError("failed to get session view")
 
             return
         }
         
         guard let destination = self.destination.url else {
-            SDLog("no destination selected")
+            SDLogError("no destination selected")
             return
         }
         
@@ -284,7 +284,7 @@ class RestoreSelectionWindowController: NSWindowController {
         
         let sessionIndex = restoreSelectionList.selectedRow
         guard let v = restoreSelectionList.view(atColumn: 0, row: sessionIndex, makeIfNecessary: false) as? RestoreSelectionTableCellView else {
-            SDLog("failed to get session view")
+            SDLogError("failed to get session view")
 
             return
         }

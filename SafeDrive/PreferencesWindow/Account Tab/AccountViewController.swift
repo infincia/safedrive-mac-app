@@ -73,7 +73,7 @@ extension AccountViewController: SDAccountProtocol {
         
         guard let accountStatus = notification.object as? SDKAccountStatus else {
                 self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment: "")
-                SDLog("API contract invalid: didSignIn in PreferencesWindowController")
+                SDLogError("API contract invalid: didSignIn in PreferencesWindowController")
                 return
         }
         self.accountStatusField.stringValue = String(describing: accountStatus.state)
@@ -88,7 +88,7 @@ extension AccountViewController: SDAccountProtocol {
         
         guard let accountStatus = notification.object as? SDKAccountStatus else {
                 self.accountStatusField.stringValue = NSLocalizedString("Unknown", comment: "")
-                SDLog("API contract invalid: didReceiveAccountStatus in PreferencesWindowController")
+                SDLogError("API contract invalid: didReceiveAccountStatus in PreferencesWindowController")
                 return
         }
         self.accountStatusField.stringValue = String(describing: accountStatus.state)
@@ -98,7 +98,7 @@ extension AccountViewController: SDAccountProtocol {
         assert(Thread.current == Thread.main, "didReceiveAccountDetails called on background thread")
         
         guard let accountDetails = notification.object as? SDKAccountDetails else {
-            SDLog("API contract invalid: didReceiveAccountDetails in PreferencesWindowController")
+            SDLogError("API contract invalid: didReceiveAccountDetails in PreferencesWindowController")
             return
         }
         

@@ -105,7 +105,7 @@ class FailedViewController: NSViewController {
 
             self.panelMessage.stringValue = NSLocalizedString("Thank you for your report", comment: "")
         }, failure: { (error) in
-            SDLog("Error submitting report: \(error)")
+            SDLogError("Error submitting report: \(error)")
             let att = NSAttributedString(string: error.localizedDescription)
             self.errorMessage.textStorage?.setAttributedString(att)
             

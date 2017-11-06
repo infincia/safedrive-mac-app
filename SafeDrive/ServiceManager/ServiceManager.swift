@@ -116,7 +116,7 @@ class ServiceManager: NSObject {
 extension ServiceManager: SDSyncEventProtocol {
     func syncEvent(notification: Notification) {
         guard let folderID = notification.object as? UInt64 else {
-            SDLog("API contract invalid: syncEvent in ServiceManager")
+            SDLogError("API contract invalid: syncEvent in ServiceManager")
             return
         }
         
@@ -138,7 +138,7 @@ extension ServiceManager: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
 
         guard let uniqueClientID = notification.object as? String else {
-            SDLog("API contract invalid: applicationDidConfigureClient in ServiceManager")
+            SDLogError("API contract invalid: applicationDidConfigureClient in ServiceManager")
             
             return
         }
@@ -158,7 +158,7 @@ extension ServiceManager: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
 
         guard let user = notification.object as? User else {
-            SDLog("API contract invalid: applicationDidConfigureUser in ServiceManager")
+            SDLogError("API contract invalid: applicationDidConfigureUser in ServiceManager")
             
             return
         }
@@ -276,19 +276,19 @@ extension ServiceManager: NSXPCListenerDelegate {
             if !self.enableLoginItem(false) {
                 SDLogError("failed to unload login item")
             } else {
-                SDLog("unloaded login item")
+                SDLogInfo("unloaded login item")
             }
             
             if !self.enableLoginItem(true) {
                 SDLogError("failed to load login item")
             } else {
-                SDLog("loaded login item")
+                SDLogInfo("loaded login item")
             }
         }
     }
     
     func createServiceConnection() -> NSXPCConnection {
-        SDLog("creating connection to service")
+        SDLogDebug("creating connection to service")
 
         let newConnection = NSXPCConnection(machServiceName: ServiceManager.serviceName, options: .privileged)
         
@@ -297,7 +297,7 @@ extension ServiceManager: NSXPCListenerDelegate {
         newConnection.remoteObjectInterface = serviceInterface
         
         newConnection.interruptionHandler = { [weak self] in
-            SDLog("service connection interrupted")
+            SDLogWarn("service connection interrupted")
             
             DispatchQueue.main.async {
                 //newConnection = nil
@@ -305,7 +305,7 @@ extension ServiceManager: NSXPCListenerDelegate {
         }
         
         newConnection.invalidationHandler = { [weak self] in
-            SDLog("service connection invalidated")
+            SDLogWarn("service connection invalidated")
 
             DispatchQueue.main.async {
                 //newConnection = nil
@@ -316,7 +316,7 @@ extension ServiceManager: NSXPCListenerDelegate {
     }
     
     func updateService() {
-        SDLog("Updating service")
+        SDLogWarn("Updating service")
 
         if isProduction() {
             // ask the service to stop any important operations first.
@@ -351,7 +351,7 @@ extension ServiceManager: NSXPCListenerDelegate {
                 let blessError = SDError(message: "\(error)", kind: .serviceDeployment)
                 ServiceManager.delegate.didFail(error: blessError)
             } else {
-                SDLog("\(ServiceManager.serviceName) installed")
+                SDLogInfo("\(ServiceManager.serviceName) installed")
                 background {
                     ServiceManager.delegate.didValidateService()
                 }
@@ -374,7 +374,7 @@ extension ServiceManager: NSXPCListenerDelegate {
                         }) as! IPCProtocol
                         
                         proxy.setAppEndpoint(self.appListener.endpoint, reply: { (state) in
-                            SDLog("App endpoint response: \(state)")
+                            SDLogDebug("App endpoint response: \(state)")
                         })
                     }
                     Thread.sleep(forTimeInterval: 1)
@@ -398,7 +398,7 @@ extension ServiceManager: NSXPCListenerDelegate {
         
         proxy.updateSDFS(sdfs.path) { (state, status) in
             if state {
-                SDLog("SDFS updated, new version: \(status)")
+                SDLogInfo("SDFS updated, new version: \(status)")
                 ServiceManager.delegate.didValidateSDFS()
             } else {
                 SDLogError("Cannot update SDFS, installation failed: \(status)")
@@ -413,7 +413,7 @@ extension ServiceManager: NSXPCListenerDelegate {
         
         background {
             outer: while !self.loadedKext {
-                SDLog("SDFS kext loading attempt")
+                SDLogInfo("SDFS kext loading attempt")
 
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                     SDLogError("Cannot load SDFS kext: \(error.localizedDescription)")
@@ -429,7 +429,7 @@ extension ServiceManager: NSXPCListenerDelegate {
                 
                 proxy.loadKext { (state, status) in
                     if state {
-                        SDLog("SDFS kext loaded")
+                        SDLogInfo("SDFS kext loaded")
                         main {
                             ServiceManager.delegate.didValidateKext()
                         }
@@ -469,7 +469,7 @@ extension ServiceManager: NSXPCListenerDelegate {
                 return
             }
             if Semver.gte(currentServiceVersion, appVersion) {
-                SDLog("Service up to date")
+                SDLogInfo("Service up to date")
                 ServiceManager.delegate.didValidateService()
             } else {
                 SDLogWarn("Service update needed")
@@ -495,7 +495,7 @@ extension ServiceManager: NSXPCListenerDelegate {
         
         proxy.forceUnmountSafeDrive(path) { (success, status) in
             if success {
-                SDLog("Force unmount succeeded")
+                SDLogInfo("Force unmount succeeded")
                 
                 main {
                     successBlock()
