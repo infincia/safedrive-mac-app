@@ -43,21 +43,10 @@ func SDErrorHandlerSetUniqueClientId(_ uniqueClientId: String?) {
     currentUniqueClientId = ucid
 }
 
-func SDLog(_ line: String, _ arguments: CVarArg...) {
-    return withVaList(arguments) { argumentPointer in
-        if !isProduction() {
-            CLSNSLogv(line, argumentPointer)
-        } else {
-            CLSLogv(line, argumentPointer)
-        }
-    }
-}
-
 func SDLogError(_ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) { _ in
         let st = String(format: line, arguments: arguments)
         SafeDriveSDK.sharedSDK.log(st, .error)
-        SDLog(line, arguments)
     }
 }
 
@@ -65,7 +54,6 @@ func SDLogWarn(_ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) { _ in
         let st = String(format: line, arguments: arguments)
         SafeDriveSDK.sharedSDK.log(st, .warn)
-        SDLog(line, arguments)
     }
 }
 
@@ -73,7 +61,6 @@ func SDLogInfo(_ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) { _ in
         let st = String(format: line, arguments: arguments)
         SafeDriveSDK.sharedSDK.log(st, .info)
-        SDLog(line, arguments)
     }
 }
 
@@ -81,7 +68,6 @@ func SDLogDebug(_ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) { _ in
         let st = String(format: line, arguments: arguments)
         SafeDriveSDK.sharedSDK.log(st, .debug)
-        SDLog(line, arguments)
     }
 }
 
@@ -89,7 +75,6 @@ func SDLogTrace(_ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) { _ in
         let st = String(format: line, arguments: arguments)
         SafeDriveSDK.sharedSDK.log(st, .trace)
-        SDLog(line, arguments)
     }
 }
 
