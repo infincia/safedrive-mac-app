@@ -11,7 +11,7 @@ post_install do |installer|
 end
 
 def shared_pods
-    pod 'Fabric', '~>  1.6.13'
+    pod 'Fabric', '~>  1.7.2'
     pod 'Crashlytics', '~>  3.9.3'
 end
 
