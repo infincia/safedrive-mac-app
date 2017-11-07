@@ -12,7 +12,7 @@ end
 
 def shared_pods
     pod 'Fabric', '~>  1.6.13'
-    pod 'Crashlytics', '~>  3.8.6'
+    pod 'Crashlytics', '~>  3.9.3'
 end
 
 target 'SafeDrive' do
