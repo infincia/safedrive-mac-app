@@ -24,7 +24,7 @@ target 'SafeDrive' do
     pod 'Sparkle', '~> 1.18.1'
     pod 'STPrivilegedTask', :git => 'https://github.com/sveinbjornt/STPrivilegedTask.git', :tag => '1.0.6'
     pod 'TSMarkdownParser', '~> 2.1.2'
-    pod 'FontAwesomeIconFactory', '~> 2.1.1'
+    pod 'FontAwesomeIconFactory', '~> 3.0.0'
     pod 'PromiseKit', :git => 'https://github.com/infincia/PromiseKit.git', :branch => 'infincia', :commit => 'ecf2619ccc431ea9b55f9d4ffcbc979db47b19ec'
     
     target 'SafeDriveTests' do
@@ -35,7 +35,7 @@ end
 
 target 'SafeDriveFinder' do
     use_frameworks!
-    pod 'FontAwesomeIconFactory', '~> 2.1.1'
+    pod 'FontAwesomeIconFactory', '~> 3.0.0'
     pod 'PromiseKit', :git => 'https://github.com/infincia/PromiseKit.git', :branch => 'infincia', :commit => 'ecf2619ccc431ea9b55f9d4ffcbc979db47b19ec'
 end
 
