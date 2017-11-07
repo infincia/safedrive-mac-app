@@ -5,6 +5,7 @@
 
 
 import Crashlytics
+import sftpfs
 
 
 var errors = [[AnyHashable: Any]]()
@@ -20,6 +21,30 @@ let reporterInterval: TimeInterval = 60
 // MARK: Public API
 
 func SDErrorHandlerInitialize() {
+    set_sftpfs_logger { (clog, cmod, level) in
+        guard let cmessage = clog,
+              let cmodule = cmod,
+            let logLevel = SDKLogLevel(rawValue: UInt8(level)) else {
+            return
+        }
+        
+        let message = String(cString: cmessage)
+        let module = String(cString: cmodule)
+        
+        switch logLevel {
+        case .error:
+            SDLogError("%@", message)
+        case .warn:
+            SDLogWarn("%@", message)
+        case .info:
+            SDLogInfo("%@", message)
+        case .debug:
+            SDLogDebug("%@", message)
+        case .trace:
+            SDLogTrace("%@", message)
+        }
+    }
+    
     let localURL = storageURL()
     
     /*
