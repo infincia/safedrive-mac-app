@@ -16,11 +16,11 @@ class SyncManagerTableCellView: NSTableCellView {
         super.init(frame: frameRect)
     }
     
-    @IBOutlet var lockButton: NIKFontAwesomeButton!
+    @IBOutlet var lockButton: FontAwesomeButton!
     @IBOutlet var addButton: NSButton!
     @IBOutlet var removeButton: NSButton!
-    @IBOutlet var syncNowButton: NIKFontAwesomeButton!
-    @IBOutlet var restoreNowButton: NIKFontAwesomeButton!
+    @IBOutlet var syncNowButton: FontAwesomeButton!
+    @IBOutlet var restoreNowButton: FontAwesomeButton!
     @IBOutlet var syncStatus: NSProgressIndicator!
     var representedSyncItem: AnyObject?
 }

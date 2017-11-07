@@ -18,7 +18,7 @@ class RestoreSelectionTableCellView: NSTableCellView {
     
     @IBOutlet var date: NSTextField!
     @IBOutlet var size: NSTextField!
-    @IBOutlet var folder: NIKFontAwesomeImageView!
+    @IBOutlet var folder: FontAwesomeImageView!
 
     var session: SDKSyncSession!
 }
