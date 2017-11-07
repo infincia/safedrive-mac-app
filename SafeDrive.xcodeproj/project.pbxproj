@@ -60,6 +60,8 @@
 		AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */; };
 		AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */; };
 		AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */; };
+		AA56DA2E1FB0FAB600C89743 /* ActivityNotifierWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA56DA2C1FB0FAB600C89743 /* ActivityNotifierWindowController.swift */; };
+		AA56DA2F1FB0FAB600C89743 /* ActivityNotifierWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA56DA2D1FB0FAB600C89743 /* ActivityNotifierWindow.xib */; };
 		AA58D2CC1E82D9F0002D56E0 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2CA1E82D9F0002D56E0 /* GeneralViewController.swift */; };
 		AA58D2CD1E82D9F0002D56E0 /* GeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA58D2CB1E82D9F0002D56E0 /* GeneralView.xib */; };
 		AA58D2D01E82DB86002D56E0 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA58D2CE1E82DB86002D56E0 /* AccountViewController.swift */; };
@@ -405,6 +407,8 @@
 		AA543C7C1BFC67480008FB8B /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Light.ttf"; sourceTree = "<group>"; };
 		AA543C7D1BFC67480008FB8B /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		AA55A2FB1CB8C46600E47DF6 /* AppXPCDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCDelegate.swift; path = SafeDrive/XPCHandlers/AppXPCDelegate.swift; sourceTree = SOURCE_ROOT; };
+		AA56DA2C1FB0FAB600C89743 /* ActivityNotifierWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNotifierWindowController.swift; sourceTree = "<group>"; };
+		AA56DA2D1FB0FAB600C89743 /* ActivityNotifierWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityNotifierWindow.xib; sourceTree = "<group>"; };
 		AA58D2CA1E82D9F0002D56E0 /* GeneralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralViewController.swift; path = "General Tab/GeneralViewController.swift"; sourceTree = "<group>"; };
 		AA58D2CB1E82D9F0002D56E0 /* GeneralView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeneralView.xib; path = "General Tab/GeneralView.xib"; sourceTree = "<group>"; };
 		AA58D2CE1E82DB86002D56E0 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = "Account Tab/AccountViewController.swift"; sourceTree = "<group>"; };
@@ -676,6 +680,7 @@
 		AA3168151A191B72006CC0EB /* SafeDrive */ = {
 			isa = PBXGroup;
 			children = (
+				AA56DA2B1FB0FA7500C89743 /* Activity Notifier */,
 				AA2A421F1F2315C400CC6010 /* Add Folder Window */,
 				AAD89BCE1E5C194B007D8E82 /* Open File Check */,
 				AAAF1A401BF59446008E7865 /* Account Controller */,
@@ -796,6 +801,15 @@
 				AA6C5BBC1C9125D3001C2869 /* ServiceManager.swift */,
 			);
 			name = ServiceManager;
+			sourceTree = "<group>";
+		};
+		AA56DA2B1FB0FA7500C89743 /* Activity Notifier */ = {
+			isa = PBXGroup;
+			children = (
+				AA56DA2C1FB0FAB600C89743 /* ActivityNotifierWindowController.swift */,
+				AA56DA2D1FB0FAB600C89743 /* ActivityNotifierWindow.xib */,
+			);
+			path = "Activity Notifier";
 			sourceTree = "<group>";
 		};
 		AA58D2C41E82D8D3002D56E0 /* General Tab */ = {
@@ -1341,6 +1355,7 @@
 				AA543C7F1BFC67480008FB8B /* Raleway-Regular.ttf in Resources */,
 				AA58D2DD1E82DC15002D56E0 /* StatusView.xib in Resources */,
 				AA76DC291C879076007B320E /* WelcomeWindow.xib in Resources */,
+				AA56DA2F1FB0FAB600C89743 /* ActivityNotifierWindow.xib in Resources */,
 				AACDAD911E97548500F5B351 /* ssh_config in Resources */,
 				AA543C7E1BFC67480008FB8B /* Raleway-Light.ttf in Resources */,
 				AA7CD61A1E68A21100EE7FAD /* ValidateDependenciesView.xib in Resources */,
@@ -1618,6 +1633,7 @@
 				AA4F8FCA1E6A429100BB068A /* SoftwareClientTableCellView.swift in Sources */,
 				AA1851601F75D11E00CC23C8 /* ValidateServiceViewController.swift in Sources */,
 				AABF04AC1E6CC46E0084DF81 /* ReadyViewController.swift in Sources */,
+				AA56DA2E1FB0FAB600C89743 /* ActivityNotifierWindowController.swift in Sources */,
 				AA55A2FC1CB8C46600E47DF6 /* AppXPCDelegate.swift in Sources */,
 				AA4F8FC71E6A2D5700BB068A /* WelcomeViewController.swift in Sources */,
 				AAF946241C824DB700B972C3 /* SyncManagerTableCellView.swift in Sources */,
