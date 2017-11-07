@@ -225,14 +225,14 @@ class MountController: NSObject {
             
             while Date().timeIntervalSince(start_time) < timeout {
                 if self.checkMount(at: url) {
-                    DispatchQueue.main.async {
+                    main {
                         mountedBlock()
                     }
                     return
                 }
                 Thread.sleep(forTimeInterval: 1)
             }
-            DispatchQueue.main.async {
+            main {
                 notMountedBlock()
             }
         }
@@ -263,12 +263,12 @@ class MountController: NSObject {
                 self.mounted = self.checkMount(at: self.currentMountURL)
                 
                 if self.mounted {
-                    DispatchQueue.main.async {
+                    main {
                         NotificationCenter.default.post(name: Notification.Name.mountDetails, object: self.mountDetails)
                         NotificationCenter.default.post(name: Notification.Name.mounted, object: nil)
                     }
                 } else {
-                    DispatchQueue.main.async {
+                    main {
                         NotificationCenter.default.post(name: Notification.Name.mountDetails, object: nil)
                         NotificationCenter.default.post(name: Notification.Name.unmounted, object: nil)
                     }
@@ -522,7 +522,7 @@ class MountController: NSObject {
                         if processes.count <= 0 {
                             return
                         }
-                        DispatchQueue.main.async {
+                        main {
                             NSApp.activate(ignoringOtherApps: true)
                             
                             self.openFileWarning.check(url: url)
