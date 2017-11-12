@@ -26,7 +26,8 @@ class SFTPFSDelegate: NSObject, NSXPCListenerDelegate, SFTPFSXPCProtocol {
                                                    user: user,
                                                    password: password,
                                                    host: host,
-                                                   port: port as NSNumber)
+                                                   port: port as NSNumber,
+                                                   xpc: true)
     }
     
     func connect() {
