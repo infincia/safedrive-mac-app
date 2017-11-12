@@ -66,7 +66,7 @@ extension AppDelegate: NSApplicationDelegate {
         
         let currentOS = "macOS \(currentOSVersion())"
         
-        let logLevel = SDKLogLevel.debug
+        let logLevel = SDKLogLevel.info
         
         // swiftlint:disable force_try
         try! self.sdk.setUp(client_version: CFBundleShortVersionString, operating_system: currentOS, language_code: languageCode, config: config, local_storage_path: groupURL.path, log_level: logLevel)
