@@ -443,7 +443,8 @@ class MountController: NSObject {
                                                                  user: user,
                                                                  password: password,
                                                                  host: host,
-                                                                 port: port as NSNumber)
+                                                                 port: port as NSNumber,
+                                                                 xpc: false)
                 
                 
                 newConnection.setUseCache(self.useCache)
