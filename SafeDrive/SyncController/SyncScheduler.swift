@@ -424,7 +424,7 @@ class SyncScheduler {
 extension SyncScheduler: SDAccountProtocol {
     
     func didSignIn(notification: Foundation.Notification) {
-        assert(Thread.current == Thread.main, "didSignIn called on background thread")
+        assert(Thread.current == Thread.main, "didSignIn() called on background thread")
         
         guard let accountStatus = notification.object as? SDKAccountStatus else {
             SDLogError("SyncScheduler", "API contract invalid: didSignIn()")
@@ -437,7 +437,7 @@ extension SyncScheduler: SDAccountProtocol {
     }
     
     func didSignOut(notification: Foundation.Notification) {
-        assert(Thread.current == Thread.main, "didSignOut called on background thread")
+        assert(Thread.current == Thread.main, "didSignOut() called on background thread")
         syncControllerQueue.sync {
             for syncController in self.syncControllers {
                 syncController.stopSyncTask {
