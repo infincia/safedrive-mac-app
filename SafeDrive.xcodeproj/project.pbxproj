@@ -168,7 +168,6 @@
 		AAC722B81F25D08E00C8EC3D /* io.safedrive.SafeDrive.cli in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656C1F25B21D00B7D8EF /* io.safedrive.SafeDrive.cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAC722B91F25D08E00C8EC3D /* io.safedrive.SafeDrive.rsync in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656D1F25B21D00B7D8EF /* io.safedrive.SafeDrive.rsync */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAC722BA1F25D08E00C8EC3D /* io.safedrive.SafeDrive.ssh in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656E1F25B21D00B7D8EF /* io.safedrive.SafeDrive.ssh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AAC722BB1F25D08E00C8EC3D /* io.safedrive.SafeDrive.sshfs in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA11656F1F25B21D00B7D8EF /* io.safedrive.SafeDrive.sshfs */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAC9448A1F730731009F8717 /* RestoreSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAC944871F730730009F8717 /* RestoreSelectionWindow.xib */; };
 		AAC9448B1F730731009F8717 /* RestoreSelectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC944881F730730009F8717 /* RestoreSelectionWindowController.swift */; };
 		AAC9448C1F730731009F8717 /* RestoreSelectionTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC944891F730730009F8717 /* RestoreSelectionTableCellView.swift */; };
@@ -276,7 +275,6 @@
 				AAC722B81F25D08E00C8EC3D /* io.safedrive.SafeDrive.cli in CopyFiles */,
 				AAC722B91F25D08E00C8EC3D /* io.safedrive.SafeDrive.rsync in CopyFiles */,
 				AAC722BA1F25D08E00C8EC3D /* io.safedrive.SafeDrive.ssh in CopyFiles */,
-				AAC722BB1F25D08E00C8EC3D /* io.safedrive.SafeDrive.sshfs in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
