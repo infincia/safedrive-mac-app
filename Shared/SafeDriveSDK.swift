@@ -613,9 +613,9 @@ public class SafeDriveSDK: NSObject {
 
     }
     
-    public func log(_ message: String, _ level: SDKLogLevel) {
+    public func log(_ module: String, _ message: String, _ level: SDKLogLevel) {
         background {
-            sddk_log(message, SDDKLogLevel(rawValue: UInt32(level.rawValue)))
+            sddk_log(module, message, SDDKLogLevel(rawValue: UInt32(level.rawValue)))
         }
     }
     
