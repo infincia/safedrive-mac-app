@@ -161,7 +161,7 @@ class OpenFileWarningWindowController: NSWindowController {
                 Thread.sleep(forTimeInterval: 1)
 
                 if self.shouldCheckRunning {
-                    SDLogDebug("checking for running processes")
+                    SDLogDebug("OpenFileWarningWindowController", "checking for running processes")
 
                     let runningProcesses = self.openFileWarningDelegate.runningProcesses()
                     let blockingProcesses = self.openFileWarningDelegate.blockingProcesses(self.url)
@@ -170,14 +170,14 @@ class OpenFileWarningWindowController: NSWindowController {
                     let blockingSet = Set<RunningProcess>(blockingProcesses)
                     let processesToClose = Array(blockingSet.intersection(runningSet))
 
-                    SDLogDebug("volume \(self.url.lastPathComponent) has \(blockingProcesses.count) blocking processes")
+                    SDLogDebug("OpenFileWarningWindowController", "volume \(self.url.lastPathComponent) has \(blockingProcesses.count) blocking processes")
                     
-                    SDLogDebug("volume \(self.url.lastPathComponent) has \(processesToClose.count) processes with open files")
+                    SDLogDebug("OpenFileWarningWindowController", "volume \(self.url.lastPathComponent) has \(processesToClose.count) processes with open files")
                     DispatchQueue.main.sync {
                         self.spinner.stopAnimation(self)
 
                         if processesToClose.count == 0 {
-                            SDLogDebug("volume \(self.url.path) is safe do disconnect now")
+                            SDLogDebug("OpenFileWarningWindowController", "volume \(self.url.path) is safe do disconnect now")
                             self.openFileWarningDelegate?.tryAgain()
                             self.shouldCheckRunning = false
                             self.close(nil)

@@ -15,7 +15,7 @@ class OpenFileCheck: NSObject {
     }
     
     public func check(volume: URL) -> [RunningProcess] {
-        SDLogDebug("check(): looking for open files on volume: \(volume)")
+        SDLogDebug("OpenFileCheck", "check(): looking for open files on volume: \(volume)")
         
         
         let task = Process()
@@ -56,7 +56,7 @@ class OpenFileCheck: NSObject {
         // swiftlint:enable force_unwrapping
 
         
-        SDLogDebug("check(): lsof: \(outputString)")
+        SDLogDebug("OpenFileCheck", "check(): lsof: \(outputString)")
         
         var processes = [RunningProcess]()
         
@@ -68,7 +68,7 @@ class OpenFileCheck: NSObject {
             
             let result: [NSTextCheckingResult] = regex.matches(in: outputString, range: NSRange(location: 0, length: s.length))
             
-            SDLogDebug("check(): \(result.count) matches found")
+            SDLogDebug("OpenFileCheck", "check(): \(result.count) matches found")
             
             for res in result {
                 
@@ -99,11 +99,11 @@ class OpenFileCheck: NSObject {
                 }
                 
                 processes.append(p)
-                SDLogDebug("check(): found process: <pid:\(pid), command:\(command)>")
+                SDLogDebug("OpenFileCheck", "check(): found process: <pid:\(pid), command:\(command)>")
             }
         }
         
-        SDLogDebug("check(): returning \(processes.count) processes still open")
+        SDLogDebug("OpenFileCheck", "check(): returning \(processes.count) processes still open")
         
         return processes
     }

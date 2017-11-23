@@ -40,7 +40,7 @@ class RunningProcessCheck: NSObject {
     
     public func close(pid: Int) {
         
-        SDLogDebug("Closing non-user application: \(pid)")
+        SDLogDebug("RunningProcessCheck", "Closing non-user application: \(pid)")
         
         let task = Process()
         
@@ -64,7 +64,7 @@ class RunningProcessCheck: NSObject {
     
     public func runningProcesses() -> [RunningProcess] {
         
-        SDLogDebug("runningProcesses(): looking for running processes")
+        SDLogDebug("RunningProcessCheck", "runningProcesses(): looking for running processes")
         
         let task = Process()
         
@@ -102,7 +102,7 @@ class RunningProcessCheck: NSObject {
         var processes = [RunningProcess]()
         
         //    28103        ttys000           0:02.46           -zsh
-        SDLogDebug("runningProcesses(): ps: \(outputString)")
+        SDLogDebug("RunningProcessCheck", "runningProcesses(): ps: \(outputString)")
         
         let pattern = "([0-9]+)\\s([0-9A-Za-z]+)\\s\\s\\s\\s([0-9\\:\\.]+)\\s([\\w\\-]+)\\n*"
         
@@ -112,7 +112,7 @@ class RunningProcessCheck: NSObject {
             
             let result: [NSTextCheckingResult] = regex.matches(in: outputString, range: NSRange(location: 0, length: s.length))
             
-            SDLogDebug("runningProcesses(): \(result.count) matches found")
+            SDLogDebug("RunningProcessCheck", "runningProcesses(): \(result.count) matches found")
             
             for res in result {
                 if res.numberOfRanges < 5 {
@@ -135,11 +135,11 @@ class RunningProcessCheck: NSObject {
                     }
                 }
                 processes.append(p)
-                SDLogDebug("runningProcesses(): found running process: <pid:\(pid), command:\(command)>")
+                SDLogDebug("RunningProcessCheck", "runningProcesses(): found running process: <pid:\(pid), command:\(command)>")
             }
         }
         
-        SDLogDebug("runningProcesses(): task exited, \(processes.count) processes running")
+        SDLogDebug("RunningProcessCheck", "runningProcesses(): task exited, \(processes.count) processes running")
         
         return processes
     }

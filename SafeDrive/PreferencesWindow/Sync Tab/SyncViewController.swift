@@ -109,7 +109,7 @@ class SyncViewController: NSViewController {
         self.addFolderWindow = AddFolderWindowController(delegate: self)
                 
         guard let w = self.addFolderWindow?.window else {
-            SDLogError("no add folder window available")
+            SDLogError("SyncViewController", "no add folder window available")
             return
         }
         self.delegate.showModalWindow(w) { (_) in
@@ -119,16 +119,16 @@ class SyncViewController: NSViewController {
     
     @IBAction func removeSyncFolder(_ sender: AnyObject) {
         guard let _ = self.uniqueClientID else {
-            SDLogError("ucid unavailable, cancelling remove sync folder")
+            SDLogError("SyncViewController", "ucid unavailable, cancelling remove sync folder")
             return
         }
         guard let _ = self.email else {
-                SDLogError("credentials unavailable, cancelling remove sync folder")
+                SDLogError("SyncViewController", "credentials unavailable, cancelling remove sync folder")
                 return
         }
         let button: NSButton = sender as! NSButton
         let uniqueID: UInt64 = UInt64(button.tag)
-        SDLogInfo("Deleting sync folder ID: %lu", uniqueID)
+        SDLogInfo("SyncViewController", "Deleting sync folder ID: %lu", uniqueID)
         
         guard let folder = folders.first(where: { $0.id == uniqueID }),
             let folderIndex = folders.index(of: folder) else {
@@ -348,7 +348,7 @@ class SyncViewController: NSViewController {
                     self.restoreSelection = RestoreSelectionWindowController(delegate: self, uniqueClientID: uniqueClientID, folder: folder)
                     
                     guard let w = self.restoreSelection?.window else {
-                        SDLogError("no recovery phrase window available")
+                        SDLogError("SyncViewController", "no recovery phrase window available")
                         return
                     }
                     self.delegate.showModalWindow(w) { (_) in
@@ -715,7 +715,7 @@ extension SyncViewController: SDAccountProtocol {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
         
         guard let accountStatus = notification.object as? SDKAccountStatus else {
-            SDLogError("API contract invalid: didSignIn in MountController")
+            SDLogError("SyncViewController", "API contract invalid: didSignIn()")
             return
         }
         
@@ -741,7 +741,7 @@ extension SyncViewController: SDAccountProtocol {
         assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
         
         guard let accountStatus = notification.object as? SDKAccountStatus else {
-                SDLogError("API contract invalid: didReceiveAccountStatus in PreferencesWindowController")
+                SDLogError("SyncViewController", "API contract invalid: didReceiveAccountStatus()")
                 return
         }
         self.internalUserName = accountStatus.userName
@@ -986,7 +986,7 @@ extension SyncViewController: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
         
         guard let uniqueClientID = notification.object as? String else {
-            SDLogError("API contract invalid: applicationDidConfigureClient in PreferencesWindowController")
+            SDLogError("SyncViewController", "API contract invalid: applicationDidConfigureClient()")
             
             return
         }
@@ -999,7 +999,7 @@ extension SyncViewController: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
         
         guard let currentUser = notification.object as? User else {
-            SDLogError("API contract invalid: applicationDidConfigureUser in PreferencesWindowController")
+            SDLogError("SyncViewController", "API contract invalid: applicationDidConfigureUser()")
             
             return
         }
@@ -1028,7 +1028,7 @@ extension SyncViewController: SDSyncEventProtocol {
         }
         
         guard let folderID = notification.object as? UInt64 else {
-            SDLogError("API contract invalid: syncEvent in SyncViewController")
+            SDLogError("SyncViewController", "API contract invalid: syncEvent()")
             return
         }
         
@@ -1062,7 +1062,7 @@ extension SyncViewController {
             self.verifyFolderWindows[folder.id] = w
             
             guard let win = w.window else {
-                SDLogError("no verify folder window available")
+                SDLogError("SyncViewController", "no verify folder window available")
                 return
             }
             self.delegate.showModalWindow(win) { (_) in

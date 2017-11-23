@@ -112,7 +112,7 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
             })
             
         }, issue: { (message) in
-            SDLogWarn("\(message)")
+            SDLogWarn("EncryptionViewController", "\(message)")
             
             let notification = NSUserNotification()
             
@@ -159,7 +159,7 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
             }
             
             if showError {
-                SDLogError("SafeDrive loadKeys failure in encryption view controller (this message will only appear once): \(error.message)")
+                SDLogError("EncryptionViewController", "SafeDrive loadKeys failure in encryption view controller (this message will only appear once): \(error.message)")
 
                 let title = NSLocalizedString("SafeDrive keys unavailable", comment: "")
                 
@@ -210,7 +210,7 @@ extension EncryptionViewController: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
         
         guard let uniqueClientID = notification.object as? String else {
-            SDLogError("API contract invalid: applicationDidConfigureClient in PreferencesWindowController")
+            SDLogError("EncryptionViewController", "API contract invalid: applicationDidConfigureClient()")
             
             return
         }
@@ -223,7 +223,7 @@ extension EncryptionViewController: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
         
         guard let currentUser = notification.object as? User else {
-            SDLogError("API contract invalid: applicationDidConfigureUser in PreferencesWindowController")
+            SDLogError("EncryptionViewController", "API contract invalid: applicationDidConfigureUser()")
             
             return
         }
@@ -239,7 +239,7 @@ extension EncryptionViewController: SDAccountProtocol {
 
         guard let _ = self.uniqueClientID,
               let email = self.email else {
-            SDLogError("API contract invalid: didSignIn in PreferencesWindowController")
+            SDLogError("EncryptionViewController", "API contract invalid: didSignIn()")
             return
         }
         
@@ -334,7 +334,7 @@ extension EncryptionViewController: SDAccountProtocol {
         assert(Thread.current == Thread.main, "didCreateRecoveryPhrase called on background thread")
         
         guard let newPhrase = notification.object as? String else {
-            SDLogError("API contract invalid: didSignIn in PreferencesWindowController")
+            SDLogError("EncryptionViewController", "API contract invalid: didSignIn()")
             return
         }
         
@@ -359,7 +359,7 @@ extension EncryptionViewController: SDAccountProtocol {
         self.copyRecoveryPhraseButton.isEnabled = false
         
         guard let w = self.recoveryPhraseEntry?.window else {
-            SDLogError("no recovery phrase window available")
+            SDLogError("EncryptionViewController", "no recovery phrase window available")
             return
         }
         self.delegate.setTab(Tab.encryption)

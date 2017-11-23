@@ -154,7 +154,7 @@ class VerifyFolderWindowController: NSWindowController {
     
     @IBAction func cancel(sender: AnyObject?) {
         guard let window = self.window else {
-            SDLogError("API contract invalid: window not found in VerifyFolderWindowController")
+            SDLogError("VerifyFolderWindowController", "API contract invalid: window not found")
             return
         }
         if let parent = window.sheetParent {
@@ -332,7 +332,7 @@ extension VerifyFolderWindowController: NSOpenSavePanelDelegate {
         // check if the candidate sync path is actually writable and readable
         if !fileManager.isWritableFile(atPath: url.path) {
             let message = NSLocalizedString("Cannot select this directory, read/write permission denied", comment: "String informing the user that they do not have permission to read/write to the selected directory")
-            SDLogWarn(message)
+            SDLogWarn("VerifyFolderWindowController", message)
             let error = SDError(message: message, kind: .filePermissionDenied)
             throw error
         }

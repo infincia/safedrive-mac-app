@@ -86,7 +86,7 @@ class ValidateAccountViewController: NSViewController {
     
     func check() {
         self.reset()
-        SDLogDebug("checking account")
+        SDLogDebug("ValidateAccountViewController", "checking account")
         
         
         background {
@@ -118,7 +118,7 @@ class ValidateAccountViewController: NSViewController {
     }
     
     @IBAction func signIn(_ sender: AnyObject?) {
-        SDLogInfo("signing in")
+        SDLogInfo("ValidateAccountViewController", "signing in")
         
         guard let email = self.email,
               let password = self.password else {
@@ -144,14 +144,14 @@ class ValidateAccountViewController: NSViewController {
 
         self.signingIn = true
         
-        SDLogDebug("starting login for account \(email)")
+        SDLogDebug("ValidateAccountViewController", "starting login for account \(email)")
 
         do {
             try SafeDriveSDK.sharedSDK.setKeychainItem(withUser: "currentuser", service: currentUserDomain(), secret: email)
-            SDLogDebug("set current user: \(email)")
+            SDLogDebug("ValidateAccountViewController", "set current user: \(email)")
 
         } catch let error as NSError {
-            SDLogError("failed to set current user: \(email)")
+            SDLogError("ValidateAccountViewController", "failed to set current user: \(email)")
             self.signingIn = false
             self.delegate?.didFail(error: error, uniqueClientID: nil)
         }
@@ -174,7 +174,7 @@ class ValidateAccountViewController: NSViewController {
             self.signingIn = false
 
             self.spinner.stopAnimation(self)
-            SDLogError("login error: \(error) (\(error.kind))")
+            SDLogError("ValidateAccountViewController", "login error: \(error) (\(error.kind))")
             if error.kind == .Authentication {
                 if !self.isInteractiveLogin {
                     self.delegate?.needsAccount()

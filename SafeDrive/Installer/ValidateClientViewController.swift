@@ -73,14 +73,14 @@ class ValidateClientViewController: NSViewController {
     func check(email: String, password: String, clients: [SDKSoftwareClient]) {
         self.reset()
         
-        SDLogInfo("checking client")
+        SDLogInfo("ValidateClientViewController", "checking client")
 
         self.email = email
         self.password = password
         
         self.clients = clients
         self.hasRegisteredClients = NSNumber(value: clients.count)
-        SDLogInfo("have clients: \(self.hasRegisteredClients)")
+        SDLogInfo("ValidateClientViewController", "have clients: \(self.hasRegisteredClients)")
         self.clientList.reloadData()
         
         background {
@@ -91,7 +91,7 @@ class ValidateClientViewController: NSViewController {
             // swiftlint:enable force_unwrapping
             
             if let uniqueClientID = try? SafeDriveSDK.sharedSDK.getKeychainItem(withUser: email, service: UCIDDomain()) {
-                SDLogInfo("valid client found, continuing")
+                SDLogInfo("ValidateClientViewController", "valid client found, continuing")
 
                 DispatchQueue.main.async {
                     self.delegate?.didValidateClient(withEmail: email, password: password, name: machineName, uniqueClientID: uniqueClientID)
@@ -108,12 +108,12 @@ class ValidateClientViewController: NSViewController {
                 }
                 Thread.sleep(forTimeInterval: 1)
             }
-            SDLogInfo("valid client found, continuing")
+            SDLogInfo("ValidateClientViewController", "valid client found, continuing")
         }
     }
     
     @IBAction func newClient(_ sender: AnyObject?) {
-        SDLogInfo("setting up client as new")
+        SDLogInfo("ValidateClientViewController", "setting up client as new")
         guard let email = self.email,
               let password = self.password else {
                 let error = SDError(message: "API contract invalid", kind: .apiContractInvalid)
@@ -133,7 +133,7 @@ class ValidateClientViewController: NSViewController {
     }
     
     @IBAction func replaceClient(_ sender: AnyObject?) {
-        SDLogInfo("replacing client")
+        SDLogInfo("ValidateClientViewController", "replacing client")
 
         guard let clients = self.clients else {
             return
@@ -147,8 +147,8 @@ class ValidateClientViewController: NSViewController {
         
         let client = clients[sindex]
         
-        SDLogInfo("client \(client.uniqueClientID) being replaced")
-        
+        SDLogInfo("ValidateClientViewController", "client \(client.uniqueClientID) being replaced")
+
         guard let email = self.email,
               let password = self.password else {
                 let error = SDError(message: "An unknown error occurred, contact support", kind: .unknown)

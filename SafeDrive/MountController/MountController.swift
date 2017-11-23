@@ -310,7 +310,7 @@ class MountController: NSObject {
                     }
                     
                     if attemptMount {
-                        SDLogDebug("Attempting to mount drive")
+                        SDLogDebug("MountController", "Attempting to mount drive")
                         
                         self.lastMountAttempt = Date()
                         
@@ -329,14 +329,14 @@ class MountController: NSObject {
             let password = self.password,
             let host = self.remoteHost,
             let port = self.remotePort else {
-                SDLogError("API contract invalid: connectVolume in MountController")
+                SDLogError("MountController", "API contract invalid: connectVolume()")
                 Crashlytics.sharedInstance().crash()
                 return
         }
         guard let volicon = Bundle.main.url(forResource: "AppIcon", withExtension: "icns") else {
             let message = NSLocalizedString("Volume icon missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .configMissing)
-            SDLogError("\(error)")
+            SDLogError("MountController", "\(error)")
             let notification = NSUserNotification()
 
             var userInfo = [String: Any]()
@@ -371,7 +371,7 @@ class MountController: NSObject {
             if self.useXPC {
                 if let s = self.sftpfsConnection {
                     let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                        SDLogError("Connecting to sftpfs failed: \(error.localizedDescription)")
+                        SDLogError("MountController", "Connecting to sftpfs failed: \(error.localizedDescription)")
                     }) as! SFTPFSXPCProtocol
                     
                     proxy.create(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port)
@@ -393,7 +393,7 @@ class MountController: NSObject {
                     }, notMounted: {
                         let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
                         let error = SDError(message: message, kind: .timeout)
-                        SDLogError("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
+                        SDLogError("MountController", "checkForMountedVolume() failure: \(error)")
                         
                         var userInfo = [String: Any]()
                         
@@ -421,7 +421,7 @@ class MountController: NSObject {
                     
                     let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
                     let error = SDError(message: message, kind: .serviceDeployment)
-                    SDLogError("\(message)")
+                    SDLogError("MountController", "\(message)")
                     
                     main {
                         notification.informativeText = error.localizedDescription
@@ -466,7 +466,7 @@ class MountController: NSObject {
                 }, notMounted: {
                     let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
                     let error = SDError(message: message, kind: .timeout)
-                    SDLogError("SafeDrive checkForMountedVolume failure in mount controller: \(error)")
+                    SDLogError("MountController", "checkForMountedVolume() failure: \(error)")
                     
                     var userInfo = [String: Any]()
                     
@@ -497,7 +497,7 @@ class MountController: NSObject {
     
         let volumeName: String = self.currentVolumeName
         
-        SDLogInfo("Dismounting volume: %@", volumeName)
+        SDLogInfo("MountController", "Dismounting volume: %@", volumeName)
         
         background {
             self.unmount(success: { _ -> Void in
@@ -506,7 +506,7 @@ class MountController: NSObject {
                 
                 let message = "SafeDrive could not be unmounted\n\n \(error.localizedDescription)"
                 
-                SDLogError(message)
+                SDLogError("MountController", message)
                 
                 let notification = NSUserNotification()
                 
@@ -556,7 +556,7 @@ class MountController: NSObject {
 extension MountController: SleepReactor {
     @objc func willSleep(_ notification: Notification) {
         if self.mounted {
-            SDLogWarn("machine going to sleep, unmounting SSHFS")
+            SDLogWarn("MountController", "machine going to sleep, unmounting SFTPFS")
             self.disconnectVolume(askForOpenApps: true)
         }
     }
@@ -569,7 +569,7 @@ extension MountController: SDAccountProtocol {
     func didSignIn(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignIn called on background thread")
         guard let accountStatus = notification.object as? SDKAccountStatus else {
-            SDLogError("API contract invalid: didSignIn in MountController")
+            SDLogError("MountController", "API contract invalid: didSignIn()")
             return
         }
         
@@ -597,7 +597,7 @@ extension MountController: SDAccountProtocol {
         assert(Thread.current == Thread.main, "didReceiveAccountStatus called on background thread")
 
         guard let accountStatus = notification.object as? SDKAccountStatus else {
-            SDLogError("API contract invalid: didReceiveAccountStatus in MountController")
+            SDLogError("MountController", "API contract invalid: didReceiveAccountStatus()")
             return
         }
         
@@ -672,7 +672,7 @@ extension MountController: SDVolumeEventProtocol {
         assert(Thread.current == Thread.main, "volumeShouldUnmount called on background thread")
 
         guard let askForOpenApps = notification.object as? Bool else {
-            SDLogError("API contract invalid in Mount Controller.volumeShouldUnmount()")
+            SDLogError("MountController", "API contract invalid: volumeShouldUnmount()")
             return
         }
         self.disconnectVolume(askForOpenApps: askForOpenApps)
@@ -682,12 +682,12 @@ extension MountController: SDVolumeEventProtocol {
 
 extension MountController: OpenFileWarningDelegate {
     func closeApplication(_ process: RunningProcess) {
-        SDLogDebug("attempting to close \(process.command) (\(process.pid))")
+        SDLogDebug("MountController", "attempting to close \(process.command) (\(process.pid))")
         
         if process.isUserApplication {
             for app in NSWorkspace.shared.runningApplications {
                 if process.pid == Int(app.processIdentifier) {
-                    SDLogDebug("found \(process.pid), terminating")
+                    SDLogDebug("MountController", "found \(process.pid), terminating")
                     app.terminate()
                 }
             }
@@ -698,14 +698,14 @@ extension MountController: OpenFileWarningDelegate {
     }
     
     func runningProcesses() -> [RunningProcess] {
-        SDLogDebug("checking running processes")
+        SDLogDebug("MountController", "checking running processes")
         let r = RunningProcessCheck()
 
         return r.runningProcesses()
     }
     
     func blockingProcesses(_ url: URL) -> [RunningProcess] {
-        SDLogDebug("checking blocking processes")
+        SDLogDebug("MountController", "checking blocking processes")
         let c = OpenFileCheck()
 
         return c.check(volume: url)
@@ -726,7 +726,7 @@ extension MountController: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
 
         guard let _ = notification.object as? String else {
-            SDLogError("API contract invalid: applicationDidConfigureClient in MountController")
+            SDLogError("MountController", "API contract invalid: applicationDidConfigureClient()")
             
             return
         }
@@ -737,7 +737,7 @@ extension MountController: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
 
         guard let currentUser = notification.object as? User else {
-            SDLogError("API contract invalid: applicationDidConfigureUser in MountController")
+            SDLogError("MountController", "API contract invalid: applicationDidConfigureUser()")
             
             return
         }

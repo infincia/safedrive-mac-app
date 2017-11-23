@@ -197,6 +197,6 @@ func startReportQueue() {
 
 private func saveErrors() {
     if !NSKeyedArchiver.archiveRootObject(errors, toFile: serializedErrorLocation.path) {
-        SDLogError("WARNING: error report database could not be saved!!!")
+        SDLogError("ErrorHandler", "WARNING: error report database could not be saved!!!")
     }
 }

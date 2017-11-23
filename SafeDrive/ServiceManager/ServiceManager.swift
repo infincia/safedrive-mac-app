@@ -116,14 +116,14 @@ class ServiceManager: NSObject {
 extension ServiceManager: SDSyncEventProtocol {
     func syncEvent(notification: Notification) {
         guard let folderID = notification.object as? UInt64 else {
-            SDLogError("API contract invalid: syncEvent in ServiceManager")
+            SDLogError("ServiceManager", "API contract invalid: syncEvent()")
             return
         }
         
         ipcServiceQueue.async {
             if let s = self.ipcConnection {
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                    SDLogError("syncEvent connecting to IPC service failed: \(error.localizedDescription)")
+                    SDLogError("ServiceManager", "syncEvent connecting to IPC service failed: \(error.localizedDescription)")
                 }) as! IPCProtocol
                 
                 proxy.syncEvent(folderID)
@@ -138,7 +138,7 @@ extension ServiceManager: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
 
         guard let uniqueClientID = notification.object as? String else {
-            SDLogError("API contract invalid: applicationDidConfigureClient in ServiceManager")
+            SDLogError("ServiceManager", "API contract invalid: applicationDidConfigureClient()")
             
             return
         }
@@ -146,7 +146,7 @@ extension ServiceManager: SDApplicationEventProtocol {
         ipcServiceQueue.async {
             if let s = self.ipcConnection {
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                    SDLogError("applicationDidConfigureClient connecting to IPC service failed: \(error.localizedDescription)")
+                    SDLogError("ServiceManager", "applicationDidConfigureClient(): connecting to IPC service failed: \(error.localizedDescription)")
                 }) as! IPCProtocol
                 
                 proxy.applicationDidConfigureClient(uniqueClientID)
@@ -158,7 +158,7 @@ extension ServiceManager: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
 
         guard let user = notification.object as? User else {
-            SDLogError("API contract invalid: applicationDidConfigureUser in ServiceManager")
+            SDLogError("ServiceManager", "API contract invalid: applicationDidConfigureUser()")
             
             return
         }
@@ -166,7 +166,7 @@ extension ServiceManager: SDApplicationEventProtocol {
         ipcServiceQueue.async {
             if let s = self.ipcConnection {
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                    SDLogError("applicationDidConfigureUser connecting to IPC service failed: \(error.localizedDescription)")
+                    SDLogError("ServiceManager", "applicationDidConfigureUser() connecting to IPC service failed: \(error.localizedDescription)")
                 }) as! IPCProtocol
                 
                 proxy.applicationDidConfigureUser(user.email)
@@ -181,7 +181,7 @@ extension ServiceManager: SDAccountProtocol {
         ipcServiceQueue.async {
             if let s = self.ipcConnection {
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                    SDLogError("didSignIn connecting to IPC service failed: \(error.localizedDescription)")
+                    SDLogError("ServiceManager", "didSignIn() connecting to IPC service failed: \(error.localizedDescription)")
                 }) as! IPCProtocol
                 
                 proxy.didSignIn()
@@ -193,7 +193,7 @@ extension ServiceManager: SDAccountProtocol {
         ipcServiceQueue.async {
             if let s = self.ipcConnection {
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                    SDLogError("didSignOut connecting to IPC service failed: \(error.localizedDescription)")
+                    SDLogError("ServiceManager", "didSignOut() connecting to IPC service failed: \(error.localizedDescription)")
                 }) as! IPCProtocol
                 
                 proxy.didSignOut()
@@ -215,7 +215,7 @@ extension ServiceManager: SDMountStateProtocol {
         ipcServiceQueue.async {
             if let s = self.ipcConnection {
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                    SDLogError("Connecting to service IPC failed: \(error.localizedDescription)")
+                    SDLogError("ServiceManager", "Connecting to service IPC failed: \(error.localizedDescription)")
                 }) as! IPCProtocol
                 
                 proxy.mountStateMounted()
@@ -227,7 +227,7 @@ extension ServiceManager: SDMountStateProtocol {
         ipcServiceQueue.async {
             if let s = self.ipcConnection {
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                    SDLogError("Connecting to service IPC failed: \(error.localizedDescription)")
+                    SDLogError("ServiceManager", "Connecting to service IPC failed: \(error.localizedDescription)")
                 }) as! IPCProtocol
                 
                 proxy.mountStateUnmounted()
@@ -274,21 +274,21 @@ extension ServiceManager: NSXPCListenerDelegate {
         // temporary kill/restart for background service until proper calls are implemented
         background {
             if !self.enableLoginItem(false) {
-                SDLogError("failed to unload login item")
+                SDLogError("ServiceManager", "failed to unload login item")
             } else {
-                SDLogInfo("unloaded login item")
+                SDLogInfo("ServiceManager", "unloaded login item")
             }
             
             if !self.enableLoginItem(true) {
-                SDLogError("failed to load login item")
+                SDLogError("ServiceManager", "failed to load login item")
             } else {
-                SDLogInfo("loaded login item")
+                SDLogInfo("ServiceManager", "loaded login item")
             }
         }
     }
     
     func createServiceConnection() -> NSXPCConnection {
-        SDLogDebug("creating connection to service")
+        SDLogDebug("ServiceManager", "creating connection to service")
 
         let newConnection = NSXPCConnection(machServiceName: ServiceManager.serviceName, options: .privileged)
         
@@ -297,7 +297,7 @@ extension ServiceManager: NSXPCListenerDelegate {
         newConnection.remoteObjectInterface = serviceInterface
         
         newConnection.interruptionHandler = { [weak self] in
-            SDLogWarn("service connection interrupted")
+            SDLogWarn("ServiceManager", "service connection interrupted")
             
             DispatchQueue.main.async {
                 //newConnection = nil
@@ -305,7 +305,7 @@ extension ServiceManager: NSXPCListenerDelegate {
         }
         
         newConnection.invalidationHandler = { [weak self] in
-            SDLogWarn("service connection invalidated")
+            SDLogWarn("ServiceManager", "service connection invalidated")
 
             DispatchQueue.main.async {
                 //newConnection = nil
@@ -316,7 +316,7 @@ extension ServiceManager: NSXPCListenerDelegate {
     }
     
     func updateService() {
-        SDLogWarn("Updating service")
+        SDLogWarn("ServiceManager", "Updating service")
 
         if isProduction() {
             // ask the service to stop any important operations first.
@@ -335,7 +335,7 @@ extension ServiceManager: NSXPCListenerDelegate {
         if status != errAuthorizationSuccess {
             let error = NSError(domain: NSOSStatusErrorDomain, code: Int(status), userInfo: nil)
             
-            SDLogError("Service authorization error: \(error)")
+            SDLogError("ServiceManager", "Service authorization error: \(error)")
             let authError = SDError(message: "Authorization error: \(error)", kind: .serviceDeployment)
             
             ServiceManager.delegate.didFail(error: authError)
@@ -347,11 +347,11 @@ extension ServiceManager: NSXPCListenerDelegate {
                 let error = cfError!.takeRetainedValue() as Error
                 // swiftlint:enable force_unwrapping
 
-                SDLogError("Service installation error: \(error)")
+                SDLogError("ServiceManager", "Service installation error: \(error)")
                 let blessError = SDError(message: "\(error)", kind: .serviceDeployment)
                 ServiceManager.delegate.didFail(error: blessError)
             } else {
-                SDLogInfo("\(ServiceManager.serviceName) installed")
+                SDLogInfo("ServiceManager", "\(ServiceManager.serviceName) installed")
                 background {
                     ServiceManager.delegate.didValidateService()
                 }
@@ -370,11 +370,11 @@ extension ServiceManager: NSXPCListenerDelegate {
                     
                     if let s = self.ipcConnection {
                         let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                            SDLogError("Connecting to IPC service failed: \(error.localizedDescription)")
+                            SDLogError("ServiceManager", "Connecting to IPC service failed: \(error.localizedDescription)")
                         }) as! IPCProtocol
                         
                         proxy.setAppEndpoint(self.appListener.endpoint, reply: { (state) in
-                            SDLogDebug("App endpoint response: \(state)")
+                            SDLogDebug("ServiceManager", "App endpoint response: \(state)")
                         })
                     }
                     Thread.sleep(forTimeInterval: 1)
@@ -391,17 +391,17 @@ extension ServiceManager: NSXPCListenerDelegate {
         let sdfs = Bundle.main.bundleURL.appendingPathComponent("Contents/Library/Filesystems/sdfs.bundle", isDirectory: false)
 
         let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-            SDLogError("Cannot update SDFS, connecting to service failed: \(error.localizedDescription)")
+            SDLogError("ServiceManager", "Cannot update SDFS, connecting to service failed: \(error.localizedDescription)")
             let error = SDError(message: "Cannot update SDFS, connecting to service failed: \(error.localizedDescription)", kind: .fuseDeployment)
             ServiceManager.delegate.didFail(error: error)
         }) as! ServiceXPCProtocol
         
         proxy.updateSDFS(sdfs.path) { (state, status) in
             if state {
-                SDLogInfo("SDFS updated, new version: \(status)")
+                SDLogInfo("ServiceManager", "SDFS updated, new version: \(status)")
                 ServiceManager.delegate.didValidateSDFS()
             } else {
-                SDLogError("Cannot update SDFS, installation failed: \(status)")
+                SDLogError("ServiceManager", "Cannot update SDFS, installation failed: \(status)")
                 let error = SDError(message: "Cannot update SDFS, installation failed: \(status)", kind: .fuseDeployment)
                 ServiceManager.delegate.didFail(error: error)
             }
@@ -413,10 +413,10 @@ extension ServiceManager: NSXPCListenerDelegate {
         
         background {
             outer: while !self.loadedKext {
-                SDLogInfo("SDFS kext loading attempt")
+                SDLogInfo("ServiceManager", "SDFS kext loading attempt")
 
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                    SDLogError("Cannot load SDFS kext: \(error.localizedDescription)")
+                    SDLogError("ServiceManager", "Cannot load SDFS kext: \(error.localizedDescription)")
                     let error = SDError(message: "Cannot load SDFS kext: \(error.localizedDescription)", kind: .kextLoading)
                     main {
                         ServiceManager.delegate.didFail(error: error)
@@ -429,13 +429,13 @@ extension ServiceManager: NSXPCListenerDelegate {
                 
                 proxy.loadKext { (state, status) in
                     if state {
-                        SDLogInfo("SDFS kext loaded")
+                        SDLogInfo("ServiceManager", "SDFS kext loaded")
                         main {
                             ServiceManager.delegate.didValidateKext()
                         }
                         self.loadedKext = true
                     } else {
-                        SDLogError("Cannot load SDFS kext: \(status)")
+                        SDLogError("ServiceManager", "Cannot load SDFS kext: \(status)")
                         main {
                             ServiceManager.delegate.needsKext()
                         }
@@ -453,13 +453,13 @@ extension ServiceManager: NSXPCListenerDelegate {
 
         
         guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
-            SDLogError("Cannot determine app version, this should never happen")
+            SDLogError("ServiceManager", "Cannot determine app version, this should never happen")
             ServiceManager.delegate.needsService()
             return
         }
         
         let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-            SDLogError("Cannot communicate with service, connection failed: \(error.localizedDescription)")
+            SDLogError("ServiceManager", "Cannot communicate with service, connection failed: \(error.localizedDescription)")
             ServiceManager.delegate.needsService()
         }) as! ServiceXPCProtocol
         
@@ -469,10 +469,10 @@ extension ServiceManager: NSXPCListenerDelegate {
                 return
             }
             if Semver.gte(currentServiceVersion, appVersion) {
-                SDLogInfo("Service up to date")
+                SDLogInfo("ServiceManager", "Service up to date")
                 ServiceManager.delegate.didValidateService()
             } else {
-                SDLogWarn("Service update needed")
+                SDLogWarn("ServiceManager", "Service update needed")
                 ServiceManager.delegate.needsService()
             }
         }
@@ -483,7 +483,7 @@ extension ServiceManager: NSXPCListenerDelegate {
         let s = self.createServiceConnection()
         
         let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-            SDLogError("Cannot communicate with service, connection failed: \(error.localizedDescription)")
+            SDLogError("ServiceManager", "Cannot communicate with service, connection failed: \(error.localizedDescription)")
             let error = SDError(message: "Force unmount failed: \(error)", kind: .unmountFailed)
             
             main {
@@ -495,13 +495,13 @@ extension ServiceManager: NSXPCListenerDelegate {
         
         proxy.forceUnmountSafeDrive(path) { (success, status) in
             if success {
-                SDLogInfo("Force unmount succeeded")
+                SDLogInfo("ServiceManager", "Force unmount succeeded")
                 
                 main {
                     successBlock()
                 }
             } else {
-                SDLogError("Force unmount failed: \(status)")
+                SDLogError("ServiceManager", "Force unmount failed: \(status)")
                 
                 let error = SDError(message: "Force unmount failed: \(status)", kind: .unmountFailed)
 

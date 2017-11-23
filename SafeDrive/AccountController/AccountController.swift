@@ -271,7 +271,7 @@ class AccountController: NSObject {
         do {
             try self.sdk.deleteKeychainItem(withUser: user.email, service: tokenDomain())
         } catch let error as SDKError {
-            SDLogWarn("warning: failed to remove auth token from keychain: \(error.message)")
+            SDLogWarn("AccountController", "warning: failed to remove auth token from keychain: \(error.message)")
         } catch {
             fatalError("cannot reach this point")
         }
@@ -279,7 +279,7 @@ class AccountController: NSObject {
         do {
             try self.sdk.deleteKeychainItem(withUser: user.email, service: accountCredentialDomain())
         } catch let error as SDKError {
-            SDLogWarn("warning: failed to remove password from keychain: \(error.message)")
+            SDLogWarn("AccountController", "warning: failed to remove password from keychain: \(error.message)")
         } catch {
             fatalError("cannot reach this point")
         }
@@ -368,7 +368,7 @@ class AccountController: NSObject {
                         if showError {
                             let title = NSLocalizedString("SafeDrive unavailable", comment: "")
                             
-                            SDLogError("SafeDrive signIn failure in account controller (this message will only appear once): \(error.message)")
+                            SDLogError("AccountController", "signIn() failure (this message will only appear once): \(error.message)")
                             
                             let notification = NSUserNotification()
                                                         
@@ -443,7 +443,7 @@ class AccountController: NSObject {
                         }
                         
                         if reportError && error.kind != .NetworkFailure {
-                            SDLogWarn("Account status retrieval failed (this message will only appear once): \(error.message)")
+                            SDLogWarn("AccountController", "Account status retrieval failed (this message will only appear once): \(error.message)")
                             
                             SDErrorHandlerReport(error)
                         }
@@ -494,7 +494,7 @@ class AccountController: NSObject {
                         }
                         
                         if reportError && error.kind != .NetworkFailure {
-                            SDLogWarn("Account details retrieval failed (this message will only appear once): \(error.message)")
+                            SDLogWarn("AccountController", "Account details retrieval failed (this message will only appear once): \(error.message)")
                             
                             SDErrorHandlerReport(error)
                         }
@@ -515,7 +515,7 @@ extension AccountController: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
 
         guard let uniqueClientID = notification.object as? String else {
-            SDLogError("API contract invalid: applicationDidConfigureClient in AppDelegate")
+            SDLogError("AccountController", "API contract invalid: applicationDidConfigureClient()")
             
             return
         }
@@ -527,7 +527,7 @@ extension AccountController: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
 
         guard let user = notification.object as? User else {
-            SDLogError("API contract invalid: applicationDidConfigureUser in AppDelegate")
+            SDLogError("AccountController", "API contract invalid: applicationDidConfigureUser()")
             
             return
         }

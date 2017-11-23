@@ -123,7 +123,7 @@ class ActivityNotifierWindowController: NSWindowController {
     func display(message: String) {
         main {
             guard let _ = self.window else {
-                SDLogError("API contract invalid: window not found in ActivityNotifierWindowController")
+                SDLogError("ActivityNotifierWindowController", "API contract invalid: window not found")
                 return
             }
 
@@ -136,7 +136,7 @@ class ActivityNotifierWindowController: NSWindowController {
     @IBAction func dismiss(sender: AnyObject?) {
         main {
             guard let _ = self.window else {
-                SDLogError("API contract invalid: window not found in ActivityNotifierWindowController")
+                SDLogError("ActivityNotifierWindowController", "API contract invalid: window not found")
                 return
             }
 

@@ -95,7 +95,7 @@ class WelcomeWindowController: NSWindowController {
     func setWelcomeState(_ state: WelcomeState) {
         assert(Thread.current == Thread.main, "NOT MAIN THREAD")
         self.state = state
-        SDLogDebug("welcome state changed: \(state)")
+        SDLogDebug("WelcomeWindowController", "welcome state changed: \(state)")
 
         switch state {
         case .welcome:
@@ -153,72 +153,72 @@ class WelcomeWindowController: NSWindowController {
 extension WelcomeWindowController: WelcomeStateDelegate {
 
     func needsWelcome() {
-        SDLogInfo("needs welcome")
+        SDLogInfo("WelcomeWindowController", "needs welcome")
         self.showWindow(self)
     }
     
     func needsService() {
-        SDLogInfo("needs service")
+        SDLogInfo("WelcomeWindowController", "needs service")
         self.showWindow(self)
     }
     
     func needsKext() {
-        SDLogInfo("needs kext")
+        SDLogInfo("WelcomeWindowController", "needs kext")
         self.showWindow(self)
     }
     
     func needsDependencies() {
-        SDLogInfo("needs dependencies")
+        SDLogInfo("WelcomeWindowController", "needs dependencies")
         self.showWindow(self)
     }
     
     func needsAccount() {
-        SDLogInfo("needs account")
+        SDLogInfo("WelcomeWindowController", "needs account")
         self.showWindow(self)
     }
     
     func needsClient() {
-        SDLogInfo("needs client configuration")
+        SDLogInfo("WelcomeWindowController", "needs client configuration")
         self.showWindow(self)
     }
     
     func didWelcomeUser() {
-        SDLogInfo("welcomed user")
+        SDLogInfo("WelcomeWindowController", "welcomed user")
         self.setWelcomeState(.validateService)
     }
 
     func didValidateService() {
-        SDLogInfo("validated service")
+        SDLogInfo("WelcomeWindowController", "validated service")
         self.setWelcomeState(.validateDependencies)
     }
     
     func didValidateDependencies() {
-        SDLogInfo("validated dependencies")
+        SDLogInfo("WelcomeWindowController", "validated dependencies")
         self.setWelcomeState(.validateAccount)
     }
     
     func didValidateAccount(withEmail email: String, password: String, clients: [SDKSoftwareClient]) {
-        SDLogInfo("validated account: \(email)")
+        SDLogInfo("WelcomeWindowController", "validated account: \(email)")
         self.setWelcomeState(.validateClient(email: email, password: password, clients: clients))
         let user = User(email: email, password: password)
         NotificationCenter.default.post(name: Notification.Name.applicationDidConfigureUser, object: user)
     }
     
     func didValidateClient(withEmail email: String, password: String, name: String, uniqueClientID: String) {
-        SDLogInfo("validated client: \(name) (\(uniqueClientID))")
+        SDLogInfo("WelcomeWindowController", "validated client: \(name) (\(uniqueClientID))")
         do {
             try SafeDriveSDK.sharedSDK.setKeychainItem(withUser: email, service: UCIDDomain(), secret: uniqueClientID)
             self.setWelcomeState(.ready)
             NotificationCenter.default.post(name: Notification.Name.applicationDidConfigureClient, object: uniqueClientID)
 
         } catch let keychainError as NSError {
-            SDLogError("failed to insert unique client ID in keychain: \(keychainError)")
+            SDLogError("WelcomeWindowController", "failed to insert unique client ID in keychain: \(keychainError)")
             self.setWelcomeState(.failed(error: keychainError, uniqueClientID: uniqueClientID))
         }
     }
     
     func didFail(error: Error, uniqueClientID: String?) {
-        SDLogError("install failed: \(error)")
+        SDLogError("WelcomeWindowController", "install failed: \(error)")
         self.setWelcomeState(.failed(error: error, uniqueClientID: uniqueClientID))
         self.showWindow(self)
     }

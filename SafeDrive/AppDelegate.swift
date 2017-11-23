@@ -76,17 +76,17 @@ extension AppDelegate: NSApplicationDelegate {
         SDErrorHandlerInitialize()
         if let updater = SUUpdater.shared() {
             if isProduction() {
-                SDLogInfo("SafeDrive release build \(CFBundleVersion)")
+                SDLogInfo("AppDelegate", "SafeDrive release build \(CFBundleVersion)")
                 environment = "RELEASE"
                 updater.feedURL = URL(string: "https://s3-eu-central-1.amazonaws.com/cdn.safedrive.io/mac/release.xml")
             } else {
-                SDLogInfo("SafeDrive staging build \(CFBundleVersion)")
+                SDLogInfo("AppDelegate", "SafeDrive staging build \(CFBundleVersion)")
                 environment = "STAGING"
                 updater.feedURL = URL(string: "https://s3-eu-central-1.amazonaws.com/cdn.safedrive.io/mac/staging.xml")
             }
         }
         
-        SDLogInfo("SDDK \(SafeDriveSDK.sddk_version)-\(SafeDriveSDK.sddk_channel)")
+        SDLogInfo("AppDelegate", "SDDK \(SafeDriveSDK.sddk_version)-\(SafeDriveSDK.sddk_channel)")
 
         UserDefaults.standard.set(CFBundleVersion, forKey: userDefaultsBuildVersionLastKey())
         
@@ -96,7 +96,7 @@ extension AppDelegate: NSApplicationDelegate {
         do {
             try FileManager.default.createDirectory(at: groupURL, withIntermediateDirectories: true, attributes: nil)
         } catch {
-            SDLogError("Failed to create group container, this is a fatal error")
+            SDLogError("AppDelegate", "Failed to create group container, this is a fatal error")
             Crashlytics.sharedInstance().crash()
         }
         
@@ -169,7 +169,7 @@ extension AppDelegate: NSApplicationDelegate {
     
     
     func applicationWillTerminate(_ aNotification: Foundation.Notification) {
-        SDLogInfo("SafeDrive build \(CFBundleVersion), protocol version \(kAppXPCProtocolVersion) exiting")
+        SDLogInfo("AppDelegate", "SafeDrive build \(CFBundleVersion), protocol version \(kAppXPCProtocolVersion) exiting")
         NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: false)
         
     }
@@ -226,7 +226,7 @@ extension AppDelegate: SDApplicationEventProtocol {
     
     func applicationDidConfigureClient(notification: Notification) {
         guard let uniqueClientID = notification.object as? String else {
-            SDLogError("API contract invalid: applicationDidConfigureClient in AppDelegate")
+            SDLogError("AppDelegate", "API contract invalid: applicationDidConfigureClient()")
 
             return
         }
@@ -240,7 +240,7 @@ extension AppDelegate: SDApplicationEventProtocol {
             do {
                 try FileManager.default.createDirectory(at: uniqueClientURL, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                SDLogError("Failed to create group container, this is a fatal error")
+                SDLogError("AppDelegate", "Failed to create group container, this is a fatal error")
                 Crashlytics.sharedInstance().crash()
             }
         }
@@ -248,7 +248,7 @@ extension AppDelegate: SDApplicationEventProtocol {
     
     func applicationDidConfigureUser(notification: Notification) {
         guard let _ = notification.object as? User else {
-            SDLogError("API contract invalid: applicationDidConfigureUser in AppDelegate")
+            SDLogError("AppDelegate", "API contract invalid: applicationDidConfigureUser()")
 
             return
         }

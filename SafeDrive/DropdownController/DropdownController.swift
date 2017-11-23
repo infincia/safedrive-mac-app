@@ -163,7 +163,7 @@ extension DropdownController: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
 
         guard let _ = notification.object as? String else {
-            SDLogError("API contract invalid: applicationDidConfigureClient in DropdownController")
+            SDLogError("DropdownController", "API contract invalid: applicationDidConfigureClient()")
             
             return
         }
@@ -174,7 +174,7 @@ extension DropdownController: SDApplicationEventProtocol {
         assert(Thread.current == Thread.main, "applicationDidConfigureUser called on background thread")
 
         guard let _ = notification.object as? User else {
-            SDLogError("API contract invalid: applicationDidConfigureUser in DropdownController")
+            SDLogError("DropdownController", "API contract invalid: applicationDidConfigureUser()")
             
             return
         }

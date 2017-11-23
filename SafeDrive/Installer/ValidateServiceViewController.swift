@@ -57,7 +57,7 @@ class ValidateServiceViewController: NSViewController {
     func check() {
         self.reset()
         
-        SDLogDebug("checking service")
+        SDLogDebug("ValidateServiceViewController", "checking service")
         self.serviceManager.checkServiceVersion()
     }
         

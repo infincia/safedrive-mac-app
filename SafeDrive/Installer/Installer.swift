@@ -114,12 +114,12 @@ class Installer: NSObject {
         
         guard let cli = Bundle.main.url(forAuxiliaryExecutable: "io.safedrive.SafeDrive.cli") else {
             let message = NSLocalizedString("CLI app missing, contact SafeDrive support", comment: "")
-            SDLogError(message)
+            SDLogError("Installer", message)
             let error = SDError(message: message, kind: .cliMissing)
             throw error
         }
         
-        SDLogDebug("CLI location: \(cli.path)")
+        SDLogDebug("Installer", "CLI location: \(cli.path)")
 
         let usrlocalbin = URL(fileURLWithPath: "/usr/local/bin")
 
@@ -130,14 +130,14 @@ class Installer: NSObject {
         do {
             try FileManager.default.removeItem(at: destination)
         } catch let error as NSError {
-            SDLogError("Error removing old CLI app: \(error)")
+            SDLogError("Installer", "Error removing old CLI app: \(error)")
         }
         
         do {
             try fileManager.createSymbolicLink(at: destination, withDestinationURL: cli)
         } catch let error as NSError {
             let message = NSLocalizedString("Error installing CLI app symlink: \(error)", comment: "")
-            SDLogError(message)
+            SDLogError("Installer", message)
             let error = SDError(message: message, kind: .cliDeployment)
             throw error
         }
@@ -147,7 +147,7 @@ class Installer: NSObject {
         
         guard let cli = Bundle.main.url(forAuxiliaryExecutable: "io.safedrive.SafeDrive.cli") else {
             let message = NSLocalizedString("CLI app missing, contact SafeDrive support", comment: "")
-            SDLogError(message)
+            SDLogError("Installer", message)
             let error = SDError(message: message, kind: .cliMissing)
             throw error
         }
@@ -157,14 +157,14 @@ class Installer: NSObject {
         
         guard let cfname = SCDynamicStoreCopyConsoleUser(nil, &uid, &gid) else {
             let message = NSLocalizedString("Failed to get user information from system", comment: "")
-            SDLogError(message)
+            SDLogError("Installer", message)
             let error = SDError(message: message, kind: .setupDirectories)
             throw error
         }
         
         let name = cfname as String
         
-        SDLogDebug("name = \(name), uid = \(uid), gid = \(gid)")
+        SDLogDebug("Installer", "name = \(name), uid = \(uid), gid = \(gid)")
 
         let privilegedTask = STPrivilegedTask()
 
@@ -176,17 +176,17 @@ class Installer: NSObject {
         if err != errAuthorizationSuccess {
             if err == errAuthorizationCanceled {
                 let message = NSLocalizedString("Directory setup cancelled by user", comment: "")
-                SDLogError(message)
+                SDLogError("Installer", message)
                 let error = SDError(message: message, kind: .setupDirectories)
                 throw error
             } else {
                 let message = NSLocalizedString("Setup could not be completed", comment: "")
-                SDLogError(message)
+                SDLogError("Installer", message)
                 let error = SDError(message: message, kind: .setupDirectories)
                 throw error
             }
         } else {
-            SDLogDebug("Directory setup launched")
+            SDLogDebug("Installer", "Directory setup launched")
         }
         
         privilegedTask.waitUntilExit()
@@ -196,11 +196,11 @@ class Installer: NSObject {
         if exitCode != 0 {
             let data = privilegedTask.outputFileHandle.readDataToEndOfFile()
             if let output = String(data: data, encoding: .utf8) {
-                SDLogError("Directory setup failed: \(output)")
+                SDLogError("Installer", "Directory setup failed: \(output)")
                 let error = SDError(message: "Directory setup failed: \(output)", kind: .setupDirectories)
                 throw error
             } else {
-                SDLogError("Directory setup failed")
+                SDLogError("Installer", "Directory setup failed")
                 let error = SDError(message: "Directory setup failed", kind: .setupDirectories)
                 throw error
             }
