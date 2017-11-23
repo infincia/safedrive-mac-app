@@ -33,15 +33,15 @@ func SDErrorHandlerInitialize() {
         
         switch logLevel {
         case .error:
-            SDLogError("%@", message)
+            SDLogError(module, "%@", message)
         case .warn:
-            SDLogWarn("%@", message)
+            SDLogWarn(module, "%@", message)
         case .info:
-            SDLogInfo("%@", message)
+            SDLogInfo(module, "%@", message)
         case .debug:
-            SDLogDebug("%@", message)
+            SDLogDebug(module, "%@", message)
         case .trace:
-            SDLogTrace("%@", message)
+            SDLogTrace(module, "%@", message)
         }
     }
     
@@ -68,38 +68,38 @@ func SDErrorHandlerSetUniqueClientId(_ uniqueClientId: String?) {
     currentUniqueClientId = ucid
 }
 
-func SDLogError(_ line: String, _ arguments: CVarArg...) {
+func SDLogError(_ module: String, _ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) { _ in
         let st = String(format: line, arguments: arguments)
-        SafeDriveSDK.sharedSDK.log(st, .error)
+        SafeDriveSDK.sharedSDK.log(module, st, .error)
     }
 }
 
-func SDLogWarn(_ line: String, _ arguments: CVarArg...) {
+func SDLogWarn(_ module: String, _ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) { _ in
         let st = String(format: line, arguments: arguments)
-        SafeDriveSDK.sharedSDK.log(st, .warn)
+        SafeDriveSDK.sharedSDK.log(module, st, .warn)
     }
 }
 
-func SDLogInfo(_ line: String, _ arguments: CVarArg...) {
+func SDLogInfo(_ module: String, _ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) { _ in
         let st = String(format: line, arguments: arguments)
-        SafeDriveSDK.sharedSDK.log(st, .info)
+        SafeDriveSDK.sharedSDK.log(module, st, .info)
     }
 }
 
-func SDLogDebug(_ line: String, _ arguments: CVarArg...) {
+func SDLogDebug(_ module: String, _ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) { _ in
         let st = String(format: line, arguments: arguments)
-        SafeDriveSDK.sharedSDK.log(st, .debug)
+        SafeDriveSDK.sharedSDK.log(module, st, .debug)
     }
 }
 
-func SDLogTrace(_ line: String, _ arguments: CVarArg...) {
+func SDLogTrace(_ module: String, _ line: String, _ arguments: CVarArg...) {
     return withVaList(arguments) { _ in
         let st = String(format: line, arguments: arguments)
-        SafeDriveSDK.sharedSDK.log(st, .trace)
+        SafeDriveSDK.sharedSDK.log(module, st, .trace)
     }
 }
 
