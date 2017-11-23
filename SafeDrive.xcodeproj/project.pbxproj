@@ -174,6 +174,7 @@
 		AAC944AA1F730B4C009F8717 /* RecoveryPhraseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC944A81F730B4C009F8717 /* RecoveryPhraseWindowController.swift */; };
 		AAC944AB1F730B4C009F8717 /* RecoveryPhraseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAC944A91F730B4C009F8717 /* RecoveryPhraseWindow.xib */; };
 		AACDAD911E97548500F5B351 /* ssh_config in Resources */ = {isa = PBXBuildFile; fileRef = AACDAD901E97548500F5B351 /* ssh_config */; };
+		AACEE5D91FBF947A00A5DF60 /* sd.iconset in Resources */ = {isa = PBXBuildFile; fileRef = AACEE5D81FBF947A00A5DF60 /* sd.iconset */; };
 		AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAD44A251D88CA1D00ACCE79 /* ServiceXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */; };
 		AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */; };
@@ -473,6 +474,7 @@
 		AAC944A81F730B4C009F8717 /* RecoveryPhraseWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryPhraseWindowController.swift; sourceTree = "<group>"; };
 		AAC944A91F730B4C009F8717 /* RecoveryPhraseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecoveryPhraseWindow.xib; sourceTree = "<group>"; };
 		AACDAD901E97548500F5B351 /* ssh_config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssh_config; sourceTree = "<group>"; };
+		AACEE5D81FBF947A00A5DF60 /* sd.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = sd.iconset; sourceTree = SOURCE_ROOT; };
 		AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHandler.swift; path = ErrorHandler/ErrorHandler.swift; sourceTree = "<group>"; };
 		AAD44A231D88CA1D00ACCE79 /* ServiceXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceXPCProtocol.swift; path = Shared/ServiceXPCProtocol.swift; sourceTree = "<group>"; };
 		AAD44A241D88CA1D00ACCE79 /* AppXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppXPCProtocol.swift; path = Shared/AppXPCProtocol.swift; sourceTree = "<group>"; };
@@ -624,6 +626,7 @@
 		AA2E550E1A774DED00647637 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AACEE5D81FBF947A00A5DF60 /* sd.iconset */,
 				AAD5CFC31F73187A0008361D /* Images.xcassets */,
 				AAE216371E9BE8BD00BE956F /* setup.sh */,
 				AACDAD901E97548500F5B351 /* ssh_config */,
@@ -1339,6 +1342,7 @@
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
 				AA58D2D11E82DB86002D56E0 /* AccountView.xib in Resources */,
 				AAD5CFC41F7318A40008361D /* Images.xcassets in Resources */,
+				AACEE5D91FBF947A00A5DF60 /* sd.iconset in Resources */,
 				AA18515F1F75D11E00CC23C8 /* ValidateServiceView.xib in Resources */,
 				AA58D2CD1E82D9F0002D56E0 /* GeneralView.xib in Resources */,
 				AA11658A1F25C56700B7D8EF /* .swiftlint.yml in Resources */,
