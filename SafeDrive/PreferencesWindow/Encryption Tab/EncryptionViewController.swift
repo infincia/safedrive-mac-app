@@ -18,6 +18,8 @@ class EncryptionViewController: NSViewController {
     
     @IBOutlet fileprivate var recoveryPhraseField: NSTextField!
     
+    @IBOutlet fileprivate var enterRecoveryPhraseButton: NSButton!
+
     var email: String?
 
     fileprivate let loadKeysQueue = DispatchQueue(label: "io.safedrive.loadKeysQueue")
@@ -90,6 +92,33 @@ class EncryptionViewController: NSViewController {
         pasteBoard.clearContents()
         pasteBoard.writeObjects([recoveryPhraseField.stringValue as NSString])
     }
+    
+    @IBAction func enterRecoveryPhrase(_ sender: AnyObject) {
+        guard let w = self.recoveryPhraseEntry?.window else {
+            SDLogError("EncryptionViewController", "No recovery phrase window available")
+            
+            let error = SDKError(message: "No recovery phrase window available in EncryptionViewController", kind: SDKErrorType.Internal)
+            
+            SDErrorHandlerReport(error)
+
+            let title = NSLocalizedString("Internal error", comment: "")
+            
+            let notification = NSUserNotification()
+            
+            let message = NSLocalizedString("This has been automatically reported to SafeDrive, please contact support if you still need help", comment: "")
+
+            notification.informativeText = message
+            notification.title = title
+            notification.soundName = NSUserNotificationDefaultSoundName
+            NSUserNotificationCenter.default.deliver(notification)
+            
+            return
+        }
+
+        self.delegate.showModalWindow(w) { (_) in
+            //
+        }
+    }
 }
 
 extension EncryptionViewController: RecoveryPhraseEntryDelegate {
@@ -131,9 +160,11 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
             if let recoveryPhrase = try? self.sdk.getKeychainItem(withUser: email, service: recoveryKeyDomain()) {
                 self.recoveryPhraseField.stringValue = recoveryPhrase
                 self.copyRecoveryPhraseButton.isEnabled = true
+                self.enterRecoveryPhraseButton.isHidden = true
             } else {
                 self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
                 self.copyRecoveryPhraseButton.isEnabled = false
+                self.enterRecoveryPhraseButton.isHidden = false
             }
             success()
             
@@ -357,7 +388,8 @@ extension EncryptionViewController: SDAccountProtocol {
 
         self.recoveryPhraseField.stringValue = NSLocalizedString("Missing", comment: "")
         self.copyRecoveryPhraseButton.isEnabled = false
-        
+        self.enterRecoveryPhraseButton.isHidden = false
+
         guard let w = self.recoveryPhraseEntry?.window else {
             SDLogError("EncryptionViewController", "no recovery phrase window available")
             return
