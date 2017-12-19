@@ -56,7 +56,7 @@ class MountController: NSObject {
         return UserDefaults.standard.bool(forKey: keepMountedKey())
     }
     
-    var useCache = true
+    var useCache = false
     
     var useXPC = false
 
