@@ -11,7 +11,10 @@ protocol SDVolumeEventProtocol: class {
     func volumeShouldUnmount(notification: Notification)
     func volumeShouldMount(notification: Notification)
     func volumeSubprocessDidTerminate(notification: Notification)
+    func volumeMounting(notification: Notification)
     func volumeUnmounting(notification: Notification)
+    func volumeMountFailed(notification: Notification)
+    func volumeUnmountFailed(notification: Notification)
 }
 
 @objc
