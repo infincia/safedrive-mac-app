@@ -248,16 +248,9 @@ class MountController: NSObject {
             while true {
                 self.mounted = self.checkMount(at: self.currentMountURL)
                 
-                if self.mounted {
-                    main {
-                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object: self.mountDetails)
-                        NotificationCenter.default.post(name: Notification.Name.mounted, object: nil)
-                    }
-                } else {
-                    main {
-                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object: nil)
-                        NotificationCenter.default.post(name: Notification.Name.unmounted, object: nil)
-                    }
+                main {
+                    NotificationCenter.default.post(name: Notification.Name.mountDetails, object: self.mountDetails)
+                    NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
                 }
                 
                 Thread.sleep(forTimeInterval: 1)

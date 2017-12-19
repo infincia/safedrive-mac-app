@@ -39,8 +39,7 @@ class DropdownController: NSObject {
         super.init()
         Bundle.main.loadNibNamed(NSNib.Name("DropdownMenu"), owner: self, topLevelObjects: nil)
         // register SDMountStateProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountState), name: Notification.Name.mountState, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
         
         // register SDAccountProtocol notifications
@@ -151,18 +150,27 @@ extension DropdownController: SDAccountProtocol {
 
 extension DropdownController: SDMountStateProtocol {
     
-    func mountStateMounted(notification: Notification) {
-        self.mounted = true
-        self.toggleMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
-        self.forceToggleMenuItem.title = NSLocalizedString("Force Disconnect", comment: "Menu title for forcefully disconnecting the volume")
-        self.menuBarImage = NSImage(named: NSImage.Name.lockUnlockedTemplate)
-    }
-    
-    func mountStateUnmounted(notification: Notification) {
-        self.mounted = false
-        self.toggleMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
-        self.forceToggleMenuItem.title = NSLocalizedString("Force Connect", comment: "Menu title for forcefully connecting the volume")
-        self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
+    func mountState(notification: Notification) {
+        guard let m = notification.object as? Bool else {
+            return
+        }
+        
+        self.mounted = m
+        
+        if self.mounting || self.unmounting {
+            return
+        }
+        
+        if self.mounted {
+            self.toggleMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnect button action on the volume")
+            self.forceToggleMenuItem.title = NSLocalizedString("Force Disconnect", comment: "Menu title for forcefully disconnecting the volume")
+            self.menuBarImage = NSImage(named: NSImage.Name.lockUnlockedTemplate)
+        } else {
+            self.mounted = false
+            self.toggleMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connect button action on the volume")
+            self.forceToggleMenuItem.title = NSLocalizedString("N/A", comment: "Not applicable")
+            self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
+        }
     }
     
     func mountStateDetails(notification: Notification) {

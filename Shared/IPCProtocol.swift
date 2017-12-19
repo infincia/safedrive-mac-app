@@ -21,6 +21,5 @@ let kIPCProtocolVersion: Int = 5
     
     func syncEvent(_ folderID: UInt64)
     
-    func mountStateMounted()
-    func mountStateUnmounted()
+    func mountState(_ mounted: Bool)
 }

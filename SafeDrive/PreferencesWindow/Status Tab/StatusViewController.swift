@@ -43,8 +43,7 @@ class StatusViewController: NSViewController {
         self.delegate = delegate
         
         // register SDMountStateProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountState), name: Notification.Name.mountState, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
         
         // register SDApplicationEventProtocol notifications
@@ -59,16 +58,18 @@ class StatusViewController: NSViewController {
 
 extension StatusViewController: SDMountStateProtocol {
     
-    func mountStateMounted(notification: Foundation.Notification) {
+    func mountState(notification: Foundation.Notification) {
+        guard let mounted = notification.object as? Bool else {
+            return
+        }
+
         assert(Thread.current == Thread.main, "mountStateMounted called on background thread")
-        
-        self.mountStatusField.stringValue = NSLocalizedString("Yes", comment: "String for volume mount status of mounted")
-    }
-    
-    func mountStateUnmounted(notification: Foundation.Notification) {
-        assert(Thread.current == Thread.main, "mountStateUnmounted called on background thread")
-        
-        self.mountStatusField.stringValue = NSLocalizedString("No", comment: "String for volume mount status of unmounted")
+
+        if mounted {
+            self.mountStatusField.stringValue = NSLocalizedString("Yes", comment: "String for volume mount status of mounted")
+        } else {
+            self.mountStatusField.stringValue = NSLocalizedString("No", comment: "String for volume mount status of unmounted")
+        }
     }
     
     func mountStateDetails(notification: Foundation.Notification) {

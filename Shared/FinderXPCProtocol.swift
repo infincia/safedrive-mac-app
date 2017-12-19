@@ -16,7 +16,5 @@ let kFinderXPCProtocolVersion: Int = 7
     
     func syncEvent(_ folderID: UInt64)
     
-    func mountStateMounted()
-    func mountStateUnmounted()
-
+    func mountState(_ mounted: Bool)
 }

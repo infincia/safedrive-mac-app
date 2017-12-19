@@ -65,8 +65,7 @@ class GeneralViewController: NSViewController {
         self.delegate = delegate
         
         // register SDMountStateProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountState), name: Notification.Name.mountState, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
     }
     
@@ -74,18 +73,20 @@ class GeneralViewController: NSViewController {
 
 extension GeneralViewController: SDMountStateProtocol {
     
-    func mountStateMounted(notification: Foundation.Notification) {
-        assert(Thread.current == Thread.main, "mountStateMounted called on background thread")
+    func mountState(notification: Foundation.Notification) {
+        guard let mounted = notification.object as? Bool else {
+            return
+        }
+
+        assert(Thread.current == Thread.main, "mountState called on background thread")
         
-        self.volumeNameField.isEnabled = false
-        self.volumeNameWarningField.isHidden = false
-    }
-    
-    func mountStateUnmounted(notification: Foundation.Notification) {
-        assert(Thread.current == Thread.main, "mountStateUnmounted called on background thread")
-    
-        self.volumeNameField.isEnabled = true
-        self.volumeNameWarningField.isHidden = true
+        if mounted {
+            self.volumeNameField.isEnabled = false
+            self.volumeNameWarningField.isHidden = false
+        } else {
+            self.volumeNameField.isEnabled = true
+            self.volumeNameWarningField.isHidden = true
+        }
     }
     
     func mountStateDetails(notification: Foundation.Notification) {

@@ -5,8 +5,7 @@
 import Foundation
 
 extension Notification.Name {
-    static let mounted = Notification.Name("mountedNotification")
-    static let unmounted = Notification.Name("unmountedNotification")
+    static let mountState = Notification.Name("mountStateNotification")
     static let mountDetails = Notification.Name("mountDetailsNotification")
 
 

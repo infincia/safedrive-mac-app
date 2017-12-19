@@ -5,26 +5,14 @@
 import Foundation
 
 class IPCListenerDelegate: NSObject, NSXPCListenerDelegate, IPCProtocol {
-    func mountStateMounted() {
+    func mountState(_ mounted: Bool) {
         finderConnectionsQueue.sync {
             for finder in self.finderConnections {
                 let proxy = finder.remoteObjectProxyWithErrorHandler({ (error) in
                     print("Connecting to service failed: \(error.localizedDescription)")
                 }) as! FinderXPCProtocol
                 
-                proxy.mountStateMounted()
-            }
-        }
-    }
-    
-    func mountStateUnmounted() {
-        finderConnectionsQueue.sync {
-            for finder in self.finderConnections {
-                let proxy = finder.remoteObjectProxyWithErrorHandler({ (error) in
-                    print("Connecting to service failed: \(error.localizedDescription)")
-                }) as! FinderXPCProtocol
-                
-                proxy.mountStateUnmounted()
+                proxy.mountState(mounted)
             }
         }
     }

@@ -31,11 +31,7 @@ class FinderXPCDelegate: NSObject, FinderXPCProtocol {
         replyBlock(kFinderXPCProtocolVersion)
     }
     
-    func mountStateMounted() {
-        NotificationCenter.default.post(name: Notification.Name.mounted, object: nil)
-    }
-    
-    func mountStateUnmounted() {
-        NotificationCenter.default.post(name: Notification.Name.unmounted, object: nil)
+    func mountState(_ mounted: Bool) {
+        NotificationCenter.default.post(name: Notification.Name.mountState, object: mounted)
     }
 }

@@ -81,8 +81,7 @@ class FinderSync: FIFinderSync {
         NotificationCenter.default.addObserver(self, selector: #selector(SDSyncEventProtocol.syncEvent), name: Notification.Name.syncEvent, object: nil)
         
         // register SDMountStateProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountState), name: Notification.Name.mountState, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
         
     }
@@ -432,14 +431,18 @@ extension FinderSync: SDAccountProtocol {
 
 extension FinderSync: SDMountStateProtocol {
     
-    func mountStateMounted(notification: Notification) {
-        //self.connectMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
-        //self.menuBarImage = NSImage(named: NSImageNameLockUnlockedTemplate)
-    }
-    
-    func mountStateUnmounted(notification: Notification) {
-        //self.connectMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
-        //self.menuBarImage = NSImage(named: NSImageNameLockLockedTemplate)
+    func mountState(notification: Notification) {
+        guard let mounted = notification.object as? Bool else {
+            return
+        }
+        
+        if mounted {
+            //self.connectMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
+            //self.menuBarImage = NSImage(named: NSImageNameLockUnlockedTemplate)
+        } else {
+            //self.connectMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
+            //self.menuBarImage = NSImage(named: NSImageNameLockLockedTemplate)
+        }
     }
     
     func mountStateDetails(notification: Notification) {

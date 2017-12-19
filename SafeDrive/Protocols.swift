@@ -19,8 +19,7 @@ protocol SDVolumeEventProtocol: class {
 
 @objc
 protocol SDMountStateProtocol: class {
-    func mountStateMounted(notification: Notification)
-    func mountStateUnmounted(notification: Notification)
+    func mountState(notification: Notification)
     func mountStateDetails(notification: Notification)
 }
 

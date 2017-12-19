@@ -82,8 +82,7 @@ class ServiceManager: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDSyncEventProtocol.syncEvent), name: Notification.Name.syncEvent, object: nil)
         
         // register SDMountStateProtocol notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateMounted), name: Notification.Name.mounted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateUnmounted), name: Notification.Name.unmounted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountState), name: Notification.Name.mountState, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDMountStateProtocol.mountStateDetails), name: Notification.Name.mountDetails, object: nil)
         
         background {
@@ -211,26 +210,18 @@ extension ServiceManager: SDAccountProtocol {
 
 extension ServiceManager: SDMountStateProtocol {
     
-    func mountStateMounted(notification: Notification) {
-        ipcServiceQueue.async {
-            if let s = self.ipcConnection {
-                let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                    SDLogError("ServiceManager", "Connecting to service IPC failed: \(error.localizedDescription)")
-                }) as! IPCProtocol
-                
-                proxy.mountStateMounted()
-            }
+    func mountState(notification: Notification) {
+        guard let mounted = notification.object as? Bool else {
+            return
         }
-    }
-    
-    func mountStateUnmounted(notification: Notification) {
+
         ipcServiceQueue.async {
             if let s = self.ipcConnection {
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                     SDLogError("ServiceManager", "Connecting to service IPC failed: \(error.localizedDescription)")
                 }) as! IPCProtocol
                 
-                proxy.mountStateUnmounted()
+                proxy.mountState(mounted)
             }
         }
     }
