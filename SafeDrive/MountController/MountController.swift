@@ -238,24 +238,6 @@ class MountController: NSObject {
         }
     }
     
-    func unmount(success successBlock: @escaping (_ mount: URL) -> Void, failure failureBlock: @escaping (_ mount: URL, _ error: Error) -> Void) {
-        
-        background {
-            do {
-                try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
-                main {
-                    self.mountURL = nil
-                    NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
-                    successBlock(self.currentMountURL)
-                }
-            } catch let error as NSError {
-                main {
-                    failureBlock(self.currentMountURL, error)
-                }
-            }
-        }
-    }
-    
     // MARK: warning Needs slight refactoring
     func mountStateLoop() {
         background {
@@ -404,11 +386,11 @@ class MountController: NSObject {
                         
                         // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
                         
-                        self.unmount(success: { _ in
-                            //
-                        }, failure: { (_, _) in
-                            //
-                        })
+                        do {
+                            try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
+                        } catch {
+
+                        }
                     })
                 } else {
                     self.mounting = false
@@ -477,11 +459,11 @@ class MountController: NSObject {
                     
                     // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
                     
-                    self.unmount(success: { _ in
-                        //
-                    }, failure: { (_, _) in
-                        //
-                    })
+                    do {
+                        try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
+                    } catch {
+
+                    }
                 })
             }
         }
@@ -489,59 +471,112 @@ class MountController: NSObject {
     
     func disconnectVolume(askForOpenApps: Bool) {
     
+        func errorHandler(url: URL, error: NSError) {
+            let message = "SafeDrive could not be unmounted\n\n \(error.localizedDescription)"
+
+            SDLogError("MountController", message)
+            
+            let notification = NSUserNotification()
+            
+            let code = error.code
+            if code == fBsyErr {
+                notification.informativeText = NSLocalizedString("Please close any open files on your SafeDrive", comment: "")
+                
+                if askForOpenApps {
+                    let c = OpenFileCheck()
+                    
+                    let processes = c.check(volume: url)
+                    
+                    if processes.count <= 0 {
+                        return
+                    }
+                    main {
+                        NSApp.activate(ignoringOtherApps: true)
+                        
+                        self.openFileWarning.check(url: url)
+                    }
+                }
+            } else if code == fnfErr {
+                notification.informativeText = NSLocalizedString("This is a bug in OS X, reboot may help", comment: "")
+            } else {
+                notification.informativeText = NSLocalizedString("Unknown error occurred (\(code))", comment: "")
+            }
+            
+            var userInfo = [String: Any]()
+            
+            userInfo["identifier"] = SDNotificationType.driveUnmountFailed.rawValue
+            
+            notification.userInfo = userInfo
+            
+            notification.title = "SafeDrive unmount failed"
+            
+            notification.soundName = NSUserNotificationDefaultSoundName
+            
+            NSUserNotificationCenter.default.deliver(notification)
+        }
+        
         let volumeName: String = self.currentVolumeName
         
         SDLogInfo("MountController", "Dismounting volume: %@", volumeName)
         
+        main {
+            NotificationCenter.default.post(name: Notification.Name.volumeUnmounting, object: nil)
+            
+            let notification = NSUserNotification()
+            notification.informativeText = NSLocalizedString("Please wait while the drive unmounts", comment: "")
+
+            var userInfo = [String: Any]()
+            
+            userInfo["identifier"] = SDNotificationType.driveUnmounting.rawValue
+            
+            notification.userInfo = userInfo
+            
+            notification.title = "SafeDrive unmounting"
+            
+            notification.soundName = NSUserNotificationDefaultSoundName
+            
+            NSUserNotificationCenter.default.deliver(notification)
+        }
+        
         background {
-            self.unmount(success: { _ -> Void in
-                //
-            }, failure: { (url, error) -> Void in
-                
-                let message = "SafeDrive could not be unmounted\n\n \(error.localizedDescription)"
-                
-                SDLogError("MountController", message)
-                
-                let notification = NSUserNotification()
-                
-                let e = error as NSError
-                let code = e.code
-                if code == fBsyErr {
-                    notification.informativeText = NSLocalizedString("Please close any open files on your SafeDrive", comment: "")
-
-                    if askForOpenApps {
-                        let c = OpenFileCheck()
-                        
-                        let processes = c.check(volume: url)
-                        
-                        if processes.count <= 0 {
-                            return
-                        }
-                        main {
-                            NSApp.activate(ignoringOtherApps: true)
-                            
-                            self.openFileWarning.check(url: url)
-                        }
+            let retries = 5
+            var retries_left = retries
+            
+            repeat {
+                do {
+                    try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
+                    main {
+                        self.mountURL = nil
+                        NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
                     }
-                } else if code == fnfErr {
-                    notification.informativeText = NSLocalizedString("This is a bug in OS X, reboot may help", comment: "")
-                } else {
-                    notification.informativeText = NSLocalizedString("Unknown error occurred (\(code))", comment: "")
-                }
-                
-                var userInfo = [String: Any]()
-                
-                userInfo["identifier"] = SDNotificationType.driveUnmountFailed.rawValue
+                    
+                    return
+                    
+                } catch let error as NSError {
+                    retries_left -= 1
 
-                notification.userInfo = userInfo
-                
-                notification.title = "SafeDrive unmount failed"
-                
-                notification.soundName = NSUserNotificationDefaultSoundName
-                
-                NSUserNotificationCenter.default.deliver(notification)
-                
-            })
+                    if retries_left <= 0 {
+                        SDLogWarn("MountController", "Unmount retries exceeded")
+
+                        main {
+                            errorHandler(url: self.currentMountURL, error: error)
+                        }
+                        return
+                    }
+                    
+                    let failed_count = retries - retries_left
+
+                    if failed_count >= 1 {
+                        let backoff_multiplier = drand48()
+
+                        let backoff_time = backoff_multiplier * Double(failed_count * failed_count)
+                        
+                        SDLogWarn("MountController", "Unmount retrying after \(backoff_time)s")
+
+                        Thread.sleep(forTimeInterval: TimeInterval(backoff_time))
+                    }
+                }
+            } while retries_left > 0
         }
     }
     
