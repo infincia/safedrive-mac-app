@@ -706,8 +706,20 @@ extension MountController: SDVolumeEventProtocol {
         }
         self.disconnectVolume(askForOpenApps: askForOpenApps)
     }
+  
+    func volumeMounting(notification: Notification) {
+        //
+    }
     
     func volumeUnmounting(notification: Notification) {
+        //
+    }
+    
+    func volumeMountFailed(notification: Notification) {
+        //
+    }
+    
+    func volumeUnmountFailed(notification: Notification) {
         //
     }
 }
