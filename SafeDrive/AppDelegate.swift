@@ -329,6 +329,8 @@ extension AppDelegate: NSUserNotificationCenterDelegate {
             break
         case .driveForceUnmountFailed:
             break
+        case .driveUnmounting:
+            break
         }
 
         center.removeDeliveredNotification(notification)
