@@ -355,12 +355,6 @@ class MountController: NSObject {
         
     
         self.mounting = true
-    
-        var urlComponents = URLComponents()
-        urlComponents.user = user
-        urlComponents.host = host
-        urlComponents.path = defaultServerPath()
-        urlComponents.port = Int(port)
 
         let notification = NSUserNotification()
         
