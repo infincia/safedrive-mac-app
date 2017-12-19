@@ -15,6 +15,10 @@ class DropdownController: NSObject {
     fileprivate var sdk = SafeDriveSDK.sharedSDK
     
     fileprivate var mounted = false
+    
+    fileprivate var mounting = false
+    
+    fileprivate var unmounting = false
 
     @objc
     var sharedAccountController = AccountController.sharedAccountController
@@ -193,29 +197,86 @@ extension DropdownController: SDApplicationEventProtocol {
 extension DropdownController: SDVolumeEventProtocol {
     
     func volumeDidMount(notification: Notification) {
+        assert(Thread.current == Thread.main, "volumeDidMount called on background thread")
+        self.mounting = false
+        self.unmounting = false
+        self.mounted = true
+        
+        self.toggleMenuItem.isEnabled = true
+        self.forceToggleMenuItem.isEnabled = true
+        
+        self.toggleMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnect button action on the volume")
+        self.forceToggleMenuItem.title = NSLocalizedString("Force Disconnect", comment: "Menu title for forcefully disconnecting the volume")
+        self.menuBarImage = NSImage(named: NSImage.Name.lockUnlockedTemplate)
     }
     
     func volumeDidUnmount(notification: Notification) {
+        assert(Thread.current == Thread.main, "volumeDidMount called on background thread")
+        self.mounting = false
+        self.unmounting = false
+        self.mounted = false
+        
+        self.toggleMenuItem.isEnabled = true
+        self.forceToggleMenuItem.isEnabled = true
+        
+        self.toggleMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connect button action on the volume")
+        self.forceToggleMenuItem.title = NSLocalizedString("N/A", comment: "Not applicable")
+        self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
     }
     
     func volumeSubprocessDidTerminate(notification: Notification) {
+        assert(Thread.current == Thread.main, "volumeSubprocessDidTerminate called on background thread")
     }
     
     func volumeShouldMount(notification: Notification) {
+        assert(Thread.current == Thread.main, "volumeShouldMount called on background thread")
     }
     
     func volumeShouldUnmount(notification: Notification) {
+        assert(Thread.current == Thread.main, "volumeShouldUnmount called on background thread")
     }
     
     func volumeMounting(notification: Notification) {
+        self.mounting = true
+        self.unmounting = false
+
+        self.toggleMenuItem.title = NSLocalizedString("Connecting...", comment: "Menu title for 'connecting' state on the volume")
+        self.forceToggleMenuItem.title = NSLocalizedString("N/A", comment: "Not applicable")
+        self.toggleMenuItem.isEnabled = false
+        self.forceToggleMenuItem.isEnabled = false
     }
     
     func volumeUnmounting(notification: Notification) {
+        self.unmounting = true
+        self.mounting = false
+
+        self.toggleMenuItem.title = NSLocalizedString("Disconnecting...", comment: "Menu title for 'disconnecting' state on the volume")
+        self.forceToggleMenuItem.title = NSLocalizedString("N/A", comment: "Not applicable")
+        self.toggleMenuItem.isEnabled = false
+        self.forceToggleMenuItem.isEnabled = false
     }
     
     func volumeMountFailed(notification: Notification) {
+        self.mounting = false
+        self.unmounting = false
+
+        self.toggleMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connect button action on the volume")
+        self.forceToggleMenuItem.title = NSLocalizedString("N/A", comment: "Not applicable")
+        self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
+        
+        self.toggleMenuItem.isEnabled = true
+        self.forceToggleMenuItem.isEnabled = true
     }
     
     func volumeUnmountFailed(notification: Notification) {
+        self.mounting = false
+        self.unmounting = false
+
+        self.toggleMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnect button action on the volume")
+        self.forceToggleMenuItem.title = NSLocalizedString("Force Disconnect", comment: "Menu title for forcefully disconnecting the volume")
+        self.menuBarImage = NSImage(named: NSImage.Name.lockUnlockedTemplate)
+        
+        self.toggleMenuItem.isEnabled = true
+        self.forceToggleMenuItem.isEnabled = true
     }
 }
