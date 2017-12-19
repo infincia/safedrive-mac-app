@@ -341,6 +341,7 @@ class MountController: NSObject {
         
     
         self.mounting = true
+        NotificationCenter.default.post(name: Notification.Name.volumeMounting, object: nil)
 
         let notification = NSUserNotification()
         
@@ -388,6 +389,8 @@ class MountController: NSObject {
                         
                         self.mounting = false
                         
+                        NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: nil)
+
                         // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
                         
                         do {
@@ -399,6 +402,8 @@ class MountController: NSObject {
                 } else {
                     self.mounting = false
                     
+                    NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: nil)
+
                     let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
                     let error = SDError(message: message, kind: .serviceDeployment)
                     SDLogError("MountController", "\(message)")
@@ -461,6 +466,8 @@ class MountController: NSObject {
                     
                     self.mounting = false
                     
+                    NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: nil)
+
                     // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
                     
                     do {
@@ -479,6 +486,8 @@ class MountController: NSObject {
             let message = "SafeDrive could not be unmounted\n\n \(error.localizedDescription)"
 
             SDLogError("MountController", message)
+            
+            NotificationCenter.default.post(name: Notification.Name.volumeUnmountFailed, object: nil)
             
             let notification = NSUserNotification()
             
