@@ -180,3 +180,33 @@ extension DropdownController: SDApplicationEventProtocol {
         }
     }
 }
+
+extension DropdownController: SDVolumeEventProtocol {
+    
+    func volumeDidMount(notification: Notification) {
+    }
+    
+    func volumeDidUnmount(notification: Notification) {
+    }
+    
+    func volumeSubprocessDidTerminate(notification: Notification) {
+    }
+    
+    func volumeShouldMount(notification: Notification) {
+    }
+    
+    func volumeShouldUnmount(notification: Notification) {
+    }
+    
+    func volumeMounting(notification: Notification) {
+    }
+    
+    func volumeUnmounting(notification: Notification) {
+    }
+    
+    func volumeMountFailed(notification: Notification) {
+    }
+    
+    func volumeUnmountFailed(notification: Notification) {
+    }
+}
