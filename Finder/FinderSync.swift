@@ -60,12 +60,9 @@ class FinderSync: FIFinderSync {
                                              action: #selector(FinderSync.openPreferencesWindow(_:)),
                                              keyEquivalent: "")
         
-        let sep = NSMenuItem.separator()
-        
         self.toolbarMenu = NSMenu()
         self.toolbarMenu.addItem(self.mountMenuItem)
         self.toolbarMenu.addItem(self.preferenceMenuItem)
-        self.toolbarMenu.addItem(sep)
         self.toolbarMenu.addItem(self.supportMenuItem)
         
         // register SDAccountProtocol notifications
