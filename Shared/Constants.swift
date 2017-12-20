@@ -23,6 +23,7 @@ public enum SDKLogLevel: UInt8 {
 public enum SDNotificationType: String {
     case driveForceUnmountFailed = "drive-force-unmount-failed"
     case signInFailed = "sign-in-failed"
+    case driveMounting = "drive-mounting"
     case driveUnmounting = "drive-unmounting"
     case driveMountFailed = "drive-mount-failed"
     case driveUnmountFailed = "drive-unmount-failed"
