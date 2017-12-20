@@ -438,10 +438,8 @@ extension FinderSync: SDMountStateProtocol {
         
         if mounted {
             //self.connectMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
-            //self.menuBarImage = NSImage(named: NSImageNameLockUnlockedTemplate)
         } else {
             //self.connectMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
-            //self.menuBarImage = NSImage(named: NSImageNameLockLockedTemplate)
         }
     }
     
