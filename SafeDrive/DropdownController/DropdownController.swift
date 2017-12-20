@@ -69,11 +69,12 @@ class DropdownController: NSObject {
     }
     
     override func awakeFromNib() {
-        guard let iconURL = Bundle.main.url(forResource: "menubar", withExtension: "icns") else {
+        guard let icon = NSImage.init(named: NSImage.Name("menubar")) else {
+            SDLogWarn("Dropdown", "NO MENUBAR ICON")
             return
         }
-        
-        self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+
+        self.statusItem = NSStatusBar.system.statusItem(withLength: 29)
         // menu loaded from SDDropdownMenu.xib
         self.statusItem?.menu = self.statusItemMenu
         
@@ -84,7 +85,7 @@ class DropdownController: NSObject {
 
         // this sets the tooltip of the menu bar item using a localized string from SafeDrive.strings
         self.statusItem?.toolTip = NSLocalizedString("SafeDriveAppName", comment: "Safe Drive Application Name")
-        self.menuBarImage = NSImage(byReferencing: iconURL)
+        self.menuBarImage = icon
         self.enableMenuItems(false)
     }
     
