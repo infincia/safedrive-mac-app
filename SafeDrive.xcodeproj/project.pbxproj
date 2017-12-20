@@ -43,6 +43,7 @@
 		AA192C0D1F37C9470037245A /* IPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C0A1F37C9280037245A /* IPCProtocol.swift */; };
 		AA192C0F1F37CA890037245A /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
+		AA1D45571FE9F53D00C804D7 /* menubar.iconset in Resources */ = {isa = PBXBuildFile; fileRef = AA1D45561FE9F53D00C804D7 /* menubar.iconset */; };
 		AA1E454E1F46AE890092F49D /* IPCService.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA192BF51F37C64A0037245A /* IPCService.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA2A42221F2315DA00CC6010 /* AddFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42201F2315DA00CC6010 /* AddFolderWindow.xib */; };
 		AA2A42241F23281400CC6010 /* AddFolderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A42211F2315DA00CC6010 /* AddFolderWindowController.swift */; };
@@ -387,6 +388,7 @@
 		AA192C071F37C7800037245A /* IPCListenerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPCListenerDelegate.swift; sourceTree = "<group>"; };
 		AA192C0A1F37C9280037245A /* IPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IPCProtocol.swift; path = Shared/IPCProtocol.swift; sourceTree = "<group>"; };
 		AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncFailurePopoverView.swift; path = ../SyncFailurePopoverView.swift; sourceTree = "<group>"; };
+		AA1D45561FE9F53D00C804D7 /* menubar.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = menubar.iconset; sourceTree = SOURCE_ROOT; };
 		AA272A051F09B01900B47673 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		AA272A0A1F09C55100B47673 /* push.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = push.sh; sourceTree = "<group>"; };
 		AA272A0B1F09C63B00B47673 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 		AA2E550E1A774DED00647637 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AA1D45561FE9F53D00C804D7 /* menubar.iconset */,
 				AACEE5D81FBF947A00A5DF60 /* sd.iconset */,
 				AAD5CFC31F73187A0008361D /* Images.xcassets */,
 				AAE216371E9BE8BD00BE956F /* setup.sh */,
@@ -1341,6 +1344,7 @@
 				AAE216381E9BE8BD00BE956F /* setup.sh in Resources */,
 				AA4F8FC81E6A2D5700BB068A /* WelcomeView.xib in Resources */,
 				AAB617C01A7B18080003CD30 /* Acknowledgments.rtf in Resources */,
+				AA1D45571FE9F53D00C804D7 /* menubar.iconset in Resources */,
 				AA58D2D11E82DB86002D56E0 /* AccountView.xib in Resources */,
 				AAD5CFC41F7318A40008361D /* Images.xcassets in Resources */,
 				AACEE5D91FBF947A00A5DF60 /* sd.iconset in Resources */,
