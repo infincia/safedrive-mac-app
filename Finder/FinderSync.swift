@@ -24,6 +24,9 @@ class FinderSync: FIFinderSync {
     var preferenceMenuItem: NSMenuItem!
     var mountMenuItem: NSMenuItem!
     
+    var earlyToolbarMenu: NSMenu!
+    var launchAppMenuItem: NSMenuItem!
+    
     var uniqueClientID: String?
     
     var lastAppContact = Date()
@@ -49,6 +52,14 @@ class FinderSync: FIFinderSync {
         FIFinderSyncController.default().directoryURLs = Set<URL>()
         
         self.serviceReconnectionLoop()
+        
+        self.earlyToolbarMenu = NSMenu()
+        
+        self.launchAppMenuItem = NSMenuItem(title: "Launch SafeDrive",
+                                            action: #selector(FinderSync.launchApp(_:)),
+                                            keyEquivalent: "")
+        
+        self.earlyToolbarMenu.addItem(self.launchAppMenuItem)
         
         self.mountMenuItem = NSMenuItem(title: "Connect",
                                              action: #selector(FinderSync.toggleMountState(_:)),
@@ -292,7 +303,13 @@ class FinderSync: FIFinderSync {
             /* contextual menu for an item in the sidebar */
             break
         case .toolbarItemMenu:
-            m = self.toolbarMenu
+            let now = Date()
+            let d = now.timeIntervalSince(self.lastAppContact)
+            if d > 3 {
+                m = self.earlyToolbarMenu
+            } else {
+                m = self.toolbarMenu
+            }
         }
         return m!
     }
