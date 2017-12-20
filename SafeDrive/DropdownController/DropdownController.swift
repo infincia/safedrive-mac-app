@@ -69,6 +69,10 @@ class DropdownController: NSObject {
     }
     
     override func awakeFromNib() {
+        guard let iconURL = Bundle.main.url(forResource: "menubar", withExtension: "icns") else {
+            return
+        }
+        
         self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         // menu loaded from SDDropdownMenu.xib
         self.statusItem?.menu = self.statusItemMenu
@@ -80,7 +84,7 @@ class DropdownController: NSObject {
 
         // this sets the tooltip of the menu bar item using a localized string from SafeDrive.strings
         self.statusItem?.toolTip = NSLocalizedString("SafeDriveAppName", comment: "Safe Drive Application Name")
-        self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
+        self.menuBarImage = NSImage(byReferencing: iconURL)
         self.enableMenuItems(false)
     }
     
@@ -164,12 +168,10 @@ extension DropdownController: SDMountStateProtocol {
         if self.mounted {
             self.toggleMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnect button action on the volume")
             self.forceToggleMenuItem.title = NSLocalizedString("Force Disconnect", comment: "Menu title for forcefully disconnecting the volume")
-            self.menuBarImage = NSImage(named: NSImage.Name.lockUnlockedTemplate)
         } else {
             self.mounted = false
             self.toggleMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connect button action on the volume")
             self.forceToggleMenuItem.title = NSLocalizedString("N/A", comment: "Not applicable")
-            self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
         }
     }
     
@@ -215,7 +217,6 @@ extension DropdownController: SDVolumeEventProtocol {
         
         self.toggleMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnect button action on the volume")
         self.forceToggleMenuItem.title = NSLocalizedString("Force Disconnect", comment: "Menu title for forcefully disconnecting the volume")
-        self.menuBarImage = NSImage(named: NSImage.Name.lockUnlockedTemplate)
     }
     
     func volumeDidUnmount(notification: Notification) {
@@ -229,7 +230,6 @@ extension DropdownController: SDVolumeEventProtocol {
         
         self.toggleMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connect button action on the volume")
         self.forceToggleMenuItem.title = NSLocalizedString("N/A", comment: "Not applicable")
-        self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
     }
     
     func volumeSubprocessDidTerminate(notification: Notification) {
@@ -270,7 +270,6 @@ extension DropdownController: SDVolumeEventProtocol {
 
         self.toggleMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connect button action on the volume")
         self.forceToggleMenuItem.title = NSLocalizedString("N/A", comment: "Not applicable")
-        self.menuBarImage = NSImage(named: NSImage.Name.lockLockedTemplate)
         
         self.toggleMenuItem.isEnabled = true
         self.forceToggleMenuItem.isEnabled = true
@@ -282,7 +281,6 @@ extension DropdownController: SDVolumeEventProtocol {
 
         self.toggleMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnect button action on the volume")
         self.forceToggleMenuItem.title = NSLocalizedString("Force Disconnect", comment: "Menu title for forcefully disconnecting the volume")
-        self.menuBarImage = NSImage(named: NSImage.Name.lockUnlockedTemplate)
         
         self.toggleMenuItem.isEnabled = true
         self.forceToggleMenuItem.isEnabled = true
