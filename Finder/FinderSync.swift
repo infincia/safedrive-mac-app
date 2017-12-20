@@ -270,10 +270,11 @@ class FinderSync: FIFinderSync {
     
     override var toolbarItemImage: NSImage {
         // swiftlint:disable force_unwrapping
-
-        return NSImage(named: NSImage.Name.lockLockedTemplate)!
+        guard let icon = Bundle.main.url(forResource: "sd", withExtension: "icns") else {
+            return NSImage.init(named: NSImage.Name.lockLockedTemplate)!
+        }
+        return NSImage(byReferencing: icon)
         // swiftlint:enable force_unwrapping
-
     }
     
     // swiftlint:disable force_unwrapping
