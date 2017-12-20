@@ -48,7 +48,7 @@ class FinderSync: FIFinderSync {
         
         self.serviceReconnectionLoop()
         
-        self.mountMenuItem = NSMenuItem(title: "Mount SafeDrive",
+        self.mountMenuItem = NSMenuItem(title: "Connect",
                                              action: #selector(FinderSync.toggleMountState(_:)),
                                              keyEquivalent: "")
         
