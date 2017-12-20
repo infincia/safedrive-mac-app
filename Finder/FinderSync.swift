@@ -297,6 +297,10 @@ class FinderSync: FIFinderSync {
         return m!
     }
     // swiftlint:enable force_unwrapping
+    
+    @IBAction func launchApp(_ sender: AnyObject) {
+        NSWorkspace.shared.launchApplication("SafeDrive")
+    }
 
     @IBAction func support(_ sender: AnyObject) {
         // swiftlint:disable force_unwrapping
