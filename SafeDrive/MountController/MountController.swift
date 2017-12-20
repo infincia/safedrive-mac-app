@@ -337,6 +337,21 @@ class MountController: NSObject {
 
         main {
             NotificationCenter.default.post(name: Notification.Name.volumeMounting, object: nil)
+            
+            let notification = NSUserNotification()
+            notification.informativeText = NSLocalizedString("Please wait while the drive mounts", comment: "")
+            
+            var userInfo = [String: Any]()
+            
+            userInfo["identifier"] = SDNotificationType.driveMounting.rawValue
+            
+            notification.userInfo = userInfo
+            
+            notification.title = "SafeDrive mounting"
+            
+            notification.soundName = NSUserNotificationDefaultSoundName
+            
+            NSUserNotificationCenter.default.deliver(notification)
         }
         
         let notification = NSUserNotification()
