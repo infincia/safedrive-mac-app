@@ -444,6 +444,8 @@ extension FinderSync: SDMountStateProtocol {
         } else {
             //self.mountMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
         }
+        
+        self.enableMenuItems(true)
     }
     
     func mountStateDetails(notification: Notification) {
