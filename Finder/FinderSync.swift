@@ -450,9 +450,9 @@ extension FinderSync: SDMountStateProtocol {
         self.mounted = mounted
         
         if self.mounted {
-            //self.mountMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
+            self.mountMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
         } else {
-            //self.mountMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
+            self.mountMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
         }
         
         self.enableMenuItems(true)
