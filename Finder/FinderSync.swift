@@ -25,6 +25,8 @@ class FinderSync: FIFinderSync {
     var mountMenuItem: NSMenuItem!
     
     var uniqueClientID: String?
+    
+    var lastAppContact = Date()
 
     fileprivate var mounted = false
     
@@ -414,17 +416,24 @@ extension FinderSync: NSXPCListenerDelegate {
 extension FinderSync: SDAccountProtocol {
     
     func didSignIn(notification: Notification) {
+        self.lastAppContact = Date()
         self.enableMenuItems(true)
     }
     
     func didSignOut(notification: Notification) {
+        self.lastAppContact = Date()
+
         self.enableMenuItems(false)
     }
     
     func didReceiveAccountDetails(notification: Notification) {
+        self.lastAppContact = Date()
+
     }
     
     func didReceiveAccountStatus(notification: Notification) {
+        self.lastAppContact = Date()
+
     }
     
 }
@@ -435,6 +444,9 @@ extension FinderSync: SDMountStateProtocol {
         guard let mounted = notification.object as? Bool else {
             return
         }
+        
+        self.lastAppContact = Date()
+        
         self.mounted = mounted
         
         if self.mounted {
@@ -447,7 +459,7 @@ extension FinderSync: SDMountStateProtocol {
     }
     
     func mountStateDetails(notification: Notification) {
-        
+        self.lastAppContact = Date()
     }
 }
 
@@ -459,6 +471,9 @@ extension FinderSync: SDApplicationEventProtocol {
             
             return
         }
+        
+        self.lastAppContact = Date()
+
         DispatchQueue.main.async { [weak self] in
             self?.configureClient(uniqueClientID: uniqueClientID)
         }
@@ -471,5 +486,8 @@ extension FinderSync: SDApplicationEventProtocol {
             
             return
         }
+        
+        self.lastAppContact = Date()
+
     }
 }
