@@ -334,8 +334,11 @@ class MountController: NSObject {
         
     
         self.mounting = true
-        NotificationCenter.default.post(name: Notification.Name.volumeMounting, object: nil)
 
+        main {
+            NotificationCenter.default.post(name: Notification.Name.volumeMounting, object: nil)
+        }
+        
         let notification = NSUserNotification()
         
         let mountURL = self.currentMountURL
