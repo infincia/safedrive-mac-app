@@ -26,6 +26,8 @@ class FinderSync: FIFinderSync {
     
     var uniqueClientID: String?
 
+    fileprivate var mounted = false
+    
     override init() {
         finderXPCDelegate = FinderXPCDelegate()
         finderListener = NSXPCListener.anonymous()
@@ -435,8 +437,9 @@ extension FinderSync: SDMountStateProtocol {
         guard let mounted = notification.object as? Bool else {
             return
         }
+        self.mounted = mounted
         
-        if mounted {
+        if self.mounted {
             //self.mountMenuItem.title = NSLocalizedString("Disconnect", comment: "Menu title for disconnecting the volume")
         } else {
             //self.mountMenuItem.title = NSLocalizedString("Connect", comment: "Menu title for connecting the volume")
