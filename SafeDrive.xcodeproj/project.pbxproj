@@ -452,6 +452,7 @@
 		AA88C00F1F1B22400025F1D7 /* ServiceListenerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceListenerDelegate.swift; path = SafeDrive.d/ServiceListenerDelegate.swift; sourceTree = "<group>"; };
 		AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FinderXPCProtocol.swift; path = Shared/FinderXPCProtocol.swift; sourceTree = "<group>"; };
 		AA88DD0F1F0C052D00C4858E /* FinderXPCDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinderXPCDelegate.swift; sourceTree = "<group>"; };
+		AA8CB2C51FFECFE100ED0C69 /* safedrive-sdk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "safedrive-sdk"; sourceTree = SOURCE_ROOT; };
 		AA9079A71F072A7D0067E383 /* exportOptions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = exportOptions.plist; sourceTree = "<group>"; };
 		AA9079A81F072A7D0067E383 /* release.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = release.sh; sourceTree = "<group>"; };
 		AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CUIThemeRenditionFix.xcassets; path = Shared/CUIThemeRenditionFix.xcassets; sourceTree = "<group>"; };
@@ -590,6 +591,7 @@
 		AA1165871F25B7C900B7D8EF /* SDDK */ = {
 			isa = PBXGroup;
 			children = (
+				AA8CB2C51FFECFE100ED0C69 /* safedrive-sdk */,
 				AA1165881F25B7C900B7D8EF /* module.map */,
 			);
 			path = SDDK;
