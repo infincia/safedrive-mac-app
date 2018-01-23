@@ -13,6 +13,7 @@
 		AA0A7D191A19682000DCB77E /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D1B1A19682000DCB77E /* PreferencesWindow.xib */; };
 		AA0A7D261A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
 		AA0A7D271A1968BB00DCB77E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA0A7D291A1968BB00DCB77E /* Localizable.strings */; };
+		AA0AD42420166C56003BE5BA /* SFTPFingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0AD42320166C56003BE5BA /* SFTPFingerprint.swift */; };
 		AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
 		AA11653C1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
 		AA11653D1F256F1600B7D8EF /* Semver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11653B1F256F1600B7D8EF /* Semver.swift */; };
@@ -364,6 +365,7 @@
 		919F110D04C41D55CB26D7F1 /* Pods-SafeDriveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SafeDriveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SafeDriveTests/Pods-SafeDriveTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AA0A7D1A1A19682000DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreferencesWindow.xib; sourceTree = "<group>"; };
 		AA0A7D281A1968BB00DCB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AA0AD42320166C56003BE5BA /* SFTPFingerprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFTPFingerprint.swift; sourceTree = "<group>"; };
 		AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenFileCheck.swift; path = "Open File Warning Window/OpenFileCheck.swift"; sourceTree = "<group>"; };
 		AA11653B1F256F1600B7D8EF /* Semver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Semver.swift; path = Shared/Semver.swift; sourceTree = "<group>"; };
 		AA1165511F25B0B600B7D8EF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Shared/Constants.swift; sourceTree = "<group>"; };
@@ -795,6 +797,7 @@
 				AAA50BB01E313AF200892E9D /* CUIThemeRenditionFix.xcassets */,
 				AA11653B1F256F1600B7D8EF /* Semver.swift */,
 				AA5DAFF51F2E36C700CD48AE /* SFTPFSXPCProtocol.swift */,
+				AA0AD42320166C56003BE5BA /* SFTPFingerprint.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1656,6 +1659,7 @@
 				AA2A42291F23AF4E00CC6010 /* VerifyFolderWindowController.swift in Sources */,
 				AA58D2CC1E82D9F0002D56E0 /* GeneralViewController.swift in Sources */,
 				AAB7D5D51CB09943001F9A8E /* CrashAlert.swift in Sources */,
+				AA0AD42420166C56003BE5BA /* SFTPFingerprint.swift in Sources */,
 				AA1165581F25B0B600B7D8EF /* Errors.swift in Sources */,
 				AA11655A1F25B0B600B7D8EF /* Models.swift in Sources */,
 			);
