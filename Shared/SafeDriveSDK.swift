@@ -277,6 +277,43 @@ public class SafeDriveSDK: NSObject {
         }
     }
     
+    public func getSFTPFingerprints(completionQueue queue: DispatchQueue, success: @escaping (_ folders: [SDKSFTPFingerprint]) -> Void, failure: @escaping SDKFailure) {
+        
+        background {
+            
+            var fingerprint_ptr: UnsafeMutablePointer<SDDKSFTPFingerprint>? = nil
+            var error: UnsafeMutablePointer<SDDKError>? = nil
+            
+            let res = sddk_get_sftp_fingerprints(&fingerprint_ptr, &error)
+            defer {
+                if res >= 0 {
+                    sddk_free_sftp_fingerprints(&fingerprint_ptr, UInt64(res))
+                }
+                if res == -1 {
+                    sddk_free_error(&error)
+                }
+            }
+            switch res {
+            case -1:
+                let e = SDKError(sdkError: error!.pointee)
+                queue.async { failure(e) }
+            default:
+                let buffer = UnsafeBufferPointer<SDDKSFTPFingerprint>(start: UnsafePointer(fingerprint_ptr), count: Int(res))
+                let a = Array(buffer)
+                var fingerprints = [SDKSFTPFingerprint]()
+                for fingerprint in a {
+                    let f = SDKSFTPFingerprint(fingerprint: fingerprint)
+                    
+                    fingerprints.append(f)
+                }
+                
+                queue.async { success(fingerprints) }
+                
+            }
+        }
+        
+    }
+    
     public func generateUniqueClientID() -> String {
         var unique_client_id: UnsafeMutablePointer<CChar>? = nil
 
