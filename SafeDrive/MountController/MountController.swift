@@ -36,6 +36,8 @@ class MountController: NSObject {
     
     static let shared = MountController()
     
+    fileprivate var sdk = SafeDriveSDK.sharedSDK
+    
     fileprivate var openFileWarning: OpenFileWarningWindowController!
     
     fileprivate var email: String?
@@ -303,6 +305,31 @@ class MountController: NSObject {
     // MARK: - High level API
     
     func connectVolume() {
+        self.sdk.getSFTPFingerprints(completionQueue: DispatchQueue.main, success: { (fingerprints) in
+            let fingerprintStrings = fingerprints.map({ (fingerprint) -> String in
+                return fingerprint.fingerprint
+            })
+            self._connectVolume(fingerprintStrings)
+        }, failure: { (error) in
+            let message = NSLocalizedString("SFTP fingerprints unavailable, contact SafeDrive support", comment: "")
+            let error = SDError(message: message, kind: .configMissing)
+            SDLogError("MountController", "\(error)")
+            let notification = NSUserNotification()
+            
+            var userInfo = [String: Any]()
+            
+            userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
+            
+            notification.userInfo = userInfo
+            
+            notification.informativeText = error.localizedDescription
+            notification.title = "SafeDrive mount error"
+            notification.soundName = NSUserNotificationDefaultSoundName
+            NSUserNotificationCenter.default.deliver(notification)
+        })
+    }
+    
+    fileprivate func _connectVolume(_ fingerprints: [String]) {
         
         guard let user = self.internalUserName,
             let password = self.password,
@@ -372,6 +399,8 @@ class MountController: NSObject {
                     
                     proxy.setIcon(volicon)
                     
+                    proxy.setSFTPFingerprints(fingerprints)
+
                     proxy.connect()
                     
                     /*
@@ -446,6 +475,8 @@ class MountController: NSObject {
                 newConnection.setUseCache(self.useCache)
                 
                 newConnection.setIcon(volicon)
+                
+                newConnection.setSFTPFingerprints(fingerprints)
                 
                 newConnection.connect()
                 
