@@ -516,6 +516,13 @@ public class SDKAccountStatus {
     }
 }
 
+extension SDKAccountStatus: CustomStringConvertible {
+    public var description: String {
+        get {
+            return "AccountStatus<host:\(host),port:\(port),userName:\(userName),state:\(state)>"
+        }
+    }
+}
 
 public enum SDKAccountState {
     case unknown         // invalid state, display error or halt
