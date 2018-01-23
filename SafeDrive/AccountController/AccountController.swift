@@ -334,6 +334,8 @@ class AccountController: NSObject {
                         self.lastAccountSignInError = nil
                             
                         DispatchQueue.main.async {
+                            SDLogDebug("AccountController", "Account status: \(status)")
+
                             NotificationCenter.default.post(name: Notification.Name.accountSignIn, object: status)
                         }
                     }.catch { (error) in
@@ -470,6 +472,8 @@ class AccountController: NSObject {
                         self.lastAccountDetailsError = nil
 
                         DispatchQueue.main.async {
+                            SDLogDebug("AccountController", "Account details: \(details)")
+
                             NotificationCenter.default.post(name: Notification.Name.accountDetails, object: details)
                         }
                         
