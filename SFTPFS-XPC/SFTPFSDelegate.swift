@@ -74,4 +74,9 @@ class SFTPFSDelegate: NSObject, NSXPCListenerDelegate, SFTPFSXPCProtocol {
     func setMountpoint(_ mountpoint: String) {
         self.sftpfs?.setMountpoint(mountpoint)
     }
+    
+    func setSFTPFingerprints(_ fingerprints: [String]) {
+        self.sftpfs?.setSFTPFingerprints(fingerprints)
+    }
+
 }
