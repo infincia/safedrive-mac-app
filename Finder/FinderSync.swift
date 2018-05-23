@@ -28,6 +28,7 @@ class FinderSync: FIFinderSync {
     var launchAppMenuItem: NSMenuItem!
     
     var uniqueClientID: String?
+    var uniqueClientName: String?
     
     var lastAppContact = Date()
 
