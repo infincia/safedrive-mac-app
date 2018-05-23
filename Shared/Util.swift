@@ -293,6 +293,18 @@ extension SDError: CustomNSError {
             return SDErrorDomainReported
         case .kextLoading:
             return SDErrorDomainNotReported
+        case .networkUnavailable:
+            return SDErrorDomainNotReported
+        case .internalFailure:
+            return SDErrorDomainReported
+        case .freeSpace:
+            return SDErrorDomainNotReported
+        case .recoveryPhraseIncorrect:
+            return SDErrorDomainNotReported
+        case .keyCorrupted:
+            return SDErrorDomainReported
+        case .cryptoError:
+            return SDErrorDomainReported
         }
     }
     
@@ -341,5 +353,10 @@ public enum SDErrorType: Int {
     case cliMissing = 7004
     case setupDirectories = 7005
     case kextLoading = 7006
-
+    case networkUnavailable = 8000
+    case internalFailure = 9000
+    case freeSpace = 10000
+    case recoveryPhraseIncorrect = 11000
+    case keyCorrupted = 12000
+    case cryptoError = 12001
 }
