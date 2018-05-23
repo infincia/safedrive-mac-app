@@ -256,6 +256,14 @@ public struct SDError {
             self.kind = .keyCorrupted
         }
     }
+    
+    public static func == (left: SDError, right: SDError) -> Bool {
+        return (left.kind == right.kind)
+    }
+    
+    public static func != (left: SDError, right: SDError) -> Bool {
+        return (left.kind != right.kind)
+    }
 }
 
 extension SDError: LocalizedError {
