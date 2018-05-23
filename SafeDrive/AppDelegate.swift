@@ -225,7 +225,7 @@ extension AppDelegate: SDApplicationControlProtocol {
 extension AppDelegate: SDApplicationEventProtocol {
     
     func applicationDidConfigureClient(notification: Notification) {
-        guard let uniqueClientID = notification.object as? String else {
+        guard let uniqueClient = notification.object as? Client else {
             SDLogError("AppDelegate", "API contract invalid: applicationDidConfigureClient()")
 
             return
@@ -235,7 +235,7 @@ extension AppDelegate: SDApplicationEventProtocol {
             let groupURL = storageURL()
 
             
-            let uniqueClientURL = groupURL.appendingPathComponent(uniqueClientID)
+            let uniqueClientURL = groupURL.appendingPathComponent(uniqueClient.uniqueClientId)
             
             do {
                 try FileManager.default.createDirectory(at: uniqueClientURL, withIntermediateDirectories: true, attributes: nil)

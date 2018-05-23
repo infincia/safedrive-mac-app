@@ -13,6 +13,11 @@ struct User {
     let password: String
 }
 
+struct Client {
+    let uniqueClientId: String
+    let uniqueClientName: String
+}
+
 class AccountController: NSObject {
     static let sharedAccountController = AccountController()
     
@@ -518,13 +523,13 @@ extension AccountController: SDApplicationEventProtocol {
     func applicationDidConfigureClient(notification: Notification) {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
 
-        guard let uniqueClientID = notification.object as? String else {
+        guard let uniqueClient = notification.object as? Client else {
             SDLogError("AccountController", "API contract invalid: applicationDidConfigureClient()")
             
             return
         }
         
-        self.uniqueClientID = uniqueClientID
+        self.uniqueClientID = uniqueClient.uniqueClientId
     }
     
     func applicationDidConfigureUser(notification: Notification) {

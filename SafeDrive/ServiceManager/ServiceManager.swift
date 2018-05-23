@@ -136,7 +136,7 @@ extension ServiceManager: SDApplicationEventProtocol {
     func applicationDidConfigureClient(notification: Notification) {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
 
-        guard let uniqueClientID = notification.object as? String else {
+        guard let uniqueClient = notification.object as? Client else {
             SDLogError("ServiceManager", "API contract invalid: applicationDidConfigureClient()")
             
             return
@@ -148,7 +148,10 @@ extension ServiceManager: SDApplicationEventProtocol {
                     SDLogError("ServiceManager", "applicationDidConfigureClient(): connecting to IPC service failed: \(error.localizedDescription)")
                 }) as! IPCProtocol
                 
-                proxy.applicationDidConfigureClient(uniqueClientID)
+                // Note: this is intentionally breaking the implicit API for applicationDidConfigureClient
+                //       but *only* when crossing the IPC boundary. The service and finder extension don't
+                //       need anything but the unique client id.
+                proxy.applicationDidConfigureClient(uniqueClient.uniqueClientId)
             }
         }
     }

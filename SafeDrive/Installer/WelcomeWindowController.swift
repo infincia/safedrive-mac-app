@@ -209,7 +209,8 @@ extension WelcomeWindowController: WelcomeStateDelegate {
         do {
             try SafeDriveSDK.sharedSDK.setKeychainItem(withUser: email, service: UCIDDomain(), secret: uniqueClientID)
             self.setWelcomeState(.ready)
-            NotificationCenter.default.post(name: Notification.Name.applicationDidConfigureClient, object: uniqueClientID)
+            let client = Client(uniqueClientId: uniqueClientID, uniqueClientName: name)
+            NotificationCenter.default.post(name: Notification.Name.applicationDidConfigureClient, object: client)
 
         } catch let keychainError as NSError {
             SDLogError("WelcomeWindowController", "failed to insert unique client ID in keychain: \(keychainError)")

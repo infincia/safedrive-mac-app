@@ -240,14 +240,13 @@ extension EncryptionViewController: SDApplicationEventProtocol {
     func applicationDidConfigureClient(notification: Notification) {
         assert(Thread.current == Thread.main, "applicationDidConfigureClient called on background thread")
         
-        guard let uniqueClientID = notification.object as? String else {
+        guard let uniqueClient = notification.object as? Client else {
             SDLogError("EncryptionViewController", "API contract invalid: applicationDidConfigureClient()")
             
             return
         }
         
-        self.uniqueClientID = uniqueClientID
-        
+        self.uniqueClientID = uniqueClient.uniqueClientId
     }
     
     func applicationDidConfigureUser(notification: Notification) {
