@@ -91,6 +91,6 @@ public class SDKSFTPFingerprint: Equatable, NSSecureCoding {
         
         _host = host
         _fingerprint = fingerprint
-        _port = UInt16(port)
+        _port = UInt16(truncating: port)
     }
 }
