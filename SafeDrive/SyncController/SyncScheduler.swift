@@ -42,7 +42,8 @@ class SyncScheduler {
     var internalUserName: String?
     var password: String?
     var uniqueClientID: String?
-    
+    var uniqueClientName: String?
+
     var remoteHost: String?
     var remotePort: UInt16?
     
@@ -451,6 +452,7 @@ extension SyncScheduler: SDAccountProtocol {
         self.email = nil
         self.password = nil
         self.uniqueClientID = nil
+        self.uniqueClientName = nil
         self.internalUserName = nil
         self.remoteHost = nil
         self.remotePort = nil
@@ -490,6 +492,7 @@ extension SyncScheduler: SDApplicationEventProtocol {
         }
         
         self.uniqueClientID = uniqueClient.uniqueClientId
+        self.uniqueClientName = uniqueClient.uniqueClientName
     }
     
     func applicationDidConfigureUser(notification: Notification) {

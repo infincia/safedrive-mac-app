@@ -26,7 +26,8 @@ class AccountController: NSObject {
     var accountState: SDKAccountState = .unknown
     
     fileprivate var _uniqueClientID: String?
-    
+    fileprivate var _uniqueClientName: String?
+
     fileprivate var _email: String?
     fileprivate var _password: String?
     
@@ -71,6 +72,21 @@ class AccountController: NSObject {
         set (newValue) {
             accountQueue.sync(flags: .barrier, execute: {
                 self._uniqueClientID = newValue
+            })
+        }
+    }
+    
+    var uniqueClientName: String? {
+        get {
+            var u: String?
+            accountQueue.sync {
+                u = self._uniqueClientName
+            }
+            return u
+        }
+        set (newValue) {
+            accountQueue.sync(flags: .barrier, execute: {
+                self._uniqueClientName = newValue
             })
         }
     }
@@ -297,6 +313,7 @@ class AccountController: NSObject {
         self.password = nil
         self.accountState = .unknown
         self.uniqueClientID = nil
+        self.uniqueClientName = nil
         
         self.lastAccountStatusCheck = nil
         self.lastAccountDetailsCheck = nil
@@ -530,6 +547,7 @@ extension AccountController: SDApplicationEventProtocol {
         }
         
         self.uniqueClientID = uniqueClient.uniqueClientId
+        self.uniqueClientName = uniqueClient.uniqueClientName
     }
     
     func applicationDidConfigureUser(notification: Notification) {

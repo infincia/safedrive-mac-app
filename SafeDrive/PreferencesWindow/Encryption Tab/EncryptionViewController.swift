@@ -13,6 +13,7 @@ class EncryptionViewController: NSViewController {
     fileprivate weak var delegate: PreferencesViewDelegate!
 
     fileprivate var uniqueClientID: String?
+    fileprivate var uniqueClientName: String?
 
     @IBOutlet fileprivate var copyRecoveryPhraseButton: NSButton!
     
@@ -247,6 +248,7 @@ extension EncryptionViewController: SDApplicationEventProtocol {
         }
         
         self.uniqueClientID = uniqueClient.uniqueClientId
+        self.uniqueClientName = uniqueClient.uniqueClientName
     }
     
     func applicationDidConfigureUser(notification: Notification) {
@@ -345,6 +347,7 @@ extension EncryptionViewController: SDAccountProtocol {
     func didSignOut(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignOut called on background thread")
         self.email = nil
+        self.uniqueClientName = nil
     }
     
     func didReceiveAccountStatus(notification: Foundation.Notification) {

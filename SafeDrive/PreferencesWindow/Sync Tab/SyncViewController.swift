@@ -49,6 +49,7 @@ class SyncViewController: NSViewController {
     fileprivate var folders = [SDKSyncFolder]()
     
     fileprivate var uniqueClientID: String?
+    fileprivate var uniqueClientName: String?
 
     var email: String?
     var internalUserName: String?
@@ -735,6 +736,7 @@ extension SyncViewController: SDAccountProtocol {
         self.internalUserName = nil
         self.remoteHost = nil
         self.remotePort = nil
+        self.uniqueClientName = nil
     }
     
     func didReceiveAccountStatus(notification: Foundation.Notification) {
@@ -992,6 +994,7 @@ extension SyncViewController: SDApplicationEventProtocol {
         }
         
         self.uniqueClientID = uniqueClient.uniqueClientId
+        self.uniqueClientName = uniqueClient.uniqueClientName
     }
     
     func applicationDidConfigureUser(notification: Notification) {
