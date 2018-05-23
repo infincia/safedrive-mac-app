@@ -311,8 +311,7 @@ class MountController: NSObject {
             })
             self._connectVolume(fingerprintStrings)
         }, failure: { (error) in
-            let message = NSLocalizedString("SFTP fingerprints unavailable, contact SafeDrive support", comment: "")
-            let error = SDError(message: message, kind: .configMissing)
+            let error = SDError(message: error.message, kind: error.kind)
             SDLogError("MountController", "\(error)")
             let notification = NSUserNotification()
             

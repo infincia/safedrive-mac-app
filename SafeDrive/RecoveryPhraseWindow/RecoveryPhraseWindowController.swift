@@ -5,7 +5,7 @@
 import Cocoa
 
 protocol RecoveryPhraseEntryDelegate: class {
-    func checkRecoveryPhrase(_ phrase: String?, success: @escaping () -> Void, failure: @escaping (_ error: SDKError) -> Void)
+    func checkRecoveryPhrase(_ phrase: String?, success: @escaping () -> Void, failure: @escaping (_ error: SDError) -> Void)
     
     func storeRecoveryPhrase(_ phrase: String, success: @escaping () -> Void, failure: @escaping (_ error: Error) -> Void)
 }

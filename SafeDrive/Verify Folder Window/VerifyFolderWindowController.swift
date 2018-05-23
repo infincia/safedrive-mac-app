@@ -8,7 +8,7 @@
 import Cocoa
 
 protocol VerifyFolderDelegate: class {
-    func verified(_ folder: SDKSyncFolder, solution: VerificationSolution, success: @escaping SDKSuccess, failure: @escaping SDKFailure)
+    func verified(_ folder: SDKSyncFolder, solution: VerificationSolution, success: @escaping SDSuccess, failure: @escaping SDFailure)
 }
 
 enum VerificationState {

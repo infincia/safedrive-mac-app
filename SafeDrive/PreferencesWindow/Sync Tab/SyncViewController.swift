@@ -192,11 +192,13 @@ class SyncViewController: NSViewController {
                     self.reload()
                     self.spinner.stopAnimation(self)
                 }, failure: { (error) in
+                    let error = SDError(message: error.message, kind: error.kind)
+
                     SDErrorHandlerReport(error)
                     self.spinner.stopAnimation(self)
                     let alert: NSAlert = NSAlert()
                     alert.messageText = NSLocalizedString("Error removing folder from your account", comment: "")
-                    alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                    alert.informativeText = error.localizedDescription
                     alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
                     alert.runModal()
                 })
@@ -232,7 +234,7 @@ class SyncViewController: NSViewController {
         })
     }
     
-    func readSyncFolders(success: @escaping () -> Void, failure: @escaping (SDKError) -> Void) {
+    func readSyncFolders(success: @escaping () -> Void, failure: @escaping (SDError) -> Void) {
         guard let _ = self.uniqueClientID else {
             return
         }
@@ -255,11 +257,13 @@ class SyncViewController: NSViewController {
             success()
             
         }, failure: { (error) in
+            let error = SDError(message: error.message, kind: error.kind)
+
             SDErrorHandlerReport(error)
             self.spinner.stopAnimation(self)
             let alert: NSAlert = NSAlert()
             alert.messageText = NSLocalizedString("Error reading folders from your account", comment: "")
-            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+            alert.informativeText = error.localizedDescription
             alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
             alert.runModal()
             failure(error)
@@ -302,11 +306,13 @@ class SyncViewController: NSViewController {
                         self.sdk.updateFolder(folder.name, path: folder.path, syncing: true, uniqueID: folderID, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: completionQueue, success: {
 
                         }, failure: { (error) in
+                            let error = SDError(message: error.message, kind: error.kind)
+
                             SDErrorHandlerReport(error)
                             self.spinner.stopAnimation(self)
                             let alert: NSAlert = NSAlert()
                             alert.messageText = NSLocalizedString("Error updating folder in your account", comment: "")
-                            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                            alert.informativeText = error.localizedDescription
                             alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
                             alert.runModal()
                         })
@@ -383,11 +389,13 @@ class SyncViewController: NSViewController {
                         self.sdk.updateFolder(folder.name, path: folder.path, syncing: true, uniqueID: uniqueID, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: completionQueue, success: { 
 
                         }, failure: { (error) in
+                            let error = SDError(message: error.message, kind: error.kind)
+
                             SDErrorHandlerReport(error)
                             self.spinner.stopAnimation(self)
                             let alert: NSAlert = NSAlert()
                             alert.messageText = NSLocalizedString("Error updating folder in your account", comment: "")
-                            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+                            alert.informativeText = error.localizedDescription
                             alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
                             alert.runModal()
                         })
@@ -503,13 +511,15 @@ class SyncViewController: NSViewController {
 
             self.readSyncFolders(self)
         }, failure: { (error) in
+            let error = SDError(message: error.message, kind: error.kind)
+
             SDErrorHandlerReport(error)
             self.spinner.stopAnimation(self)
             dropdown.isEnabled = true
 
             let alert: NSAlert = NSAlert()
             alert.messageText = NSLocalizedString("Error updating folder in your account", comment: "")
-            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+            alert.informativeText = error.localizedDescription
             alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
             alert.runModal()
         })
@@ -556,13 +566,15 @@ class SyncViewController: NSViewController {
             timePicker.isEnabled = true
 
         }, failure: { (error) in
+            let error = SDError(message: error.message, kind: error.kind)
+
             SDErrorHandlerReport(error)
             self.spinner.stopAnimation(self)
             timePicker.isEnabled = true
 
             let alert: NSAlert = NSAlert()
             alert.messageText = NSLocalizedString("Error updating folder in your account", comment: "")
-            alert.informativeText = NSLocalizedString("This error has been reported to SafeDrive, please contact support for further help", comment: "")
+            alert.informativeText = error.localizedDescription
             alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
             alert.runModal()
         })
@@ -953,7 +965,7 @@ extension SyncViewController: NSTableViewDataSource {
 }
 
 extension SyncViewController: AddFolderDelegate {
-    func add(_ folderName: String, folderPath: URL, encrypted: Bool, success: @escaping (UInt64) -> Void, failure: @escaping (SDKError) -> Void) {
+    func add(_ folderName: String, folderPath: URL, encrypted: Bool, success: @escaping (UInt64) -> Void, failure: @escaping (SDError) -> Void) {
         assert(Thread.current == Thread.main, "selectedSession called on background thread")
 
         
@@ -964,7 +976,11 @@ extension SyncViewController: AddFolderDelegate {
                 success(folderID)
                 self.sync(folderID, encrypted: encrypted)
             }, failure: failure)
-        }, failure: failure)
+        }, failure: { (error) in
+            let error = SDError(message: error.message, kind: error.kind)
+
+            failure(error)
+        })
     }
 
 }
@@ -1079,7 +1095,7 @@ extension SyncViewController {
 }
 
 extension SyncViewController: VerifyFolderDelegate {
-    func verified(_ folder: SDKSyncFolder, solution: VerificationSolution, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
+    func verified(_ folder: SDKSyncFolder, solution: VerificationSolution, success: @escaping SDSuccess, failure: @escaping SDFailure) {
         switch solution {
         case .find:
             self.sdk.updateFolder(folder.name, path: folder.path, syncing: true, uniqueID: folder.id, syncFrequency: folder.syncFrequency, syncTime: folder.syncTime, completionQueue: DispatchQueue.main, success: { 
@@ -1087,6 +1103,8 @@ extension SyncViewController: VerifyFolderDelegate {
                 success()
                 self.verifyFolderWindows.removeValue(forKey: folder.id)
             }, failure: { (error) in
+                let error = SDError(message: error.message, kind: error.kind)
+
                 failure(error)
             })
         case .pause:
@@ -1095,6 +1113,8 @@ extension SyncViewController: VerifyFolderDelegate {
                 success()
                 self.verifyFolderWindows.removeValue(forKey: folder.id)
             }, failure: { (error) in
+                let error = SDError(message: error.message, kind: error.kind)
+
                 failure(error)
             })
         case .restore:
@@ -1112,6 +1132,8 @@ extension SyncViewController: VerifyFolderDelegate {
                 
                 self.verifyFolderWindows.removeValue(forKey: folder.id)
             }, failure: { (error) in
+                let error = SDError(message: error.message, kind: error.kind)
+
                 failure(error)
             })
         }

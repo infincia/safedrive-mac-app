@@ -25,11 +25,11 @@ class EncryptionViewController: NSViewController {
 
     fileprivate let loadKeysQueue = DispatchQueue(label: "io.safedrive.loadKeysQueue")
 
-    var _lastLoadKeysError: SDKError?
+    var _lastLoadKeysError: SDError?
     
-    var lastLoadKeysError: SDKError? {
+    var lastLoadKeysError: SDError? {
         get {
-            var s: SDKError?
+            var s: SDError?
             loadKeysQueue.sync {
                 s = self._lastLoadKeysError
             }
@@ -123,7 +123,7 @@ class EncryptionViewController: NSViewController {
 }
 
 extension EncryptionViewController: RecoveryPhraseEntryDelegate {
-    func checkRecoveryPhrase(_ phrase: String?, success: @escaping () -> Void, failure: @escaping (_ error: SDKError) -> Void) {
+    func checkRecoveryPhrase(_ phrase: String?, success: @escaping () -> Void, failure: @escaping (_ error: SDError) -> Void) {
         assert(Thread.current == Thread.main, "checkRecoveryPhrase called on background thread")
         
         guard let email = self.email else {
@@ -137,7 +137,7 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
                 NotificationCenter.default.post(name: Notification.Name.accountCreatedRecoveryPhrase, object: newPhrase)
 
             }, failure: { (error) in
-                let se = SDKError(message: error.localizedDescription, kind: SDKErrorType.KeychainError)
+                let se = SDError(message: error.localizedDescription, kind: SDErrorType.addKeychainItemFailed)
                 failure(se)
             })
             
@@ -170,11 +170,13 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
             success()
             
         }, failure: { (error) in
+            let error = SDError(message: error.message, kind: error.kind)
+
             var reportError = false
             var showError = false
 
             switch error.kind {
-            case .Authentication:
+            case .authorization:
                 break
             default:
                 if let existingError = self.lastLoadKeysError {
@@ -209,7 +211,7 @@ extension EncryptionViewController: RecoveryPhraseEntryDelegate {
                 NSUserNotificationCenter.default.deliver(notification)
             }
             
-            if reportError && error.kind != .NetworkFailure {
+            if reportError && error.kind != .networkUnavailable {
                 SDErrorHandlerReport(error)
             }
             
@@ -280,54 +282,14 @@ extension EncryptionViewController: SDAccountProtocol {
         self.checkRecoveryPhrase(recoveryPhrase, success: {
             NotificationCenter.default.post(name: Notification.Name.accountLoadedRecoveryPhrase, object: nil)
         }, failure: { (error) in
+            let error = SDError(message: error.message, kind: error.kind)
+
             switch error.kind {
-            case .StateMissing:
+            case .networkUnavailable:
                 break
-            case .Internal:
-                break
-            case .RequestFailure:
-                break
-            case .NetworkFailure:
-                break
-            case .Conflict:
-                break
-            case .BlockMissing:
-                break
-            case .SessionMissing:
-                break
-            case .RecoveryPhraseIncorrect:
+            case .recoveryPhraseIncorrect:
                 NotificationCenter.default.post(name: Notification.Name.accountNeedsRecoveryPhrase, object: nil)
-            case .InsufficientFreeSpace:
-                break
-            case .Authentication:
-                break
-            case .UnicodeError:
-                break
-            case .TokenExpired:
-                break
-            case .CryptoError:
-                NotificationCenter.default.post(name: Notification.Name.accountNeedsRecoveryPhrase, object: nil)
-            case .IO:
-                break
-            case .SyncAlreadyInProgress:
-                break
-            case .RestoreAlreadyInProgress:
-                break
-            case .ExceededRetries:
-                break
-            case .KeychainError:
-                break
-            case .BlockUnreadable:
-                break
-            case .SessionUnreadable:
-                break
-            case .ServiceUnavailable:
-                break
-            case .Cancelled:
-                break
-            case .FolderMissing:
-                break
-            case .KeyCorrupted:
+            case .keyCorrupted, .cryptoError:
                 let alert = NSAlert()
                 alert.addButton(withTitle: "OK")
                 
@@ -340,6 +302,8 @@ extension EncryptionViewController: SDAccountProtocol {
                 self.delegate.showAlert(alert) { (_) in
                     //
                 }
+            default:
+                break
             }
         })
     }

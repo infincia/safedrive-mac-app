@@ -5,7 +5,7 @@
 import Cocoa
 
 protocol AddFolderDelegate: class {
-    func add(_ folderName: String, folderPath: URL, encrypted: Bool, success: @escaping SDKAddSyncFolderSuccess, failure: @escaping SDKFailure)
+    func add(_ folderName: String, folderPath: URL, encrypted: Bool, success: @escaping SDKAddSyncFolderSuccess, failure: @escaping SDFailure)
 }
 
 
@@ -141,6 +141,8 @@ class AddFolderWindowController: NSWindowController {
                 })
             }
         }, failure: { (error) in
+            let error = SDError(message: error.message, kind: error.kind)
+
             SDErrorHandlerReport(error)
             
             self.spinner.stopAnimation(self)
