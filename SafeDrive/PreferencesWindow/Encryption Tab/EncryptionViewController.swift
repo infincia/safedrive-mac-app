@@ -347,6 +347,7 @@ extension EncryptionViewController: SDAccountProtocol {
     func didSignOut(notification: Foundation.Notification) {
         assert(Thread.current == Thread.main, "didSignOut called on background thread")
         self.email = nil
+        self.uniqueClientID = nil
         self.uniqueClientName = nil
     }
     

@@ -736,6 +736,7 @@ extension SyncViewController: SDAccountProtocol {
         self.internalUserName = nil
         self.remoteHost = nil
         self.remotePort = nil
+        self.uniqueClientID = nil
         self.uniqueClientName = nil
     }
     
