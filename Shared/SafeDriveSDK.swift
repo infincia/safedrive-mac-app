@@ -94,14 +94,14 @@ public class SafeDriveSDK: NSObject {
         sddk_free_state(&state)
     }
     
-    public func login(_ username: String, password: String, unique_client_id: String) -> Promise<SDKAccountStatus> {
+    public func login(_ username: String, password: String, unique_client_id: String, unique_client_name: String) -> Promise<SDKAccountStatus> {
         
         return Promise { fulfill, reject in
             background {
                 var error: UnsafeMutablePointer<SDDKError>? = nil
                 var status: UnsafeMutablePointer<SDDKAccountStatus>? = nil
                 
-                let res = sddk_login(self.state, unique_client_id, username, password, &status, &error)
+                let res = sddk_login(self.state, unique_client_id, unique_client_name, username, password, &status, &error)
                 defer {
                     if res == -1 {
                         sddk_free_error(&error)
@@ -209,10 +209,11 @@ public class SafeDriveSDK: NSObject {
                 let a = Array(buffer)
                 var new_array = [SDKSoftwareClient]()
                 for c_client in a {
+                    let uniqueClientName = String(cString: c_client.unique_client_name)
                     let uniqueClientId = String(cString: c_client.unique_client_id)
                     let language = String(cString: c_client.language)
                     let operatingSystem = String(cString: c_client.operating_system)
-                    let client = SDKSoftwareClient(uniqueClientID: uniqueClientId, operatingSystem: operatingSystem, language: language)
+                    let client = SDKSoftwareClient(uniqueClientName: uniqueClientName, uniqueClientID: uniqueClientId, operatingSystem: operatingSystem, language: language)
                     new_array.append(client)
                 }
                 

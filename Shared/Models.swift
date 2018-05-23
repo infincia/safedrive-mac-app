@@ -585,6 +585,7 @@ extension SDKAccountState: CustomStringConvertible {
 
 
 public struct SDKSoftwareClient {
+    public let uniqueClientName: String
     public let uniqueClientID: String
     public let operatingSystem: String
     public let language: String
