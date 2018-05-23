@@ -202,6 +202,60 @@ public struct SDError {
         self.message = message
         self.kind = kind
     }
+    
+    public init(message: String, kind: SDKErrorType) {
+        self.message = message
+        switch kind {
+        case .StateMissing:
+            self.kind = .internalFailure
+        case .Internal:
+            self.kind = .internalFailure
+        case .RequestFailure:
+            self.kind = .apiContractInvalid
+        case .NetworkFailure:
+            self.kind = .networkUnavailable
+        case .Conflict:
+            self.kind = .folderConflict
+        case .BlockMissing:
+            self.kind = .internalFailure
+        case .SessionMissing:
+            self.kind = .internalFailure
+        case .RecoveryPhraseIncorrect:
+            self.kind = .recoveryPhraseIncorrect
+        case .InsufficientFreeSpace:
+            self.kind = .freeSpace
+        case .Authentication:
+            self.kind = .authorization
+        case .UnicodeError:
+            self.kind = .internalFailure
+        case .TokenExpired:
+            self.kind = .authorization
+        case .CryptoError:
+            self.kind = .internalFailure
+        case .IO:
+            self.kind = .internalFailure
+        case .SyncAlreadyInProgress:
+            self.kind = .alreadyRunning
+        case .RestoreAlreadyInProgress:
+            self.kind = .alreadyRunning
+        case .ExceededRetries:
+            self.kind = .timeout
+        case .KeychainError:
+            self.kind = .addKeychainItemFailed
+        case .BlockUnreadable:
+            self.kind = .internalFailure
+        case .SessionUnreadable:
+            self.kind = .internalFailure
+        case .ServiceUnavailable:
+            self.kind = .internalFailure
+        case .Cancelled:
+            self.kind = .cancelled
+        case .FolderMissing:
+            self.kind = .directoryMissing
+        case .KeyCorrupted:
+            self.kind = .keyCorrupted
+        }
+    }
 }
 
 extension SDError: LocalizedError {
