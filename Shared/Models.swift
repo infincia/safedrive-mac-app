@@ -12,6 +12,8 @@
 import Foundation
 import SDDK
 
+public typealias SDSuccess = () -> Void
+public typealias SDFailure = (_ error: SDError) -> Void
 
 
 public typealias SDKSuccess = () -> Void
