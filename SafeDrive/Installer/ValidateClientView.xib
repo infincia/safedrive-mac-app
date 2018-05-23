@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,21 +29,21 @@
                         <rect key="frame" x="2" y="2" width="307" height="126"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView wantsLayer="YES" fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="65" horizontalPageScroll="10" verticalLineScroll="65" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Or-AC-3fq">
+                            <scrollView wantsLayer="YES" fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="42" horizontalPageScroll="10" verticalLineScroll="42" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Or-AC-3fq">
                                 <rect key="frame" x="0.0" y="0.0" width="307" height="126"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="Ouu-bn-T4J">
                                     <rect key="frame" x="0.0" y="0.0" width="307" height="126"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="63" viewBased="YES" floatsGroupRows="NO" id="sjA-3G-pbV">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="42" viewBased="YES" floatsGroupRows="NO" id="sjA-3G-pbV">
                                             <rect key="frame" x="0.0" y="0.0" width="307" height="126"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <size key="intercellSpacing" width="3" height="2"/>
+                                            <size key="intercellSpacing" width="3" height="0.0"/>
                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="303" minWidth="40" maxWidth="1000" id="kcY-ON-4I1" userLabel="SoftwareClient">
+                                                <tableColumn identifier="" width="303" minWidth="40" maxWidth="1000" id="kcY-ON-4I1" userLabel="SoftwareClient">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Size">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -56,27 +57,32 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="SoftwareClientTableCellView" id="KDz-Y5-jj6" userLabel="Software Client List" customClass="SoftwareClientTableCellView" customModule="SafeDrive" customModuleProvider="target">
-                                                            <rect key="frame" x="1" y="1" width="303" height="63"/>
+                                                            <rect key="frame" x="1" y="0.0" width="303" height="42"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="na8-s0-ivv" userLabel="Icon">
-                                                                    <rect key="frame" x="12" y="3" width="48" height="48"/>
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="na8-s0-ivv" userLabel="Icon" customClass="NIKFontAwesomeImageView">
+                                                                    <rect key="frame" x="14" y="9" width="24" height="24"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="48" id="2Ow-uL-sYB"/>
+                                                                        <constraint firstAttribute="width" constant="24" id="XrT-eO-lYI"/>
                                                                     </constraints>
-                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="oYa-DM-sQj"/>
+                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="oYa-DM-sQj"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="iconHex" value="0xf023"/>
+                                                                    </userDefinedRuntimeAttributes>
                                                                 </imageView>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkp-0n-Yzw" userLabel="Name">
-                                                                    <rect key="frame" x="66" y="23" width="148" height="17"/>
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qkp-0n-Yzw" userLabel="Name">
+                                                                    <rect key="frame" x="48" y="12" width="166" height="19"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="IBv-Za-ojV">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gC0-Xv-0kV">
-                                                                    <rect key="frame" x="230" y="21" width="60" height="19"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gC0-Xv-0kV">
+                                                                    <rect key="frame" x="230" y="12" width="60" height="18"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="60" id="45B-l9-heY"/>
+                                                                    </constraints>
                                                                     <buttonCell key="cell" type="roundRect" title="Replace" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SXJ-EJ-27H">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="cellTitle"/>
@@ -87,20 +93,23 @@
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="qkp-0n-Yzw" secondAttribute="trailing" constant="91" id="1eT-os-HnH"/>
-                                                                <constraint firstItem="na8-s0-ivv" firstAttribute="top" secondItem="KDz-Y5-jj6" secondAttribute="top" constant="12" id="Cyw-rC-clo"/>
-                                                                <constraint firstItem="qkp-0n-Yzw" firstAttribute="leading" secondItem="na8-s0-ivv" secondAttribute="trailing" constant="8" symbolic="YES" id="LzY-WP-KNE"/>
-                                                                <constraint firstItem="qkp-0n-Yzw" firstAttribute="centerY" secondItem="KDz-Y5-jj6" secondAttribute="centerY" id="Q9L-Ue-Z1r"/>
-                                                                <constraint firstItem="na8-s0-ivv" firstAttribute="leading" secondItem="KDz-Y5-jj6" secondAttribute="leading" constant="12" id="dIA-cb-Io1"/>
-                                                                <constraint firstAttribute="bottom" secondItem="na8-s0-ivv" secondAttribute="bottom" constant="3" id="kHW-ol-lHs"/>
+                                                                <constraint firstItem="gC0-Xv-0kV" firstAttribute="leading" secondItem="qkp-0n-Yzw" secondAttribute="trailing" constant="18" id="02J-Uf-EQB"/>
+                                                                <constraint firstItem="na8-s0-ivv" firstAttribute="centerY" secondItem="KDz-Y5-jj6" secondAttribute="centerY" id="2L3-Iq-iGR"/>
+                                                                <constraint firstItem="qkp-0n-Yzw" firstAttribute="centerY" secondItem="gC0-Xv-0kV" secondAttribute="centerY" id="3Mw-ut-cfd"/>
+                                                                <constraint firstItem="na8-s0-ivv" firstAttribute="leading" secondItem="KDz-Y5-jj6" secondAttribute="leading" constant="14" id="4Q9-l8-dfe"/>
+                                                                <constraint firstItem="na8-s0-ivv" firstAttribute="centerY" secondItem="qkp-0n-Yzw" secondAttribute="centerY" id="9aL-Xe-6ki"/>
+                                                                <constraint firstItem="qkp-0n-Yzw" firstAttribute="top" secondItem="KDz-Y5-jj6" secondAttribute="top" constant="11" id="iSt-fK-MmS"/>
+                                                                <constraint firstAttribute="trailing" secondItem="gC0-Xv-0kV" secondAttribute="trailing" constant="13" id="m1B-6s-5Nt"/>
+                                                                <constraint firstItem="qkp-0n-Yzw" firstAttribute="firstBaseline" secondItem="gC0-Xv-0kV" secondAttribute="firstBaseline" id="puU-M6-aWF"/>
+                                                                <constraint firstItem="na8-s0-ivv" firstAttribute="top" secondItem="KDz-Y5-jj6" secondAttribute="top" constant="9" id="u6K-yq-rcg"/>
+                                                                <constraint firstItem="qkp-0n-Yzw" firstAttribute="leading" secondItem="na8-s0-ivv" secondAttribute="trailing" constant="12" id="x0o-0o-Xv4"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="icon" destination="na8-s0-ivv" id="XWc-tR-AJX"/>
                                                                 <outlet property="imageView" destination="na8-s0-ivv" id="3s0-sF-QS8"/>
-                                                                <outlet property="name" destination="qkp-0n-Yzw" id="uyt-0s-on1"/>
                                                                 <outlet property="replace" destination="gC0-Xv-0kV" id="zSZ-Hb-HkQ"/>
                                                                 <outlet property="textField" destination="qkp-0n-Yzw" id="Xj3-Bs-wot"/>
-                                                                <outlet property="uniqueClientID" destination="qkp-0n-Yzw" id="Usq-gz-d3V"/>
+                                                                <outlet property="uniqueClientName" destination="qkp-0n-Yzw" id="V7Q-kJ-f0K"/>
                                                             </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>
@@ -147,7 +156,7 @@
                         <action selector="newClient:" target="-2" id="Gad-IQ-FwH"/>
                     </connections>
                 </button>
-                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CRH-UM-epo">
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CRH-UM-epo">
                     <rect key="frame" x="-2" y="49" width="315" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Or is this a new computer?" id="kb3-su-9p3">
@@ -178,7 +187,7 @@
                     <rect key="frame" x="275" y="382" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
-                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" preferredMaxLayoutWidth="269" translatesAutoresizingMaskIntoConstraints="NO" id="xYY-Vn-zJr">
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="269" translatesAutoresizingMaskIntoConstraints="NO" id="xYY-Vn-zJr">
                     <rect key="frame" x="18" y="76" width="275" height="38"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="It looks like this is the first computer you have used with SafeDrive" id="gTQ-OJ-2yl">
@@ -194,7 +203,7 @@
                         </binding>
                     </connections>
                 </textField>
-                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XQ-az-dtV">
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0XQ-az-dtV">
                     <rect key="frame" x="18" y="151" width="275" height="76"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Other computers have been registered on your SafeDrive account, is this computer a replacement for one of them?" id="Umq-Hq-E0v">

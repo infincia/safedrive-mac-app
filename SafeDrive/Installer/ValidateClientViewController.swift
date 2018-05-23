@@ -84,19 +84,19 @@ class ValidateClientViewController: NSViewController {
         self.clientList.reloadData()
         
         background {
-            
-            let host = Host()
-            // swiftlint:disable force_unwrapping
-            let machineName = host.localizedName!
-            // swiftlint:enable force_unwrapping
-            
             if let uniqueClientID = try? SafeDriveSDK.sharedSDK.getKeychainItem(withUser: email, service: UCIDDomain()) {
                 SDLogInfo("ValidateClientViewController", "valid client found, continuing")
 
-                DispatchQueue.main.async {
-                    self.delegate?.didValidateClient(withEmail: email, password: password, name: machineName, uniqueClientID: uniqueClientID)
+                let existingClientResult = clients.filter { (client) -> Bool in
+                    return client.uniqueClientID == uniqueClientID
                 }
-                return
+                
+                if let existingClient = existingClientResult.first {
+                    DispatchQueue.main.async {
+                        self.delegate?.didValidateClient(withEmail: email, password: password, name: existingClient.uniqueClientName, uniqueClientID: existingClient.uniqueClientID)
+                    }
+                    return
+                }
             }
             
             while !self.isClientRegistered {
@@ -156,13 +156,8 @@ class ValidateClientViewController: NSViewController {
             self.delegate?.didFail(error: error, uniqueClientID: client.uniqueClientID)
             return
         }
-
-        let host = Host()
-        // swiftlint:disable force_unwrapping
-        let machineName = host.localizedName!
-        // swiftlint:enable force_unwrapping
         
-        self.delegate?.didValidateClient(withEmail: email, password: password, name: machineName, uniqueClientID: client.uniqueClientID)
+        self.delegate?.didValidateClient(withEmail: email, password: password, name: client.uniqueClientName, uniqueClientID: client.uniqueClientID)
     }
 }
 
@@ -180,7 +175,6 @@ extension ValidateClientViewController: NSTableViewDataSource {
         let client = clients[row]
 
         view.softwareClient = client
-        view.uniqueClientID.stringValue = client.uniqueClientID
         //view.icon.image = client.icon
         
         return view

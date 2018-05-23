@@ -4,6 +4,8 @@
 // swiftlint:disable private_outlet
 
 import Cocoa
+import FontAwesomeIconFactory
+
 
 class SoftwareClientTableCellView: NSTableCellView {
 
@@ -15,19 +17,18 @@ class SoftwareClientTableCellView: NSTableCellView {
         }
         set (newValue) {
             self._softwareClient = newValue
-            self.uniqueClientID.stringValue = newValue.uniqueClientID
+            self.uniqueClientName.stringValue = newValue.uniqueClientName
             if self._softwareClient.operatingSystem.lowercased().contains("linux") {
-                self.icon.image = NSImage(named: NSImage.Name.computer)
+                self.icon.icon = NIKFontAwesomeIcon.linux
             } else if self._softwareClient.operatingSystem.lowercased().contains("windows") {
-                self.icon.image = NSImage(named: NSImage.Name.computer)
+                self.icon.icon = NIKFontAwesomeIcon.windows
             } else if self._softwareClient.operatingSystem.lowercased().contains("mac") ||
                       self._softwareClient.operatingSystem.lowercased().contains("osx") ||
                       self._softwareClient.operatingSystem.lowercased().contains("os x") {
-                self.icon.image = NSImage(named: NSImage.Name.computer)
+                self.icon.icon = NIKFontAwesomeIcon.apple
             } else {
-                self.icon.image = NSImage(named: NSImage.Name.computer)
+                self.icon.icon = NIKFontAwesomeIcon.desktop
             }
-            
         }
     }
     
@@ -39,8 +40,8 @@ class SoftwareClientTableCellView: NSTableCellView {
         super.init(frame: frameRect)
     }
     
-    @IBOutlet var name: NSTextField!
-    @IBOutlet var icon: NSImageView!
+    @IBOutlet var uniqueClientName: NSTextField!
+    @IBOutlet var icon: FontAwesomeImageView!
     @IBOutlet var uniqueClientID: NSTextField!
     @IBOutlet var replace: NSButton!
 }

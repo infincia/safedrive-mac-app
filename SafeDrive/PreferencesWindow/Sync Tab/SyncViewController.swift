@@ -411,14 +411,16 @@ class SyncViewController: NSViewController {
     // MARK: Sync control
     
     func sync(_ folderID: UInt64, encrypted: Bool) {
-        guard let uniqueClientID = self.uniqueClientID else {
+        guard let uniqueClientID = self.uniqueClientID,
+              let uniqueClientName = self.uniqueClientName else {
             return
         }
         self.syncScheduler.queueSyncJob(uniqueClientID, folderID: folderID, direction: .forward, name: UUID().uuidString.lowercased(), destination: nil, session: nil)
     }
     
     func restore(_ folderID: UInt64, encrypted: Bool, name: String, destination: URL?, session: SDKSyncSession?) {
-        guard let uniqueClientID = self.uniqueClientID else {
+        guard let uniqueClientID = self.uniqueClientID,
+              let uniqueClientName = self.uniqueClientName else {
             return
         }
         
@@ -972,7 +974,8 @@ extension SyncViewController: RestoreSelectionDelegate {
     func selectedSession(_ sessionName: String, folderID: UInt64, destination: URL, session: SDKSyncSession?) {
         assert(Thread.current == Thread.main, "selectedSession called on background thread")
         
-        guard let uniqueClientID = self.uniqueClientID else {
+        guard let uniqueClientID = self.uniqueClientID,
+              let uniqueClientName = self.uniqueClientName else {
             return
         }
         

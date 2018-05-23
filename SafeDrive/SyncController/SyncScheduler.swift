@@ -86,7 +86,8 @@ class SyncScheduler {
         SDLogInfo("SyncScheduler", "Sync scheduler running")
         
         while self.running {
-            guard let uniqueClientID = self.uniqueClientID else {
+            guard let uniqueClientID = self.uniqueClientID,
+                  let uniqueClientName = self.uniqueClientName else {
                 Thread.sleep(forTimeInterval: 1)
                 continue
             }

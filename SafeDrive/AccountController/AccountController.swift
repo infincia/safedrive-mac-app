@@ -332,7 +332,7 @@ class AccountController: NSObject {
     fileprivate func accountLoop() {
         background {
             while true {
-                guard let email = self.email, let password = self.password, let uniqueClientID = self.uniqueClientID else {
+                guard let email = self.email, let password = self.password, let uniqueClientID = self.uniqueClientID, let uniqueClientName = self.uniqueClientName else {
                     Thread.sleep(forTimeInterval: 1)
 
                     continue
@@ -342,7 +342,7 @@ class AccountController: NSObject {
                     self.signingIn = true
                     
                     firstly {
-                        self.sdk.login(email, password: password, unique_client_id: uniqueClientID)
+                        self.sdk.login(email, password: password, unique_client_id: uniqueClientID, unique_client_name: uniqueClientName)
                     }.then { (status) -> Void in
                         SDErrorHandlerSetUniqueClientId(uniqueClientID)
                         
