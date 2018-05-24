@@ -633,7 +633,10 @@ extension MountController: SleepReactor {
     @objc func willSleep(_ notification: Notification) {
         if self.mounted {
             SDLogWarn("MountController", "machine going to sleep, unmounting SFTPFS")
-            self.disconnectVolume(askForOpenApps: true)
+            main {
+                let askForOpenApps = false
+                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: askForOpenApps)
+            }
         }
     }
 }
