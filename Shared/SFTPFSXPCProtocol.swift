@@ -13,9 +13,9 @@ let kSFTPFSXPCProtocolVersion: Int = 7
                 host: String,
                 port: UInt16)
     
-    func connect()
+    func connect(reply replyBlock: @escaping (_ success: Bool, _ message: String?, _ error_type: sftpfs_error_type) -> Void)
     
-    func disconnect()
+    func disconnect(reply replyBlock: @escaping (_ success: Bool, _ message: String?, _ error_type: sftpfs_error_type) -> Void)
     
     func setIcon(_ url: URL)
 
