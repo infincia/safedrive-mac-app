@@ -487,7 +487,9 @@ class MountController: NSObject {
                  */
                 
                 self.checkMount(at: mountURL, timeout: 30, mounted: {
-                    NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
+                    main {
+                        NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
+                    }
                     self.mounting = false
                 }, notMounted: {
                     let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
@@ -507,8 +509,9 @@ class MountController: NSObject {
                     
                     self.mounting = false
                     
-                    NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: nil)
-
+                    main {
+                        NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: nil)
+                    }
                     // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
                     
                     do {
