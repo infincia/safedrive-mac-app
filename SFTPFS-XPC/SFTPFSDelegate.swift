@@ -30,12 +30,20 @@ class SFTPFSDelegate: NSObject, NSXPCListenerDelegate, SFTPFSXPCProtocol {
                                                    xpc: true)
     }
     
-    func connect() {
-        self.sftpfs?.connect()
+    func connect(reply replyBlock: @escaping (_ success: Bool, _ message: String?, _ error_type: sftpfs_error_type) -> Void) {
+        self.sftpfs?.connect({
+            replyBlock(true, nil, sftpfs_error_type.init(0))
+        }, error: { (message, error_type) in
+            replyBlock(false, message, error_type)
+        })
     }
     
-    func disconnect() {
-        self.sftpfs?.disconnect()
+    func disconnect(reply replyBlock: @escaping (_ success: Bool, _ message: String?, _ error_type: sftpfs_error_type) -> Void) {
+        self.sftpfs?.disconnect({
+            replyBlock(true, nil, sftpfs_error_type.init(0))
+        }, error: { (message, error_type) in
+            replyBlock(false, message, error_type)
+        })
         ProcessInfo.processInfo.enableSuddenTermination()
     }
     
