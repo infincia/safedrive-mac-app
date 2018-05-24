@@ -63,4 +63,5 @@ protocol SDAPIAvailabilityProtocol: class {
 
 protocol SleepReactor: class {
     func willSleep(_ notification: Notification)
+    func didWake(_ notification: Notification)
 }
