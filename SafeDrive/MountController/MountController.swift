@@ -179,7 +179,8 @@ class MountController: NSObject {
         
         let nc = NSWorkspace.shared.notificationCenter
         nc.addObserver(self, selector: #selector(willSleep(_:)), name: NSWorkspace.willSleepNotification, object: nil)
-        
+        nc.addObserver(self, selector: #selector(didWake(_:)), name: NSWorkspace.didWakeNotification, object: nil)
+
         let connection = NSXPCConnection(serviceName: "io.safedrive.SafeDrive.SFTPFS")
         
         let serviceInterface = NSXPCInterface(with: SFTPFSXPCProtocol.self)
@@ -636,6 +637,19 @@ extension MountController: SleepReactor {
             main {
                 let askForOpenApps = false
                 NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: askForOpenApps)
+            }
+        }
+    }
+    
+    @objc func didWake(_ notification: Notification) {
+        if self.mounted {
+            SDLogWarn("MountController", "machine woke up, re-mounting SFTPFS")
+            main {
+                // This should cause a remount if the drive isn't mounted anymore
+                //
+                // TODO: will need to ensure the drive actually unmounts before
+                //       sleep, otherwise this won't really help anything
+                self.lastMountAttempt = nil
             }
         }
     }
