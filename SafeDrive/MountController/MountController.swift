@@ -474,24 +474,17 @@ class MountController: NSObject {
                 
                 newConnection.setSFTPFingerprints(fingerprints)
                 
-                newConnection.connect()
                 
                 self.sftpfs = newConnection
                 
-                /*
-                 now check for a successful mount. if after 30 seconds there is no volume
-                 mounted, it is a fair bet that an error occurred in the meantime
-                 */
-                
-                self.checkMount(at: mountURL, timeout: 30, mounted: {
+                newConnection.connect({
                     main {
                         NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                     }
                     self.mounting = false
-                }, notMounted: {
-                    let message = NSLocalizedString("SafeDrive did not mount within 30 seconds, please check your network connection", comment: "")
-                    let error = SDError(message: message, kind: .timeout)
-                    SDLogError("MountController", "checkForMountedVolume() failure: \(error)")
+                }, error: { (message, error_type) in
+                    let error = SDError(message: message, kind: .mountFailed)
+                    SDLogError("MountController", "_connectVolume() failure: \(error)")
                     
                     var userInfo = [String: Any]()
                     
