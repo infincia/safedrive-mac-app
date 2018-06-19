@@ -150,6 +150,7 @@ class MountController: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeUnmounting), name: Notification.Name.volumeUnmounting, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeMountFailed), name: Notification.Name.volumeMountFailed, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeUnmountFailed), name: Notification.Name.volumeUnmountFailed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeIsFull), name: Notification.Name.volumeIsFull, object: nil)
 
         // register SDApplicationEventProtocol notifications
         
@@ -724,6 +725,9 @@ extension MountController: SDVolumeEventProtocol {
         notification.title = "SafeDrive unmount failed"
         notification.soundName = NSUserNotificationDefaultSoundName
         NSUserNotificationCenter.default.deliver(notification)
+    }
+    
+    func volumeIsFull(notification: Notification) {        
     }
 }
 

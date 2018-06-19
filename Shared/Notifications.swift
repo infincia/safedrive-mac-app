@@ -20,6 +20,8 @@ extension Notification.Name {
     static let volumeMountFailed = Notification.Name("volumeMountFailed")
     static let volumeUnmountFailed = Notification.Name("volumeUnmountFailed")
 
+    static let volumeIsFull = Notification.Name("volumeIsFull")
+
     static let applicationShouldOpenPreferencesWindow = Notification.Name("applicationShouldOpenPreferencesWindowNotification")
     static let applicationShouldOpenAccountWindow = Notification.Name("applicationShouldOpenAccountWindowNotification")
     static let applicationShouldOpenAboutWindow = Notification.Name("applicationShouldOpenAboutWindowNotification")
