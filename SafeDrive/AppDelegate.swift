@@ -170,7 +170,8 @@ extension AppDelegate: NSApplicationDelegate {
     
     func applicationWillTerminate(_ aNotification: Foundation.Notification) {
         SDLogInfo("AppDelegate", "SafeDrive build \(CFBundleVersion), protocol version \(kAppXPCProtocolVersion) exiting")
-        NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: false)
+        let unmountEvent = UnmountEvent(askForOpenApps: false, force: false)
+        NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
         
     }
 }
@@ -210,7 +211,8 @@ extension AppDelegate: SDApplicationControlProtocol {
     func applicationShouldToggleMountState(notification: Foundation.Notification) {
         DispatchQueue.main.async {
             if self.mountController.mounted {
-                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: true)
+                let unmountEvent = UnmountEvent(askForOpenApps: true, force: false)
+                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
             } else {
                 NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: nil)
             }

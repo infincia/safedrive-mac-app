@@ -515,7 +515,7 @@ class MountController: NSObject {
         }
     }
     
-    func disconnectVolume(askForOpenApps: Bool) {
+    func disconnectVolume(askForOpenApps: Bool, force: Bool) {
     
         func errorHandler(url: URL, error: NSError) {
             let message = "SafeDrive could not be unmounted\n\n \(error.localizedDescription)"
@@ -635,8 +635,8 @@ extension MountController: SleepReactor {
         if self.mounted {
             SDLogWarn("MountController", "machine going to sleep, unmounting SFTPFS")
             main {
-                let askForOpenApps = false
-                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: askForOpenApps)
+                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
             }
         }
     }
@@ -764,12 +764,13 @@ extension MountController: SDVolumeEventProtocol {
     func volumeShouldUnmount(notification: Notification) {
         assert(Thread.current == Thread.main, "volumeShouldUnmount called on background thread")
 
-        guard let askForOpenApps = notification.object as? Bool else {
+        guard let unmountEvent = notification.object as? UnmountEvent else {
             SDLogError("MountController", "API contract invalid: volumeShouldUnmount()")
             return
         }
-        self.disconnectVolume(askForOpenApps: askForOpenApps)
+        self.disconnectVolume(askForOpenApps: unmountEvent.askForOpenApps, force: unmountEvent.force)
     }
+    
   
     func volumeMounting(notification: Notification) {
         //
@@ -821,7 +822,7 @@ extension MountController: OpenFileWarningDelegate {
     }
     
     func tryAgain() {
-        self.disconnectVolume(askForOpenApps: false)
+        self.disconnectVolume(askForOpenApps: false, force: false)
     }
     
     func finished() {

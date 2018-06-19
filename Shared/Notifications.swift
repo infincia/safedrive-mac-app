@@ -45,3 +45,13 @@ extension Notification.Name {
     static let syncEvent = Notification.Name("syncEventNotification")
 
 }
+
+class UnmountEvent {
+    var askForOpenApps: Bool = false
+    var force: Bool = false
+    
+    init(askForOpenApps: Bool, force: Bool) {
+        self.askForOpenApps = askForOpenApps
+        self.force = force
+    }
+}
