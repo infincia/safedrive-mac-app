@@ -232,7 +232,7 @@ class OpenFileWarningWindowController: NSWindowController {
             
             var userInfo = [String: Any]()
             
-            userInfo["identifier"] = SDNotificationType.driveForceUnmountFailed.rawValue
+            userInfo["identifier"] = SDNotificationType.driveUnmountFailed.rawValue
             
             notification.userInfo = userInfo
             

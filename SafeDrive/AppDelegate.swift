@@ -317,8 +317,6 @@ extension AppDelegate: NSUserNotificationCenterDelegate {
             break
         case .driveUnmountFailed:
             break
-        case .driveForceUnmountFailed:
-            break
         case .driveUnmounting:
             break
         case .driveMounting:
