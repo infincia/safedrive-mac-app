@@ -20,6 +20,23 @@ public enum SDKLogLevel: UInt8 {
     case trace = 4
 }
 
+public enum SFTPFSErrorType: Int32 {
+    case NoError = 0
+    case InternalError = 1
+    case UnknownError = 2
+    case AlreadyConnected = 3
+    case NotConnected = 4
+    case DiskFull = 5
+    case PermissionDenied = 6
+    case AccessForbidden = 7
+    case ConnectionLost = 8
+    case ConnectionFailed = 9
+    case ConnectionCancelled = 10
+    case FileNotFound = 11
+    case MountFailed = 12
+    case UnmountFailed = 13
+}
+
 public enum SDNotificationType: String {
     case signInFailed = "sign-in-failed"
     case driveMounting = "drive-mounting"
