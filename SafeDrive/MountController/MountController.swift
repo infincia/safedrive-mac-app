@@ -315,18 +315,10 @@ class MountController: NSObject {
         }, failure: { (error) in
             let error = SDError(message: error.message, kind: error.kind)
             SDLogError("MountController", "\(error)")
-            let notification = NSUserNotification()
             
-            var userInfo = [String: Any]()
-            
-            userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
-            
-            notification.userInfo = userInfo
-            
-            notification.informativeText = error.localizedDescription
-            notification.title = "SafeDrive mount error"
-            notification.soundName = NSUserNotificationDefaultSoundName
-            NSUserNotificationCenter.default.deliver(notification)
+            main {
+                NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
+            }
         })
     }
     
@@ -344,19 +336,10 @@ class MountController: NSObject {
             let message = NSLocalizedString("Volume icon missing, contact SafeDrive support", comment: "")
             let error = SDError(message: message, kind: .configMissing)
             SDLogError("MountController", "\(error)")
-            let notification = NSUserNotification()
-
-            var userInfo = [String: Any]()
             
-            userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
-            
-            notification.userInfo = userInfo
-            
-            notification.informativeText = error.localizedDescription
-            notification.title = "SafeDrive mount error"
-            notification.soundName = NSUserNotificationDefaultSoundName
-            NSUserNotificationCenter.default.deliver(notification)
-            
+            main {
+                NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
+            }
             return
         }
         
@@ -365,24 +348,7 @@ class MountController: NSObject {
 
         main {
             NotificationCenter.default.post(name: Notification.Name.volumeMounting, object: nil)
-            
-            let notification = NSUserNotification()
-            notification.informativeText = NSLocalizedString("Please wait while the drive mounts", comment: "")
-            
-            var userInfo = [String: Any]()
-            
-            userInfo["identifier"] = SDNotificationType.driveMounting.rawValue
-            
-            notification.userInfo = userInfo
-            
-            notification.title = "SafeDrive mounting"
-            
-            notification.soundName = NSUserNotificationDefaultSoundName
-            
-            NSUserNotificationCenter.default.deliver(notification)
         }
-        
-        let notification = NSUserNotification()
         
         let mountURL = self.currentMountURL
         let volumeName = self.currentVolumeName
@@ -411,22 +377,10 @@ class MountController: NSObject {
                         } else {
                             let error = SDError(message: message!, kind: .mountFailed)
                             SDLogError("MountController", "_connectVolume() failure: \(error)")
-                            
-                            var userInfo = [String: Any]()
-                            
-                            userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
-                            
-                            notification.userInfo = userInfo
-                            
-                            notification.informativeText = error.localizedDescription
-                            notification.title = "SafeDrive mount error"
-                            notification.soundName = NSUserNotificationDefaultSoundName
-                            NSUserNotificationCenter.default.deliver(notification)
-                            
                             self.mounting = false
-                            
+
                             main {
-                                NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: nil)
+                                NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
                             }
                             // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
                             
@@ -440,25 +394,12 @@ class MountController: NSObject {
                 } else {
                     self.mounting = false
                     
-                    NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: nil)
-
                     let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
                     let error = SDError(message: message, kind: .serviceDeployment)
-                    SDLogError("MountController", "\(message)")
                     
-                    main {
-                        notification.informativeText = error.localizedDescription
-                        
-                        var userInfo = [String: Any]()
-                        
-                        userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
+                    NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
 
-                        notification.userInfo = userInfo
-                        
-                        notification.title = "SafeDrive mount error"
-                        notification.soundName = NSUserNotificationDefaultSoundName
-                        NSUserNotificationCenter.default.deliver(notification)
-                    }
+                    SDLogError("MountController", "\(message)")
                 }
             } else {
                 let newConnection = ManagedSFTPFS.withMountpoint(mountURL.path,
@@ -487,22 +428,11 @@ class MountController: NSObject {
                 }, error: { (message, error_type) in
                     let error = SDError(message: message, kind: .mountFailed)
                     SDLogError("MountController", "_connectVolume() failure: \(error)")
-                    
-                    var userInfo = [String: Any]()
-                    
-                    userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
 
-                    notification.userInfo = userInfo
-                    
-                    notification.informativeText = error.localizedDescription
-                    notification.title = "SafeDrive mount error"
-                    notification.soundName = NSUserNotificationDefaultSoundName
-                    NSUserNotificationCenter.default.deliver(notification)
                     
                     self.mounting = false
-                    
                     main {
-                        NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: nil)
+                        NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
                     }
                     // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
                     
@@ -523,13 +453,11 @@ class MountController: NSObject {
 
             SDLogError("MountController", message)
             
-            NotificationCenter.default.post(name: Notification.Name.volumeUnmountFailed, object: nil)
-            
-            let notification = NSUserNotification()
-            
+            var userMessage: String
+
             let code = error.code
             if code == fBsyErr {
-                notification.informativeText = NSLocalizedString("Please close any open files on your SafeDrive", comment: "")
+                userMessage = NSLocalizedString("Please close any open files on your SafeDrive", comment: "")
                 
                 if askForOpenApps {
                     let c = OpenFileCheck()
@@ -546,22 +474,16 @@ class MountController: NSObject {
                     }
                 }
             } else if code == fnfErr {
-                notification.informativeText = NSLocalizedString("This is a bug in OS X, reboot may help", comment: "")
+                userMessage = NSLocalizedString("This is a bug in OS X, reboot may help", comment: "")
             } else {
-                notification.informativeText = NSLocalizedString("Unknown error occurred (\(code))", comment: "")
+                userMessage = NSLocalizedString("Unknown error occurred (\(code))", comment: "")
             }
             
-            var userInfo = [String: Any]()
-            
-            userInfo["identifier"] = SDNotificationType.driveUnmountFailed.rawValue
-            
-            notification.userInfo = userInfo
-            
-            notification.title = "SafeDrive unmount failed"
-            
-            notification.soundName = NSUserNotificationDefaultSoundName
-            
-            NSUserNotificationCenter.default.deliver(notification)
+            let _error = SDError(message: userMessage, kind: .unmountFailed)
+
+            main {
+                NotificationCenter.default.post(name: Notification.Name.volumeUnmountFailed, object: _error)
+            }
         }
         
         let volumeName: String = self.currentVolumeName
@@ -570,21 +492,6 @@ class MountController: NSObject {
         
         main {
             NotificationCenter.default.post(name: Notification.Name.volumeUnmounting, object: nil)
-            
-            let notification = NSUserNotification()
-            notification.informativeText = NSLocalizedString("Please wait while the drive unmounts", comment: "")
-
-            var userInfo = [String: Any]()
-            
-            userInfo["identifier"] = SDNotificationType.driveUnmounting.rawValue
-            
-            notification.userInfo = userInfo
-            
-            notification.title = "SafeDrive unmounting"
-            
-            notification.soundName = NSUserNotificationDefaultSoundName
-            
-            NSUserNotificationCenter.default.deliver(notification)
         }
         
         background {
@@ -784,19 +691,59 @@ extension MountController: SDVolumeEventProtocol {
     }
   
     func volumeMounting(notification: Notification) {
-        //
+        
+        let notification = NSUserNotification()
+        notification.informativeText = NSLocalizedString("Please wait while the drive mounts", comment: "")
+        var userInfo = [String: Any]()
+        userInfo["identifier"] = SDNotificationType.driveMounting.rawValue
+        notification.userInfo = userInfo
+        notification.title = "SafeDrive mounting"
+        notification.soundName = NSUserNotificationDefaultSoundName
+        NSUserNotificationCenter.default.deliver(notification)
     }
     
     func volumeUnmounting(notification: Notification) {
-        //
+        let notification = NSUserNotification()
+        notification.informativeText = NSLocalizedString("Please wait while the drive unmounts", comment: "")
+        var userInfo = [String: Any]()
+        userInfo["identifier"] = SDNotificationType.driveUnmounting.rawValue
+        notification.userInfo = userInfo
+        notification.title = "SafeDrive unmounting"
+        notification.soundName = NSUserNotificationDefaultSoundName
+        NSUserNotificationCenter.default.deliver(notification)
     }
     
     func volumeMountFailed(notification: Notification) {
-        //
+        guard let error = notification.object as? SDError else {
+            SDLogError("MountController", "API contract invalid: volumeMountFailed()")
+            return
+        }
+        
+        let notification = NSUserNotification()
+        notification.informativeText = error.localizedDescription
+        var userInfo = [String: Any]()
+        userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
+        notification.userInfo = userInfo
+        notification.title = "SafeDrive mount failed"
+        notification.soundName = NSUserNotificationDefaultSoundName
+        NSUserNotificationCenter.default.deliver(notification)
+    
     }
     
     func volumeUnmountFailed(notification: Notification) {
-        //
+        guard let error = notification.object as? SDError else {
+            SDLogError("MountController", "API contract invalid: volumeUnmountFailed()")
+            return
+        }
+        
+        let notification = NSUserNotification()
+        notification.informativeText = error.localizedDescription
+        var userInfo = [String: Any]()
+        userInfo["identifier"] = SDNotificationType.driveUnmountFailed.rawValue
+        notification.userInfo = userInfo
+        notification.title = "SafeDrive unmount failed"
+        notification.soundName = NSUserNotificationDefaultSoundName
+        NSUserNotificationCenter.default.deliver(notification)
     }
 }
 
