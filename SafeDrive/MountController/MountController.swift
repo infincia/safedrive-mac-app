@@ -664,8 +664,6 @@ extension MountController: SDVolumeEventProtocol {
     }
     
     func volumeShouldUnmount(notification: Notification) {
-        assert(Thread.current == Thread.main, "volumeShouldUnmount called on background thread")
-
         guard let unmountEvent = notification.object as? UnmountEvent else {
             SDLogError("MountController", "API contract invalid: volumeShouldUnmount()")
             return
