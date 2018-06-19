@@ -463,6 +463,23 @@ class MountController: NSObject {
             NotificationCenter.default.post(name: Notification.Name.volumeUnmounting, object: nil)
         }
         
+        // if the force flag is set, we skip the rest of the unmount handling for now
+        // we may want to retry the force unmounting as well, but it will have to be
+        // done in a different way due to the differences in how XPC and NSWorkspace APIs work
+        if force {
+            ServiceManager.sharedServiceManager.forceUnmountSafeDrive(self.currentMountURL.path, {
+                main {
+                    self.mountURL = nil
+                    NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
+                }
+            }, { (error) in
+                main {
+                    NotificationCenter.default.post(name: Notification.Name.volumeUnmountFailed, object: error)
+                }
+            })
+            return
+        }
+
         background {
             let retries = 5
             var retries_left = retries
