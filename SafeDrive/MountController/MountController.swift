@@ -19,10 +19,6 @@ class MountController: NSObject {
     
     fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue")
     
-    fileprivate var _mounting = false
-    
-    fileprivate let mountingQueue = DispatchQueue(label: "io.safedrive.mountingQueue")
-    
     fileprivate var _signedIn = false
     
     fileprivate let signedInQueue = DispatchQueue(label: "io.safedrive.signedInQueue")
@@ -101,21 +97,6 @@ class MountController: NSObject {
         }
     }
     
-    var mounting: Bool {
-        get {
-            var r: Bool = false
-            mountingQueue.sync {
-                r = self._mounting
-            }
-            return r
-        }
-        set (newValue) {
-            mountingQueue.sync(flags: .barrier, execute: {
-                self._mounting = newValue
-            })
-        }
-    }
-    
     var signedIn: Bool {
         get {
             var r: Bool = false
@@ -149,7 +130,6 @@ class MountController: NSObject {
     override init() {
         super.init()
         self.mounted = false
-        self.mounting = false
         self.signedIn = false
         self.lastMountAttempt = nil
         
@@ -343,9 +323,6 @@ class MountController: NSObject {
             return
         }
         
-    
-        self.mounting = true
-
         main {
             NotificationCenter.default.post(name: Notification.Name.volumeMounting, object: nil)
         }
@@ -373,11 +350,9 @@ class MountController: NSObject {
                             main {
                                 NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                             }
-                            self.mounting = false
                         } else {
                             let error = SDError(message: message!, kind: .mountFailed)
                             SDLogError("MountController", "_connectVolume() failure: \(error)")
-                            self.mounting = false
 
                             main {
                                 NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
@@ -392,8 +367,6 @@ class MountController: NSObject {
                         }
                     })
                 } else {
-                    self.mounting = false
-                    
                     let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
                     let error = SDError(message: message, kind: .serviceDeployment)
                     
@@ -424,13 +397,10 @@ class MountController: NSObject {
                     main {
                         NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                     }
-                    self.mounting = false
                 }, error: { (message, error_type) in
                     let error = SDError(message: message, kind: .mountFailed)
                     SDLogError("MountController", "_connectVolume() failure: \(error)")
 
-                    
-                    self.mounting = false
                     main {
                         NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
                     }
