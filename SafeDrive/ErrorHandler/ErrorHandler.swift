@@ -31,6 +31,40 @@ func SDErrorHandlerInitialize() {
         
 
         SDLogError("SFTPFS", "\(errorType): %s", message)
+        
+        switch errorType {
+        case .AccessForbidden:
+            break
+        case .AlreadyConnected:
+            break
+        case .ConnectionCancelled:
+            let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+        case .ConnectionFailed:
+            let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+        case .ConnectionLost:
+            let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+        case .DiskFull:
+            break
+        case .FileNotFound:
+            break
+        case .InternalError:
+            break
+        case .MountFailed:
+            break
+        case .NoError:
+            break
+        case .NotConnected:
+            break
+        case .PermissionDenied:
+            break
+        case .UnknownError:
+            break
+        case .UnmountFailed:
+            break
+        }
     }
     
     set_sftpfs_logger { (clog, cmod, level) in
