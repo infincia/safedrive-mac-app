@@ -728,6 +728,14 @@ extension MountController: SDVolumeEventProtocol {
     }
     
     func volumeIsFull(notification: Notification) {        
+        let notification = NSUserNotification()
+        notification.informativeText = NSLocalizedString("SafeDrive is full", comment: "")
+        var userInfo = [String: Any]()
+        userInfo["identifier"] = SDNotificationType.driveFull.rawValue
+        notification.userInfo = userInfo
+        notification.title = "SafeDrive full"
+        notification.soundName = NSUserNotificationDefaultSoundName
+        NSUserNotificationCenter.default.deliver(notification)
     }
 }
 

@@ -47,6 +47,7 @@ public enum SDNotificationType: String {
     case openPreferences = "open-preferences"
     case driveMounted = "drive-mounted"
     case driveUnmounted = "drive-unmounted"
+    case driveFull = "drive-full"
 }
 
 

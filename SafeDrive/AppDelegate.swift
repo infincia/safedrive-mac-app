@@ -321,6 +321,8 @@ extension AppDelegate: NSUserNotificationCenterDelegate {
             break
         case .driveMounting:
             break
+        case .driveFull:
+            break
         }
 
         center.removeDeliveredNotification(notification)
