@@ -533,6 +533,18 @@ extension MountController: SleepReactor {
                 let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
                 NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
             }
+            // force this call stack to block to prevent the machine from
+            // sleeping. the system is supposed to allow up to 30 seconds if we
+            // delay this notification from returning, so we issue an async force
+            // unmount notification and then sleep as long as possible
+            var limit: TimeInterval = 24
+            repeat {
+                if limit <= 0 {
+                    break
+                }
+                limit -= 1
+                Thread.sleep(forTimeInterval: 1)
+            } while self.mounted
         }
     }
     
