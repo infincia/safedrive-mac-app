@@ -642,11 +642,13 @@ extension MountController: SDVolumeEventProtocol {
         
         NSUserNotificationCenter.default.deliver(notification)
         
+        /*
         do {
             try FileManager.default.removeItem(at: self.currentMountURL)
         } catch let error {
             SDLogError("MountController", "removing mountpoint failed: \(error.localizedDescription)")
         }
+        */
     }
     
     func volumeSubprocessDidTerminate(notification: Notification) {
