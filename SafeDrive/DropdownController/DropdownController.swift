@@ -58,7 +58,6 @@ class DropdownController: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount), name: Notification.Name.volumeDidUnmount, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount), name: Notification.Name.volumeShouldUnmount, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldMount), name: Notification.Name.volumeShouldMount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldToggleMountState), name: Notification.Name.volumeShouldToggleMountState, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeMounting), name: Notification.Name.volumeMounting, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeUnmounting), name: Notification.Name.volumeUnmounting, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeMountFailed), name: Notification.Name.volumeMountFailed, object: nil)
@@ -91,33 +90,20 @@ class DropdownController: NSObject {
     }
     
     @IBAction func toggleMount(_ sender: AnyObject) {
-        NotificationCenter.default.post(name: Notification.Name.volumeShouldToggleMountState, object: nil)
+        if self.mounted {
+            let unmountEvent = UnmountEvent(askForOpenApps: true, force: false)
+            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+        } else {
+            NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: nil)
+        }
     }
     
     @IBAction func forceToggleMount(_ sender: AnyObject) {
         if self.mounted {
-            let driveURL = MountController.shared.currentMountURL
-            ServiceManager.sharedServiceManager.forceUnmountSafeDrive(driveURL.path, {
-                NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
-            }, { (error) in
-                let notification = NSUserNotification()
-                                
-                var userInfo = [String: Any]()
-                
-                userInfo["identifier"] = SDNotificationType.driveUnmountFailed.rawValue
-                
-                notification.userInfo = userInfo
-                
-                notification.title = "SafeDrive force unmount failed"
-                
-                notification.informativeText = error.localizedDescription
-                
-                notification.soundName = NSUserNotificationDefaultSoundName
-                
-                NSUserNotificationCenter.default.deliver(notification)
-            })
+            let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
         } else {
-           NotificationCenter.default.post(name: Notification.Name.volumeShouldToggleMountState, object: nil)
+            NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: nil)
         }
     }
     
@@ -244,10 +230,6 @@ extension DropdownController: SDVolumeEventProtocol {
     
     func volumeShouldUnmount(notification: Notification) {
         assert(Thread.current == Thread.main, "volumeShouldUnmount called on background thread")
-    }
-    
-    func volumeShouldToggleMountState(notification: Notification) {
-        assert(Thread.current == Thread.main, "volumeShouldToggleMountState called on background thread")
     }
 
     func volumeMounting(notification: Notification) {

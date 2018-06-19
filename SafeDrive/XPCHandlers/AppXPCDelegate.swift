@@ -34,7 +34,12 @@ class AppXPCDelegate: NSObject, AppXPCProtocol {
     
     func toggleMountState() {
         print("finder extension requesting mount state change")
-        NotificationCenter.default.post(name: Notification.Name.volumeShouldToggleMountState, object: nil)
+        if MountController.shared.mounted {
+            let unmountEvent = UnmountEvent(askForOpenApps: true, force: false)
+            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+        } else {
+            NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: nil)
+        }
     }
     
     func getUniqueClientID(_ replyBlock: @escaping (_ uniqueClientID: String?) -> Void) {

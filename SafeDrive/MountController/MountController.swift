@@ -146,7 +146,6 @@ class MountController: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount), name: Notification.Name.volumeDidUnmount, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount), name: Notification.Name.volumeShouldUnmount, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldMount), name: Notification.Name.volumeShouldMount, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldToggleMountState), name: Notification.Name.volumeShouldToggleMountState, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeMounting), name: Notification.Name.volumeMounting, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeUnmounting), name: Notification.Name.volumeUnmounting, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeMountFailed), name: Notification.Name.volumeMountFailed, object: nil)
@@ -277,7 +276,7 @@ class MountController: NSObject {
                         
                         self.lastMountAttempt = Date()
                         
-                        NotificationCenter.default.post(name: NSNotification.Name.volumeShouldToggleMountState, object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name.volumeShouldMount, object: nil)
                     }
                 }
             }
@@ -648,18 +647,7 @@ extension MountController: SDVolumeEventProtocol {
         }
         self.disconnectVolume(askForOpenApps: unmountEvent.askForOpenApps, force: unmountEvent.force)
     }
-    
-    func volumeShouldToggleMountState(notification: Notification) {
-        DispatchQueue.main.async {
-            if self.mounted {
-                let unmountEvent = UnmountEvent(askForOpenApps: true, force: false)
-                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-            } else {
-                NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: nil)
-            }
-        }
-    }
-  
+
     func volumeMounting(notification: Notification) {
         
         let notification = NSUserNotification()
