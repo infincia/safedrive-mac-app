@@ -6,6 +6,7 @@
 
 
 import Foundation
+import Cocoa
 
 class MountController: NSObject {
     
@@ -545,6 +546,15 @@ extension MountController: SleepReactor {
                 limit -= 1
                 Thread.sleep(forTimeInterval: 1)
             } while self.mounted
+            
+            Thread.sleep(forTimeInterval: 5)
+
+            SDLogInfo("MountController", "asking machine to sleep")
+
+            // now tell the machine to sleep again
+            let source = "tell application \"Finder\"\nsleep\nend tell"
+            let script = NSAppleScript(source: source)
+            script?.executeAndReturnError(nil)
         }
     }
     
