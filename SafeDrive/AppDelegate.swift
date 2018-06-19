@@ -111,7 +111,7 @@ extension AppDelegate: NSApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenPreferencesWindow), name: Notification.Name.applicationShouldOpenPreferencesWindow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldOpenAboutWindow), name: Notification.Name.applicationShouldOpenAboutWindow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.applicationShouldOpenSyncWindow(_:)), name: Notification.Name.applicationShouldOpenSyncWindow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDApplicationControlProtocol.applicationShouldToggleMountState), name: Notification.Name.applicationShouldToggleMountState, object: nil)
+
         
         // register SDApplicationEventProtocol notifications
         
@@ -204,18 +204,6 @@ extension AppDelegate: SDApplicationControlProtocol {
         DispatchQueue.main.async {
             NSApp.activate(ignoringOtherApps: true)
             self.preferencesWindowController?.showWindow(nil)
-        }
-    }
-    
-    // TODO: move to mount controller
-    func applicationShouldToggleMountState(notification: Foundation.Notification) {
-        DispatchQueue.main.async {
-            if self.mountController.mounted {
-                let unmountEvent = UnmountEvent(askForOpenApps: true, force: false)
-                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-            } else {
-                NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: nil)
-            }
         }
     }
     

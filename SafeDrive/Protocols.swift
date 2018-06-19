@@ -10,6 +10,7 @@ protocol SDVolumeEventProtocol: class {
     func volumeDidUnmount(notification: Notification)
     func volumeShouldUnmount(notification: Notification)
     func volumeShouldMount(notification: Notification)
+    func volumeShouldToggleMountState(notification: Notification)
     func volumeSubprocessDidTerminate(notification: Notification)
     func volumeMounting(notification: Notification)
     func volumeUnmounting(notification: Notification)
@@ -40,7 +41,6 @@ protocol SDApplicationControlProtocol: class {
     func applicationShouldOpenAccountWindow(notification: Notification)
     func applicationShouldOpenAboutWindow(notification: Notification)
     func applicationShouldFinishConfiguration(notification: Notification)
-    func applicationShouldToggleMountState(notification: Notification)
 }
 
 @objc

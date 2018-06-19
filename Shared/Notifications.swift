@@ -13,6 +13,8 @@ extension Notification.Name {
     static let volumeDidUnmount = Notification.Name("volumeDidUnmountNotification")
     static let volumeShouldMount = Notification.Name("volumeShouldMountNotification")
     static let volumeShouldUnmount = Notification.Name("volumeShouldUnmountNotification")
+    static let volumeShouldToggleMountState = Notification.Name("volumeShouldToggleMountState")
+
     static let volumeSubprocessDidTerminate = Notification.Name("volumeSubprocessDidTerminateNotification")
     static let volumeMounting = Notification.Name("volumeMountingNotification")
     static let volumeUnmounting = Notification.Name("volumeUnmountingNotification")
@@ -24,7 +26,6 @@ extension Notification.Name {
     static let applicationShouldOpenAboutWindow = Notification.Name("applicationShouldOpenAboutWindowNotification")
     static let applicationShouldOpenSyncWindow = Notification.Name("applicationShouldOpenSyncWindowNotification")
     static let applicationShouldFinishConfiguration = Notification.Name("applicationShouldFinishConfigurationNotification")
-    static let applicationShouldToggleMountState = Notification.Name("applicationShouldToggleMountState")
     
     
     static let applicationDidConfigureClient = Notification.Name("applicationDidConfigureClient")

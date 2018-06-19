@@ -58,6 +58,7 @@ class DropdownController: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeDidUnmount), name: Notification.Name.volumeDidUnmount, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldUnmount), name: Notification.Name.volumeShouldUnmount, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldMount), name: Notification.Name.volumeShouldMount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeShouldToggleMountState), name: Notification.Name.volumeShouldToggleMountState, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeMounting), name: Notification.Name.volumeMounting, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeUnmounting), name: Notification.Name.volumeUnmounting, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeMountFailed), name: Notification.Name.volumeMountFailed, object: nil)
@@ -90,7 +91,7 @@ class DropdownController: NSObject {
     }
     
     @IBAction func toggleMount(_ sender: AnyObject) {
-        NotificationCenter.default.post(name: Notification.Name.applicationShouldToggleMountState, object: nil)
+        NotificationCenter.default.post(name: Notification.Name.volumeShouldToggleMountState, object: nil)
     }
     
     @IBAction func forceToggleMount(_ sender: AnyObject) {
@@ -116,7 +117,7 @@ class DropdownController: NSObject {
                 NSUserNotificationCenter.default.deliver(notification)
             })
         } else {
-           NotificationCenter.default.post(name: Notification.Name.applicationShouldToggleMountState, object: nil)
+           NotificationCenter.default.post(name: Notification.Name.volumeShouldToggleMountState, object: nil)
         }
     }
     
@@ -245,6 +246,10 @@ extension DropdownController: SDVolumeEventProtocol {
         assert(Thread.current == Thread.main, "volumeShouldUnmount called on background thread")
     }
     
+    func volumeShouldToggleMountState(notification: Notification) {
+        assert(Thread.current == Thread.main, "volumeShouldToggleMountState called on background thread")
+    }
+
     func volumeMounting(notification: Notification) {
         self.mounting = true
         self.unmounting = false
