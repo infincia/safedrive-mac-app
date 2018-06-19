@@ -21,6 +21,18 @@ let reporterInterval: TimeInterval = 60
 // MARK: Public API
 
 func SDErrorHandlerInitialize() {
+    set_sftpfs_error_handler { (cmsg, error_type) in
+        guard let cmessage = cmsg,
+            let errorType = SFTPFSErrorType(rawValue: error_type) else {
+                return
+        }
+        
+        let message = String(cString: cmessage)
+        
+
+        SDLogError("SFTPFS", "\(errorType): %s", message)
+    }
+    
     set_sftpfs_logger { (clog, cmod, level) in
         guard let cmessage = clog,
               let cmodule = cmod,
