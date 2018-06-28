@@ -21,3 +21,5 @@
 @import Crashlytics;
 
 #import <sftpfs/sftpfs.h>
+
+#import "NSURL+LSSharedItems.h"

@@ -35,6 +35,7 @@
 		AA16CE381F2ABC6400CD2399 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165521F25B0B600B7D8EF /* Errors.swift */; };
 		AA16CE391F2ABC6600CD2399 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165511F25B0B600B7D8EF /* Constants.swift */; };
 		AA16CE3A1F2ABC6A00CD2399 /* SafeDriveSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1165541F25B0B600B7D8EF /* SafeDriveSDK.swift */; };
+		AA17382E20E553C800F89B7A /* NSURL+LSSharedItems.m in Sources */ = {isa = PBXBuildFile; fileRef = AA17382D20E553C800F89B7A /* NSURL+LSSharedItems.m */; };
 		AA18515F1F75D11E00CC23C8 /* ValidateServiceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA18515D1F75D11D00CC23C8 /* ValidateServiceView.xib */; };
 		AA1851601F75D11E00CC23C8 /* ValidateServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA18515E1F75D11D00CC23C8 /* ValidateServiceViewController.swift */; };
 		AA192C081F37C7800037245A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C061F37C7800037245A /* main.swift */; };
@@ -380,6 +381,8 @@
 		AA11656F1F25B21D00B7D8EF /* io.safedrive.SafeDrive.sshfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = io.safedrive.SafeDrive.sshfs; path = "safedrive-sdk/target/x86_64-apple-darwin/release/io.safedrive.SafeDrive.sshfs"; sourceTree = "<group>"; };
 		AA1165881F25B7C900B7D8EF /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 		AA1165891F25C56700B7D8EF /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		AA17382C20E5538D00F89B7A /* NSURL+LSSharedItems.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSURL+LSSharedItems.h"; path = "Shared/NSURL+LSSharedItems.h"; sourceTree = "<group>"; };
+		AA17382D20E553C800F89B7A /* NSURL+LSSharedItems.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSURL+LSSharedItems.m"; path = "Shared/NSURL+LSSharedItems.m"; sourceTree = "<group>"; };
 		AA18515D1F75D11D00CC23C8 /* ValidateServiceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateServiceView.xib; path = Installer/ValidateServiceView.xib; sourceTree = "<group>"; };
 		AA18515E1F75D11D00CC23C8 /* ValidateServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateServiceViewController.swift; path = Installer/ValidateServiceViewController.swift; sourceTree = "<group>"; };
 		AA192BF51F37C64A0037245A /* IPCService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPCService.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -798,6 +801,8 @@
 				AA11653B1F256F1600B7D8EF /* Semver.swift */,
 				AA5DAFF51F2E36C700CD48AE /* SFTPFSXPCProtocol.swift */,
 				AA0AD42320166C56003BE5BA /* SFTPFingerprint.swift */,
+				AA17382C20E5538D00F89B7A /* NSURL+LSSharedItems.h */,
+				AA17382D20E553C800F89B7A /* NSURL+LSSharedItems.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1654,6 +1659,7 @@
 				AA7CD61E1E68A23300EE7FAD /* ValidateAccountViewController.swift in Sources */,
 				AAD44A201D889E6200ACCE79 /* ErrorHandler.swift in Sources */,
 				AA0ED3EF1E5C8F07007E8FDC /* OpenFileCheck.swift in Sources */,
+				AA17382E20E553C800F89B7A /* NSURL+LSSharedItems.m in Sources */,
 				AA6C5BB91C90D96F001C2869 /* NSDate+next.swift in Sources */,
 				AAD89BD21E5C197E007D8E82 /* OpenFileWarningWindowController.swift in Sources */,
 				AA2A42291F23AF4E00CC6010 /* VerifyFolderWindowController.swift in Sources */,
