@@ -46,6 +46,7 @@ fileprivate let SDUseServiceKey = "useService"
 fileprivate let SDUseSFTPFSKey = "useSFTPFS"
 fileprivate let SDUseCacheKey = "useCache"
 fileprivate let SDKeepMountedKey = "keepMounted"
+fileprivate let SDKeepInFinderSidebarKey = "keepInFinderSidebar"
 fileprivate let SDCurrentVolumeNameKey = "currentVolumeName"
 fileprivate let SDMountAtLaunchKey = "mountAtLaunch"
 fileprivate let SDWelcomeShownKey = "welcomeShown"
@@ -178,6 +179,10 @@ func useCacheKey() -> String {
 
 func keepMountedKey() -> String {
     return SDKeepMountedKey
+}
+
+func keepInFinderSidebarKey() -> String {
+    return SDKeepInFinderSidebarKey
 }
 
 func userDefaultsMountAtLaunchKey() -> String {

@@ -47,7 +47,7 @@ class AppDelegate: NSObject {
 
 extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Foundation.Notification) {
-        UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true, userDefaultsCurrentVolumeNameKey(): defaultVolumeName(), keepMountedKey(): true, useSFTPFSKey(): false, useCacheKey(): false, useServiceKey(): false])
+        UserDefaults.standard.register(defaults: ["NSApplicationCrashOnExceptions": true, userDefaultsCurrentVolumeNameKey(): defaultVolumeName(), keepMountedKey(): true, keepInFinderSidebarKey(): true, useSFTPFSKey(): false, useCacheKey(): false, useServiceKey(): false])
         Crashlytics.sharedInstance().delegate = self
         Fabric.with([Crashlytics.self])
         
