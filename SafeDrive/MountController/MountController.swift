@@ -465,6 +465,15 @@ class MountController: NSObject {
             NotificationCenter.default.post(name: Notification.Name.volumeUnmounting, object: nil)
         }
         
+        let u = self.currentMountURL as NSURL
+        if !u.removeFavoriteItem() {
+            SDLogWarn("MountController", "Failed to remove mountpoint from Finder sidebar favorites list")
+        }
+        
+        if !u.removeFavoriteVolume() {
+            SDLogWarn("MountController", "Failed to remove mountpoint from Finder sidebar volumes list")
+        }
+        
         // if the force flag is set, we skip the rest of the unmount handling for now
         // we may want to retry the force unmounting as well, but it will have to be
         // done in a different way due to the differences in how XPC and NSWorkspace APIs work
@@ -643,6 +652,15 @@ extension MountController: SDVolumeEventProtocol {
         notification.soundName = NSUserNotificationDefaultSoundName
         
         NSUserNotificationCenter.default.deliver(notification)
+        
+        // add to the Finder sidebar if preference is enabled
+        
+        if UserDefaults.standard.bool(forKey: keepInFinderSidebarKey()) {
+            let u = self.currentMountURL as NSURL
+            if !u.addFavoriteItem() {
+                SDLogError("MountController", "Failed to add mountpoint to Finder sidebar favorites list")
+            }
+        }
     }
     
     func volumeDidUnmount(notification: Notification) {
@@ -664,6 +682,14 @@ extension MountController: SDVolumeEventProtocol {
         
         NSUserNotificationCenter.default.deliver(notification)
         
+        let u = self.currentMountURL as NSURL
+        if !u.removeFavoriteItem() {
+            SDLogWarn("MountController", "Failed to remove mountpoint from Finder sidebar favorites list")
+        }
+        
+        if !u.removeFavoriteVolume() {
+            SDLogWarn("MountController", "Failed to remove mountpoint from Finder sidebar volumes list")
+        }
     }
     
     func volumeSubprocessDidTerminate(notification: Notification) {
