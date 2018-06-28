@@ -72,7 +72,6 @@
         if (listRef) {
             CFArrayRef snapshotRef = LSSharedFileListCopySnapshot(listRef, NULL);
             NSArray* favoritesList = CFBridgingRelease(snapshotRef);
-            NSLog(@"Found %lu items in favorites list", favoritesList.count);
 
             for (id favorite in favoritesList) {
                 LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)favorite;
@@ -90,9 +89,7 @@
                                                 NULL) == noErr) {
 
                     NSURL *itemURL = (NSURL *)CFBridgingRelease(itemURLRef);
-                    NSLog(@"Checking %@ in favorites list", itemURL);
                     if ([itemURL isEqual: self]) {
-                        NSLog(@"Found NSURL in favorites list: %@", itemURL);
                         if (LSSharedFileListItemRemove(listRef, itemRef) == noErr) {
                             result = YES;
                         }
@@ -111,7 +108,6 @@
                     if (displayNameRef) {
                         NSString* displayName = CFBridgingRelease(displayNameRef);
                         if ([displayName isEqual: self.lastPathComponent]) {
-                            NSLog(@"Found matching item without NSURL in favorites list");
                             if (LSSharedFileListItemRemove(listRef, itemRef) == noErr) {
                                 result = YES;
                             }
