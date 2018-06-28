@@ -14,7 +14,7 @@ find . -name "$i" -type f -exec sed -i '' s/com.github/io.safedrive/g {} +
 find . -name "$i" -type f -exec sed -i '' s/.filesystems.sdfs//g {} +
 done
 
-find . -type d -name '*osxfuse*' -exec sh -c 'mv {} $(echo {} | sed -e 's/osxfuse/sdfs/g')' \;
+find . -type d -name '*osxfuse*' -exec sh -c 'mv {} $(echo {} | sed -e 's/osxfuse/sdfs/g')' \; || true
 find . -name '*osxfuse*' -exec sh -c 'mv {} $(echo {} | sed -e 's/osxfuse/sdfs/g')' \; || true
 
 popd
