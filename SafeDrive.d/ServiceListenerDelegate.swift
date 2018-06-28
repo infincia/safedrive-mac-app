@@ -4,9 +4,13 @@
 
 import Foundation
 
+struct Constants {
+    static let sdfsPath = "/Library/Filesystems/sdfs.fs"
+}
+
 class ServiceListenerDelegate: NSObject {
     fileprivate func getSDFSVersion() -> String? {
-        guard let sdfs = Bundle.init(path: "/Library/Filesystems/sdfs.fs"),
+        guard let sdfs = Bundle.init(path: Constants.sdfsPath),
             let version = sdfs.infoDictionary?["CFBundleVersion"] as? String else {
                 return nil
         }
@@ -47,7 +51,7 @@ class ServiceListenerDelegate: NSObject {
     
     fileprivate func fixSDFSPermissions() throws {
         
-        let kextRoot = "/Library/Filesystems/sdfs.fs"
+        let kextRoot = Constants.sdfsPath
         
         let p = Process()
         p.launchPath = "/bin/chmod"
@@ -128,13 +132,13 @@ extension ServiceListenerDelegate: ServiceXPCProtocol {
         }
         
         do {
-            try FileManager.default.removeItem(atPath: "/Library/Filesystems/sdfs.fs")
+            try FileManager.default.removeItem(atPath: Constants.sdfsPath)
         } catch {
             // ignore, not fatal
         }
         
         do {
-            try FileManager.default.copyItem(atPath: source, toPath: "/Library/Filesystems/sdfs.fs")
+            try FileManager.default.copyItem(atPath: source, toPath: Constants.sdfsPath)
         } catch let error as NSError {
             replyBlock(false, "\(error.localizedDescription)")
             return
