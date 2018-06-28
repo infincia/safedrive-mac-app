@@ -11,6 +11,12 @@ mkdir -p ${BUILD_DIR}
 rm -rf ${BUILD_DIR}/sdfs*
 rm -rf ${DIST_DIR}/*
 
+pushd sdfs
+find . -name '*sdfs*' -exec rm -r {} \; || true
+git submodule foreach git reset --hard
+git reset --hard
+popd
+
 ./patch_sdfs.sh || ./patch_sdfs.sh || ./patch_sdfs.sh || ./patch_sdfs.sh
 
 pushd sdfs
