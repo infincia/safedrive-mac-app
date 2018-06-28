@@ -22,48 +22,50 @@ let reporterInterval: TimeInterval = 60
 
 func SDErrorHandlerInitialize() {
     set_sftpfs_error_handler { (cmsg, error_type) in
-        guard let cmessage = cmsg,
-            let errorType = SFTPFSErrorType(rawValue: error_type) else {
-                return
-        }
-        
-        let message = String(cString: cmessage)
-        
+        background {
+            guard let cmessage = cmsg,
+                let errorType = SFTPFSErrorType(rawValue: error_type) else {
+                    return
+            }
+            
+            let message = String(cString: cmessage)
+            
 
-        SDLogError("SFTPFS", "\(errorType): %s", message)
-        
-        switch errorType {
-        case .AccessForbidden:
-            break
-        case .AlreadyConnected:
-            break
-        case .ConnectionCancelled:
-            let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-        case .ConnectionFailed:
-            let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-        case .ConnectionLost:
-            let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-        case .DiskFull:
-            break
-        case .FileNotFound:
-            break
-        case .InternalError:
-            break
-        case .MountFailed:
-            break
-        case .NoError:
-            break
-        case .NotConnected:
-            break
-        case .PermissionDenied:
-            break
-        case .UnknownError:
-            break
-        case .UnmountFailed:
-            break
+            SDLogError("SFTPFS", "\(errorType): %s", message)
+            
+            switch errorType {
+            case .AccessForbidden:
+                break
+            case .AlreadyConnected:
+                break
+            case .ConnectionCancelled:
+                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+            case .ConnectionFailed:
+                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+            case .ConnectionLost:
+                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+            case .DiskFull:
+                break
+            case .FileNotFound:
+                break
+            case .InternalError:
+                break
+            case .MountFailed:
+                break
+            case .NoError:
+                break
+            case .NotConnected:
+                break
+            case .PermissionDenied:
+                break
+            case .UnknownError:
+                break
+            case .UnmountFailed:
+                break
+            }
         }
     }
     
