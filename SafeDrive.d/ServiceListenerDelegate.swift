@@ -6,6 +6,7 @@ import Foundation
 
 struct Constants {
     static let sdfsPath = "/Library/Filesystems/sdfs.fs"
+    static let sdfsBundleId = "io.safedrive.sdfs"
 }
 
 class ServiceListenerDelegate: NSObject {
@@ -28,7 +29,7 @@ class ServiceListenerDelegate: NSObject {
         let pipe: Pipe = Pipe()
         let task: Process = Process()
         task.launchPath = "/sbin/kextunload"
-        task.arguments = ["-b", "io.safedrive.sdfs"]
+        task.arguments = ["-b", Constants.sdfsBundleId]
         task.standardOutput = pipe
         task.launch()
         task.waitUntilExit()
