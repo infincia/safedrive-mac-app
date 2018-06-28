@@ -17,7 +17,7 @@ if #available(OSX 10.12, *) {
     NSLog("%@ will start", bundleId)
 }
 
-let listenerDelegate = ServiceListenerDelegate()
+let listenerDelegate = ServiceListenerDelegate(bundleId: bundleId)
 
 let listener = NSXPCListener(machServiceName: bundleId)
 

@@ -10,6 +10,18 @@ struct Constants {
 }
 
 class ServiceListenerDelegate: NSObject {
+    
+    fileprivate var bundleId: String!
+    
+    override init() {
+        super.init()
+    }
+
+    convenience init(bundleId: String) {
+        self.init()
+        self.bundleId = bundleId
+    }
+
     fileprivate func getSDFSVersion() -> String? {
         guard let sdfs = Bundle.init(path: Constants.sdfsPath),
             let version = sdfs.infoDictionary?["CFBundleVersion"] as? String else {
@@ -34,7 +46,7 @@ class ServiceListenerDelegate: NSObject {
         task.launch()
         task.waitUntilExit()
         if task.terminationStatus != 0 {
-            throw NSError(domain: "io.safedrive.SafeDrive.d", code: 0x0001, userInfo: [NSLocalizedDescriptionKey: "Unloading sdfs.kext failed"])
+            throw NSError(domain: self.bundleId, code: 0x0001, userInfo: [NSLocalizedDescriptionKey: "Unloading sdfs.kext failed"])
         }
     }
     
@@ -46,7 +58,7 @@ class ServiceListenerDelegate: NSObject {
         task.launch()
         task.waitUntilExit()
         if task.terminationStatus != 0 {
-            throw NSError(domain: "io.safedrive.SafeDrive.d", code: 0x0002, userInfo: [NSLocalizedDescriptionKey: "Loading sdfs.kext failed"])
+            throw NSError(domain: self.bundleId, code: 0x0002, userInfo: [NSLocalizedDescriptionKey: "Loading sdfs.kext failed"])
         }
     }
     
@@ -61,7 +73,7 @@ class ServiceListenerDelegate: NSObject {
         p.waitUntilExit()
         
         if p.terminationStatus != 0 {
-            throw NSError(domain: "io.safedrive.SafeDrive.d", code: 0x0003, userInfo: [NSLocalizedDescriptionKey: "SDFS kext permissions could not be set"])
+            throw NSError(domain: self.bundleId, code: 0x0003, userInfo: [NSLocalizedDescriptionKey: "SDFS kext permissions could not be set"])
         }
         
         let p2 = Process()
@@ -71,7 +83,7 @@ class ServiceListenerDelegate: NSObject {
         p2.waitUntilExit()
         
         if p2.terminationStatus != 0 {
-            throw NSError(domain: "io.safedrive.SafeDrive.d", code: 0x0004, userInfo: [NSLocalizedDescriptionKey: "SDFS kext owner could not be set"])
+            throw NSError(domain: self.bundleId, code: 0x0004, userInfo: [NSLocalizedDescriptionKey: "SDFS kext owner could not be set"])
         }
         
         let p3 = Process()
@@ -81,7 +93,7 @@ class ServiceListenerDelegate: NSObject {
         p3.waitUntilExit()
         
         if p3.terminationStatus != 0 {
-            throw NSError(domain: "io.safedrive.SafeDrive.d", code: 0x0005, userInfo: [NSLocalizedDescriptionKey: "SDFS kext loader binary could not be setuid"])
+            throw NSError(domain: self.bundleId, code: 0x0005, userInfo: [NSLocalizedDescriptionKey: "SDFS kext loader binary could not be setuid"])
         }
     }
     
@@ -94,7 +106,7 @@ class ServiceListenerDelegate: NSObject {
         task.launch()
         task.waitUntilExit()
         if task.terminationStatus != 0 {
-            throw NSError(domain: "io.safedrive.SafeDrive.d", code: 0x0006, userInfo: [NSLocalizedDescriptionKey: "Force unmount failed"])
+            throw NSError(domain: self.bundleId, code: 0x0006, userInfo: [NSLocalizedDescriptionKey: "Force unmount failed"])
         }
     }
 }
