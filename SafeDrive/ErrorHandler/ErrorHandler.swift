@@ -5,7 +5,6 @@
 
 
 import Crashlytics
-import sftpfs
 
 
 var errors = [[AnyHashable: Any]]()
@@ -21,78 +20,6 @@ let reporterInterval: TimeInterval = 60
 // MARK: Public API
 
 func SDErrorHandlerInitialize() {
-    set_sftpfs_error_handler { (cmsg, error_type) in
-        background {
-            guard let cmessage = cmsg,
-                let errorType = SFTPFSErrorType(rawValue: error_type) else {
-                    return
-            }
-            
-            let message = String(cString: cmessage)
-            
-
-            SDLogError("SFTPFS", "\(errorType): %s", message)
-            
-            switch errorType {
-            case .AccessForbidden:
-                break
-            case .AlreadyConnected:
-                break
-            case .ConnectionCancelled:
-                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-            case .ConnectionFailed:
-                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-            case .ConnectionLost:
-                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-            case .DiskFull:
-                break
-            case .FileNotFound:
-                break
-            case .InternalError:
-                break
-            case .MountFailed:
-                break
-            case .NoError:
-                break
-            case .NotConnected:
-                break
-            case .PermissionDenied:
-                break
-            case .UnknownError:
-                break
-            case .UnmountFailed:
-                break
-            }
-        }
-    }
-    
-    set_sftpfs_logger { (clog, cmod, level) in
-        guard let cmessage = clog,
-              let cmodule = cmod,
-            let logLevel = SDKLogLevel(rawValue: UInt8(level)) else {
-            return
-        }
-        
-        let message = String(cString: cmessage)
-        let module = String(cString: cmodule)
-        
-        switch logLevel {
-        case .error:
-            SDLogError(module, "%@", message)
-        case .warn:
-            SDLogWarn(module, "%@", message)
-        case .info:
-            SDLogInfo(module, "%@", message)
-        case .debug:
-            SDLogDebug(module, "%@", message)
-        case .trace:
-            SDLogTrace(module, "%@", message)
-        }
-    }
-    
     let localURL = storageURL()
     
     /*
