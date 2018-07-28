@@ -103,7 +103,7 @@
                       * items with more generic names
                     ***/
                     
-                    /*
+                    
                     CFStringRef displayNameRef = LSSharedFileListItemCopyDisplayName(itemRef);
                     if (displayNameRef) {
                         NSString* displayName = CFBridgingRelease(displayNameRef);
@@ -113,7 +113,6 @@
                             }
                         }
                     }
-                    */
                 }
             }
             CFRelease(listRef);
