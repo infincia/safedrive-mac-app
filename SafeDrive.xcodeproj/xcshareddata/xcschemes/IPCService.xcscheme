@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AA192BF41F37C64A0037245A"
-               BuildableName = "IPCService.app"
+               BuildableName = "SafeDrive (IPC).app"
                BlueprintName = "IPCService"
                ReferencedContainer = "container:SafeDrive.xcodeproj">
             </BuildableReference>
@@ -26,7 +26,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -37,7 +36,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -52,7 +50,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA192BF41F37C64A0037245A"
-            BuildableName = "IPCService.app"
+            BuildableName = "SafeDrive (IPC).app"
             BlueprintName = "IPCService"
             ReferencedContainer = "container:SafeDrive.xcodeproj">
          </BuildableReference>
@@ -70,7 +68,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA192BF41F37C64A0037245A"
-            BuildableName = "IPCService.app"
+            BuildableName = "SafeDrive (IPC).app"
             BlueprintName = "IPCService"
             ReferencedContainer = "container:SafeDrive.xcodeproj">
          </BuildableReference>

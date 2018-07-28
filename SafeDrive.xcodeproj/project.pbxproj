@@ -45,7 +45,7 @@
 		AA192C0D1F37C9470037245A /* IPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA192C0A1F37C9280037245A /* IPCProtocol.swift */; };
 		AA192C0F1F37CA890037245A /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
 		AA1B5EF71CA30EA5005DCB81 /* SyncFailurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B5EF61CA30EA5005DCB81 /* SyncFailurePopoverView.swift */; };
-		AA1E454E1F46AE890092F49D /* IPCService.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA192BF51F37C64A0037245A /* IPCService.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AA1E454E1F46AE890092F49D /* SafeDrive (IPC).app in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA192BF51F37C64A0037245A /* SafeDrive (IPC).app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA2A42221F2315DA00CC6010 /* AddFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42201F2315DA00CC6010 /* AddFolderWindow.xib */; };
 		AA2A42241F23281400CC6010 /* AddFolderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A42211F2315DA00CC6010 /* AddFolderWindowController.swift */; };
 		AA2A42281F23AF4E00CC6010 /* VerifyFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42261F23AF4E00CC6010 /* VerifyFolderWindow.xib */; };
@@ -334,7 +334,7 @@
 			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
-				AA1E454E1F46AE890092F49D /* IPCService.app in CopyFiles */,
+				AA1E454E1F46AE890092F49D /* SafeDrive (IPC).app in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,7 +389,7 @@
 		AA17382D20E553C800F89B7A /* NSURL+LSSharedItems.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSURL+LSSharedItems.m"; path = "Shared/NSURL+LSSharedItems.m"; sourceTree = "<group>"; };
 		AA18515D1F75D11D00CC23C8 /* ValidateServiceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ValidateServiceView.xib; path = Installer/ValidateServiceView.xib; sourceTree = "<group>"; };
 		AA18515E1F75D11D00CC23C8 /* ValidateServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValidateServiceViewController.swift; path = Installer/ValidateServiceViewController.swift; sourceTree = "<group>"; };
-		AA192BF51F37C64A0037245A /* IPCService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPCService.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA192BF51F37C64A0037245A /* SafeDrive (IPC).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SafeDrive (IPC).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA192BFD1F37C64A0037245A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA192C051F37C7800037245A /* IPCService.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = IPCService.entitlements; sourceTree = "<group>"; };
 		AA192C061F37C7800037245A /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -686,7 +686,7 @@
 				AAF945FF1C815D5A00B972C3 /* SafeDrive.appex */,
 				AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
 				AA5DAFDC1F2E2E9B00CD48AE /* SFTPFSService.xpc */,
-				AA192BF51F37C64A0037245A /* IPCService.app */,
+				AA192BF51F37C64A0037245A /* SafeDrive (IPC).app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1097,7 +1097,7 @@
 			);
 			name = IPCService;
 			productName = IPCService;
-			productReference = AA192BF51F37C64A0037245A /* IPCService.app */;
+			productReference = AA192BF51F37C64A0037245A /* SafeDrive (IPC).app */;
 			productType = "com.apple.product-type.application";
 		};
 		AA3168121A191B72006CC0EB /* SafeDrive */ = {
@@ -1859,7 +1859,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = G738Z89QKM.io.safedrive.IPCService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "SafeDrive (IPC)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1891,7 +1891,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = G738Z89QKM.io.safedrive.IPCService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "SafeDrive (IPC)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
