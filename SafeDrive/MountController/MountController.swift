@@ -282,25 +282,6 @@ class MountController: NSObject {
         return false
     }
 
-    func checkMount(at url: URL, timeout: TimeInterval, mounted mountedBlock: @escaping () -> Void, notMounted notMountedBlock: @escaping () -> Void) {
-        background {
-            let start_time = Date()
-            
-            while Date().timeIntervalSince(start_time) < timeout {
-                if self.checkMount(at: url) {
-                    main {
-                        mountedBlock()
-                    }
-                    return
-                }
-                Thread.sleep(forTimeInterval: 1)
-            }
-            main {
-                notMountedBlock()
-            }
-        }
-    }
-    
     // MARK: warning Needs slight refactoring
     func mountStateLoop() {
         background {
