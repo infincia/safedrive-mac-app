@@ -617,16 +617,31 @@ class MountController: NSObject {
         // we may want to retry the force unmounting as well, but it will have to be
         // done in a different way due to the differences in how XPC and NSWorkspace APIs work
         if force {
-            ServiceManager.sharedServiceManager.forceUnmountSafeDrive(self.currentMountURL.path, {
-                main {
-                    self.mountURL = nil
-                    NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
+            if self.useXPC {
+                if let s = self.sftpfsConnection {
+                    let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                        SDLogError("MountController", "Killing sftpfs failed: \(error.localizedDescription)")
+                    }) as! SFTPFSXPCProtocol
+                    
+                    proxy.killMount()
+                    
+                    main {
+                        self.mountURL = nil
+                        NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
+                    }
                 }
-            }, { (error) in
-                main {
-                    NotificationCenter.default.post(name: Notification.Name.volumeUnmountFailed, object: error)
-                }
-            })
+            } else {
+                ServiceManager.sharedServiceManager.forceUnmountSafeDrive(self.currentMountURL.path, {
+                    main {
+                        self.mountURL = nil
+                        NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
+                    }
+                }, { (error) in
+                    main {
+                        NotificationCenter.default.post(name: Notification.Name.volumeUnmountFailed, object: error)
+                    }
+                })
+            }
             return
         }
 
