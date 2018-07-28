@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AAF945FE1C815D5A00B972C3"
-               BuildableName = "SafeDrive.appex"
+               BuildableName = "SafeDrive (Finder).appex"
                BlueprintName = "SafeDriveFinder"
                ReferencedContainer = "container:SafeDrive.xcodeproj">
             </BuildableReference>
@@ -41,7 +41,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -49,7 +48,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AAF945FE1C815D5A00B972C3"
-            BuildableName = "SafeDrive.appex"
+            BuildableName = "SafeDrive (Finder).appex"
             BlueprintName = "SafeDriveFinder"
             ReferencedContainer = "container:SafeDrive.xcodeproj">
          </BuildableReference>
@@ -61,7 +60,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = ""
       selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"

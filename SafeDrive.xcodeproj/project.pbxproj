@@ -116,7 +116,7 @@
 		AA88DD0C1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
 		AA88DD0E1F0C04D500C4858E /* FinderXPCProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0A1F0C04D500C4858E /* FinderXPCProtocol.swift */; };
 		AA88DD101F0C052D00C4858E /* FinderXPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA88DD0F1F0C052D00C4858E /* FinderXPCDelegate.swift */; };
-		AA9079AE1F07EE120067E383 /* SafeDrive.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AAF945FF1C815D5A00B972C3 /* SafeDrive.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AA9079AE1F07EE120067E383 /* SafeDrive (Finder).appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AAF945FF1C815D5A00B972C3 /* SafeDrive (Finder).appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA942BA71DFA823A00DC0B74 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD44A1F1D889E6200ACCE79 /* ErrorHandler.swift */; };
 		AAA3E7031EADB7320083CE66 /* OpenFileCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0ED3EE1E5C8F07007E8FDC /* OpenFileCheck.swift */; };
 		AAA3E7051EADB7350083CE66 /* OpenFileWarningTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD89BD41E5C1D94007D8E82 /* OpenFileWarningTableCellView.swift */; };
@@ -312,7 +312,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				AA9079AE1F07EE120067E383 /* SafeDrive.appex in Embed App Extensions */,
+				AA9079AE1F07EE120067E383 /* SafeDrive (Finder).appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -502,7 +502,7 @@
 		AAF85BFC1A23A5510063B54F /* SDSystemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SDSystemAPI.h; path = SystemAPI/SDSystemAPI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AAF85BFD1A23A5510063B54F /* SDSystemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SDSystemAPI.m; path = SystemAPI/SDSystemAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AAF945F61C801AA900B972C3 /* SafeDrive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SafeDrive.entitlements; sourceTree = "<group>"; };
-		AAF945FF1C815D5A00B972C3 /* SafeDrive.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SafeDrive.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAF945FF1C815D5A00B972C3 /* SafeDrive (Finder).appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "SafeDrive (Finder).appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF946021C815D5A00B972C3 /* Finder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Finder.entitlements; sourceTree = "<group>"; };
 		AAF946031C815D5A00B972C3 /* FinderSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderSync.swift; sourceTree = "<group>"; };
 		AAF946051C815D5A00B972C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -683,7 +683,7 @@
 			children = (
 				AA3168131A191B72006CC0EB /* SafeDrive.app */,
 				AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */,
-				AAF945FF1C815D5A00B972C3 /* SafeDrive.appex */,
+				AAF945FF1C815D5A00B972C3 /* SafeDrive (Finder).appex */,
 				AAC466C71F0C9BFD002088B6 /* io.safedrive.SafeDrive.d */,
 				AA5DAFDC1F2E2E9B00CD48AE /* SafeDrive (SFTPFS).xpc */,
 				AA192BF51F37C64A0037245A /* SafeDrive (IPC).app */,
@@ -1204,7 +1204,7 @@
 			);
 			name = SafeDriveFinder;
 			productName = Finder;
-			productReference = AAF945FF1C815D5A00B972C3 /* SafeDrive.appex */;
+			productReference = AAF945FF1C815D5A00B972C3 /* SafeDrive (Finder).appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -2402,7 +2402,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.Finder;
-				PRODUCT_NAME = SafeDrive;
+				PRODUCT_NAME = "SafeDrive (Finder)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/SDDK";
@@ -2434,7 +2434,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = io.safedrive.SafeDrive.Finder;
-				PRODUCT_NAME = SafeDrive;
+				PRODUCT_NAME = "SafeDrive (Finder)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/SDDK";
