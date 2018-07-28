@@ -87,7 +87,7 @@ class SyncScheduler {
         
         while self.running {
             guard let uniqueClientID = self.uniqueClientID,
-                  let uniqueClientName = self.uniqueClientName else {
+                  let _ = self.uniqueClientName else {
                 Thread.sleep(forTimeInterval: 1)
                 continue
             }
