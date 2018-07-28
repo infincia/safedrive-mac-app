@@ -4,9 +4,8 @@
 
 // swiftlint:disable file_length
 
-
-import Foundation
 import Cocoa
+import Foundation
 
 class MountController: NSObject {
     
