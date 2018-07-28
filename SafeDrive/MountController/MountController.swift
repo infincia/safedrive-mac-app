@@ -57,7 +57,7 @@ class MountController: NSObject {
     
     var useCache = false
     
-    var useXPC = false
+    var useXPC = true
 
     var currentMountURL: URL {
         let home = NSHomeDirectory()
