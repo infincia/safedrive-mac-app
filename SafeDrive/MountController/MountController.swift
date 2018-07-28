@@ -346,7 +346,7 @@ class MountController: NSObject {
                     
                     proxy.setSFTPFingerprints(fingerprints)
                     
-                    proxy.connect(reply: { (success, message, error_type) in
+                    proxy.connect(reply: { (success, message, _) in
                         if success {
                             main {
                                 NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
@@ -398,7 +398,7 @@ class MountController: NSObject {
                     main {
                         NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                     }
-                }, error: { (message, error_type) in
+                }, error: { (message, _) in
                     let error = SDError(message: message, kind: .mountFailed)
                     SDLogError("MountController", "_connectVolume() failure: \(error)")
 
