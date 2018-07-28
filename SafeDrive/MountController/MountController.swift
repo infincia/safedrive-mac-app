@@ -263,6 +263,7 @@ class MountController: NSObject {
         
         self.sftpfsConnection = connection
         
+        finderSidebarLoop()
         mountStateLoop()
         mountLoop()
     }
@@ -280,6 +281,25 @@ class MountController: NSObject {
             }
         }
         return false
+    }
+    
+    func finderSidebarLoop() {
+        background {
+            while true {
+                Thread.sleep(forTimeInterval: 10)
+
+                if !self.mounted {
+                    let u = self.currentMountURL as NSURL
+                    if !u.removeFavoriteItem() {
+                        // ignore
+                    }
+                    
+                    if !u.removeFavoriteVolume() {
+                        // ignore
+                    }
+                }
+            }
+        }
     }
 
     // MARK: warning Needs slight refactoring
