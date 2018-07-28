@@ -412,6 +412,70 @@ class MountController: NSObject {
                         SDLogError("MountController", "Connecting to sftpfs failed: \(error.localizedDescription)")
                     }) as! SFTPFSXPCProtocol
                     
+                    
+                    proxy.setLogger({ (message, module, level) in
+                        guard let logLevel = SDKLogLevel(rawValue: UInt8(level)) else {
+                            return
+                        }
+                        
+                        switch logLevel {
+                        case .error:
+                            SDLogError(module, "%@", message)
+                        case .warn:
+                            SDLogWarn(module, "%@", message)
+                        case .info:
+                            SDLogInfo(module, "%@", message)
+                        case .debug:
+                            SDLogDebug(module, "%@", message)
+                        case .trace:
+                            SDLogTrace(module, "%@", message)
+                        }
+                    })
+                    
+                    proxy.setErrorHandler({ (message, error_type) in
+                        background {
+                            guard let errorType = SFTPFSErrorType(rawValue: error_type) else {
+                                return
+                            }
+                            
+                            SDLogError("SFTPFS", "\(errorType): %s", message)
+                            
+                            switch errorType {
+                            case .AccessForbidden:
+                                break
+                            case .AlreadyConnected:
+                                break
+                            case .ConnectionCancelled:
+                                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+                                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+                            case .ConnectionFailed:
+                                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+                                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+                            case .ConnectionLost:
+                                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+                                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+                            case .DiskFull:
+                                break
+                            case .FileNotFound:
+                                break
+                            case .InternalError:
+                                break
+                            case .MountFailed:
+                                break
+                            case .NoError:
+                                break
+                            case .NotConnected:
+                                break
+                            case .PermissionDenied:
+                                break
+                            case .UnknownError:
+                                break
+                            case .UnmountFailed:
+                                break
+                            }
+                        }
+                    })
+                    
                     proxy.create(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port)
                     
                     proxy.setUseCache(self.useCache)
