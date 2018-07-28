@@ -17,6 +17,8 @@ let kSFTPFSXPCProtocolVersion: Int = 7
     
     func disconnect(reply replyBlock: @escaping (_ success: Bool, _ message: String?, _ error_type: sftpfs_error_type) -> Void)
     
+    func killMount()
+    
     func setIcon(_ url: URL)
 
     func useCache(reply replyBlock: @escaping (Bool) -> Void)

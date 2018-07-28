@@ -53,6 +53,10 @@ extension SFTPFSDelegate: SFTPFSXPCProtocol {
         ProcessInfo.processInfo.enableSuddenTermination()
     }
     
+    func killMount() {
+        exit(1)
+    }
+    
     func setIcon(_ url: URL) {
         self.sftpfs?.setIcon(url)
     }
