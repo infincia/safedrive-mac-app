@@ -237,4 +237,3 @@ public enum SDErrorType: Int {
     case keyCorrupted = 12000
     case cryptoError = 12001
 }
-
