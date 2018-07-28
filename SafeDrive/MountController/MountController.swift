@@ -172,11 +172,11 @@ class MountController: NSObject {
         weak var weakSelf: MountController? = self
         
         connection.interruptionHandler = {
-            if let weakSelf = weakSelf {
+            /*if let weakSelf = weakSelf {
                 weakSelf.sftpfsQueue.async {
                     weakSelf.sftpfsConnection = nil
                 }
-            }
+            }*/
         }
         connection.invalidationHandler = {
             if let weakSelf = weakSelf {
