@@ -9,6 +9,9 @@ class SFTPFSDelegate: NSObject {
     
     fileprivate var sftpfs: ManagedSFTPFS?
     
+    fileprivate static var loggerCallback: ((String, String, Int32) -> Void)?
+    fileprivate static var errorCallback: ((String, Int32) -> Void)?
+
     func create(_ mountpoint: String, label: String, user: String, password: String, host: String, port: UInt16) {
         ProcessInfo.processInfo.disableSuddenTermination()
         
@@ -21,6 +24,18 @@ class SFTPFSDelegate: NSObject {
                                                    xpc: true)
     }
     
+    static func log(_ message: String, _ module: String, _ level: Int32) {
+        if let cb = SFTPFSDelegate.loggerCallback {
+            cb(message, module, level)
+        }
+    }
+    
+    static func error(_ message: String, _ error_type: Int32) {
+        if let cb = SFTPFSDelegate.errorCallback {
+            cb(message, error_type)
+        }
+    }
+}
 
 
 extension SFTPFSDelegate: NSXPCListenerDelegate {
@@ -97,4 +112,33 @@ extension SFTPFSDelegate: SFTPFSXPCProtocol {
         self.sftpfs?.setSFTPFingerprints(fingerprints)
     }
 
+    func setErrorHandler( _ callback: @escaping (String, Int32) -> Void) {
+        SFTPFSDelegate.errorCallback = callback
+
+        set_sftpfs_error_handler { (cmsg, error_type) in
+            guard let cmessage = cmsg else {
+                    return
+            }
+            
+            let message = String(cString: cmessage)
+            
+            SFTPFSDelegate.error(message, error_type)
+        }
+    }
+    func setLogger(_ callback: @escaping (String, String, Int32) -> Void) {
+        SFTPFSDelegate.loggerCallback = callback
+        
+        set_sftpfs_logger { (clog, cmod, level) in
+            guard let cmessage = clog,
+                let cmodule = cmod else {
+                    return
+            }
+            
+            let message = String(cString: cmessage)
+            let module = String(cString: cmodule)
+            
+            SFTPFSDelegate.log(message, module, level)
+
+        }
+    }
 }

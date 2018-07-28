@@ -32,4 +32,8 @@ let kSFTPFSXPCProtocolVersion: Int = 7
     func setMountpoint(_ mountpoint: String)
     
     func setSFTPFingerprints(_ fingerprints: [String])
+    
+    func setErrorHandler( _ callback: @escaping (String, Int32) -> Void)
+    
+    func setLogger(_ callback: @escaping (String, String, Int32) -> Void)
 }
