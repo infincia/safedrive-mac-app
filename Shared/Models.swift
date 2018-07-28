@@ -520,9 +520,7 @@ public class SDKAccountStatus {
 
 extension SDKAccountStatus: CustomStringConvertible {
     public var description: String {
-        get {
-            return "AccountStatus<host:\(host),port:\(port),userName:\(userName),state:\(state)>"
-        }
+        return "AccountStatus<host:\(host),port:\(port),userName:\(userName),state:\(state)>"
     }
 }
 
