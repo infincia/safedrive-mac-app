@@ -51,6 +51,10 @@
 		AA2A42281F23AF4E00CC6010 /* VerifyFolderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA2A42261F23AF4E00CC6010 /* VerifyFolderWindow.xib */; };
 		AA2A42291F23AF4E00CC6010 /* VerifyFolderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A42271F23AF4E00CC6010 /* VerifyFolderWindowController.swift */; };
 		AA2E55101A774E0000647637 /* known_hosts in Resources */ = {isa = PBXBuildFile; fileRef = AA2E550F1A774E0000647637 /* known_hosts */; };
+		AA2F67B420F3C5CB00AF2D69 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5071691E2ED5F7006F59C8 /* Util.swift */; };
+		AA2F67B620F3C64700AF2D69 /* SDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2F67B520F3C64700AF2D69 /* SDError.swift */; };
+		AA2F67B720F3C68100AF2D69 /* SDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2F67B520F3C64700AF2D69 /* SDError.swift */; };
+		AA2F67B820F3C68100AF2D69 /* SDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2F67B520F3C64700AF2D69 /* SDError.swift */; };
 		AA3EB8411E569D28003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA3EB8431E569E9D003A2E79 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3EB8401E569D28003A2E79 /* Protocols.swift */; };
 		AA3ED7161FE9E5AB00CFBF70 /* sd.iconset in Resources */ = {isa = PBXBuildFile; fileRef = AACEE5D81FBF947A00A5DF60 /* sd.iconset */; };
@@ -400,6 +404,7 @@
 		AA2A42261F23AF4E00CC6010 /* VerifyFolderWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VerifyFolderWindow.xib; path = "Verify Folder Window/VerifyFolderWindow.xib"; sourceTree = "<group>"; };
 		AA2A42271F23AF4E00CC6010 /* VerifyFolderWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyFolderWindowController.swift; path = "Verify Folder Window/VerifyFolderWindowController.swift"; sourceTree = "<group>"; };
 		AA2E550F1A774E0000647637 /* known_hosts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = known_hosts; sourceTree = "<group>"; };
+		AA2F67B520F3C64700AF2D69 /* SDError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SDError.swift; path = Shared/SDError.swift; sourceTree = "<group>"; };
 		AA3168131A191B72006CC0EB /* SafeDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3168171A191B72006CC0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA3168261A191B72006CC0EB /* SafeDriveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeDriveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -803,6 +808,7 @@
 				AA0AD42320166C56003BE5BA /* SFTPFingerprint.swift */,
 				AA17382C20E5538D00F89B7A /* NSURL+LSSharedItems.h */,
 				AA17382D20E553C800F89B7A /* NSURL+LSSharedItems.m */,
+				AA2F67B520F3C64700AF2D69 /* SDError.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1564,6 +1570,7 @@
 				AA192C0C1F37C9430037245A /* IPCProtocol.swift in Sources */,
 				AAD44A261D88CA1D00ACCE79 /* AppXPCProtocol.swift in Sources */,
 				AAC9448B1F730731009F8717 /* RestoreSelectionWindowController.swift in Sources */,
+				AA2F67B620F3C64700AF2D69 /* SDError.swift in Sources */,
 				AAA88BD71C851F17009BE1C7 /* AccountController.swift in Sources */,
 				AAD69F181E665B4400FAB196 /* RunningProcessCheck.swift in Sources */,
 				AA6E27341D8839DC00038019 /* SyncController.swift in Sources */,
@@ -1620,6 +1627,7 @@
 				AAA3E72A1EADB8FE0083CE66 /* ServiceXPCProtocol.swift in Sources */,
 				AA6E272C1D876DD800038019 /* Notifications.swift in Sources */,
 				AA6E27351D8839DC00038019 /* SyncController.swift in Sources */,
+				AA2F67B720F3C68100AF2D69 /* SDError.swift in Sources */,
 				AAA3E7201EADB7820083CE66 /* PreferencesWindowController.swift in Sources */,
 				AAA3E7071EADB73B0083CE66 /* RunningProcessCheck.swift in Sources */,
 				AAA3E7181EADB7700083CE66 /* SyncFailurePopoverView.swift in Sources */,
@@ -1668,6 +1676,7 @@
 				AA5DAFF71F2E36C700CD48AE /* SFTPFSXPCProtocol.swift in Sources */,
 				AA5DAFF41F2E34E700CD48AE /* SFTPFSDelegate.swift in Sources */,
 				AA5DAFF81F2E395C00CD48AE /* main.swift in Sources */,
+				AA2F67B420F3C5CB00AF2D69 /* Util.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1692,6 +1701,7 @@
 				AA192C0D1F37C9470037245A /* IPCProtocol.swift in Sources */,
 				AA6E272E1D876DD800038019 /* Notifications.swift in Sources */,
 				AA11655B1F25B0B600B7D8EF /* Models.swift in Sources */,
+				AA2F67B820F3C68100AF2D69 /* SDError.swift in Sources */,
 				AA1165571F25B0B600B7D8EF /* Constants.swift in Sources */,
 				AA11653E1F256F1600B7D8EF /* Semver.swift in Sources */,
 				AA50716B1E2ED86A006F59C8 /* Util.swift in Sources */,
