@@ -287,9 +287,20 @@ class MountController: NSObject {
         background {
             while true {
                 Thread.sleep(forTimeInterval: 5)
+                let u = self.currentMountURL as NSURL
 
-                if !self.mounted {
-                    let u = self.currentMountURL as NSURL
+                if self.mounted {
+                    // add to the Finder sidebar if preference is enabled
+                    
+                    if UserDefaults.standard.bool(forKey: keepInFinderSidebarKey()) {
+                        let u = self.currentMountURL as NSURL
+                        if !u.isFavoriteItemPresent() {
+                            if !u.addFavoriteItem() {
+                                SDLogError("MountController", "Failed to add mountpoint to Finder sidebar favorites list")
+                            }
+                        }
+                    }
+                } else {
                     if !u.removeFavoriteItem() {
                         // ignore
                     }
@@ -806,15 +817,6 @@ extension MountController: SDVolumeEventProtocol {
         notification.soundName = NSUserNotificationDefaultSoundName
         
         NSUserNotificationCenter.default.deliver(notification)
-        
-        // add to the Finder sidebar if preference is enabled
-        
-        if UserDefaults.standard.bool(forKey: keepInFinderSidebarKey()) {
-            let u = self.currentMountURL as NSURL
-            if !u.addFavoriteItem() {
-                SDLogError("MountController", "Failed to add mountpoint to Finder sidebar favorites list")
-            }
-        }
     }
     
     func volumeDidUnmount(notification: Notification) {
