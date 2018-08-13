@@ -286,7 +286,7 @@ class MountController: NSObject {
     func finderSidebarLoop() {
         background {
             while true {
-                Thread.sleep(forTimeInterval: 10)
+                Thread.sleep(forTimeInterval: 5)
 
                 if !self.mounted {
                     let u = self.currentMountURL as NSURL
