@@ -12,6 +12,9 @@
 - (BOOL)removeFavoriteItem;
 - (BOOL)removeFavoriteVolume;
 
+
+- (BOOL)isFavoriteItemPresent;
+- (BOOL)isFavoriteVolumePresent;
 @end
 
 #endif /* NSURL_LSSharedItems_h */

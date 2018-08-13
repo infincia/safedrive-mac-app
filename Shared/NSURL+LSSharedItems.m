@@ -21,6 +21,13 @@
     return [self removeFrom: kLSSharedFileListFavoriteVolumes];
 }
 
+- (BOOL)isFavoriteItemPresent {
+    return [self isPresentIn: kLSSharedFileListFavoriteItems];
+}
+
+- (BOOL)isFavoriteVolumePresent {
+    return [self isPresentIn: kLSSharedFileListFavoriteVolumes];
+}
 
 // private API
 
@@ -110,6 +117,68 @@
                         if ([displayName isEqual: self.lastPathComponent]) {
                             if (LSSharedFileListItemRemove(listRef, itemRef) == noErr) {
                                 result = YES;
+                            }
+                        }
+                    }
+                }
+            }
+            CFRelease(listRef);
+        }
+    }
+    return result;
+}
+
+- (BOOL)isPresentIn:(CFStringRef)list {
+    /*
+     if (![NSURL LSFunctionsAvailable]) {
+     return NO;
+     }
+     */
+    
+    BOOL result = NO;
+    if (self.isFileURL) {
+        LSSharedFileListRef listRef = LSSharedFileListCreate(NULL, list, NULL);
+        if (listRef) {
+            CFArrayRef snapshotRef = LSSharedFileListCopySnapshot(listRef, NULL);
+            NSArray* favoritesList = CFBridgingRelease(snapshotRef);
+            
+            for (id favorite in favoritesList) {
+                LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)favorite;
+                
+                CFURLRef itemURLRef;
+                
+                // CFErrorRef err;
+                
+                // itemURLRef = LSSharedFileListItemCopyResolvedURL(itemRef, 0, &err);
+                
+                if (LSSharedFileListItemResolve(itemRef,
+                                                kLSSharedFileListNoUserInteraction |
+                                                kLSSharedFileListDoNotMountVolumes,
+                                                &itemURLRef,
+                                                NULL) == noErr) {
+                    
+                    NSURL *itemURL = (NSURL *)CFBridgingRelease(itemURLRef);
+                    if ([itemURL isEqual: self]) {
+                        result = YES;
+                        break;
+                    }
+                } else {
+                    /**
+                     * this is error prone so we leave it disabled for now. The
+                     * display names are not going to be unique and users can
+                     * change the name of the drive to anything they want at the
+                     * moment, which could result in removing unrelated favorite
+                     * items with more generic names
+                     ***/
+                    
+                    
+                    CFStringRef displayNameRef = LSSharedFileListItemCopyDisplayName(itemRef);
+                    if (displayNameRef) {
+                        NSString* displayName = CFBridgingRelease(displayNameRef);
+                        if ([displayName isEqual: self.lastPathComponent]) {
+                            if (LSSharedFileListItemRemove(listRef, itemRef) == noErr) {
+                                result = YES;
+                                break;
                             }
                         }
                     }
