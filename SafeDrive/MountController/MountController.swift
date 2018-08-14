@@ -327,24 +327,37 @@ class MountController: NSObject {
                             proxy.mounted(reply: { (isMounted) in
                                 self.mounted = isMounted
 
+                                // needs to run on background thread or it will
+                                // block the UI if the network stops responding
+                                let _mountDetails = self.mountDetails
+                                
                                 main {
-                                    NotificationCenter.default.post(name: Notification.Name.mountDetails, object: self.mountDetails)
+                                    NotificationCenter.default.post(name: Notification.Name.mountDetails, object: _mountDetails)
                                     NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
                                 }
                             })
                         } else {
                             self.mounted = false
                             
+                            // needs to run on background thread or it will
+                            // block the UI if the network stops responding
+                            let _mountDetails = self.mountDetails
+                            
                             main {
-                                NotificationCenter.default.post(name: Notification.Name.mountDetails, object: self.mountDetails)
+                                NotificationCenter.default.post(name: Notification.Name.mountDetails, object: _mountDetails)
                                 NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
                             }
                         }
                     }
                 } else {
                     self.mounted = self.checkMount(at: self.currentMountURL)
+                    
+                    // needs to run on background thread or it will
+                    // block the UI if the network stops responding
+                    let _mountDetails = self.mountDetails
+                    
                     main {
-                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object: self.mountDetails)
+                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object: _mountDetails)
                         NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
                     }
                 }
