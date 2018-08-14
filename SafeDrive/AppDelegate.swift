@@ -34,6 +34,8 @@ class AppDelegate: NSObject {
     
     fileprivate var sdk = SafeDriveSDK.sharedSDK
     
+    fileprivate var activityWindowController: ActivityNotifierWindowController!
+
     // swiftlint:disable force_unwrapping
     var CFBundleVersion = Int((Bundle.main.infoDictionary!["CFBundleVersion"])! as! String)!
     
@@ -126,6 +128,11 @@ extension AppDelegate: NSApplicationDelegate {
         self.welcomeWindowController = WelcomeWindowController()
         // swiftlint:disable force_unwrapping
         _ = self.welcomeWindowController.window!
+        // swiftlint:enable force_unwrapping
+        
+        self.activityWindowController = ActivityNotifierWindowController()
+        // swiftlint:disable force_unwrapping
+        _ = self.activityWindowController.window!
         // swiftlint:enable force_unwrapping
 
         self.syncScheduler = SyncScheduler.sharedSyncScheduler
