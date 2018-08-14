@@ -119,6 +119,13 @@
                                 result = YES;
                             }
                         }
+                    } else {
+                        /**
+                          * Sidebar item has no url or name, it's useless even
+                          * if it isn't ours so we remove it
+                          *
+                         **/
+                        LSSharedFileListItemRemove(listRef, itemRef);
                     }
                 }
             }
