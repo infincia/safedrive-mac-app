@@ -265,6 +265,7 @@ class MountController: NSObject {
         
         finderSidebarLoop()
         mountStateLoop()
+        mountDetailsLoop()
         mountLoop()
     }
     
@@ -319,10 +320,18 @@ class MountController: NSObject {
         }
     }
 
-    // MARK: warning Needs slight refactoring
     func mountStateLoop() {
         background {
             while true {
+                /**
+                 * Always sleep at the top of the loop, guards against future
+                 * changes that may accidentally cause uncontrolled CPU
+                 * spinning due to break/continue statements that don't sleep
+                 * first
+                 **/
+                
+                Thread.sleep(forTimeInterval: 1)
+
                 if self.useXPC {                    
                     self.sftpfsQueue.sync {
                         if let s = self.sftpfsConnection {
@@ -332,25 +341,15 @@ class MountController: NSObject {
                             
                             proxy.mounted(reply: { (isMounted) in
                                 self.mounted = isMounted
-
-                                // needs to run on background thread or it will
-                                // block the UI if the network stops responding
-                                let _mountDetails = self.mountDetails
                                 
                                 main {
-                                    NotificationCenter.default.post(name: Notification.Name.mountDetails, object: _mountDetails)
                                     NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
                                 }
                             })
                         } else {
                             self.mounted = false
                             
-                            // needs to run on background thread or it will
-                            // block the UI if the network stops responding
-                            let _mountDetails = self.mountDetails
-                            
                             main {
-                                NotificationCenter.default.post(name: Notification.Name.mountDetails, object: _mountDetails)
                                 NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
                             }
                         }
@@ -358,17 +357,73 @@ class MountController: NSObject {
                 } else {
                     self.mounted = self.checkMount(at: self.currentMountURL)
                     
-                    // needs to run on background thread or it will
-                    // block the UI if the network stops responding
+                    main {
+                        NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
+                    }
+                }
+            }
+        }
+    }
+    
+    func mountDetailsLoop() {
+        background {
+            while true {
+                 /**
+                   * Always sleep at the top of the loop, guards against future
+                   * changes that may accidentally cause uncontrolled CPU
+                   * spinning due to break/continue statements that don't sleep
+                   * first
+                  **/
+                Thread.sleep(forTimeInterval: 1)
+
+                if self.mounted {
+                    /**
+                     * needs to run on background thread or it will
+                     * block the UI if the network stops responding
+                     **/
                     let _mountDetails = self.mountDetails
                     
                     main {
                         NotificationCenter.default.post(name: Notification.Name.mountDetails, object: _mountDetails)
-                        NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
+                    }
+                    
+                    /**
+                      * after a successful stats check, we can sleep for much
+                      * longer than one second, this will lighten the load on
+                      * the drive and network.
+                     **/
+                    var lastState = self.mounted
+                    let startDate = Date()
+
+                    while true {
+                        /**
+                          * However we still want to quickly update the stats if the
+                          * mount state changes, so we have an 'escape hatch' to
+                          * break early and update immediately, when needed
+                         **/
+                        if lastState != self.mounted {
+                            break
+                        }
+                        lastState = self.mounted
+
+                        let now = Date()
+                        let d = now.timeIntervalSince(startDate)
+                        if d > 30 {
+                            break
+                        }
+                        
+                        Thread.sleep(forTimeInterval: 1)
+                    }
+
+                } else {
+                    /**
+                     * if the drive isn't mounted we shouldn't run stats updates
+                     * at all, just clear them
+                     **/
+                    main {
+                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object: nil)
                     }
                 }
-                
-                Thread.sleep(forTimeInterval: 1)
             }
         }
     }
