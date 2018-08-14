@@ -127,6 +127,7 @@ class ActivityNotifierWindowController: NSWindowController {
                 return
             }
 
+            self.startDate = Date()
             self.message = message
             self.startCounter()
             self.showWindow(self)
