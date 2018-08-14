@@ -286,6 +286,12 @@ class MountController: NSObject {
     func finderSidebarLoop() {
         background {
             while true {
+                /**
+                 * Always sleep at the top of the loop, guards against future
+                 * changes that may accidentally cause uncontrolled CPU
+                 * spinning due to break/continue statements that don't sleep
+                 * first
+                 **/
                 Thread.sleep(forTimeInterval: 5)
                 let u = self.currentMountURL as NSURL
 
