@@ -103,11 +103,10 @@
                     }
                 } else {
                     /**
-                      * this is error prone so we leave it disabled for now. The
-                      * display names are not going to be unique and users can
-                      * change the name of the drive to anything they want at the
-                      * moment, which could result in removing unrelated favorite
-                      * items with more generic names
+                      * this is error prone, the display names are not going to
+                      * be unique and users can change the name of the drive to
+                      * anything they want at the moment, which could result in
+                      * removing unrelated favorite items with more generic names
                     ***/
                     
                     
