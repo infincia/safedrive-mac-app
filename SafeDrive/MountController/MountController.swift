@@ -317,11 +317,36 @@ class MountController: NSObject {
     func mountStateLoop() {
         background {
             while true {
-                self.mounted = self.checkMount(at: self.currentMountURL)
-                
-                main {
-                    NotificationCenter.default.post(name: Notification.Name.mountDetails, object: self.mountDetails)
-                    NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
+                if self.useXPC {                    
+                    self.sftpfsQueue.sync {
+                        if let s = self.sftpfsConnection {
+                            let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                                SDLogError("MountController", "Connecting to sftpfs failed: \(error.localizedDescription)")
+                            }) as! SFTPFSXPCProtocol
+                            
+                            proxy.mounted(reply: { (isMounted) in
+                                self.mounted = isMounted
+
+                                main {
+                                    NotificationCenter.default.post(name: Notification.Name.mountDetails, object: self.mountDetails)
+                                    NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
+                                }
+                            })
+                        } else {
+                            self.mounted = false
+                            
+                            main {
+                                NotificationCenter.default.post(name: Notification.Name.mountDetails, object: self.mountDetails)
+                                NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
+                            }
+                        }
+                    }
+                } else {
+                    self.mounted = self.checkMount(at: self.currentMountURL)
+                    main {
+                        NotificationCenter.default.post(name: Notification.Name.mountDetails, object: self.mountDetails)
+                        NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
+                    }
                 }
                 
                 Thread.sleep(forTimeInterval: 1)
