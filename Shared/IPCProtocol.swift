@@ -7,8 +7,11 @@ let kIPCProtocolVersion: Int = 5
 
 @objc protocol IPCProtocol {
     func protocolVersion(_ replyBlock: @escaping (_ version: Int) -> Void)
+
     func setAppEndpoint(_ endpoint: NSXPCListenerEndpoint, reply replyBlock: @escaping (_ success: Bool) -> Void)
+
     func getAppEndpoint(_ replyBlock: @escaping (_ endpoint: NSXPCListenerEndpoint) -> Void)
+
     func addFinderConnection(_ endpoint: NSXPCListenerEndpoint, reply replyBlock: @escaping (_ success: Bool) -> Void)
 
     func didSignIn()

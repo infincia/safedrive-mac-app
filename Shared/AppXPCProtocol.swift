@@ -7,6 +7,7 @@ let kAppXPCProtocolVersion: Int = 7
 
 @objc protocol AppXPCProtocol {
     func protocolVersion(_ replyBlock: @escaping (_ version: Int) -> Void)
+
     func getMountState(_ replyBlock: @escaping (_ mounted: Bool) -> Void)
 
     func displayPreferencesWindow()
@@ -14,6 +15,4 @@ let kAppXPCProtocolVersion: Int = 7
     func toggleMountState()
     
     func getUniqueClientID(_ replyBlock: @escaping (_ uniqueClientID: String?) -> Void)
-
-
 }
