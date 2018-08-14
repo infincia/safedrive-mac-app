@@ -104,6 +104,22 @@ extension SFTPFSDelegate: SFTPFSXPCProtocol {
         }
     }
 
+    func mounted(reply replyBlock: @escaping (Bool)-> Void) {
+        if let mounted = self.sftpfs?.mounted() {
+            replyBlock(mounted)
+        } else {
+            replyBlock(false)
+        }
+    }
+    
+    func mounting(reply replyBlock: @escaping (Bool)-> Void) {
+        if let mounting = self.sftpfs?.mounting() {
+            replyBlock(mounting)
+        } else {
+            replyBlock(false)
+        }
+    }
+    
     func setMountpoint(_ mountpoint: String) {
         self.sftpfs?.setMountpoint(mountpoint)
     }

@@ -29,6 +29,10 @@ let kSFTPFSXPCProtocolVersion: Int = 7
     
     func connecting(reply replyBlock: @escaping (Bool) -> Void)
     
+    func mounted(reply replyBlock: @escaping (Bool) -> Void)
+    
+    func mounting(reply replyBlock: @escaping (Bool) -> Void)
+    
     func setMountpoint(_ mountpoint: String)
     
     func setSFTPFingerprints(_ fingerprints: [String])
