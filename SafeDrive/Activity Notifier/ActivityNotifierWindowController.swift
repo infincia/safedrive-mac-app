@@ -11,6 +11,8 @@ protocol ActivityNotifierWindowControllerDelegate: class {
 
 class ActivityNotifierWindowController: NSWindowController {
     
+    static var shared = ActivityNotifierWindowController()
+
     fileprivate var sdk = SafeDriveSDK.sharedSDK
     
     fileprivate let counterQueue = DispatchQueue(label: "io.safedrive.counterQueue")

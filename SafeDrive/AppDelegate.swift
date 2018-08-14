@@ -130,7 +130,7 @@ extension AppDelegate: NSApplicationDelegate {
         _ = self.welcomeWindowController.window!
         // swiftlint:enable force_unwrapping
         
-        self.activityWindowController = ActivityNotifierWindowController()
+        self.activityWindowController = ActivityNotifierWindowController.shared
         // swiftlint:disable force_unwrapping
         _ = self.activityWindowController.window!
         // swiftlint:enable force_unwrapping
