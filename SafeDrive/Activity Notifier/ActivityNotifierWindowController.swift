@@ -68,8 +68,9 @@ class ActivityNotifierWindowController: NSWindowController {
     
     convenience init() {
         self.init(windowNibName: NSNib.Name("ActivityNotifierWindow"))
-        
+        // swiftlint:disable force_unwrapping
         _ = window!
+        // swiftlint:enable force_unwrapping
     }
     
     

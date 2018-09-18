@@ -601,7 +601,9 @@ class MountController: NSObject {
                                 NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                             }
                         } else {
+                            // swiftlint:disable force_unwrapping
                             let error = SDError(message: message!, kind: .mountFailed)
+                            // swiftlint:enable force_unwrapping
                             SDLogError("MountController", "_connectVolume() failure: \(error)")
 
                             main {
