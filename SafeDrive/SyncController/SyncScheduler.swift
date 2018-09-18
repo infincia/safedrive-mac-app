@@ -373,7 +373,7 @@ class SyncScheduler {
                 }
                 
             }, success: { (_: URL) -> Void in
-                SDLogInfo("SyncScheduler", "Sync finished for \(syncController.folderName)")
+                SDLogInfo("SyncScheduler", "Sync finished for \(String(describing: syncController.folderName))")
                 
                 let duration = NSDate().timeIntervalSince(syncDate)
                 
@@ -396,7 +396,7 @@ class SyncScheduler {
                 
             }, failure: { (_: URL, error: Error) -> Void in
                 SDErrorHandlerReport(error)
-                SDLogInfo("SyncScheduler", "Sync failed for \(syncController.folderName): \(error.localizedDescription)")
+                SDLogInfo("SyncScheduler", "Sync failed for \(String(describing: syncController.folderName)): \(error.localizedDescription)")
 
                 let duration = NSDate().timeIntervalSince(syncDate)
 
