@@ -2,6 +2,7 @@
 
 set -e -u -o pipefail # Fail on error
 
+PROJECT_DIR=${PWD}
 DIST_DIR=${PWD}/dist
 BUILD_DIR=${PWD}/build
 
@@ -25,6 +26,8 @@ pushd sdfs
 popd
 
 ditto /tmp/sdfs/fsbundle/sdfs.fs ${DIST_DIR}/sdfs.bundle
+
+cp -a ${PROJECT_DIR}/sd.icns ${DIST_DIR}/sdfs.bundle/Contents/Resources/Volume.icns || true
 
 pushd ${DIST_DIR}/sdfs.bundle/Contents/Extensions
 
