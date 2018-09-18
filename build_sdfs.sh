@@ -20,7 +20,7 @@ popd
 ./patch_sdfs.sh || ./patch_sdfs.sh || ./patch_sdfs.sh || ./patch_sdfs.sh
 
 pushd sdfs
-./build.sh -v 5 -t fsbundle -a build -- -s 10.14 -d 10.9 --kext=10.9 --kext="10.10->10.9" --kext=10.11 --kext="10.12->10.11" --kext="10.13->10.11"
+./build.sh -v 5 -t fsbundle -a build -- -s 10.14 -d 10.9 --kext=10.9 --kext="10.10->10.9" --kext=10.11 --kext="10.12->10.11" --kext="10.13->10.11"  --kext="10.14->10.11"
 ./build.sh -v 5 -t library -a build -- -s 10.14 -d 10.9
 popd
 
