@@ -114,7 +114,7 @@ class MountController: NSObject {
     
     var lastMountAttempt: Date? {
         get {
-            var r: Date? = nil
+            var r: Date?
             signedInQueue.sync {
                 r = self._lastMountAttempt
             }

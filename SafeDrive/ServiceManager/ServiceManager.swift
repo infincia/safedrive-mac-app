@@ -334,7 +334,7 @@ extension ServiceManager: NSXPCListenerDelegate {
             
             ServiceManager.delegate.didFail(error: authError)
         } else {
-            var cfError: Unmanaged<CFError>? = nil
+            var cfError: Unmanaged<CFError>?
             
             if !SMJobBless(kSMDomainSystemLaunchd, ServiceManager.serviceName as CFString, authRef, &cfError) {
                 // swiftlint:disable force_unwrapping

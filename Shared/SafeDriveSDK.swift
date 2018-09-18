@@ -37,7 +37,7 @@ public class SafeDriveSDK: NSObject {
     }
     
     public static var sddk_channel: String {
-        var ch: UnsafeMutablePointer<CChar>? = nil
+        var ch: UnsafeMutablePointer<CChar>?
         
         sddk_get_channel(&ch)
         defer {
@@ -47,7 +47,7 @@ public class SafeDriveSDK: NSObject {
     }
     
     public static var sddk_version: String {
-        var ver: UnsafeMutablePointer<CChar>? = nil
+        var ver: UnsafeMutablePointer<CChar>?
 
         sddk_get_version(&ver)
         defer {
@@ -70,8 +70,8 @@ public class SafeDriveSDK: NSObject {
         case .Staging:
             sddk_config = SDDKConfiguration_Staging
         }
-        var error: UnsafeMutablePointer<SDDKError>? = nil
-        var state: OpaquePointer? = nil
+        var error: UnsafeMutablePointer<SDDKError>?
+        var state: OpaquePointer?
                 
         let c_log_level = SDDKLogLevel.init(UInt32(log_level.rawValue))
             
@@ -98,8 +98,8 @@ public class SafeDriveSDK: NSObject {
         
         return Promise { fulfill, reject in
             background {
-                var error: UnsafeMutablePointer<SDDKError>? = nil
-                var status: UnsafeMutablePointer<SDDKAccountStatus>? = nil
+                var error: UnsafeMutablePointer<SDDKError>?
+                var status: UnsafeMutablePointer<SDDKAccountStatus>?
                 
                 let res = sddk_login(self.state, unique_client_id, unique_client_name, username, password, &status, &error)
                 defer {
@@ -124,8 +124,8 @@ public class SafeDriveSDK: NSObject {
     public func removeClient() -> Promise<Void> {
         return Promise { fulfill, reject in
             background {
-                var error: UnsafeMutablePointer<SDDKError>? = nil
-                var status: UnsafeMutablePointer<SDDKAccountStatus>? = nil
+                var error: UnsafeMutablePointer<SDDKError>?
+                var status: UnsafeMutablePointer<SDDKAccountStatus>?
                 
                 let res = sddk_remove_client(self.state, &error)
                 defer {
@@ -148,7 +148,7 @@ public class SafeDriveSDK: NSObject {
     
         background {
             
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_load_keys(unsafeBitCast(storePhrase, to: UnsafeMutableRawPointer.self),
                                      unsafeBitCast(issue, to: UnsafeMutableRawPointer.self),
@@ -188,8 +188,8 @@ public class SafeDriveSDK: NSObject {
         
         background {
 
-            var clients_ptr: UnsafeMutablePointer<SDDKSoftwareClient>? = nil
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var clients_ptr: UnsafeMutablePointer<SDDKSoftwareClient>?
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_get_software_clients(username, password, &clients_ptr, &error)
             defer {
@@ -228,8 +228,8 @@ public class SafeDriveSDK: NSObject {
 
         background {
         
-            var account_status_ptr: UnsafeMutablePointer<SDDKAccountStatus>? = nil
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var account_status_ptr: UnsafeMutablePointer<SDDKAccountStatus>?
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_get_account_status(self.state!, &account_status_ptr, &error)
             defer {
@@ -255,8 +255,8 @@ public class SafeDriveSDK: NSObject {
 
         background {
         
-            var account_details_ptr: UnsafeMutablePointer<SDDKAccountDetails>? = nil
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var account_details_ptr: UnsafeMutablePointer<SDDKAccountDetails>?
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_get_account_details(self.state!, &account_details_ptr, &error)
             defer {
@@ -282,8 +282,8 @@ public class SafeDriveSDK: NSObject {
         
         background {
             
-            var fingerprint_ptr: UnsafeMutablePointer<SDDKSFTPFingerprint>? = nil
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var fingerprint_ptr: UnsafeMutablePointer<SDDKSFTPFingerprint>?
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_get_sftp_fingerprints(&fingerprint_ptr, &error)
             defer {
@@ -316,7 +316,7 @@ public class SafeDriveSDK: NSObject {
     }
     
     public func generateUniqueClientID() -> String {
-        var unique_client_id: UnsafeMutablePointer<CChar>? = nil
+        var unique_client_id: UnsafeMutablePointer<CChar>?
 
         sddk_generate_unique_client_id(&unique_client_id)
         defer {
@@ -330,7 +330,7 @@ public class SafeDriveSDK: NSObject {
         
         background {
             
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
             
             var c_encrypted: UInt8 = 0
             if encrypted {
@@ -357,7 +357,7 @@ public class SafeDriveSDK: NSObject {
         
         background {
             
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
             
             var c_syncing: UInt8 = 0
             if syncing {
@@ -383,7 +383,7 @@ public class SafeDriveSDK: NSObject {
     public func removeFolder(_ folderId: UInt64, completionQueue queue: DispatchQueue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
         background {
             
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_remove_sync_folder(self.state!, folderId, &error)
             
@@ -407,8 +407,8 @@ public class SafeDriveSDK: NSObject {
 
         background {
             
-            var folder_ptr: UnsafeMutablePointer<SDDKFolder>? = nil
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var folder_ptr: UnsafeMutablePointer<SDDKFolder>?
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_get_sync_folder(self.state!, folderId, &folder_ptr, &error)
             defer {
@@ -435,8 +435,8 @@ public class SafeDriveSDK: NSObject {
         
         background {
 
-            var folder_ptr: UnsafeMutablePointer<SDDKFolder>? = nil
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var folder_ptr: UnsafeMutablePointer<SDDKFolder>?
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_get_sync_folders(self.state!, &folder_ptr, &error)
             defer {
@@ -470,7 +470,7 @@ public class SafeDriveSDK: NSObject {
     
     public func hasConflictingFolder(folderPath: String, completionQueue queue: DispatchQueue, success: @escaping (_ conflict: Bool) -> Void, failure: @escaping SDKFailure) {
         
-        var error: UnsafeMutablePointer<SDDKError>? = nil
+        var error: UnsafeMutablePointer<SDDKError>?
         let res = sddk_has_conflicting_folder(self.state!, folderPath, &error)
         defer {
             if res == -1 {
@@ -492,8 +492,8 @@ public class SafeDriveSDK: NSObject {
     
         background {
 
-            var sessions_ptr: UnsafeMutablePointer<SDDKSyncSession>? = nil
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var sessions_ptr: UnsafeMutablePointer<SDDKSyncSession>?
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_get_sync_sessions(self.state!, &sessions_ptr, &error)
             defer {
@@ -527,7 +527,7 @@ public class SafeDriveSDK: NSObject {
     public func removeSession(_ sessionId: UInt64, completionQueue queue: DispatchQueue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
         background {
             
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_remove_sync_session(self.state!, sessionId, &error)
             
@@ -550,7 +550,7 @@ public class SafeDriveSDK: NSObject {
     public func cancelSyncTask(sessionName: String, completionQueue queue: DispatchQueue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
         
         background {
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
 
             let res = sddk_cancel_sync_task(sessionName, &error)
             defer {
@@ -571,7 +571,7 @@ public class SafeDriveSDK: NSObject {
     public func syncFolder(folderID: UInt64, sessionName: String, completionQueue queue: DispatchQueue, progress: @escaping SDKSyncSessionProgress, bandwidth: @escaping SDKSyncSessionBandwidth, issue: @escaping SDKSyncSessionIssue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
         
         background {
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
 
             let res = sddk_sync(unsafeBitCast(progress, to: UnsafeMutableRawPointer.self),
                                 unsafeBitCast(bandwidth, to: UnsafeMutableRawPointer.self),
@@ -612,7 +612,7 @@ public class SafeDriveSDK: NSObject {
         
         background {
         
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
 
             let res = sddk_restore(unsafeBitCast(progress, to: UnsafeMutableRawPointer.self),
                                    unsafeBitCast(bandwidth, to: UnsafeMutableRawPointer.self),
@@ -664,7 +664,7 @@ public class SafeDriveSDK: NSObject {
         
             let description = error.localizedDescription
             var context = ""
-            var s_error: UnsafeMutablePointer<SDDKError>? = nil
+            var s_error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_report_error(clientVersion, os, uniqueClientId, description, context, &s_error)
             defer {
@@ -689,7 +689,7 @@ public class SafeDriveSDK: NSObject {
         
         background {
             
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_gc(self.state!, &error)
             defer {
@@ -710,8 +710,8 @@ public class SafeDriveSDK: NSObject {
     // keychain
     
     public func getKeychainItem(withUser username: String, service: String) throws -> String {
-        var secret_ptr: UnsafeMutablePointer<CChar>? = nil
-        var error: UnsafeMutablePointer<SDDKError>? = nil
+        var secret_ptr: UnsafeMutablePointer<CChar>?
+        var error: UnsafeMutablePointer<SDDKError>?
         
         let res = sddk_get_keychain_item(username, service, &secret_ptr, &error)
         defer {
@@ -734,7 +734,7 @@ public class SafeDriveSDK: NSObject {
     
     public func setKeychainItem(withUser username: String, service: String, secret: String) throws {
         
-        var error: UnsafeMutablePointer<SDDKError>? = nil
+        var error: UnsafeMutablePointer<SDDKError>?
         
         let res = sddk_set_keychain_item(username, service, secret, &error)
         defer {
@@ -754,7 +754,7 @@ public class SafeDriveSDK: NSObject {
     
     public func deleteKeychainItem(withUser username: String, service: String) throws {
         
-        var error: UnsafeMutablePointer<SDDKError>? = nil
+        var error: UnsafeMutablePointer<SDDKError>?
         
         
         let res = sddk_delete_keychain_item(username, service, &error)
@@ -777,7 +777,7 @@ public class SafeDriveSDK: NSObject {
     public func remoteFSCreateDirectory(path: String, completionQueue queue: DispatchQueue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
         
         background {
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_remote_mkdir(self.state!, &error, path)
             defer {
@@ -798,7 +798,7 @@ public class SafeDriveSDK: NSObject {
     public func remoteFSDeleteDirectory(path: String, completionQueue queue: DispatchQueue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
         
         background {
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_remote_rmdir(self.state!, &error, path)
             defer {
@@ -819,7 +819,7 @@ public class SafeDriveSDK: NSObject {
     public func remoteFSDeletePath(path: String, recursive: Bool, completionQueue queue: DispatchQueue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
         
         background {
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
             
             var c_recursive: UInt8 = 0
             if recursive {
@@ -845,7 +845,7 @@ public class SafeDriveSDK: NSObject {
     public func remoteFSMoveDirectory(path: String, newPath: String, completionQueue queue: DispatchQueue, success: @escaping SDKSuccess, failure: @escaping SDKFailure) {
         
         background {
-            var error: UnsafeMutablePointer<SDDKError>? = nil
+            var error: UnsafeMutablePointer<SDDKError>?
             
             let res = sddk_remote_mv(self.state!, &error, path, newPath)
             defer {

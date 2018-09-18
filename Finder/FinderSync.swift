@@ -290,7 +290,7 @@ class FinderSync: FIFinderSync {
     
     // swiftlint:disable force_unwrapping
     override func menu(for menuKind: FIMenuKind) -> NSMenu {
-        var m: NSMenu? = nil
+        var m: NSMenu?
         switch menuKind {
         case .contextualMenuForItems:
             /* contextual menu for one or more files/directories */
