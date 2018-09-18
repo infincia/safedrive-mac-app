@@ -13,7 +13,9 @@ class FinderSync: FIFinderSync {
     var appConnection: NSXPCConnection?
     var serviceConnection: NSXPCConnection?
     fileprivate var finderListener: NSXPCListener
-    fileprivate weak var finderXPCDelegate: FinderXPCDelegate?
+    // swiftlint:disable weak_delegate
+    fileprivate var finderXPCDelegate: FinderXPCDelegate?
+    // swiftlint:enable weak_delegate
 
     var folders = [SDKSyncFolder]()
     
