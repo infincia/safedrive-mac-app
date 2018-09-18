@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>v0.9.70</string>
+	<string>v0.9.71</string>
 	<key>CFBundleVersion</key>
-	<string>2287</string>
+	<string>2308</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright (c) 2014-2017 SafeDrive. All rights reserved.</string>
 	<key>XPCService</key>
