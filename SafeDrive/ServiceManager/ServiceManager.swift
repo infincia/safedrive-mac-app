@@ -99,7 +99,7 @@ class ServiceManager: NSObject {
             print("Failed to LSRegisterURL \(helper)")
         }
         
-        if (SMLoginItemSetEnabled(ServiceManager.ipcServiceName as CFString, state)) {
+        if SMLoginItemSetEnabled(ServiceManager.ipcServiceName as CFString, state) {
             return true
         } else {
             print("Failed to SMLoginItemSetEnabled \(helper)")
