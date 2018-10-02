@@ -390,7 +390,7 @@ class MountController: NSObject {
                 }
                 
                 
-                if !self.mounted && self.keepMounted {
+                if !self.mounted && !self.mounting && self.keepMounted {
                     var attemptMount = false
                     
                     if let lastMountAttempt = self.lastMountAttempt {
@@ -468,6 +468,7 @@ class MountController: NSObject {
             if let s = self.sftpfsConnection {
                 let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
                     SDLogError("MountController", "Connecting to sftpfs failed: \(error.localizedDescription)")
+                    self.mounting = false
                 }) as! SFTPFSXPCProtocol
                 
                 
@@ -542,13 +543,16 @@ class MountController: NSObject {
                 
                 proxy.setSFTPFingerprints(fingerprints)
                 
+                self.mounting = true
 
                 proxy.connect(reply: { (success, message, _) in
                     if success {
+                        self.mounting = false
                         main {
                             NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                         }
                     } else {
+                        self.mounting = false
                         // swiftlint:disable force_unwrapping
                         let error = SDError(message: message!, kind: .mountFailed)
                         // swiftlint:enable force_unwrapping
@@ -567,6 +571,7 @@ class MountController: NSObject {
                     }
                 })
             } else {
+                self.mounting = false
                 
                 let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
                 let error = SDError(message: message, kind: .serviceDeployment)
