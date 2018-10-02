@@ -16,7 +16,8 @@ class MountController: NSObject {
     fileprivate let sftpfsQueue = DispatchQueue(label: "io.safedrive.sftpfsQueue")
 
     fileprivate var _mounted = false
-    
+    fileprivate var _mounting = false
+
     fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue")
     
     fileprivate var _signedIn = false
@@ -93,6 +94,21 @@ class MountController: NSObject {
         set (newValue) {
             mountStateQueue.sync(flags: .barrier, execute: {
                 self._mounted = newValue
+            })
+        }
+    }
+    
+    var mounting: Bool {
+        get {
+            var r: Bool = false
+            mountStateQueue.sync {
+                r = self._mounting
+            }
+            return r
+        }
+        set (newValue) {
+            mountStateQueue.sync(flags: .barrier, execute: {
+                self._mounting = newValue
             })
         }
     }
