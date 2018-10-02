@@ -60,8 +60,6 @@ class MountController: NSObject {
     
     var useCache = false
     
-    var useXPC = true
-
     var currentMountURL: URL {
         let home = NSHomeDirectory()
         let volumesDirectoryURL = URL(fileURLWithPath: home, isDirectory: true)
@@ -164,81 +162,6 @@ class MountController: NSObject {
         self.mounted = false
         self.signedIn = false
         self.lastMountAttempt = nil
-        
-        if !self.useXPC {
-            
-            set_sftpfs_error_handler { (cmsg, error_type) in
-                background {
-                    guard let cmessage = cmsg,
-                        let errorType = SFTPFSErrorType(rawValue: error_type) else {
-                            return
-                    }
-                    
-                    let message = String(cString: cmessage)
-                    
-                    
-                    SDLogError("SFTPFS", "\(errorType): %s", message)
-                    
-                    switch errorType {
-                    case .AccessForbidden:
-                        break
-                    case .AlreadyConnected:
-                        break
-                    case .ConnectionCancelled:
-                        let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-                        NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-                    case .ConnectionFailed:
-                        let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-                        NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-                    case .ConnectionLost:
-                        let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-                        NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-                    case .DiskFull:
-                        break
-                    case .FileNotFound:
-                        break
-                    case .InternalError:
-                        break
-                    case .MountFailed:
-                        break
-                    case .NoError:
-                        break
-                    case .NotConnected:
-                        break
-                    case .PermissionDenied:
-                        break
-                    case .UnknownError:
-                        break
-                    case .UnmountFailed:
-                        break
-                    }
-                }
-            }
-            
-            set_sftpfs_logger { (clog, cmod, level) in
-                guard let cmessage = clog,
-                    let cmodule = cmod,
-                    let logLevel = SDKLogLevel(rawValue: UInt8(level)) else {
-                        return
-                }
-                
-                let message = String(cString: cmessage)
-                let module = String(cString: cmodule)
-                
-                switch logLevel {
-                case .error:
-                    SDLogError(module, "%@", message)
-                case .warn:
-                    SDLogWarn(module, "%@", message)
-                case .info:
-                    SDLogInfo(module, "%@", message)
-                case .debug:
-                    SDLogDebug(module, "%@", message)
-                case .trace:
-                    SDLogTrace(module, "%@", message)
-                }
-            }
-        }
         
         self.openFileWarning = OpenFileWarningWindowController(delegate: self)
         
@@ -364,33 +287,25 @@ class MountController: NSObject {
                 
                 Thread.sleep(forTimeInterval: 1)
 
-                if self.useXPC {                    
-                    self.sftpfsQueue.sync {
-                        if let s = self.sftpfsConnection {
-                            let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                                SDLogError("MountController", "Connecting to sftpfs failed: \(error.localizedDescription)")
-                            }) as! SFTPFSXPCProtocol
-                            
-                            proxy.mounted(reply: { (isMounted) in
-                                self.mounted = isMounted
-                                
-                                main {
-                                    NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
-                                }
-                            })
-                        } else {
-                            self.mounted = false
+                self.sftpfsQueue.sync {
+                    if let s = self.sftpfsConnection {
+                        let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                            SDLogError("MountController", "Connecting to sftpfs failed: \(error.localizedDescription)")
+                        }) as! SFTPFSXPCProtocol
+                        
+                        proxy.mounted(reply: { (isMounted) in
+                            self.mounted = isMounted
                             
                             main {
                                 NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
                             }
+                        })
+                    } else {
+                        self.mounted = false
+                        
+                        main {
+                            NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
                         }
-                    }
-                } else {
-                    self.mounted = self.checkMount(at: self.currentMountURL)
-                    
-                    main {
-                        NotificationCenter.default.post(name: Notification.Name.mountState, object: self.mounted)
                     }
                 }
             }
@@ -549,154 +464,118 @@ class MountController: NSObject {
         let volumeName = self.currentVolumeName
 
         sftpfsQueue.async {
-            if self.useXPC {
-                if let s = self.sftpfsConnection {
-                    let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                        SDLogError("MountController", "Connecting to sftpfs failed: \(error.localizedDescription)")
-                    }) as! SFTPFSXPCProtocol
+
+            if let s = self.sftpfsConnection {
+                let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                    SDLogError("MountController", "Connecting to sftpfs failed: \(error.localizedDescription)")
+                }) as! SFTPFSXPCProtocol
+                
+                
+                proxy.setLogger({ (message, module, level) in
+                    guard let logLevel = SDKLogLevel(rawValue: UInt8(level)) else {
+                        return
+                    }
                     
-                    
-                    proxy.setLogger({ (message, module, level) in
-                        guard let logLevel = SDKLogLevel(rawValue: UInt8(level)) else {
+                    switch logLevel {
+                    case .error:
+                        SDLogError(module, "%@", message)
+                    case .warn:
+                        SDLogWarn(module, "%@", message)
+                    case .info:
+                        SDLogInfo(module, "%@", message)
+                    case .debug:
+                        SDLogDebug(module, "%@", message)
+                    case .trace:
+                        SDLogTrace(module, "%@", message)
+                    }
+                })
+                
+                proxy.setErrorHandler({ (message, error_type) in
+                    background {
+                        guard let errorType = SFTPFSErrorType(rawValue: error_type) else {
                             return
                         }
                         
-                        switch logLevel {
-                        case .error:
-                            SDLogError(module, "%@", message)
-                        case .warn:
-                            SDLogWarn(module, "%@", message)
-                        case .info:
-                            SDLogInfo(module, "%@", message)
-                        case .debug:
-                            SDLogDebug(module, "%@", message)
-                        case .trace:
-                            SDLogTrace(module, "%@", message)
+                        SDLogError("SFTPFS", "\(errorType): %s", message)
+                        
+                        switch errorType {
+                        case .AccessForbidden:
+                            break
+                        case .AlreadyConnected:
+                            break
+                        case .ConnectionCancelled:
+                            let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+                            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+                        case .ConnectionFailed:
+                            let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+                            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+                        case .ConnectionLost:
+                            let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
+                            NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
+                        case .DiskFull:
+                            break
+                        case .FileNotFound:
+                            break
+                        case .InternalError:
+                            break
+                        case .MountFailed:
+                            break
+                        case .NoError:
+                            break
+                        case .NotConnected:
+                            break
+                        case .PermissionDenied:
+                            break
+                        case .UnknownError:
+                            break
+                        case .UnmountFailed:
+                            break
                         }
-                    })
-                    
-                    proxy.setErrorHandler({ (message, error_type) in
-                        background {
-                            guard let errorType = SFTPFSErrorType(rawValue: error_type) else {
-                                return
-                            }
-                            
-                            SDLogError("SFTPFS", "\(errorType): %s", message)
-                            
-                            switch errorType {
-                            case .AccessForbidden:
-                                break
-                            case .AlreadyConnected:
-                                break
-                            case .ConnectionCancelled:
-                                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-                                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-                            case .ConnectionFailed:
-                                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-                                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-                            case .ConnectionLost:
-                                let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
-                                NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
-                            case .DiskFull:
-                                break
-                            case .FileNotFound:
-                                break
-                            case .InternalError:
-                                break
-                            case .MountFailed:
-                                break
-                            case .NoError:
-                                break
-                            case .NotConnected:
-                                break
-                            case .PermissionDenied:
-                                break
-                            case .UnknownError:
-                                break
-                            case .UnmountFailed:
-                                break
-                            }
-                        }
-                    })
-                    
-                    proxy.create(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port)
-                    
-                    proxy.setUseCache(self.useCache)
-                    
-                    proxy.setIcon(volicon)
-                    
-                    proxy.setSFTPFingerprints(fingerprints)
-                    
-                    proxy.connect(reply: { (success, message, _) in
-                        if success {
-                            main {
-                                NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
-                            }
-                        } else {
-                            // swiftlint:disable force_unwrapping
-                            let error = SDError(message: message!, kind: .mountFailed)
-                            // swiftlint:enable force_unwrapping
-                            SDLogError("MountController", "_connectVolume() failure: \(error)")
-
-                            main {
-                                NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
-                            }
-                            // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
-                            
-                            do {
-                                try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
-                            } catch {
-                                
-                            }
-                        }
-                    })
-                } else {
-                    let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
-                    let error = SDError(message: message, kind: .serviceDeployment)
-                    
-                    NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
-
-                    SDLogError("MountController", "\(message)")
-                }
-            } else {
-                let newConnection = ManagedSFTPFS.withMountpoint(mountURL.path,
-                                                                 label: volumeName,
-                                                                 user: user,
-                                                                 password: password,
-                                                                 host: host,
-                                                                 port: port as NSNumber,
-                                                                 xpc: false)
-                
-                
-                newConnection.setUseCache(self.useCache)
-                
-                newConnection.setIcon(volicon)
-                
-                newConnection.setSFTPFingerprints(fingerprints)
-                
-                
-                self.sftpfs = newConnection
-                
-                newConnection.connect({
-                    main {
-                        NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
-                    }
-                }, error: { (message, _) in
-                    let error = SDError(message: message, kind: .mountFailed)
-                    SDLogError("MountController", "_connectVolume() failure: \(error)")
-
-                    main {
-                        NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
-                    }
-                    // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
-                    
-                    do {
-                        try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
-                    } catch {
-
                     }
                 })
+                
+                proxy.create(mountURL.path, label: volumeName, user: user, password: password, host: host, port: port)
+                
+                proxy.setUseCache(self.useCache)
+                
+                proxy.setIcon(volicon)
+                
+                proxy.setSFTPFingerprints(fingerprints)
+                
+
+                proxy.connect(reply: { (success, message, _) in
+                    if success {
+                        main {
+                            NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
+                        }
+                    } else {
+                        // swiftlint:disable force_unwrapping
+                        let error = SDError(message: message!, kind: .mountFailed)
+                        // swiftlint:enable force_unwrapping
+                        SDLogError("MountController", "_connectVolume() failure: \(error)")
+
+                        main {
+                            NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
+                        }
+                        // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
+                        
+                        do {
+                            try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
+                        } catch {
+                            
+                        }
+                    }
+                })
+            } else {
+                
+                let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
+                let error = SDError(message: message, kind: .serviceDeployment)
+                
+                NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
+
+                SDLogError("MountController", "\(message)")
             }
+            
         }
     }
     
@@ -761,30 +640,17 @@ class MountController: NSObject {
         // we may want to retry the force unmounting as well, but it will have to be
         // done in a different way due to the differences in how XPC and NSWorkspace APIs work
         if force {
-            if self.useXPC {
-                if let s = self.sftpfsConnection {
-                    let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
-                        SDLogError("MountController", "Killing sftpfs failed: \(error.localizedDescription)")
-                    }) as! SFTPFSXPCProtocol
-                    
-                    proxy.killMount()
-                    
-                    main {
-                        self.mountURL = nil
-                        NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
-                    }
+            if let s = self.sftpfsConnection {
+                let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                    SDLogError("MountController", "Killing sftpfs failed: \(error.localizedDescription)")
+                }) as! SFTPFSXPCProtocol
+                
+                proxy.killMount()
+                
+                main {
+                    self.mountURL = nil
+                    NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
                 }
-            } else {
-                ServiceManager.sharedServiceManager.forceUnmountSafeDrive(self.currentMountURL.path, {
-                    main {
-                        self.mountURL = nil
-                        NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
-                    }
-                }, { (error) in
-                    main {
-                        NotificationCenter.default.post(name: Notification.Name.volumeUnmountFailed, object: error)
-                    }
-                })
             }
             return
         }
