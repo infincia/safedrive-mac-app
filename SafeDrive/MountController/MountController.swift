@@ -26,9 +26,12 @@ class MountController: NSObject {
     
     fileprivate var _lastMountAttempt: Date?
     
+    fileprivate var _mountDelay: TimeInterval = 60.0
+
     fileprivate let lastMountAttemptQueue = DispatchQueue(label: "io.safedrive.lastMountAttemptQueue")
     
-    
+    fileprivate let mountDelayQueue = DispatchQueue(label: "io.safedrive.mountDelayQueue")
+
     fileprivate var mountURL: URL?
     
     static let shared = MountController()
@@ -71,6 +74,19 @@ class MountController: NSObject {
             return try FileManager.default.attributesOfFileSystem(forPath: self.currentMountURL.path)
         } catch {
             return nil
+        }
+    }
+    
+    var mountDelay: TimeInterval {
+        get {
+            return mountDelayQueue.sync {
+                return self._mountDelay
+            }
+        }
+        set (newValue) {
+            mountDelayQueue.sync(flags: .barrier, execute: {
+                self._mountDelay = newValue
+            })
         }
     }
     
@@ -467,7 +483,7 @@ class MountController: NSObject {
                         
                         let d = now.timeIntervalSince(lastMountAttempt)
                         
-                        if d > 60 {
+                        if d > self.mountDelay {
                             attemptMount = true
                         }
                     } else {
