@@ -652,6 +652,18 @@ class MountController: NSObject {
                 
                 proxy.connect(reply: { (success, message, _) in
                     if success {
+                        switch self.remainingMountAttempts {
+                        case -1:
+                            /**
+                             * Don't show a desktop notification if this isn't
+                             * a user-initiated mount.
+                             */
+                            break
+                        default:
+                            main {
+                                NotificationCenter.default.post(name: Notification.Name.volumeDidMountDesktopNotification, object: nil)
+                            }
+                        }
                         // reset the mount properties to the default values for
                         // automounting, if enabled
                         self.remainingMountAttempts = -1
