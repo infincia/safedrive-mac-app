@@ -14,24 +14,17 @@ class MountController: NSObject {
     fileprivate var sftpfsConnection: NSXPCConnection?
     
     fileprivate let sftpfsQueue = DispatchQueue(label: "io.safedrive.sftpfsQueue")
+    fileprivate let propertyQueue = DispatchQueue(label: "io.safedrive.mountController.propertyQueue")
 
     fileprivate var _mounted = false
     fileprivate var _mounting = false
-
-    fileprivate let mountStateQueue = DispatchQueue(label: "io.safedrive.mountStateQueue")
     
     fileprivate var _signedIn = false
-    
-    fileprivate let signedInQueue = DispatchQueue(label: "io.safedrive.signedInQueue")
     
     fileprivate var _lastMountAttempt: Date?
     
     fileprivate var _mountDelay: TimeInterval = 60.0
-
-    fileprivate let lastMountAttemptQueue = DispatchQueue(label: "io.safedrive.lastMountAttemptQueue")
     
-    fileprivate let mountDelayQueue = DispatchQueue(label: "io.safedrive.mountDelayQueue")
-
     fileprivate var mountURL: URL?
     
     static let shared = MountController()
@@ -77,12 +70,12 @@ class MountController: NSObject {
     
     var mountDelay: TimeInterval {
         get {
-            return mountDelayQueue.sync {
+            return propertyQueue.sync {
                 return self._mountDelay
             }
         }
         set (newValue) {
-            mountDelayQueue.sync(flags: .barrier, execute: {
+            propertyQueue.sync(flags: .barrier, execute: {
                 self._mountDelay = newValue
             })
         }
@@ -100,13 +93,13 @@ class MountController: NSObject {
     var mounted: Bool {
         get {
             var r: Bool = false
-            mountStateQueue.sync {
+            propertyQueue.sync {
                 r = self._mounted
             }
             return r
         }
         set (newValue) {
-            mountStateQueue.sync(flags: .barrier, execute: {
+            propertyQueue.sync(flags: .barrier, execute: {
                 self._mounted = newValue
             })
         }
@@ -115,13 +108,13 @@ class MountController: NSObject {
     var mounting: Bool {
         get {
             var r: Bool = false
-            mountStateQueue.sync {
+            propertyQueue.sync {
                 r = self._mounting
             }
             return r
         }
         set (newValue) {
-            mountStateQueue.sync(flags: .barrier, execute: {
+            propertyQueue.sync(flags: .barrier, execute: {
                 self._mounting = newValue
             })
         }
@@ -130,13 +123,13 @@ class MountController: NSObject {
     var signedIn: Bool {
         get {
             var r: Bool = false
-            signedInQueue.sync {
+            propertyQueue.sync {
                 r = self._signedIn
             }
             return r
         }
         set (newValue) {
-            signedInQueue.sync(flags: .barrier, execute: {
+            propertyQueue.sync(flags: .barrier, execute: {
                 self._signedIn = newValue
             })
         }
@@ -145,13 +138,13 @@ class MountController: NSObject {
     var lastMountAttempt: Date? {
         get {
             var r: Date?
-            signedInQueue.sync {
+            propertyQueue.sync {
                 r = self._lastMountAttempt
             }
             return r
         }
         set (newValue) {
-            signedInQueue.sync(flags: .barrier, execute: {
+            propertyQueue.sync(flags: .barrier, execute: {
                 self._lastMountAttempt = newValue
             })
         }
