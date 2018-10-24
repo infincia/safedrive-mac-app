@@ -8,6 +8,12 @@ import Cocoa
 import Foundation
 
 class MountController: NSObject {
+
+    static let shared = MountController()
+    
+    fileprivate var sdk = SafeDriveSDK.sharedSDK
+    
+    fileprivate var openFileWarning: OpenFileWarningWindowController!
     
     fileprivate var sftpfs: ManagedSFTPFS?
     
@@ -26,12 +32,6 @@ class MountController: NSObject {
     fileprivate var _mountDelay: TimeInterval = 60.0
     
     fileprivate var mountURL: URL?
-    
-    static let shared = MountController()
-    
-    fileprivate var sdk = SafeDriveSDK.sharedSDK
-    
-    fileprivate var openFileWarning: OpenFileWarningWindowController!
     
     fileprivate var email: String?
     fileprivate var internalUserName: String?
