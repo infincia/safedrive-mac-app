@@ -8,6 +8,13 @@ extension Notification.Name {
     static let mountState = Notification.Name("mountStateNotification")
     static let mountDetails = Notification.Name("mountDetailsNotification")
 
+    static let volumeDidMountDesktopNotification = Notification.Name("volumeDidMountDesktopNotification")
+    static let volumeDidUnmountDesktopNotification = Notification.Name("volumeDidUnmountDesktopNotification")
+    static let volumeMountingDesktopNotification = Notification.Name("volumeMountingDesktopNotification")
+    static let volumeUnmountingDesktopNotification = Notification.Name("volumeUnmountingDesktopNotification")
+    static let volumeMountFailedDesktopNotification = Notification.Name("volumeMountFailedDesktopNotification")
+    static let volumeUnmountFailedDesktopNotification = Notification.Name("volumeUnmountFailedDesktopNotification")
+    static let volumeIsFullDesktopNotification = Notification.Name("volumeIsFullDesktopNotification")
 
     static let volumeDidMount = Notification.Name("volumeDidMountNotification")
     static let volumeDidUnmount = Notification.Name("volumeDidUnmountNotification")
@@ -20,7 +27,6 @@ extension Notification.Name {
     static let volumeMountFailed = Notification.Name("volumeMountFailed")
     static let volumeUnmountFailed = Notification.Name("volumeUnmountFailed")
 
-    static let volumeIsFull = Notification.Name("volumeIsFull")
 
     static let applicationShouldOpenPreferencesWindow = Notification.Name("applicationShouldOpenPreferencesWindowNotification")
     static let applicationShouldOpenAccountWindow = Notification.Name("applicationShouldOpenAccountWindowNotification")

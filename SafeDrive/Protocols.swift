@@ -15,6 +15,16 @@ protocol SDVolumeEventProtocol: class {
     func volumeUnmounting(notification: Notification)
     func volumeMountFailed(notification: Notification)
     func volumeUnmountFailed(notification: Notification)
+}
+
+@objc
+protocol SDDesktopNotificationProtocol: class {
+    func volumeDidMount(notification: Notification)
+    func volumeDidUnmount(notification: Notification)
+    func volumeMounting(notification: Notification)
+    func volumeUnmounting(notification: Notification)
+    func volumeMountFailed(notification: Notification)
+    func volumeUnmountFailed(notification: Notification)
     func volumeIsFull(notification: Notification)
 }
 
