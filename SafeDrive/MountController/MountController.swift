@@ -442,7 +442,8 @@ class MountController: NSObject {
     
     // MARK: - High level API
     
-    func connectVolume() {
+    func connectVolume(forEvent mountEvent: MountEvent) {
+        
         /**
          * We want to "lock" the mounting system as soon as this method is
          * called, so that nothing else tries to call it until the current
@@ -873,7 +874,11 @@ extension MountController: SDVolumeEventProtocol {
     func volumeShouldMount(notification: Notification) {
         assert(Thread.current == Thread.main, "volumeShouldMount called on background thread")
 
-        self.connectVolume()
+        guard let mountEvent = notification.object as? MountEvent else {
+            SDLogError("MountController", "API contract invalid: volumeShouldMount()")
+            return
+        }
+        self.connectVolume(forEvent: mountEvent)
     }
     
     func volumeShouldUnmount(notification: Notification) {
