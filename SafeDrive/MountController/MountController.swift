@@ -29,7 +29,7 @@ class MountController: NSObject {
     
     fileprivate var _lastMountAttempt: Date?
     
-    fileprivate var _mountDelay: TimeInterval = 60.0
+    fileprivate var _mountDelay: TimeInterval = mountDelayInterval()
     
     fileprivate var mountURL: URL?
     
