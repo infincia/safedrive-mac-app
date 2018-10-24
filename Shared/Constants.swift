@@ -33,6 +33,9 @@ fileprivate let SDRecoveryKeyDomain = "recovery.safedrive.io"
 fileprivate let SDUniqueClientIDDomain = "ucid.safedrive.io"
 fileprivate let SDCurrentUserDomain = "currentuser.safedrive.io"
 
+// Mount related constants
+fileprivate let SDMountDelayInterval: TimeInterval = 60.0
+
 // General constants
 
 fileprivate let SDDefaultVolumeName = "SafeDrive"
@@ -139,6 +142,9 @@ func userDefaultsWelcomeShownKey() -> String {
     return SDWelcomeShownKey
 }
 
+func mountDelayInterval() -> TimeInterval {
+    return SDMountDelayInterval
+}
 
 public enum SDKLogLevel: UInt8 {
     case error = 0
