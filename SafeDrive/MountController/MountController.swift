@@ -440,6 +440,38 @@ class MountController: NSObject {
         }
     }
     
+    func mountFailureHandler(error: Error) {
+        switch self.remainingMountAttempts {
+        case -1:
+            /**
+             * This was an automated mount attempt, don't
+             * show any notifications or change anything
+             **/
+            break
+        case 0:
+            /**
+             * This was a user-initiated mount attempt and
+             * the retry limit has been exceeded, so we need to
+             * reset things and notify the user that mounting failed
+             **/
+            
+            self.remainingMountAttempts = -1
+            self.mountDelay = mountDelayInterval()
+            
+            main {
+                NotificationCenter.default.post(name: Notification.Name.volumeMountFailedDesktopNotification, object: error)
+            }
+        default:
+            /**
+             * This is a user-initiated mount attempt, but
+             * the retry limit has not been exceeded yet, so
+             * we only need to decrement the retry counter
+             * and let mountLoop try again
+             **/
+            self.remainingMountAttempts -= 1
+        }
+    }
+    
     // MARK: - High level API
     
     func connectVolume(forEvent mountEvent: MountEvent) {
