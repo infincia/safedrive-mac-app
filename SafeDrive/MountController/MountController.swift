@@ -590,8 +590,8 @@ class MountController: NSObject {
                         main {
                             NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
                         }
+
                         // NOTE: This is a workaround for an issue in SSHFS where a volume can both fail to mount but still end up in the mount table
-                        
                         do {
                             try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
                         } catch {
