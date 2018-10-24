@@ -94,7 +94,8 @@ class DropdownController: NSObject {
             let unmountEvent = UnmountEvent(askForOpenApps: true, force: false)
             NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
         } else {
-            NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: nil)
+            let mountEvent = MountEvent(userInitiated: true)
+            NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: mountEvent)
         }
     }
     
@@ -103,7 +104,8 @@ class DropdownController: NSObject {
             let unmountEvent = UnmountEvent(askForOpenApps: false, force: true)
             NotificationCenter.default.post(name: Notification.Name.volumeShouldUnmount, object: unmountEvent)
         } else {
-            NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: nil)
+            let mountEvent = MountEvent(userInitiated: true)
+            NotificationCenter.default.post(name: Notification.Name.volumeShouldMount, object: mountEvent)
         }
     }
     

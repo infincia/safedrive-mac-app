@@ -431,7 +431,9 @@ class MountController: NSObject {
                         
                         self.lastMountAttempt = Date()
                         
-                        NotificationCenter.default.post(name: NSNotification.Name.volumeShouldMount, object: nil)
+                        let mountEvent = MountEvent(userInitiated: false)
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name.volumeShouldMount, object: mountEvent)
                     }
                 }
             }
