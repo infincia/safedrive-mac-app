@@ -31,6 +31,8 @@ class MountController: NSObject {
     
     fileprivate var _mountDelay: TimeInterval = mountDelayInterval()
     
+    fileprivate var _remainingMountAttempts: Int8 = 0
+
     fileprivate var mountURL: URL?
     
     fileprivate var email: String?
@@ -146,6 +148,19 @@ class MountController: NSObject {
         set (newValue) {
             propertyQueue.sync(flags: .barrier, execute: {
                 self._lastMountAttempt = newValue
+            })
+        }
+    }
+    
+    var remainingMountAttempts: Int8 {
+        get {
+            return propertyQueue.sync {
+                return self._remainingMountAttempts
+            }
+        }
+        set (newValue) {
+            propertyQueue.sync(flags: .barrier, execute: {
+                self._remainingMountAttempts = newValue
             })
         }
     }
