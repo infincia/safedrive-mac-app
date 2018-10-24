@@ -62,8 +62,6 @@ class DropdownController: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeUnmounting), name: Notification.Name.volumeUnmounting, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeMountFailed), name: Notification.Name.volumeMountFailed, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeUnmountFailed), name: Notification.Name.volumeUnmountFailed, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(SDVolumeEventProtocol.volumeIsFull), name: Notification.Name.volumeIsFull, object: nil)
-
     }
     
     deinit {
@@ -274,9 +272,5 @@ extension DropdownController: SDVolumeEventProtocol {
         
         self.toggleMenuItem.isEnabled = true
         self.forceToggleMenuItem.isEnabled = true
-    }
-    
-    func volumeIsFull(notification: Notification) {
-        assert(Thread.current == Thread.main, "volumeIsFull called on background thread")
     }
 }
