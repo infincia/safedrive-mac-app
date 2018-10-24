@@ -652,6 +652,11 @@ class MountController: NSObject {
                 
                 proxy.connect(reply: { (success, message, _) in
                     if success {
+                        // reset the mount properties to the default values for
+                        // automounting, if enabled
+                        self.remainingMountAttempts = -1
+                        self.mountDelay = mountDelayInterval()
+
                         main {
                             NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                         }
