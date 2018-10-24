@@ -450,6 +450,11 @@ class MountController: NSObject {
         **/
         self.mounting = true
 
+        
+        main {
+            NotificationCenter.default.post(name: Notification.Name.volumeMounting, object: nil)
+        }
+        
         self.sdk.getSFTPFingerprints(completionQueue: DispatchQueue.main, success: { (fingerprints) in
             let fingerprintStrings = fingerprints.map({ (fingerprint) -> String in
                 return fingerprint.fingerprint
@@ -486,11 +491,7 @@ class MountController: NSObject {
             }
             return
         }
-        
-        main {
-            NotificationCenter.default.post(name: Notification.Name.volumeMounting, object: nil)
-        }
-        
+
         let mountURL = self.currentMountURL
         let volumeName = self.currentVolumeName
 
