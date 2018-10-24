@@ -125,6 +125,16 @@ extension AppDelegate: NSApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignIn), name: Notification.Name.accountSignIn, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SDAccountProtocol.didSignOut), name: Notification.Name.accountSignOut, object: nil)
         
+        // register SDDesktopNotification notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(SDDesktopNotificationProtocol.volumeDidMount), name: Notification.Name.volumeDidMountDesktopNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDDesktopNotificationProtocol.volumeDidUnmount), name: Notification.Name.volumeDidUnmountDesktopNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDDesktopNotificationProtocol.volumeMounting), name: Notification.Name.volumeMountingDesktopNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDDesktopNotificationProtocol.volumeUnmounting), name: Notification.Name.volumeUnmountingDesktopNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDDesktopNotificationProtocol.volumeMountFailed), name: Notification.Name.volumeMountFailedDesktopNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDDesktopNotificationProtocol.volumeUnmountFailed), name: Notification.Name.volumeUnmountFailedDesktopNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SDDesktopNotificationProtocol.volumeIsFull), name: Notification.Name.volumeIsFullDesktopNotification, object: nil)
+        
+        
         self.welcomeWindowController = WelcomeWindowController()
         // swiftlint:disable force_unwrapping
         _ = self.welcomeWindowController.window!
