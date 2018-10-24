@@ -443,6 +443,13 @@ class MountController: NSObject {
     // MARK: - High level API
     
     func connectVolume() {
+        /**
+         * We want to "lock" the mounting system as soon as this method is
+         * called, so that nothing else tries to call it until the current
+         * method has finished and either failed or succeeded.
+        **/
+        self.mounting = true
+
         self.sdk.getSFTPFingerprints(completionQueue: DispatchQueue.main, success: { (fingerprints) in
             let fingerprintStrings = fingerprints.map({ (fingerprint) -> String in
                 return fingerprint.fingerprint
@@ -455,6 +462,8 @@ class MountController: NSObject {
             main {
                 NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
             }
+
+            self.mounting = false
         })
     }
     
@@ -566,8 +575,6 @@ class MountController: NSObject {
                 
                 proxy.setSFTPFingerprints(fingerprints)
                 
-                self.mounting = true
-
                 proxy.connect(reply: { (success, message, _) in
                     if success {
                         self.mounting = false
