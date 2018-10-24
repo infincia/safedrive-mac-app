@@ -451,6 +451,33 @@ class MountController: NSObject {
         **/
         self.mounting = true
 
+        /**
+         * If a user initiates the mount, they are expecting some feedback within
+         * a short period of time, either a failure or a success.
+         
+         * We want to retry 5 times, with a small delay between each attempt,
+         * before we report it as a failure. Only if it fails all 5 times do we
+         * tell the user, as some failures are temporary.
+         *
+         * We're handling it this way because we need to kill the SFTPFS process
+         * between each attempt, so that FUSE can clean up after itself before
+         * we try the mount again.
+         *
+         * However, we don't want automated background mounting (keepMounted)
+         * to be subject to this limit, nor do we want to show an obnoxious
+         * notification on the desktop every few seconds. If the user isn't
+         * waiting for the drive to mount, they aren't expecting instant
+         * feedback either and notifications would be irritating.
+         *
+         * In that case, we would rather display the current drive status,
+         * including mount failures, in a less disruptive way, such as badging
+         * the menu bar icon or using a hover panel.
+         *
+        **/
+        if mountEvent.userInitiated {
+            self.remainingMountAttempts = 5
+            self.mountDelay = TimeInterval(floatLiteral: 5.0)
+        }
         
         main {
             NotificationCenter.default.post(name: Notification.Name.volumeMounting, object: nil)
