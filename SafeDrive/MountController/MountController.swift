@@ -454,7 +454,7 @@ class MountController: NSObject {
             let fingerprintStrings = fingerprints.map({ (fingerprint) -> String in
                 return fingerprint.fingerprint
             })
-            self._connectVolume(fingerprintStrings)
+            self._connectVolume(withFingerprints: fingerprintStrings)
         }, failure: { (error) in
             let error = SDError(message: error.message, kind: error.kind)
             SDLogError("MountController", "\(error)")
@@ -467,8 +467,7 @@ class MountController: NSObject {
         })
     }
     
-    fileprivate func _connectVolume(_ fingerprints: [String]) {
-        
+    fileprivate func _connectVolume(withFingerprints fingerprints: [String]) {
         guard let user = self.internalUserName,
             let password = self.password,
             let host = self.remoteHost,
