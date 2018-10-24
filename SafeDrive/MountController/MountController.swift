@@ -827,42 +827,12 @@ extension MountController: SDVolumeEventProtocol {
 
     func volumeDidMount(notification: Notification) {
         assert(Thread.current == Thread.main, "volumeDidMount called on background thread")
-        
-        let notification = NSUserNotification()
-        
-        var userInfo = [String: Any]()
-        
-        userInfo["identifier"] = SDNotificationType.driveMounted.rawValue
-
-        notification.userInfo = userInfo
-        
-        notification.informativeText = NSLocalizedString("click here to show the drive in Finder", comment: "")
-        
-        notification.title = "SafeDrive connected"
-        
-        notification.soundName = NSUserNotificationDefaultSoundName
-        
-        NSUserNotificationCenter.default.deliver(notification)
     }
     
     func volumeDidUnmount(notification: Notification) {
         assert(Thread.current == Thread.main, "volumeDidMount called on background thread")
 
         self.openFileWarning.stop()
-
-        let notification = NSUserNotification()
-                
-        var userInfo = [String: Any]()
-        
-        userInfo["identifier"] = SDNotificationType.driveUnmounted.rawValue
-
-        notification.userInfo = userInfo
-                
-        notification.title = "SafeDrive disconnected"
-        
-        notification.soundName = NSUserNotificationDefaultSoundName
-        
-        NSUserNotificationCenter.default.deliver(notification)
         
         let u = self.currentMountURL as NSURL
         if !u.removeFavoriteItem() {
@@ -896,69 +866,24 @@ extension MountController: SDVolumeEventProtocol {
 
     func volumeMounting(notification: Notification) {
         
-        let notification = NSUserNotification()
-        notification.informativeText = NSLocalizedString("Please wait while the drive mounts", comment: "")
-        var userInfo = [String: Any]()
-        userInfo["identifier"] = SDNotificationType.driveMounting.rawValue
-        notification.userInfo = userInfo
-        notification.title = "SafeDrive mounting"
-        notification.soundName = NSUserNotificationDefaultSoundName
-        NSUserNotificationCenter.default.deliver(notification)
     }
     
     func volumeUnmounting(notification: Notification) {
-        let notification = NSUserNotification()
-        notification.informativeText = NSLocalizedString("Please wait while the drive unmounts", comment: "")
-        var userInfo = [String: Any]()
-        userInfo["identifier"] = SDNotificationType.driveUnmounting.rawValue
-        notification.userInfo = userInfo
-        notification.title = "SafeDrive unmounting"
-        notification.soundName = NSUserNotificationDefaultSoundName
-        NSUserNotificationCenter.default.deliver(notification)
+        
     }
     
     func volumeMountFailed(notification: Notification) {
-        guard let error = notification.object as? SDError else {
+        guard let _ = notification.object as? SDError else {
             SDLogError("MountController", "API contract invalid: volumeMountFailed()")
             return
         }
-        
-        let notification = NSUserNotification()
-        notification.informativeText = error.localizedDescription
-        var userInfo = [String: Any]()
-        userInfo["identifier"] = SDNotificationType.driveMountFailed.rawValue
-        notification.userInfo = userInfo
-        notification.title = "SafeDrive mount failed"
-        notification.soundName = NSUserNotificationDefaultSoundName
-        NSUserNotificationCenter.default.deliver(notification)
-    
     }
     
     func volumeUnmountFailed(notification: Notification) {
-        guard let error = notification.object as? SDError else {
+        guard let _ = notification.object as? SDError else {
             SDLogError("MountController", "API contract invalid: volumeUnmountFailed()")
             return
         }
-        
-        let notification = NSUserNotification()
-        notification.informativeText = error.localizedDescription
-        var userInfo = [String: Any]()
-        userInfo["identifier"] = SDNotificationType.driveUnmountFailed.rawValue
-        notification.userInfo = userInfo
-        notification.title = "SafeDrive unmount failed"
-        notification.soundName = NSUserNotificationDefaultSoundName
-        NSUserNotificationCenter.default.deliver(notification)
-    }
-    
-    func volumeIsFull(notification: Notification) {        
-        let notification = NSUserNotification()
-        notification.informativeText = NSLocalizedString("SafeDrive is full", comment: "")
-        var userInfo = [String: Any]()
-        userInfo["identifier"] = SDNotificationType.driveFull.rawValue
-        notification.userInfo = userInfo
-        notification.title = "SafeDrive full"
-        notification.soundName = NSUserNotificationDefaultSoundName
-        NSUserNotificationCenter.default.deliver(notification)
     }
 }
 
