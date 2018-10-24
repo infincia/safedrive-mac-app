@@ -477,6 +477,17 @@ class MountController: NSObject {
         if mountEvent.userInitiated {
             self.remainingMountAttempts = 5
             self.mountDelay = TimeInterval(floatLiteral: 5.0)
+            
+            /**
+             * We only show a mounting notification once for each time the user
+             * clicks the connect option in the dropdown menu, any other time
+             * we are either retrying a user-initated mount or trying to automount
+             * in the background, which the user is not expecting notifications
+             * for.
+            **/
+            main {
+                NotificationCenter.default.post(name: Notification.Name.volumeMountingDesktopNotification, object: nil)
+            }
         }
         
         main {
