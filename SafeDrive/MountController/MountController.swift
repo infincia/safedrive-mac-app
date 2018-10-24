@@ -576,16 +576,16 @@ class MountController: NSObject {
                 
                 proxy.connect(reply: { (success, message, _) in
                     if success {
-                        self.mounting = false
                         main {
                             NotificationCenter.default.post(name: Notification.Name.volumeDidMount, object: nil)
                         }
                     } else {
-                        self.mounting = false
                         // swiftlint:disable force_unwrapping
                         let error = SDError(message: message!, kind: .mountFailed)
                         // swiftlint:enable force_unwrapping
                         SDLogError("MountController", "_connectVolume() failure: \(error)")
+
+                        proxy.killMount()
 
                         main {
                             NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
@@ -598,16 +598,18 @@ class MountController: NSObject {
                             
                         }
                     }
+                    
+                    self.mounting = false
                 })
             } else {
-                self.mounting = false
-                
                 let message = NSLocalizedString("Connecting to sftpfs not possible", comment: "")
                 let error = SDError(message: message, kind: .serviceDeployment)
                 
                 NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
 
                 SDLogError("MountController", "\(message)")
+                
+                self.mounting = false
             }
             
         }
