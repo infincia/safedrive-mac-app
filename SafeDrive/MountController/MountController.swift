@@ -398,7 +398,21 @@ class MountController: NSObject {
                 }
                 
                 
-                if !self.mounted && !self.mounting && self.keepMounted {
+                /**
+                 *
+                 * If there are remainingMountAttempts left, the mount controller
+                 * is in the middle of handling a user initiated mount, so we
+                 * should temporarily call connectVolume() automatically if needed,
+                 * even though keepMounted may not be enabled.
+                 *
+                 * This is part of the mount retry system, we reuse the same loop
+                 * and time keeping logic that keeps the drive mounted if the
+                 * user wants it to stay mounted, but instead of trying every
+                 * 60s we lower the mountDelay to 5s, giving us a free retry
+                 * system without introducing races and extra state tracking.
+                 *
+                **/
+                if !self.mounted && !self.mounting && (self.keepMounted || self.remainingMountAttempts > 0) {
                     var attemptMount = false
                     
                     if let lastMountAttempt = self.lastMountAttempt {
