@@ -54,6 +54,14 @@ extension Notification.Name {
 
 }
 
+class MountEvent {
+    var userInitiated: Bool = false
+    
+    init(userInitiated: Bool) {
+        self.userInitiated = userInitiated
+    }
+}
+
 class UnmountEvent {
     var askForOpenApps: Bool = false
     var force: Bool = false
