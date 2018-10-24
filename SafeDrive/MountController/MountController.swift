@@ -654,6 +654,10 @@ class MountController: NSObject {
             main {
                 NotificationCenter.default.post(name: Notification.Name.volumeUnmountFailed, object: _error)
             }
+            
+            main {
+                NotificationCenter.default.post(name: Notification.Name.volumeUnmountFailedDesktopNotification, object: _error)
+            }
         }
         
         let volumeName: String = self.currentVolumeName
@@ -662,6 +666,10 @@ class MountController: NSObject {
         
         main {
             NotificationCenter.default.post(name: Notification.Name.volumeUnmounting, object: nil)
+        }
+        
+        main {
+            NotificationCenter.default.post(name: Notification.Name.volumeUnmountingDesktopNotification, object: nil)
         }
         
         let u = self.currentMountURL as NSURL
@@ -687,6 +695,7 @@ class MountController: NSObject {
                 main {
                     self.mountURL = nil
                     NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
+                    NotificationCenter.default.post(name: Notification.Name.volumeDidUnmountDesktopNotification, object: nil)
                 }
             }
             return
@@ -702,6 +711,7 @@ class MountController: NSObject {
                     main {
                         self.mountURL = nil
                         NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
+                        NotificationCenter.default.post(name: Notification.Name.volumeDidUnmountDesktopNotification, object: nil)
                     }
                     
                     return
