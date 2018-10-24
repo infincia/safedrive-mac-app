@@ -539,6 +539,10 @@ class MountController: NSObject {
                 NotificationCenter.default.post(name: Notification.Name.volumeMountFailed, object: error)
             }
 
+            // if we don't handle this as a failure here, then network failures
+            // will cause retries to continue forever
+            self.mountFailureHandler(error: error)
+
             self.mounting = false
         })
     }
@@ -669,6 +673,8 @@ class MountController: NSObject {
                         } catch {
                             
                         }
+                        
+                        self.mountFailureHandler(error: error)
                     }
                     
                     self.mounting = false
@@ -681,6 +687,8 @@ class MountController: NSObject {
 
                 SDLogError("MountController", "\(message)")
                 
+                self.mountFailureHandler(error: error)
+
                 self.mounting = false
             }
             
