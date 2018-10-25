@@ -804,6 +804,14 @@ class MountController: NSObject {
             repeat {
                 do {
                     try NSWorkspace.shared.unmountAndEjectDevice(at: self.currentMountURL)
+                    if let s = self.sftpfsConnection {
+                        let proxy = s.remoteObjectProxyWithErrorHandler({ (error) in
+                            SDLogError("MountController", "Killing sftpfs failed: \(error.localizedDescription)")
+                        }) as! SFTPFSXPCProtocol
+                        
+                        proxy.killMount()
+                    }
+                    
                     main {
                         self.mountURL = nil
                         NotificationCenter.default.post(name: Notification.Name.volumeDidUnmount, object: nil)
