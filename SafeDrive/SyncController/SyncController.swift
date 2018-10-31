@@ -169,7 +169,8 @@ class SyncController: Equatable {
                 let d = now.timeIntervalSince(last_update)
                 if d > 1 {
                     last_update = Date()
-                    let percent = Double(current / total) * 100.0
+                    let intermediate_percent = Double(current) / Double(total)
+                    let percent = intermediate_percent * 100.0
                     (self.syncProgressQueue).async {
                         progressBlock(total, current, new, percent)
                     }
@@ -193,7 +194,8 @@ class SyncController: Equatable {
                 let d = now.timeIntervalSince(last_update)
                 if d > 1 {
                     last_update = Date()
-                    let percent = Double(current / total) * 100.0
+                    let intermediate_percent = Double(current) / Double(total)
+                    let percent = intermediate_percent * 100.0
                     (self.syncProgressQueue).async {
                         progressBlock(total, current, new, percent)
                     }
