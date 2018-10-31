@@ -975,8 +975,6 @@ extension MountController: SDVolumeEventProtocol {
     }
     
     func volumeShouldMount(notification: Notification) {
-        assert(Thread.current == Thread.main, "volumeShouldMount called on background thread")
-
         guard let mountEvent = notification.object as? MountEvent else {
             SDLogError("MountController", "API contract invalid: volumeShouldMount()")
             return

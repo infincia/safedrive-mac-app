@@ -227,7 +227,7 @@ extension DropdownController: SDVolumeEventProtocol {
     }
     
     func volumeShouldMount(notification: Notification) {
-        assert(Thread.current == Thread.main, "volumeShouldMount called on background thread")
+
     }
     
     func volumeShouldUnmount(notification: Notification) {
