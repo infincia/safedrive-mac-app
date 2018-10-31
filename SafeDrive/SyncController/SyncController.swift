@@ -418,7 +418,7 @@ class SyncController: Equatable {
 
         //let sshCommand = "\(sshPath) -F\(tempConfigFile.path) -oUserKnownHostsFile=\"\(tempHostsFile.path)\" -p \(port)"
         
-        var taskArguments = ["-e", sshCommand, "--delete", "-rlptX", "--info=progress2", "--no-inc-recursive", "--iconv=utf-8-mac,utf-8"]
+        var taskArguments = ["-e", sshCommand, "--delete", "-rlptx", "--info=progress2", "--no-inc-recursive", "--iconv=utf-8-mac,utf-8"]
         
         let remote = "\(user)@\(host):\"\(serverPath)/\""
         
