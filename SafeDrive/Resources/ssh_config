@@ -7,4 +7,4 @@ Host *.safedrive.io
    HostbasedAuthentication no
    CheckHostIP no
    NumberOfPasswordPrompts 1
-   StrictHostKeyChecking no
+   StrictHostKeyChecking yes
